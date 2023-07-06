@@ -107,6 +107,9 @@ export declare namespace FernApiClient {
         environment: core.Supplier<string>;
         rootVariable: string;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class FernApiClient {
     protected readonly _options: FernApiClient.Options;
@@ -224,11 +227,14 @@ export declare namespace Service {
         environment: core.Supplier<string>;
         rootVariable: string;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Service {
     protected readonly _options: Service.Options;
     constructor(_options: Service.Options);
-    post(): Promise<void>;
+    post(requestOptions?: Service.RequestOptions): Promise<void>;
 }
 ",
                         "name": "Client.d.ts",
@@ -283,7 +289,7 @@ class Service {
     constructor(_options) {
         this._options = _options;
     }
-    post() {
+    post(requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
                 url: (0, url_join_1.default)(yield core.Supplier.get(this._options.environment), \`/\${this._options.rootVariable}\`),
@@ -294,7 +300,7 @@ class Service {
                     \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
                 },
                 contentType: \\"application/json\\",
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return;
@@ -855,6 +861,10 @@ export declare namespace FernApiClient {
         environment: core.Supplier<string>;
         rootVariable: string;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class FernApiClient {
@@ -904,12 +914,16 @@ export declare namespace Service {
         environment: core.Supplier<string>;
         rootVariable: string;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
-    public async post(): Promise<void> {
+    public async post(requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), \`/\${this._options.rootVariable}\`),
             method: \\"POST\\",
@@ -919,7 +933,7 @@ export class Service {
                 \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
             },
             contentType: \\"application/json\\",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return;

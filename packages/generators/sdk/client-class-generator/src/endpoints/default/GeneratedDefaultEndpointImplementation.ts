@@ -6,6 +6,7 @@ import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpoi
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
 import { EndpointSignature, GeneratedEndpointImplementation } from "../GeneratedEndpointImplementation";
 import { buildUrl } from "../utils/buildUrl";
+import { getRequestOptionsParameter, getTimeoutExpression } from "../utils/requestOptionsParameter";
 import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse";
 
 export declare namespace GeneratedDefaultEndpointImplementation {
@@ -13,7 +14,7 @@ export declare namespace GeneratedDefaultEndpointImplementation {
         endpoint: HttpEndpoint;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         includeCredentialsOnCrossOriginRequests: boolean;
-        timeoutInSeconds: number | "infinity" | undefined;
+        defaultTimeoutInSeconds: number | "infinity" | undefined;
         request: GeneratedEndpointRequest;
         response: GeneratedEndpointResponse;
         includeSerdeLayer: boolean;
@@ -24,7 +25,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     public readonly endpoint: HttpEndpoint;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private includeCredentialsOnCrossOriginRequests: boolean;
-    private timeoutInSeconds: number | "infinity" | undefined;
+    private defaultTimeoutInSeconds: number | "infinity" | undefined;
     private request: GeneratedEndpointRequest;
     private response: GeneratedEndpointResponse;
     private includeSerdeLayer: boolean;
@@ -34,14 +35,14 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         response,
         generatedSdkClientClass,
         includeCredentialsOnCrossOriginRequests,
-        timeoutInSeconds,
+        defaultTimeoutInSeconds,
         request,
         includeSerdeLayer,
     }: GeneratedDefaultEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests;
-        this.timeoutInSeconds = timeoutInSeconds;
+        this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
         this.request = request;
         this.response = response;
         this.includeSerdeLayer = includeSerdeLayer;
@@ -53,7 +54,12 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
 
     public getSignature(context: SdkContext): EndpointSignature {
         return {
-            parameters: this.request.getEndpointParameters(context),
+            parameters: [
+                ...this.request.getEndpointParameters(context),
+                getRequestOptionsParameter({
+                    requestOptionsReference: this.generatedSdkClientClass.getReferenceToRequestOptions(),
+                }),
+            ],
             returnTypeWithoutPromise: this.response.getReturnType(context),
         };
     }
@@ -103,7 +109,12 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             ...this.request.getFetcherRequestArgs(context),
             url: this.getReferenceToEnvironment(context),
             method: ts.factory.createStringLiteral(this.endpoint.method),
-            timeoutInSeconds: this.timeoutInSeconds,
+            timeoutInSeconds: getTimeoutExpression({
+                defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
+                timeoutInSecondsReference: this.generatedSdkClientClass.getReferenceToTimeoutInSeconds.bind(
+                    this.generatedSdkClientClass
+                ),
+            }),
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
         };
 

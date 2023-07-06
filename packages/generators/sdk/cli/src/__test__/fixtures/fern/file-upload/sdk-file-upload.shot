@@ -106,6 +106,9 @@ export declare namespace FernApiClient {
     interface Options {
         environment: core.Supplier<string>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class FernApiClient {
     protected readonly _options: FernApiClient.Options;
@@ -232,12 +235,15 @@ export declare namespace Service {
     interface Options {
         environment: core.Supplier<string>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Service {
     protected readonly _options: Service.Options;
     constructor(_options: Service.Options);
-    post(file: File | fs.ReadStream, maybeFile: File | fs.ReadStream | undefined, request: FernApi.MyRequest): Promise<void>;
-    justFile(file: File | fs.ReadStream): Promise<void>;
+    post(file: File | fs.ReadStream, maybeFile: File | fs.ReadStream | undefined, request: FernApi.MyRequest, requestOptions?: Service.RequestOptions): Promise<void>;
+    justFile(file: File | fs.ReadStream, requestOptions?: Service.RequestOptions): Promise<void>;
 }
 ",
                         "name": "Client.d.ts",
@@ -293,7 +299,7 @@ class Service {
     constructor(_options) {
         this._options = _options;
     }
-    post(file, maybeFile, request) {
+    post(file, maybeFile, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             const _request = new form_data_1.default();
             if (request.maybeString != null) {
@@ -357,7 +363,7 @@ class Service {
                 },
                 contentType: \\"multipart/form-data; boundary=\\" + _request.getBoundary(),
                 body: _request,
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return;
@@ -383,7 +389,7 @@ class Service {
             }
         });
     }
-    justFile(file) {
+    justFile(file, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             const _request = new form_data_1.default();
             _request.append(\\"file\\", file);
@@ -398,7 +404,7 @@ class Service {
                 },
                 contentType: \\"multipart/form-data; boundary=\\" + _request.getBoundary(),
                 body: _request,
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return;
@@ -3937,6 +3943,10 @@ export declare namespace FernApiClient {
     interface Options {
         environment: core.Supplier<string>;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class FernApiClient {
@@ -3990,6 +4000,10 @@ export declare namespace Service {
     interface Options {
         environment: core.Supplier<string>;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Service {
@@ -3998,7 +4012,8 @@ export class Service {
     public async post(
         file: File | fs.ReadStream,
         maybeFile: File | fs.ReadStream | undefined,
-        request: FernApi.MyRequest
+        request: FernApi.MyRequest,
+        requestOptions?: Service.RequestOptions
     ): Promise<void> {
         const _request = new FormData();
         if (request.maybeString != null) {
@@ -4077,7 +4092,7 @@ export class Service {
             },
             contentType: \\"multipart/form-data; boundary=\\" + _request.getBoundary(),
             body: _request,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return;
@@ -4105,7 +4120,7 @@ export class Service {
         }
     }
 
-    public async justFile(file: File | fs.ReadStream): Promise<void> {
+    public async justFile(file: File | fs.ReadStream, requestOptions?: Service.RequestOptions): Promise<void> {
         const _request = new FormData();
         _request.append(\\"file\\", file);
         const _response = await core.fetcher({
@@ -4119,7 +4134,7 @@ export class Service {
             },
             contentType: \\"multipart/form-data; boundary=\\" + _request.getBoundary(),
             body: _request,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return;

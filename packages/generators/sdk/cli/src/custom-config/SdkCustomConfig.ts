@@ -12,7 +12,7 @@ export interface SdkCustomConfig {
     includeUtilsOnUnionMembers: boolean;
     includeOtherInUnionTypes: boolean;
     requireDefaultEnvironment: boolean;
-    timeoutInSeconds: number | "infinity" | undefined;
+    defaultTimeoutInSeconds: number | "infinity" | undefined;
     skipResponseValidation: boolean;
     extraDependencies: Record<string, string>;
     treatUnknownAsAny: boolean;

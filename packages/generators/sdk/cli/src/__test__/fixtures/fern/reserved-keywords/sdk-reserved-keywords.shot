@@ -12,6 +12,9 @@ export declare namespace FernApiClient {
     interface Options {
         environment: core.Supplier<string>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class FernApiClient {
     protected readonly _options: FernApiClient.Options;
@@ -136,11 +139,14 @@ export declare namespace Package {
     interface Options {
         environment: core.Supplier<string>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Package {
     protected readonly _options: Package.Options;
     constructor(_options: Package.Options);
-    test(request: FernApi.TestRequest): Promise<core.APIResponse<void, FernApi.package_.test.Error>>;
+    test(request: FernApi.TestRequest, requestOptions?: Package.RequestOptions): Promise<core.APIResponse<void, FernApi.package_.test.Error>>;
 }
 ",
                     "name": "Client.d.ts",
@@ -195,7 +201,7 @@ class Package {
     constructor(_options) {
         this._options = _options;
     }
-    test(request) {
+    test(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             const { for: for_ } = request;
             const _queryParams = new url_search_params_1.default();
@@ -208,7 +214,7 @@ class Package {
                 },
                 contentType: \\"application/json\\",
                 queryParameters: _queryParams,
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return {

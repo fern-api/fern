@@ -91,16 +91,12 @@ export class StreamingFetcherImpl extends CoreUtility implements StreamingFetche
                     ts.factory.createPropertyAssignment(this.StreamingFetcher.Args.properties.body, args.body)
                 );
             }
-            if (args.timeoutInSeconds !== "infinity") {
-                properties.push(
-                    ts.factory.createPropertyAssignment(
-                        this.StreamingFetcher.Args.properties.timeoutMs,
-                        ts.factory.createNumericLiteral(
-                            args.timeoutInSeconds != null ? args.timeoutInSeconds * 1000 : 60000
-                        )
-                    )
-                );
-            }
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    this.StreamingFetcher.Args.properties.timeoutMs,
+                    args.timeoutInSeconds
+                )
+            );
             if (args.withCredentials) {
                 properties.push(
                     ts.factory.createPropertyAssignment(

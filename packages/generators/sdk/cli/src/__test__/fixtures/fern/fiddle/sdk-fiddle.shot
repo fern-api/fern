@@ -9950,7 +9950,7 @@ var FiddleService = class {
   constructor(_options) {
     this._options = _options;
   }
-  test() {
+  test(requestOptions) {
     return __async(this, null, function* () {
       const _response = yield fetcher({
         url: yield Supplier.get(this._options.environment),
@@ -9962,7 +9962,7 @@ var FiddleService = class {
           \\"X-Fern-SDK-Version\\": \\"0.0.0\\"
         },
         contentType: \\"application/json\\",
-        timeoutMs: 6e4
+        timeoutMs: (requestOptions == null ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1e3 : 6e4
       });
       if (_response.ok) {
         return {
@@ -9991,7 +9991,7 @@ var Health = class {
   constructor(_options) {
     this._options = _options;
   }
-  status() {
+  status(requestOptions) {
     return __async(this, null, function* () {
       const _response = yield fetcher({
         url: (0, import_url_join.default)(yield Supplier.get(this._options.environment), \\"/api/health\\"),
@@ -10003,7 +10003,7 @@ var Health = class {
           \\"X-Fern-SDK-Version\\": \\"0.0.0\\"
         },
         contentType: \\"application/json\\",
-        timeoutMs: 6e4
+        timeoutMs: (requestOptions == null ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1e3 : 6e4
       });
       if (_response.ok) {
         return {
@@ -10033,7 +10033,7 @@ var RemoteGen = class {
   constructor(_options) {
     this._options = _options;
   }
-  createJob(request) {
+  createJob(request, requestOptions) {
     return __async(this, null, function* () {
       var _a;
       const _response = yield fetcher({
@@ -10047,7 +10047,7 @@ var RemoteGen = class {
         },
         contentType: \\"application/json\\",
         body: yield CreateJobRequest.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
-        timeoutMs: 6e4
+        timeoutMs: (requestOptions == null ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1e3 : 6e4
       });
       if (_response.ok) {
         return {
@@ -10087,7 +10087,7 @@ var RemoteGen = class {
       };
     });
   }
-  createJobV2(request) {
+  createJobV2(request, requestOptions) {
     return __async(this, null, function* () {
       var _a;
       const _response = yield fetcher({
@@ -10101,7 +10101,7 @@ var RemoteGen = class {
         },
         contentType: \\"application/json\\",
         body: yield CreateJobRequestV2.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
-        timeoutMs: 6e4
+        timeoutMs: (requestOptions == null ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1e3 : 6e4
       });
       if (_response.ok) {
         return {
@@ -10141,7 +10141,7 @@ var RemoteGen = class {
       };
     });
   }
-  getJobStatus(jobId) {
+  getJobStatus(jobId, requestOptions) {
     return __async(this, null, function* () {
       const _response = yield fetcher({
         url: (0, import_url_join2.default)(
@@ -10156,7 +10156,7 @@ var RemoteGen = class {
           \\"X-Fern-SDK-Version\\": \\"0.0.0\\"
         },
         contentType: \\"application/json\\",
-        timeoutMs: 6e4
+        timeoutMs: (requestOptions == null ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1e3 : 6e4
       });
       if (_response.ok) {
         return {
@@ -23770,7 +23770,7 @@ var FiddleService = class {
   constructor(_options) {
     this._options = _options;
   }
-  test() {
+  test(requestOptions) {
     return __async(this, null, function* () {
       const _response = yield fetcher({
         url: yield Supplier.get(this._options.environment),
@@ -23782,7 +23782,7 @@ var FiddleService = class {
           \\"X-Fern-SDK-Version\\": \\"0.0.0\\"
         },
         contentType: \\"application/json\\",
-        timeoutMs: 6e4
+        timeoutMs: (requestOptions == null ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1e3 : 6e4
       });
       if (_response.ok) {
         return {
@@ -23811,7 +23811,7 @@ var Health = class {
   constructor(_options) {
     this._options = _options;
   }
-  status() {
+  status(requestOptions) {
     return __async(this, null, function* () {
       const _response = yield fetcher({
         url: (0, import_url_join.default)(yield Supplier.get(this._options.environment), \\"/api/health\\"),
@@ -23823,7 +23823,7 @@ var Health = class {
           \\"X-Fern-SDK-Version\\": \\"0.0.0\\"
         },
         contentType: \\"application/json\\",
-        timeoutMs: 6e4
+        timeoutMs: (requestOptions == null ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1e3 : 6e4
       });
       if (_response.ok) {
         return {
@@ -23853,7 +23853,7 @@ var RemoteGen = class {
   constructor(_options) {
     this._options = _options;
   }
-  createJob(request) {
+  createJob(request, requestOptions) {
     return __async(this, null, function* () {
       var _a;
       const _response = yield fetcher({
@@ -23867,7 +23867,7 @@ var RemoteGen = class {
         },
         contentType: \\"application/json\\",
         body: yield CreateJobRequest.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
-        timeoutMs: 6e4
+        timeoutMs: (requestOptions == null ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1e3 : 6e4
       });
       if (_response.ok) {
         return {
@@ -23907,7 +23907,7 @@ var RemoteGen = class {
       };
     });
   }
-  createJobV2(request) {
+  createJobV2(request, requestOptions) {
     return __async(this, null, function* () {
       var _a;
       const _response = yield fetcher({
@@ -23921,7 +23921,7 @@ var RemoteGen = class {
         },
         contentType: \\"application/json\\",
         body: yield CreateJobRequestV2.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
-        timeoutMs: 6e4
+        timeoutMs: (requestOptions == null ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1e3 : 6e4
       });
       if (_response.ok) {
         return {
@@ -23961,7 +23961,7 @@ var RemoteGen = class {
       };
     });
   }
-  getJobStatus(jobId) {
+  getJobStatus(jobId, requestOptions) {
     return __async(this, null, function* () {
       const _response = yield fetcher({
         url: (0, import_url_join2.default)(
@@ -23976,7 +23976,7 @@ var RemoteGen = class {
           \\"X-Fern-SDK-Version\\": \\"0.0.0\\"
         },
         contentType: \\"application/json\\",
-        timeoutMs: 6e4
+        timeoutMs: (requestOptions == null ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1e3 : 6e4
       });
       if (_response.ok) {
         return {
@@ -59106,7 +59106,7 @@ var FiddleService = class {
   constructor(_options) {
     this._options = _options;
   }
-  async test() {
+  async test(requestOptions) {
     const _response = await fetcher({
       url: await Supplier.get(this._options.environment),
       method: \\"GET\\",
@@ -59117,7 +59117,7 @@ var FiddleService = class {
         \\"X-Fern-SDK-Version\\": \\"0.0.0\\"
       },
       contentType: \\"application/json\\",
-      timeoutMs: 6e4
+      timeoutMs: (requestOptions == null ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1e3 : 6e4
     });
     if (_response.ok) {
       return {
@@ -59143,7 +59143,7 @@ var Health = class {
   constructor(_options) {
     this._options = _options;
   }
-  async status() {
+  async status(requestOptions) {
     const _response = await fetcher({
       url: (0, import_url_join.default)(await Supplier.get(this._options.environment), \\"/api/health\\"),
       method: \\"GET\\",
@@ -59154,7 +59154,7 @@ var Health = class {
         \\"X-Fern-SDK-Version\\": \\"0.0.0\\"
       },
       contentType: \\"application/json\\",
-      timeoutMs: 6e4
+      timeoutMs: (requestOptions == null ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1e3 : 6e4
     });
     if (_response.ok) {
       return {
@@ -59181,7 +59181,7 @@ var RemoteGen = class {
   constructor(_options) {
     this._options = _options;
   }
-  async createJob(request) {
+  async createJob(request, requestOptions) {
     var _a;
     const _response = await fetcher({
       url: (0, import_url_join2.default)(await Supplier.get(this._options.environment), \\"/api/remote-gen/create-job\\"),
@@ -59194,7 +59194,7 @@ var RemoteGen = class {
       },
       contentType: \\"application/json\\",
       body: await CreateJobRequest.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
-      timeoutMs: 6e4
+      timeoutMs: (requestOptions == null ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1e3 : 6e4
     });
     if (_response.ok) {
       return {
@@ -59233,7 +59233,7 @@ var RemoteGen = class {
       error: remoteGen_exports.createJob.Error._unknown(_response.error)
     };
   }
-  async createJobV2(request) {
+  async createJobV2(request, requestOptions) {
     var _a;
     const _response = await fetcher({
       url: (0, import_url_join2.default)(await Supplier.get(this._options.environment), \\"/api/remote-gen/create-job-v2\\"),
@@ -59246,7 +59246,7 @@ var RemoteGen = class {
       },
       contentType: \\"application/json\\",
       body: await CreateJobRequestV2.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
-      timeoutMs: 6e4
+      timeoutMs: (requestOptions == null ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1e3 : 6e4
     });
     if (_response.ok) {
       return {
@@ -59285,7 +59285,7 @@ var RemoteGen = class {
       error: remoteGen_exports.createJobV2.Error._unknown(_response.error)
     };
   }
-  async getJobStatus(jobId) {
+  async getJobStatus(jobId, requestOptions) {
     const _response = await fetcher({
       url: (0, import_url_join2.default)(
         await Supplier.get(this._options.environment),
@@ -59299,7 +59299,7 @@ var RemoteGen = class {
         \\"X-Fern-SDK-Version\\": \\"0.0.0\\"
       },
       contentType: \\"application/json\\",
-      timeoutMs: 6e4
+      timeoutMs: (requestOptions == null ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1e3 : 6e4
     });
     if (_response.ok) {
       return {
@@ -62952,6 +62952,9 @@ export declare namespace FiddleClient {
         environment: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class FiddleClient {
     protected readonly _options: FiddleClient.Options;
@@ -62992,11 +62995,14 @@ export declare namespace FiddleService {
         environment: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class FiddleService {
     protected readonly _options: FiddleService.Options;
     constructor(_options: FiddleService.Options);
-    test(): Promise<core.APIResponse<void, Fiddle.fiddle.test.Error>>;
+    test(requestOptions?: FiddleService.RequestOptions): Promise<core.APIResponse<void, Fiddle.fiddle.test.Error>>;
     protected _getAuthorizationHeader(): Promise<string>;
 }
 ",
@@ -63065,11 +63071,14 @@ export declare namespace Health {
         environment: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Health {
     protected readonly _options: Health.Options;
     constructor(_options: Health.Options);
-    status(): Promise<core.APIResponse<void, Fiddle.health.status.Error>>;
+    status(requestOptions?: Health.RequestOptions): Promise<core.APIResponse<void, Fiddle.health.status.Error>>;
     protected _getAuthorizationHeader(): Promise<string>;
 }
 ",
@@ -63148,13 +63157,16 @@ export declare namespace RemoteGen {
         environment: core.Supplier<string>;
         token: core.Supplier<core.BearerToken>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class RemoteGen {
     protected readonly _options: RemoteGen.Options;
     constructor(_options: RemoteGen.Options);
-    createJob(request: Fiddle.CreateJobRequest): Promise<core.APIResponse<Fiddle.CreateJobResponse, Fiddle.remoteGen.createJob.Error>>;
-    createJobV2(request: Fiddle.CreateJobRequestV2): Promise<core.APIResponse<Fiddle.CreateJobResponse, Fiddle.remoteGen.createJobV2.Error>>;
-    getJobStatus(jobId: Fiddle.RemoteGenJobId): Promise<core.APIResponse<Record<Fiddle.RemoteGenTaskId, Fiddle.Task>, Fiddle.remoteGen.getJobStatus.Error>>;
+    createJob(request: Fiddle.CreateJobRequest, requestOptions?: RemoteGen.RequestOptions): Promise<core.APIResponse<Fiddle.CreateJobResponse, Fiddle.remoteGen.createJob.Error>>;
+    createJobV2(request: Fiddle.CreateJobRequestV2, requestOptions?: RemoteGen.RequestOptions): Promise<core.APIResponse<Fiddle.CreateJobResponse, Fiddle.remoteGen.createJobV2.Error>>;
+    getJobStatus(jobId: Fiddle.RemoteGenJobId, requestOptions?: RemoteGen.RequestOptions): Promise<core.APIResponse<Record<Fiddle.RemoteGenTaskId, Fiddle.Task>, Fiddle.remoteGen.getJobStatus.Error>>;
     protected _getAuthorizationHeader(): Promise<string>;
 }
 ",

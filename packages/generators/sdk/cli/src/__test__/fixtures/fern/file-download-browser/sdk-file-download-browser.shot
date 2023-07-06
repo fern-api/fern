@@ -106,6 +106,9 @@ export declare namespace FernApiClient {
     interface Options {
         environment: core.Supplier<string>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class FernApiClient {
     protected readonly _options: FernApiClient.Options;
@@ -222,11 +225,14 @@ export declare namespace Service {
     interface Options {
         environment: core.Supplier<string>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Service {
     protected readonly _options: Service.Options;
     constructor(_options: Service.Options);
-    downloadFile(): Promise<Blob>;
+    downloadFile(requestOptions?: Service.RequestOptions): Promise<Blob>;
 }
 ",
                         "name": "Client.d.ts",
@@ -277,7 +283,7 @@ class Service {
     constructor(_options) {
         this._options = _options;
     }
-    downloadFile() {
+    downloadFile(requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
                 url: yield core.Supplier.get(this._options.environment),
@@ -289,7 +295,7 @@ class Service {
                 },
                 contentType: \\"application/json\\",
                 responseType: \\"blob\\",
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return _response.body;
@@ -847,6 +853,10 @@ export declare namespace FernApiClient {
     interface Options {
         environment: core.Supplier<string>;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class FernApiClient {
@@ -894,12 +904,16 @@ export declare namespace Service {
     interface Options {
         environment: core.Supplier<string>;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
-    public async downloadFile(): Promise<Blob> {
+    public async downloadFile(requestOptions?: Service.RequestOptions): Promise<Blob> {
         const _response = await core.fetcher<Blob>({
             url: await core.Supplier.get(this._options.environment),
             method: \\"POST\\",
@@ -910,7 +924,7 @@ export class Service {
             },
             contentType: \\"application/json\\",
             responseType: \\"blob\\",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return _response.body;

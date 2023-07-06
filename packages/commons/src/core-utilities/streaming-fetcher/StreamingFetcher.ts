@@ -40,7 +40,7 @@ export declare namespace StreamingFetcher {
         headers: ts.ObjectLiteralElementLike[];
         queryParameters: ts.Expression | undefined;
         body: ts.Expression | undefined;
-        timeoutInSeconds: number | "infinity" | undefined;
+        timeoutInSeconds: ts.Expression;
         withCredentials: boolean;
         onUploadProgress: ts.Expression | undefined;
 

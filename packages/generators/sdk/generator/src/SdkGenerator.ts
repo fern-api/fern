@@ -67,7 +67,7 @@ export declare namespace SdkGenerator {
         includeUtilsOnUnionMembers: boolean;
         includeOtherInUnionTypes: boolean;
         requireDefaultEnvironment: boolean;
-        timeoutInSeconds: number | "infinity" | undefined;
+        defaultTimeoutInSeconds: number | "infinity" | undefined;
         skipResponseValidation: boolean;
         targetRuntime: JavaScriptRuntime;
         extraDependencies: Record<string, string>;
@@ -243,7 +243,7 @@ export class SdkGenerator {
             includeCredentialsOnCrossOriginRequests: config.includeCredentialsOnCrossOriginRequests,
             allowCustomFetcher: config.allowCustomFetcher,
             requireDefaultEnvironment: config.requireDefaultEnvironment,
-            timeoutInSeconds: config.timeoutInSeconds,
+            defaultTimeoutInSeconds: config.defaultTimeoutInSeconds,
             npmPackage,
             targetRuntime: config.targetRuntime,
             includeContentHeadersOnFileDownloadResponse: config.includeContentHeadersOnFileDownloadResponse,

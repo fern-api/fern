@@ -106,6 +106,9 @@ export declare namespace FernApiClient {
     interface Options {
         environment: core.Supplier<string>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class FernApiClient {
     protected readonly _options: FernApiClient.Options;
@@ -224,11 +227,14 @@ export declare namespace Service {
     interface Options {
         environment: core.Supplier<string>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Service {
     protected readonly _options: Service.Options;
     constructor(_options: Service.Options);
-    downloadFile(): Promise<stream.Readable>;
+    downloadFile(requestOptions?: Service.RequestOptions): Promise<stream.Readable>;
 }
 ",
                         "name": "Client.d.ts",
@@ -279,7 +285,7 @@ class Service {
     constructor(_options) {
         this._options = _options;
     }
-    downloadFile() {
+    downloadFile(requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.streamingFetcher({
                 url: yield core.Supplier.get(this._options.environment),
@@ -289,7 +295,7 @@ class Service {
                     \\"X-Fern-SDK-Name\\": \\"@fern/api\\",
                     \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
                 },
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
                 onError: (error) => {
                     throw new errors.FernApiError({
                         message: error === null || error === void 0 ? void 0 : error.message,
@@ -1002,6 +1008,10 @@ export declare namespace FernApiClient {
     interface Options {
         environment: core.Supplier<string>;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class FernApiClient {
@@ -1050,12 +1060,16 @@ export declare namespace Service {
     interface Options {
         environment: core.Supplier<string>;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
-    public async downloadFile(): Promise<stream.Readable> {
+    public async downloadFile(requestOptions?: Service.RequestOptions): Promise<stream.Readable> {
         const _response = await core.streamingFetcher({
             url: await core.Supplier.get(this._options.environment),
             method: \\"POST\\",
@@ -1064,7 +1078,7 @@ export class Service {
                 \\"X-Fern-SDK-Name\\": \\"@fern/api\\",
                 \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
             },
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             onError: (error) => {
                 throw new errors.FernApiError({
                     message: (error as any)?.message,

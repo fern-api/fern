@@ -7,13 +7,14 @@ import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
 import { EndpointSignature, GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation";
 import { buildUrl } from "./utils/buildUrl";
+import { getRequestOptionsParameter, getTimeoutExpression } from "./utils/requestOptionsParameter";
 
 export declare namespace GeneratedBlobDownloadEndpointImplementation {
     export interface Init {
         endpoint: HttpEndpoint;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         includeCredentialsOnCrossOriginRequests: boolean;
-        timeoutInSeconds: number | "infinity" | undefined;
+        defaultTimeoutInSeconds: number | "infinity" | undefined;
         request: GeneratedEndpointRequest;
         response: GeneratedEndpointResponse;
         includeSerdeLayer: boolean;
@@ -24,7 +25,7 @@ export class GeneratedBlobDownloadEndpointImplementation implements GeneratedEnd
     public readonly endpoint: HttpEndpoint;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private includeCredentialsOnCrossOriginRequests: boolean;
-    private timeoutInSeconds: number | "infinity" | undefined;
+    private defaultTimeoutInSeconds: number | "infinity" | undefined;
     private request: GeneratedEndpointRequest;
     private response: GeneratedEndpointResponse;
     private includeSerdeLayer: boolean;
@@ -33,7 +34,7 @@ export class GeneratedBlobDownloadEndpointImplementation implements GeneratedEnd
         endpoint,
         generatedSdkClientClass,
         includeCredentialsOnCrossOriginRequests,
-        timeoutInSeconds,
+        defaultTimeoutInSeconds,
         request,
         response,
         includeSerdeLayer,
@@ -41,7 +42,7 @@ export class GeneratedBlobDownloadEndpointImplementation implements GeneratedEnd
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests;
-        this.timeoutInSeconds = timeoutInSeconds;
+        this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
         this.request = request;
         this.response = response;
         this.includeSerdeLayer = includeSerdeLayer;
@@ -53,7 +54,12 @@ export class GeneratedBlobDownloadEndpointImplementation implements GeneratedEnd
 
     public getSignature(context: SdkContext): EndpointSignature {
         return {
-            parameters: this.request.getEndpointParameters(context),
+            parameters: [
+                ...this.request.getEndpointParameters(context),
+                getRequestOptionsParameter({
+                    requestOptionsReference: this.generatedSdkClientClass.getReferenceToRequestOptions(),
+                }),
+            ],
             returnTypeWithoutPromise: this.response.getReturnType(context),
         };
     }
@@ -107,7 +113,12 @@ export class GeneratedBlobDownloadEndpointImplementation implements GeneratedEnd
             ...this.request.getFetcherRequestArgs(context),
             url: this.getReferenceToEnvironment(context),
             method: ts.factory.createStringLiteral(this.endpoint.method),
-            timeoutInSeconds: this.timeoutInSeconds,
+            timeoutInSeconds: getTimeoutExpression({
+                defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
+                timeoutInSecondsReference: this.generatedSdkClientClass.getReferenceToTimeoutInSeconds.bind(
+                    this.generatedSdkClientClass
+                ),
+            }),
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             responseType: "blob",
         };

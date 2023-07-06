@@ -40,7 +40,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         includeCredentialsOnCrossOriginRequests: boolean;
         allowCustomFetcher: boolean;
         requireDefaultEnvironment: boolean;
-        timeoutInSeconds: number | "infinity" | undefined;
+        defaultTimeoutInSeconds: number | "infinity" | undefined;
         npmPackage: NpmPackage | undefined;
         targetRuntime: JavaScriptRuntime;
         includeContentHeadersOnFileDownloadResponse: boolean;
@@ -49,6 +49,8 @@ export declare namespace GeneratedSdkClientClassImpl {
 }
 
 export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
+    private static REQUEST_OPTIONS_INTERFACE_NAME = "RequestOptions";
+    private static TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME = "timeoutInSeconds";
     private static OPTIONS_INTERFACE_NAME = "Options";
     private static OPTIONS_PRIVATE_MEMBER = "_options";
     private static ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
@@ -81,7 +83,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         includeCredentialsOnCrossOriginRequests,
         allowCustomFetcher,
         requireDefaultEnvironment,
-        timeoutInSeconds,
+        defaultTimeoutInSeconds,
         npmPackage,
         targetRuntime,
         includeContentHeadersOnFileDownloadResponse,
@@ -164,7 +166,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         response: getGeneratedEndpointResponse({ response }),
                         generatedSdkClientClass: this,
                         includeCredentialsOnCrossOriginRequests,
-                        timeoutInSeconds,
+                        defaultTimeoutInSeconds,
                         includeSerdeLayer,
                     });
                 };
@@ -181,7 +183,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                     endpoint,
                                     generatedSdkClientClass: this,
                                     includeCredentialsOnCrossOriginRequests,
-                                    timeoutInSeconds,
+                                    defaultTimeoutInSeconds,
                                     request: getGeneratedEndpointRequest(),
                                     includeContentHeadersOnResponse: includeContentHeadersOnFileDownloadResponse,
                                     includeSerdeLayer,
@@ -191,7 +193,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                     endpoint,
                                     generatedSdkClientClass: this,
                                     includeCredentialsOnCrossOriginRequests,
-                                    timeoutInSeconds,
+                                    defaultTimeoutInSeconds,
                                     request: getGeneratedEndpointRequest(),
                                     response: getGeneratedEndpointResponse({
                                         response: HttpResponse.fileDownload(fileDownload),
@@ -210,7 +212,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             generatedSdkClientClass: this,
                             includeCredentialsOnCrossOriginRequests,
                             response: streamingResponse,
-                            timeoutInSeconds,
+                            defaultTimeoutInSeconds,
                             request: getGeneratedEndpointRequest(),
                             includeSerdeLayer,
                         }),
@@ -275,6 +277,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         });
 
         const optionsInterface = serviceModule.addInterface(this.generateOptionsInterface(context));
+        serviceModule.addInterface(this.generateRequestOptionsInterface());
 
         const serviceClass = context.sourceFile.addClass({
             name: this.serviceClassName,
@@ -449,6 +452,23 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return headers;
     }
 
+    /*******************
+     * REQUEST OPTIONS *
+     *******************/
+
+    private generateRequestOptionsInterface(): OptionalKind<InterfaceDeclarationStructure> {
+        return {
+            name: GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME,
+            properties: [
+                {
+                    name: GeneratedSdkClientClassImpl.TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME,
+                    type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
+                    hasQuestionToken: true,
+                },
+            ],
+        };
+    }
+
     /***********
      * OPTIONS *
      ***********/
@@ -611,6 +631,38 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return context.coreUtilities.fetcher.Supplier.get(
             this.getReferenceToOption(GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME)
         );
+    }
+
+    public getReferenceToRequestOptions(): ts.TypeReferenceNode {
+        return ts.factory.createTypeReferenceNode(
+            ts.factory.createQualifiedName(
+                ts.factory.createIdentifier(this.serviceClassName),
+                ts.factory.createIdentifier(GeneratedSdkClientClassImpl.REQUEST_OPTIONS_INTERFACE_NAME)
+            )
+        );
+    }
+
+    public getReferenceToTimeoutInSeconds({
+        referenceToRequestOptions,
+        isNullable,
+    }: {
+        referenceToRequestOptions: ts.Expression;
+        isNullable: boolean;
+    }): ts.Expression {
+        return isNullable
+            ? ts.factory.createPropertyAccessChain(
+                  referenceToRequestOptions,
+                  ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                  ts.factory.createIdentifier(
+                      GeneratedSdkClientClassImpl.TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME
+                  )
+              )
+            : ts.factory.createPropertyAccessExpression(
+                  referenceToRequestOptions,
+                  ts.factory.createIdentifier(
+                      GeneratedSdkClientClassImpl.TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME
+                  )
+              );
     }
 
     public getReferenceToOptions(): ts.Expression {

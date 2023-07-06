@@ -106,6 +106,9 @@ export declare namespace FernApiClient {
     interface Options {
         environment: core.Supplier<string>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class FernApiClient {
     protected readonly _options: FernApiClient.Options;
@@ -231,16 +234,19 @@ export declare namespace Service {
     interface Options {
         environment: core.Supplier<string>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Service {
     protected readonly _options: Service.Options;
     constructor(_options: Service.Options);
     post(file: File | Blob, maybeFile: File | Blob | undefined, request: FernApi.MyRequest, opts?: {
         onUploadProgress: (event: axios.AxiosProgressEvent) => void;
-    }): Promise<void>;
+    }, requestOptions?: Service.RequestOptions): Promise<void>;
     justFile(file: File | Blob, opts?: {
         onUploadProgress: (event: axios.AxiosProgressEvent) => void;
-    }): Promise<void>;
+    }, requestOptions?: Service.RequestOptions): Promise<void>;
 }
 ",
                         "name": "Client.d.ts",
@@ -296,7 +302,7 @@ class Service {
     constructor(_options) {
         this._options = _options;
     }
-    post(file, maybeFile, request, opts) {
+    post(file, maybeFile, request, opts, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             const _request = new form_data_1.default();
             if (request.maybeString != null) {
@@ -360,7 +366,7 @@ class Service {
                 },
                 contentType: \\"multipart/form-data; boundary=\\" + _request.getBoundary(),
                 body: _request,
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
                 onUploadProgress: opts === null || opts === void 0 ? void 0 : opts.onUploadProgress,
             });
             if (_response.ok) {
@@ -387,7 +393,7 @@ class Service {
             }
         });
     }
-    justFile(file, opts) {
+    justFile(file, opts, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             const _request = new form_data_1.default();
             _request.append(\\"file\\", file);
@@ -402,7 +408,7 @@ class Service {
                 },
                 contentType: \\"multipart/form-data; boundary=\\" + _request.getBoundary(),
                 body: _request,
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
                 onUploadProgress: opts === null || opts === void 0 ? void 0 : opts.onUploadProgress,
             });
             if (_response.ok) {
@@ -3942,6 +3948,10 @@ export declare namespace FernApiClient {
     interface Options {
         environment: core.Supplier<string>;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class FernApiClient {
@@ -3995,6 +4005,10 @@ export declare namespace Service {
     interface Options {
         environment: core.Supplier<string>;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Service {
@@ -4006,7 +4020,8 @@ export class Service {
         request: FernApi.MyRequest,
         opts?: {
             onUploadProgress: (event: axios.AxiosProgressEvent) => void;
-        }
+        },
+        requestOptions?: Service.RequestOptions
     ): Promise<void> {
         const _request = new FormData();
         if (request.maybeString != null) {
@@ -4085,7 +4100,7 @@ export class Service {
             },
             contentType: \\"multipart/form-data; boundary=\\" + _request.getBoundary(),
             body: _request,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             onUploadProgress: opts?.onUploadProgress,
         });
         if (_response.ok) {
@@ -4118,7 +4133,8 @@ export class Service {
         file: File | Blob,
         opts?: {
             onUploadProgress: (event: axios.AxiosProgressEvent) => void;
-        }
+        },
+        requestOptions?: Service.RequestOptions
     ): Promise<void> {
         const _request = new FormData();
         _request.append(\\"file\\", file);
@@ -4133,7 +4149,7 @@ export class Service {
             },
             contentType: \\"multipart/form-data; boundary=\\" + _request.getBoundary(),
             body: _request,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             onUploadProgress: opts?.onUploadProgress,
         });
         if (_response.ok) {

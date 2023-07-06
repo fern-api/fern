@@ -109,6 +109,9 @@ export declare namespace FernApiClient {
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class FernApiClient {
     protected readonly _options: FernApiClient.Options;
@@ -191,13 +194,16 @@ export declare namespace File_ {
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class File_ {
     protected readonly _options: File_.Options;
     constructor(_options: File_.Options);
-    stream(param: string, request: FernApi.StreamRequest, cb: (data: FernApi.StreamPart) => void, opts?: Pick<core.StreamingFetcher.Args, \\"onError\\" | \\"onFinish\\" | \\"abortController\\" | \\"timeoutMs\\">): Promise<stream.Readable>;
-    streamBooleans(param: string, cb: (data: boolean) => void, opts?: Pick<core.StreamingFetcher.Args, \\"onError\\" | \\"onFinish\\" | \\"abortController\\" | \\"timeoutMs\\">): Promise<stream.Readable>;
-    streamUnknowns(param: string, cb: (data: unknown) => void, opts?: Pick<core.StreamingFetcher.Args, \\"onError\\" | \\"onFinish\\" | \\"abortController\\" | \\"timeoutMs\\">): Promise<stream.Readable>;
+    stream(param: string, request: FernApi.StreamRequest, cb: (data: FernApi.StreamPart) => void, opts?: Pick<core.StreamingFetcher.Args, \\"onError\\" | \\"onFinish\\" | \\"abortController\\" | \\"timeoutMs\\">, requestOptions?: File_.RequestOptions): Promise<stream.Readable>;
+    streamBooleans(param: string, cb: (data: boolean) => void, opts?: Pick<core.StreamingFetcher.Args, \\"onError\\" | \\"onFinish\\" | \\"abortController\\" | \\"timeoutMs\\">, requestOptions?: File_.RequestOptions): Promise<stream.Readable>;
+    streamUnknowns(param: string, cb: (data: unknown) => void, opts?: Pick<core.StreamingFetcher.Args, \\"onError\\" | \\"onFinish\\" | \\"abortController\\" | \\"timeoutMs\\">, requestOptions?: File_.RequestOptions): Promise<stream.Readable>;
 }
 ",
                         "name": "Client.d.ts",
@@ -254,7 +260,7 @@ class File_ {
     constructor(_options) {
         this._options = _options;
     }
-    stream(param, request, cb, opts) {
+    stream(param, request, cb, opts, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const { query, body: _body } = request;
@@ -273,7 +279,7 @@ class File_ {
                 },
                 queryParameters: _queryParams,
                 body: yield serializers.file.stream.Request.jsonOrThrow(_body, { unrecognizedObjectKeys: \\"strip\\" }),
-                timeoutMs: 2000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 2000,
                 onData: _queue.wrap((data) => __awaiter(this, void 0, void 0, function* () {
                     var _b;
                     const parsed = yield serializers.StreamPart.parse(data, {
@@ -296,7 +302,7 @@ class File_ {
             return _response.data;
         });
     }
-    streamBooleans(param, cb, opts) {
+    streamBooleans(param, cb, opts, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _queue = new core.CallbackQueue();
@@ -308,7 +314,7 @@ class File_ {
                     \\"X-Fern-SDK-Name\\": \\"@fern/api\\",
                     \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
                 },
-                timeoutMs: 2000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 2000,
                 onData: _queue.wrap((data) => __awaiter(this, void 0, void 0, function* () {
                     var _b;
                     const parsed = yield serializers.file.streamBooleans.StreamData.parse(data, {
@@ -332,7 +338,7 @@ class File_ {
             return _response.data;
         });
     }
-    streamUnknowns(param, cb, opts) {
+    streamUnknowns(param, cb, opts, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _queue = new core.CallbackQueue();
@@ -344,7 +350,7 @@ class File_ {
                     \\"X-Fern-SDK-Name\\": \\"@fern/api\\",
                     \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
                 },
-                timeoutMs: 2000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 2000,
                 onData: _queue.wrap((data) => __awaiter(this, void 0, void 0, function* () {
                     cb(data);
                 })),
@@ -4067,6 +4073,10 @@ export declare namespace FernApiClient {
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class FernApiClient {
@@ -4114,6 +4124,10 @@ export declare namespace File_ {
         fetcher?: core.FetchFunction;
         streamingFetcher?: core.StreamingFetchFunction;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class File_ {
@@ -4123,7 +4137,8 @@ export class File_ {
         param: string,
         request: FernApi.StreamRequest,
         cb: (data: FernApi.StreamPart) => void,
-        opts?: Pick<core.StreamingFetcher.Args, \\"onError\\" | \\"onFinish\\" | \\"abortController\\" | \\"timeoutMs\\">
+        opts?: Pick<core.StreamingFetcher.Args, \\"onError\\" | \\"onFinish\\" | \\"abortController\\" | \\"timeoutMs\\">,
+        requestOptions?: File_.RequestOptions
     ): Promise<stream.Readable> {
         const { query, body: _body } = request;
         const _queryParams = new URLSearchParams();
@@ -4142,7 +4157,7 @@ export class File_ {
             },
             queryParameters: _queryParams,
             body: await serializers.file.stream.Request.jsonOrThrow(_body, { unrecognizedObjectKeys: \\"strip\\" }),
-            timeoutMs: 2000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 2000,
             onData: _queue.wrap(async (data) => {
                 const parsed = await serializers.StreamPart.parse(data, {
                     unrecognizedObjectKeys: \\"passthrough\\",
@@ -4166,7 +4181,8 @@ export class File_ {
     public async streamBooleans(
         param: string,
         cb: (data: boolean) => void,
-        opts?: Pick<core.StreamingFetcher.Args, \\"onError\\" | \\"onFinish\\" | \\"abortController\\" | \\"timeoutMs\\">
+        opts?: Pick<core.StreamingFetcher.Args, \\"onError\\" | \\"onFinish\\" | \\"abortController\\" | \\"timeoutMs\\">,
+        requestOptions?: File_.RequestOptions
     ): Promise<stream.Readable> {
         const _queue = new core.CallbackQueue();
         const _response = await (this._options.streamingFetcher ?? core.streamingFetcher)({
@@ -4177,7 +4193,7 @@ export class File_ {
                 \\"X-Fern-SDK-Name\\": \\"@fern/api\\",
                 \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
             },
-            timeoutMs: 2000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 2000,
             onData: _queue.wrap(async (data) => {
                 const parsed = await serializers.file.streamBooleans.StreamData.parse(data, {
                     unrecognizedObjectKeys: \\"passthrough\\",
@@ -4202,7 +4218,8 @@ export class File_ {
     public async streamUnknowns(
         param: string,
         cb: (data: unknown) => void,
-        opts?: Pick<core.StreamingFetcher.Args, \\"onError\\" | \\"onFinish\\" | \\"abortController\\" | \\"timeoutMs\\">
+        opts?: Pick<core.StreamingFetcher.Args, \\"onError\\" | \\"onFinish\\" | \\"abortController\\" | \\"timeoutMs\\">,
+        requestOptions?: File_.RequestOptions
     ): Promise<stream.Readable> {
         const _queue = new core.CallbackQueue();
         const _response = await (this._options.streamingFetcher ?? core.streamingFetcher)({
@@ -4213,7 +4230,7 @@ export class File_ {
                 \\"X-Fern-SDK-Name\\": \\"@fern/api\\",
                 \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
             },
-            timeoutMs: 2000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 2000,
             onData: _queue.wrap(async (data) => {
                 cb(data);
             }),

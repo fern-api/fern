@@ -13,7 +13,7 @@ export declare namespace SdkClientClassGenerator {
         includeCredentialsOnCrossOriginRequests: boolean;
         allowCustomFetcher: boolean;
         requireDefaultEnvironment: boolean;
-        timeoutInSeconds: number | "infinity" | undefined;
+        defaultTimeoutInSeconds: number | "infinity" | undefined;
         npmPackage: NpmPackage | undefined;
         targetRuntime: JavaScriptRuntime;
         includeContentHeadersOnFileDownloadResponse: boolean;
@@ -36,7 +36,7 @@ export class SdkClientClassGenerator {
     private includeCredentialsOnCrossOriginRequests: boolean;
     private allowCustomFetcher: boolean;
     private requireDefaultEnvironment: boolean;
-    private timeoutInSeconds: number | "infinity" | undefined;
+    private defaultTimeoutInSeconds: number | "infinity" | undefined;
     private npmPackage: NpmPackage | undefined;
     private targetRuntime: JavaScriptRuntime;
     private includeContentHeadersOnFileDownloadResponse: boolean;
@@ -50,7 +50,7 @@ export class SdkClientClassGenerator {
         includeCredentialsOnCrossOriginRequests,
         allowCustomFetcher,
         requireDefaultEnvironment,
-        timeoutInSeconds,
+        defaultTimeoutInSeconds,
         npmPackage,
         targetRuntime,
         includeContentHeadersOnFileDownloadResponse,
@@ -63,7 +63,7 @@ export class SdkClientClassGenerator {
         this.includeCredentialsOnCrossOriginRequests = includeCredentialsOnCrossOriginRequests;
         this.allowCustomFetcher = allowCustomFetcher;
         this.requireDefaultEnvironment = requireDefaultEnvironment;
-        this.timeoutInSeconds = timeoutInSeconds;
+        this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
         this.npmPackage = npmPackage;
         this.targetRuntime = targetRuntime;
         this.includeContentHeadersOnFileDownloadResponse = includeContentHeadersOnFileDownloadResponse;
@@ -84,7 +84,7 @@ export class SdkClientClassGenerator {
             includeCredentialsOnCrossOriginRequests: this.includeCredentialsOnCrossOriginRequests,
             allowCustomFetcher: this.allowCustomFetcher,
             requireDefaultEnvironment: this.requireDefaultEnvironment,
-            timeoutInSeconds: this.timeoutInSeconds,
+            defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
             npmPackage: this.npmPackage,
             targetRuntime: this.targetRuntime,
             includeContentHeadersOnFileDownloadResponse: this.includeContentHeadersOnFileDownloadResponse,

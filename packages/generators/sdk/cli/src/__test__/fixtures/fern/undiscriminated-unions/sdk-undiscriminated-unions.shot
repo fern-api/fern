@@ -106,6 +106,9 @@ export declare namespace FernApiClient {
     interface Options {
         environment: core.Supplier<string>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class FernApiClient {
     protected readonly _options: FernApiClient.Options;
@@ -185,11 +188,14 @@ export declare namespace File_ {
     interface Options {
         environment: core.Supplier<string>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class File_ {
     protected readonly _options: File_.Options;
     constructor(_options: File_.Options);
-    get(request: FernApi.MyUnion): Promise<FernApi.MyUnion>;
+    get(request: FernApi.MyUnion, requestOptions?: File_.RequestOptions): Promise<FernApi.MyUnion>;
 }
 ",
                         "name": "Client.d.ts",
@@ -241,7 +247,7 @@ class File_ {
     constructor(_options) {
         this._options = _options;
     }
-    get(request) {
+    get(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
                 url: yield core.Supplier.get(this._options.environment),
@@ -253,7 +259,7 @@ class File_ {
                 },
                 contentType: \\"application/json\\",
                 body: yield serializers.MyUnion.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return yield serializers.MyUnion.parseOrThrow(_response.body, {
@@ -3526,6 +3532,10 @@ export declare namespace FernApiClient {
     interface Options {
         environment: core.Supplier<string>;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class FernApiClient {
@@ -3569,12 +3579,16 @@ export declare namespace File_ {
     interface Options {
         environment: core.Supplier<string>;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class File_ {
     constructor(protected readonly _options: File_.Options) {}
 
-    public async get(request: FernApi.MyUnion): Promise<FernApi.MyUnion> {
+    public async get(request: FernApi.MyUnion, requestOptions?: File_.RequestOptions): Promise<FernApi.MyUnion> {
         const _response = await core.fetcher({
             url: await core.Supplier.get(this._options.environment),
             method: \\"POST\\",
@@ -3585,7 +3599,7 @@ export class File_ {
             },
             contentType: \\"application/json\\",
             body: await serializers.MyUnion.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return await serializers.MyUnion.parseOrThrow(_response.body, {

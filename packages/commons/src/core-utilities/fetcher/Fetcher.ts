@@ -79,7 +79,7 @@ export declare namespace Fetcher {
         queryParameters: ts.Expression | undefined;
         body: ts.Expression | undefined;
         withCredentials: boolean;
-        timeoutInSeconds: number | "infinity" | undefined;
+        timeoutInSeconds: ts.Expression;
         onUploadProgress: ts.Expression | undefined;
         responseType?: "json" | "blob";
     }

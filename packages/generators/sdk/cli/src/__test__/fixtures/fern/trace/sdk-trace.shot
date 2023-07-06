@@ -21,6 +21,9 @@ export declare namespace TraceApiClient {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class TraceApiClient {
     protected readonly _options: TraceApiClient.Options;
@@ -151,18 +154,21 @@ export declare namespace Admin {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Admin {
     protected readonly _options: Admin.Options;
     constructor(_options: Admin.Options);
-    updateTestSubmissionStatus(submissionId: TraceApi.SubmissionId, request: TraceApi.TestSubmissionStatus): Promise<core.APIResponse<void, TraceApi.admin.updateTestSubmissionStatus.Error>>;
-    sendTestSubmissionUpdate(submissionId: TraceApi.SubmissionId, request: TraceApi.TestSubmissionUpdate): Promise<core.APIResponse<void, TraceApi.admin.sendTestSubmissionUpdate.Error>>;
-    updateWorkspaceSubmissionStatus(submissionId: TraceApi.SubmissionId, request: TraceApi.WorkspaceSubmissionStatus): Promise<core.APIResponse<void, TraceApi.admin.updateWorkspaceSubmissionStatus.Error>>;
-    sendWorkspaceSubmissionUpdate(submissionId: TraceApi.SubmissionId, request: TraceApi.WorkspaceSubmissionUpdate): Promise<core.APIResponse<void, TraceApi.admin.sendWorkspaceSubmissionUpdate.Error>>;
-    storeTracedTestCase(submissionId: TraceApi.SubmissionId, testCaseId: string, request: TraceApi.StoreTracedTestCaseRequest): Promise<core.APIResponse<void, TraceApi.admin.storeTracedTestCase.Error>>;
-    storeTracedTestCaseV2(submissionId: TraceApi.SubmissionId, testCaseId: TraceApi.v2.TestCaseId, request: TraceApi.TraceResponseV2[]): Promise<core.APIResponse<void, TraceApi.admin.storeTracedTestCaseV2.Error>>;
-    storeTracedWorkspace(submissionId: TraceApi.SubmissionId, request: TraceApi.StoreTracedWorkspaceRequest): Promise<core.APIResponse<void, TraceApi.admin.storeTracedWorkspace.Error>>;
-    storeTracedWorkspaceV2(submissionId: TraceApi.SubmissionId, request: TraceApi.TraceResponseV2[]): Promise<core.APIResponse<void, TraceApi.admin.storeTracedWorkspaceV2.Error>>;
+    updateTestSubmissionStatus(submissionId: TraceApi.SubmissionId, request: TraceApi.TestSubmissionStatus, requestOptions?: Admin.RequestOptions): Promise<core.APIResponse<void, TraceApi.admin.updateTestSubmissionStatus.Error>>;
+    sendTestSubmissionUpdate(submissionId: TraceApi.SubmissionId, request: TraceApi.TestSubmissionUpdate, requestOptions?: Admin.RequestOptions): Promise<core.APIResponse<void, TraceApi.admin.sendTestSubmissionUpdate.Error>>;
+    updateWorkspaceSubmissionStatus(submissionId: TraceApi.SubmissionId, request: TraceApi.WorkspaceSubmissionStatus, requestOptions?: Admin.RequestOptions): Promise<core.APIResponse<void, TraceApi.admin.updateWorkspaceSubmissionStatus.Error>>;
+    sendWorkspaceSubmissionUpdate(submissionId: TraceApi.SubmissionId, request: TraceApi.WorkspaceSubmissionUpdate, requestOptions?: Admin.RequestOptions): Promise<core.APIResponse<void, TraceApi.admin.sendWorkspaceSubmissionUpdate.Error>>;
+    storeTracedTestCase(submissionId: TraceApi.SubmissionId, testCaseId: string, request: TraceApi.StoreTracedTestCaseRequest, requestOptions?: Admin.RequestOptions): Promise<core.APIResponse<void, TraceApi.admin.storeTracedTestCase.Error>>;
+    storeTracedTestCaseV2(submissionId: TraceApi.SubmissionId, testCaseId: TraceApi.v2.TestCaseId, request: TraceApi.TraceResponseV2[], requestOptions?: Admin.RequestOptions): Promise<core.APIResponse<void, TraceApi.admin.storeTracedTestCaseV2.Error>>;
+    storeTracedWorkspace(submissionId: TraceApi.SubmissionId, request: TraceApi.StoreTracedWorkspaceRequest, requestOptions?: Admin.RequestOptions): Promise<core.APIResponse<void, TraceApi.admin.storeTracedWorkspace.Error>>;
+    storeTracedWorkspaceV2(submissionId: TraceApi.SubmissionId, request: TraceApi.TraceResponseV2[], requestOptions?: Admin.RequestOptions): Promise<core.APIResponse<void, TraceApi.admin.storeTracedWorkspaceV2.Error>>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -232,7 +238,7 @@ class Admin {
     constructor(_options) {
         this._options = _options;
     }
-    updateTestSubmissionStatus(submissionId, request) {
+    updateTestSubmissionStatus(submissionId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -246,6 +252,7 @@ class Admin {
                 },
                 contentType: \\"application/json\\",
                 body: yield serializers.TestSubmissionStatus.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -260,7 +267,7 @@ class Admin {
             };
         });
     }
-    sendTestSubmissionUpdate(submissionId, request) {
+    sendTestSubmissionUpdate(submissionId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -274,6 +281,7 @@ class Admin {
                 },
                 contentType: \\"application/json\\",
                 body: yield serializers.TestSubmissionUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -288,7 +296,7 @@ class Admin {
             };
         });
     }
-    updateWorkspaceSubmissionStatus(submissionId, request) {
+    updateWorkspaceSubmissionStatus(submissionId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -302,6 +310,7 @@ class Admin {
                 },
                 contentType: \\"application/json\\",
                 body: yield serializers.WorkspaceSubmissionStatus.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -316,7 +325,7 @@ class Admin {
             };
         });
     }
-    sendWorkspaceSubmissionUpdate(submissionId, request) {
+    sendWorkspaceSubmissionUpdate(submissionId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -330,6 +339,7 @@ class Admin {
                 },
                 contentType: \\"application/json\\",
                 body: yield serializers.WorkspaceSubmissionUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -344,7 +354,7 @@ class Admin {
             };
         });
     }
-    storeTracedTestCase(submissionId, testCaseId, request) {
+    storeTracedTestCase(submissionId, testCaseId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const { someQueryParam, referenceToOptionalString } = request, _body = __rest(request, [\\"someQueryParam\\", \\"referenceToOptionalString\\"]);
@@ -367,6 +377,7 @@ class Admin {
                 contentType: \\"application/json\\",
                 queryParameters: _queryParams,
                 body: yield serializers.StoreTracedTestCaseRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: \\"strip\\" }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -381,7 +392,7 @@ class Admin {
             };
         });
     }
-    storeTracedTestCaseV2(submissionId, testCaseId, request) {
+    storeTracedTestCaseV2(submissionId, testCaseId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -397,6 +408,7 @@ class Admin {
                 body: yield serializers.admin.storeTracedTestCaseV2.Request.jsonOrThrow(request, {
                     unrecognizedObjectKeys: \\"strip\\",
                 }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -411,7 +423,7 @@ class Admin {
             };
         });
     }
-    storeTracedWorkspace(submissionId, request) {
+    storeTracedWorkspace(submissionId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -427,6 +439,7 @@ class Admin {
                 body: yield serializers.StoreTracedWorkspaceRequest.jsonOrThrow(request, {
                     unrecognizedObjectKeys: \\"strip\\",
                 }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -441,7 +454,7 @@ class Admin {
             };
         });
     }
-    storeTracedWorkspaceV2(submissionId, request) {
+    storeTracedWorkspaceV2(submissionId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -457,6 +470,7 @@ class Admin {
                 body: yield serializers.admin.storeTracedWorkspaceV2.Request.jsonOrThrow(request, {
                     unrecognizedObjectKeys: \\"strip\\",
                 }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -2839,12 +2853,15 @@ export declare namespace Homepage {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Homepage {
     protected readonly _options: Homepage.Options;
     constructor(_options: Homepage.Options);
-    getHomepageProblems(): Promise<core.APIResponse<TraceApi.ProblemId[], TraceApi.homepage.getHomepageProblems.Error>>;
-    setHomepageProblems(request: TraceApi.ProblemId[]): Promise<core.APIResponse<void, TraceApi.homepage.setHomepageProblems.Error>>;
+    getHomepageProblems(requestOptions?: Homepage.RequestOptions): Promise<core.APIResponse<TraceApi.ProblemId[], TraceApi.homepage.getHomepageProblems.Error>>;
+    setHomepageProblems(request: TraceApi.ProblemId[], requestOptions?: Homepage.RequestOptions): Promise<core.APIResponse<void, TraceApi.homepage.setHomepageProblems.Error>>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -2902,7 +2919,7 @@ class Homepage {
     constructor(_options) {
         this._options = _options;
     }
-    getHomepageProblems() {
+    getHomepageProblems(requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -2915,6 +2932,7 @@ class Homepage {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -2934,7 +2952,7 @@ class Homepage {
             };
         });
     }
-    setHomepageProblems(request) {
+    setHomepageProblems(request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -2950,6 +2968,7 @@ class Homepage {
                 body: yield serializers.homepage.setHomepageProblems.Request.jsonOrThrow(request, {
                     unrecognizedObjectKeys: \\"strip\\",
                 }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -3420,11 +3439,14 @@ export declare namespace Migration {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Migration {
     protected readonly _options: Migration.Options;
     constructor(_options: Migration.Options);
-    getAttemptedMigrations(serviceParam: string): Promise<core.APIResponse<TraceApi.Migration[], TraceApi.migration.getAttemptedMigrations.Error>>;
+    getAttemptedMigrations(serviceParam: string, requestOptions?: Migration.RequestOptions): Promise<core.APIResponse<TraceApi.Migration[], TraceApi.migration.getAttemptedMigrations.Error>>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -3482,7 +3504,7 @@ class Migration {
     constructor(_options) {
         this._options = _options;
     }
-    getAttemptedMigrations(serviceParam) {
+    getAttemptedMigrations(serviceParam, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -3495,6 +3517,7 @@ class Migration {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -3789,6 +3812,9 @@ export declare namespace Playlist {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Playlist {
     protected readonly _options: Playlist.Options;
@@ -3796,23 +3822,23 @@ export declare class Playlist {
     /**
      * Create a new playlist
      */
-    createPlaylist(serviceParam: number, request: TraceApi.PlaylistCreateRequestWrapper): Promise<core.APIResponse<TraceApi.Playlist, TraceApi.playlist.createPlaylist.Error>>;
+    createPlaylist(serviceParam: number, request: TraceApi.PlaylistCreateRequestWrapper, requestOptions?: Playlist.RequestOptions): Promise<core.APIResponse<TraceApi.Playlist, TraceApi.playlist.createPlaylist.Error>>;
     /**
      * Returns the user's playlists
      */
-    getPlaylists(serviceParam: number, request: TraceApi.GetPlaylistsRequest): Promise<core.APIResponse<TraceApi.Playlist[], TraceApi.playlist.getPlaylists.Error>>;
+    getPlaylists(serviceParam: number, request: TraceApi.GetPlaylistsRequest, requestOptions?: Playlist.RequestOptions): Promise<core.APIResponse<TraceApi.Playlist[], TraceApi.playlist.getPlaylists.Error>>;
     /**
      * Returns a playlist
      */
-    getPlaylist(serviceParam: number, playlistId: TraceApi.PlaylistId, request?: TraceApi.GetPlaylistRequest): Promise<core.APIResponse<TraceApi.Playlist, TraceApi.playlist.getPlaylist.Error>>;
+    getPlaylist(serviceParam: number, playlistId: TraceApi.PlaylistId, request?: TraceApi.GetPlaylistRequest, requestOptions?: Playlist.RequestOptions): Promise<core.APIResponse<TraceApi.Playlist, TraceApi.playlist.getPlaylist.Error>>;
     /**
      * Updates a playlist
      */
-    updatePlaylist(serviceParam: number, playlistId: TraceApi.PlaylistId, request?: TraceApi.UpdatePlaylistRequest): Promise<core.APIResponse<TraceApi.Playlist | undefined, TraceApi.playlist.updatePlaylist.Error>>;
+    updatePlaylist(serviceParam: number, playlistId: TraceApi.PlaylistId, request?: TraceApi.UpdatePlaylistRequest, requestOptions?: Playlist.RequestOptions): Promise<core.APIResponse<TraceApi.Playlist | undefined, TraceApi.playlist.updatePlaylist.Error>>;
     /**
      * Deletes a playlist
      */
-    deletePlaylist(serviceParam: number, playlistId: TraceApi.PlaylistId): Promise<core.APIResponse<void, TraceApi.playlist.deletePlaylist.Error>>;
+    deletePlaylist(serviceParam: number, playlistId: TraceApi.PlaylistId, requestOptions?: Playlist.RequestOptions): Promise<core.APIResponse<void, TraceApi.playlist.deletePlaylist.Error>>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -3874,7 +3900,7 @@ class Playlist {
     /**
      * Create a new playlist
      */
-    createPlaylist(serviceParam, request) {
+    createPlaylist(serviceParam, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const { multiple, multipleOptional, aliasQueryParam, body: _body } = request;
@@ -3910,6 +3936,7 @@ class Playlist {
                 contentType: \\"application/json\\",
                 queryParameters: _queryParams,
                 body: yield serializers.PlaylistCreateRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: \\"strip\\" }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -3932,7 +3959,7 @@ class Playlist {
     /**
      * Returns the user's playlists
      */
-    getPlaylists(serviceParam, request) {
+    getPlaylists(serviceParam, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const { limit, otherField } = request;
@@ -3952,6 +3979,7 @@ class Playlist {
                 },
                 contentType: \\"application/json\\",
                 queryParameters: _queryParams,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -3974,7 +4002,7 @@ class Playlist {
     /**
      * Returns a playlist
      */
-    getPlaylist(serviceParam, playlistId, request = {}) {
+    getPlaylist(serviceParam, playlistId, request = {}, requestOptions) {
         var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             const { optionalQueryParam } = request;
@@ -3993,6 +4021,7 @@ class Playlist {
                 },
                 contentType: \\"application/json\\",
                 queryParameters: _queryParams,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -4030,7 +4059,7 @@ class Playlist {
     /**
      * Updates a playlist
      */
-    updatePlaylist(serviceParam, playlistId, request) {
+    updatePlaylist(serviceParam, playlistId, request, requestOptions) {
         var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -4048,6 +4077,7 @@ class Playlist {
                         unrecognizedObjectKeys: \\"strip\\",
                     })
                     : undefined,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -4084,7 +4114,7 @@ class Playlist {
     /**
      * Deletes a playlist
      */
-    deletePlaylist(serviceParam, playlistId) {
+    deletePlaylist(serviceParam, playlistId, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -4097,6 +4127,7 @@ class Playlist {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -5295,6 +5326,9 @@ export declare namespace Problem {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Problem {
     protected readonly _options: Problem.Options;
@@ -5302,19 +5336,19 @@ export declare class Problem {
     /**
      * Creates a problem
      */
-    createProblem(request: TraceApi.CreateProblemRequest): Promise<core.APIResponse<TraceApi.CreateProblemResponse, TraceApi.problem.createProblem.Error>>;
+    createProblem(request: TraceApi.CreateProblemRequest, requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<TraceApi.CreateProblemResponse, TraceApi.problem.createProblem.Error>>;
     /**
      * Updates a problem
      */
-    updateProblem(problemId: TraceApi.ProblemId, request: TraceApi.CreateProblemRequest): Promise<core.APIResponse<TraceApi.UpdateProblemResponse, TraceApi.problem.updateProblem.Error>>;
+    updateProblem(problemId: TraceApi.ProblemId, request: TraceApi.CreateProblemRequest, requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<TraceApi.UpdateProblemResponse, TraceApi.problem.updateProblem.Error>>;
     /**
      * Soft deletes a problem
      */
-    deleteProblem(problemId: TraceApi.ProblemId): Promise<core.APIResponse<void, TraceApi.problem.deleteProblem.Error>>;
+    deleteProblem(problemId: TraceApi.ProblemId, requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<void, TraceApi.problem.deleteProblem.Error>>;
     /**
      * Returns default starter files for problem
      */
-    getDefaultStarterFiles(request: TraceApi.GetDefaultStarterFilesRequest): Promise<core.APIResponse<TraceApi.GetDefaultStarterFilesResponse, TraceApi.problem.getDefaultStarterFiles.Error>>;
+    getDefaultStarterFiles(request: TraceApi.GetDefaultStarterFilesRequest, requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<TraceApi.GetDefaultStarterFilesResponse, TraceApi.problem.getDefaultStarterFiles.Error>>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -5375,7 +5409,7 @@ class Problem {
     /**
      * Creates a problem
      */
-    createProblem(request) {
+    createProblem(request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -5389,6 +5423,7 @@ class Problem {
                 },
                 contentType: \\"application/json\\",
                 body: yield serializers.CreateProblemRequest.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -5411,7 +5446,7 @@ class Problem {
     /**
      * Updates a problem
      */
-    updateProblem(problemId, request) {
+    updateProblem(problemId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -5425,6 +5460,7 @@ class Problem {
                 },
                 contentType: \\"application/json\\",
                 body: yield serializers.CreateProblemRequest.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -5447,7 +5483,7 @@ class Problem {
     /**
      * Soft deletes a problem
      */
-    deleteProblem(problemId) {
+    deleteProblem(problemId, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -5460,6 +5496,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -5477,7 +5514,7 @@ class Problem {
     /**
      * Returns default starter files for problem
      */
-    getDefaultStarterFiles(request) {
+    getDefaultStarterFiles(request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -5493,6 +5530,7 @@ class Problem {
                 body: yield serializers.GetDefaultStarterFilesRequest.jsonOrThrow(request, {
                     unrecognizedObjectKeys: \\"strip\\",
                 }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -6605,6 +6643,9 @@ export declare namespace Submission {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 /**
  * Responsible for spinning up and spinning down execution.
@@ -6615,16 +6656,16 @@ export declare class Submission {
     /**
      * Returns sessionId and execution server URL for session. Spins up server.
      */
-    createExecutionSession(language: TraceApi.Language): Promise<core.APIResponse<TraceApi.ExecutionSessionResponse, TraceApi.submission.createExecutionSession.Error>>;
+    createExecutionSession(language: TraceApi.Language, requestOptions?: Submission.RequestOptions): Promise<core.APIResponse<TraceApi.ExecutionSessionResponse, TraceApi.submission.createExecutionSession.Error>>;
     /**
      * Returns execution server URL for session. Returns empty if session isn't registered.
      */
-    getExecutionSession(sessionId: string): Promise<core.APIResponse<TraceApi.ExecutionSessionResponse | undefined, TraceApi.submission.getExecutionSession.Error>>;
+    getExecutionSession(sessionId: string, requestOptions?: Submission.RequestOptions): Promise<core.APIResponse<TraceApi.ExecutionSessionResponse | undefined, TraceApi.submission.getExecutionSession.Error>>;
     /**
      * Stops execution session.
      */
-    stopExecutionSession(sessionId: string): Promise<core.APIResponse<void, TraceApi.submission.stopExecutionSession.Error>>;
-    getExecutionSessionsState(): Promise<core.APIResponse<TraceApi.GetExecutionSessionStateResponse, TraceApi.submission.getExecutionSessionsState.Error>>;
+    stopExecutionSession(sessionId: string, requestOptions?: Submission.RequestOptions): Promise<core.APIResponse<void, TraceApi.submission.stopExecutionSession.Error>>;
+    getExecutionSessionsState(requestOptions?: Submission.RequestOptions): Promise<core.APIResponse<TraceApi.GetExecutionSessionStateResponse, TraceApi.submission.getExecutionSessionsState.Error>>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -6688,7 +6729,7 @@ class Submission {
     /**
      * Returns sessionId and execution server URL for session. Spins up server.
      */
-    createExecutionSession(language) {
+    createExecutionSession(language, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -6701,6 +6742,7 @@ class Submission {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -6723,7 +6765,7 @@ class Submission {
     /**
      * Returns execution server URL for session. Returns empty if session isn't registered.
      */
-    getExecutionSession(sessionId) {
+    getExecutionSession(sessionId, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -6736,6 +6778,7 @@ class Submission {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -6758,7 +6801,7 @@ class Submission {
     /**
      * Stops execution session.
      */
-    stopExecutionSession(sessionId) {
+    stopExecutionSession(sessionId, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -6771,6 +6814,7 @@ class Submission {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -6785,7 +6829,7 @@ class Submission {
             };
         });
     }
-    getExecutionSessionsState() {
+    getExecutionSessionsState(requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -6798,6 +6842,7 @@ class Submission {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -11066,12 +11111,15 @@ export declare namespace Sysprop {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Sysprop {
     protected readonly _options: Sysprop.Options;
     constructor(_options: Sysprop.Options);
-    setNumWarmInstances(language: TraceApi.Language, numWarmInstances: number): Promise<core.APIResponse<void, TraceApi.sysprop.setNumWarmInstances.Error>>;
-    getNumWarmInstances(): Promise<core.APIResponse<Record<TraceApi.Language, number | undefined>, TraceApi.sysprop.getNumWarmInstances.Error>>;
+    setNumWarmInstances(language: TraceApi.Language, numWarmInstances: number, requestOptions?: Sysprop.RequestOptions): Promise<core.APIResponse<void, TraceApi.sysprop.setNumWarmInstances.Error>>;
+    getNumWarmInstances(requestOptions?: Sysprop.RequestOptions): Promise<core.APIResponse<Record<TraceApi.Language, number | undefined>, TraceApi.sysprop.getNumWarmInstances.Error>>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -11129,7 +11177,7 @@ class Sysprop {
     constructor(_options) {
         this._options = _options;
     }
-    setNumWarmInstances(language, numWarmInstances) {
+    setNumWarmInstances(language, numWarmInstances, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -11142,6 +11190,7 @@ class Sysprop {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -11156,7 +11205,7 @@ class Sysprop {
             };
         });
     }
-    getNumWarmInstances() {
+    getNumWarmInstances(requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -11169,6 +11218,7 @@ class Sysprop {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -11454,6 +11504,9 @@ export declare namespace V2 {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class V2 {
     protected readonly _options: V2.Options;
@@ -11604,6 +11657,9 @@ export declare namespace Problem {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Problem {
     protected readonly _options: Problem.Options;
@@ -11611,19 +11667,19 @@ export declare class Problem {
     /**
      * Returns lightweight versions of all problems
      */
-    getLightweightProblems(): Promise<core.APIResponse<TraceApi.v2.LightweightProblemInfoV2[], TraceApi.v2.problem.getLightweightProblems.Error>>;
+    getLightweightProblems(requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<TraceApi.v2.LightweightProblemInfoV2[], TraceApi.v2.problem.getLightweightProblems.Error>>;
     /**
      * Returns latest versions of all problems
      */
-    getProblems(): Promise<core.APIResponse<TraceApi.v2.ProblemInfoV2[], TraceApi.v2.problem.getProblems.Error>>;
+    getProblems(requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<TraceApi.v2.ProblemInfoV2[], TraceApi.v2.problem.getProblems.Error>>;
     /**
      * Returns latest version of a problem
      */
-    getLatestProblem(problemId: TraceApi.ProblemId): Promise<core.APIResponse<TraceApi.v2.ProblemInfoV2, TraceApi.v2.problem.getLatestProblem.Error>>;
+    getLatestProblem(problemId: TraceApi.ProblemId, requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<TraceApi.v2.ProblemInfoV2, TraceApi.v2.problem.getLatestProblem.Error>>;
     /**
      * Returns requested version of a problem
      */
-    getProblemVersion(problemId: TraceApi.ProblemId, problemVersion: number): Promise<core.APIResponse<TraceApi.v2.ProblemInfoV2, TraceApi.v2.problem.getProblemVersion.Error>>;
+    getProblemVersion(problemId: TraceApi.ProblemId, problemVersion: number, requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<TraceApi.v2.ProblemInfoV2, TraceApi.v2.problem.getProblemVersion.Error>>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -11684,7 +11740,7 @@ class Problem {
     /**
      * Returns lightweight versions of all problems
      */
-    getLightweightProblems() {
+    getLightweightProblems(requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -11697,6 +11753,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -11719,7 +11776,7 @@ class Problem {
     /**
      * Returns latest versions of all problems
      */
-    getProblems() {
+    getProblems(requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -11732,6 +11789,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -11754,7 +11812,7 @@ class Problem {
     /**
      * Returns latest version of a problem
      */
-    getLatestProblem(problemId) {
+    getLatestProblem(problemId, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -11767,6 +11825,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -11789,7 +11848,7 @@ class Problem {
     /**
      * Returns requested version of a problem
      */
-    getProblemVersion(problemId, problemVersion) {
+    getProblemVersion(problemId, problemVersion, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -11802,6 +11861,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -13842,6 +13902,9 @@ export declare namespace V3 {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class V3 {
     protected readonly _options: V3.Options;
@@ -13983,6 +14046,9 @@ export declare namespace Problem {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Problem {
     protected readonly _options: Problem.Options;
@@ -13990,19 +14056,19 @@ export declare class Problem {
     /**
      * Returns lightweight versions of all problems
      */
-    getLightweightProblems(): Promise<core.APIResponse<TraceApi.v2.v3.LightweightProblemInfoV2[], TraceApi.v2.v3.problem.getLightweightProblems.Error>>;
+    getLightweightProblems(requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<TraceApi.v2.v3.LightweightProblemInfoV2[], TraceApi.v2.v3.problem.getLightweightProblems.Error>>;
     /**
      * Returns latest versions of all problems
      */
-    getProblems(): Promise<core.APIResponse<TraceApi.v2.v3.ProblemInfoV2[], TraceApi.v2.v3.problem.getProblems.Error>>;
+    getProblems(requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<TraceApi.v2.v3.ProblemInfoV2[], TraceApi.v2.v3.problem.getProblems.Error>>;
     /**
      * Returns latest version of a problem
      */
-    getLatestProblem(problemId: TraceApi.ProblemId): Promise<core.APIResponse<TraceApi.v2.v3.ProblemInfoV2, TraceApi.v2.v3.problem.getLatestProblem.Error>>;
+    getLatestProblem(problemId: TraceApi.ProblemId, requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<TraceApi.v2.v3.ProblemInfoV2, TraceApi.v2.v3.problem.getLatestProblem.Error>>;
     /**
      * Returns requested version of a problem
      */
-    getProblemVersion(problemId: TraceApi.ProblemId, problemVersion: number): Promise<core.APIResponse<TraceApi.v2.v3.ProblemInfoV2, TraceApi.v2.v3.problem.getProblemVersion.Error>>;
+    getProblemVersion(problemId: TraceApi.ProblemId, problemVersion: number, requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<TraceApi.v2.v3.ProblemInfoV2, TraceApi.v2.v3.problem.getProblemVersion.Error>>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -14063,7 +14129,7 @@ class Problem {
     /**
      * Returns lightweight versions of all problems
      */
-    getLightweightProblems() {
+    getLightweightProblems(requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -14076,6 +14142,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -14098,7 +14165,7 @@ class Problem {
     /**
      * Returns latest versions of all problems
      */
-    getProblems() {
+    getProblems(requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -14111,6 +14178,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -14133,7 +14201,7 @@ class Problem {
     /**
      * Returns latest version of a problem
      */
-    getLatestProblem(problemId) {
+    getLatestProblem(problemId, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -14146,6 +14214,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -14168,7 +14237,7 @@ class Problem {
     /**
      * Returns requested version of a problem
      */
-    getProblemVersion(problemId, problemVersion) {
+    getProblemVersion(problemId, problemVersion, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -14181,6 +14250,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -19026,6 +19096,9 @@ export declare namespace TraceApiClient {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class TraceApiClient {
     protected readonly _options: TraceApiClient.Options;
@@ -19156,18 +19229,21 @@ export declare namespace Admin {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Admin {
     protected readonly _options: Admin.Options;
     constructor(_options: Admin.Options);
-    updateTestSubmissionStatus(submissionId: TraceApi.SubmissionId, request: TraceApi.TestSubmissionStatus): Promise<core.APIResponse<void, TraceApi.admin.updateTestSubmissionStatus.Error>>;
-    sendTestSubmissionUpdate(submissionId: TraceApi.SubmissionId, request: TraceApi.TestSubmissionUpdate): Promise<core.APIResponse<void, TraceApi.admin.sendTestSubmissionUpdate.Error>>;
-    updateWorkspaceSubmissionStatus(submissionId: TraceApi.SubmissionId, request: TraceApi.WorkspaceSubmissionStatus): Promise<core.APIResponse<void, TraceApi.admin.updateWorkspaceSubmissionStatus.Error>>;
-    sendWorkspaceSubmissionUpdate(submissionId: TraceApi.SubmissionId, request: TraceApi.WorkspaceSubmissionUpdate): Promise<core.APIResponse<void, TraceApi.admin.sendWorkspaceSubmissionUpdate.Error>>;
-    storeTracedTestCase(submissionId: TraceApi.SubmissionId, testCaseId: string, request: TraceApi.StoreTracedTestCaseRequest): Promise<core.APIResponse<void, TraceApi.admin.storeTracedTestCase.Error>>;
-    storeTracedTestCaseV2(submissionId: TraceApi.SubmissionId, testCaseId: TraceApi.v2.TestCaseId, request: TraceApi.TraceResponseV2[]): Promise<core.APIResponse<void, TraceApi.admin.storeTracedTestCaseV2.Error>>;
-    storeTracedWorkspace(submissionId: TraceApi.SubmissionId, request: TraceApi.StoreTracedWorkspaceRequest): Promise<core.APIResponse<void, TraceApi.admin.storeTracedWorkspace.Error>>;
-    storeTracedWorkspaceV2(submissionId: TraceApi.SubmissionId, request: TraceApi.TraceResponseV2[]): Promise<core.APIResponse<void, TraceApi.admin.storeTracedWorkspaceV2.Error>>;
+    updateTestSubmissionStatus(submissionId: TraceApi.SubmissionId, request: TraceApi.TestSubmissionStatus, requestOptions?: Admin.RequestOptions): Promise<core.APIResponse<void, TraceApi.admin.updateTestSubmissionStatus.Error>>;
+    sendTestSubmissionUpdate(submissionId: TraceApi.SubmissionId, request: TraceApi.TestSubmissionUpdate, requestOptions?: Admin.RequestOptions): Promise<core.APIResponse<void, TraceApi.admin.sendTestSubmissionUpdate.Error>>;
+    updateWorkspaceSubmissionStatus(submissionId: TraceApi.SubmissionId, request: TraceApi.WorkspaceSubmissionStatus, requestOptions?: Admin.RequestOptions): Promise<core.APIResponse<void, TraceApi.admin.updateWorkspaceSubmissionStatus.Error>>;
+    sendWorkspaceSubmissionUpdate(submissionId: TraceApi.SubmissionId, request: TraceApi.WorkspaceSubmissionUpdate, requestOptions?: Admin.RequestOptions): Promise<core.APIResponse<void, TraceApi.admin.sendWorkspaceSubmissionUpdate.Error>>;
+    storeTracedTestCase(submissionId: TraceApi.SubmissionId, testCaseId: string, request: TraceApi.StoreTracedTestCaseRequest, requestOptions?: Admin.RequestOptions): Promise<core.APIResponse<void, TraceApi.admin.storeTracedTestCase.Error>>;
+    storeTracedTestCaseV2(submissionId: TraceApi.SubmissionId, testCaseId: TraceApi.v2.TestCaseId, request: TraceApi.TraceResponseV2[], requestOptions?: Admin.RequestOptions): Promise<core.APIResponse<void, TraceApi.admin.storeTracedTestCaseV2.Error>>;
+    storeTracedWorkspace(submissionId: TraceApi.SubmissionId, request: TraceApi.StoreTracedWorkspaceRequest, requestOptions?: Admin.RequestOptions): Promise<core.APIResponse<void, TraceApi.admin.storeTracedWorkspace.Error>>;
+    storeTracedWorkspaceV2(submissionId: TraceApi.SubmissionId, request: TraceApi.TraceResponseV2[], requestOptions?: Admin.RequestOptions): Promise<core.APIResponse<void, TraceApi.admin.storeTracedWorkspaceV2.Error>>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -19237,7 +19313,7 @@ class Admin {
     constructor(_options) {
         this._options = _options;
     }
-    updateTestSubmissionStatus(submissionId, request) {
+    updateTestSubmissionStatus(submissionId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -19251,6 +19327,7 @@ class Admin {
                 },
                 contentType: \\"application/json\\",
                 body: yield serializers.TestSubmissionStatus.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -19265,7 +19342,7 @@ class Admin {
             };
         });
     }
-    sendTestSubmissionUpdate(submissionId, request) {
+    sendTestSubmissionUpdate(submissionId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -19279,6 +19356,7 @@ class Admin {
                 },
                 contentType: \\"application/json\\",
                 body: yield serializers.TestSubmissionUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -19293,7 +19371,7 @@ class Admin {
             };
         });
     }
-    updateWorkspaceSubmissionStatus(submissionId, request) {
+    updateWorkspaceSubmissionStatus(submissionId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -19307,6 +19385,7 @@ class Admin {
                 },
                 contentType: \\"application/json\\",
                 body: yield serializers.WorkspaceSubmissionStatus.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -19321,7 +19400,7 @@ class Admin {
             };
         });
     }
-    sendWorkspaceSubmissionUpdate(submissionId, request) {
+    sendWorkspaceSubmissionUpdate(submissionId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -19335,6 +19414,7 @@ class Admin {
                 },
                 contentType: \\"application/json\\",
                 body: yield serializers.WorkspaceSubmissionUpdate.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -19349,7 +19429,7 @@ class Admin {
             };
         });
     }
-    storeTracedTestCase(submissionId, testCaseId, request) {
+    storeTracedTestCase(submissionId, testCaseId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const { someQueryParam, referenceToOptionalString } = request, _body = __rest(request, [\\"someQueryParam\\", \\"referenceToOptionalString\\"]);
@@ -19372,6 +19452,7 @@ class Admin {
                 contentType: \\"application/json\\",
                 queryParameters: _queryParams,
                 body: yield serializers.StoreTracedTestCaseRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: \\"strip\\" }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -19386,7 +19467,7 @@ class Admin {
             };
         });
     }
-    storeTracedTestCaseV2(submissionId, testCaseId, request) {
+    storeTracedTestCaseV2(submissionId, testCaseId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -19402,6 +19483,7 @@ class Admin {
                 body: yield serializers.admin.storeTracedTestCaseV2.Request.jsonOrThrow(request, {
                     unrecognizedObjectKeys: \\"strip\\",
                 }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -19416,7 +19498,7 @@ class Admin {
             };
         });
     }
-    storeTracedWorkspace(submissionId, request) {
+    storeTracedWorkspace(submissionId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -19432,6 +19514,7 @@ class Admin {
                 body: yield serializers.StoreTracedWorkspaceRequest.jsonOrThrow(request, {
                     unrecognizedObjectKeys: \\"strip\\",
                 }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -19446,7 +19529,7 @@ class Admin {
             };
         });
     }
-    storeTracedWorkspaceV2(submissionId, request) {
+    storeTracedWorkspaceV2(submissionId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -19462,6 +19545,7 @@ class Admin {
                 body: yield serializers.admin.storeTracedWorkspaceV2.Request.jsonOrThrow(request, {
                     unrecognizedObjectKeys: \\"strip\\",
                 }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -21844,12 +21928,15 @@ export declare namespace Homepage {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Homepage {
     protected readonly _options: Homepage.Options;
     constructor(_options: Homepage.Options);
-    getHomepageProblems(): Promise<core.APIResponse<TraceApi.ProblemId[], TraceApi.homepage.getHomepageProblems.Error>>;
-    setHomepageProblems(request: TraceApi.ProblemId[]): Promise<core.APIResponse<void, TraceApi.homepage.setHomepageProblems.Error>>;
+    getHomepageProblems(requestOptions?: Homepage.RequestOptions): Promise<core.APIResponse<TraceApi.ProblemId[], TraceApi.homepage.getHomepageProblems.Error>>;
+    setHomepageProblems(request: TraceApi.ProblemId[], requestOptions?: Homepage.RequestOptions): Promise<core.APIResponse<void, TraceApi.homepage.setHomepageProblems.Error>>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -21907,7 +21994,7 @@ class Homepage {
     constructor(_options) {
         this._options = _options;
     }
-    getHomepageProblems() {
+    getHomepageProblems(requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -21920,6 +22007,7 @@ class Homepage {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -21939,7 +22027,7 @@ class Homepage {
             };
         });
     }
-    setHomepageProblems(request) {
+    setHomepageProblems(request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -21955,6 +22043,7 @@ class Homepage {
                 body: yield serializers.homepage.setHomepageProblems.Request.jsonOrThrow(request, {
                     unrecognizedObjectKeys: \\"strip\\",
                 }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -22425,11 +22514,14 @@ export declare namespace Migration {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Migration {
     protected readonly _options: Migration.Options;
     constructor(_options: Migration.Options);
-    getAttemptedMigrations(serviceParam: string): Promise<core.APIResponse<TraceApi.Migration[], TraceApi.migration.getAttemptedMigrations.Error>>;
+    getAttemptedMigrations(serviceParam: string, requestOptions?: Migration.RequestOptions): Promise<core.APIResponse<TraceApi.Migration[], TraceApi.migration.getAttemptedMigrations.Error>>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -22487,7 +22579,7 @@ class Migration {
     constructor(_options) {
         this._options = _options;
     }
-    getAttemptedMigrations(serviceParam) {
+    getAttemptedMigrations(serviceParam, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -22500,6 +22592,7 @@ class Migration {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -22794,6 +22887,9 @@ export declare namespace Playlist {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Playlist {
     protected readonly _options: Playlist.Options;
@@ -22801,23 +22897,23 @@ export declare class Playlist {
     /**
      * Create a new playlist
      */
-    createPlaylist(serviceParam: number, request: TraceApi.PlaylistCreateRequestWrapper): Promise<core.APIResponse<TraceApi.Playlist, TraceApi.playlist.createPlaylist.Error>>;
+    createPlaylist(serviceParam: number, request: TraceApi.PlaylistCreateRequestWrapper, requestOptions?: Playlist.RequestOptions): Promise<core.APIResponse<TraceApi.Playlist, TraceApi.playlist.createPlaylist.Error>>;
     /**
      * Returns the user's playlists
      */
-    getPlaylists(serviceParam: number, request: TraceApi.GetPlaylistsRequest): Promise<core.APIResponse<TraceApi.Playlist[], TraceApi.playlist.getPlaylists.Error>>;
+    getPlaylists(serviceParam: number, request: TraceApi.GetPlaylistsRequest, requestOptions?: Playlist.RequestOptions): Promise<core.APIResponse<TraceApi.Playlist[], TraceApi.playlist.getPlaylists.Error>>;
     /**
      * Returns a playlist
      */
-    getPlaylist(serviceParam: number, playlistId: TraceApi.PlaylistId, request?: TraceApi.GetPlaylistRequest): Promise<core.APIResponse<TraceApi.Playlist, TraceApi.playlist.getPlaylist.Error>>;
+    getPlaylist(serviceParam: number, playlistId: TraceApi.PlaylistId, request?: TraceApi.GetPlaylistRequest, requestOptions?: Playlist.RequestOptions): Promise<core.APIResponse<TraceApi.Playlist, TraceApi.playlist.getPlaylist.Error>>;
     /**
      * Updates a playlist
      */
-    updatePlaylist(serviceParam: number, playlistId: TraceApi.PlaylistId, request?: TraceApi.UpdatePlaylistRequest): Promise<core.APIResponse<TraceApi.Playlist | undefined, TraceApi.playlist.updatePlaylist.Error>>;
+    updatePlaylist(serviceParam: number, playlistId: TraceApi.PlaylistId, request?: TraceApi.UpdatePlaylistRequest, requestOptions?: Playlist.RequestOptions): Promise<core.APIResponse<TraceApi.Playlist | undefined, TraceApi.playlist.updatePlaylist.Error>>;
     /**
      * Deletes a playlist
      */
-    deletePlaylist(serviceParam: number, playlistId: TraceApi.PlaylistId): Promise<core.APIResponse<void, TraceApi.playlist.deletePlaylist.Error>>;
+    deletePlaylist(serviceParam: number, playlistId: TraceApi.PlaylistId, requestOptions?: Playlist.RequestOptions): Promise<core.APIResponse<void, TraceApi.playlist.deletePlaylist.Error>>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -22879,7 +22975,7 @@ class Playlist {
     /**
      * Create a new playlist
      */
-    createPlaylist(serviceParam, request) {
+    createPlaylist(serviceParam, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const { multiple, multipleOptional, aliasQueryParam, body: _body } = request;
@@ -22915,6 +23011,7 @@ class Playlist {
                 contentType: \\"application/json\\",
                 queryParameters: _queryParams,
                 body: yield serializers.PlaylistCreateRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: \\"strip\\" }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -22937,7 +23034,7 @@ class Playlist {
     /**
      * Returns the user's playlists
      */
-    getPlaylists(serviceParam, request) {
+    getPlaylists(serviceParam, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const { limit, otherField } = request;
@@ -22957,6 +23054,7 @@ class Playlist {
                 },
                 contentType: \\"application/json\\",
                 queryParameters: _queryParams,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -22979,7 +23077,7 @@ class Playlist {
     /**
      * Returns a playlist
      */
-    getPlaylist(serviceParam, playlistId, request = {}) {
+    getPlaylist(serviceParam, playlistId, request = {}, requestOptions) {
         var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             const { optionalQueryParam } = request;
@@ -22998,6 +23096,7 @@ class Playlist {
                 },
                 contentType: \\"application/json\\",
                 queryParameters: _queryParams,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -23035,7 +23134,7 @@ class Playlist {
     /**
      * Updates a playlist
      */
-    updatePlaylist(serviceParam, playlistId, request) {
+    updatePlaylist(serviceParam, playlistId, request, requestOptions) {
         var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -23053,6 +23152,7 @@ class Playlist {
                         unrecognizedObjectKeys: \\"strip\\",
                     })
                     : undefined,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -23089,7 +23189,7 @@ class Playlist {
     /**
      * Deletes a playlist
      */
-    deletePlaylist(serviceParam, playlistId) {
+    deletePlaylist(serviceParam, playlistId, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -23102,6 +23202,7 @@ class Playlist {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -24300,6 +24401,9 @@ export declare namespace Problem {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Problem {
     protected readonly _options: Problem.Options;
@@ -24307,19 +24411,19 @@ export declare class Problem {
     /**
      * Creates a problem
      */
-    createProblem(request: TraceApi.CreateProblemRequest): Promise<core.APIResponse<TraceApi.CreateProblemResponse, TraceApi.problem.createProblem.Error>>;
+    createProblem(request: TraceApi.CreateProblemRequest, requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<TraceApi.CreateProblemResponse, TraceApi.problem.createProblem.Error>>;
     /**
      * Updates a problem
      */
-    updateProblem(problemId: TraceApi.ProblemId, request: TraceApi.CreateProblemRequest): Promise<core.APIResponse<TraceApi.UpdateProblemResponse, TraceApi.problem.updateProblem.Error>>;
+    updateProblem(problemId: TraceApi.ProblemId, request: TraceApi.CreateProblemRequest, requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<TraceApi.UpdateProblemResponse, TraceApi.problem.updateProblem.Error>>;
     /**
      * Soft deletes a problem
      */
-    deleteProblem(problemId: TraceApi.ProblemId): Promise<core.APIResponse<void, TraceApi.problem.deleteProblem.Error>>;
+    deleteProblem(problemId: TraceApi.ProblemId, requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<void, TraceApi.problem.deleteProblem.Error>>;
     /**
      * Returns default starter files for problem
      */
-    getDefaultStarterFiles(request: TraceApi.GetDefaultStarterFilesRequest): Promise<core.APIResponse<TraceApi.GetDefaultStarterFilesResponse, TraceApi.problem.getDefaultStarterFiles.Error>>;
+    getDefaultStarterFiles(request: TraceApi.GetDefaultStarterFilesRequest, requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<TraceApi.GetDefaultStarterFilesResponse, TraceApi.problem.getDefaultStarterFiles.Error>>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -24380,7 +24484,7 @@ class Problem {
     /**
      * Creates a problem
      */
-    createProblem(request) {
+    createProblem(request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -24394,6 +24498,7 @@ class Problem {
                 },
                 contentType: \\"application/json\\",
                 body: yield serializers.CreateProblemRequest.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -24416,7 +24521,7 @@ class Problem {
     /**
      * Updates a problem
      */
-    updateProblem(problemId, request) {
+    updateProblem(problemId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -24430,6 +24535,7 @@ class Problem {
                 },
                 contentType: \\"application/json\\",
                 body: yield serializers.CreateProblemRequest.jsonOrThrow(request, { unrecognizedObjectKeys: \\"strip\\" }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -24452,7 +24558,7 @@ class Problem {
     /**
      * Soft deletes a problem
      */
-    deleteProblem(problemId) {
+    deleteProblem(problemId, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -24465,6 +24571,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -24482,7 +24589,7 @@ class Problem {
     /**
      * Returns default starter files for problem
      */
-    getDefaultStarterFiles(request) {
+    getDefaultStarterFiles(request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -24498,6 +24605,7 @@ class Problem {
                 body: yield serializers.GetDefaultStarterFilesRequest.jsonOrThrow(request, {
                     unrecognizedObjectKeys: \\"strip\\",
                 }),
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -25610,6 +25718,9 @@ export declare namespace Submission {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 /**
  * Responsible for spinning up and spinning down execution.
@@ -25620,16 +25731,16 @@ export declare class Submission {
     /**
      * Returns sessionId and execution server URL for session. Spins up server.
      */
-    createExecutionSession(language: TraceApi.Language): Promise<core.APIResponse<TraceApi.ExecutionSessionResponse, TraceApi.submission.createExecutionSession.Error>>;
+    createExecutionSession(language: TraceApi.Language, requestOptions?: Submission.RequestOptions): Promise<core.APIResponse<TraceApi.ExecutionSessionResponse, TraceApi.submission.createExecutionSession.Error>>;
     /**
      * Returns execution server URL for session. Returns empty if session isn't registered.
      */
-    getExecutionSession(sessionId: string): Promise<core.APIResponse<TraceApi.ExecutionSessionResponse | undefined, TraceApi.submission.getExecutionSession.Error>>;
+    getExecutionSession(sessionId: string, requestOptions?: Submission.RequestOptions): Promise<core.APIResponse<TraceApi.ExecutionSessionResponse | undefined, TraceApi.submission.getExecutionSession.Error>>;
     /**
      * Stops execution session.
      */
-    stopExecutionSession(sessionId: string): Promise<core.APIResponse<void, TraceApi.submission.stopExecutionSession.Error>>;
-    getExecutionSessionsState(): Promise<core.APIResponse<TraceApi.GetExecutionSessionStateResponse, TraceApi.submission.getExecutionSessionsState.Error>>;
+    stopExecutionSession(sessionId: string, requestOptions?: Submission.RequestOptions): Promise<core.APIResponse<void, TraceApi.submission.stopExecutionSession.Error>>;
+    getExecutionSessionsState(requestOptions?: Submission.RequestOptions): Promise<core.APIResponse<TraceApi.GetExecutionSessionStateResponse, TraceApi.submission.getExecutionSessionsState.Error>>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -25693,7 +25804,7 @@ class Submission {
     /**
      * Returns sessionId and execution server URL for session. Spins up server.
      */
-    createExecutionSession(language) {
+    createExecutionSession(language, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -25706,6 +25817,7 @@ class Submission {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -25728,7 +25840,7 @@ class Submission {
     /**
      * Returns execution server URL for session. Returns empty if session isn't registered.
      */
-    getExecutionSession(sessionId) {
+    getExecutionSession(sessionId, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -25741,6 +25853,7 @@ class Submission {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -25763,7 +25876,7 @@ class Submission {
     /**
      * Stops execution session.
      */
-    stopExecutionSession(sessionId) {
+    stopExecutionSession(sessionId, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -25776,6 +25889,7 @@ class Submission {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -25790,7 +25904,7 @@ class Submission {
             };
         });
     }
-    getExecutionSessionsState() {
+    getExecutionSessionsState(requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -25803,6 +25917,7 @@ class Submission {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -30071,12 +30186,15 @@ export declare namespace Sysprop {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Sysprop {
     protected readonly _options: Sysprop.Options;
     constructor(_options: Sysprop.Options);
-    setNumWarmInstances(language: TraceApi.Language, numWarmInstances: number): Promise<core.APIResponse<void, TraceApi.sysprop.setNumWarmInstances.Error>>;
-    getNumWarmInstances(): Promise<core.APIResponse<Record<TraceApi.Language, number | undefined>, TraceApi.sysprop.getNumWarmInstances.Error>>;
+    setNumWarmInstances(language: TraceApi.Language, numWarmInstances: number, requestOptions?: Sysprop.RequestOptions): Promise<core.APIResponse<void, TraceApi.sysprop.setNumWarmInstances.Error>>;
+    getNumWarmInstances(requestOptions?: Sysprop.RequestOptions): Promise<core.APIResponse<Record<TraceApi.Language, number | undefined>, TraceApi.sysprop.getNumWarmInstances.Error>>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -30134,7 +30252,7 @@ class Sysprop {
     constructor(_options) {
         this._options = _options;
     }
-    setNumWarmInstances(language, numWarmInstances) {
+    setNumWarmInstances(language, numWarmInstances, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -30147,6 +30265,7 @@ class Sysprop {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -30161,7 +30280,7 @@ class Sysprop {
             };
         });
     }
-    getNumWarmInstances() {
+    getNumWarmInstances(requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -30174,6 +30293,7 @@ class Sysprop {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -30459,6 +30579,9 @@ export declare namespace V2 {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class V2 {
     protected readonly _options: V2.Options;
@@ -30609,6 +30732,9 @@ export declare namespace Problem {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Problem {
     protected readonly _options: Problem.Options;
@@ -30616,19 +30742,19 @@ export declare class Problem {
     /**
      * Returns lightweight versions of all problems
      */
-    getLightweightProblems(): Promise<core.APIResponse<TraceApi.v2.LightweightProblemInfoV2[], TraceApi.v2.problem.getLightweightProblems.Error>>;
+    getLightweightProblems(requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<TraceApi.v2.LightweightProblemInfoV2[], TraceApi.v2.problem.getLightweightProblems.Error>>;
     /**
      * Returns latest versions of all problems
      */
-    getProblems(): Promise<core.APIResponse<TraceApi.v2.ProblemInfoV2[], TraceApi.v2.problem.getProblems.Error>>;
+    getProblems(requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<TraceApi.v2.ProblemInfoV2[], TraceApi.v2.problem.getProblems.Error>>;
     /**
      * Returns latest version of a problem
      */
-    getLatestProblem(problemId: TraceApi.ProblemId): Promise<core.APIResponse<TraceApi.v2.ProblemInfoV2, TraceApi.v2.problem.getLatestProblem.Error>>;
+    getLatestProblem(problemId: TraceApi.ProblemId, requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<TraceApi.v2.ProblemInfoV2, TraceApi.v2.problem.getLatestProblem.Error>>;
     /**
      * Returns requested version of a problem
      */
-    getProblemVersion(problemId: TraceApi.ProblemId, problemVersion: number): Promise<core.APIResponse<TraceApi.v2.ProblemInfoV2, TraceApi.v2.problem.getProblemVersion.Error>>;
+    getProblemVersion(problemId: TraceApi.ProblemId, problemVersion: number, requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<TraceApi.v2.ProblemInfoV2, TraceApi.v2.problem.getProblemVersion.Error>>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -30689,7 +30815,7 @@ class Problem {
     /**
      * Returns lightweight versions of all problems
      */
-    getLightweightProblems() {
+    getLightweightProblems(requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -30702,6 +30828,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -30724,7 +30851,7 @@ class Problem {
     /**
      * Returns latest versions of all problems
      */
-    getProblems() {
+    getProblems(requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -30737,6 +30864,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -30759,7 +30887,7 @@ class Problem {
     /**
      * Returns latest version of a problem
      */
-    getLatestProblem(problemId) {
+    getLatestProblem(problemId, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -30772,6 +30900,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -30794,7 +30923,7 @@ class Problem {
     /**
      * Returns requested version of a problem
      */
-    getProblemVersion(problemId, problemVersion) {
+    getProblemVersion(problemId, problemVersion, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -30807,6 +30936,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -32847,6 +32977,9 @@ export declare namespace V3 {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class V3 {
     protected readonly _options: V3.Options;
@@ -32988,6 +33121,9 @@ export declare namespace Problem {
         environment?: core.Supplier<environments.TraceApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Problem {
     protected readonly _options: Problem.Options;
@@ -32995,19 +33131,19 @@ export declare class Problem {
     /**
      * Returns lightweight versions of all problems
      */
-    getLightweightProblems(): Promise<core.APIResponse<TraceApi.v2.v3.LightweightProblemInfoV2[], TraceApi.v2.v3.problem.getLightweightProblems.Error>>;
+    getLightweightProblems(requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<TraceApi.v2.v3.LightweightProblemInfoV2[], TraceApi.v2.v3.problem.getLightweightProblems.Error>>;
     /**
      * Returns latest versions of all problems
      */
-    getProblems(): Promise<core.APIResponse<TraceApi.v2.v3.ProblemInfoV2[], TraceApi.v2.v3.problem.getProblems.Error>>;
+    getProblems(requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<TraceApi.v2.v3.ProblemInfoV2[], TraceApi.v2.v3.problem.getProblems.Error>>;
     /**
      * Returns latest version of a problem
      */
-    getLatestProblem(problemId: TraceApi.ProblemId): Promise<core.APIResponse<TraceApi.v2.v3.ProblemInfoV2, TraceApi.v2.v3.problem.getLatestProblem.Error>>;
+    getLatestProblem(problemId: TraceApi.ProblemId, requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<TraceApi.v2.v3.ProblemInfoV2, TraceApi.v2.v3.problem.getLatestProblem.Error>>;
     /**
      * Returns requested version of a problem
      */
-    getProblemVersion(problemId: TraceApi.ProblemId, problemVersion: number): Promise<core.APIResponse<TraceApi.v2.v3.ProblemInfoV2, TraceApi.v2.v3.problem.getProblemVersion.Error>>;
+    getProblemVersion(problemId: TraceApi.ProblemId, problemVersion: number, requestOptions?: Problem.RequestOptions): Promise<core.APIResponse<TraceApi.v2.v3.ProblemInfoV2, TraceApi.v2.v3.problem.getProblemVersion.Error>>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -33068,7 +33204,7 @@ class Problem {
     /**
      * Returns lightweight versions of all problems
      */
-    getLightweightProblems() {
+    getLightweightProblems(requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -33081,6 +33217,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -33103,7 +33240,7 @@ class Problem {
     /**
      * Returns latest versions of all problems
      */
-    getProblems() {
+    getProblems(requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -33116,6 +33253,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -33138,7 +33276,7 @@ class Problem {
     /**
      * Returns latest version of a problem
      */
-    getLatestProblem(problemId) {
+    getLatestProblem(problemId, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -33151,6 +33289,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {
@@ -33173,7 +33312,7 @@ class Problem {
     /**
      * Returns requested version of a problem
      */
-    getProblemVersion(problemId, problemVersion) {
+    getProblemVersion(problemId, problemVersion, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -33186,6 +33325,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.0\\",
                 },
                 contentType: \\"application/json\\",
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
                 withCredentials: true,
             });
             if (_response.ok) {

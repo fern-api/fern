@@ -116,6 +116,9 @@ export declare namespace FernApiClient {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class FernApiClient {
     protected readonly _options: FernApiClient.Options;
@@ -246,18 +249,21 @@ export declare namespace Admin {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Admin {
     protected readonly _options: Admin.Options;
     constructor(_options: Admin.Options);
-    updateTestSubmissionStatus(submissionId: FernApi.SubmissionId, request: FernApi.TestSubmissionStatus): Promise<void>;
-    sendTestSubmissionUpdate(submissionId: FernApi.SubmissionId, request: FernApi.TestSubmissionUpdate): Promise<void>;
-    updateWorkspaceSubmissionStatus(submissionId: FernApi.SubmissionId, request: FernApi.WorkspaceSubmissionStatus): Promise<void>;
-    sendWorkspaceSubmissionUpdate(submissionId: FernApi.SubmissionId, request: FernApi.WorkspaceSubmissionUpdate): Promise<void>;
-    storeTracedTestCase(submissionId: FernApi.SubmissionId, testCaseId: string, request: FernApi.StoreTracedTestCaseRequest): Promise<void>;
-    storeTracedTestCaseV2(submissionId: FernApi.SubmissionId, testCaseId: FernApi.v2.TestCaseId, request: FernApi.TraceResponseV2[]): Promise<void>;
-    storeTracedWorkspace(submissionId: FernApi.SubmissionId, request: FernApi.StoreTracedWorkspaceRequest): Promise<void>;
-    storeTracedWorkspaceV2(submissionId: FernApi.SubmissionId, request: FernApi.TraceResponseV2[]): Promise<void>;
+    updateTestSubmissionStatus(submissionId: FernApi.SubmissionId, request: FernApi.TestSubmissionStatus, requestOptions?: Admin.RequestOptions): Promise<void>;
+    sendTestSubmissionUpdate(submissionId: FernApi.SubmissionId, request: FernApi.TestSubmissionUpdate, requestOptions?: Admin.RequestOptions): Promise<void>;
+    updateWorkspaceSubmissionStatus(submissionId: FernApi.SubmissionId, request: FernApi.WorkspaceSubmissionStatus, requestOptions?: Admin.RequestOptions): Promise<void>;
+    sendWorkspaceSubmissionUpdate(submissionId: FernApi.SubmissionId, request: FernApi.WorkspaceSubmissionUpdate, requestOptions?: Admin.RequestOptions): Promise<void>;
+    storeTracedTestCase(submissionId: FernApi.SubmissionId, testCaseId: string, request: FernApi.StoreTracedTestCaseRequest, requestOptions?: Admin.RequestOptions): Promise<void>;
+    storeTracedTestCaseV2(submissionId: FernApi.SubmissionId, testCaseId: FernApi.v2.TestCaseId, request: FernApi.TraceResponseV2[], requestOptions?: Admin.RequestOptions): Promise<void>;
+    storeTracedWorkspace(submissionId: FernApi.SubmissionId, request: FernApi.StoreTracedWorkspaceRequest, requestOptions?: Admin.RequestOptions): Promise<void>;
+    storeTracedWorkspaceV2(submissionId: FernApi.SubmissionId, request: FernApi.TraceResponseV2[], requestOptions?: Admin.RequestOptions): Promise<void>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -326,7 +332,7 @@ class Admin {
     constructor(_options) {
         this._options = _options;
     }
-    updateTestSubmissionStatus(submissionId, request) {
+    updateTestSubmissionStatus(submissionId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -340,7 +346,7 @@ class Admin {
                 },
                 contentType: \\"application/json\\",
                 body: request,
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return;
@@ -366,7 +372,7 @@ class Admin {
             }
         });
     }
-    sendTestSubmissionUpdate(submissionId, request) {
+    sendTestSubmissionUpdate(submissionId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -380,7 +386,7 @@ class Admin {
                 },
                 contentType: \\"application/json\\",
                 body: request,
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return;
@@ -406,7 +412,7 @@ class Admin {
             }
         });
     }
-    updateWorkspaceSubmissionStatus(submissionId, request) {
+    updateWorkspaceSubmissionStatus(submissionId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -420,7 +426,7 @@ class Admin {
                 },
                 contentType: \\"application/json\\",
                 body: request,
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return;
@@ -446,7 +452,7 @@ class Admin {
             }
         });
     }
-    sendWorkspaceSubmissionUpdate(submissionId, request) {
+    sendWorkspaceSubmissionUpdate(submissionId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -460,7 +466,7 @@ class Admin {
                 },
                 contentType: \\"application/json\\",
                 body: request,
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return;
@@ -486,7 +492,7 @@ class Admin {
             }
         });
     }
-    storeTracedTestCase(submissionId, testCaseId, request) {
+    storeTracedTestCase(submissionId, testCaseId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const { someQueryParam, referenceToOptionalString } = request, _body = __rest(request, [\\"someQueryParam\\", \\"referenceToOptionalString\\"]);
@@ -509,7 +515,7 @@ class Admin {
                 contentType: \\"application/json\\",
                 queryParameters: _queryParams,
                 body: _body,
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return;
@@ -535,7 +541,7 @@ class Admin {
             }
         });
     }
-    storeTracedTestCaseV2(submissionId, testCaseId, request) {
+    storeTracedTestCaseV2(submissionId, testCaseId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -549,7 +555,7 @@ class Admin {
                 },
                 contentType: \\"application/json\\",
                 body: request,
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return;
@@ -575,7 +581,7 @@ class Admin {
             }
         });
     }
-    storeTracedWorkspace(submissionId, request) {
+    storeTracedWorkspace(submissionId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -589,7 +595,7 @@ class Admin {
                 },
                 contentType: \\"application/json\\",
                 body: request,
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return;
@@ -615,7 +621,7 @@ class Admin {
             }
         });
     }
-    storeTracedWorkspaceV2(submissionId, request) {
+    storeTracedWorkspaceV2(submissionId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -629,7 +635,7 @@ class Admin {
                 },
                 contentType: \\"application/json\\",
                 body: request,
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return;
@@ -1762,12 +1768,15 @@ export declare namespace Homepage {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Homepage {
     protected readonly _options: Homepage.Options;
     constructor(_options: Homepage.Options);
-    getHomepageProblems(): Promise<FernApi.ProblemId[]>;
-    setHomepageProblems(request: FernApi.ProblemId[]): Promise<void>;
+    getHomepageProblems(requestOptions?: Homepage.RequestOptions): Promise<FernApi.ProblemId[]>;
+    setHomepageProblems(request: FernApi.ProblemId[], requestOptions?: Homepage.RequestOptions): Promise<void>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -1824,7 +1833,7 @@ class Homepage {
     constructor(_options) {
         this._options = _options;
     }
-    getHomepageProblems() {
+    getHomepageProblems(requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -1837,7 +1846,7 @@ class Homepage {
                     \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
                 },
                 contentType: \\"application/json\\",
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return _response.body;
@@ -1863,7 +1872,7 @@ class Homepage {
             }
         });
     }
-    setHomepageProblems(request) {
+    setHomepageProblems(request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -1877,7 +1886,7 @@ class Homepage {
                 },
                 contentType: \\"application/json\\",
                 body: request,
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return;
@@ -2176,11 +2185,14 @@ export declare namespace Migration {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Migration {
     protected readonly _options: Migration.Options;
     constructor(_options: Migration.Options);
-    getAttemptedMigrations(serviceParam: string): Promise<FernApi.Migration[]>;
+    getAttemptedMigrations(serviceParam: string, requestOptions?: Migration.RequestOptions): Promise<FernApi.Migration[]>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -2237,7 +2249,7 @@ class Migration {
     constructor(_options) {
         this._options = _options;
     }
-    getAttemptedMigrations(serviceParam) {
+    getAttemptedMigrations(serviceParam, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -2250,7 +2262,7 @@ class Migration {
                     \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
                 },
                 contentType: \\"application/json\\",
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return _response.body;
@@ -2447,6 +2459,9 @@ export declare namespace Playlist {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Playlist {
     protected readonly _options: Playlist.Options;
@@ -2454,26 +2469,26 @@ export declare class Playlist {
     /**
      * Create a new playlist
      */
-    createPlaylist(serviceParam: number, request: FernApi.PlaylistCreateRequestWrapper): Promise<FernApi.Playlist>;
+    createPlaylist(serviceParam: number, request: FernApi.PlaylistCreateRequestWrapper, requestOptions?: Playlist.RequestOptions): Promise<FernApi.Playlist>;
     /**
      * Returns the user's playlists
      */
-    getPlaylists(serviceParam: number, request: FernApi.GetPlaylistsRequest): Promise<FernApi.Playlist[]>;
+    getPlaylists(serviceParam: number, request: FernApi.GetPlaylistsRequest, requestOptions?: Playlist.RequestOptions): Promise<FernApi.Playlist[]>;
     /**
      * Returns a playlist
      * @throws {@link FernApi.PlaylistIdNotFoundError}
      * @throws {@link FernApi.UnauthorizedError}
      */
-    getPlaylist(serviceParam: number, playlistId: FernApi.PlaylistId, request?: FernApi.GetPlaylistRequest): Promise<FernApi.Playlist>;
+    getPlaylist(serviceParam: number, playlistId: FernApi.PlaylistId, request?: FernApi.GetPlaylistRequest, requestOptions?: Playlist.RequestOptions): Promise<FernApi.Playlist>;
     /**
      * Updates a playlist
      * @throws {@link FernApi.PlaylistIdNotFoundError}
      */
-    updatePlaylist(serviceParam: number, playlistId: FernApi.PlaylistId, request?: FernApi.UpdatePlaylistRequest): Promise<FernApi.Playlist | undefined>;
+    updatePlaylist(serviceParam: number, playlistId: FernApi.PlaylistId, request?: FernApi.UpdatePlaylistRequest, requestOptions?: Playlist.RequestOptions): Promise<FernApi.Playlist | undefined>;
     /**
      * Deletes a playlist
      */
-    deletePlaylist(serviceParam: number, playlistId: FernApi.PlaylistId): Promise<void>;
+    deletePlaylist(serviceParam: number, playlistId: FernApi.PlaylistId, requestOptions?: Playlist.RequestOptions): Promise<void>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -2535,7 +2550,7 @@ class Playlist {
     /**
      * Create a new playlist
      */
-    createPlaylist(serviceParam, request) {
+    createPlaylist(serviceParam, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const { multiple, multipleOptional, aliasQueryParam, body: _body } = request;
@@ -2571,7 +2586,7 @@ class Playlist {
                 contentType: \\"application/json\\",
                 queryParameters: _queryParams,
                 body: _body,
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return _response.body;
@@ -2600,7 +2615,7 @@ class Playlist {
     /**
      * Returns the user's playlists
      */
-    getPlaylists(serviceParam, request) {
+    getPlaylists(serviceParam, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const { limit, otherField } = request;
@@ -2620,7 +2635,7 @@ class Playlist {
                 },
                 contentType: \\"application/json\\",
                 queryParameters: _queryParams,
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return _response.body;
@@ -2651,7 +2666,7 @@ class Playlist {
      * @throws {@link FernApi.PlaylistIdNotFoundError}
      * @throws {@link FernApi.UnauthorizedError}
      */
-    getPlaylist(serviceParam, playlistId, request = {}) {
+    getPlaylist(serviceParam, playlistId, request = {}, requestOptions) {
         var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             const { optionalQueryParam } = request;
@@ -2670,7 +2685,7 @@ class Playlist {
                 },
                 contentType: \\"application/json\\",
                 queryParameters: _queryParams,
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return _response.body;
@@ -2707,7 +2722,7 @@ class Playlist {
      * Updates a playlist
      * @throws {@link FernApi.PlaylistIdNotFoundError}
      */
-    updatePlaylist(serviceParam, playlistId, request) {
+    updatePlaylist(serviceParam, playlistId, request, requestOptions) {
         var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -2721,7 +2736,7 @@ class Playlist {
                 },
                 contentType: \\"application/json\\",
                 body: request != null ? request : undefined,
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return _response.body;
@@ -2755,7 +2770,7 @@ class Playlist {
     /**
      * Deletes a playlist
      */
-    deletePlaylist(serviceParam, playlistId) {
+    deletePlaylist(serviceParam, playlistId, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -2768,7 +2783,7 @@ class Playlist {
                     \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
                 },
                 contentType: \\"application/json\\",
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return;
@@ -3623,6 +3638,9 @@ export declare namespace Problem {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Problem {
     protected readonly _options: Problem.Options;
@@ -3630,19 +3648,19 @@ export declare class Problem {
     /**
      * Creates a problem
      */
-    createProblem(request: FernApi.CreateProblemRequest): Promise<FernApi.CreateProblemResponse>;
+    createProblem(request: FernApi.CreateProblemRequest, requestOptions?: Problem.RequestOptions): Promise<FernApi.CreateProblemResponse>;
     /**
      * Updates a problem
      */
-    updateProblem(problemId: FernApi.ProblemId, request: FernApi.CreateProblemRequest): Promise<FernApi.UpdateProblemResponse>;
+    updateProblem(problemId: FernApi.ProblemId, request: FernApi.CreateProblemRequest, requestOptions?: Problem.RequestOptions): Promise<FernApi.UpdateProblemResponse>;
     /**
      * Soft deletes a problem
      */
-    deleteProblem(problemId: FernApi.ProblemId): Promise<void>;
+    deleteProblem(problemId: FernApi.ProblemId, requestOptions?: Problem.RequestOptions): Promise<void>;
     /**
      * Returns default starter files for problem
      */
-    getDefaultStarterFiles(request: FernApi.GetDefaultStarterFilesRequest): Promise<FernApi.GetDefaultStarterFilesResponse>;
+    getDefaultStarterFiles(request: FernApi.GetDefaultStarterFilesRequest, requestOptions?: Problem.RequestOptions): Promise<FernApi.GetDefaultStarterFilesResponse>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -3702,7 +3720,7 @@ class Problem {
     /**
      * Creates a problem
      */
-    createProblem(request) {
+    createProblem(request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -3716,7 +3734,7 @@ class Problem {
                 },
                 contentType: \\"application/json\\",
                 body: request,
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return _response.body;
@@ -3745,7 +3763,7 @@ class Problem {
     /**
      * Updates a problem
      */
-    updateProblem(problemId, request) {
+    updateProblem(problemId, request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -3759,7 +3777,7 @@ class Problem {
                 },
                 contentType: \\"application/json\\",
                 body: request,
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return _response.body;
@@ -3788,7 +3806,7 @@ class Problem {
     /**
      * Soft deletes a problem
      */
-    deleteProblem(problemId) {
+    deleteProblem(problemId, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -3801,7 +3819,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
                 },
                 contentType: \\"application/json\\",
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return;
@@ -3830,7 +3848,7 @@ class Problem {
     /**
      * Returns default starter files for problem
      */
-    getDefaultStarterFiles(request) {
+    getDefaultStarterFiles(request, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -3844,7 +3862,7 @@ class Problem {
                 },
                 contentType: \\"application/json\\",
                 body: request,
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return _response.body;
@@ -4393,6 +4411,9 @@ export declare namespace Submission {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 /**
  * Responsible for spinning up and spinning down execution.
@@ -4403,16 +4424,16 @@ export declare class Submission {
     /**
      * Returns sessionId and execution server URL for session. Spins up server.
      */
-    createExecutionSession(language: FernApi.Language): Promise<FernApi.ExecutionSessionResponse>;
+    createExecutionSession(language: FernApi.Language, requestOptions?: Submission.RequestOptions): Promise<FernApi.ExecutionSessionResponse>;
     /**
      * Returns execution server URL for session. Returns empty if session isn't registered.
      */
-    getExecutionSession(sessionId: string): Promise<FernApi.ExecutionSessionResponse | undefined>;
+    getExecutionSession(sessionId: string, requestOptions?: Submission.RequestOptions): Promise<FernApi.ExecutionSessionResponse | undefined>;
     /**
      * Stops execution session.
      */
-    stopExecutionSession(sessionId: string): Promise<void>;
-    getExecutionSessionsState(): Promise<FernApi.GetExecutionSessionStateResponse>;
+    stopExecutionSession(sessionId: string, requestOptions?: Submission.RequestOptions): Promise<void>;
+    getExecutionSessionsState(requestOptions?: Submission.RequestOptions): Promise<FernApi.GetExecutionSessionStateResponse>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -4475,7 +4496,7 @@ class Submission {
     /**
      * Returns sessionId and execution server URL for session. Spins up server.
      */
-    createExecutionSession(language) {
+    createExecutionSession(language, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -4488,7 +4509,7 @@ class Submission {
                     \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
                 },
                 contentType: \\"application/json\\",
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return _response.body;
@@ -4517,7 +4538,7 @@ class Submission {
     /**
      * Returns execution server URL for session. Returns empty if session isn't registered.
      */
-    getExecutionSession(sessionId) {
+    getExecutionSession(sessionId, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -4530,7 +4551,7 @@ class Submission {
                     \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
                 },
                 contentType: \\"application/json\\",
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return _response.body;
@@ -4559,7 +4580,7 @@ class Submission {
     /**
      * Stops execution session.
      */
-    stopExecutionSession(sessionId) {
+    stopExecutionSession(sessionId, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -4572,7 +4593,7 @@ class Submission {
                     \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
                 },
                 contentType: \\"application/json\\",
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return;
@@ -4598,7 +4619,7 @@ class Submission {
             }
         });
     }
-    getExecutionSessionsState() {
+    getExecutionSessionsState(requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -4611,7 +4632,7 @@ class Submission {
                     \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
                 },
                 contentType: \\"application/json\\",
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return _response.body;
@@ -7031,12 +7052,15 @@ export declare namespace Sysprop {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Sysprop {
     protected readonly _options: Sysprop.Options;
     constructor(_options: Sysprop.Options);
-    setNumWarmInstances(language: FernApi.Language, numWarmInstances: number): Promise<void>;
-    getNumWarmInstances(): Promise<Record<FernApi.Language, number | undefined>>;
+    setNumWarmInstances(language: FernApi.Language, numWarmInstances: number, requestOptions?: Sysprop.RequestOptions): Promise<void>;
+    getNumWarmInstances(requestOptions?: Sysprop.RequestOptions): Promise<Record<FernApi.Language, number | undefined>>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -7093,7 +7117,7 @@ class Sysprop {
     constructor(_options) {
         this._options = _options;
     }
-    setNumWarmInstances(language, numWarmInstances) {
+    setNumWarmInstances(language, numWarmInstances, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -7106,7 +7130,7 @@ class Sysprop {
                     \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
                 },
                 contentType: \\"application/json\\",
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return;
@@ -7132,7 +7156,7 @@ class Sysprop {
             }
         });
     }
-    getNumWarmInstances() {
+    getNumWarmInstances(requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -7145,7 +7169,7 @@ class Sysprop {
                     \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
                 },
                 contentType: \\"application/json\\",
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return _response.body;
@@ -7251,6 +7275,9 @@ export declare namespace V2 {
     interface Options {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+    }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
     }
 }
 export declare class V2 {
@@ -7402,6 +7429,9 @@ export declare namespace Problem {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Problem {
     protected readonly _options: Problem.Options;
@@ -7409,19 +7439,19 @@ export declare class Problem {
     /**
      * Returns lightweight versions of all problems
      */
-    getLightweightProblems(): Promise<FernApi.v2.LightweightProblemInfoV2[]>;
+    getLightweightProblems(requestOptions?: Problem.RequestOptions): Promise<FernApi.v2.LightweightProblemInfoV2[]>;
     /**
      * Returns latest versions of all problems
      */
-    getProblems(): Promise<FernApi.v2.ProblemInfoV2[]>;
+    getProblems(requestOptions?: Problem.RequestOptions): Promise<FernApi.v2.ProblemInfoV2[]>;
     /**
      * Returns latest version of a problem
      */
-    getLatestProblem(problemId: FernApi.ProblemId): Promise<FernApi.v2.ProblemInfoV2>;
+    getLatestProblem(problemId: FernApi.ProblemId, requestOptions?: Problem.RequestOptions): Promise<FernApi.v2.ProblemInfoV2>;
     /**
      * Returns requested version of a problem
      */
-    getProblemVersion(problemId: FernApi.ProblemId, problemVersion: number): Promise<FernApi.v2.ProblemInfoV2>;
+    getProblemVersion(problemId: FernApi.ProblemId, problemVersion: number, requestOptions?: Problem.RequestOptions): Promise<FernApi.v2.ProblemInfoV2>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -7481,7 +7511,7 @@ class Problem {
     /**
      * Returns lightweight versions of all problems
      */
-    getLightweightProblems() {
+    getLightweightProblems(requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -7494,7 +7524,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
                 },
                 contentType: \\"application/json\\",
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return _response.body;
@@ -7523,7 +7553,7 @@ class Problem {
     /**
      * Returns latest versions of all problems
      */
-    getProblems() {
+    getProblems(requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -7536,7 +7566,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
                 },
                 contentType: \\"application/json\\",
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return _response.body;
@@ -7565,7 +7595,7 @@ class Problem {
     /**
      * Returns latest version of a problem
      */
-    getLatestProblem(problemId) {
+    getLatestProblem(problemId, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -7578,7 +7608,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
                 },
                 contentType: \\"application/json\\",
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return _response.body;
@@ -7607,7 +7637,7 @@ class Problem {
     /**
      * Returns requested version of a problem
      */
-    getProblemVersion(problemId, problemVersion) {
+    getProblemVersion(problemId, problemVersion, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -7620,7 +7650,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
                 },
                 contentType: \\"application/json\\",
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return _response.body;
@@ -8830,6 +8860,9 @@ export declare namespace V3 {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class V3 {
     protected readonly _options: V3.Options;
@@ -8971,6 +9004,9 @@ export declare namespace Problem {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 export declare class Problem {
     protected readonly _options: Problem.Options;
@@ -8978,19 +9014,19 @@ export declare class Problem {
     /**
      * Returns lightweight versions of all problems
      */
-    getLightweightProblems(): Promise<FernApi.v2.v3.LightweightProblemInfoV2[]>;
+    getLightweightProblems(requestOptions?: Problem.RequestOptions): Promise<FernApi.v2.v3.LightweightProblemInfoV2[]>;
     /**
      * Returns latest versions of all problems
      */
-    getProblems(): Promise<FernApi.v2.v3.ProblemInfoV2[]>;
+    getProblems(requestOptions?: Problem.RequestOptions): Promise<FernApi.v2.v3.ProblemInfoV2[]>;
     /**
      * Returns latest version of a problem
      */
-    getLatestProblem(problemId: FernApi.ProblemId): Promise<FernApi.v2.v3.ProblemInfoV2>;
+    getLatestProblem(problemId: FernApi.ProblemId, requestOptions?: Problem.RequestOptions): Promise<FernApi.v2.v3.ProblemInfoV2>;
     /**
      * Returns requested version of a problem
      */
-    getProblemVersion(problemId: FernApi.ProblemId, problemVersion: number): Promise<FernApi.v2.v3.ProblemInfoV2>;
+    getProblemVersion(problemId: FernApi.ProblemId, problemVersion: number, requestOptions?: Problem.RequestOptions): Promise<FernApi.v2.v3.ProblemInfoV2>;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
 ",
@@ -9050,7 +9086,7 @@ class Problem {
     /**
      * Returns lightweight versions of all problems
      */
-    getLightweightProblems() {
+    getLightweightProblems(requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -9063,7 +9099,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
                 },
                 contentType: \\"application/json\\",
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return _response.body;
@@ -9092,7 +9128,7 @@ class Problem {
     /**
      * Returns latest versions of all problems
      */
-    getProblems() {
+    getProblems(requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -9105,7 +9141,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
                 },
                 contentType: \\"application/json\\",
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return _response.body;
@@ -9134,7 +9170,7 @@ class Problem {
     /**
      * Returns latest version of a problem
      */
-    getLatestProblem(problemId) {
+    getLatestProblem(problemId, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -9147,7 +9183,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
                 },
                 contentType: \\"application/json\\",
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return _response.body;
@@ -9176,7 +9212,7 @@ class Problem {
     /**
      * Returns requested version of a problem
      */
-    getProblemVersion(problemId, problemVersion) {
+    getProblemVersion(problemId, problemVersion, requestOptions) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             const _response = yield core.fetcher({
@@ -9189,7 +9225,7 @@ class Problem {
                     \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
                 },
                 contentType: \\"application/json\\",
-                timeoutMs: 60000,
+                timeoutMs: (requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.timeoutInSeconds) != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             });
             if (_response.ok) {
                 return _response.body;
@@ -11026,6 +11062,10 @@ export declare namespace FernApiClient {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class FernApiClient {
@@ -11114,6 +11154,10 @@ export declare namespace Admin {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Admin {
@@ -11121,7 +11165,8 @@ export class Admin {
 
     public async updateTestSubmissionStatus(
         submissionId: FernApi.SubmissionId,
-        request: FernApi.TestSubmissionStatus
+        request: FernApi.TestSubmissionStatus,
+        requestOptions?: Admin.RequestOptions
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -11137,7 +11182,7 @@ export class Admin {
             },
             contentType: \\"application/json\\",
             body: request,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return;
@@ -11167,7 +11212,8 @@ export class Admin {
 
     public async sendTestSubmissionUpdate(
         submissionId: FernApi.SubmissionId,
-        request: FernApi.TestSubmissionUpdate
+        request: FernApi.TestSubmissionUpdate,
+        requestOptions?: Admin.RequestOptions
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -11183,7 +11229,7 @@ export class Admin {
             },
             contentType: \\"application/json\\",
             body: request,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return;
@@ -11213,7 +11259,8 @@ export class Admin {
 
     public async updateWorkspaceSubmissionStatus(
         submissionId: FernApi.SubmissionId,
-        request: FernApi.WorkspaceSubmissionStatus
+        request: FernApi.WorkspaceSubmissionStatus,
+        requestOptions?: Admin.RequestOptions
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -11229,7 +11276,7 @@ export class Admin {
             },
             contentType: \\"application/json\\",
             body: request,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return;
@@ -11259,7 +11306,8 @@ export class Admin {
 
     public async sendWorkspaceSubmissionUpdate(
         submissionId: FernApi.SubmissionId,
-        request: FernApi.WorkspaceSubmissionUpdate
+        request: FernApi.WorkspaceSubmissionUpdate,
+        requestOptions?: Admin.RequestOptions
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -11275,7 +11323,7 @@ export class Admin {
             },
             contentType: \\"application/json\\",
             body: request,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return;
@@ -11306,7 +11354,8 @@ export class Admin {
     public async storeTracedTestCase(
         submissionId: FernApi.SubmissionId,
         testCaseId: string,
-        request: FernApi.StoreTracedTestCaseRequest
+        request: FernApi.StoreTracedTestCaseRequest,
+        requestOptions?: Admin.RequestOptions
     ): Promise<void> {
         const { someQueryParam, referenceToOptionalString, ..._body } = request;
         const _queryParams = new URLSearchParams();
@@ -11333,7 +11382,7 @@ export class Admin {
             contentType: \\"application/json\\",
             queryParameters: _queryParams,
             body: _body,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return;
@@ -11364,7 +11413,8 @@ export class Admin {
     public async storeTracedTestCaseV2(
         submissionId: FernApi.SubmissionId,
         testCaseId: FernApi.v2.TestCaseId,
-        request: FernApi.TraceResponseV2[]
+        request: FernApi.TraceResponseV2[],
+        requestOptions?: Admin.RequestOptions
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -11380,7 +11430,7 @@ export class Admin {
             },
             contentType: \\"application/json\\",
             body: request,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return;
@@ -11410,7 +11460,8 @@ export class Admin {
 
     public async storeTracedWorkspace(
         submissionId: FernApi.SubmissionId,
-        request: FernApi.StoreTracedWorkspaceRequest
+        request: FernApi.StoreTracedWorkspaceRequest,
+        requestOptions?: Admin.RequestOptions
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -11426,7 +11477,7 @@ export class Admin {
             },
             contentType: \\"application/json\\",
             body: request,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return;
@@ -11456,7 +11507,8 @@ export class Admin {
 
     public async storeTracedWorkspaceV2(
         submissionId: FernApi.SubmissionId,
-        request: FernApi.TraceResponseV2[]
+        request: FernApi.TraceResponseV2[],
+        requestOptions?: Admin.RequestOptions
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -11472,7 +11524,7 @@ export class Admin {
             },
             contentType: \\"application/json\\",
             body: request,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return;
@@ -12272,12 +12324,16 @@ export declare namespace Homepage {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Homepage {
     constructor(protected readonly _options: Homepage.Options) {}
 
-    public async getHomepageProblems(): Promise<FernApi.ProblemId[]> {
+    public async getHomepageProblems(requestOptions?: Homepage.RequestOptions): Promise<FernApi.ProblemId[]> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernApiEnvironment.Prod,
@@ -12291,7 +12347,7 @@ export class Homepage {
                 \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
             },
             contentType: \\"application/json\\",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return _response.body as FernApi.ProblemId[];
@@ -12319,7 +12375,10 @@ export class Homepage {
         }
     }
 
-    public async setHomepageProblems(request: FernApi.ProblemId[]): Promise<void> {
+    public async setHomepageProblems(
+        request: FernApi.ProblemId[],
+        requestOptions?: Homepage.RequestOptions
+    ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernApiEnvironment.Prod,
@@ -12334,7 +12393,7 @@ export class Homepage {
             },
             contentType: \\"application/json\\",
             body: request,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return;
@@ -12490,12 +12549,19 @@ export declare namespace Migration {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Migration {
     constructor(protected readonly _options: Migration.Options) {}
 
-    public async getAttemptedMigrations(serviceParam: string): Promise<FernApi.Migration[]> {
+    public async getAttemptedMigrations(
+        serviceParam: string,
+        requestOptions?: Migration.RequestOptions
+    ): Promise<FernApi.Migration[]> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernApiEnvironment.Prod,
@@ -12509,7 +12575,7 @@ export class Migration {
                 \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
             },
             contentType: \\"application/json\\",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return _response.body as FernApi.Migration[];
@@ -12636,6 +12702,10 @@ export declare namespace Playlist {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Playlist {
@@ -12646,7 +12716,8 @@ export class Playlist {
      */
     public async createPlaylist(
         serviceParam: number,
-        request: FernApi.PlaylistCreateRequestWrapper
+        request: FernApi.PlaylistCreateRequestWrapper,
+        requestOptions?: Playlist.RequestOptions
     ): Promise<FernApi.Playlist> {
         const { multiple, multipleOptional, aliasQueryParam, body: _body } = request;
         const _queryParams = new URLSearchParams();
@@ -12684,7 +12755,7 @@ export class Playlist {
             contentType: \\"application/json\\",
             queryParameters: _queryParams,
             body: _body,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return _response.body as FernApi.Playlist;
@@ -12715,7 +12786,11 @@ export class Playlist {
     /**
      * Returns the user's playlists
      */
-    public async getPlaylists(serviceParam: number, request: FernApi.GetPlaylistsRequest): Promise<FernApi.Playlist[]> {
+    public async getPlaylists(
+        serviceParam: number,
+        request: FernApi.GetPlaylistsRequest,
+        requestOptions?: Playlist.RequestOptions
+    ): Promise<FernApi.Playlist[]> {
         const { limit, otherField } = request;
         const _queryParams = new URLSearchParams();
         if (limit != null) {
@@ -12737,7 +12812,7 @@ export class Playlist {
             },
             contentType: \\"application/json\\",
             queryParameters: _queryParams,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return _response.body as FernApi.Playlist[];
@@ -12773,7 +12848,8 @@ export class Playlist {
     public async getPlaylist(
         serviceParam: number,
         playlistId: FernApi.PlaylistId,
-        request: FernApi.GetPlaylistRequest = {}
+        request: FernApi.GetPlaylistRequest = {},
+        requestOptions?: Playlist.RequestOptions
     ): Promise<FernApi.Playlist> {
         const { optionalQueryParam } = request;
         const _queryParams = new URLSearchParams();
@@ -12795,7 +12871,7 @@ export class Playlist {
             },
             contentType: \\"application/json\\",
             queryParameters: _queryParams,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return _response.body as FernApi.Playlist;
@@ -12839,7 +12915,8 @@ export class Playlist {
     public async updatePlaylist(
         serviceParam: number,
         playlistId: FernApi.PlaylistId,
-        request?: FernApi.UpdatePlaylistRequest
+        request?: FernApi.UpdatePlaylistRequest,
+        requestOptions?: Playlist.RequestOptions
     ): Promise<FernApi.Playlist | undefined> {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -12855,7 +12932,7 @@ export class Playlist {
             },
             contentType: \\"application/json\\",
             body: request != null ? request : undefined,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return _response.body as FernApi.Playlist | undefined;
@@ -12893,7 +12970,11 @@ export class Playlist {
     /**
      * Deletes a playlist
      */
-    public async deletePlaylist(serviceParam: number, playlistId: FernApi.PlaylistId): Promise<void> {
+    public async deletePlaylist(
+        serviceParam: number,
+        playlistId: FernApi.PlaylistId,
+        requestOptions?: Playlist.RequestOptions
+    ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernApiEnvironment.Prod,
@@ -12907,7 +12988,7 @@ export class Playlist {
                 \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
             },
             contentType: \\"application/json\\",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return;
@@ -13365,6 +13446,10 @@ export declare namespace Problem {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Problem {
@@ -13373,7 +13458,10 @@ export class Problem {
     /**
      * Creates a problem
      */
-    public async createProblem(request: FernApi.CreateProblemRequest): Promise<FernApi.CreateProblemResponse> {
+    public async createProblem(
+        request: FernApi.CreateProblemRequest,
+        requestOptions?: Problem.RequestOptions
+    ): Promise<FernApi.CreateProblemResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernApiEnvironment.Prod,
@@ -13388,7 +13476,7 @@ export class Problem {
             },
             contentType: \\"application/json\\",
             body: request,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return _response.body as FernApi.CreateProblemResponse;
@@ -13421,7 +13509,8 @@ export class Problem {
      */
     public async updateProblem(
         problemId: FernApi.ProblemId,
-        request: FernApi.CreateProblemRequest
+        request: FernApi.CreateProblemRequest,
+        requestOptions?: Problem.RequestOptions
     ): Promise<FernApi.UpdateProblemResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -13437,7 +13526,7 @@ export class Problem {
             },
             contentType: \\"application/json\\",
             body: request,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return _response.body as FernApi.UpdateProblemResponse;
@@ -13468,7 +13557,7 @@ export class Problem {
     /**
      * Soft deletes a problem
      */
-    public async deleteProblem(problemId: FernApi.ProblemId): Promise<void> {
+    public async deleteProblem(problemId: FernApi.ProblemId, requestOptions?: Problem.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernApiEnvironment.Prod,
@@ -13482,7 +13571,7 @@ export class Problem {
                 \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
             },
             contentType: \\"application/json\\",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return;
@@ -13514,7 +13603,8 @@ export class Problem {
      * Returns default starter files for problem
      */
     public async getDefaultStarterFiles(
-        request: FernApi.GetDefaultStarterFilesRequest
+        request: FernApi.GetDefaultStarterFilesRequest,
+        requestOptions?: Problem.RequestOptions
     ): Promise<FernApi.GetDefaultStarterFilesResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -13530,7 +13620,7 @@ export class Problem {
             },
             contentType: \\"application/json\\",
             body: request,
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return _response.body as FernApi.GetDefaultStarterFilesResponse;
@@ -13901,6 +13991,10 @@ export declare namespace Submission {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 /**
@@ -13912,7 +14006,10 @@ export class Submission {
     /**
      * Returns sessionId and execution server URL for session. Spins up server.
      */
-    public async createExecutionSession(language: FernApi.Language): Promise<FernApi.ExecutionSessionResponse> {
+    public async createExecutionSession(
+        language: FernApi.Language,
+        requestOptions?: Submission.RequestOptions
+    ): Promise<FernApi.ExecutionSessionResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernApiEnvironment.Prod,
@@ -13926,7 +14023,7 @@ export class Submission {
                 \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
             },
             contentType: \\"application/json\\",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return _response.body as FernApi.ExecutionSessionResponse;
@@ -13957,7 +14054,10 @@ export class Submission {
     /**
      * Returns execution server URL for session. Returns empty if session isn't registered.
      */
-    public async getExecutionSession(sessionId: string): Promise<FernApi.ExecutionSessionResponse | undefined> {
+    public async getExecutionSession(
+        sessionId: string,
+        requestOptions?: Submission.RequestOptions
+    ): Promise<FernApi.ExecutionSessionResponse | undefined> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernApiEnvironment.Prod,
@@ -13971,7 +14071,7 @@ export class Submission {
                 \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
             },
             contentType: \\"application/json\\",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return _response.body as FernApi.ExecutionSessionResponse | undefined;
@@ -14002,7 +14102,7 @@ export class Submission {
     /**
      * Stops execution session.
      */
-    public async stopExecutionSession(sessionId: string): Promise<void> {
+    public async stopExecutionSession(sessionId: string, requestOptions?: Submission.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernApiEnvironment.Prod,
@@ -14016,7 +14116,7 @@ export class Submission {
                 \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
             },
             contentType: \\"application/json\\",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return;
@@ -14044,7 +14144,9 @@ export class Submission {
         }
     }
 
-    public async getExecutionSessionsState(): Promise<FernApi.GetExecutionSessionStateResponse> {
+    public async getExecutionSessionsState(
+        requestOptions?: Submission.RequestOptions
+    ): Promise<FernApi.GetExecutionSessionStateResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernApiEnvironment.Prod,
@@ -14058,7 +14160,7 @@ export class Submission {
                 \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
             },
             contentType: \\"application/json\\",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return _response.body as FernApi.GetExecutionSessionStateResponse;
@@ -15792,12 +15894,20 @@ export declare namespace Sysprop {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Sysprop {
     constructor(protected readonly _options: Sysprop.Options) {}
 
-    public async setNumWarmInstances(language: FernApi.Language, numWarmInstances: number): Promise<void> {
+    public async setNumWarmInstances(
+        language: FernApi.Language,
+        numWarmInstances: number,
+        requestOptions?: Sysprop.RequestOptions
+    ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernApiEnvironment.Prod,
@@ -15811,7 +15921,7 @@ export class Sysprop {
                 \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
             },
             contentType: \\"application/json\\",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return;
@@ -15839,7 +15949,9 @@ export class Sysprop {
         }
     }
 
-    public async getNumWarmInstances(): Promise<Record<FernApi.Language, number | undefined>> {
+    public async getNumWarmInstances(
+        requestOptions?: Sysprop.RequestOptions
+    ): Promise<Record<FernApi.Language, number | undefined>> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernApiEnvironment.Prod,
@@ -15853,7 +15965,7 @@ export class Sysprop {
                 \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
             },
             contentType: \\"application/json\\",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return _response.body as Record<FernApi.Language, number | undefined>;
@@ -15933,6 +16045,10 @@ export declare namespace V2 {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class V2 {
@@ -16001,6 +16117,10 @@ export declare namespace Problem {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Problem {
@@ -16009,7 +16129,9 @@ export class Problem {
     /**
      * Returns lightweight versions of all problems
      */
-    public async getLightweightProblems(): Promise<FernApi.v2.LightweightProblemInfoV2[]> {
+    public async getLightweightProblems(
+        requestOptions?: Problem.RequestOptions
+    ): Promise<FernApi.v2.LightweightProblemInfoV2[]> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernApiEnvironment.Prod,
@@ -16023,7 +16145,7 @@ export class Problem {
                 \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
             },
             contentType: \\"application/json\\",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return _response.body as FernApi.v2.LightweightProblemInfoV2[];
@@ -16054,7 +16176,7 @@ export class Problem {
     /**
      * Returns latest versions of all problems
      */
-    public async getProblems(): Promise<FernApi.v2.ProblemInfoV2[]> {
+    public async getProblems(requestOptions?: Problem.RequestOptions): Promise<FernApi.v2.ProblemInfoV2[]> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernApiEnvironment.Prod,
@@ -16068,7 +16190,7 @@ export class Problem {
                 \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
             },
             contentType: \\"application/json\\",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return _response.body as FernApi.v2.ProblemInfoV2[];
@@ -16099,7 +16221,10 @@ export class Problem {
     /**
      * Returns latest version of a problem
      */
-    public async getLatestProblem(problemId: FernApi.ProblemId): Promise<FernApi.v2.ProblemInfoV2> {
+    public async getLatestProblem(
+        problemId: FernApi.ProblemId,
+        requestOptions?: Problem.RequestOptions
+    ): Promise<FernApi.v2.ProblemInfoV2> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernApiEnvironment.Prod,
@@ -16113,7 +16238,7 @@ export class Problem {
                 \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
             },
             contentType: \\"application/json\\",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return _response.body as FernApi.v2.ProblemInfoV2;
@@ -16146,7 +16271,8 @@ export class Problem {
      */
     public async getProblemVersion(
         problemId: FernApi.ProblemId,
-        problemVersion: number
+        problemVersion: number,
+        requestOptions?: Problem.RequestOptions
     ): Promise<FernApi.v2.ProblemInfoV2> {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -16161,7 +16287,7 @@ export class Problem {
                 \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
             },
             contentType: \\"application/json\\",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return _response.body as FernApi.v2.ProblemInfoV2;
@@ -16968,6 +17094,10 @@ export declare namespace V3 {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class V3 {
@@ -17029,6 +17159,10 @@ export declare namespace Problem {
         environment?: core.Supplier<environments.FernApiEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
     }
+
+    interface RequestOptions {
+        timeoutInSeconds?: number;
+    }
 }
 
 export class Problem {
@@ -17037,7 +17171,9 @@ export class Problem {
     /**
      * Returns lightweight versions of all problems
      */
-    public async getLightweightProblems(): Promise<FernApi.v2.v3.LightweightProblemInfoV2[]> {
+    public async getLightweightProblems(
+        requestOptions?: Problem.RequestOptions
+    ): Promise<FernApi.v2.v3.LightweightProblemInfoV2[]> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernApiEnvironment.Prod,
@@ -17051,7 +17187,7 @@ export class Problem {
                 \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
             },
             contentType: \\"application/json\\",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return _response.body as FernApi.v2.v3.LightweightProblemInfoV2[];
@@ -17082,7 +17218,7 @@ export class Problem {
     /**
      * Returns latest versions of all problems
      */
-    public async getProblems(): Promise<FernApi.v2.v3.ProblemInfoV2[]> {
+    public async getProblems(requestOptions?: Problem.RequestOptions): Promise<FernApi.v2.v3.ProblemInfoV2[]> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernApiEnvironment.Prod,
@@ -17096,7 +17232,7 @@ export class Problem {
                 \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
             },
             contentType: \\"application/json\\",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return _response.body as FernApi.v2.v3.ProblemInfoV2[];
@@ -17127,7 +17263,10 @@ export class Problem {
     /**
      * Returns latest version of a problem
      */
-    public async getLatestProblem(problemId: FernApi.ProblemId): Promise<FernApi.v2.v3.ProblemInfoV2> {
+    public async getLatestProblem(
+        problemId: FernApi.ProblemId,
+        requestOptions?: Problem.RequestOptions
+    ): Promise<FernApi.v2.v3.ProblemInfoV2> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.FernApiEnvironment.Prod,
@@ -17141,7 +17280,7 @@ export class Problem {
                 \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
             },
             contentType: \\"application/json\\",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return _response.body as FernApi.v2.v3.ProblemInfoV2;
@@ -17174,7 +17313,8 @@ export class Problem {
      */
     public async getProblemVersion(
         problemId: FernApi.ProblemId,
-        problemVersion: number
+        problemVersion: number,
+        requestOptions?: Problem.RequestOptions
     ): Promise<FernApi.v2.v3.ProblemInfoV2> {
         const _response = await core.fetcher({
             url: urlJoin(
@@ -17189,7 +17329,7 @@ export class Problem {
                 \\"X-Fern-SDK-Version\\": \\"0.0.1\\",
             },
             contentType: \\"application/json\\",
-            timeoutMs: 60000,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
         });
         if (_response.ok) {
             return _response.body as FernApi.v2.v3.ProblemInfoV2;
