@@ -179,15 +179,15 @@ It is possible to generate the code on your own machine by using the `--local` f
 
 ## Adding Generators
 
-You can add generators using the `fern add`. You can have multiple generators for a single project, e.g. a single `fern generate` call could generate SDKs in Python, TypeScript and Java all in one go.
+You can add generators using the `fern add` command. You can have multiple generators for a single project, e.g. a single `fern generate` call could generate SDKs in Python, TypeScript and Java all in one go.
 
 For instance, if you'd like to add a TypeScript generator to your project, simply run:
 
 ```
-fern add fern-typescript-sdk
+fern add fern-typescript-node-sdk
 ```
 
-Which will add the Node variant of the TypeScript SDK to the list of generators - the other variant being a TypeScript browser library, to be used by frontends directly.
+This will add the Node variant of the TypeScript SDK to the list of generators - the other variant being a TypeScript browser library, to be used by frontends directly.
 
 Your `generators.yml` file should contain the new generator:
 
