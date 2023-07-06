@@ -143,7 +143,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		files = append(files, file)
 		if ir.Environments != nil {
 			// Generate the core environments file.
-			fileInfo = fileInfoForEnvironments()
+			fileInfo = fileInfoForEnvironments(ir.ApiName, generatedNames)
 			writer = newFileWriter(
 				fileInfo.filename,
 				fileInfo.packageName,
@@ -524,10 +524,16 @@ func fileInfoForCoreClientOptions() *fileInfo {
 	}
 }
 
-func fileInfoForEnvironments() *fileInfo {
+func fileInfoForEnvironments(apiName *ir.Name, generatedNames map[string]struct{}) *fileInfo {
+	if _, ok := generatedNames["Environments"]; ok {
+		return &fileInfo{
+			filename:    "core/environments.go",
+			packageName: "core",
+		}
+	}
 	return &fileInfo{
-		filename:    "core/environments.go",
-		packageName: "core",
+		filename:    "environments.go",
+		packageName: strings.ToLower(apiName.CamelCase.SafeName),
 	}
 }
 
