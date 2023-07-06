@@ -2,7 +2,7 @@ import { UAParser } from "ua-parser-js";
 
 const uaParser = new UAParser();
 
-type Platform = "mac" | "windows" | "other";
+export type Platform = "mac" | "windows" | "other";
 
 export const PLATFORM = (function getPlatform(): Platform {
     const { name } = uaParser.getOS();
