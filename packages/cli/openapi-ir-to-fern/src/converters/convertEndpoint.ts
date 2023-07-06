@@ -1,5 +1,5 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { Endpoint, HttpError, Request, Schema, SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/ir";
+import { Endpoint, HttpError, Request, Response, Schema, SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/ir";
 import { ROOT_PREFIX } from "../convertPackage";
 import { Environments } from "../getEnvironments";
 import { convertHeader } from "./convertHeader";
@@ -132,33 +132,49 @@ export function convertEndpoint({
     }
 
     if (endpoint.response != null) {
-        if (endpoint.response.type === "json") {
-            const responseTypeReference = convertToTypeReference({
-                schema: endpoint.response.schema,
-                prefix: isPackageYml ? undefined : ROOT_PREFIX,
-                schemas,
-            });
-            additionalTypeDeclarations = {
-                ...additionalTypeDeclarations,
-                ...responseTypeReference.additionalTypeDeclarations,
-            };
-            if (endpoint.responseIsStreaming) {
-                convertedEndpoint["response-stream"] = {
-                    type: getTypeFromTypeReference(responseTypeReference.typeReference),
+        Response._visit(endpoint.response, {
+            json: (jsonResponse) => {
+                const responseTypeReference = convertToTypeReference({
+                    schema: jsonResponse.schema,
+                    prefix: isPackageYml ? undefined : ROOT_PREFIX,
+                    schemas,
+                });
+                additionalTypeDeclarations = {
+                    ...additionalTypeDeclarations,
+                    ...responseTypeReference.additionalTypeDeclarations,
                 };
-            } else {
+                if (endpoint.responseIsStreaming) {
+                    convertedEndpoint["response-stream"] = {
+                        docs: jsonResponse.description ?? undefined,
+                        type: getTypeFromTypeReference(responseTypeReference.typeReference),
+                    };
+                } else {
+                    convertedEndpoint.response = {
+                        docs: jsonResponse.description ?? undefined,
+                        type: getTypeFromTypeReference(responseTypeReference.typeReference),
+                    };
+                }
+            },
+            file: (fileResponse) => {
                 convertedEndpoint.response = {
-                    docs: endpoint.response.description ?? undefined,
-                    type: getTypeFromTypeReference(responseTypeReference.typeReference),
+                    docs: fileResponse.description ?? undefined,
+                    type: "file",
                 };
-            }
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        } else if (endpoint.response.type === "file") {
-            convertedEndpoint.response = {
-                docs: endpoint.response.description ?? undefined,
-                type: "file",
-            };
-        }
+            },
+            text: (textResponse) => {
+                if (endpoint.responseIsStreaming) {
+                    convertedEndpoint["response-stream"] = {
+                        docs: textResponse.description ?? undefined,
+                        type: "text",
+                    };
+                } else {
+                    // fern doesn't support non-streaming text
+                }
+            },
+            _unknown: () => {
+                throw new Error("Unrecognized Response type: " + endpoint.response?.type);
+            },
+        });
     }
 
     if (environments?.type === "multi") {

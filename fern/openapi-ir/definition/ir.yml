@@ -223,8 +223,12 @@ types:
     union:
       file: FileResponse
       json: JsonResponse
+      text: TextResponse
 
   FileResponse:
+    extends: WithDescription
+
+  TextResponse:
     extends: WithDescription
 
   JsonResponse:

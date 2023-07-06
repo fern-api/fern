@@ -137,6 +137,7 @@ types:
     extends: commons.WithDocs
 
   StreamingResponse:
+    extends: commons.WithDocs
     properties:
       dataEventType: StreamingResponseChunkType
       terminator: optional<string>

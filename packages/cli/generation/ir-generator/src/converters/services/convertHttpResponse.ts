@@ -29,6 +29,7 @@ export function convertHttpResponse({
 
     if (responseStream != null) {
         return HttpResponse.streaming({
+            docs: typeof responseStream !== "string" ? responseStream.docs : undefined,
             dataEventType: constructStreamingResponseChunkType(responseStream, file),
             terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined,
         });

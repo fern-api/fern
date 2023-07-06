@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { Response, StatusCode } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
@@ -42,18 +43,25 @@ export function convertResponse({
         }
 
         const convertedResponse = convertResolvedResponse({ response, context, responseBreadcrumbs });
-        if (convertedResponse?.type === "json") {
-            return {
-                value: convertedResponse,
-                errorStatusCodes,
-            };
-        } else if (convertedResponse?.type === "file") {
-            return {
-                value: convertedResponse,
-                errorStatusCodes: [],
-            };
+        if (convertedResponse != null) {
+            switch (convertedResponse.type) {
+                case "json":
+                    return {
+                        value: convertedResponse,
+                        errorStatusCodes,
+                    };
+                case "file":
+                case "text":
+                    return {
+                        value: convertedResponse,
+                        errorStatusCodes: [],
+                    };
+                default:
+                    assertNever(convertedResponse);
+            }
         }
     }
+
     return {
         value: undefined,
         errorStatusCodes,
@@ -81,12 +89,16 @@ function convertResolvedResponse({
         };
     }
 
-    const fileResponseSchema =
-        resolvedResponse.content?.[APPLICATION_OCTET_STREAM_CONTENT]?.schema ??
-        resolvedResponse.content?.[TEXT_PLAIN_CONTENT]?.schema;
-    if (fileResponseSchema != null) {
+    if (resolvedResponse.content?.[APPLICATION_OCTET_STREAM_CONTENT]?.schema != null) {
         return {
             type: "file",
+            description: resolvedResponse.description,
+        };
+    }
+
+    if (resolvedResponse.content?.[TEXT_PLAIN_CONTENT]?.schema != null) {
+        return {
+            type: "text",
             description: resolvedResponse.description,
         };
     }
