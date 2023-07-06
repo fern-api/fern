@@ -5,7 +5,7 @@ types:
       title:
         type: optional<string>
         docs: used as tab bar title, and in the navbar if no logo is defined
-      logo: optional<string>
+      logo: optional<LogoConfiguration>
       favicon: optional<string>
       colors: optional<ColorsConfiguration>
       "navbar-links": optional<list<NavbarLink>>
@@ -16,6 +16,17 @@ types:
       - PageConfiguration
       - SectionConfiguration
       - ApiSectionConfiguration
+
+  LogoConfiguration:
+    discriminated: false
+    union:
+      - string
+      - LogoInfo
+
+  LogoInfo:
+    properties:
+      path: string
+      href: string
 
   PageConfiguration:
     properties:

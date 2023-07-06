@@ -4,6 +4,31 @@ import { HeaderButton } from "./HeaderButton";
 
 export const Header: React.FC = () => {
     const { resolveFile, docsDefinition } = useDocsContext();
+    const { logo, logoHref, navbarLinks } = docsDefinition.config;
+
+    const hasLogo = logo != null;
+    const hasLogoHref = logoHref != null;
+
+    const logoContent = hasLogo && <img className="max-h-5" src={resolveFile(logo)} />;
+    const logoSection = hasLogo && (
+        <div className="flex max-h-full">
+            {hasLogoHref ? (
+                <a href={logoHref} className="flex items-center">
+                    {logoContent}
+                </a>
+            ) : (
+                <div className="flex items-center">{logoContent}</div>
+            )}
+        </div>
+    );
+
+    const navbarLinksSection = (
+        <div className="flex items-center gap-5">
+            {navbarLinks.map((navbarLink, i) => (
+                <HeaderButton key={i} navbarLink={navbarLink} />
+            ))}
+        </div>
+    );
 
     return (
         <div
@@ -13,18 +38,8 @@ export const Header: React.FC = () => {
                 "h-16"
             )}
         >
-            <div className="flex max-h-full">
-                {docsDefinition.config.logo != null && (
-                    <div className="flex items-center">
-                        <img className="max-h-5" src={resolveFile(docsDefinition.config.logo)} />
-                    </div>
-                )}
-            </div>
-            <div className="flex items-center gap-5">
-                {docsDefinition.config.navbarLinks.map((navbarLink, i) => (
-                    <HeaderButton key={i} navbarLink={navbarLink} />
-                ))}
-            </div>
+            {logoSection}
+            {navbarLinksSection}
         </div>
     );
 };
