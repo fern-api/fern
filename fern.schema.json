@@ -471,13 +471,16 @@
                       }
                     ]
                   },
-                  "stream-condition": { "type": "string" },
                   "response-stream": {
                     "anyOf": [
                       { "type": "string" },
                       {
                         "type": "object",
-                        "properties": { "type": { "type": "string" }, "terminator": { "type": "string" } },
+                        "properties": {
+                          "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                          "type": { "type": "string" },
+                          "terminator": { "type": "string" }
+                        },
                         "required": ["type"],
                         "additionalProperties": false
                       }
