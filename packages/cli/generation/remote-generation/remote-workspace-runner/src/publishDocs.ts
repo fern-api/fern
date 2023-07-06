@@ -184,13 +184,13 @@ async function convertDocsConfiguration({
         logo:
             docsDefinition.config.logo != null
                 ? await convertImageReference({
-                      imageReference: docsDefinition.config.logo,
+                      imageReference: docsDefinition.config.logo.reference,
                       docsDefinition,
                       uploadUrls,
                       context,
                   })
                 : undefined,
-        logoHref: docsDefinition.config.logoHref,
+        logoHref: docsDefinition.config.logo?.href,
         favicon:
             docsDefinition.config.favicon != null
                 ? await convertImageReference({
@@ -310,7 +310,7 @@ function getFilepathsToUpload(docsDefinition: DocsDefinition): AbsoluteFilePath[
     const filepaths: AbsoluteFilePath[] = [];
 
     if (docsDefinition.config.logo != null) {
-        filepaths.push(docsDefinition.config.logo.filepath);
+        filepaths.push(docsDefinition.config.logo.reference.filepath);
     }
 
     if (docsDefinition.config.favicon != null) {
