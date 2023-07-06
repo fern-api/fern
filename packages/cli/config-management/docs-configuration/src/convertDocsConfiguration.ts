@@ -19,20 +19,17 @@ export async function convertDocsConfiguration({
     absolutePathOfConfiguration: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<DocsConfiguration> {
+    const { navigation, colors, favicon, logo, navbarLinks, title } = rawDocsConfiguration;
     return {
-        navigation: convertNavigationConfiguration(rawDocsConfiguration.navigation, absolutePathOfConfiguration),
-        title: rawDocsConfiguration.title,
+        navigation: convertNavigationConfiguration(navigation, absolutePathOfConfiguration),
+        title,
         logo:
-            rawDocsConfiguration.logo != null
-                ? convertImageReference(rawDocsConfiguration.logo, absolutePathOfConfiguration)
+            logo != null
+                ? convertImageReference(typeof logo === "string" ? logo : logo.path, absolutePathOfConfiguration)
                 : undefined,
-        favicon:
-            rawDocsConfiguration.favicon != null
-                ? convertImageReference(rawDocsConfiguration.favicon, absolutePathOfConfiguration)
-                : undefined,
-        colors: convertColorsConfiguration(rawDocsConfiguration.colors ?? {}, context),
-        navbarLinks:
-            rawDocsConfiguration.navbarLinks != null ? convertNavbarLinks(rawDocsConfiguration.navbarLinks) : undefined,
+        favicon: favicon != null ? convertImageReference(favicon, absolutePathOfConfiguration) : undefined,
+        colors: convertColorsConfiguration(colors ?? {}, context),
+        navbarLinks: navbarLinks != null ? convertNavbarLinks(navbarLinks) : undefined,
     };
 }
 
