@@ -1,6 +1,7 @@
 import { z } from "zod";
+import { WithDocsSchema } from "./WithDocsSchema";
 
-export const HttpResponseStreamSchema = z.strictObject({
+export const HttpResponseStreamSchema = WithDocsSchema.extend({
     type: z.string(),
     terminator: z.optional(z.string()),
 });

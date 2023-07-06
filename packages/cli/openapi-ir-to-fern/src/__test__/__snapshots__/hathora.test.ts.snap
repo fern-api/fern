@@ -1186,7 +1186,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "response": {
               "docs": "Ok",
-              "type": "file",
+              "type": "text",
             },
           },
         },
@@ -1793,7 +1793,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "response": {
               "docs": "Ok",
-              "type": "file",
+              "type": "text",
             },
           },
           "GetLogsForDeployment": {
@@ -1829,7 +1829,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "response": {
               "docs": "Ok",
-              "type": "file",
+              "type": "text",
             },
           },
           "GetLogsForProcess": {
@@ -1865,7 +1865,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "response": {
               "docs": "Ok",
-              "type": "file",
+              "type": "text",
             },
           },
         },
