@@ -161,9 +161,10 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FernRegistry.ap
     };
 }
 
-function convertResponse(irResponse: Ir.http.HttpResponse): FernRegistry.api.v1.register.HttpResponse {
-    return {
-        type: Ir.http.HttpResponse._visit<FernRegistry.api.v1.register.HttpResponseBodyShape>(irResponse, {
+function convertResponse(irResponse: Ir.http.HttpResponse): FernRegistry.api.v1.register.HttpResponse | undefined {
+    const type = Ir.http.HttpResponse._visit<FernRegistry.api.v1.register.HttpResponseBodyShape | undefined>(
+        irResponse,
+        {
             fileDownload: () => FernRegistry.api.v1.register.HttpResponseBodyShape.fileDownload(),
             json: (jsonResponse) =>
                 FernRegistry.api.v1.register.HttpResponseBodyShape.reference(
@@ -173,13 +174,18 @@ function convertResponse(irResponse: Ir.http.HttpResponse): FernRegistry.api.v1.
                 if (streamingResponse.dataEventType.type === "text") {
                     return FernRegistry.api.v1.register.HttpResponseBodyShape.streamingText();
                 }
-                throw new Error("Non-text streaming response is not supported");
+                return undefined;
             },
             _unknown: () => {
                 throw new Error("Unknown HttpResponse: " + irResponse.type);
             },
-        }),
-    };
+        }
+    );
+    if (type != null) {
+        return { type };
+    } else {
+        return undefined;
+    }
 }
 
 function convertExampleEndpointCall(
