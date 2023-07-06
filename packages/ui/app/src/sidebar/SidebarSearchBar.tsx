@@ -1,7 +1,7 @@
 import { Icon } from "@blueprintjs/core";
-import { PLATFORM } from "@fern-api/core-utils";
-import dynamic from "next/dynamic";
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { type MouseEventHandler } from "react";
+import { PlatformSpecificContent } from "../commons/PlatformSpecificContent";
 
 export declare namespace SidebarSearchBar {
     export interface Props {
@@ -9,7 +9,7 @@ export declare namespace SidebarSearchBar {
     }
 }
 
-export const SidebarSearchBarCore: React.FC<SidebarSearchBar.Props> = ({ onClick }) => {
+export const SidebarSearchBar: React.FC<SidebarSearchBar.Props> = ({ onClick }) => {
     return (
         <button
             onClick={onClick}
@@ -20,15 +20,18 @@ export const SidebarSearchBarCore: React.FC<SidebarSearchBar.Props> = ({ onClick
                 <div className="text-text-muted group-hover:text-text-default transition">Search</div>
             </div>
 
-            {PLATFORM !== "other" && (
-                <div className="text-text-muted group-hover:text-text-default ml-auto text-start text-xs tracking-wide transition">
-                    {PLATFORM === "mac" ? "CMD+K" : "CTRL+K"}
-                </div>
-            )}
+            <PlatformSpecificContent>
+                {(platform) => (
+                    <div className="text-text-muted group-hover:text-text-default ml-auto text-start text-xs tracking-wide transition">
+                        {visitDiscriminatedUnion({ platform }, "platform")._visit({
+                            mac: () => "CMD+K",
+                            windows: () => "CTRL+K",
+                            other: () => null,
+                            _other: () => null,
+                        })}
+                    </div>
+                )}
+            </PlatformSpecificContent>
         </button>
     );
 };
-
-export const SidebarSearchBar = dynamic(() => Promise.resolve(SidebarSearchBarCore), {
-    ssr: false,
-});
