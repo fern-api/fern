@@ -52,13 +52,17 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                         }
                     }
 
-                    if (isRawTextType(typeReference) && location !== TypeReferenceLocation.StreamingResponse) {
-                        return [
-                            {
-                                severity: "error",
-                                message: "The text type can only be used as the response-stream.",
-                            },
-                        ];
+                    if (isRawTextType(typeReference)) {
+                        if (location === TypeReferenceLocation.StreamingResponse) {
+                            return [];
+                        } else {
+                            return [
+                                {
+                                    severity: "error",
+                                    message: "The text type can only be used as a response-stream.",
+                                },
+                            ];
+                        }
                     }
 
                     const namedTypes = getAllNamedTypes({
@@ -72,6 +76,11 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                             violations.push({
                                 severity: "error",
                                 message: "The file type can only be used as properties in inlined requests.",
+                            });
+                        } else if (namedType.parsed?.typeName != null && isRawTextType(namedType.parsed.typeName)) {
+                            violations.push({
+                                severity: "error",
+                                message: "The text type can only be used as a response-stream.",
                             });
                         } else if (!doesTypeExist(namedType)) {
                             violations.push({
