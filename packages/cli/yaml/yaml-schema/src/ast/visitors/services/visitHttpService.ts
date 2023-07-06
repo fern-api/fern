@@ -199,9 +199,13 @@ async function visitEndpoint({
                 return;
             }
             if (typeof responseStream === "string") {
-                await visitTypeReference(responseStream, [...nodePathForEndpoint, "response-stream"]);
+                await visitTypeReference(responseStream, [...nodePathForEndpoint, "response-stream"], {
+                    location: TypeReferenceLocation.StreamingResponse,
+                });
             } else {
-                await visitTypeReference(responseStream.type, [...nodePathForEndpoint, "response-stream"]);
+                await visitTypeReference(responseStream.type, [...nodePathForEndpoint, "response-stream"], {
+                    location: TypeReferenceLocation.StreamingResponse,
+                });
             }
         },
         response: async (response) => {
