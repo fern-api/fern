@@ -22,13 +22,19 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
     const { resolveTypeById } = useApiDefinitionContext();
 
     return visitDiscriminatedUnion(type, "type")._visit<JSX.Element | null>({
-        id: ({ value: typeId }) => (
-            <InternalTypeDefinition
-                key={typeId}
-                typeShape={resolveTypeById(typeId).shape}
-                isCollapsible={isCollapsible}
-            />
-        ),
+        id: ({ value: typeId }) => {
+            const typeShape = resolveTypeById(typeId).shape;
+            if (typeShape.type === "alias") {
+                return (
+                    <InternalTypeReferenceDefinitions
+                        type={typeShape.value}
+                        isCollapsible={isCollapsible}
+                        className={className}
+                    />
+                );
+            }
+            return <InternalTypeDefinition key={typeId} typeShape={typeShape} isCollapsible={isCollapsible} />;
+        },
         primitive: () => null,
         list: ({ itemType }) => (
             <ListTypeContextProvider>
