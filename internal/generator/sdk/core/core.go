@@ -98,11 +98,15 @@ func DoRequest(
 ) error {
 	var requestBody io.Reader
 	if request != nil {
-		requestBytes, err := json.Marshal(request)
-		if err != nil {
-			return err
+		if body, ok := request.(io.Reader); ok {
+			requestBody = body
+		} else {
+			requestBytes, err := json.Marshal(request)
+			if err != nil {
+				return err
+			}
+			requestBody = bytes.NewReader(requestBytes)
 		}
-		requestBody = bytes.NewReader(requestBytes)
 	}
 	req, err := newRequest(ctx, url, method, endpointHeaders, requestBody)
 	if err != nil {

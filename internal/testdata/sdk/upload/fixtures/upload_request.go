@@ -2,7 +2,7 @@
 
 package api
 
-// CreateFileRequest is an in-lined request used by the Upload endpoint.
-type CreateFileRequest struct {
+// UploadRequest is an in-lined request used by the Upload endpoint.
+type UploadRequest struct {
 	Status string `json:"status,omitempty"`
 }

@@ -511,7 +511,8 @@ func (f *fileWriter) WriteClient(
 		}
 
 		if len(endpoint.FileProperties) > 0 || len(endpoint.FileBodyProperties) > 0 {
-			f.P("writer := multipart.NewWriter(bytes.NewBuffer(nil))")
+			f.P("requestBuffer := bytes.NewBuffer(nil)")
+			f.P("writer := multipart.NewWriter(requestBuffer)")
 			for _, fileProperty := range endpoint.FileProperties {
 				var (
 					fileVariable     = fileProperty.Key.Name.CamelCase.SafeName
@@ -566,7 +567,7 @@ func (f *fileWriter) WriteClient(
 		f.P(receiver, ".httpClient,")
 		f.P("endpointURL, ")
 		f.P(endpoint.Method, ",")
-		f.P(endpoint.RequestParameterName, ",")
+		f.P(endpoint.RequestValueName, ",")
 		f.P(endpoint.ResponseParameterName, ",")
 		f.P(headersParameter, ",")
 		f.P(endpoint.ErrorDecoderParameterName, ",")
@@ -606,6 +607,7 @@ type endpoint struct {
 	PathParameterDocs         []*string
 	ImportPath                string
 	RequestParameterName      string
+	RequestValueName          string
 	ResponseType              string
 	ResponseParameterName     string
 	ResponseInitializerFormat string
@@ -665,19 +667,30 @@ func (f *fileWriter) endpointFromIR(
 	}
 
 	// Format the rest of the request parameters.
-	requestParameterName := "nil"
+	var (
+		requestParameterName = ""
+		requestValueName     = "nil"
+	)
 	if irEndpoint.SdkRequest != nil {
-		var requestType string
-		if requestBody := irEndpoint.SdkRequest.Shape.JustRequestBody; requestBody != nil {
-			requestType = typeReferenceToGoType(requestBody.RequestBodyType, f.types, f.imports, f.baseImportPath, importPath)
+		if needsRequestParameter(irEndpoint) {
+			var requestType string
+			if requestBody := irEndpoint.SdkRequest.Shape.JustRequestBody; requestBody != nil {
+				requestType = typeReferenceToGoType(requestBody.RequestBodyType, f.types, f.imports, f.baseImportPath, importPath)
+			}
+			if irEndpoint.SdkRequest.Shape.Wrapper != nil {
+				// If this is a wrapper type, it's guaranteed to be generated in the same package,
+				// so we don't need to consult its Fern filepath.
+				requestType = fmt.Sprintf("*%s", irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
+			}
+			requestParameterName = irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
+			requestValueName = requestParameterName
+			signatureParameters += fmt.Sprintf(", %s %s", requestParameterName, requestType)
 		}
-		if irEndpoint.SdkRequest.Shape.Wrapper != nil {
-			// If this is a wrapper type, it's guaranteed to be generated in the same package,
-			// so we don't need to consult its Fern filepath.
-			requestType = fmt.Sprintf("*%s", irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
+		if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.FileUpload != nil {
+			// This is a file upload request, so we prepare a buffer for the request body
+			// instead of just using the request specified by the function signature.
+			requestValueName = "requestBuffer"
 		}
-		requestParameterName = irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
-		signatureParameters += fmt.Sprintf(", %s %s", requestParameterName, requestType)
 	}
 
 	// Format all of the response values.
@@ -758,6 +771,7 @@ func (f *fileWriter) endpointFromIR(
 		PathParameterDocs:         pathParameterDocs,
 		ImportPath:                importPath,
 		RequestParameterName:      requestParameterName,
+		RequestValueName:          requestValueName,
 		ResponseType:              responseType,
 		ResponseParameterName:     responseParameterName,
 		ResponseInitializerFormat: responseInitializerFormat,
@@ -1293,6 +1307,18 @@ func formatForValueType(typeReference *ir.TypeReference) *valueTypeFormat {
 		Suffix:       suffix,
 		IsDefaultNil: typeReference.Primitive == ir.PrimitiveTypeBase64,
 	}
+}
+
+// needsRequestParameter returns true if the endpoint needs a request parameter in its
+// function signature.
+func needsRequestParameter(endpoint *ir.HttpEndpoint) bool {
+	if endpoint.SdkRequest == nil {
+		return false
+	}
+	if endpoint.RequestBody != nil {
+		return endpoint.RequestBody.FileUpload == nil || fileUploadHasBodyProperties(endpoint.RequestBody.FileUpload)
+	}
+	return true
 }
 
 // maybeDeclaredTypeName returns the declared type name associated with

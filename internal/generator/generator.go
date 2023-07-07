@@ -292,7 +292,7 @@ func (g *Generator) generateService(
 	var files []*File
 	// Generate the in-lined request types.
 	for _, irEndpoint := range irService.Endpoints {
-		if irEndpoint.SdkRequest == nil || irEndpoint.SdkRequest.Shape == nil || irEndpoint.SdkRequest.Shape.Wrapper == nil {
+		if shouldSkipRequestType(irEndpoint) {
 			// This endpoint doesn't have any in-lined request types that need to be generated.
 			continue
 		}
@@ -623,6 +623,34 @@ func generatedNamesFromIR(ir *ir.IntermediateRepresentation) map[string]struct{}
 		generatedNames[irVariable.Name.PascalCase.UnsafeName] = struct{}{}
 	}
 	return generatedNames
+}
+
+// shouldSkipRequestType returns true if the request type should not be generated.
+func shouldSkipRequestType(irEndpoint *ir.HttpEndpoint) bool {
+	if irEndpoint.SdkRequest == nil || irEndpoint.SdkRequest.Shape == nil || irEndpoint.SdkRequest.Shape.Wrapper == nil {
+		// This endpoint doesn't have any in-lined request types that need to be generated.
+		return true
+	}
+	if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.FileUpload != nil {
+		return !fileUploadHasBodyProperties(irEndpoint.RequestBody.FileUpload)
+	}
+	return false
+}
+
+// fileUploadHasBodyProperties returns true if the file upload request has at least
+// one body property.
+func fileUploadHasBodyProperties(fileUpload *ir.FileUploadRequest) bool {
+	if fileUpload == nil {
+		return false
+	}
+	// If this request is a file upload, there must be at least one body property
+	// in order for us to generate the in-lined request type.
+	for _, property := range fileUpload.Properties {
+		if property.BodyProperty != nil {
+			return true
+		}
+	}
+	return false
 }
 
 // pointerFunctionNames enumerates all of the pointer function names.
