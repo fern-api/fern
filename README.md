@@ -60,7 +60,7 @@ Generating API documentation is part of our cloud offering. If you're interested
 
 We have designed Fern to complement existing OpenAPI toolchains and workflows, rather than replace them. We believe OpenAPI does a good job at as a declarative standard for defining APIs, but at times it is too verbose and complex, which reduces the quality of generated code.
 
-We've built [our own format](https://buildwithfern.com/docs/definition) that we believe to be easier to work with. Feel free to use either OpenAPI or the Fern specification - the Fern toolchain is fully compatible with btoh!
+We've built [our own format](https://buildwithfern.com/docs/definition) that we believe to be easier to work with. Feel free to use either OpenAPI or the Fern specification - the Fern toolchain is fully compatible with both!
 
 If you want to read more about how the Fern specification and OpenAPI differ, read [﻿Fern vs. OpenAPI](https://buildwithfern.com/docs/comparison-with-openapi) for an in-depth comparison.
 
