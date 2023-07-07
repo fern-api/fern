@@ -239,7 +239,7 @@ These are some real world examples of Fern generating documentation and SDKs use
 You can run the compiler by running the `generate` command:
 
 ```
-fern generate [--group <group>] [--version <version>]
+fern generate [--group <group>] [--version <version>] [--local [--keepDocker]]
 ```
 
 It will validate your API and run the generators specified in `generators.yml`.
