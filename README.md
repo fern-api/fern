@@ -188,7 +188,7 @@ See [Generators](https://buildwithfern.com/docs/compiler/generators) for the ful
 
 ## Generating code
 
-By default, all code generated in the cloud, so you don't have to worry about installing all the requisite tools locally. Before you can start generating files, you'll need to log in:
+By default, all code is generated in the cloud, so you don't have to worry about installing all the requisite tools locally. Before you can start generating files, you'll need to log in:
 
 ```
 fern login
