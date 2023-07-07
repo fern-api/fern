@@ -150,9 +150,15 @@ func DoRequest(
 
 	// Mutate the response parameter in-place.
 	if response != nil {
-		decoder := json.NewDecoder(resp.Body)
-		if err := decoder.Decode(response); err != nil {
-			return err
+		if writer, ok := response.(io.Writer); ok {
+			if _, err := io.Copy(writer, resp.Body); err != nil {
+				return err
+			}
+		} else {
+			decoder := json.NewDecoder(resp.Body)
+			if err := decoder.Decode(response); err != nil {
+				return err
+			}
 		}
 	}
 

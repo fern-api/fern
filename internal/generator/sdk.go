@@ -703,18 +703,25 @@ func (f *fileWriter) endpointFromIR(
 		errorReturnValues         string
 	)
 	if irEndpoint.Response != nil {
-		if irEndpoint.Response.Json == nil {
-			return nil, fmt.Errorf("the SDK generator only supports JSON-based responses, but found %q", irEndpoint.Response.Type)
+		if irEndpoint.Response.Json != nil {
+			responseType = typeReferenceToGoType(irEndpoint.Response.Json.ResponseBodyType, f.types, f.imports, f.baseImportPath, importPath)
+			responseInitializerFormat = "var response %s"
+			if named := maybeDeclaredTypeName(irEndpoint.Response.Json.ResponseBodyType); named != nil && isPointer(f.types[named.TypeId]) {
+				responseInitializerFormat = "response := new(%s)"
+			}
+			responseParameterName = "&response"
+			signatureReturnValues = fmt.Sprintf("(%s, error)", responseType)
+			successfulReturnValues = "response, nil"
+			errorReturnValues = "response, err"
 		}
-		responseType = typeReferenceToGoType(irEndpoint.Response.Json.ResponseBodyType, f.types, f.imports, f.baseImportPath, importPath)
-		responseInitializerFormat = "var response %s"
-		if named := maybeDeclaredTypeName(irEndpoint.Response.Json.ResponseBodyType); named != nil && isPointer(f.types[named.TypeId]) {
-			responseInitializerFormat = "response := new(%s)"
+		if irEndpoint.Response.FileDownload != nil {
+			responseType = "bytes.NewBuffer(nil)"
+			responseInitializerFormat = "response := %s"
+			responseParameterName = "response"
+			signatureReturnValues = "(io.Writer, error)"
+			successfulReturnValues = "response, nil"
+			errorReturnValues = "nil, err"
 		}
-		responseParameterName = "&response"
-		signatureReturnValues = fmt.Sprintf("(%s, error)", responseType)
-		successfulReturnValues = "response, nil"
-		errorReturnValues = "response, err"
 	} else {
 		responseParameterName = "nil"
 		signatureReturnValues = "error"

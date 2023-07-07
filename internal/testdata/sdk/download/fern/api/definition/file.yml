@@ -1,0 +1,10 @@
+service:
+  base-path: /file
+  auth: false
+  endpoints:
+    download:
+      path: /{filename}/download
+      method: GET
+      path-parameters:
+        filename: string
+      response: file
