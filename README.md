@@ -186,7 +186,7 @@ groups:
 
 See [Generators](https://buildwithfern.com/docs/compiler/generators) for the full list of available generators.
 
-## Generating code
+## Generating Code
 
 By default, all code is generated in the cloud, so you don't have to worry about installing all the requisite tools locally. Before you can start generating files, you'll need to log in:
 
@@ -246,7 +246,7 @@ It will validate your API and run the generators specified in `generators.yml`.
 
 #### Grouping
 
-In `genrators.yml`, you can split up your generators into groups.
+In `generators.yml`, you can split up your generators into groups:
 
 ```yaml
 groups:
@@ -262,16 +262,18 @@ groups:
 
 This is often useful if you want to generate SDKs for internal use and external use. You can run `fern generate --group internal` on every commit, and `fern generate --group external` when you publish a release.
 
-#### Versions
+#### Options
 
-You can specify a version using the `--version` option. This version string is used when publishing SDKs to registries (e.g. npm).
+The following options are available for `fern generate`:
 
-#### Local Generation
+| Option               | Description                                                                                                                                                         |
+|----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `--version <string>` | Used when publishing SDKs to registries (e.g. npm).                                                                                                                 |
+| `--local`            | Generation runs in the cloud by default. If you want to run it on your local machine, you can use this option, which will run each generator in a Docker container. |
+| `--keepDocker`       | To be used in tandem with `--local` - preserves the Docker container after running.                                                                                 |
+| `--group <string>`   | Specifies the group of generators to run.                                                                                                                           |
 
-Generation runs in the cloud by default. If you want to run it on your local machine, you can use the `--local` option. This will run each generator in a Docker container.
-By default, Fern will delete the container after running. To keep the container around (e.g. to look at the generator's logs), use the `--keepDocker` option.
-
-#### Other Commands
+#### Commands
 
 | Command         | Description                                                                                                                                                                                                     |
 | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -279,6 +281,7 @@ By default, Fern will delete the container after running. To keep the container 
 | `fern check`    | Runs validation on the current workspace, ensuring all specifications are valid.                                                                                                                                |
 | `fern add`      | Adds a generator to the Fern compiler. You can view the full list of supported generators in our [docs](https://www.buildwithfern.com/docs/compiler/generators).                                                |
 | `fern register` | _Advanced feature_ allowing for the registration of dependent APIs, i.e APIs that depend on this API to function. Read more in our [docs](https://www.buildwithfern.com/docs/advanced/depending-on-other-apis). |
+
 
 ## Documentation
 
