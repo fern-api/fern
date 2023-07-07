@@ -1,3 +1,6 @@
+imports:
+  examples: examples.yml
+
 types:
   FileId:
     docs: ID uniquely identifying an OpenAPI file.
@@ -150,6 +153,7 @@ types:
       response: optional<Response>
       errorStatusCode: list<StatusCode>
       server: list<Server>
+      example: list<examples.ExampleEndpointCall>
 
   EndpointSdkName:
     properties:

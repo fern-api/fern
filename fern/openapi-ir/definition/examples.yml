@@ -1,0 +1,50 @@
+types:
+  ExampleEndpointCall:
+    properties:
+      request: ExampleEndpointRequest
+      response: ExampleEndpointResponse
+
+  ExampleEndpointRequest:
+    properties:
+      url:
+        type: string
+        docs: Does not include query parameters
+      queryParameters: ExampleQueryParameter
+      pathParameters: ExamplePathParameter
+      headers: ExampleHeader
+      body: Value
+
+  ExampleEndpointResponse:
+    properties:
+      body: Value
+
+  Value:
+    union:
+      list: list<PrimitiveValue>
+      map: map<string, Value>
+      primitive: PrimitiveValue
+      object: map<string, Value>
+      enum: string
+      unkown: unknown
+
+  PrimitiveValue:
+    union:
+      integer: integer
+      double: double
+      string: string
+      boolean: boolean
+
+  ExampleQueryParameter:
+    properties:
+      key: string
+      value: PrimitiveValue
+
+  ExamplePathParameter:
+    properties:
+      key: string
+      value: PrimitiveValue
+
+  ExampleHeader:
+    properties:
+      key: string
+      value: PrimitiveValue
