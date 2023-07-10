@@ -17,7 +17,7 @@
 
 Fern is an open source toolkit for designing, building, and consuming REST APIs. With Fern, you can generate client libraries, API documentation and boilerplate for your backend server.
 
-:battery: Fern is **fully compatible with OpenAPI.** You can use your existing OpenAPI spec to generate code and documentation with Fern. If you're not a fan of OpenAPI, you can also use Fern's [simpler format](#the-fern-specification) to define your API.
+Fern is **fully compatible with OpenAPI.** You can use your existing OpenAPI spec to generate code and documentation with Fern. If you're not a fan of OpenAPI, you can also use Fern's [simpler format](#the-fern-specification) to define your API.
 
 # Capabilities
 
@@ -56,7 +56,7 @@ Fern provides first class support for generating documentation, ranging from [fu
 
 Generating API documentation is part of our cloud offering. If you're interested in trying out this service, [get in touch!](mailto:hey@buildwithfern.com)
 
-## The Fern specification
+## Fern and OpenAPI
 
 We have designed Fern to complement existing OpenAPI toolchains and workflows, rather than replace them. We believe OpenAPI does a good job at as a declarative standard for defining APIs, but at times it is too verbose and complex, which reduces the quality of generated code.
 
@@ -186,7 +186,7 @@ groups:
 
 See [Generators](https://buildwithfern.com/docs/compiler/generators) for the full list of available generators.
 
-## Generating code
+## Generating Code
 
 By default, all code is generated in the cloud, so you don't have to worry about installing all the requisite tools locally. Before you can start generating files, you'll need to log in:
 
@@ -234,7 +234,7 @@ These are some real world examples of Fern generating documentation and SDKs use
 - [Vellum Docs](https://docs.vellum.ai/api-reference/generate)
 - [Flipt Java SDK](https://github.com/flipt-io/flipt-java)
 
-# CLI reference
+# CLI Reference
 
 ## `fern generate`
 
@@ -244,7 +244,7 @@ fern generate [--group <group>] [--version <version>] [--local [--keepDocker]]
 
 This will validate your API and run the generators specified in `generators.yml`.
 
-#### `--group`
+`--group`
 
 In `genrators.yml`, you can split up your generators into groups.
 
@@ -262,11 +262,11 @@ groups:
 
 This is often useful if you want to generate SDKs for internal use and external use. You can run `fern generate --group internal` on every commit, and `fern generate --group external` when you cut a release.
 
-#### `--version`
+`--version`
 
 You can specify a version using the `--version` option. This version string is used when publishing SDKs to registries (e.g. npm).
 
-#### `--local`
+`--local`
 
 Generation runs in the cloud by default. If you want to run it on your local machine, you can use the `--local` option. This will run each generator in a Docker container.
 By default, Fern will delete the container after running. To keep the container around (e.g. to look at the generator's logs), use the `--keepDocker` option.
@@ -279,7 +279,7 @@ fern init [--openapi <openapi spec>]
 
 This will initialize a new Fern project with a default Fern specification.
 
-#### `--openapi`
+`--openapi`
 
 If you specify a path or URL to an OpenAPI spec, Fern will initialize an OpenAPI workspace.
 
@@ -291,18 +291,18 @@ fern check
 
 This will validate that your workspace is set up correctly and that your API definition is valid.
 
-# Documentation
+## Documentation
 
 Our full documentation can be found [here](https://www.buildwithfern.com/docs).
 
-# Community
+## Community
 
 [Join our Discord!](https://discord.com/invite/JkkXumPzcG) We are always here to answer questions and help you get the most use out of Fern.
 
-# Contributing
+## Contributing
 
 We highly value community contributions. See our [CONTRIBUTING.md](/CONTRIBUTING.md) document for more info on how you can contribute!
 
-# Attribution
+## Attribution
 
 Thanks to the folks at [Twemoji](https://twemoji.twitter.com/), an open source project, who created the graphic that we use as our logo.
