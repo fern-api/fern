@@ -21,4 +21,5 @@ service:
           X-Endpoint-Optional-Date-Header: optional<date>
           X-Endpoint-Optional-Datetime-Header: optional<datetime>
           X-Endpoint-Optional-Bytes-Header: optional<base64>
+          X-Endpoint-Fern-Header: literal<"fern">
       response: string

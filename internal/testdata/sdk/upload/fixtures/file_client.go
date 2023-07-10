@@ -57,6 +57,9 @@ func (f *fileClient) Upload(ctx context.Context, file io.Reader, request *Upload
 	if _, err := io.Copy(filePart, file); err != nil {
 		return response, err
 	}
+	if err := writer.WriteField("fern", fmt.Sprintf("%v", "fern")); err != nil {
+		return response, err
+	}
 	var statusDefaultValue string
 	if request.Status != statusDefaultValue {
 		if err := writer.WriteField("status", fmt.Sprintf("%v", request.Status)); err != nil {

@@ -81,6 +81,7 @@ func (u *userClient) SetName(ctx context.Context, userId string, request *SetNam
 	if request.XEndpointOptionalBytesHeader != xEndpointOptionalBytesHeaderDefaultValue {
 		headers.Add("X-Endpoint-Optional-Bytes-Header", fmt.Sprintf("%v", base64.StdEncoding.EncodeToString(*request.XEndpointOptionalBytesHeader)))
 	}
+	headers.Add("X-Endpoint-Fern-Header", fmt.Sprintf("%v", "fern"))
 
 	var response string
 	if err := core.DoRequest(

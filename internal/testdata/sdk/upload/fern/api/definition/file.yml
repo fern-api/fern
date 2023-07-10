@@ -9,6 +9,7 @@ service:
         name: UploadRequest
         body:
           properties:
+            fern: literal<"fern">
             status: string
             file: file
       response: string

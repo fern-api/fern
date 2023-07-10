@@ -17,7 +17,6 @@ type ClientOptions struct {
 	BaseURL    string
 	HTTPClient HTTPClient
 	HTTPHeader http.Header
-	Custom     string
 }
 
 // NewClientOptions returns a new *ClientOptions value.
@@ -34,9 +33,6 @@ func NewClientOptions() *ClientOptions {
 // on every request.
 func (c *ClientOptions) ToHeader() http.Header {
 	header := c.HTTPHeader
-	var authCustomValue string
-	if c.Custom != authCustomValue {
-		header.Set("X-API-Key", fmt.Sprintf("%v", c.Custom))
-	}
+	header.Set("X-API-Key", fmt.Sprintf("%v", "fern"))
 	return header
 }

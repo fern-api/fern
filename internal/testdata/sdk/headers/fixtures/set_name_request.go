@@ -19,4 +19,9 @@ type SetNameRequest struct {
 	XEndpointOptionalDateHeader     *time.Time `json:"-"`
 	XEndpointOptionalDatetimeHeader *time.Time `json:"-"`
 	XEndpointOptionalBytesHeader    *[]byte    `json:"-"`
+	xEndpointFernHeader             string
+}
+
+func (s *SetNameRequest) XEndpointFernHeader() string {
+	return s.xEndpointFernHeader
 }

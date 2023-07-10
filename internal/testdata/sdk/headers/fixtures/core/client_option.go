@@ -90,5 +90,6 @@ func (c *ClientOptions) ToHeader() http.Header {
 	if c.XApiOptionalBytes != headerXApiOptionalBytesValue {
 		header.Set("X-API-Optional-Bytes", fmt.Sprintf("%v", base64.StdEncoding.EncodeToString(*c.XApiOptionalBytes)))
 	}
+	header.Set("X-API-Fern-Header", fmt.Sprintf("%v", "fern"))
 	return header
 }

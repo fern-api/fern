@@ -45,6 +45,10 @@ func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth, headers []*i
 			f.P("Password string")
 		}
 		if authScheme.Header != nil {
+			if authScheme.Header.ValueType.Container != nil && authScheme.Header.ValueType.Container.Literal != nil {
+				// We don't want to generate a client option for literal values.
+				continue
+			}
 			f.P(
 				authScheme.Header.Name.Name.PascalCase.UnsafeName,
 				" ",
@@ -53,6 +57,10 @@ func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth, headers []*i
 		}
 	}
 	for _, header := range headers {
+		if header.ValueType.Container != nil && header.ValueType.Container.Literal != nil {
+			// We don't want to generate a client option for literal values.
+			continue
+		}
 		f.P(
 			header.Name.Name.PascalCase.UnsafeName,
 			" ",
@@ -103,6 +111,10 @@ func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth, headers []*i
 			if header.Prefix != nil {
 				prefix = *header.Prefix + " "
 			}
+			if isLiteral := (header.ValueType.Container != nil && header.ValueType.Container.Literal != nil); isLiteral {
+				f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, literalToValue(header.ValueType.Container.Literal), "))")
+				continue
+			}
 			valueTypeFormat := formatForValueType(header.ValueType)
 			value := valueTypeFormat.Prefix + "c." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
 			if valueTypeFormat.IsDefaultNil {
@@ -118,6 +130,10 @@ func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth, headers []*i
 		}
 	}
 	for _, header := range headers {
+		if isLiteral := (header.ValueType.Container != nil && header.ValueType.Container.Literal != nil); isLiteral {
+			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v",`, literalToValue(header.ValueType.Container.Literal), "))")
+			continue
+		}
 		valueTypeFormat := formatForValueType(header.ValueType)
 		value := valueTypeFormat.Prefix + "c." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
 		if valueTypeFormat.IsDefaultNil {
@@ -248,6 +264,10 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 			f.P()
 		}
 		if authScheme.Header != nil {
+			if authScheme.Header.ValueType.Container != nil && authScheme.Header.ValueType.Container.Literal != nil {
+				// We don't want to generate a client option for literal values.
+				continue
+			}
 			var (
 				optionName = fmt.Sprintf("ClientWithAuth%s", authScheme.Header.Name.Name.PascalCase.UnsafeName)
 				field      = authScheme.Header.Name.Name.PascalCase.UnsafeName
@@ -269,6 +289,10 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 	}
 
 	for _, header := range headers {
+		if header.ValueType.Container != nil && header.ValueType.Container.Literal != nil {
+			// We don't want to generate a client option for literal values.
+			continue
+		}
 		var (
 			optionName = fmt.Sprintf("ClientWithHeader%s", header.Name.Name.PascalCase.UnsafeName)
 			field      = header.Name.Name.PascalCase.UnsafeName
@@ -439,6 +463,8 @@ func (f *fileWriter) WriteClient(
 					f.P("for _, value := range ", endpoint.RequestParameterName, ".", queryParameter.Name.Name.PascalCase.UnsafeName, "{")
 					f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
 					f.P("}")
+				} else if isLiteral := (queryParameter.ValueType.Container != nil && queryParameter.ValueType.Container.Literal != nil); isLiteral {
+					f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, literalToValue(queryParameter.ValueType.Container.Literal), "))")
 				} else {
 					requestField := valueTypeFormat.Prefix + endpoint.RequestParameterName + "." + queryParameter.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
 					if valueTypeFormat.IsDefaultNil {
@@ -467,12 +493,16 @@ func (f *fileWriter) WriteClient(
 				requestField := valueTypeFormat.Prefix + endpoint.RequestParameterName + "." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
 				if valueTypeFormat.IsDefaultNil {
 					f.P("if ", endpoint.RequestParameterName, ".", header.Name.Name.PascalCase.UnsafeName, "!= nil {")
+					f.P(`headers.Add("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
+					f.P("}")
+				} else if isLiteral := (header.ValueType.Container != nil && header.ValueType.Container.Literal != nil); isLiteral {
+					f.P(`headers.Add("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, literalToValue(header.ValueType.Container.Literal), "))")
 				} else {
 					f.P("var ", header.Name.Name.CamelCase.SafeName, "DefaultValue ", headerType)
 					f.P("if ", endpoint.RequestParameterName, ".", header.Name.Name.PascalCase.UnsafeName, "!= ", header.Name.Name.CamelCase.SafeName, "DefaultValue {")
+					f.P(`headers.Add("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
+					f.P("}")
 				}
-				f.P(`headers.Add("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
-				f.P("}")
 			}
 			headersParameter = "headers"
 		}
@@ -540,6 +570,12 @@ func (f *fileWriter) WriteClient(
 			}
 
 			for _, fileBodyProperty := range endpoint.FileBodyProperties {
+				if isLiteral := (fileBodyProperty.ValueType.Container != nil && fileBodyProperty.ValueType.Container.Literal != nil); isLiteral {
+					f.P(`if err := writer.WriteField("`, fileBodyProperty.Name.WireValue, `", fmt.Sprintf("%v", `, literalToValue(fileBodyProperty.ValueType.Container.Literal), ")); err != nil {")
+					f.P("return ", endpoint.ErrorReturnValues)
+					f.P("}")
+					continue
+				}
 				propertyType := typeReferenceToGoType(fileBodyProperty.ValueType, f.types, f.imports, f.baseImportPath, endpoint.ImportPath)
 				valueTypeFormat := formatForValueType(fileBodyProperty.ValueType)
 				requestField := valueTypeFormat.Prefix + endpoint.RequestParameterName + "." + fileBodyProperty.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
@@ -878,10 +914,21 @@ func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *i
 		importPath = fernFilepathToImportPath(f.baseImportPath, fernFilepath)
 	)
 
+	var literals []*literal
 	f.P("// ", typeName, " is an in-lined request used by the ", endpoint.Name.PascalCase.UnsafeName, " endpoint.")
 	f.P("type ", typeName, " struct {")
 	for _, header := range endpoint.Headers {
 		f.WriteDocs(header.Docs)
+		if header.ValueType.Container != nil && header.ValueType.Container.Literal != nil {
+			literals = append(
+				literals,
+				&literal{
+					Name:  header.Name.Name,
+					Value: header.ValueType.Container.Literal,
+				},
+			)
+			continue
+		}
 		f.P(header.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, importPath), " `json:\"-\"`")
 	}
 	for _, queryParam := range endpoint.QueryParameters {
@@ -890,21 +937,43 @@ func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *i
 			value = fmt.Sprintf("[]%s", value)
 		}
 		f.WriteDocs(queryParam.Docs)
+		if queryParam.ValueType.Container != nil && queryParam.ValueType.Container.Literal != nil {
+			literals = append(
+				literals,
+				&literal{
+					Name:  queryParam.Name.Name,
+					Value: queryParam.ValueType.Container.Literal,
+				},
+			)
+			continue
+		}
 		f.P(queryParam.Name.Name.PascalCase.UnsafeName, " ", value, " `json:\"-\"`")
 	}
 	if endpoint.RequestBody == nil {
 		// If the request doesn't have a body, we don't need any custom [de]serialization logic.
+		for _, literal := range literals {
+			f.P(literal.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
+		}
 		f.P("}")
 		f.P()
+		for _, literal := range literals {
+			f.P("func (", receiver, " *", typeName, ") ", literal.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
+			f.P("return ", receiver, ".", literal.Name.CamelCase.SafeName)
+			f.P("}")
+			f.P()
+		}
 		return nil
 	}
-	literals, err := requestBodyToFieldDeclaration(endpoint.RequestBody, f, importPath, bodyField)
+	fieldLiterals, err := requestBodyToFieldDeclaration(endpoint.RequestBody, f, importPath, bodyField)
 	if err != nil {
 		return err
 	}
+	literals = append(literals, fieldLiterals...)
+	for _, literal := range literals {
+		f.P(literal.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
+	}
 	f.P("}")
 	f.P()
-
 	// Implement the getter methods.
 	for _, literal := range literals {
 		f.P("func (", receiver, " *", typeName, ") ", literal.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")

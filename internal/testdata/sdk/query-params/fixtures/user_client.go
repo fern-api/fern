@@ -44,6 +44,7 @@ func (u *userClient) GetAllUsers(ctx context.Context, request *GetAllUsersReques
 	if request.Limit != limitDefaultValue {
 		queryParams.Add("limit", fmt.Sprintf("%v", *request.Limit))
 	}
+	queryParams.Add("key", fmt.Sprintf("%v", "fern"))
 	if len(queryParams) > 0 {
 		endpointURL += "?" + queryParams.Encode()
 	}

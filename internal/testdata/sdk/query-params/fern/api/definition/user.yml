@@ -12,4 +12,5 @@ service:
           X-Endpoint-Header: string
         query-parameters:
           limit: optional<integer>
+          key: literal<"fern">
       response: string

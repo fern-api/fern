@@ -3,4 +3,4 @@ auth: custom
 auth-schemes:
   custom:
     header: X-API-Key
-    type: string
+    type: literal<"fern">
