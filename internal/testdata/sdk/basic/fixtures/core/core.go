@@ -11,9 +11,6 @@ import (
 )
 
 const (
-	// acceptHeader is the Accept header.
-	acceptHeader = "Accept"
-
 	// contentType specifies the JSON Content-Type header value.
 	contentType       = "application/json"
 	contentTypeHeader = "Content-Type"
@@ -34,7 +31,6 @@ const (
 // fernHeaders specifies all of the standard Fern headers in
 // a set so that they're easier to access and reference.
 var fernHeaders = map[string]string{
-	acceptHeader:         contentType,
 	contentTypeHeader:    contentType,
 	fernLanguageHeader:   fernLanguage,
 	fernSDKNameHeader:    fernSDKName,
