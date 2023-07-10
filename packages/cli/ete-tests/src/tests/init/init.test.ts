@@ -40,7 +40,7 @@ describe("fern init", () => {
     }, 60_000);
 
     it("init openapi url", async () => {
-        const pathOfDirectory = await init({ openApiArg: "https://api.texel.ai/openapi.json" });
+        const pathOfDirectory = await init({ openApiArg: "https://petstore3.swagger.io/api/v3/openapi.json" });
         expect(await getDirectoryContents(pathOfDirectory)).toMatchSnapshot();
     }, 60_000);
 });
