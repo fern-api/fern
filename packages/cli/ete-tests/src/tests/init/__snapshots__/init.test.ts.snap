@@ -198,949 +198,822 @@ groups:
               {
                 "contents": "openapi: 3.0.2
 info:
-  title: Texel API
-  version: 0.1.0
+  title: Swagger Petstore - OpenAPI 3.0
+  description: >-
+    This is a sample Pet Store Server based on the OpenAPI 3.0 specification. 
+    You can find out more about
+
+    Swagger at [http://swagger.io](http://swagger.io). In the third iteration of
+    the pet store, we've switched to the design first approach!
+
+    You can now help us improve the API whether it's by making changes to the
+    definition itself or to the code.
+
+    That way, with time, we can improve the API in general, and expose some of
+    the new features in OAS3.
+
+
+    Some useful links:
+
+    - [The Pet Store
+    repository](https://github.com/swagger-api/swagger-petstore)
+
+    - [The source API definition for the Pet
+    Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.17
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: /api/v3
+tags:
+  - name: pet
+    description: Everything about your Pets
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+  - name: store
+    description: Access to Petstore orders
+    externalDocs:
+      description: Find out more about our store
+      url: http://swagger.io
+  - name: user
+    description: Operations about user
 paths:
-  /dreambooth/status/{job_id}:
+  /pet:
+    put:
+      tags:
+        - pet
+      summary: Update an existing pet
+      description: Update an existing pet by Id
+      operationId: updatePet
+      requestBody:
+        description: Update an existent pet in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Pet'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Pet'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Pet'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Pet not found
+        '405':
+          description: Validation exception
+      security:
+        - petstore_auth:
+            - write:pets
+            - read:pets
+    post:
+      tags:
+        - pet
+      summary: Add a new pet to the store
+      description: Add a new pet to the store
+      operationId: addPet
+      requestBody:
+        description: Create a new pet in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Pet'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Pet'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Pet'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:pets
+            - read:pets
+  /pet/findByStatus:
     get:
       tags:
-        - dreambooth
-      summary: Status
-      operationId: status_dreambooth_status__job_id__get
+        - pet
+      summary: Finds Pets by status
+      description: Multiple status values can be provided with comma separated strings
+      operationId: findPetsByStatus
       parameters:
-        - required: true
+        - name: status
+          in: query
+          description: Status values that need to be considered for filter
+          required: false
+          explode: true
           schema:
-            title: Job Id
-          name: job_id
-          in: path
+            type: string
+            default: available
+            enum:
+              - available
+              - pending
+              - sold
       responses:
         '200':
-          description: Successful Response
+          description: successful operation
           content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pet'
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pet'
+        '400':
+          description: Invalid status value
       security:
-        - HTTPBearer: []
-  /dreambooth/result/{job_id}:
+        - petstore_auth:
+            - write:pets
+            - read:pets
+  /pet/findByTags:
     get:
       tags:
-        - dreambooth
-      summary: Result
-      operationId: result_dreambooth_result__job_id__get
+        - pet
+      summary: Finds Pets by tags
+      description: >-
+        Multiple tags can be provided with comma separated strings. Use tag1,
+        tag2, tag3 for testing.
+      operationId: findPetsByTags
       parameters:
-        - required: true
+        - name: tags
+          in: query
+          description: Tags to filter by
+          required: false
+          explode: true
           schema:
-            title: Job Id
-          name: job_id
-          in: path
+            type: array
+            items:
+              type: string
       responses:
         '200':
-          description: Successful Response
+          description: successful operation
           content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pet'
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pet'
+        '400':
+          description: Invalid tag value
       security:
-        - HTTPBearer: []
-  /dreambooth/inference:
-    post:
-      tags:
-        - dreambooth
-      summary: Run inference with a dreambooth model
-      description: >-
-        Run inference on a pretrained model. The status of the job can be
-        checked using the job_id.
-      operationId: inference_dreambooth_inference_post
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/InferenceRequest'
-        required: true
-      responses:
-        '201':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DreamboothResponse'
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - HTTPBearer: []
-  /dreambooth/train:
-    post:
-      tags:
-        - dreambooth
-      summary: Train a dreambooth model with instance images
-      description: >-
-        Train a new model using the provided local images and prompts. The model
-        will be trained asynchronously and the response will contain a job_id.
-        The status of the job can be checked using the job_id.
-      operationId: train_dreambooth_train_post
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DreamboothTrainRequest'
-        required: true
-      responses:
-        '201':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DreamboothResponse'
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - HTTPBearer: []
-  /dreambooth/train_v2:
-    post:
-      tags:
-        - dreambooth
-      summary: Train a dreambooth model with URL images
-      description: >-
-        Train a new model using the provided images URL and prompts. The model
-        will be trained asynchronously and the response will contain a job_id.
-        The status of the job can be checked using the job_id.
-      operationId: train_v2_dreambooth_train_v2_post
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DreamboothTrainRequestV2'
-        required: true
-      responses:
-        '201':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DreamboothResponse'
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - HTTPBearer: []
-  /video_encoder/status/{job_id}:
+        - petstore_auth:
+            - write:pets
+            - read:pets
+  /pet/{petId}:
     get:
       tags:
-        - video encoder
-      summary: Get job status using job id
-      operationId: status_video_encoder_status__job_id__get
+        - pet
+      summary: Find pet by ID
+      description: Returns a single pet
+      operationId: getPetById
       parameters:
-        - required: true
-          schema:
-            title: Job Id
-          name: job_id
+        - name: petId
           in: path
+          description: ID of pet to return
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
         '200':
-          description: Successful Response
+          description: successful operation
           content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Pet'
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: '#/components/schemas/Pet'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Pet not found
       security:
-        - HTTPBearer: []
-  /video_encoder/status_client_id/{client_id}:
-    get:
+        - api_key: []
+        - petstore_auth:
+            - write:pets
+            - read:pets
+    post:
       tags:
-        - video encoder
-      summary: Get job status using client id
-      operationId: status_client_id_video_encoder_status_client_id__client_id__get
+        - pet
+      summary: Updates a pet in the store with form data
+      description: ''
+      operationId: updatePetWithForm
       parameters:
-        - required: true
-          schema:
-            title: Client Id
-          name: client_id
+        - name: petId
           in: path
+          description: ID of pet that needs to be updated
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: name
+          in: query
+          description: Name of pet that needs to be updated
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Status of pet that needs to be updated
+          schema:
+            type: string
       responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+        '405':
+          description: Invalid input
       security:
-        - HTTPBearer: []
-  /video_encoder/encode:
-    post:
+        - petstore_auth:
+            - write:pets
+            - read:pets
+    delete:
       tags:
-        - video encoder
-      summary: Encode
-      operationId: encode_video_encoder_encode_post
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/VideoEncoderRequest'
-        required: true
-      responses:
-        '201':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - HTTPBearer: []
-  /stable_diffusion/:
-    post:
-      tags:
-        - Stable Diffusion
-      summary: Run a prompt through Stable Diffusion
-      description: >-
-        Provide a prompt and optionally a negative prompt. The input will be run
-        through Stable Diffusion to return an output image.
-      operationId: infer_stable_diffusion__post
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/routers__stable_diffusion__Prompt'
-        required: true
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - HTTPBearer: []
-  /esm/:
-    post:
-      tags:
-        - ESM
-      summary: Run a protein sequence through esmfold
-      description: Provide a protein sequence. The result will be returned as a pdb
-      operationId: infer_esm__post
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ProteinRequest'
-        required: true
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - HTTPBearer: []
-  /v1/embeddings/:
-    post:
-      tags:
-        - Embeddings
-      summary: Generate embeddings for a text string given a model
-      description: Provide a text string and model as input to generate embeddings.
-      operationId: createEmbedding
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EmbeddingRequest'
-        required: true
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - HTTPBearer: []
-  /unity_server/status/{job_id}:
-    get:
-      tags:
-        - Unity server
-      summary: Get job status using job id
-      operationId: status_unity_server_status__job_id__get
+        - pet
+      summary: Deletes a pet
+      description: ''
+      operationId: deletePet
       parameters:
-        - required: true
+        - name: api_key
+          in: header
+          description: ''
+          required: false
           schema:
-            title: Job Id
-          name: job_id
+            type: string
+        - name: petId
           in: path
+          description: Pet id to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
       responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+        '400':
+          description: Invalid pet value
       security:
-        - HTTPBearer: []
-  /unity_server/start:
+        - petstore_auth:
+            - write:pets
+            - read:pets
+  /pet/{petId}/uploadImage:
     post:
       tags:
-        - Unity server
-      summary: Start
-      operationId: start_unity_server_start_post
+        - pet
+      summary: uploads an image
+      description: ''
+      operationId: uploadFile
+      parameters:
+        - name: petId
+          in: path
+          description: ID of pet to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: additionalMetadata
+          in: query
+          description: Additional Metadata
+          required: false
+          schema:
+            type: string
       requestBody:
         content:
-          application/json:
+          application/octet-stream:
             schema:
-              $ref: '#/components/schemas/UnityServerRequest'
-        required: true
-      responses:
-        '201':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-        - HTTPBearer: []
-  /v1/completions/:
-    post:
-      tags:
-        - Completions
-      summary: Creates a completion for the provided prompt and parameters.
-      description: >-
-        Given a prompt, the model will return one or more predicted completions,
-        and can also return the probabilities of alternative tokens at each
-        position.
-      operationId: createCompletion
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CompletionsRequest'
-        required: true
+              type: string
+              format: binary
       responses:
         '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
+          description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/HTTPValidationError'
+                $ref: '#/components/schemas/ApiResponse'
       security:
-        - HTTPBearer: []
-  /:
+        - petstore_auth:
+            - write:pets
+            - read:pets
+  /store/inventory:
     get:
-      summary: Root
-      operationId: root__get
+      tags:
+        - store
+      summary: Returns pet inventories by status
+      description: Returns a map of status codes to quantities
+      operationId: getInventory
       responses:
         '200':
-          description: Successful Response
+          description: successful operation
           content:
             application/json:
-              schema: {}
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  format: int32
+      security:
+        - api_key: []
+  /store/order:
+    post:
+      tags:
+        - store
+      summary: Place an order for a pet
+      description: Place a new order in the store
+      operationId: placeOrder
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Order'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '405':
+          description: Invalid input
+  /store/order/{orderId}:
+    get:
+      tags:
+        - store
+      summary: Find purchase order by ID
+      description: >-
+        For valid response try integer IDs with value <= 5 or > 10. Other values
+        will generate exceptions.
+      operationId: getOrderById
+      parameters:
+        - name: orderId
+          in: path
+          description: ID of order that needs to be fetched
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Order'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Order not found
+    delete:
+      tags:
+        - store
+      summary: Delete purchase order by ID
+      description: >-
+        For valid response try integer IDs with value < 1000. Anything above
+        1000 or nonintegers will generate API errors
+      operationId: deleteOrder
+      parameters:
+        - name: orderId
+          in: path
+          description: ID of the order that needs to be deleted
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Order not found
+  /user:
+    post:
+      tags:
+        - user
+      summary: Create user
+      description: This can only be done by the logged in user.
+      operationId: createUser
+      requestBody:
+        description: Created user object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+  /user/createWithList:
+    post:
+      tags:
+        - user
+      summary: Creates list of users with given input array
+      description: Creates list of users with given input array
+      operationId: createUsersWithListInput
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        default:
+          description: successful operation
+  /user/login:
+    get:
+      tags:
+        - user
+      summary: Logs user into the system
+      description: ''
+      operationId: loginUser
+      parameters:
+        - name: username
+          in: query
+          description: The user name for login
+          required: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          headers:
+            X-Rate-Limit:
+              description: calls per hour allowed by the user
+              schema:
+                type: integer
+                format: int32
+            X-Expires-After:
+              description: date in UTC when token expires
+              schema:
+                type: string
+                format: date-time
+          content:
+            application/xml:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Invalid username/password supplied
+  /user/logout:
+    get:
+      tags:
+        - user
+      summary: Logs out current logged in user session
+      description: ''
+      operationId: logoutUser
+      parameters: []
+      responses:
+        default:
+          description: successful operation
+  /user/{username}:
+    get:
+      tags:
+        - user
+      summary: Get user by user name
+      description: ''
+      operationId: getUserByName
+      parameters:
+        - name: username
+          in: path
+          description: 'The name that needs to be fetched. Use user1 for testing. '
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+    put:
+      tags:
+        - user
+      summary: Update user
+      description: This can only be done by the logged in user.
+      operationId: updateUser
+      parameters:
+        - name: username
+          in: path
+          description: name that need to be deleted
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Update an existent user in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        default:
+          description: successful operation
+    delete:
+      tags:
+        - user
+      summary: Delete user
+      description: This can only be done by the logged in user.
+      operationId: deleteUser
+      parameters:
+        - name: username
+          in: path
+          description: The name that needs to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
 components:
   schemas:
-    CompletionsRequest:
-      title: CompletionsRequest
-      required:
-        - prompt
+    Order:
       type: object
       properties:
-        prompt:
-          title: Prompt
-          anyOf:
-            - type: string
-            - type: array
-              items:
-                type: string
-        max_tokens:
-          title: Max Tokens
+        id:
           type: integer
-          default: 16
-        temperature:
-          title: Temperature
-          type: number
-          default: 1
-        top_p:
-          title: Top P
-          type: number
-          default: 1
-        'n':
-          title: 'N'
+          format: int64
+          example: 10
+        petId:
           type: integer
-          default: 1
-        stream:
-          title: Stream
-          type: boolean
-          default: false
-        logprobs:
-          title: Logprobs
+          format: int64
+          example: 198772
+        quantity:
           type: integer
-        echo:
-          title: Echo
-          type: boolean
-          default: false
-    ControlNet:
-      title: ControlNet
-      required:
-        - model
-        - image_url
-      type: object
-      properties:
-        model:
-          $ref: '#/components/schemas/ControlNetModel'
-        image_url:
-          title: Image Url
+          format: int32
+          example: 7
+        shipDate:
           type: string
-        scale:
-          title: Scale
-          type: number
-          default: 1
-        preprocessor:
-          $ref: '#/components/schemas/ControlNetPreprocessor'
-        params:
-          title: Params
-          type: object
-    ControlNetModel:
-      title: ControlNetModel
-      enum:
-        - canny
-        - ip2p
-        - inpaint
-        - mlsd
-        - depth
-        - normalbae
-        - seg
-        - lineart
-        - lineart_anime
-        - openpose
-        - scribble
-        - softedge
-        - shuffle
-        - tile
-      type: string
-      description: An enumeration.
-    ControlNetPreprocessor:
-      title: ControlNetPreprocessor
-      enum:
-        - HED
-        - midas
-        - MLSD
-        - openpose
-        - openpose_face
-        - openpose_face_only
-        - openpose_full
-        - openpose_hand
-        - pidi_net
-        - normal_bae
-        - lineart
-        - lineart_anime
-        - canny
-        - content_shuffle
-        - zoe
-        - mediapipe_face
-        - sam
-      type: string
-      description: An enumeration.
-    DreamboothResponse:
-      title: DreamboothResponse
-      required:
-        - job_id
-        - status
-      type: object
-      properties:
-        job_id:
-          title: Job Id
-          type: string
+          format: date-time
         status:
-          title: Status
           type: string
-    DreamboothTrainRequest:
-      title: DreamboothTrainRequest
-      required:
-        - training_params
+          description: Order Status
+          example: approved
+          enum:
+            - placed
+            - approved
+            - delivered
+        complete:
+          type: boolean
+      xml:
+        name: order
+    Customer:
       type: object
       properties:
-        training_params:
-          $ref: '#/components/schemas/TrainingParams'
-        inference_request:
-          $ref: '#/components/schemas/InferenceRequest'
-        callback:
-          title: Callback
+        id:
+          type: integer
+          format: int64
+          example: 100000
+        username:
           type: string
-          default: ''
-    DreamboothTrainRequestV2:
-      title: DreamboothTrainRequestV2
-      required:
-        - images_url
-        - prompts
-        - class_name
-      type: object
-      properties:
-        images_url:
-          title: Images Url
+          example: fehguy
+        address:
           type: array
+          xml:
+            name: addresses
+            wrapped: true
           items:
-            type: string
-        prompts:
-          title: Prompts
-          type: array
-          items:
-            $ref: '#/components/schemas/routers__dreambooth__Prompt'
-        class_name:
-          title: Class Name
-          type: string
-        callback:
-          title: Callback
-          type: string
-    EmbeddingRequest:
-      title: EmbeddingRequest
-      required:
-        - input
-        - model
+            $ref: '#/components/schemas/Address'
+      xml:
+        name: customer
+    Address:
       type: object
       properties:
-        input:
-          title: Input
-          anyOf:
-            - type: string
-            - type: array
-              items:
-                type: string
-        instructions:
-          title: Instructions
-          anyOf:
-            - type: string
-            - type: array
-              items:
-                type: string
-        model:
-          title: Model
+        street:
           type: string
-    Filter:
-      title: Filter
+          example: 437 Lytton
+        city:
+          type: string
+          example: Palo Alto
+        state:
+          type: string
+          example: CA
+        zip:
+          type: string
+          example: '94301'
+      xml:
+        name: address
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: Dogs
+      xml:
+        name: category
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        username:
+          type: string
+          example: theUser
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: James
+        email:
+          type: string
+          example: john@email.com
+        password:
+          type: string
+          example: '12345'
+        phone:
+          type: string
+          example: '12345'
+        userStatus:
+          type: integer
+          description: User Status
+          format: int32
+          example: 1
+      xml:
+        name: user
+    Tag:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+      xml:
+        name: tag
+    Pet:
       required:
         - name
+        - photoUrls
       type: object
       properties:
-        name:
-          title: Name
-          type: string
-        inputs:
-          title: Inputs
-          type: array
-          items:
-            type: string
-          default: []
-        output:
-          title: Output
-          type: array
-          items:
-            type: string
-          default:
-            - video
-        args:
-          title: Args
-          type: array
-          items:
-            type: string
-          default: []
-        kwargs:
-          title: Kwargs
-          type: object
-          default: {}
-        label:
-          title: Label
-          type: string
-          default: filter
-    HTTPValidationError:
-      title: HTTPValidationError
-      type: object
-      properties:
-        detail:
-          title: Detail
-          type: array
-          items:
-            $ref: '#/components/schemas/ValidationError'
-    Img2Img:
-      title: Img2Img
-      required:
-        - image_url
-      type: object
-      properties:
-        image_url:
-          title: Image Url
-          type: string
-        denoising_strength:
-          title: Denoising Strength
-          type: number
-          default: 0.75
-    InPaint:
-      title: InPaint
-      required:
-        - image_url
-        - mask_url
-      type: object
-      properties:
-        image_url:
-          title: Image Url
-          type: string
-        mask_url:
-          title: Mask Url
-          type: string
-        denoising_strength:
-          title: Denoising Strength
-          type: number
-          default: 0.75
-    InferenceParams:
-      title: InferenceParams
-      type: object
-      properties:
-        steps:
-          title: Steps
-          type: integer
-          default: 50
-        seed:
-          title: Seed
-          type: integer
-          default: 1337
-        cfg_scale:
-          title: Cfg Scale
-          type: number
-          default: 7.5
-        width:
-          title: Width
-          type: integer
-          default: 512
-        height:
-          title: Height
-          type: integer
-          default: 512
-    InferenceRequest:
-      title: InferenceRequest
-      required:
-        - prompts
-      type: object
-      properties:
-        model:
-          title: Model
-          allOf:
-            - $ref: '#/components/schemas/Model'
-          default:
-            name: runwayml/stable-diffusion-v1-5
-            revision: main
-        prompts:
-          title: Prompts
-          type: array
-          items:
-            $ref: '#/components/schemas/routers__dreambooth__Prompt'
-        inference_params:
-          title: Inference Params
-          allOf:
-            - $ref: '#/components/schemas/InferenceParams'
-          default:
-            steps: 50
-            seed: 1337
-            cfg_scale: 7.5
-            width: 512
-            height: 512
-        enable_safe_mode:
-          title: Enable Safe Mode
-          type: boolean
-          default: false
-        img2img:
-          $ref: '#/components/schemas/Img2Img'
-        inpaint:
-          $ref: '#/components/schemas/InPaint'
-        controlnets:
-          title: Controlnets
-          type: array
-          items:
-            $ref: '#/components/schemas/ControlNet'
-          default: []
-        callback:
-          title: Callback
-          type: string
-          default: ''
-    Model:
-      title: Model
-      type: object
-      properties:
-        name:
-          title: Name
-          type: string
-          default: runwayml/stable-diffusion-v1-5
-        revision:
-          title: Revision
-          type: string
-          default: main
-    ProteinRequest:
-      title: ProteinRequest
-      required:
-        - sequence
-      type: object
-      properties:
-        sequence:
-          title: Sequence
-          type: string
-    Stream:
-      title: Stream
-      required:
-        - url
-      type: object
-      properties:
-        url:
-          title: Url
-          type: string
-        content_type:
-          title: Content Type
-          type: string
-          default: ''
-        label:
-          title: Label
-          type: string
-          default: stream
-    TrainingParams:
-      title: TrainingParams
-      required:
-        - images_url
-        - class_name
-      type: object
-      properties:
-        model:
-          $ref: '#/components/schemas/Model'
-        images_url:
-          title: Images Url
-          type: array
-          items:
-            type: string
-        max_train_steps:
-          title: Max Train Steps
-          type: integer
-          default: 0
-        class_name:
-          title: Class Name
-          type: string
-        class_images_url:
-          title: Class Images Url
-          type: array
-          items:
-            type: string
-          default: []
-        instance_name:
-          title: Instance Name
-          type: string
-          default: sks
-    UnityServerRequest:
-      title: UnityServerRequest
-      type: object
-      properties: {}
-    ValidationError:
-      title: ValidationError
-      required:
-        - loc
-        - msg
-        - type
-      type: object
-      properties:
-        loc:
-          title: Location
-          type: array
-          items:
-            anyOf:
-              - type: string
-              - type: integer
-        msg:
-          title: Message
-          type: string
-        type:
-          title: Error Type
-          type: string
-    VideoEncoderProperties:
-      title: VideoEncoderProperties
-      type: object
-      properties:
-        fps:
-          title: Fps
-          type: number
-          default: 0
-        bitrate:
-          title: Bitrate
-          type: string
-          default: 0
-        preset:
-          title: Preset
-          type: string
-          default: p4
-        tune:
-          title: Tune
-          type: string
-          default: hq
-    VideoEncoderRequest:
-      title: VideoEncoderRequest
-      type: object
-      properties:
-        inputs:
-          title: Inputs
-          type: array
-          items:
-            $ref: '#/components/schemas/Stream'
-        outputs:
-          title: Outputs
-          type: array
-          items:
-            $ref: '#/components/schemas/Stream'
-        video_encoder_codec:
-          title: Video Encoder Codec
-          type: string
-          default: hevc_nvenc
-        video_properties:
-          $ref: '#/components/schemas/VideoEncoderProperties'
-        filters:
-          title: Filters
-          type: array
-          items:
-            $ref: '#/components/schemas/Filter'
-        callback:
-          title: Callback
-          type: string
-        client_job_id:
-          title: Client Job Id
-          type: string
-        input_url:
-          title: Input Url
-          type: string
-          description: Use \`inputs_url\` instead
-          deprecated: true
-        output_url:
-          title: Output Url
-          type: string
-          description: Use \`outputs_url\` instead
-          deprecated: true
-        content_type:
-          title: Content Type
-          type: string
-          description: Use \`inputs_url.content_type\` instead
-          deprecated: true
-    routers__dreambooth__Prompt:
-      title: Prompt
-      required:
-        - complete
-      type: object
-      properties:
-        complete:
-          title: Complete
-          type: string
-        negative:
-          title: Negative
-          type: string
-        count:
-          title: Count
-          type: integer
-          default: 1
         id:
-          title: Id
+          type: integer
+          format: int64
+          example: 10
+        name:
           type: string
-    routers__stable_diffusion__Prompt:
-      title: Prompt
-      required:
-        - prompt
+          example: doggie
+        category:
+          $ref: '#/components/schemas/Category'
+        photoUrls:
+          type: array
+          xml:
+            wrapped: true
+          items:
+            type: string
+            xml:
+              name: photoUrl
+        tags:
+          type: array
+          xml:
+            wrapped: true
+          items:
+            $ref: '#/components/schemas/Tag'
+        status:
+          type: string
+          description: pet status in the store
+          enum:
+            - available
+            - pending
+            - sold
+      xml:
+        name: pet
+    ApiResponse:
       type: object
       properties:
-        prompt:
-          title: Prompt
+        code:
+          type: integer
+          format: int32
+        type:
           type: string
-        negative_prompt:
-          title: Negative Prompt
+        message:
           type: string
-        model:
-          title: Model
-          type: string
-          default: runwayml/stable-diffusion-v1-5
-        count:
-          title: Count
-          type: integer
-          default: 1
-        steps:
-          title: Steps
-          type: integer
-          default: 50
-        guidance_scale:
-          title: Guidance Scale
-          type: number
-          default: 7.5
-        width:
-          title: Width
-          type: integer
-          default: 512
-        height:
-          title: Height
-          type: integer
-          default: 512
+      xml:
+        name: '##default'
+  requestBodies:
+    Pet:
+      description: Pet object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Pet'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Pet'
+    UserArray:
+      description: List of user object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
   securitySchemes:
-    HTTPBearer:
-      type: http
-      scheme: bearer
+    petstore_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
+          scopes:
+            write:pets: modify pets in your account
+            read:pets: read your pets
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
 ",
                 "name": "openapi.yml",
                 "type": "file",
