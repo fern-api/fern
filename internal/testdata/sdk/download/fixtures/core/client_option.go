@@ -30,4 +30,4 @@ func NewClientOptions() *ClientOptions {
 
 // ToHeader maps the configured client options into a http.Header issued
 // on every request.
-func (c *ClientOptions) ToHeader() http.Header { return c.HTTPHeader }
+func (c *ClientOptions) ToHeader() http.Header { return c.HTTPHeader.Clone() }

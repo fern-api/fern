@@ -85,7 +85,7 @@ func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth, headers []*i
 	if (auth == nil || len(auth.Schemes) == 0) && (headers == nil || len(headers) == 0) {
 		f.P("// ToHeader maps the configured client options into a http.Header issued")
 		f.P("// on every request.")
-		f.P("func (c *ClientOptions) ToHeader() http.Header { return c.HTTPHeader }")
+		f.P("func (c *ClientOptions) ToHeader() http.Header { return c.HTTPHeader.Clone() }")
 		f.P()
 		return nil
 	}
@@ -94,7 +94,7 @@ func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth, headers []*i
 	f.P("// ToHeader maps the configured client options into a http.Header issued")
 	f.P("// on every request.")
 	f.P("func (c *ClientOptions) ToHeader() http.Header {")
-	f.P("header := c.HTTPHeader")
+	f.P("header := c.HTTPHeader.Clone()")
 	for _, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
 			f.P(`if c.Bearer != "" { `)

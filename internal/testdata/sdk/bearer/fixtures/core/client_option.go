@@ -32,7 +32,7 @@ func NewClientOptions() *ClientOptions {
 // ToHeader maps the configured client options into a http.Header issued
 // on every request.
 func (c *ClientOptions) ToHeader() http.Header {
-	header := c.HTTPHeader
+	header := c.HTTPHeader.Clone()
 	if c.Bearer != "" {
 		header.Set("Authorization", "Bearer "+c.Bearer)
 	}

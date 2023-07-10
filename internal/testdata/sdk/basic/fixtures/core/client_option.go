@@ -34,7 +34,7 @@ func NewClientOptions() *ClientOptions {
 // ToHeader maps the configured client options into a http.Header issued
 // on every request.
 func (c *ClientOptions) ToHeader() http.Header {
-	header := c.HTTPHeader
+	header := c.HTTPHeader.Clone()
 	if c.Username != "" && c.Password != "" {
 		header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(c.Username+": "+c.Password)))
 	}

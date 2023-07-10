@@ -46,7 +46,7 @@ func NewClientOptions() *ClientOptions {
 // ToHeader maps the configured client options into a http.Header issued
 // on every request.
 func (c *ClientOptions) ToHeader() http.Header {
-	header := c.HTTPHeader
+	header := c.HTTPHeader.Clone()
 	var authCustomValue *[]byte
 	if c.Custom != authCustomValue {
 		header.Set("X-API-Custom-Key", fmt.Sprintf("%v", base64.StdEncoding.EncodeToString(*c.Custom)))

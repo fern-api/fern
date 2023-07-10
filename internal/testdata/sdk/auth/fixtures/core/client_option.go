@@ -32,7 +32,7 @@ func NewClientOptions() *ClientOptions {
 // ToHeader maps the configured client options into a http.Header issued
 // on every request.
 func (c *ClientOptions) ToHeader() http.Header {
-	header := c.HTTPHeader
+	header := c.HTTPHeader.Clone()
 	header.Set("X-API-Key", fmt.Sprintf("%v", "fern"))
 	return header
 }
