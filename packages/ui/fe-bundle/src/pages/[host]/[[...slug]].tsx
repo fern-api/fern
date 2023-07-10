@@ -11,8 +11,6 @@ import { UrlPathResolver } from "../../url-path-resolver/UrlPathResolver";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const CACHE_TIME_IN_SECONDS = 1;
-
 export declare namespace Docs {
     export interface Props {
         docs: FernRegistryDocsReadV2.LoadDocsForUrlResponse;
@@ -69,7 +67,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         if (firstNavigationItem != null) {
             slug = firstNavigationItem.urlSlug;
         } else {
-            return { notFound: true, revalidate: CACHE_TIME_IN_SECONDS };
+            return { notFound: true, revalidate: true };
         }
     }
 
@@ -85,7 +83,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
     }
 
     if (resolvedUrlPath == null) {
-        return { notFound: true, revalidate: CACHE_TIME_IN_SECONDS };
+        return { notFound: true, revalidate: true };
     }
 
     return {
@@ -95,7 +93,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
             nextPath: (await urlPathResolver.getNextNavigatableItem(resolvedUrlPath)) ?? null,
             previousPath: (await urlPathResolver.getPreviousNavigatableItem(resolvedUrlPath)) ?? null,
         },
-        revalidate: CACHE_TIME_IN_SECONDS,
+        revalidate: true,
     };
 };
 
