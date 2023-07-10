@@ -11,7 +11,7 @@ import { UrlPathResolver } from "../../url-path-resolver/UrlPathResolver";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const CACHE_TIME_IN_SECONDS = 60;
+const CACHE_TIME_IN_SECONDS = 1;
 
 export declare namespace Docs {
     export interface Props {
