@@ -39,7 +39,7 @@ func (u *userClient) SetName(ctx context.Context, userId string, request *SetNam
 	if u.baseURL != "" {
 		baseURL = u.baseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"/users/%v/set-name", userId)
+	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name", userId)
 
 	headers := u.header.Clone()
 	var xEndpointHeaderDefaultValue string

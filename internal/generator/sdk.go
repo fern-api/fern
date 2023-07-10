@@ -793,6 +793,7 @@ func (f *fileWriter) endpointFromIR(
 				pathSuffix += part.Tail
 			}
 		}
+		pathSuffix = strings.TrimLeft(pathSuffix, "/")
 	}
 
 	// An error decoder is required when there are endpoint-specific errors.

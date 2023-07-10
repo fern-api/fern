@@ -40,7 +40,7 @@ func (u *userClient) GetUsername(ctx context.Context, request *GetUsersRequest) 
 	if u.baseURL != "" {
 		baseURL = u.baseURL
 	}
-	endpointURL := baseURL + "/" + "/user"
+	endpointURL := baseURL + "/" + "user"
 
 	queryParams := make(url.Values)
 	var idDefaultValue uuid.UUID

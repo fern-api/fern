@@ -38,7 +38,7 @@ func (f *fileClient) Download(ctx context.Context, filename string) (io.Writer, 
 	if f.baseURL != "" {
 		baseURL = f.baseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"/file/%v/download", filename)
+	endpointURL := fmt.Sprintf(baseURL+"/"+"file/%v/download", filename)
 
 	response := bytes.NewBuffer(nil)
 	if err := core.DoRequest(

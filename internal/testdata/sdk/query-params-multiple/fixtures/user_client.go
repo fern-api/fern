@@ -37,7 +37,7 @@ func (u *userClient) GetAllUsers(ctx context.Context, request *GetAllUsersReques
 	if u.baseURL != "" {
 		baseURL = u.baseURL
 	}
-	endpointURL := baseURL + "/" + "/users/all"
+	endpointURL := baseURL + "/" + "users/all"
 
 	queryParams := make(url.Values)
 	var tagDefaultValue int

@@ -35,7 +35,7 @@ func (p *plantClient) GetPlant(ctx context.Context) (string, error) {
 	if p.baseURL != "" {
 		baseURL = p.baseURL
 	}
-	endpointURL := baseURL + "/" + "/plants"
+	endpointURL := baseURL + "/" + "plants"
 
 	var response string
 	if err := core.DoRequest(

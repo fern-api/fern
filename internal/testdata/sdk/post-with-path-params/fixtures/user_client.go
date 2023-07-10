@@ -41,7 +41,7 @@ func (u *userClient) SetName(ctx context.Context, userId string, request string)
 	if u.baseURL != "" {
 		baseURL = u.baseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"/users/%v/set-name", userId)
+	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name", userId)
 
 	var response string
 	if err := core.DoRequest(
@@ -64,7 +64,7 @@ func (u *userClient) SetNameV2(ctx context.Context, userId string, request *SetN
 	if u.baseURL != "" {
 		baseURL = u.baseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"/users/%v/set-name-v2", userId)
+	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name-v2", userId)
 
 	var response string
 	if err := core.DoRequest(
@@ -87,7 +87,7 @@ func (u *userClient) SetNameV3(ctx context.Context, userId string, request *SetN
 	if u.baseURL != "" {
 		baseURL = u.baseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"/users/%v/set-name-v3", userId)
+	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name-v3", userId)
 
 	headers := u.header.Clone()
 	var xEndpointHeaderDefaultValue string
@@ -116,7 +116,7 @@ func (u *userClient) SetNameV3Optional(ctx context.Context, userId string, reque
 	if u.baseURL != "" {
 		baseURL = u.baseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"/users/%v/set-name-v3-optional", userId)
+	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name-v3-optional", userId)
 
 	headers := u.header.Clone()
 	var xEndpointHeaderDefaultValue string
@@ -145,7 +145,7 @@ func (u *userClient) SetNameV4(ctx context.Context, userId string, request *SetN
 	if u.baseURL != "" {
 		baseURL = u.baseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"/users/%v/set-name-v4", userId)
+	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name-v4", userId)
 
 	headers := u.header.Clone()
 	var xEndpointHeaderDefaultValue string
@@ -174,7 +174,7 @@ func (u *userClient) SetNameV5(ctx context.Context, userId string, request *SetN
 	if u.baseURL != "" {
 		baseURL = u.baseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"/users/%v/set-name-v5", userId)
+	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name-v5", userId)
 
 	headers := u.header.Clone()
 	var xEndpointHeaderDefaultValue string

@@ -38,7 +38,7 @@ func (u *userClient) GetUser(ctx context.Context, userId string) (string, error)
 	if u.baseURL != "" {
 		baseURL = u.baseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"/users/%v", userId)
+	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v", userId)
 
 	var response string
 	if err := core.DoRequest(
@@ -61,7 +61,7 @@ func (u *userClient) GetUserV2(ctx context.Context, userId string) (string, erro
 	if u.baseURL != "" {
 		baseURL = u.baseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"/users/get/%v/info", userId)
+	endpointURL := fmt.Sprintf(baseURL+"/"+"users/get/%v/info", userId)
 
 	var response string
 	if err := core.DoRequest(
@@ -84,7 +84,7 @@ func (u *userClient) GetUserV3(ctx context.Context, userId string, infoId string
 	if u.baseURL != "" {
 		baseURL = u.baseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"/users/get/%v/info/%v", userId, infoId)
+	endpointURL := fmt.Sprintf(baseURL+"/"+"users/get/%v/info/%v", userId, infoId)
 
 	var response string
 	if err := core.DoRequest(

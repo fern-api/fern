@@ -37,7 +37,7 @@ func (a *authClient) GetAuth(ctx context.Context) (string, error) {
 	if a.baseURL != "" {
 		baseURL = a.baseURL
 	}
-	endpointURL := baseURL + "/" + "/auth"
+	endpointURL := baseURL + "/" + "auth"
 
 	var response string
 	if err := core.DoRequest(
@@ -60,7 +60,7 @@ func (a *authClient) ListAuth(ctx context.Context) ([]string, error) {
 	if a.baseURL != "" {
 		baseURL = a.baseURL
 	}
-	endpointURL := baseURL + "/" + "/auth/list"
+	endpointURL := baseURL + "/" + "auth/list"
 
 	var response []string
 	if err := core.DoRequest(
@@ -83,7 +83,7 @@ func (a *authClient) ListPlants(ctx context.Context) ([]string, error) {
 	if a.baseURL != "" {
 		baseURL = a.baseURL
 	}
-	endpointURL := baseURL + "/" + "/auth/plants"
+	endpointURL := baseURL + "/" + "auth/plants"
 
 	var response []string
 	if err := core.DoRequest(

@@ -40,7 +40,7 @@ func (u *userClient) GetName(ctx context.Context, userId string, request *GetNam
 	if u.baseURL != "" {
 		baseURL = u.baseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"/users/%v/get-name", userId)
+	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/get-name", userId)
 
 	queryParams := make(url.Values)
 	var filterDefaultValue string

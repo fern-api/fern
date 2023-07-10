@@ -37,7 +37,7 @@ func (u *userClient) GetUser(ctx context.Context, userId string, request *GetUse
 	if u.baseURL != "" {
 		baseURL = u.baseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"/users/%v", userId)
+	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v", userId)
 
 	queryParams := make(url.Values)
 	var shallowDefaultValue *bool
