@@ -290,6 +290,7 @@ fern check
 ```
 
 This will validate that your workspace is set up correctly and that your API definition is valid.
+
 ## Documentation
 
 Our full documentation can be found [here](https://www.buildwithfern.com/docs).
