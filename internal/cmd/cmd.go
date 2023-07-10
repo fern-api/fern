@@ -48,13 +48,14 @@ var (
 // Config represents the common configuration required from all of
 // the commands (e.g. fern-go-{client,model}).
 type Config struct {
-	DryRun            bool
-	CoordinatorURL    string
-	CoordinatorTaskID string
-	IrFilepath        string
-	ImportPath        string
-	Module            *generator.ModuleConfig
-	Writer            *writer.Config
+	DryRun                  bool
+	EnableClientSubpackages bool
+	CoordinatorURL          string
+	CoordinatorTaskID       string
+	IrFilepath              string
+	ImportPath              string
+	Module                  *generator.ModuleConfig
+	Writer                  *writer.Config
 }
 
 // GeneratorFunc is a function that generates files.
@@ -202,13 +203,14 @@ func newConfig(configFilename string) (*Config, error) {
 		coordinatorTaskID = config.Environment.Remote.Id
 	}
 	return &Config{
-		DryRun:            config.DryRun,
-		CoordinatorURL:    coordinatorURL,
-		CoordinatorTaskID: coordinatorTaskID,
-		IrFilepath:        config.IrFilepath,
-		ImportPath:        customConfig.ImportPath,
-		Module:            moduleConfig,
-		Writer:            writerConfig,
+		DryRun:                  config.DryRun,
+		EnableClientSubpackages: customConfig.EnableClientSubpackages,
+		CoordinatorURL:          coordinatorURL,
+		CoordinatorTaskID:       coordinatorTaskID,
+		IrFilepath:              config.IrFilepath,
+		ImportPath:              customConfig.ImportPath,
+		Module:                  moduleConfig,
+		Writer:                  writerConfig,
 	}, nil
 }
 
@@ -246,8 +248,9 @@ func readConfig(configFilename string) (*generatorexec.GeneratorConfig, error) {
 }
 
 type customConfig struct {
-	ImportPath string        `json:"importPath,omitempty"`
-	Module     *moduleConfig `json:"module,omitempty"`
+	EnableClientSubpackages bool          `json:"enableClientSubpackages,omitempty"`
+	ImportPath              string        `json:"importPath,omitempty"`
+	Module                  *moduleConfig `json:"module,omitempty"`
 }
 
 type moduleConfig struct {

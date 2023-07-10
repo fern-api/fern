@@ -1018,6 +1018,19 @@ func fernFilepathToImportPath(baseImportPath string, fernFilepath *ir.FernFilepa
 	return path.Join(append([]string{baseImportPath}, packages...)...)
 }
 
+// fernFilepathToImportPathForClientSubpackage maps the given Fern filepath to its
+// Go import path, assuming that this is being called from the client subpackage.
+//
+// This is behaviorally equivalent to fernFilepathToImportPath, but it explicitly
+// omits the last client element added to the Fern filepath.
+func fernFilepathToImportPathForClientSubpackage(baseImportPath string, fernFilepath *ir.FernFilepath) string {
+	var packages []string
+	for _, packageName := range fernFilepath.PackagePath[:len(fernFilepath.PackagePath)-1] {
+		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
+	}
+	return path.Join(append([]string{baseImportPath}, packages...)...)
+}
+
 // isPointer returns true if the given type is a pointer type (e.g. objects and
 // unions). Enums, primitives, and aliases of these types do not require pointers.
 func isPointer(typeDeclaration *ir.TypeDeclaration) bool {

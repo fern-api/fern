@@ -1,0 +1,12 @@
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-go-sdk
+        version: 0.10.25-rc0
+        config:
+          enableClientSubpackages: true
+          importPath: github.com/fern-api/fern-go/internal/testdata/sdk/client-cycle/fixtures
+        output:
+          location: local-file-system
+          path: ../../fixtures

@@ -324,6 +324,7 @@ func (f *fileWriter) WriteClient(
 	environmentsConfig *ir.EnvironmentsConfig,
 	fernFilepath *ir.FernFilepath,
 	namePrefix *ir.Name,
+	enableClientSubpackages bool,
 ) error {
 	var (
 		clientName     = "Client"
@@ -338,7 +339,7 @@ func (f *fileWriter) WriteClient(
 	// Reformat the endpoint data into a structure that's suitable for code generation.
 	var endpoints []*endpoint
 	for _, irEndpoint := range irEndpoints {
-		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, receiver)
+		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, receiver, enableClientSubpackages)
 		if err != nil {
 			return err
 		}
@@ -369,7 +370,10 @@ func (f *fileWriter) WriteClient(
 			continue
 		}
 		var (
-			importPath     = fernFilepathToImportPath(f.baseImportPath, subpackage.FernFilepath)
+			importPath = fernFilepathToImportPath(
+				f.baseImportPath,
+				fernFilepathForServiceWithClientSubpackage(subpackage.FernFilepath, enableClientSubpackages),
+			)
 			clientTypeName = f.imports.Add(importPath) + ".Client"
 		)
 		f.P(subpackage.Name.PascalCase.UnsafeName, "()", clientTypeName)
@@ -520,8 +524,15 @@ func (f *fileWriter) WriteClient(
 			f.P("switch statusCode {")
 			for _, responseError := range endpoint.Errors {
 				errorDeclaration := f.errors[responseError.Error.ErrorId]
+				errorType := errorDeclaration.Name.Name.PascalCase.UnsafeName
+				if enableClientSubpackages {
+					// If client subpackages are enabled, we need to import
+					// the error types from another package.
+					errorImportPath := fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
+					errorType = f.imports.Add(errorImportPath) + "." + errorType
+				}
 				f.P("case ", errorDeclaration.StatusCode, ":")
-				f.P("value := new(", errorDeclaration.Name.Name.PascalCase.UnsafeName, ")")
+				f.P("value := new(", errorType, ")")
 				f.P("value.APIError = apiError")
 				f.P("if err := decoder.Decode(value); err != nil {")
 				f.P("return err")
@@ -669,6 +680,7 @@ func (f *fileWriter) endpointFromIR(
 	irEndpoint *ir.HttpEndpoint,
 	irEnvironmentsConfig *ir.EnvironmentsConfig,
 	receiver string,
+	enableClientSubpackages bool,
 ) (*endpoint, error) {
 	importPath := fernFilepathToImportPath(f.baseImportPath, fernFilepath)
 
@@ -713,9 +725,14 @@ func (f *fileWriter) endpointFromIR(
 				requestType = typeReferenceToGoType(requestBody.RequestBodyType, f.types, f.imports, f.baseImportPath, importPath)
 			}
 			if irEndpoint.SdkRequest.Shape.Wrapper != nil {
-				// If this is a wrapper type, it's guaranteed to be generated in the same package,
-				// so we don't need to consult its Fern filepath.
-				requestType = fmt.Sprintf("*%s", irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
+				requestType = irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName
+				if enableClientSubpackages {
+					// If client subpackages are enabled, we need to import
+					// the request types from another package.
+					requestImportPath := fernFilepathToImportPathForClientSubpackage(f.baseImportPath, fernFilepath)
+					requestType = f.imports.Add(requestImportPath) + "." + requestType
+				}
+				requestType = fmt.Sprintf("*%s", requestType)
 			}
 			requestParameterName = irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
 			requestValueName = requestParameterName

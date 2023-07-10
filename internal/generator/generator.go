@@ -318,7 +318,8 @@ func (g *Generator) generateService(
 	if irService.Name.FernFilepath.File != nil {
 		namePrefix = irService.Name.FernFilepath.File
 	}
-	fileInfo := fileInfoForService(ir.ApiName, irService.Name.FernFilepath, namePrefix)
+	clientFernFilepath := fernFilepathForServiceWithClientSubpackage(irService.Name.FernFilepath, g.config.EnableClientSubpackages)
+	fileInfo := fileInfoForService(ir.ApiName, clientFernFilepath, namePrefix)
 	writer := newFileWriter(
 		fileInfo.filename,
 		fileInfo.packageName,
@@ -330,8 +331,9 @@ func (g *Generator) generateService(
 		irService.Endpoints,
 		irSubpackages,
 		ir.Environments,
-		irService.Name.FernFilepath,
+		clientFernFilepath,
 		namePrefix,
+		g.config.EnableClientSubpackages,
 	); err != nil {
 		return nil, err
 	}
@@ -355,7 +357,8 @@ func (g *Generator) generateServiceWithoutEndpoints(
 	if len(irSubpackages) > 0 && irSubpackage.FernFilepath.File != nil {
 		namePrefix = irSubpackage.FernFilepath.File
 	}
-	fileInfo := fileInfoForService(ir.ApiName, irSubpackage.FernFilepath, namePrefix)
+	clientFernFilepath := fernFilepathForServiceWithClientSubpackage(irSubpackage.FernFilepath, g.config.EnableClientSubpackages)
+	fileInfo := fileInfoForService(ir.ApiName, clientFernFilepath, namePrefix)
 	writer := newFileWriter(
 		fileInfo.filename,
 		fileInfo.packageName,
@@ -367,8 +370,9 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		nil,
 		irSubpackages,
 		nil,
-		irSubpackage.FernFilepath,
+		clientFernFilepath,
 		namePrefix,
+		g.config.EnableClientSubpackages,
 	); err != nil {
 		return nil, err
 	}
@@ -383,7 +387,8 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 	fernFilepath *fernir.FernFilepath,
 	irSubpackages []*fernir.Subpackage,
 ) (*File, error) {
-	fileInfo := fileInfoForService(ir.ApiName, fernFilepath, nil /* namePrefix */)
+	clientFernFilepath := fernFilepathForServiceWithClientSubpackage(fernFilepath, g.config.EnableClientSubpackages)
+	fileInfo := fileInfoForService(ir.ApiName, clientFernFilepath, nil /* namePrefix */)
 	writer := newFileWriter(
 		fileInfo.filename,
 		fileInfo.packageName,
@@ -395,8 +400,9 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		nil,
 		irSubpackages,
 		nil,
-		fernFilepath,
+		clientFernFilepath,
 		nil,
+		g.config.EnableClientSubpackages,
 	); err != nil {
 		return nil, err
 	}
@@ -651,6 +657,81 @@ func fileUploadHasBodyProperties(fileUpload *ir.FileUploadRequest) bool {
 		}
 	}
 	return false
+}
+
+// fernFilepathForServiceWithClientSubpackage updates the given fern fileapth so that the
+// generated client is deposited into a package with a client suffix.
+func fernFilepathForServiceWithClientSubpackage(fernFilepath *ir.FernFilepath, enableClientSubpackages bool) *ir.FernFilepath {
+	if !enableClientSubpackages {
+		return fernFilepath
+	}
+	clientElement := &ir.Name{
+		OriginalName: "client",
+		CamelCase: &ir.SafeAndUnsafeString{
+			UnsafeName: "client",
+			SafeName:   "client",
+		},
+		PascalCase: &ir.SafeAndUnsafeString{
+			UnsafeName: "Client",
+			SafeName:   "Client",
+		},
+		SnakeCase: &ir.SafeAndUnsafeString{
+			UnsafeName: "client",
+			SafeName:   "client",
+		},
+		ScreamingSnakeCase: &ir.SafeAndUnsafeString{
+			UnsafeName: "CLIENT",
+			SafeName:   "CLIENT",
+		},
+	}
+	if len(fernFilepath.PackagePath) > 0 {
+		// If there is a final package element, we need to merge the client suffix
+		// with the last element.
+		clientPrefix := fernFilepath.PackagePath[len(fernFilepath.PackagePath)-1]
+		clientSuffix := &ir.Name{
+			OriginalName: "client",
+			CamelCase: &ir.SafeAndUnsafeString{
+				UnsafeName: "Client",
+				SafeName:   "Client",
+			},
+			PascalCase: &ir.SafeAndUnsafeString{
+				UnsafeName: "Client",
+				SafeName:   "Client",
+			},
+			SnakeCase: &ir.SafeAndUnsafeString{
+				UnsafeName: "_client",
+				SafeName:   "_client",
+			},
+			ScreamingSnakeCase: &ir.SafeAndUnsafeString{
+				UnsafeName: "_CLIENT",
+				SafeName:   "_CLIENT",
+			},
+		}
+		// Note that we exclusively use the unsafeName representation when forming
+		// the safe name because all values are guarnateed to be safe, and we want
+		// to preserve the true casing convention.
+		clientElement = &ir.Name{
+			OriginalName: clientPrefix.OriginalName + clientSuffix.OriginalName,
+			CamelCase: &ir.SafeAndUnsafeString{
+				UnsafeName: clientPrefix.CamelCase.UnsafeName + clientSuffix.CamelCase.UnsafeName,
+				SafeName:   clientPrefix.CamelCase.UnsafeName + clientSuffix.CamelCase.UnsafeName,
+			},
+			PascalCase: &ir.SafeAndUnsafeString{
+				UnsafeName: clientPrefix.PascalCase.UnsafeName + clientSuffix.PascalCase.UnsafeName,
+				SafeName:   clientPrefix.PascalCase.UnsafeName + clientSuffix.PascalCase.UnsafeName,
+			},
+			SnakeCase: &ir.SafeAndUnsafeString{
+				UnsafeName: clientPrefix.SnakeCase.UnsafeName + clientSuffix.SnakeCase.UnsafeName,
+				SafeName:   clientPrefix.SnakeCase.UnsafeName + clientSuffix.SnakeCase.UnsafeName,
+			},
+			ScreamingSnakeCase: &ir.SafeAndUnsafeString{
+				UnsafeName: clientPrefix.ScreamingSnakeCase.UnsafeName + clientSuffix.ScreamingSnakeCase.UnsafeName,
+				SafeName:   clientPrefix.ScreamingSnakeCase.UnsafeName + clientSuffix.ScreamingSnakeCase.UnsafeName,
+			},
+		}
+	}
+	fernFilepath.PackagePath = append(fernFilepath.PackagePath, clientElement)
+	return fernFilepath
 }
 
 // pointerFunctionNames enumerates all of the pointer function names.
