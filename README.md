@@ -56,7 +56,7 @@ Fern provides first class support for generating documentation, ranging from [fu
 
 Generating API documentation is part of our cloud offering. If you're interested in trying out this service, [get in touch!](mailto:hey@buildwithfern.com)
 
-## The Fern specification
+## Fern and OpenAPI
 
 We have designed Fern to complement existing OpenAPI toolchains and workflows, rather than replace them. We believe OpenAPI does a good job at as a declarative standard for defining APIs, but at times it is too verbose and complex, which reduces the quality of generated code.
 
@@ -236,17 +236,17 @@ These are some real world examples of Fern generating documentation and SDKs use
 
 # CLI Reference
 
-You can run the compiler by running the `generate` command:
+## `fern generate`
 
 ```
 fern generate [--group <group>] [--version <version>] [--local [--keepDocker]]
 ```
 
-It will validate your API and run the generators specified in `generators.yml`.
+This will validate your API and run the generators specified in `generators.yml`.
 
-#### Grouping
+`--group`
 
-In `generators.yml`, you can split up your generators into groups:
+In `genrators.yml`, you can split up your generators into groups.
 
 ```yaml
 groups:
@@ -260,29 +260,36 @@ groups:
         ...
 ```
 
-This is often useful if you want to generate SDKs for internal use and external use. You can run `fern generate --group internal` on every commit, and `fern generate --group external` when you publish a release.
+This is often useful if you want to generate SDKs for internal use and external use. You can run `fern generate --group internal` on every commit, and `fern generate --group external` when you cut a release.
 
-#### Options
+`--version`
 
-The following options are available for `fern generate`:
+You can specify a version using the `--version` option. This version string is used when publishing SDKs to registries (e.g. npm).
 
-| Option               | Description                                                                                                                                                         |
-|----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `--version <string>` | Used when publishing SDKs to registries (e.g. npm).                                                                                                                 |
-| `--local`            | Generation runs in the cloud by default. If you want to run it on your local machine, you can use this option, which will run each generator in a Docker container. |
-| `--keepDocker`       | To be used in tandem with `--local` - preserves the Docker container after running.                                                                                 |
-| `--group <string>`   | Specifies the group of generators to run.                                                                                                                           |
+`--local`
 
-#### Commands
+Generation runs in the cloud by default. If you want to run it on your local machine, you can use the `--local` option. This will run each generator in a Docker container.
+By default, Fern will delete the container after running. To keep the container around (e.g. to look at the generator's logs), use the `--keepDocker` option.
 
-| Command         | Description                                                                                                                                                                                                     |
-| --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `fern init`     | Initialize a new Fern workspace.                                                                                                                                                                                |
-| `fern check`    | Runs validation on the current workspace, ensuring all specifications are valid.                                                                                                                                |
-| `fern add`      | Adds a generator to the Fern compiler. You can view the full list of supported generators in our [docs](https://www.buildwithfern.com/docs/compiler/generators).                                                |
-| `fern register` | _Advanced feature_ allowing for the registration of dependent APIs, i.e APIs that depend on this API to function. Read more in our [docs](https://www.buildwithfern.com/docs/advanced/depending-on-other-apis). |
+## `fern init`
 
+```
+fern init [--openapi <openapi spec>]
+```
 
+This will initialize a new Fern project with a default Fern specification.
+
+`--openapi`
+
+If you specify a path or URL to an OpenAPI spec, Fern will initialize an OpenAPI workspace.
+
+## `fern check`
+
+```
+fern check
+```
+
+This will validate that your workspace is set up correctly and that your API definition is valid.
 ## Documentation
 
 Our full documentation can be found [here](https://www.buildwithfern.com/docs).
