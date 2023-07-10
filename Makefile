@@ -13,5 +13,5 @@ install:
 	go install ./cmd/...
 
 .PHONY: test
-test:
+test: install
 	go test ./...

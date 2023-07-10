@@ -155,6 +155,44 @@
                                 "_type": "container"
                             },
                             "allowMultiple": false
+                        },
+                        {
+                            "availability": {
+                                "status": "GENERAL_AVAILABILITY"
+                            },
+                            "name": {
+                                "name": {
+                                    "originalName": "key",
+                                    "camelCase": {
+                                        "unsafeName": "key",
+                                        "safeName": "key"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "key",
+                                        "safeName": "key"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "KEY",
+                                        "safeName": "KEY"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Key",
+                                        "safeName": "Key"
+                                    }
+                                },
+                                "wireValue": "key"
+                            },
+                            "valueType": {
+                                "container": {
+                                    "literal": {
+                                        "string": "fern",
+                                        "type": "string"
+                                    },
+                                    "_type": "literal"
+                                },
+                                "_type": "container"
+                            },
+                            "allowMultiple": false
                         }
                     ],
                     "headers": [

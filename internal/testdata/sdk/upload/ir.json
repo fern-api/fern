@@ -121,22 +121,418 @@
                     "headers": [],
                     "requestBody": {
                         "name": {
-                            "originalName": "CreateFileRequest",
+                            "originalName": "UploadRequest",
                             "camelCase": {
-                                "unsafeName": "createFileRequest",
-                                "safeName": "createFileRequest"
+                                "unsafeName": "uploadRequest",
+                                "safeName": "uploadRequest"
                             },
                             "snakeCase": {
-                                "unsafeName": "create_file_request",
-                                "safeName": "create_file_request"
+                                "unsafeName": "upload_request",
+                                "safeName": "upload_request"
                             },
                             "screamingSnakeCase": {
-                                "unsafeName": "CREATE_FILE_REQUEST",
-                                "safeName": "CREATE_FILE_REQUEST"
+                                "unsafeName": "UPLOAD_REQUEST",
+                                "safeName": "UPLOAD_REQUEST"
                             },
                             "pascalCase": {
-                                "unsafeName": "CreateFileRequest",
-                                "safeName": "CreateFileRequest"
+                                "unsafeName": "UploadRequest",
+                                "safeName": "UploadRequest"
+                            }
+                        },
+                        "properties": [
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "fern",
+                                        "camelCase": {
+                                            "unsafeName": "fern",
+                                            "safeName": "fern"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "fern",
+                                            "safeName": "fern"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "FERN",
+                                            "safeName": "FERN"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Fern",
+                                            "safeName": "Fern"
+                                        }
+                                    },
+                                    "wireValue": "fern"
+                                },
+                                "valueType": {
+                                    "container": {
+                                        "literal": {
+                                            "string": "fern",
+                                            "type": "string"
+                                        },
+                                        "_type": "literal"
+                                    },
+                                    "_type": "container"
+                                },
+                                "type": "bodyProperty"
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "status",
+                                        "camelCase": {
+                                            "unsafeName": "status",
+                                            "safeName": "status"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "status",
+                                            "safeName": "status"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "STATUS",
+                                            "safeName": "STATUS"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Status",
+                                            "safeName": "Status"
+                                        }
+                                    },
+                                    "wireValue": "status"
+                                },
+                                "valueType": {
+                                    "primitive": "STRING",
+                                    "_type": "primitive"
+                                },
+                                "type": "bodyProperty"
+                            },
+                            {
+                                "key": {
+                                    "name": {
+                                        "originalName": "file",
+                                        "camelCase": {
+                                            "unsafeName": "file",
+                                            "safeName": "file"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "file",
+                                            "safeName": "file"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "FILE",
+                                            "safeName": "FILE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "File",
+                                            "safeName": "File"
+                                        }
+                                    },
+                                    "wireValue": "file"
+                                },
+                                "isOptional": false,
+                                "type": "file"
+                            }
+                        ],
+                        "type": "fileUpload"
+                    },
+                    "sdkRequest": {
+                        "shape": {
+                            "wrapperName": {
+                                "originalName": "UploadRequest",
+                                "camelCase": {
+                                    "unsafeName": "uploadRequest",
+                                    "safeName": "uploadRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "upload_request",
+                                    "safeName": "upload_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UPLOAD_REQUEST",
+                                    "safeName": "UPLOAD_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "UploadRequest",
+                                    "safeName": "UploadRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            },
+                            "type": "wrapper"
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        }
+                    },
+                    "response": {
+                        "responseBodyType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "type": "json"
+                    },
+                    "sdkResponse": {
+                        "responseBodyType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "type": "json"
+                    },
+                    "errors": [],
+                    "examples": []
+                },
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "uploadSimple",
+                        "camelCase": {
+                            "unsafeName": "uploadSimple",
+                            "safeName": "uploadSimple"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "upload_simple",
+                            "safeName": "upload_simple"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UPLOAD_SIMPLE",
+                            "safeName": "UPLOAD_SIMPLE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "UploadSimple",
+                            "safeName": "UploadSimple"
+                        }
+                    },
+                    "auth": false,
+                    "method": "POST",
+                    "path": {
+                        "head": "/upload-simple",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/file/upload-simple",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "name": {
+                            "originalName": "UploadSimpleRequest",
+                            "camelCase": {
+                                "unsafeName": "uploadSimpleRequest",
+                                "safeName": "uploadSimpleRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "upload_simple_request",
+                                "safeName": "upload_simple_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UPLOAD_SIMPLE_REQUEST",
+                                "safeName": "UPLOAD_SIMPLE_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "UploadSimpleRequest",
+                                "safeName": "UploadSimpleRequest"
+                            }
+                        },
+                        "properties": [
+                            {
+                                "key": {
+                                    "name": {
+                                        "originalName": "file",
+                                        "camelCase": {
+                                            "unsafeName": "file",
+                                            "safeName": "file"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "file",
+                                            "safeName": "file"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "FILE",
+                                            "safeName": "FILE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "File",
+                                            "safeName": "File"
+                                        }
+                                    },
+                                    "wireValue": "file"
+                                },
+                                "isOptional": false,
+                                "type": "file"
+                            }
+                        ],
+                        "type": "fileUpload"
+                    },
+                    "sdkRequest": {
+                        "shape": {
+                            "wrapperName": {
+                                "originalName": "UploadSimpleRequest",
+                                "camelCase": {
+                                    "unsafeName": "uploadSimpleRequest",
+                                    "safeName": "uploadSimpleRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "upload_simple_request",
+                                    "safeName": "upload_simple_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UPLOAD_SIMPLE_REQUEST",
+                                    "safeName": "UPLOAD_SIMPLE_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "UploadSimpleRequest",
+                                    "safeName": "UploadSimpleRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            },
+                            "type": "wrapper"
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        }
+                    },
+                    "response": {
+                        "responseBodyType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "type": "json"
+                    },
+                    "sdkResponse": {
+                        "responseBodyType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "type": "json"
+                    },
+                    "errors": [],
+                    "examples": []
+                },
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "uploadMultiple",
+                        "camelCase": {
+                            "unsafeName": "uploadMultiple",
+                            "safeName": "uploadMultiple"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "upload_multiple",
+                            "safeName": "upload_multiple"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UPLOAD_MULTIPLE",
+                            "safeName": "UPLOAD_MULTIPLE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "UploadMultiple",
+                            "safeName": "UploadMultiple"
+                        }
+                    },
+                    "auth": false,
+                    "method": "POST",
+                    "path": {
+                        "head": "/upload-multi",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/file/upload-multi",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "name": {
+                            "originalName": "UploadMultiRequest",
+                            "camelCase": {
+                                "unsafeName": "uploadMultiRequest",
+                                "safeName": "uploadMultiRequest"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "upload_multi_request",
+                                "safeName": "upload_multi_request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UPLOAD_MULTI_REQUEST",
+                                "safeName": "UPLOAD_MULTI_REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "UploadMultiRequest",
+                                "safeName": "UploadMultiRequest"
                             }
                         },
                         "properties": [
@@ -227,22 +623,22 @@
                     "sdkRequest": {
                         "shape": {
                             "wrapperName": {
-                                "originalName": "CreateFileRequest",
+                                "originalName": "UploadMultiRequest",
                                 "camelCase": {
-                                    "unsafeName": "createFileRequest",
-                                    "safeName": "createFileRequest"
+                                    "unsafeName": "uploadMultiRequest",
+                                    "safeName": "uploadMultiRequest"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "create_file_request",
-                                    "safeName": "create_file_request"
+                                    "unsafeName": "upload_multi_request",
+                                    "safeName": "upload_multi_request"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "CREATE_FILE_REQUEST",
-                                    "safeName": "CREATE_FILE_REQUEST"
+                                    "unsafeName": "UPLOAD_MULTI_REQUEST",
+                                    "safeName": "UPLOAD_MULTI_REQUEST"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "CreateFileRequest",
-                                    "safeName": "CreateFileRequest"
+                                    "unsafeName": "UploadMultiRequest",
+                                    "safeName": "UploadMultiRequest"
                                 }
                             },
                             "bodyKey": {

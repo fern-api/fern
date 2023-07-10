@@ -20,9 +20,423 @@
     },
     "auth": {
         "requirement": "ALL",
-        "schemes": []
+        "schemes": [
+            {
+                "name": {
+                    "name": {
+                        "originalName": "custom",
+                        "camelCase": {
+                            "unsafeName": "custom",
+                            "safeName": "custom"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "custom",
+                            "safeName": "custom"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CUSTOM",
+                            "safeName": "CUSTOM"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Custom",
+                            "safeName": "Custom"
+                        }
+                    },
+                    "wireValue": "X-API-Custom-Key"
+                },
+                "valueType": {
+                    "container": {
+                        "optional": {
+                            "primitive": "BASE_64",
+                            "_type": "primitive"
+                        },
+                        "_type": "optional"
+                    },
+                    "_type": "container"
+                },
+                "_type": "header"
+            }
+        ]
     },
-    "headers": [],
+    "headers": [
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "X-API-Name",
+                    "camelCase": {
+                        "unsafeName": "xApiName",
+                        "safeName": "xApiName"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "x_api_name",
+                        "safeName": "x_api_name"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "X_API_NAME",
+                        "safeName": "X_API_NAME"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "XApiName",
+                        "safeName": "XApiName"
+                    }
+                },
+                "wireValue": "X-API-Name"
+            },
+            "valueType": {
+                "primitive": "STRING",
+                "_type": "primitive"
+            }
+        },
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "X-API-ID",
+                    "camelCase": {
+                        "unsafeName": "xApiId",
+                        "safeName": "xApiId"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "x_api_id",
+                        "safeName": "x_api_id"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "X_API_ID",
+                        "safeName": "X_API_ID"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "XApiId",
+                        "safeName": "XApiId"
+                    }
+                },
+                "wireValue": "X-API-ID"
+            },
+            "valueType": {
+                "primitive": "UUID",
+                "_type": "primitive"
+            }
+        },
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "X-API-Datetime",
+                    "camelCase": {
+                        "unsafeName": "xApiDatetime",
+                        "safeName": "xApiDatetime"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "x_api_datetime",
+                        "safeName": "x_api_datetime"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "X_API_DATETIME",
+                        "safeName": "X_API_DATETIME"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "XApiDatetime",
+                        "safeName": "XApiDatetime"
+                    }
+                },
+                "wireValue": "X-API-Datetime"
+            },
+            "valueType": {
+                "primitive": "DATE_TIME",
+                "_type": "primitive"
+            }
+        },
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "X-API-Date",
+                    "camelCase": {
+                        "unsafeName": "xApiDate",
+                        "safeName": "xApiDate"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "x_api_date",
+                        "safeName": "x_api_date"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "X_API_DATE",
+                        "safeName": "X_API_DATE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "XApiDate",
+                        "safeName": "XApiDate"
+                    }
+                },
+                "wireValue": "X-API-Date"
+            },
+            "valueType": {
+                "primitive": "DATE",
+                "_type": "primitive"
+            }
+        },
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "X-API-Bytes",
+                    "camelCase": {
+                        "unsafeName": "xApiBytes",
+                        "safeName": "xApiBytes"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "x_api_bytes",
+                        "safeName": "x_api_bytes"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "X_API_BYTES",
+                        "safeName": "X_API_BYTES"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "XApiBytes",
+                        "safeName": "XApiBytes"
+                    }
+                },
+                "wireValue": "X-API-Bytes"
+            },
+            "valueType": {
+                "primitive": "BASE_64",
+                "_type": "primitive"
+            }
+        },
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "X-API-Optional-Name",
+                    "camelCase": {
+                        "unsafeName": "xApiOptionalName",
+                        "safeName": "xApiOptionalName"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "x_api_optional_name",
+                        "safeName": "x_api_optional_name"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "X_API_OPTIONAL_NAME",
+                        "safeName": "X_API_OPTIONAL_NAME"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "XApiOptionalName",
+                        "safeName": "XApiOptionalName"
+                    }
+                },
+                "wireValue": "X-API-Optional-Name"
+            },
+            "valueType": {
+                "container": {
+                    "optional": {
+                        "primitive": "STRING",
+                        "_type": "primitive"
+                    },
+                    "_type": "optional"
+                },
+                "_type": "container"
+            }
+        },
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "X-API-Optional-ID",
+                    "camelCase": {
+                        "unsafeName": "xApiOptionalId",
+                        "safeName": "xApiOptionalId"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "x_api_optional_id",
+                        "safeName": "x_api_optional_id"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "X_API_OPTIONAL_ID",
+                        "safeName": "X_API_OPTIONAL_ID"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "XApiOptionalId",
+                        "safeName": "XApiOptionalId"
+                    }
+                },
+                "wireValue": "X-API-Optional-ID"
+            },
+            "valueType": {
+                "container": {
+                    "optional": {
+                        "primitive": "UUID",
+                        "_type": "primitive"
+                    },
+                    "_type": "optional"
+                },
+                "_type": "container"
+            }
+        },
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "X-API-Optional-Datetime",
+                    "camelCase": {
+                        "unsafeName": "xApiOptionalDatetime",
+                        "safeName": "xApiOptionalDatetime"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "x_api_optional_datetime",
+                        "safeName": "x_api_optional_datetime"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "X_API_OPTIONAL_DATETIME",
+                        "safeName": "X_API_OPTIONAL_DATETIME"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "XApiOptionalDatetime",
+                        "safeName": "XApiOptionalDatetime"
+                    }
+                },
+                "wireValue": "X-API-Optional-Datetime"
+            },
+            "valueType": {
+                "container": {
+                    "optional": {
+                        "primitive": "DATE_TIME",
+                        "_type": "primitive"
+                    },
+                    "_type": "optional"
+                },
+                "_type": "container"
+            }
+        },
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "X-API-Optional-Date",
+                    "camelCase": {
+                        "unsafeName": "xApiOptionalDate",
+                        "safeName": "xApiOptionalDate"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "x_api_optional_date",
+                        "safeName": "x_api_optional_date"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "X_API_OPTIONAL_DATE",
+                        "safeName": "X_API_OPTIONAL_DATE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "XApiOptionalDate",
+                        "safeName": "XApiOptionalDate"
+                    }
+                },
+                "wireValue": "X-API-Optional-Date"
+            },
+            "valueType": {
+                "container": {
+                    "optional": {
+                        "primitive": "DATE",
+                        "_type": "primitive"
+                    },
+                    "_type": "optional"
+                },
+                "_type": "container"
+            }
+        },
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "X-API-Optional-Bytes",
+                    "camelCase": {
+                        "unsafeName": "xApiOptionalBytes",
+                        "safeName": "xApiOptionalBytes"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "x_api_optional_bytes",
+                        "safeName": "x_api_optional_bytes"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "X_API_OPTIONAL_BYTES",
+                        "safeName": "X_API_OPTIONAL_BYTES"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "XApiOptionalBytes",
+                        "safeName": "XApiOptionalBytes"
+                    }
+                },
+                "wireValue": "X-API-Optional-Bytes"
+            },
+            "valueType": {
+                "container": {
+                    "optional": {
+                        "primitive": "BASE_64",
+                        "_type": "primitive"
+                    },
+                    "_type": "optional"
+                },
+                "_type": "container"
+            }
+        },
+        {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "X-API-Fern-Header",
+                    "camelCase": {
+                        "unsafeName": "xApiFernHeader",
+                        "safeName": "xApiFernHeader"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "x_api_fern_header",
+                        "safeName": "x_api_fern_header"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "X_API_FERN_HEADER",
+                        "safeName": "X_API_FERN_HEADER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "XApiFernHeader",
+                        "safeName": "XApiFernHeader"
+                    }
+                },
+                "wireValue": "X-API-Fern-Header"
+            },
+            "valueType": {
+                "container": {
+                    "literal": {
+                        "string": "fern",
+                        "type": "string"
+                    },
+                    "_type": "literal"
+                },
+                "_type": "container"
+            }
+        }
+    ],
     "types": {},
     "errors": {},
     "services": {
@@ -525,6 +939,43 @@
                                         "_type": "primitive"
                                     },
                                     "_type": "optional"
+                                },
+                                "_type": "container"
+                            }
+                        },
+                        {
+                            "availability": {
+                                "status": "GENERAL_AVAILABILITY"
+                            },
+                            "name": {
+                                "name": {
+                                    "originalName": "X-Endpoint-Fern-Header",
+                                    "camelCase": {
+                                        "unsafeName": "xEndpointFernHeader",
+                                        "safeName": "xEndpointFernHeader"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "x_endpoint_fern_header",
+                                        "safeName": "x_endpoint_fern_header"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "X_ENDPOINT_FERN_HEADER",
+                                        "safeName": "X_ENDPOINT_FERN_HEADER"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "XEndpointFernHeader",
+                                        "safeName": "XEndpointFernHeader"
+                                    }
+                                },
+                                "wireValue": "X-Endpoint-Fern-Header"
+                            },
+                            "valueType": {
+                                "container": {
+                                    "literal": {
+                                        "string": "fern",
+                                        "type": "string"
+                                    },
+                                    "_type": "literal"
                                 },
                                 "_type": "container"
                             }

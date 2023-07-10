@@ -20,7 +20,30 @@
     },
     "auth": {
         "requirement": "ALL",
-        "schemes": []
+        "schemes": [
+            {
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                },
+                "_type": "bearer"
+            }
+        ]
     },
     "headers": [],
     "types": {
@@ -250,7 +273,7 @@
         "hasEndpointsInTree": false
     },
     "sdkConfig": {
-        "isAuthMandatory": false,
+        "isAuthMandatory": true,
         "hasStreamingEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "platformHeaders": {

@@ -182,6 +182,191 @@
             },
             "referencedTypes": [],
             "examples": []
+        },
+        "type_imdb:Something": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "Something",
+                    "camelCase": {
+                        "unsafeName": "something",
+                        "safeName": "something"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "something",
+                        "safeName": "something"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SOMETHING",
+                        "safeName": "SOMETHING"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Something",
+                        "safeName": "Something"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "imdb",
+                            "camelCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IMDB",
+                                "safeName": "IMDB"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Imdb",
+                                "safeName": "Imdb"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "imdb",
+                        "camelCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMDB",
+                            "safeName": "IMDB"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imdb",
+                            "safeName": "Imdb"
+                        }
+                    }
+                },
+                "typeId": "type_imdb:Something"
+            },
+            "shape": {
+                "values": [
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "one",
+                                "camelCase": {
+                                    "unsafeName": "one",
+                                    "safeName": "one"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "one",
+                                    "safeName": "one"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ONE",
+                                    "safeName": "ONE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "One",
+                                    "safeName": "One"
+                                }
+                            },
+                            "wireValue": "one"
+                        }
+                    },
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "One",
+                                "camelCase": {
+                                    "unsafeName": "one",
+                                    "safeName": "one"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "one",
+                                    "safeName": "one"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ONE",
+                                    "safeName": "ONE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "One",
+                                    "safeName": "One"
+                                }
+                            },
+                            "wireValue": "One"
+                        }
+                    },
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "ONe",
+                                "camelCase": {
+                                    "unsafeName": "oNe",
+                                    "safeName": "oNe"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "o_ne",
+                                    "safeName": "o_ne"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "O_NE",
+                                    "safeName": "O_NE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ONe",
+                                    "safeName": "ONe"
+                                }
+                            },
+                            "wireValue": "ONe"
+                        }
+                    },
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "ONE",
+                                "camelCase": {
+                                    "unsafeName": "one",
+                                    "safeName": "one"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "one",
+                                    "safeName": "one"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ONE",
+                                    "safeName": "ONE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "One",
+                                    "safeName": "One"
+                                }
+                            },
+                            "wireValue": "ONE"
+                        }
+                    }
+                ],
+                "_type": "enum"
+            },
+            "referencedTypes": [],
+            "examples": []
         }
     },
     "errors": {},
@@ -280,7 +465,8 @@
                 }
             },
             "types": [
-                "type_imdb:Enum"
+                "type_imdb:Enum",
+                "type_imdb:Something"
             ],
             "errors": [],
             "subpackages": [],

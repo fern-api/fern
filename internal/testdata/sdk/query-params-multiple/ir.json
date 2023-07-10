@@ -124,6 +124,38 @@
                             },
                             "name": {
                                 "name": {
+                                    "originalName": "tag",
+                                    "camelCase": {
+                                        "unsafeName": "tag",
+                                        "safeName": "tag"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "tag",
+                                        "safeName": "tag"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "TAG",
+                                        "safeName": "TAG"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Tag",
+                                        "safeName": "Tag"
+                                    }
+                                },
+                                "wireValue": "tag"
+                            },
+                            "valueType": {
+                                "primitive": "INTEGER",
+                                "_type": "primitive"
+                            },
+                            "allowMultiple": false
+                        },
+                        {
+                            "availability": {
+                                "status": "GENERAL_AVAILABILITY"
+                            },
+                            "name": {
+                                "name": {
                                     "originalName": "limit",
                                     "camelCase": {
                                         "unsafeName": "limit",
@@ -154,7 +186,77 @@
                                 },
                                 "_type": "container"
                             },
+                            "allowMultiple": true
+                        },
+                        {
+                            "availability": {
+                                "status": "GENERAL_AVAILABILITY"
+                            },
+                            "name": {
+                                "name": {
+                                    "originalName": "filter",
+                                    "camelCase": {
+                                        "unsafeName": "filter",
+                                        "safeName": "filter"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "filter",
+                                        "safeName": "filter"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "FILTER",
+                                        "safeName": "FILTER"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Filter",
+                                        "safeName": "Filter"
+                                    }
+                                },
+                                "wireValue": "filter"
+                            },
+                            "valueType": {
+                                "container": {
+                                    "optional": {
+                                        "primitive": "STRING",
+                                        "_type": "primitive"
+                                    },
+                                    "_type": "optional"
+                                },
+                                "_type": "container"
+                            },
                             "allowMultiple": false
+                        },
+                        {
+                            "availability": {
+                                "status": "GENERAL_AVAILABILITY"
+                            },
+                            "name": {
+                                "name": {
+                                    "originalName": "series",
+                                    "camelCase": {
+                                        "unsafeName": "series",
+                                        "safeName": "series"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "series",
+                                        "safeName": "series"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "SERIES",
+                                        "safeName": "SERIES"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Series",
+                                        "safeName": "Series"
+                                    }
+                                },
+                                "wireValue": "series"
+                            },
+                            "valueType": {
+                                "primitive": "STRING",
+                                "_type": "primitive"
+                            },
+                            "allowMultiple": true
                         }
                     ],
                     "headers": [

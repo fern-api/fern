@@ -45,8 +45,14 @@
                     "wireValue": "X-API-Key"
                 },
                 "valueType": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
+                    "container": {
+                        "literal": {
+                            "string": "fern",
+                            "type": "string"
+                        },
+                        "_type": "literal"
+                    },
+                    "_type": "container"
                 },
                 "_type": "header"
             }

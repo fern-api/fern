@@ -25,7 +25,368 @@
     "headers": [],
     "types": {},
     "errors": {},
-    "services": {},
+    "services": {
+        "service_auth": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "auth",
+                            "camelCase": {
+                                "unsafeName": "auth",
+                                "safeName": "auth"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "auth",
+                                "safeName": "auth"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "AUTH",
+                                "safeName": "AUTH"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Auth",
+                                "safeName": "Auth"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "auth",
+                        "camelCase": {
+                            "unsafeName": "auth",
+                            "safeName": "auth"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "auth",
+                            "safeName": "auth"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AUTH",
+                            "safeName": "AUTH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Auth",
+                            "safeName": "Auth"
+                        }
+                    }
+                }
+            },
+            "basePath": {
+                "head": "/auth",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "endpoints": [
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "getAuth",
+                        "camelCase": {
+                            "unsafeName": "getAuth",
+                            "safeName": "getAuth"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_auth",
+                            "safeName": "get_auth"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_AUTH",
+                            "safeName": "GET_AUTH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetAuth",
+                            "safeName": "GetAuth"
+                        }
+                    },
+                    "auth": false,
+                    "baseUrl": "Auth",
+                    "method": "GET",
+                    "path": {
+                        "head": "",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/auth",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "response": {
+                        "responseBodyType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "type": "json"
+                    },
+                    "sdkResponse": {
+                        "responseBodyType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "type": "json"
+                    },
+                    "errors": [],
+                    "examples": []
+                },
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "listAuth",
+                        "camelCase": {
+                            "unsafeName": "listAuth",
+                            "safeName": "listAuth"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "list_auth",
+                            "safeName": "list_auth"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LIST_AUTH",
+                            "safeName": "LIST_AUTH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ListAuth",
+                            "safeName": "ListAuth"
+                        }
+                    },
+                    "auth": false,
+                    "baseUrl": "Auth",
+                    "method": "GET",
+                    "path": {
+                        "head": "/list",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/auth/list",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "response": {
+                        "responseBodyType": {
+                            "container": {
+                                "list": {
+                                    "primitive": "STRING",
+                                    "_type": "primitive"
+                                },
+                                "_type": "list"
+                            },
+                            "_type": "container"
+                        },
+                        "type": "json"
+                    },
+                    "sdkResponse": {
+                        "responseBodyType": {
+                            "container": {
+                                "list": {
+                                    "primitive": "STRING",
+                                    "_type": "primitive"
+                                },
+                                "_type": "list"
+                            },
+                            "_type": "container"
+                        },
+                        "type": "json"
+                    },
+                    "errors": [],
+                    "examples": []
+                },
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "listPlants",
+                        "camelCase": {
+                            "unsafeName": "listPlants",
+                            "safeName": "listPlants"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "list_plants",
+                            "safeName": "list_plants"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LIST_PLANTS",
+                            "safeName": "LIST_PLANTS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ListPlants",
+                            "safeName": "ListPlants"
+                        }
+                    },
+                    "auth": false,
+                    "baseUrl": "Plants",
+                    "method": "GET",
+                    "path": {
+                        "head": "/plants",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/auth/plants",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "response": {
+                        "responseBodyType": {
+                            "container": {
+                                "list": {
+                                    "primitive": "STRING",
+                                    "_type": "primitive"
+                                },
+                                "_type": "list"
+                            },
+                            "_type": "container"
+                        },
+                        "type": "json"
+                    },
+                    "sdkResponse": {
+                        "responseBodyType": {
+                            "container": {
+                                "list": {
+                                    "primitive": "STRING",
+                                    "_type": "primitive"
+                                },
+                                "_type": "list"
+                            },
+                            "_type": "container"
+                        },
+                        "type": "json"
+                    },
+                    "errors": [],
+                    "examples": []
+                }
+            ]
+        },
+        "service_plant": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "plant",
+                            "camelCase": {
+                                "unsafeName": "plant",
+                                "safeName": "plant"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "plant",
+                                "safeName": "plant"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PLANT",
+                                "safeName": "PLANT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Plant",
+                                "safeName": "Plant"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "plant",
+                        "camelCase": {
+                            "unsafeName": "plant",
+                            "safeName": "plant"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "plant",
+                            "safeName": "plant"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PLANT",
+                            "safeName": "PLANT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Plant",
+                            "safeName": "Plant"
+                        }
+                    }
+                }
+            },
+            "basePath": {
+                "head": "/plants",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "endpoints": [
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "getPlant",
+                        "camelCase": {
+                            "unsafeName": "getPlant",
+                            "safeName": "getPlant"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_plant",
+                            "safeName": "get_plant"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_PLANT",
+                            "safeName": "GET_PLANT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetPlant",
+                            "safeName": "GetPlant"
+                        }
+                    },
+                    "auth": false,
+                    "baseUrl": "Plants",
+                    "method": "GET",
+                    "path": {
+                        "head": "",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/plants",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "response": {
+                        "responseBodyType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "type": "json"
+                    },
+                    "sdkResponse": {
+                        "responseBodyType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        },
+                        "type": "json"
+                    },
+                    "errors": [],
+                    "examples": []
+                }
+            ]
+        }
+    },
     "constants": {
         "errorInstanceIdKey": {
             "name": {
@@ -161,7 +522,146 @@
     },
     "pathParameters": [],
     "variables": [],
-    "subpackages": {},
+    "subpackages": {
+        "subpackage_auth": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "auth",
+                        "camelCase": {
+                            "unsafeName": "auth",
+                            "safeName": "auth"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "auth",
+                            "safeName": "auth"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "AUTH",
+                            "safeName": "AUTH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Auth",
+                            "safeName": "Auth"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "auth",
+                    "camelCase": {
+                        "unsafeName": "auth",
+                        "safeName": "auth"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "auth",
+                        "safeName": "auth"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "AUTH",
+                        "safeName": "AUTH"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Auth",
+                        "safeName": "Auth"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "auth",
+                "camelCase": {
+                    "unsafeName": "auth",
+                    "safeName": "auth"
+                },
+                "snakeCase": {
+                    "unsafeName": "auth",
+                    "safeName": "auth"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "AUTH",
+                    "safeName": "AUTH"
+                },
+                "pascalCase": {
+                    "unsafeName": "Auth",
+                    "safeName": "Auth"
+                }
+            },
+            "service": "service_auth",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "hasEndpointsInTree": true
+        },
+        "subpackage_plant": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "plant",
+                        "camelCase": {
+                            "unsafeName": "plant",
+                            "safeName": "plant"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "plant",
+                            "safeName": "plant"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PLANT",
+                            "safeName": "PLANT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Plant",
+                            "safeName": "Plant"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "plant",
+                    "camelCase": {
+                        "unsafeName": "plant",
+                        "safeName": "plant"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "plant",
+                        "safeName": "plant"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PLANT",
+                        "safeName": "PLANT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Plant",
+                        "safeName": "Plant"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "plant",
+                "camelCase": {
+                    "unsafeName": "plant",
+                    "safeName": "plant"
+                },
+                "snakeCase": {
+                    "unsafeName": "plant",
+                    "safeName": "plant"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "PLANT",
+                    "safeName": "PLANT"
+                },
+                "pascalCase": {
+                    "unsafeName": "Plant",
+                    "safeName": "Plant"
+                }
+            },
+            "service": "service_plant",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "hasEndpointsInTree": true
+        }
+    },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
@@ -169,8 +669,11 @@
         },
         "types": [],
         "errors": [],
-        "subpackages": [],
-        "hasEndpointsInTree": false
+        "subpackages": [
+            "subpackage_auth",
+            "subpackage_plant"
+        ],
+        "hasEndpointsInTree": true
     },
     "sdkConfig": {
         "isAuthMandatory": false,
