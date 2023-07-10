@@ -7,5 +7,5 @@ type ErrorDeclaration struct {
 	Name              *DeclaredErrorName `json:"name,omitempty"`
 	DiscriminantValue *NameAndWireValue  `json:"discriminantValue,omitempty"`
 	Type              *TypeReference     `json:"type,omitempty"`
-	StatusCode        int                `json:"statusCode,omitempty"`
+	StatusCode        int                `json:"statusCode"`
 }

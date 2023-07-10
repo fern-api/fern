@@ -19,8 +19,8 @@ func NewUnionFromOne(value *ExampleType) *Union {
 
 func (u *Union) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"type,omitempty"`
-		Docs string `json:"docs,omitempty"`
+		Type string `json:"type"`
+		Docs string `json:"docs"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -44,8 +44,8 @@ func (u Union) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "one":
 		var marshaler = struct {
-			Type string `json:"type,omitempty"`
-			Docs string `json:"docs,omitempty"`
+			Type string `json:"type"`
+			Docs string `json:"docs"`
 			*ExampleType
 		}{
 			Type:        u.Type,

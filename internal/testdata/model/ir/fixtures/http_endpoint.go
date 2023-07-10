@@ -21,6 +21,6 @@ type HttpEndpoint struct {
 	StreamingResponse *StreamingResponse     `json:"streamingResponse,omitempty"`
 	SdkResponse       *SdkResponse           `json:"sdkResponse,omitempty"`
 	Errors            ResponseErrors         `json:"errors,omitempty"`
-	Auth              bool                   `json:"auth,omitempty"`
+	Auth              bool                   `json:"auth"`
 	Examples          []*ExampleEndpointCall `json:"examples,omitempty"`
 }

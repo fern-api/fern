@@ -23,7 +23,7 @@ func NewSdkRequestShapeFromWrapper(value *SdkRequestWrapper) *SdkRequestShape {
 
 func (s *SdkRequestShape) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"type,omitempty"`
+		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -52,7 +52,7 @@ func (s SdkRequestShape) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", s.Type, s)
 	case "justRequestBody":
 		var marshaler = struct {
-			Type string `json:"type,omitempty"`
+			Type string `json:"type"`
 			*HttpRequestBodyReference
 		}{
 			Type:                     s.Type,
@@ -61,7 +61,7 @@ func (s SdkRequestShape) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "wrapper":
 		var marshaler = struct {
-			Type string `json:"type,omitempty"`
+			Type string `json:"type"`
 			*SdkRequestWrapper
 		}{
 			Type:              s.Type,

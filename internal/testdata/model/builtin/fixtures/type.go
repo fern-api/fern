@@ -9,15 +9,15 @@ import (
 )
 
 type Type struct {
-	One       int              `json:"one,omitempty"`
-	Two       float64          `json:"two,omitempty"`
-	Three     string           `json:"three,omitempty"`
-	Four      bool             `json:"four,omitempty"`
-	Five      int64            `json:"five,omitempty"`
-	Six       time.Time        `json:"six,omitempty"`
-	Seven     time.Time        `json:"seven,omitempty"`
-	Eight     uuid.UUID        `json:"eight,omitempty"`
-	Nine      []byte           `json:"nine,omitempty"`
+	One       int              `json:"one"`
+	Two       float64          `json:"two"`
+	Three     string           `json:"three"`
+	Four      bool             `json:"four"`
+	Five      int64            `json:"five"`
+	Six       time.Time        `json:"six"`
+	Seven     time.Time        `json:"seven"`
+	Eight     uuid.UUID        `json:"eight"`
+	Nine      []byte           `json:"nine"`
 	Ten       []int            `json:"ten,omitempty"`
 	Eleven    []float64        `json:"eleven,omitempty"`
 	Twelve    map[string]bool  `json:"twelve,omitempty"`
@@ -48,7 +48,7 @@ func (t *Type) MarshalJSON() ([]byte, error) {
 	type embed Type
 	var marshaler = struct {
 		embed
-		Eighteen string `json:"eighteen,omitempty"`
+		Eighteen string `json:"eighteen"`
 	}{
 		embed:    embed(*t),
 		Eighteen: "fern",

@@ -3,7 +3,7 @@
 package ir
 
 type PlatformHeaders struct {
-	Language   string `json:"language,omitempty"`
-	SdkName    string `json:"sdkName,omitempty"`
-	SdkVersion string `json:"sdkVersion,omitempty"`
+	Language   string `json:"language"`
+	SdkName    string `json:"sdkName"`
+	SdkVersion string `json:"sdkVersion"`
 }

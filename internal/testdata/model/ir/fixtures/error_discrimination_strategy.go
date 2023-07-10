@@ -23,7 +23,7 @@ func NewErrorDiscriminationStrategyFromProperty(value *ErrorDiscriminationByProp
 
 func (e *ErrorDiscriminationStrategy) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"type,omitempty"`
+		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -52,7 +52,7 @@ func (e ErrorDiscriminationStrategy) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "statusCode":
 		var marshaler = struct {
-			Type       string `json:"type,omitempty"`
+			Type       string `json:"type"`
 			StatusCode any    `json:"statusCode,omitempty"`
 		}{
 			Type:       e.Type,
@@ -61,7 +61,7 @@ func (e ErrorDiscriminationStrategy) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "property":
 		var marshaler = struct {
-			Type string `json:"type,omitempty"`
+			Type string `json:"type"`
 			*ErrorDiscriminationByPropertyStrategy
 		}{
 			Type:                                  e.Type,

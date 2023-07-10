@@ -27,7 +27,7 @@ func NewStreamConditionFromRequestPropertyKey(value string) *StreamCondition {
 
 func (s *StreamCondition) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"type,omitempty"`
+		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -36,7 +36,7 @@ func (s *StreamCondition) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "queryParameterKey":
 		var valueUnmarshaler struct {
-			QueryParameterKey string `json:"value,omitempty"`
+			QueryParameterKey string `json:"value"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -44,7 +44,7 @@ func (s *StreamCondition) UnmarshalJSON(data []byte) error {
 		s.QueryParameterKey = valueUnmarshaler.QueryParameterKey
 	case "requestPropertyKey":
 		var valueUnmarshaler struct {
-			RequestPropertyKey string `json:"value,omitempty"`
+			RequestPropertyKey string `json:"value"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -60,8 +60,8 @@ func (s StreamCondition) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", s.Type, s)
 	case "queryParameterKey":
 		var marshaler = struct {
-			Type              string `json:"type,omitempty"`
-			QueryParameterKey string `json:"value,omitempty"`
+			Type              string `json:"type"`
+			QueryParameterKey string `json:"value"`
 		}{
 			Type:              s.Type,
 			QueryParameterKey: s.QueryParameterKey,
@@ -69,8 +69,8 @@ func (s StreamCondition) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "requestPropertyKey":
 		var marshaler = struct {
-			Type               string `json:"type,omitempty"`
-			RequestPropertyKey string `json:"value,omitempty"`
+			Type               string `json:"type"`
+			RequestPropertyKey string `json:"value"`
 		}{
 			Type:               s.Type,
 			RequestPropertyKey: s.RequestPropertyKey,

@@ -5,7 +5,7 @@ package ir
 type ExampleEndpointCall struct {
 	Docs                   *string                  `json:"docs,omitempty"`
 	Name                   *Name                    `json:"name,omitempty"`
-	Url                    string                   `json:"url,omitempty"`
+	Url                    string                   `json:"url"`
 	RootPathParameters     []*ExamplePathParameter  `json:"rootPathParameters,omitempty"`
 	ServicePathParameters  []*ExamplePathParameter  `json:"servicePathParameters,omitempty"`
 	EndpointPathParameters []*ExamplePathParameter  `json:"endpointPathParameters,omitempty"`

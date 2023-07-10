@@ -9,6 +9,6 @@ type Subpackage struct {
 	Types              []TypeId       `json:"types,omitempty"`
 	Errors             []ErrorId      `json:"errors,omitempty"`
 	Subpackages        []SubpackageId `json:"subpackages,omitempty"`
-	HasEndpointsInTree bool           `json:"hasEndpointsInTree,omitempty"`
+	HasEndpointsInTree bool           `json:"hasEndpointsInTree"`
 	Name               *Name          `json:"name,omitempty"`
 }

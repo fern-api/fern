@@ -3,6 +3,6 @@
 package ir
 
 type EnvironmentBaseUrlWithId struct {
-	Id   EnvironmentBaseUrlId `json:"id,omitempty"`
+	Id   EnvironmentBaseUrlId `json:"id"`
 	Name *Name                `json:"name,omitempty"`
 }

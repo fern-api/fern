@@ -32,7 +32,7 @@ func (u *UnionWithLiteral) Fern() string {
 
 func (u *UnionWithLiteral) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"type,omitempty"`
+		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -53,9 +53,9 @@ func (u UnionWithLiteral) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "fern":
 		var marshaler = struct {
-			Type     string `json:"type,omitempty"`
-			Extended string `json:"extended,omitempty"`
-			Base     string `json:"base,omitempty"`
+			Type     string `json:"type"`
+			Extended string `json:"extended"`
+			Base     string `json:"base"`
 			Fern     string `json:"value,omitempty"`
 		}{
 			Type:     u.Type,

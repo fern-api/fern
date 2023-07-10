@@ -3,7 +3,7 @@
 package ir
 
 type DeclaredTypeName struct {
-	TypeId       TypeId        `json:"typeId,omitempty"`
+	TypeId       TypeId        `json:"typeId"`
 	FernFilepath *FernFilepath `json:"fernFilepath,omitempty"`
 	Name         *Name         `json:"name,omitempty"`
 }

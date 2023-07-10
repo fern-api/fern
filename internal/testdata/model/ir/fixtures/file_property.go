@@ -4,5 +4,5 @@ package ir
 
 type FileProperty struct {
 	Key        *NameAndWireValue `json:"key,omitempty"`
-	IsOptional bool              `json:"isOptional,omitempty"`
+	IsOptional bool              `json:"isOptional"`
 }

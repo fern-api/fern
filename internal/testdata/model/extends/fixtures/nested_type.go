@@ -3,7 +3,7 @@
 package api
 
 type NestedType struct {
-	Docs string `json:"docs,omitempty"`
-	Raw  string `json:"raw,omitempty"`
-	Name string `json:"name,omitempty"`
+	Docs string `json:"docs"`
+	Raw  string `json:"raw"`
+	Name string `json:"name"`
 }

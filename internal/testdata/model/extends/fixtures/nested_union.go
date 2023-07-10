@@ -20,9 +20,9 @@ func NewNestedUnionFromOne(value *ExampleType) *NestedUnion {
 
 func (n *NestedUnion) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"type,omitempty"`
-		Docs string `json:"docs,omitempty"`
-		Raw  string `json:"raw,omitempty"`
+		Type string `json:"type"`
+		Docs string `json:"docs"`
+		Raw  string `json:"raw"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -47,9 +47,9 @@ func (n NestedUnion) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", n.Type, n)
 	case "one":
 		var marshaler = struct {
-			Type string `json:"type,omitempty"`
-			Docs string `json:"docs,omitempty"`
-			Raw  string `json:"raw,omitempty"`
+			Type string `json:"type"`
+			Docs string `json:"docs"`
+			Raw  string `json:"raw"`
 			*ExampleType
 		}{
 			Type:        n.Type,

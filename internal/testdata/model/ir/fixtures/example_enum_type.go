@@ -3,5 +3,5 @@
 package ir
 
 type ExampleEnumType struct {
-	WireValue string `json:"wireValue,omitempty"`
+	WireValue string `json:"wireValue"`
 }

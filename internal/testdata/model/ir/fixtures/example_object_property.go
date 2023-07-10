@@ -3,7 +3,7 @@
 package ir
 
 type ExampleObjectProperty struct {
-	WireKey string                `json:"wireKey,omitempty"`
+	WireKey string                `json:"wireKey"`
 	Value   *ExampleTypeReference `json:"value,omitempty"`
 	// this property may have been brought in via extension. originalTypeDeclaration
 	// is the name of the type that contains this property

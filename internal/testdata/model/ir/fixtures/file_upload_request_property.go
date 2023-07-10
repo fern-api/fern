@@ -23,7 +23,7 @@ func NewFileUploadRequestPropertyFromBodyProperty(value *InlinedRequestBodyPrope
 
 func (f *FileUploadRequestProperty) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"type,omitempty"`
+		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -52,7 +52,7 @@ func (f FileUploadRequestProperty) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", f.Type, f)
 	case "file":
 		var marshaler = struct {
-			Type string `json:"type,omitempty"`
+			Type string `json:"type"`
 			*FileProperty
 		}{
 			Type:         f.Type,
@@ -61,7 +61,7 @@ func (f FileUploadRequestProperty) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "bodyProperty":
 		var marshaler = struct {
-			Type string `json:"type,omitempty"`
+			Type string `json:"type"`
 			*InlinedRequestBodyProperty
 		}{
 			Type:                       f.Type,

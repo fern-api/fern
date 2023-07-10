@@ -24,7 +24,7 @@ func NewUnionWithDiscriminantFromBar(value *Bar) *UnionWithDiscriminant {
 
 func (u *UnionWithDiscriminant) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"_type,omitempty"`
+		Type string `json:"_type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -57,7 +57,7 @@ func (u UnionWithDiscriminant) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "foo":
 		var marshaler = struct {
-			Type string `json:"_type,omitempty"`
+			Type string `json:"_type"`
 			Foo  *Foo   `json:"foo,omitempty"`
 		}{
 			Type: u.Type,
@@ -66,7 +66,7 @@ func (u UnionWithDiscriminant) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "bar":
 		var marshaler = struct {
-			Type string `json:"_type,omitempty"`
+			Type string `json:"_type"`
 			Bar  *Bar   `json:"bar,omitempty"`
 		}{
 			Type: u.Type,

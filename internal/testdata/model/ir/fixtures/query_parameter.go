@@ -7,5 +7,5 @@ type QueryParameter struct {
 	Availability  *Availability     `json:"availability,omitempty"`
 	Name          *NameAndWireValue `json:"name,omitempty"`
 	ValueType     *TypeReference    `json:"valueType,omitempty"`
-	AllowMultiple bool              `json:"allowMultiple,omitempty"`
+	AllowMultiple bool              `json:"allowMultiple"`
 }

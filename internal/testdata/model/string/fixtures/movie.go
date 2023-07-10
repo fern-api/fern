@@ -3,6 +3,6 @@
 package api
 
 type Movie struct {
-	Id    string `json:"id,omitempty"`
-	Title string `json:"title,omitempty"`
+	Id    string `json:"id"`
+	Title string `json:"title"`
 }

@@ -4,7 +4,7 @@ package ir
 
 type VariableDeclaration struct {
 	Docs *string        `json:"docs,omitempty"`
-	Id   VariableId     `json:"id,omitempty"`
+	Id   VariableId     `json:"id"`
 	Name *Name          `json:"name,omitempty"`
 	Type *TypeReference `json:"type,omitempty"`
 }

@@ -28,7 +28,7 @@ func NewExampleSingleUnionTypePropertiesFromNoProperties(value any) *ExampleSing
 
 func (e *ExampleSingleUnionTypeProperties) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
-		Type string `json:"type,omitempty"`
+		Type string `json:"type"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -63,7 +63,7 @@ func (e ExampleSingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "samePropertiesAsObject":
 		var marshaler = struct {
-			Type string `json:"type,omitempty"`
+			Type string `json:"type"`
 			*ExampleNamedType
 		}{
 			Type:             e.Type,
@@ -72,7 +72,7 @@ func (e ExampleSingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "singleProperty":
 		var marshaler = struct {
-			Type string `json:"type,omitempty"`
+			Type string `json:"type"`
 			*ExampleTypeReference
 		}{
 			Type:                 e.Type,
@@ -81,7 +81,7 @@ func (e ExampleSingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "noProperties":
 		var marshaler = struct {
-			Type         string `json:"type,omitempty"`
+			Type         string `json:"type"`
 			NoProperties any    `json:"noProperties,omitempty"`
 		}{
 			Type:         e.Type,

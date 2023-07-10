@@ -7,7 +7,7 @@ import (
 )
 
 type Foo struct {
-	Name  string   `json:"name,omitempty"`
+	Name  string   `json:"name"`
 	Value *Value   `json:"value,omitempty"`
 	Bar   *bar.Bar `json:"bar,omitempty"`
 }

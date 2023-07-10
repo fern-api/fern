@@ -3,5 +3,5 @@
 package api
 
 type Docs struct {
-	Docs string `json:"docs,omitempty"`
+	Docs string `json:"docs"`
 }

@@ -4,7 +4,7 @@ package ir
 
 type SingleBaseUrlEnvironment struct {
 	Docs *string        `json:"docs,omitempty"`
-	Id   EnvironmentId  `json:"id,omitempty"`
+	Id   EnvironmentId  `json:"id"`
 	Name *Name          `json:"name,omitempty"`
-	Url  EnvironmentUrl `json:"url,omitempty"`
+	Url  EnvironmentUrl `json:"url"`
 }
