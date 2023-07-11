@@ -156,6 +156,7 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Attachment identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "byte_count": {
@@ -544,10 +545,12 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Message identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "@type": {
               "docs": "Message type",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "did": {
@@ -1026,6 +1029,7 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@context": {
               "docs": "The JSON-LD context of the credential",
+              "name": "_@context",
               "type": "list<map<string, unknown>>",
             },
             "credentialSubject": {
@@ -1123,10 +1127,12 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Message identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "@type": {
               "docs": "Message type",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "comment": {
@@ -1148,6 +1154,7 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@type": {
               "docs": "Message type identifier",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "attributes": {
@@ -1165,10 +1172,12 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Message identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "@type": {
               "docs": "Message type",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "comment": {
@@ -1498,10 +1507,12 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Message identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "@type": {
               "docs": "Message type",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "protocols": {
@@ -1515,10 +1526,12 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Message identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "@type": {
               "docs": "Message type",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "disclosures": {
@@ -2611,6 +2624,7 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@type": {
               "docs": "Message type identifier",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "attributes": {
@@ -3154,10 +3168,12 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Message identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "@type": {
               "docs": "Message type",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "accept": {
@@ -3388,10 +3404,12 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Message identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "@type": {
               "docs": "Message type",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "filter": {
@@ -3430,10 +3448,12 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Message identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "@type": {
               "docs": "Message type",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "updates": {
@@ -3604,10 +3624,12 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Message identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "@type": {
               "docs": "Message type",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "mediator_terms": {
@@ -3625,10 +3647,12 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Message identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "@type": {
               "docs": "Message type",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "endpoint": {
@@ -3700,10 +3724,12 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Message identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "@type": {
               "docs": "Message type",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "description": {
@@ -3975,10 +4001,12 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Message identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "@type": {
               "docs": "Message type",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "comment": {
@@ -3996,10 +4024,12 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Message identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "@type": {
               "docs": "Message type",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "comment": {
@@ -4039,10 +4069,12 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Message identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "@type": {
               "docs": "Message type",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "queries": {
@@ -4056,10 +4088,12 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Message identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "@type": {
               "docs": "Message type",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "comment": {
@@ -4680,6 +4714,7 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "_type": {
               "docs": "Transaction type",
+              "name": "__type",
               "type": "optional<string>",
             },
             "connection_id": {
@@ -5725,10 +5760,12 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Message identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "@type": {
               "docs": "Message type",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "comment": {
@@ -5754,10 +5791,12 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Message identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "@type": {
               "docs": "Message type",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "comment": {
@@ -5787,6 +5826,7 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@type": {
               "docs": "Message type identifier",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "attributes": {
@@ -5800,10 +5840,12 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Message identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "@type": {
               "docs": "Message type",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "comment": {
@@ -5833,10 +5875,12 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Message identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "@type": {
               "docs": "Message type",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "comment": {
@@ -5937,10 +5981,12 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Message identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "@type": {
               "docs": "Message type",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "comment": {
@@ -6197,10 +6243,12 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Message identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "@type": {
               "docs": "Message type",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "comment": {
@@ -6243,10 +6291,12 @@ exports[`open api parser aries simple 1`] = `
           "properties": {
             "@id": {
               "docs": "Message identifier",
+              "name": "_@id",
               "type": "optional<string>",
             },
             "@type": {
               "docs": "Message type",
+              "name": "_@type",
               "type": "optional<string>",
             },
             "comment": {

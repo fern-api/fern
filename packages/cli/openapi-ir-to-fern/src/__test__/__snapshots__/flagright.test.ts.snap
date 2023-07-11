@@ -760,6 +760,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "properties": {
             "3dsDone": {
               "docs": "Whether 3ds was successfully enforced for the transaction",
+              "name": "_3dsDone",
               "type": "optional<boolean>",
             },
             "cardAuthenticated": {

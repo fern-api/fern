@@ -50,6 +50,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "city": {
@@ -132,6 +133,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "destination_port": {
@@ -230,6 +232,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "chargeable_volume": {
@@ -255,6 +258,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "flight_number": {
@@ -276,6 +280,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "country_code": {
@@ -301,6 +306,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "air_booking": {
@@ -402,6 +408,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "booking_id": {
@@ -475,6 +482,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -496,6 +504,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "String representing the object’s type. Always \`/booking_amendment_product_description\` for this object.",
+              "name": "__object",
               "type": "optional<string>",
             },
             "description": {
@@ -517,6 +526,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -538,6 +548,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "String representing the object’s type. Always \`/product_descriptions\` for this object.",
+              "name": "__object",
               "type": "optional<string>",
             },
             "description": {
@@ -563,6 +574,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "booking": {
@@ -588,6 +600,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "link": {
@@ -605,6 +618,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -641,6 +655,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -662,6 +677,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -683,6 +699,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -759,6 +776,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "id": {
@@ -780,6 +798,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -876,6 +895,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -897,6 +917,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -918,6 +939,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "co2e_emissions": {
@@ -931,6 +953,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -952,6 +975,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "String representing the object’s type. Always \`/cargo\` for this object.",
+              "name": "__object",
               "type": "optional<string>",
             },
             "contains_hazmat": {
@@ -1026,6 +1050,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object. Always /commercial_invoice for this object.",
+              "name": "__object",
               "type": "optional<string>",
             },
             "currency": {
@@ -1099,6 +1124,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "link": {
@@ -1136,6 +1162,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object. Always /commercial_invoice_line_item for this object.",
+              "name": "__object",
               "type": "optional<string>",
             },
             "container_number": {
@@ -1246,6 +1273,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -1267,6 +1295,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -1288,6 +1317,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -1309,6 +1339,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -1330,6 +1361,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -1351,6 +1383,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object. Always /network/company for this object.",
+              "name": "__object",
               "type": "optional<string>",
             },
             "contacts": {
@@ -1392,6 +1425,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "id": {
@@ -1421,6 +1455,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -1442,6 +1477,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -1467,6 +1503,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "id": {
@@ -1488,6 +1525,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object. Always /network/contact for this object.",
+              "name": "__object",
               "type": "optional<string>",
             },
             "company": {
@@ -1521,6 +1559,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "id": {
@@ -1542,6 +1581,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "link": {
@@ -1559,6 +1599,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "String representing the object’s type. Always \`/container_counts\` for this object.",
+              "name": "__object",
               "type": "optional<string>",
             },
             "forty_five_ft_hc": {
@@ -1584,6 +1625,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "link": {
@@ -1601,6 +1643,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -1622,6 +1665,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -1643,6 +1687,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "id": {
@@ -1664,6 +1709,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -3709,6 +3755,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "The type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "amount": {
@@ -3742,6 +3789,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -3763,6 +3811,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object. Always /customs_entry for this object.",
+              "name": "__object",
               "type": "optional<string>",
             },
             "entry_number": {
@@ -3792,6 +3841,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "link": {
@@ -3809,6 +3859,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -3830,6 +3881,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -3871,6 +3923,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "address": {
@@ -3924,6 +3977,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object. Always /document for this object.",
+              "name": "__object",
               "type": "optional<string>",
             },
             "archived_at": {
@@ -3965,6 +4019,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "link": {
@@ -3982,6 +4037,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -4003,6 +4059,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -4024,6 +4081,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -4049,6 +4107,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -4070,6 +4129,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "String representing the object’s type. Always /api/error for this object.",
+              "name": "__object",
               "type": "optional<string>",
             },
             "code": {
@@ -4126,6 +4186,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -4147,6 +4208,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -4168,6 +4230,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -4189,6 +4252,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "message": {
@@ -4290,6 +4354,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object. Always /file_metadata for this object.",
+              "name": "__object",
               "type": "optional<string>",
             },
             "size": {
@@ -4332,6 +4397,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "link": {
@@ -4349,6 +4415,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "id": {
@@ -4384,6 +4451,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "String representing the object’s type. Always \`/hs_code\` for this object.",
+              "name": "__object",
               "type": "optional<string>",
             },
             "code": {
@@ -4405,6 +4473,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object. Always '/invoice' for this object.",
+              "name": "__object",
               "type": "optional<string>",
             },
             "balance": {
@@ -4518,6 +4587,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -4539,6 +4609,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -4560,6 +4631,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object.",
+              "name": "__object",
               "type": "optional<string>",
             },
             "amount": {
@@ -4632,6 +4704,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "The type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "qualifier": {
@@ -4649,6 +4722,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "The type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "qualifier": {
@@ -4711,6 +4785,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -4732,6 +4807,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "link": {
@@ -4749,6 +4825,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "id": {
@@ -4770,6 +4847,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "String representing the object’s type. Always \`/quantity/length\` for this object.",
+              "name": "__object",
               "type": "optional<string>",
             },
             "unit": {
@@ -4892,6 +4970,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object. Always /network/location for this object.",
+              "name": "__object",
               "type": "optional<string>",
             },
             "address": {
@@ -4933,6 +5012,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -4954,6 +5034,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -4979,6 +5060,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -5000,6 +5082,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "manufacturer_code": {
@@ -5057,6 +5140,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object. Always /money for this object.",
+              "name": "__object",
               "type": "optional<string>",
             },
           },
@@ -5079,6 +5163,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -5100,6 +5185,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -5121,6 +5207,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -5142,6 +5229,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -5163,6 +5251,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -5184,6 +5273,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -5209,6 +5299,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -5230,6 +5321,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -5251,6 +5343,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -5272,6 +5365,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -5293,6 +5387,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -5314,6 +5409,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -5339,6 +5435,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -5360,6 +5457,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -5381,6 +5479,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -5402,6 +5501,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -5423,6 +5523,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "container_counts": {
@@ -5529,6 +5630,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -5550,6 +5652,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -5571,6 +5674,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -5592,6 +5696,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "dates": {
@@ -5613,6 +5718,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "carrier_booking_number": {
@@ -5646,6 +5752,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "container_legs": {
@@ -5786,6 +5893,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "address": {
@@ -5825,6 +5933,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<PlaceportObject>",
             },
             "port_code": {
@@ -5883,6 +5992,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -5904,6 +6014,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -5929,6 +6040,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "archived_at": {
@@ -5982,6 +6094,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "codes": {
@@ -5999,6 +6112,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -6020,6 +6134,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -6041,6 +6156,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -6062,6 +6178,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "type": {
@@ -6079,6 +6196,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "id": {
@@ -6100,6 +6218,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -6121,6 +6240,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -6142,6 +6262,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "archived_at": {
@@ -6423,6 +6544,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -6444,6 +6566,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -6465,6 +6588,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "assigned_party": {
@@ -6562,6 +6686,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "link": {
@@ -6672,6 +6797,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -6693,6 +6819,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -6734,6 +6861,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "id": {
@@ -6755,6 +6883,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -7104,6 +7233,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "id": {
@@ -7125,6 +7255,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -7166,6 +7297,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "container_legs": {
@@ -7179,6 +7311,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "actual_arrival_date": {
@@ -7408,6 +7541,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "actual_arrival_date": {
@@ -7603,6 +7737,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of this object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "classifications": {
@@ -7655,6 +7790,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "containers": {
@@ -7812,6 +7948,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -7833,6 +7970,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -7854,6 +7992,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "id": {
@@ -7887,6 +8026,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "actual_arrival_date": {
@@ -7964,6 +8104,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -7985,6 +8126,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -8006,6 +8148,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -8027,6 +8170,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "place": {
@@ -8063,6 +8207,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of Object Returned. In this case, /api/refs/object.",
+              "name": "__object",
               "type": "optional<string>",
             },
             "id": {
@@ -8084,6 +8229,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -8175,6 +8321,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -8196,6 +8343,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "data": {
@@ -8217,6 +8365,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "shipments": {
@@ -8247,6 +8396,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "String representing the object’s type. Always \`/shipping_unit\` for this object.",
+              "name": "__object",
               "type": "optional<string>",
             },
             "atomic_count": {
@@ -8333,6 +8483,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "address": {
@@ -8399,6 +8550,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "description_of_products": {
@@ -8435,6 +8587,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": undefined,
+              "name": "__object",
               "type": "optional<string>",
             },
             "container_legs": {
@@ -8489,6 +8642,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "country_code": {
@@ -8509,6 +8663,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
           },
@@ -8546,6 +8701,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "Type of the object",
+              "name": "__object",
               "type": "optional<string>",
             },
             "created_at": {
@@ -8582,6 +8738,7 @@ exports[`open api parser flexport simple 1`] = `
           "properties": {
             "_object": {
               "docs": "String representing the object’s type. Always \`/quantity/weight\` for this object.",
+              "name": "__object",
               "type": "optional<string>",
             },
           },
