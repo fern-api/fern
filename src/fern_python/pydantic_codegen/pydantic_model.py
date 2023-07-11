@@ -373,7 +373,8 @@ def get_field_name_initializer(
                         writer.write_line(f'"{line}\\n"')
                 writer.write_line(")")
             else:
-                writer.write(f'description="{description}"')
+                escaped_description = description.replace('"', '\\"')
+                writer.write(f'description="{escaped_description}"')
         writer.write(")")
 
     return AST.Expression(AST.CodeWriter(write))

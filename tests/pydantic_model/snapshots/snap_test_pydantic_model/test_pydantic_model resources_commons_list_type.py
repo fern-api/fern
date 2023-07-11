@@ -14,14 +14,14 @@ from ...core.datetime_utils import serialize_datetime
 class ListType(pydantic.BaseModel):
     id: typing.Optional[str]
     remote_id: typing.Optional[str] = pydantic.Field(description="The third-party API ID of the matching object.")
-    file_name: typing.Optional[str] = pydantic.Field(description="The attachment's name.")
+    file_name: typing.Optional[str] = pydantic.Field(description='The attachment\'s name, e.g. "file.txt".')
     file_url: typing.Optional[str] = pydantic.Field(description="The attachment's url.")
     candidate: typing.Optional[str] = pydantic.Field(description="")
     value_type: VariableType = pydantic.Field(alias="valueType")
     is_fixed_length: typing.Optional[bool] = pydantic.Field(
         alias="isFixedLength",
         description=(
-            "Whether this list is fixed-size (for languages that supports\n" "fixed-sizelists).Defaults to false.\n"
+            "Whether this list is fixed-size (for languages that supports\n" "fixed-sizelists). Defaults to false.\n"
         ),
     )
 

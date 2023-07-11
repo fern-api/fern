@@ -22,7 +22,7 @@ types:
         docs: The third-party API ID of the matching object.
         type: optional<string>
       file_name:
-        docs: The attachment's name.
+        docs: The attachment's name, e.g. "file.txt".
         type: optional<string>
       file_url:
         docs: The attachment's url.
@@ -34,7 +34,7 @@ types:
       isFixedLength:
         docs: |
           Whether this list is fixed-size (for languages that supports
-          fixed-sizelists).Defaults to false.
+          fixed-sizelists). Defaults to false.
         type: optional<boolean>
   MapType:
     properties:
