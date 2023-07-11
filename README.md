@@ -52,7 +52,7 @@ groups:
         version: 0.0.11
         config:
           module:
-            path: github.com/example/module
+            path: github.com/your/sdk
         output:
           location: local-file-system
           path: ../../gen/go/api
