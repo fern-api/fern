@@ -153,3 +153,6 @@ class FastApiGenerator(AbstractGenerator):
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
         ) as source_file:
             ErrorGenerator(context=context, error=error).generate(source_file=source_file)
+
+    def get_sorted_modules(self) -> None:
+        return None

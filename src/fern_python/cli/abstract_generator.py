@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import os
 from abc import ABC, abstractmethod
-from typing import Tuple
+from typing import Optional, Sequence, Tuple
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources import GeneratorConfig
@@ -46,6 +46,7 @@ class AbstractGenerator(ABC):
             else generator_config.organization,
             project_config=project_config,
             should_format_files=self.should_format_files(generator_config=generator_config),
+            sorted_modules=self.get_sorted_modules(),
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper, ir=ir, generator_config=generator_config, project=project
@@ -191,4 +192,8 @@ jobs:
         generator_config: GeneratorConfig,
         ir: ir_types.IntermediateRepresentation,
     ) -> Tuple[str, ...]:
+        ...
+
+    @abstractmethod
+    def get_sorted_modules(self) -> Optional[Sequence[str]]:
         ...

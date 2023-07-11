@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  a: a.yml
+
+types:
+  ImportingA:
+    properties:
+      a: optional<a.A>
+
+  RootType:
+    properties:
+      s: string

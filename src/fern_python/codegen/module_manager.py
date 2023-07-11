@@ -1,7 +1,8 @@
 import os
 from collections import defaultdict
 from dataclasses import dataclass
-from typing import DefaultDict, Set, Tuple
+from functools import cmp_to_key
+from typing import DefaultDict, List, Optional, Sequence, Set, Tuple
 
 from . import AST
 from .filepath import ExportStrategy, Filepath
@@ -19,6 +20,12 @@ def create_empty_module_info() -> ModuleInfo:
     return ModuleInfo(exports=defaultdict(set))
 
 
+@dataclass
+class ModuleExportsLine:
+    exported_from: str
+    exports: List[str]
+
+
 class ModuleManager:
     """
     A utility for managing the __init__.py files in a project
@@ -26,9 +33,10 @@ class ModuleManager:
 
     _module_infos: DefaultDict[AST.ModulePath, ModuleInfo]
 
-    def __init__(self, *, should_format: bool) -> None:
+    def __init__(self, *, should_format: bool, sorted_modules: Optional[Sequence[str]] = None) -> None:
         self._module_infos = defaultdict(create_empty_module_info)
         self._should_format = should_format
+        self._sorted_modules = sorted_modules or []
 
     def register_exports(self, filepath: Filepath, exports: Set[str]) -> None:
         module_being_exported_from: AST.ModulePath = tuple(
@@ -70,9 +78,26 @@ class ModuleManager:
                 filepath=os.path.join(filepath, *module, "__init__.py"), should_format=self._should_format
             ) as writer:
                 all_exports: Set[str] = set()
-                for exported_from, exports in module_info.exports.items():
-                    if len(exports) > 0:
-                        writer.write_line(f"from .{'.'.join(exported_from)} import {', '.join(exports)}")
-                        all_exports.update(exports)
+                for module_exports_line in self._build_sorted_exports(module_info):
+                    if len(module_exports_line.exports) > 0:
+                        writer.write_line(
+                            f"from {module_exports_line.exported_from} import {', '.join(module_exports_line.exports)}"
+                        )
+                        all_exports.update(module_exports_line.exports)
                 if len(all_exports) > 0:
                     writer.write_line("__all__ = [" + ", ".join(f'"{export}"' for export in sorted(all_exports)) + "]")
+
+    def _build_sorted_exports(self, module_info: ModuleInfo) -> List[ModuleExportsLine]:
+        modules = [
+            ModuleExportsLine(exported_from=f".{'.'.join(exported_from)}", exports=sorted(exports))
+            for exported_from, exports in module_info.exports.items()
+        ]
+        return sorted(modules, key=cmp_to_key(self._compare_modules_for_sorting))
+
+    def _compare_modules_for_sorting(self, a: ModuleExportsLine, b: ModuleExportsLine) -> int:
+        for module in self._sorted_modules:
+            if a.exported_from.startswith(module):
+                return -1
+            if b.exported_from.startswith(module):
+                return 1
+        return -1 if a.exported_from < b.exported_from else 1

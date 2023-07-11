@@ -3,7 +3,7 @@ import shutil
 import subprocess
 from glob import glob
 from pathlib import Path
-from typing import Any, Callable, List, Set
+from typing import Any, Callable, List, Optional, Set, Union
 
 from fern.generator_exec.resources import config
 from snapshottest.file import FileSnapshot  # type: ignore
@@ -21,6 +21,8 @@ def run_snapshot_test(
     cli: Callable[[str], None],
     custom_config: Any = None,
     output_mode: config.OutputMode = config.OutputMode.factory.download_files(),
+    test_commands: Optional[List[str]] = None,
+    organization: str = "fern",
 ) -> None:
     path_to_fixture = os.path.join(os.path.dirname(filename_of_test), f"fixtures/{fixture_name}")
 
@@ -32,7 +34,7 @@ def run_snapshot_test(
         ir_filepath=path_to_ir,
         output=config.GeneratorOutputConfig(path=path_to_output, mode=output_mode),
         workspace_name="ir",
-        organization="fern",
+        organization=organization,
         custom_config=custom_config,
         environment=config.GeneratorEnvironment.factory.local(),
         dry_run=True,
@@ -77,8 +79,12 @@ def run_snapshot_test(
     )
 
     # check compile
-    def run_command_in_output_directory(command: List[str]) -> None:
-        proc = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=path_to_output, text=True)
+    def run_command_in_output_directory(command: Union[str, List[str]], shell: bool = False) -> None:
+        print("+ " + command if type(command) is str else " ".join(command))
+        proc = subprocess.run(
+            command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=path_to_output, text=True, shell=shell
+        )
+        print(f"Return code: {proc.returncode}")
         print(proc.stdout)
         proc.check_returncode()
 
@@ -97,4 +103,7 @@ def run_snapshot_test(
                 "types-backports=0.1.3",
             ]
         )
-    run_command_in_output_directory(["poetry", "run", "mypy", "."])
+
+    if test_commands is not None:
+        for command in test_commands:
+            run_command_in_output_directory(command, shell=True)

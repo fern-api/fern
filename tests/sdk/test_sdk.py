@@ -150,3 +150,32 @@ def test_streaming_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
         filename_of_test=__file__,
         custom_config={"use_api_name_in_package": True},
     )
+
+
+def test_circular_imports(snapshot: SnapshotTest, tmpdir: Path) -> None:
+    run_snapshot_test(
+        snapshot=snapshot,
+        fixture_name="circular-imports",
+        tmpdir=tmpdir,
+        cli=cli,
+        filename_of_test=__file__,
+        output_mode=config.OutputMode.factory.github(
+            config.GithubOutputMode(
+                repo_url="some-repo-url",
+                version="1.0.0",
+                publish_info=config.GithubPublishInfo.factory.pypi(
+                    config.PypiGithubPublishInfo(
+                        registry_url="https://pypi.org/",
+                        package_name="my_org",
+                        username_environment_variable="PYPI_USERNAME",
+                        password_environment_variable="PYPI_PASSWORD",
+                    )
+                ),
+            ),
+        ),
+        organization="my_org",
+        test_commands=[
+            "poetry install",
+            "poetry run python -c 'import my_org'",
+        ],
+    )

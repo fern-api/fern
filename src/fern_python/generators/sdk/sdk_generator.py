@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Sequence, Tuple
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources.config import GeneratorConfig
@@ -223,3 +223,8 @@ class SdkGenerator(AbstractGenerator):
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
         ) as source_file:
             ErrorGenerator(context=context, error=error).generate(source_file=source_file)
+
+    def get_sorted_modules(self) -> Sequence[str]:
+        # always import types/errors before resources (nested packages)
+        # to avoid issues with circular imports
+        return [".types", ".errors", ".resources"]

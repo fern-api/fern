@@ -80,7 +80,13 @@ class WriterImpl(AST.Writer):
 
             try:
                 print("Formatting: " + self._filepath)
-                self._content = isort.code(self._content, quiet=True)
+
+                # don't sort imports in __init__.py because the
+                # import order is controlled to avoid issues with
+                # circular imports
+                if os.path.basename(self._filepath) != "__init__.py":
+                    self._content = isort.code(self._content, quiet=True)
+
                 self._content = black.format_file_contents(
                     self._content,
                     fast=True,

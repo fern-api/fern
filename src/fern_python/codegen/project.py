@@ -4,7 +4,7 @@ import os
 from dataclasses import dataclass
 from pathlib import Path
 from types import TracebackType
-from typing import Optional, Set, Type
+from typing import Optional, Sequence, Set, Type
 
 from fern_python.codegen.pyproject_toml import PyProjectToml, PyProjectTomlPackageConfig
 
@@ -36,6 +36,7 @@ class Project:
         python_version: str = "3.7",
         project_config: ProjectConfig = None,
         should_format_files: bool,
+        sorted_modules: Optional[Sequence[str]] = None,
     ) -> None:
         self._project_filepath = (
             filepath if project_config is None else os.path.join(filepath, "src", relative_path_to_project)
@@ -43,7 +44,7 @@ class Project:
         self._root_filepath = filepath
         self._relative_path_to_project = relative_path_to_project
         self._project_config = project_config
-        self._module_manager = ModuleManager(should_format=should_format_files)
+        self._module_manager = ModuleManager(should_format=should_format_files, sorted_modules=sorted_modules)
         self._python_version = python_version
         self._dependency_manager = DependencyManager()
         self._should_format_files = should_format_files

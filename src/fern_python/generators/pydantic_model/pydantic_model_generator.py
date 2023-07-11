@@ -96,3 +96,6 @@ class PydanticModelGenerator(AbstractGenerator):
                 source_file=source_file,
             )
             type_declaration_handler.run()
+
+    def get_sorted_modules(self) -> None:
+        return None
