@@ -12,7 +12,7 @@ import (
 )
 
 type FileClient interface {
-	Download(ctx context.Context, filename string) (io.Writer, error)
+	Download(ctx context.Context, filename string) (io.Reader, error)
 }
 
 func NewFileClient(opts ...core.ClientOption) FileClient {
@@ -33,7 +33,7 @@ type fileClient struct {
 	header     http.Header
 }
 
-func (f *fileClient) Download(ctx context.Context, filename string) (io.Writer, error) {
+func (f *fileClient) Download(ctx context.Context, filename string) (io.Reader, error) {
 	baseURL := ""
 	if f.baseURL != "" {
 		baseURL = f.baseURL
