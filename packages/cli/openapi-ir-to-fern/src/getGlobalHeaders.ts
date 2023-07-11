@@ -47,7 +47,7 @@ export function getGlobalHeaders(openApiFile: OpenAPIFile): Record<string, RawSc
                 result[headerName] =
                     typeof header.schema === "string"
                         ? `optional<${header.schema}>`
-                        : { ...header.schema, type: `optiona<${header.schema.type}>` };
+                        : { ...header.schema, type: `optional<${header.schema.type}>` };
             }
         }
     }
