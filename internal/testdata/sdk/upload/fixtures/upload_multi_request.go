@@ -4,5 +4,5 @@ package api
 
 // UploadMultiRequest is an in-lined request used by the UploadMultiple endpoint.
 type UploadMultiRequest struct {
-	Status string `json:"status,omitempty"`
+	Status string `json:"status"`
 }

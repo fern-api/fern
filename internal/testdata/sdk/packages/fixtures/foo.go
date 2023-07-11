@@ -3,6 +3,6 @@
 package api
 
 type Foo struct {
-	Id   string `json:"id,omitempty"`
-	Name string `json:"name,omitempty"`
+	Id   string `json:"id"`
+	Name string `json:"name"`
 }

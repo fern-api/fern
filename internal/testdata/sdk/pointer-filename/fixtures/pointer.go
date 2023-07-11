@@ -3,5 +3,5 @@
 package api
 
 type Pointer struct {
-	Name string `json:"name,omitempty"`
+	Name string `json:"name"`
 }

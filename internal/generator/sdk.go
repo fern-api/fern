@@ -693,7 +693,6 @@ func (f *fileWriter) endpointFromIR(
 				parameterName := fileUploadProperty.File.Key.Name.CamelCase.SafeName
 				parameterType := "io.Reader"
 				signatureParameters += fmt.Sprintf(", %s %s", parameterName, parameterType)
-				pathParameterNames = append(pathParameterNames, parameterName)
 				fileProperties = append(fileProperties, fileUploadProperty.File)
 			}
 			if fileUploadProperty.BodyProperty != nil {

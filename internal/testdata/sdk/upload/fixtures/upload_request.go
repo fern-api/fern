@@ -8,7 +8,7 @@ import (
 
 // UploadRequest is an in-lined request used by the Upload endpoint.
 type UploadRequest struct {
-	Status string `json:"status,omitempty"`
+	Status string `json:"status"`
 	fern   string
 }
 

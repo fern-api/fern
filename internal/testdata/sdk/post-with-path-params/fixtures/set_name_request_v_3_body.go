@@ -3,5 +3,5 @@
 package api
 
 type SetNameRequestV3Body struct {
-	UserName string `json:"userName,omitempty"`
+	UserName string `json:"userName"`
 }

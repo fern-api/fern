@@ -3,5 +3,5 @@
 package api
 
 type ClientWithAuthBearer struct {
-	Value string `json:"value,omitempty"`
+	Value string `json:"value"`
 }

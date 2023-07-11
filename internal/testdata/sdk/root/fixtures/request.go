@@ -3,7 +3,7 @@
 package api
 
 type Request struct {
-	Url     string          `json:"url,omitempty"`
+	Url     string          `json:"url"`
 	Headers *map[string]any `json:"headers,omitempty"`
 	Body    *string         `json:"body,omitempty"`
 }

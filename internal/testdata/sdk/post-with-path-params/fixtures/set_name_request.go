@@ -4,5 +4,5 @@ package api
 
 // SetNameRequest is an in-lined request used by the SetNameV2 endpoint.
 type SetNameRequest struct {
-	UserName string `json:"userName,omitempty"`
+	UserName string `json:"userName"`
 }

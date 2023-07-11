@@ -41,7 +41,7 @@ func (f *fileClient) Upload(ctx context.Context, file io.Reader, request *Upload
 	if f.baseURL != "" {
 		baseURL = f.baseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"file/upload", file)
+	endpointURL := baseURL + "/" + "file/upload"
 
 	var response string
 	requestBuffer := bytes.NewBuffer(nil)
@@ -91,7 +91,7 @@ func (f *fileClient) UploadSimple(ctx context.Context, file io.Reader) (string, 
 	if f.baseURL != "" {
 		baseURL = f.baseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"file/upload-simple", file)
+	endpointURL := baseURL + "/" + "file/upload-simple"
 
 	var response string
 	requestBuffer := bytes.NewBuffer(nil)
@@ -132,7 +132,7 @@ func (f *fileClient) UploadMultiple(ctx context.Context, file io.Reader, optiona
 	if f.baseURL != "" {
 		baseURL = f.baseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"file/upload-multi", file, optionalFile)
+	endpointURL := baseURL + "/" + "file/upload-multi"
 
 	var response string
 	requestBuffer := bytes.NewBuffer(nil)

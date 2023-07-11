@@ -3,5 +3,5 @@
 package api
 
 type ClientOptions struct {
-	Value string `json:"value,omitempty"`
+	Value string `json:"value"`
 }

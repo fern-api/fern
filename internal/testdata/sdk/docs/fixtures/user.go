@@ -4,5 +4,5 @@ package api
 
 // A user.
 type User struct {
-	Name string `json:"name,omitempty"`
+	Name string `json:"name"`
 }
