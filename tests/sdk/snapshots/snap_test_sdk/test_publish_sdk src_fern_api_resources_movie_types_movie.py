@@ -13,7 +13,7 @@ class Movie(pydantic.BaseModel):
     id: MovieId
     title: str
     from_: str = pydantic.Field(alias="from")
-    rating: float = pydantic.Field(description=("The rating scale is one to five stars\n"))
+    rating: float = pydantic.Field(description="The rating scale is one to five stars")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

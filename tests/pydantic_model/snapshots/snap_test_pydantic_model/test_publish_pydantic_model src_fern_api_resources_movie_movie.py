@@ -16,7 +16,7 @@ class Movie(pydantic.BaseModel):
     id: MovieId
     title: str
     from_: str = pydantic.Field(alias="from")
-    rating: float = pydantic.Field(description=("The rating scale is one to five stars\n"))
+    rating: float = pydantic.Field(description="The rating scale is one to five stars")
     type: typing_extensions.Literal["movie"]
 
     class Partial(typing_extensions.TypedDict):

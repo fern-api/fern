@@ -16,10 +16,25 @@ types:
       doublyLinkedListType: {}
   ListType:
     properties:
+      id:
+        type: optional<string>
+      remote_id:
+        docs: The third-party API ID of the matching object.
+        type: optional<string>
+      file_name:
+        docs: The attachment's name.
+        type: optional<string>
+      file_url:
+        docs: The attachment's url.
+        type: optional<string>
+      candidate:
+        docs: ""
+        type: optional<string>
       valueType: VariableType
       isFixedLength:
-        docs: Whether this list is fixed-size (for languages that supports fixed-size
-          lists). Defaults to false.
+        docs: |
+          Whether this list is fixed-size (for languages that supports
+          fixed-sizelists).Defaults to false.
         type: optional<boolean>
   MapType:
     properties:

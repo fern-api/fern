@@ -11,7 +11,7 @@ from ...commons.types.problem_id import ProblemId
 
 class UpdatePlaylistRequest(pydantic.BaseModel):
     name: str
-    problems: typing.List[ProblemId] = pydantic.Field(description=("The problems that make up the playlist.\n"))
+    problems: typing.List[ProblemId] = pydantic.Field(description="The problems that make up the playlist.")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

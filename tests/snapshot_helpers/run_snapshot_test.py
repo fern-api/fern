@@ -104,6 +104,8 @@ def run_snapshot_test(
             ]
         )
 
+    run_command_in_output_directory(["poetry", "run", "mypy", "."])
+
     if test_commands is not None:
         for command in test_commands:
             run_command_in_output_directory(command, shell=True)

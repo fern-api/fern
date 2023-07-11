@@ -14,9 +14,7 @@ class ListType(pydantic.BaseModel):
     value_type: VariableType = pydantic.Field(alias="valueType")
     is_fixed_length: typing.Optional[bool] = pydantic.Field(
         alias="isFixedLength",
-        description=(
-            "Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.\n"
-        ),
+        description="Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.",
     )
 
     def json(self, **kwargs: typing.Any) -> str:

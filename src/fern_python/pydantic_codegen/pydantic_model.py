@@ -361,7 +361,7 @@ def get_field_name_initializer(
                 writer.write(", ")
             arg_present = True
             lines = description.split("\n")
-            if len(lines) > 0:
+            if len(lines) > 1:
                 writer.write_line("description=(")
                 for i, line in enumerate(lines):
                     line = line.replace('"', '\\"')
