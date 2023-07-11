@@ -19,6 +19,23 @@ describe("undiscriminatedUnion", () => {
         }
     );
 
+    it("Returns errors for all variants", async () => {
+        const result = await undiscriminatedUnion([string(), number()]).parse(true);
+        if (result.ok) {
+            throw new Error("Unexpectedly passed validation");
+        }
+        expect(result.errors).toEqual([
+            {
+                message: "[Variant 0] Expected string. Received true.",
+                path: [],
+            },
+            {
+                message: "[Variant 1] Expected number. Received true.",
+                path: [],
+            },
+        ]);
+    });
+
     describe("compile", () => {
         // eslint-disable-next-line jest/expect-expect
         it("doesn't compile with zero members", () => {

@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import { boolean, number, object, property, string } from "../builders";
+import { boolean, number, object, property, string, undiscriminatedUnion } from "../builders";
 
 describe("skipValidation", () => {
     it("allows data that doesn't conform to the schema", async () => {
@@ -12,12 +12,14 @@ describe("skipValidation", () => {
             camelCase: property("snake_case", string()),
             numberProperty: number(),
             requiredProperty: boolean(),
+            anyPrimitive: undiscriminatedUnion([string(), number(), boolean()]),
         });
 
         const parsed = await schema.parse(
             {
                 snake_case: "hello",
                 numberProperty: "oops",
+                anyPrimitive: true,
             },
             {
                 skipValidation: true,
@@ -29,6 +31,7 @@ describe("skipValidation", () => {
             value: {
                 camelCase: "hello",
                 numberProperty: "oops",
+                anyPrimitive: true,
             },
         });
 

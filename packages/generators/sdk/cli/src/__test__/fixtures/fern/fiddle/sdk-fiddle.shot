@@ -3500,29 +3500,31 @@ function undiscriminatedUnion(schemas) {
   const baseSchema = {
     parse: (raw, opts) => __async(this, null, function* () {
       return validateAndTransformUndiscriminatedUnion(
-        (schema) => schema.parse(raw, opts),
-        schemas
+        (schema, opts2) => schema.parse(raw, opts2),
+        schemas,
+        opts
       );
     }),
     json: (parsed, opts) => __async(this, null, function* () {
       return validateAndTransformUndiscriminatedUnion(
-        (schema) => schema.json(parsed, opts),
-        schemas
+        (schema, opts2) => schema.json(parsed, opts2),
+        schemas,
+        opts
       );
     }),
     getType: () => SchemaType.UNDISCRIMINATED_UNION
   };
   return __spreadValues(__spreadValues({}, maybeSkipValidation(baseSchema)), getSchemaUtils(baseSchema));
 }
-function validateAndTransformUndiscriminatedUnion(transform2, schemas) {
+function validateAndTransformUndiscriminatedUnion(transform2, schemas, opts) {
   return __async(this, null, function* () {
     const errors = [];
     for (const [index, schema] of schemas.entries()) {
-      const transformed = yield transform2(schema);
+      const transformed = yield transform2(schema, __spreadProps(__spreadValues({}, opts), { skipValidation: false }));
       if (transformed.ok) {
         return transformed;
       } else {
-        for (const error of errors) {
+        for (const error of transformed.errors) {
           errors.push({
             path: error.path,
             message: \`[Variant \${index}] \${error.message}\`
@@ -8586,29 +8588,31 @@ function undiscriminatedUnion(schemas) {
   const baseSchema = {
     parse: (raw, opts) => __async(this, null, function* () {
       return validateAndTransformUndiscriminatedUnion(
-        (schema) => schema.parse(raw, opts),
-        schemas
+        (schema, opts2) => schema.parse(raw, opts2),
+        schemas,
+        opts
       );
     }),
     json: (parsed, opts) => __async(this, null, function* () {
       return validateAndTransformUndiscriminatedUnion(
-        (schema) => schema.json(parsed, opts),
-        schemas
+        (schema, opts2) => schema.json(parsed, opts2),
+        schemas,
+        opts
       );
     }),
     getType: () => SchemaType.UNDISCRIMINATED_UNION
   };
   return __spreadValues(__spreadValues({}, maybeSkipValidation(baseSchema)), getSchemaUtils(baseSchema));
 }
-function validateAndTransformUndiscriminatedUnion(transform2, schemas) {
+function validateAndTransformUndiscriminatedUnion(transform2, schemas, opts) {
   return __async(this, null, function* () {
     const errors = [];
     for (const [index, schema] of schemas.entries()) {
-      const transformed = yield transform2(schema);
+      const transformed = yield transform2(schema, __spreadProps(__spreadValues({}, opts), { skipValidation: false }));
       if (transformed.ok) {
         return transformed;
       } else {
-        for (const error of errors) {
+        for (const error of transformed.errors) {
           errors.push({
             path: error.path,
             message: \`[Variant \${index}] \${error.message}\`
@@ -12567,29 +12571,31 @@ function undiscriminatedUnion(schemas) {
   const baseSchema = {
     parse: (raw, opts) => __async(this, null, function* () {
       return validateAndTransformUndiscriminatedUnion(
-        (schema) => schema.parse(raw, opts),
-        schemas
+        (schema, opts2) => schema.parse(raw, opts2),
+        schemas,
+        opts
       );
     }),
     json: (parsed, opts) => __async(this, null, function* () {
       return validateAndTransformUndiscriminatedUnion(
-        (schema) => schema.json(parsed, opts),
-        schemas
+        (schema, opts2) => schema.json(parsed, opts2),
+        schemas,
+        opts
       );
     }),
     getType: () => SchemaType.UNDISCRIMINATED_UNION
   };
   return __spreadValues(__spreadValues({}, maybeSkipValidation(baseSchema)), getSchemaUtils(baseSchema));
 }
-function validateAndTransformUndiscriminatedUnion(transform2, schemas) {
+function validateAndTransformUndiscriminatedUnion(transform2, schemas, opts) {
   return __async(this, null, function* () {
     const errors = [];
     for (const [index, schema] of schemas.entries()) {
-      const transformed = yield transform2(schema);
+      const transformed = yield transform2(schema, __spreadProps(__spreadValues({}, opts), { skipValidation: false }));
       if (transformed.ok) {
         return transformed;
       } else {
-        for (const error of errors) {
+        for (const error of transformed.errors) {
           errors.push({
             path: error.path,
             message: \`[Variant \${index}] \${error.message}\`
@@ -17321,29 +17327,31 @@ function undiscriminatedUnion(schemas) {
   const baseSchema = {
     parse: (raw, opts) => __async(this, null, function* () {
       return validateAndTransformUndiscriminatedUnion(
-        (schema) => schema.parse(raw, opts),
-        schemas
+        (schema, opts2) => schema.parse(raw, opts2),
+        schemas,
+        opts
       );
     }),
     json: (parsed, opts) => __async(this, null, function* () {
       return validateAndTransformUndiscriminatedUnion(
-        (schema) => schema.json(parsed, opts),
-        schemas
+        (schema, opts2) => schema.json(parsed, opts2),
+        schemas,
+        opts
       );
     }),
     getType: () => SchemaType.UNDISCRIMINATED_UNION
   };
   return __spreadValues(__spreadValues({}, maybeSkipValidation(baseSchema)), getSchemaUtils(baseSchema));
 }
-function validateAndTransformUndiscriminatedUnion(transform2, schemas) {
+function validateAndTransformUndiscriminatedUnion(transform2, schemas, opts) {
   return __async(this, null, function* () {
     const errors = [];
     for (const [index, schema] of schemas.entries()) {
-      const transformed = yield transform2(schema);
+      const transformed = yield transform2(schema, __spreadProps(__spreadValues({}, opts), { skipValidation: false }));
       if (transformed.ok) {
         return transformed;
       } else {
-        for (const error of errors) {
+        for (const error of transformed.errors) {
           errors.push({
             path: error.path,
             message: \`[Variant \${index}] \${error.message}\`
@@ -22412,29 +22420,31 @@ function undiscriminatedUnion(schemas) {
   const baseSchema = {
     parse: (raw, opts) => __async(this, null, function* () {
       return validateAndTransformUndiscriminatedUnion(
-        (schema) => schema.parse(raw, opts),
-        schemas
+        (schema, opts2) => schema.parse(raw, opts2),
+        schemas,
+        opts
       );
     }),
     json: (parsed, opts) => __async(this, null, function* () {
       return validateAndTransformUndiscriminatedUnion(
-        (schema) => schema.json(parsed, opts),
-        schemas
+        (schema, opts2) => schema.json(parsed, opts2),
+        schemas,
+        opts
       );
     }),
     getType: () => SchemaType.UNDISCRIMINATED_UNION
   };
   return __spreadValues(__spreadValues({}, maybeSkipValidation(baseSchema)), getSchemaUtils(baseSchema));
 }
-function validateAndTransformUndiscriminatedUnion(transform2, schemas) {
+function validateAndTransformUndiscriminatedUnion(transform2, schemas, opts) {
   return __async(this, null, function* () {
     const errors = [];
     for (const [index, schema] of schemas.entries()) {
-      const transformed = yield transform2(schema);
+      const transformed = yield transform2(schema, __spreadProps(__spreadValues({}, opts), { skipValidation: false }));
       if (transformed.ok) {
         return transformed;
       } else {
-        for (const error of errors) {
+        for (const error of transformed.errors) {
           errors.push({
             path: error.path,
             message: \`[Variant \${index}] \${error.message}\`
@@ -26380,29 +26390,31 @@ function undiscriminatedUnion(schemas) {
   const baseSchema = {
     parse: (raw, opts) => __async(this, null, function* () {
       return validateAndTransformUndiscriminatedUnion(
-        (schema) => schema.parse(raw, opts),
-        schemas
+        (schema, opts2) => schema.parse(raw, opts2),
+        schemas,
+        opts
       );
     }),
     json: (parsed, opts) => __async(this, null, function* () {
       return validateAndTransformUndiscriminatedUnion(
-        (schema) => schema.json(parsed, opts),
-        schemas
+        (schema, opts2) => schema.json(parsed, opts2),
+        schemas,
+        opts
       );
     }),
     getType: () => SchemaType.UNDISCRIMINATED_UNION
   };
   return __spreadValues(__spreadValues({}, maybeSkipValidation(baseSchema)), getSchemaUtils(baseSchema));
 }
-function validateAndTransformUndiscriminatedUnion(transform2, schemas) {
+function validateAndTransformUndiscriminatedUnion(transform2, schemas, opts) {
   return __async(this, null, function* () {
     const errors = [];
     for (const [index, schema] of schemas.entries()) {
-      const transformed = yield transform2(schema);
+      const transformed = yield transform2(schema, __spreadProps(__spreadValues({}, opts), { skipValidation: false }));
       if (transformed.ok) {
         return transformed;
       } else {
-        for (const error of errors) {
+        for (const error of transformed.errors) {
           errors.push({
             path: error.path,
             message: \`[Variant \${index}] \${error.message}\`
@@ -41946,14 +41958,16 @@ function undiscriminatedUnion(schemas) {
   const baseSchema = {
     parse: async (raw, opts) => {
       return validateAndTransformUndiscriminatedUnion(
-        (schema) => schema.parse(raw, opts),
-        schemas
+        (schema, opts2) => schema.parse(raw, opts2),
+        schemas,
+        opts
       );
     },
     json: async (parsed, opts) => {
       return validateAndTransformUndiscriminatedUnion(
-        (schema) => schema.json(parsed, opts),
-        schemas
+        (schema, opts2) => schema.json(parsed, opts2),
+        schemas,
+        opts
       );
     },
     getType: () => SchemaType.UNDISCRIMINATED_UNION
@@ -41963,14 +41977,14 @@ function undiscriminatedUnion(schemas) {
     ...getSchemaUtils(baseSchema)
   };
 }
-async function validateAndTransformUndiscriminatedUnion(transform2, schemas) {
+async function validateAndTransformUndiscriminatedUnion(transform2, schemas, opts) {
   const errors = [];
   for (const [index, schema] of schemas.entries()) {
-    const transformed = await transform2(schema);
+    const transformed = await transform2(schema, { ...opts, skipValidation: false });
     if (transformed.ok) {
       return transformed;
     } else {
-      for (const error of errors) {
+      for (const error of transformed.errors) {
         errors.push({
           path: error.path,
           message: \`[Variant \${index}] \${error.message}\`
@@ -57852,14 +57866,16 @@ function undiscriminatedUnion(schemas) {
   const baseSchema = {
     parse: async (raw, opts) => {
       return validateAndTransformUndiscriminatedUnion(
-        (schema) => schema.parse(raw, opts),
-        schemas
+        (schema, opts2) => schema.parse(raw, opts2),
+        schemas,
+        opts
       );
     },
     json: async (parsed, opts) => {
       return validateAndTransformUndiscriminatedUnion(
-        (schema) => schema.json(parsed, opts),
-        schemas
+        (schema, opts2) => schema.json(parsed, opts2),
+        schemas,
+        opts
       );
     },
     getType: () => SchemaType.UNDISCRIMINATED_UNION
@@ -57869,14 +57885,14 @@ function undiscriminatedUnion(schemas) {
     ...getSchemaUtils(baseSchema)
   };
 }
-async function validateAndTransformUndiscriminatedUnion(transform2, schemas) {
+async function validateAndTransformUndiscriminatedUnion(transform2, schemas, opts) {
   const errors = [];
   for (const [index, schema] of schemas.entries()) {
-    const transformed = await transform2(schema);
+    const transformed = await transform2(schema, { ...opts, skipValidation: false });
     if (transformed.ok) {
       return transformed;
     } else {
-      for (const error of errors) {
+      for (const error of transformed.errors) {
         errors.push({
           path: error.path,
           message: \`[Variant \${index}] \${error.message}\`
@@ -61644,14 +61660,16 @@ function undiscriminatedUnion(schemas) {
   const baseSchema = {
     parse: async (raw, opts) => {
       return validateAndTransformUndiscriminatedUnion(
-        (schema) => schema.parse(raw, opts),
-        schemas
+        (schema, opts2) => schema.parse(raw, opts2),
+        schemas,
+        opts
       );
     },
     json: async (parsed, opts) => {
       return validateAndTransformUndiscriminatedUnion(
-        (schema) => schema.json(parsed, opts),
-        schemas
+        (schema, opts2) => schema.json(parsed, opts2),
+        schemas,
+        opts
       );
     },
     getType: () => SchemaType.UNDISCRIMINATED_UNION
@@ -61661,14 +61679,14 @@ function undiscriminatedUnion(schemas) {
     ...getSchemaUtils(baseSchema)
   };
 }
-async function validateAndTransformUndiscriminatedUnion(transform2, schemas) {
+async function validateAndTransformUndiscriminatedUnion(transform2, schemas, opts) {
   const errors = [];
   for (const [index, schema] of schemas.entries()) {
-    const transformed = await transform2(schema);
+    const transformed = await transform2(schema, { ...opts, skipValidation: false });
     if (transformed.ok) {
       return transformed;
     } else {
-      for (const error of errors) {
+      for (const error of transformed.errors) {
         errors.push({
           path: error.path,
           message: \`[Variant \${index}] \${error.message}\`
