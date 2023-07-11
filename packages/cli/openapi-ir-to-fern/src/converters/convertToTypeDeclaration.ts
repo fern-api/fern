@@ -141,7 +141,7 @@ export function convertObjectToTypeDeclaration({
         docs: schema.description ?? undefined,
         properties: Object.fromEntries(
             Object.entries(properties).map(([propertyKey, propertyDefinition]) => {
-                if (doesNotStartWithAlphabetic(propertyKey)) {
+                if (startsWithNumber(propertyKey)) {
                     return [
                         propertyKey,
                         typeof propertyDefinition === "string"
@@ -363,7 +363,7 @@ export function convertOneOfToTypeDeclaration({
     };
 }
 
-const STARTS_WITH_NON_ALPHABET = /^[^a-zA-Z]/;
-function doesNotStartWithAlphabetic(str: string): boolean {
-    return STARTS_WITH_NON_ALPHABET.test(str);
+const STARTS_WITH_NUMBER = /^[0-9]/;
+function startsWithNumber(str: string): boolean {
+    return STARTS_WITH_NUMBER.test(str);
 }

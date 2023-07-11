@@ -255,7 +255,6 @@ exports[`open api parser suger simple 1`] = `
           "properties": {
             "$schema": {
               "docs": undefined,
-              "name": "_$schema",
               "type": "optional<string>",
             },
             "acceptBy": {
@@ -584,7 +583,6 @@ exports[`open api parser suger simple 1`] = `
           "properties": {
             "$schema": {
               "docs": undefined,
-              "name": "_$schema",
               "type": "optional<string>",
             },
             "code": {
@@ -753,7 +751,6 @@ exports[`open api parser suger simple 1`] = `
           "properties": {
             "$schema": {
               "docs": undefined,
-              "name": "_$schema",
               "type": "optional<string>",
             },
             "id": {

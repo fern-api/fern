@@ -293,7 +293,6 @@ exports[`open api parser squidex simple 1`] = `
           "properties": {
             "_meta": {
               "docs": undefined,
-              "name": "__meta",
               "type": "optional<AssetMeta>",
             },
             "created": {
@@ -1321,7 +1320,6 @@ exports[`open api parser squidex simple 1`] = `
           "properties": {
             "_meta": {
               "docs": undefined,
-              "name": "__meta",
               "type": "optional<ContributorsMetadata>",
             },
             "items": {
@@ -2537,7 +2535,6 @@ exports[`open api parser squidex simple 1`] = `
           "properties": {
             "_links": {
               "docs": "The links.",
-              "name": "__links",
               "type": "map<string, ResourceLink>",
             },
           },
