@@ -3,9 +3,9 @@
 This repository contains the the [Fern](https://github.com/fern-api/fern)
 TypeScript generators:
 
-- `fern-api/fern-typescript-node-sdk`
-- `fern-api/fern-typescript-browser-sdk`
-- `fern-api/fern-typescript-express`
+- `fernapi/fern-typescript-node-sdk`
+- `fernapi/fern-typescript-browser-sdk`
+- `fernapi/fern-typescript-express`
 
 Every Fern generator is written in the language it is targeting, to make it as
 easy as possible for the community to contribute. As such, all these generators
