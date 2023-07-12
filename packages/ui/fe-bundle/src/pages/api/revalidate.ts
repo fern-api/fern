@@ -6,6 +6,8 @@ interface RequestBody {
 
 const handler: NextApiHandler = async (req, res) => {
     const { urls } = req.body as RequestBody;
+    // eslint-disable-next-line no-console
+    console.log("Revalidating host:", req.headers.host);
     try {
         // this should be the actual path not a rewritten path
         // e.g. for "/blog/[slug]" this should be "/blog/post-1"
