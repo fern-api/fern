@@ -7,11 +7,16 @@ interface RequestBody {
 const handler: NextApiHandler = async (req, res) => {
     const { urls } = req.body as RequestBody;
     // eslint-disable-next-line no-console
-    console.log("Revalidating host:", req.headers);
+    console.log("Revalidating host:", JSON.stringify(req.headers, undefined, 4));
 
     if (typeof req.headers["x-fern-host"] === "string") {
+        // eslint-disable-next-line no-console
+        console.log("Changing req.headers.host");
         req.headers.host = req.headers["x-fern-host"];
     }
+
+    // eslint-disable-next-line no-console
+    console.log("[2] Revalidating host:", JSON.stringify(req.headers, undefined, 4));
 
     let success = true;
 
