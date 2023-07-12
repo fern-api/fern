@@ -57,7 +57,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         console.error("Failed to fetch docs", docs.error);
         return {
             notFound: true,
-            revalidate: true,
+            // revalidate: true,
         };
     }
 
@@ -67,7 +67,10 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         if (firstNavigationItem != null) {
             slug = firstNavigationItem.urlSlug;
         } else {
-            return { notFound: true, revalidate: true };
+            return {
+                notFound: true,
+                // revalidate: true,
+            };
         }
     }
 
@@ -83,7 +86,10 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
     }
 
     if (resolvedUrlPath == null) {
-        return { notFound: true, revalidate: true };
+        return {
+            notFound: true,
+            // revalidate: true,
+        };
     }
 
     return {
@@ -93,7 +99,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
             nextPath: (await urlPathResolver.getNextNavigatableItem(resolvedUrlPath)) ?? null,
             previousPath: (await urlPathResolver.getPreviousNavigatableItem(resolvedUrlPath)) ?? null,
         },
-        revalidate: true,
+        // revalidate: true,
     };
 };
 
