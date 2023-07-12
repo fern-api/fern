@@ -19,15 +19,24 @@ import { getEndpointEnvironmentUrl } from "./getEndpointEnvironmentUrl";
 import { PathParametersSection } from "./PathParametersSection";
 import { QueryParametersSection } from "./QueryParametersSection";
 
+// TODO: Might want to place this type guard elsewhere
+function isSubpackage(
+    package_: FernRegistryApiRead.ApiDefinitionPackage
+): package_ is FernRegistryApiRead.ApiDefinitionSubpackage {
+    return typeof (package_ as FernRegistryApiRead.ApiDefinitionSubpackage).subpackageId === "string";
+}
+
 export declare namespace EndpointContent {
     export interface Props {
         endpoint: FernRegistryApiRead.EndpointDefinition;
+        package: FernRegistryApiRead.ApiDefinitionPackage;
         setContainerRef: (ref: HTMLElement | null) => void;
     }
 }
 
 export const EndpointContent = React.memo<EndpointContent.Props>(function EndpointContent({
     endpoint,
+    package: package_,
     setContainerRef,
 }) {
     const { setHoveredRequestPropertyPath, setHoveredResponsePropertyPath } = useEndpointContext();
@@ -42,6 +51,21 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
             setHoveredResponsePropertyPath(isHovering ? jsonPropertyPath : undefined);
         },
         [setHoveredResponsePropertyPath]
+    );
+
+    const computePropertyAnchor = useCallback(
+        (property: FernRegistryApiRead.ObjectProperty) => {
+            let anchor = "";
+            if (isSubpackage(package_)) {
+                anchor += package_.urlSlug;
+                anchor += "_";
+            }
+            anchor += endpoint.id;
+            anchor += "_";
+            anchor += property.key;
+            return anchor;
+        },
+        [package_, endpoint]
     );
 
     const [titleHeight, setTitleHeight] = useState<number>();
@@ -119,6 +143,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                     <EndpointRequestSection
                                         httpRequest={endpoint.request}
                                         onHoverProperty={onHoverRequestProperty}
+                                        getPropertyAnchor={computePropertyAnchor}
                                     />
                                 </EndpointSection>
                             )}

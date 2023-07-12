@@ -22,7 +22,12 @@ export const ApiPackageContents: React.FC<ApiPackageContents.Props> = ({ package
             <SeparatedElements separator={<SectionSeparator />}>
                 {[
                     ...package_.endpoints.map((endpoint) => (
-                        <Endpoint key={endpoint.id} endpoint={endpoint} slug={joinUrlSlugs(slug, endpoint.urlSlug)} />
+                        <Endpoint
+                            key={endpoint.id}
+                            endpoint={endpoint}
+                            slug={joinUrlSlugs(slug, endpoint.urlSlug)}
+                            package={package_}
+                        />
                     )),
                     ...package_.subpackages.map((subpackageId) => {
                         if (!doesSubpackageHaveEndpointsRecursive(subpackageId, resolveSubpackageById)) {

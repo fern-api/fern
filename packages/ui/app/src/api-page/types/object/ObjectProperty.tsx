@@ -1,7 +1,8 @@
-import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
+import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import { useCallback, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
+import { LinkIcon } from "../../../commons/icons/LinkIcon";
 import { MonospaceText } from "../../../commons/monospace/MonospaceText";
 import { JsonPropertyPath } from "../../examples/json-example/contexts/JsonPropertyPath";
 import {
@@ -16,10 +17,11 @@ import { TypeShorthand } from "../type-shorthand/TypeShorthand";
 export declare namespace ObjectProperty {
     export interface Props {
         property: FernRegistryApiRead.ObjectProperty;
+        anchor?: string;
     }
 }
 
-export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ property }) => {
+export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ anchor, property }) => {
     const { resolveTypeById } = useApiDefinitionContext();
 
     const contextValue = useTypeDefinitionContext();
@@ -73,10 +75,21 @@ export const ObjectProperty: React.FC<ObjectProperty.Props> = ({ property }) => 
 
     return (
         <div
-            className={classNames("flex flex-col py-3", {
+            id={anchor}
+            className={classNames("flex relative flex-col py-3 group", {
                 "px-3": !contextValue.isRootTypeDefinition,
             })}
         >
+            {anchor != null && (
+                <div
+                    // eslint-disable-next-line
+                    className="absolute -left-[calc(0.875rem+0.5rem*2)] top-2.5 flex items-center justify-center px-2 py-1 opacity-0 hover:opacity-100 group-hover:opacity-100"
+                >
+                    <a href={`#${anchor}`}>
+                        <LinkIcon className="text-text-muted hover:text-text-stark h-3.5 w-3.5 transition" />
+                    </a>
+                </div>
+            )}
             <div className="flex items-baseline gap-2">
                 <div onMouseEnter={onMouseEnterPropertyName} onMouseOut={onMouseOutPropertyName}>
                     <MonospaceText>{property.key}</MonospaceText>
