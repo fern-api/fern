@@ -46,11 +46,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                 alias: () => undefined,
                 object: (object) => ({
                     elements: getAllObjectProperties(object, resolveTypeById).map((property) => (
-                        <ObjectProperty
-                            key={property.key}
-                            property={property}
-                            anchor={getPropertyAnchor != null ? getPropertyAnchor(property) : undefined}
-                        />
+                        <ObjectProperty key={property.key} property={property} anchor={getPropertyAnchor?.(property)} />
                     )),
                     elementNameSingular: "property",
                     elementNamePlural: "properties",

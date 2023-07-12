@@ -53,15 +53,18 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
         [setHoveredResponsePropertyPath]
     );
 
-    const computePropertyAnchor = useCallback(
-        (type: "request" | "response", property: FernRegistryApiRead.ObjectProperty) => {
+    const computeAnchor = useCallback(
+        (
+            attributeType: "request" | "response" | "path",
+            attribute: FernRegistryApiRead.ObjectProperty | FernRegistryApiRead.PathParameter
+        ) => {
             let anchor = "";
             if (isSubpackage(package_)) {
                 anchor += package_.urlSlug + "_";
             }
             anchor += endpoint.id;
-            anchor += "_" + type + "_";
-            anchor += property.key;
+            anchor += "_" + attributeType + "_";
+            anchor += attribute.key;
             return anchor;
         },
         [package_, endpoint]
@@ -132,7 +135,10 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                     <div className="mt-8 flex">
                         <div className="flex flex-1 flex-col gap-12">
                             {endpoint.path.pathParameters.length > 0 && (
-                                <PathParametersSection pathParameters={endpoint.path.pathParameters} />
+                                <PathParametersSection
+                                    pathParameters={endpoint.path.pathParameters}
+                                    getParameterAnchor={(param) => computeAnchor("path", param)}
+                                />
                             )}
                             {endpoint.queryParameters.length > 0 && (
                                 <QueryParametersSection queryParameters={endpoint.queryParameters} />
@@ -142,7 +148,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                     <EndpointRequestSection
                                         httpRequest={endpoint.request}
                                         onHoverProperty={onHoverRequestProperty}
-                                        getPropertyAnchor={(property) => computePropertyAnchor("request", property)}
+                                        getPropertyAnchor={(property) => computeAnchor("request", property)}
                                     />
                                 </EndpointSection>
                             )}
@@ -151,7 +157,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                     <EndpointResponseSection
                                         httpResponse={endpoint.response}
                                         onHoverProperty={onHoverResponseProperty}
-                                        getPropertyAnchor={(property) => computePropertyAnchor("response", property)}
+                                        getPropertyAnchor={(property) => computeAnchor("response", property)}
                                     />
                                 </EndpointSection>
                             )}
