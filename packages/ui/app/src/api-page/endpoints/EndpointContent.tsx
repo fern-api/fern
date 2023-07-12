@@ -54,14 +54,13 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
     );
 
     const computePropertyAnchor = useCallback(
-        (property: FernRegistryApiRead.ObjectProperty) => {
+        (type: "request" | "response", property: FernRegistryApiRead.ObjectProperty) => {
             let anchor = "";
             if (isSubpackage(package_)) {
-                anchor += package_.urlSlug;
-                anchor += "_";
+                anchor += package_.urlSlug + "_";
             }
             anchor += endpoint.id;
-            anchor += "_";
+            anchor += "_" + type + "_";
             anchor += property.key;
             return anchor;
         },
@@ -143,7 +142,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                     <EndpointRequestSection
                                         httpRequest={endpoint.request}
                                         onHoverProperty={onHoverRequestProperty}
-                                        getPropertyAnchor={computePropertyAnchor}
+                                        getPropertyAnchor={(property) => computePropertyAnchor("request", property)}
                                     />
                                 </EndpointSection>
                             )}
@@ -152,6 +151,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                     <EndpointResponseSection
                                         httpResponse={endpoint.response}
                                         onHoverProperty={onHoverResponseProperty}
+                                        getPropertyAnchor={(property) => computePropertyAnchor("response", property)}
                                     />
                                 </EndpointSection>
                             )}

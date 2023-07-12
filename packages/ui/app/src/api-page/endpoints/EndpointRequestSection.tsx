@@ -46,6 +46,7 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
                         type={type.value}
                         isCollapsible={false}
                         onHoverProperty={onHoverProperty}
+                        getPropertyAnchor={getPropertyAnchor}
                     />
                 ),
                 fileUpload: () => null,
