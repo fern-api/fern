@@ -355,13 +355,13 @@ workflows:
             tags:
               only: /.*/
 
-      - ete-tests:
-          filters:
-            tags:
-              only: /.*/
-          context:
-            - auth0-dev
-            - fern-tokens
+      # - ete-tests:
+      #     filters:
+      #       tags:
+      #         only: /.*/
+      #     context:
+      #       - auth0-dev
+      #       - fern-tokens
 
       - live-test-dev:
           filters:

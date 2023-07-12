@@ -17,10 +17,13 @@ export declare namespace Docs {
         resolvedUrlPath: ResolvedUrlPath;
         nextPath: ResolvedUrlPath | null;
         previousPath: ResolvedUrlPath | null;
+        args: string;
     }
 }
 
-export default function Docs({ docs, resolvedUrlPath, nextPath, previousPath }: Docs.Props): JSX.Element {
+export default function Docs({ docs, resolvedUrlPath, nextPath, previousPath, args }: Docs.Props): JSX.Element {
+    // eslint-disable-next-line no-console
+    console.log(args);
     return (
         <main className={inter.className}>
             <Head>
@@ -39,7 +42,11 @@ export default function Docs({ docs, resolvedUrlPath, nextPath, previousPath }: 
     );
 }
 
-export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }) => {
+export const getStaticProps: GetStaticProps<Docs.Props> = async (args) => {
+    // eslint-disable-next-line no-console
+    console.log(args);
+
+    const { params = {} } = args;
     const host = params.host as string | undefined;
     const slugArray = params.slug as string[] | undefined;
 
@@ -98,6 +105,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
             resolvedUrlPath,
             nextPath: (await urlPathResolver.getNextNavigatableItem(resolvedUrlPath)) ?? null,
             previousPath: (await urlPathResolver.getPreviousNavigatableItem(resolvedUrlPath)) ?? null,
+            args: JSON.stringify(args),
         },
         // revalidate: true,
     };
