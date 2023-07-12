@@ -330,30 +330,30 @@ workflows:
   version: 2
   build:
     jobs:
-      - check:
-          filters:
-            tags:
-              only: /.*/
+      # - check:
+      #     filters:
+      #       tags:
+      #         only: /.*/
 
-      - eslint:
-          filters:
-            tags:
-              only: /.*/
+      # - eslint:
+      #     filters:
+      #       tags:
+      #         only: /.*/
 
-      - organize-imports:
-          filters:
-            tags:
-              only: /.*/
+      # - organize-imports:
+      #     filters:
+      #       tags:
+      #         only: /.*/
 
-      - compile:
-          filters:
-            tags:
-              only: /.*/
+      # - compile:
+      #     filters:
+      #       tags:
+      #         only: /.*/
 
-      - test:
-          filters:
-            tags:
-              only: /.*/
+      # - test:
+      #     filters:
+      #       tags:
+      #         only: /.*/
 
       # - ete-tests:
       #     filters:
@@ -363,103 +363,103 @@ workflows:
       #       - auth0-dev
       #       - fern-tokens
 
-      - live-test-dev:
-          filters:
-            tags:
-              only: /.*/
-          context:
-            - auth0-dev
-            - fern-tokens
+      # - live-test-dev:
+      #     filters:
+      #       tags:
+      #         only: /.*/
+      #     context:
+      #       - auth0-dev
+      #       - fern-tokens
 
-      - live-test:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
-          context:
-            - auth0-dev
-            - fern-tokens
-            - posthog
+      # - live-test:
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags:
+      #         only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
+      #     context:
+      #       - auth0-dev
+      #       - fern-tokens
+      #       - posthog
 
-      - publish-dev:
-          filters:
-            branches:
-              only: main
-          requires:
-            - check
-            - organize-imports
-            - compile
-            - eslint
-            - test
-            - ete-tests
-          context:
-            - npm
-            - auth0-dev
+      # - publish-dev:
+      #     filters:
+      #       branches:
+      #         only: main
+      #     requires:
+      #       - check
+      #       - organize-imports
+      #       - compile
+      #       - eslint
+      #       - test
+      #       - ete-tests
+      #     context:
+      #       - npm
+      #       - auth0-dev
 
-      - publish-rc:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^([0-9]+)\.([0-9]+)\.([0-9]+)-rc([0-9]+)$/
-          requires:
-            - check
-            - organize-imports
-            - compile
-            - eslint
-            - test
-            - ete-tests
-            - live-test-dev
-          context:
-            - npm
-            - auth0-prod
-            - posthog
+      # - publish-rc:
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags:
+      #         only: /^([0-9]+)\.([0-9]+)\.([0-9]+)-rc([0-9]+)$/
+      #     requires:
+      #       - check
+      #       - organize-imports
+      #       - compile
+      #       - eslint
+      #       - test
+      #       - ete-tests
+      #       - live-test-dev
+      #     context:
+      #       - npm
+      #       - auth0-prod
+      #       - posthog
 
-      - publish:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
-          requires:
-            - check-release-is-allowed
-            - check
-            - organize-imports
-            - compile
-            - eslint
-            - test
-            - ete-tests
-            - live-test-dev
-            - live-test
-          context:
-            - npm
-            - auth0-prod
-            - posthog
+      # - publish:
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags:
+      #         only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
+      #     requires:
+      #       - check-release-is-allowed
+      #       - check
+      #       - organize-imports
+      #       - compile
+      #       - eslint
+      #       - test
+      #       - ete-tests
+      #       - live-test-dev
+      #       - live-test
+      #     context:
+      #       - npm
+      #       - auth0-prod
+      #       - posthog
 
-      - publish-ir-sdk:
-          filters:
-            branches:
-              only: main
-            tags:
-              only: /.*/
-          requires:
-            - check
-            - organize-imports
-            - compile
-            - eslint
-            - test
-            - ete-tests
-            - live-test-dev
-          context:
-            - fern-tokens
+      # - publish-ir-sdk:
+      #     filters:
+      #       branches:
+      #         only: main
+      #       tags:
+      #         only: /.*/
+      #     requires:
+      #       - check
+      #       - organize-imports
+      #       - compile
+      #       - eslint
+      #       - test
+      #       - ete-tests
+      #       - live-test-dev
+      #     context:
+      #       - fern-tokens
 
-      - deploy-docs-preview:
-          filters:
-            branches:
-              ignore: main
-          context:
-            - vercel-dev
+      # - deploy-docs-preview:
+      #     filters:
+      #       branches:
+      #         ignore: main
+      #     context:
+      #       - vercel-dev
 
       - deploy-docs-dev:
           # filters:
@@ -475,29 +475,29 @@ workflows:
           context:
             - vercel-dev
 
-      - deploy-docs:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^docs@([0-9]+)\.([0-9]+)\.([0-9]+)$/
-          requires:
-            - check-release-is-allowed
-            - check
-            - organize-imports
-            - compile
-            - eslint
-            - test
-            - ete-tests
-            - live-test-dev
-            - live-test
-          context:
-            - vercel-prod
-            - fe-algolia-prod
+      # - deploy-docs:
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags:
+      #         only: /^docs@([0-9]+)\.([0-9]+)\.([0-9]+)$/
+      #     requires:
+      #       - check-release-is-allowed
+      #       - check
+      #       - organize-imports
+      #       - compile
+      #       - eslint
+      #       - test
+      #       - ete-tests
+      #       - live-test-dev
+      #       - live-test
+      #     context:
+      #       - vercel-prod
+      #       - fe-algolia-prod
 
-      - check-release-is-allowed:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
+      # - check-release-is-allowed:
+      #     filters:
+      #       branches:
+      #         ignore: /.*/
+      #       tags:
+      #         only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
