@@ -21,9 +21,9 @@ const handler: NextApiHandler = async (req, res) => {
     let success = true;
 
     success &&= await tryRevalidate(res, "/");
-    for (const url of urls) {
-        success &&= await tryRevalidate(res, `/${url}`);
-        success &&= await tryRevalidate(res, `/${url}/`);
+    for (const _url of urls) {
+        // success &&= await tryRevalidate(res, `/${url}`);
+        // success &&= await tryRevalidate(res, `/${url}/`);
     }
 
     if (success) {
