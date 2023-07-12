@@ -40,8 +40,7 @@ func (u *userClient) GetUser(ctx context.Context, userId string, request *GetUse
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v", userId)
 
 	queryParams := make(url.Values)
-	var shallowDefaultValue *bool
-	if request.Shallow != shallowDefaultValue {
+	if request.Shallow != nil {
 		queryParams.Add("shallow", fmt.Sprintf("%v", *request.Shallow))
 	}
 	if len(queryParams) > 0 {

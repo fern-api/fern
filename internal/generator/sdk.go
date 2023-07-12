@@ -117,16 +117,13 @@ func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth, headers []*i
 			}
 			valueTypeFormat := formatForValueType(header.ValueType)
 			value := valueTypeFormat.Prefix + "c." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
-			if valueTypeFormat.IsDefaultNil {
-				// The only header type that can't use the default value approach is base64 (aka a []byte).
+			if valueTypeFormat.IsOptional {
 				f.P("if c.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
+				f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, value, "))")
+				f.P("}")
 			} else {
-				variableName := "auth" + header.Name.Name.PascalCase.UnsafeName + "Value"
-				f.P("var ", variableName, " ", typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.imports, f.baseImportPath, importPath))
-				f.P("if c.", header.Name.Name.PascalCase.UnsafeName, " != ", variableName, " {")
+				f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, value, "))")
 			}
-			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, value, "))")
-			f.P("}")
 		}
 	}
 	for _, header := range headers {
@@ -136,16 +133,13 @@ func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth, headers []*i
 		}
 		valueTypeFormat := formatForValueType(header.ValueType)
 		value := valueTypeFormat.Prefix + "c." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
-		if valueTypeFormat.IsDefaultNil {
-			// The only header type that can't use the default value approach is base64 (aka a []byte).
+		if valueTypeFormat.IsOptional {
 			f.P("if c.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
+			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, value, "))")
+			f.P("}")
 		} else {
-			variableName := "header" + header.Name.Name.PascalCase.UnsafeName + "Value"
-			f.P("var ", variableName, " ", typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, importPath))
-			f.P("if c.", header.Name.Name.PascalCase.UnsafeName, " != ", variableName, " {")
+			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, value, "))")
 		}
-		f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, value, "))")
-		f.P("}")
 	}
 	f.P("return header")
 	f.P("}")
@@ -460,7 +454,6 @@ func (f *fileWriter) WriteClient(
 			f.P()
 			f.P("queryParams := make(url.Values)")
 			for _, queryParameter := range endpoint.QueryParameters {
-				queryParameterType := typeReferenceToGoType(queryParameter.ValueType, f.types, f.imports, f.baseImportPath, endpoint.ImportPath)
 				valueTypeFormat := formatForValueType(queryParameter.ValueType)
 				if queryParameter.AllowMultiple {
 					requestField := valueTypeFormat.Prefix + "value" + valueTypeFormat.Suffix
@@ -471,15 +464,14 @@ func (f *fileWriter) WriteClient(
 					f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, literalToValue(queryParameter.ValueType.Container.Literal), "))")
 				} else {
 					requestField := valueTypeFormat.Prefix + endpoint.RequestParameterName + "." + queryParameter.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
-					if valueTypeFormat.IsDefaultNil {
+					if valueTypeFormat.IsOptional {
 						// The only query parameter that can't use the default value approach is base64 (aka a []byte).
 						f.P("if ", endpoint.RequestParameterName, ".", queryParameter.Name.Name.PascalCase.UnsafeName, "!= nil {")
+						f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
+						f.P("}")
 					} else {
-						f.P("var ", queryParameter.Name.Name.CamelCase.SafeName, "DefaultValue ", queryParameterType)
-						f.P("if ", endpoint.RequestParameterName, ".", queryParameter.Name.Name.PascalCase.UnsafeName, "!= ", queryParameter.Name.Name.CamelCase.SafeName, "DefaultValue {")
+						f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
 					}
-					f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
-					f.P("}")
 				}
 			}
 			f.P("if len(queryParams) > 0 {")
@@ -492,20 +484,16 @@ func (f *fileWriter) WriteClient(
 			f.P()
 			f.P("headers := ", receiver, ".header.Clone()")
 			for _, header := range endpoint.Headers {
-				headerType := typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, endpoint.ImportPath)
 				valueTypeFormat := formatForValueType(header.ValueType)
 				requestField := valueTypeFormat.Prefix + endpoint.RequestParameterName + "." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
-				if valueTypeFormat.IsDefaultNil {
+				if valueTypeFormat.IsOptional {
 					f.P("if ", endpoint.RequestParameterName, ".", header.Name.Name.PascalCase.UnsafeName, "!= nil {")
 					f.P(`headers.Add("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
 					f.P("}")
 				} else if isLiteral := (header.ValueType.Container != nil && header.ValueType.Container.Literal != nil); isLiteral {
 					f.P(`headers.Add("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, literalToValue(header.ValueType.Container.Literal), "))")
 				} else {
-					f.P("var ", header.Name.Name.CamelCase.SafeName, "DefaultValue ", headerType)
-					f.P("if ", endpoint.RequestParameterName, ".", header.Name.Name.PascalCase.UnsafeName, "!= ", header.Name.Name.CamelCase.SafeName, "DefaultValue {")
 					f.P(`headers.Add("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
-					f.P("}")
 				}
 			}
 			headersParameter = "headers"
@@ -587,19 +575,19 @@ func (f *fileWriter) WriteClient(
 					f.P("}")
 					continue
 				}
-				propertyType := typeReferenceToGoType(fileBodyProperty.ValueType, f.types, f.imports, f.baseImportPath, endpoint.ImportPath)
 				valueTypeFormat := formatForValueType(fileBodyProperty.ValueType)
 				requestField := valueTypeFormat.Prefix + endpoint.RequestParameterName + "." + fileBodyProperty.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
-				if valueTypeFormat.IsDefaultNil {
+				if valueTypeFormat.IsOptional {
 					f.P("if ", endpoint.RequestParameterName, ".", fileBodyProperty.Name.Name.PascalCase.UnsafeName, "!= nil {")
+					f.P(`if err := writer.WriteField("`, fileBodyProperty.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, ")); err != nil {")
+					f.P("return ", endpoint.ErrorReturnValues)
+					f.P("}")
+					f.P("}")
 				} else {
-					f.P("var ", fileBodyProperty.Name.Name.CamelCase.SafeName, "DefaultValue ", propertyType)
-					f.P("if ", endpoint.RequestParameterName, ".", fileBodyProperty.Name.Name.PascalCase.UnsafeName, "!= ", fileBodyProperty.Name.Name.CamelCase.SafeName, "DefaultValue {")
+					f.P(`if err := writer.WriteField("`, fileBodyProperty.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, ")); err != nil {")
+					f.P("return ", endpoint.ErrorReturnValues)
+					f.P("}")
 				}
-				f.P(`if err := writer.WriteField("`, fileBodyProperty.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, ")); err != nil {")
-				f.P("return ", endpoint.ErrorReturnValues)
-				f.P("}")
-				f.P("}")
 			}
 			f.P("if err := writer.Close(); err != nil {")
 			f.P("return ", endpoint.ErrorReturnValues)
@@ -1368,18 +1356,20 @@ func irMethodToMethodEnum(method ir.HttpMethod) string {
 }
 
 type valueTypeFormat struct {
-	Prefix       string
-	Suffix       string
-	IsDefaultNil bool
+	Prefix     string
+	Suffix     string
+	IsOptional bool
 }
 
 func formatForValueType(typeReference *ir.TypeReference) *valueTypeFormat {
 	var (
-		prefix string
-		suffix string
+		prefix     string
+		suffix     string
+		isOptional bool
 	)
 	if typeReference.Container != nil && typeReference.Container.Optional != nil {
 		prefix = "*"
+		isOptional = true
 	}
 	if primitive := maybePrimitive(typeReference); primitive != 0 {
 		// Several of the primitive types require special handling for query parameter serialization.
@@ -1396,9 +1386,9 @@ func formatForValueType(typeReference *ir.TypeReference) *valueTypeFormat {
 		}
 	}
 	return &valueTypeFormat{
-		Prefix:       prefix,
-		Suffix:       suffix,
-		IsDefaultNil: typeReference.Primitive == ir.PrimitiveTypeBase64,
+		Prefix:     prefix,
+		Suffix:     suffix,
+		IsOptional: isOptional,
 	}
 }
 

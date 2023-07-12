@@ -43,19 +43,13 @@ func (u *userClient) GetName(ctx context.Context, userId string, request *GetNam
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/get-name", userId)
 
 	queryParams := make(url.Values)
-	var filterDefaultValue string
-	if request.Filter != filterDefaultValue {
-		queryParams.Add("filter", fmt.Sprintf("%v", request.Filter))
-	}
+	queryParams.Add("filter", fmt.Sprintf("%v", request.Filter))
 	if len(queryParams) > 0 {
 		endpointURL += "?" + queryParams.Encode()
 	}
 
 	headers := u.header.Clone()
-	var xEndpointHeaderDefaultValue string
-	if request.XEndpointHeader != xEndpointHeaderDefaultValue {
-		headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
-	}
+	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
 
 	var response string
 	if err := core.DoRequest(

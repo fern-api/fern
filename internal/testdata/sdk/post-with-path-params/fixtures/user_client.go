@@ -90,10 +90,7 @@ func (u *userClient) SetNameV3(ctx context.Context, userId string, request *SetN
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name-v3", userId)
 
 	headers := u.header.Clone()
-	var xEndpointHeaderDefaultValue string
-	if request.XEndpointHeader != xEndpointHeaderDefaultValue {
-		headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
-	}
+	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
 
 	response := new(SetNameRequestV3Body)
 	if err := core.DoRequest(
@@ -119,10 +116,7 @@ func (u *userClient) SetNameV3Optional(ctx context.Context, userId string, reque
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name-v3-optional", userId)
 
 	headers := u.header.Clone()
-	var xEndpointHeaderDefaultValue string
-	if request.XEndpointHeader != xEndpointHeaderDefaultValue {
-		headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
-	}
+	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
 
 	response := new(SetNameRequestV3Body)
 	if err := core.DoRequest(
@@ -148,10 +142,7 @@ func (u *userClient) SetNameV4(ctx context.Context, userId string, request *SetN
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name-v4", userId)
 
 	headers := u.header.Clone()
-	var xEndpointHeaderDefaultValue string
-	if request.XEndpointHeader != xEndpointHeaderDefaultValue {
-		headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
-	}
+	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
 
 	var response string
 	if err := core.DoRequest(
@@ -177,10 +168,7 @@ func (u *userClient) SetNameV5(ctx context.Context, userId string, request *SetN
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name-v5", userId)
 
 	headers := u.header.Clone()
-	var xEndpointHeaderDefaultValue string
-	if request.XEndpointHeader != xEndpointHeaderDefaultValue {
-		headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
-	}
+	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
 
 	var response string
 	if err := core.DoRequest(

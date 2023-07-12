@@ -47,47 +47,27 @@ func NewClientOptions() *ClientOptions {
 // on every request.
 func (c *ClientOptions) ToHeader() http.Header {
 	header := c.HTTPHeader.Clone()
-	var authCustomValue *[]byte
-	if c.Custom != authCustomValue {
+	if c.Custom != nil {
 		header.Set("X-API-Custom-Key", fmt.Sprintf("%v", base64.StdEncoding.EncodeToString(*c.Custom)))
 	}
-	var headerXApiNameValue string
-	if c.XApiName != headerXApiNameValue {
-		header.Set("X-API-Name", fmt.Sprintf("%v", c.XApiName))
-	}
-	var headerXApiIdValue uuid.UUID
-	if c.XApiId != headerXApiIdValue {
-		header.Set("X-API-ID", fmt.Sprintf("%v", c.XApiId))
-	}
-	var headerXApiDatetimeValue time.Time
-	if c.XApiDatetime != headerXApiDatetimeValue {
-		header.Set("X-API-Datetime", fmt.Sprintf("%v", c.XApiDatetime.Format(time.RFC3339)))
-	}
-	var headerXApiDateValue time.Time
-	if c.XApiDate != headerXApiDateValue {
-		header.Set("X-API-Date", fmt.Sprintf("%v", c.XApiDate.Format("2006-01-02")))
-	}
-	if c.XApiBytes != nil {
-		header.Set("X-API-Bytes", fmt.Sprintf("%v", base64.StdEncoding.EncodeToString(c.XApiBytes)))
-	}
-	var headerXApiOptionalNameValue *string
-	if c.XApiOptionalName != headerXApiOptionalNameValue {
+	header.Set("X-API-Name", fmt.Sprintf("%v", c.XApiName))
+	header.Set("X-API-ID", fmt.Sprintf("%v", c.XApiId))
+	header.Set("X-API-Datetime", fmt.Sprintf("%v", c.XApiDatetime.Format(time.RFC3339)))
+	header.Set("X-API-Date", fmt.Sprintf("%v", c.XApiDate.Format("2006-01-02")))
+	header.Set("X-API-Bytes", fmt.Sprintf("%v", base64.StdEncoding.EncodeToString(c.XApiBytes)))
+	if c.XApiOptionalName != nil {
 		header.Set("X-API-Optional-Name", fmt.Sprintf("%v", *c.XApiOptionalName))
 	}
-	var headerXApiOptionalIdValue *uuid.UUID
-	if c.XApiOptionalId != headerXApiOptionalIdValue {
+	if c.XApiOptionalId != nil {
 		header.Set("X-API-Optional-ID", fmt.Sprintf("%v", *c.XApiOptionalId))
 	}
-	var headerXApiOptionalDatetimeValue *time.Time
-	if c.XApiOptionalDatetime != headerXApiOptionalDatetimeValue {
+	if c.XApiOptionalDatetime != nil {
 		header.Set("X-API-Optional-Datetime", fmt.Sprintf("%v", c.XApiOptionalDatetime.Format(time.RFC3339)))
 	}
-	var headerXApiOptionalDateValue *time.Time
-	if c.XApiOptionalDate != headerXApiOptionalDateValue {
+	if c.XApiOptionalDate != nil {
 		header.Set("X-API-Optional-Date", fmt.Sprintf("%v", c.XApiOptionalDate.Format("2006-01-02")))
 	}
-	var headerXApiOptionalBytesValue *[]byte
-	if c.XApiOptionalBytes != headerXApiOptionalBytesValue {
+	if c.XApiOptionalBytes != nil {
 		header.Set("X-API-Optional-Bytes", fmt.Sprintf("%v", base64.StdEncoding.EncodeToString(*c.XApiOptionalBytes)))
 	}
 	header.Set("X-API-Fern-Header", fmt.Sprintf("%v", "fern"))

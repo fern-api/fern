@@ -7,7 +7,6 @@ import (
 	base64 "encoding/base64"
 	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/headers/fixtures/core"
-	uuid "github.com/gofrs/uuid/v5"
 	http "net/http"
 	time "time"
 )
@@ -42,43 +41,24 @@ func (u *userClient) SetName(ctx context.Context, userId string, request *SetNam
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name", userId)
 
 	headers := u.header.Clone()
-	var xEndpointHeaderDefaultValue string
-	if request.XEndpointHeader != xEndpointHeaderDefaultValue {
-		headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
-	}
-	var xEndpointIdHeaderDefaultValue uuid.UUID
-	if request.XEndpointIdHeader != xEndpointIdHeaderDefaultValue {
-		headers.Add("X-Endpoint-ID-Header", fmt.Sprintf("%v", request.XEndpointIdHeader))
-	}
-	var xEndpointDateHeaderDefaultValue time.Time
-	if request.XEndpointDateHeader != xEndpointDateHeaderDefaultValue {
-		headers.Add("X-Endpoint-Date-Header", fmt.Sprintf("%v", request.XEndpointDateHeader.Format("2006-01-02")))
-	}
-	var xEndpointDatetimeHeaderDefaultValue time.Time
-	if request.XEndpointDatetimeHeader != xEndpointDatetimeHeaderDefaultValue {
-		headers.Add("X-Endpoint-Datetime-Header", fmt.Sprintf("%v", request.XEndpointDatetimeHeader.Format(time.RFC3339)))
-	}
-	if request.XEndpointBytesHeader != nil {
-		headers.Add("X-Endpoint-Bytes-Header", fmt.Sprintf("%v", base64.StdEncoding.EncodeToString(request.XEndpointBytesHeader)))
-	}
-	var xEndpointOptionalHeaderDefaultValue *string
-	if request.XEndpointOptionalHeader != xEndpointOptionalHeaderDefaultValue {
+	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
+	headers.Add("X-Endpoint-ID-Header", fmt.Sprintf("%v", request.XEndpointIdHeader))
+	headers.Add("X-Endpoint-Date-Header", fmt.Sprintf("%v", request.XEndpointDateHeader.Format("2006-01-02")))
+	headers.Add("X-Endpoint-Datetime-Header", fmt.Sprintf("%v", request.XEndpointDatetimeHeader.Format(time.RFC3339)))
+	headers.Add("X-Endpoint-Bytes-Header", fmt.Sprintf("%v", base64.StdEncoding.EncodeToString(request.XEndpointBytesHeader)))
+	if request.XEndpointOptionalHeader != nil {
 		headers.Add("X-Endpoint-Optional-Header", fmt.Sprintf("%v", *request.XEndpointOptionalHeader))
 	}
-	var xEndpointOptionalIdHeaderDefaultValue *uuid.UUID
-	if request.XEndpointOptionalIdHeader != xEndpointOptionalIdHeaderDefaultValue {
+	if request.XEndpointOptionalIdHeader != nil {
 		headers.Add("X-Endpoint-Optional-ID-Header", fmt.Sprintf("%v", *request.XEndpointOptionalIdHeader))
 	}
-	var xEndpointOptionalDateHeaderDefaultValue *time.Time
-	if request.XEndpointOptionalDateHeader != xEndpointOptionalDateHeaderDefaultValue {
+	if request.XEndpointOptionalDateHeader != nil {
 		headers.Add("X-Endpoint-Optional-Date-Header", fmt.Sprintf("%v", request.XEndpointOptionalDateHeader.Format("2006-01-02")))
 	}
-	var xEndpointOptionalDatetimeHeaderDefaultValue *time.Time
-	if request.XEndpointOptionalDatetimeHeader != xEndpointOptionalDatetimeHeaderDefaultValue {
+	if request.XEndpointOptionalDatetimeHeader != nil {
 		headers.Add("X-Endpoint-Optional-Datetime-Header", fmt.Sprintf("%v", request.XEndpointOptionalDatetimeHeader.Format(time.RFC3339)))
 	}
-	var xEndpointOptionalBytesHeaderDefaultValue *[]byte
-	if request.XEndpointOptionalBytesHeader != xEndpointOptionalBytesHeaderDefaultValue {
+	if request.XEndpointOptionalBytesHeader != nil {
 		headers.Add("X-Endpoint-Optional-Bytes-Header", fmt.Sprintf("%v", base64.StdEncoding.EncodeToString(*request.XEndpointOptionalBytesHeader)))
 	}
 	headers.Add("X-Endpoint-Fern-Header", fmt.Sprintf("%v", "fern"))

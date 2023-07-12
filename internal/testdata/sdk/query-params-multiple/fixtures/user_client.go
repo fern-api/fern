@@ -40,15 +40,11 @@ func (u *userClient) GetAllUsers(ctx context.Context, request *GetAllUsersReques
 	endpointURL := baseURL + "/" + "users/all"
 
 	queryParams := make(url.Values)
-	var tagDefaultValue int
-	if request.Tag != tagDefaultValue {
-		queryParams.Add("tag", fmt.Sprintf("%v", request.Tag))
-	}
+	queryParams.Add("tag", fmt.Sprintf("%v", request.Tag))
 	for _, value := range request.Limit {
 		queryParams.Add("limit", fmt.Sprintf("%v", *value))
 	}
-	var filterDefaultValue *string
-	if request.Filter != filterDefaultValue {
+	if request.Filter != nil {
 		queryParams.Add("filter", fmt.Sprintf("%v", *request.Filter))
 	}
 	for _, value := range request.Series {
@@ -59,10 +55,7 @@ func (u *userClient) GetAllUsers(ctx context.Context, request *GetAllUsersReques
 	}
 
 	headers := u.header.Clone()
-	var xEndpointHeaderDefaultValue string
-	if request.XEndpointHeader != xEndpointHeaderDefaultValue {
-		headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
-	}
+	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
 
 	var response string
 	if err := core.DoRequest(

@@ -7,7 +7,6 @@ import (
 	base64 "encoding/base64"
 	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/query-params-complex/fixtures/core"
-	uuid "github.com/gofrs/uuid/v5"
 	http "net/http"
 	url "net/url"
 	time "time"
@@ -43,35 +42,20 @@ func (u *userClient) GetUsername(ctx context.Context, request *GetUsersRequest) 
 	endpointURL := baseURL + "/" + "user"
 
 	queryParams := make(url.Values)
-	var idDefaultValue uuid.UUID
-	if request.Id != idDefaultValue {
-		queryParams.Add("id", fmt.Sprintf("%v", request.Id))
-	}
-	var dateDefaultValue time.Time
-	if request.Date != dateDefaultValue {
-		queryParams.Add("date", fmt.Sprintf("%v", request.Date.Format("2006-01-02")))
-	}
-	var deadlineDefaultValue time.Time
-	if request.Deadline != deadlineDefaultValue {
-		queryParams.Add("deadline", fmt.Sprintf("%v", request.Deadline.Format(time.RFC3339)))
-	}
-	if request.Bytes != nil {
-		queryParams.Add("bytes", fmt.Sprintf("%v", base64.StdEncoding.EncodeToString(request.Bytes)))
-	}
-	var optionalIdDefaultValue *uuid.UUID
-	if request.OptionalId != optionalIdDefaultValue {
+	queryParams.Add("id", fmt.Sprintf("%v", request.Id))
+	queryParams.Add("date", fmt.Sprintf("%v", request.Date.Format("2006-01-02")))
+	queryParams.Add("deadline", fmt.Sprintf("%v", request.Deadline.Format(time.RFC3339)))
+	queryParams.Add("bytes", fmt.Sprintf("%v", base64.StdEncoding.EncodeToString(request.Bytes)))
+	if request.OptionalId != nil {
 		queryParams.Add("optionalId", fmt.Sprintf("%v", *request.OptionalId))
 	}
-	var optionalDateDefaultValue *time.Time
-	if request.OptionalDate != optionalDateDefaultValue {
+	if request.OptionalDate != nil {
 		queryParams.Add("optionalDate", fmt.Sprintf("%v", request.OptionalDate.Format("2006-01-02")))
 	}
-	var optionalDeadlineDefaultValue *time.Time
-	if request.OptionalDeadline != optionalDeadlineDefaultValue {
+	if request.OptionalDeadline != nil {
 		queryParams.Add("optionalDeadline", fmt.Sprintf("%v", request.OptionalDeadline.Format(time.RFC3339)))
 	}
-	var optionalBytesDefaultValue *[]byte
-	if request.OptionalBytes != optionalBytesDefaultValue {
+	if request.OptionalBytes != nil {
 		queryParams.Add("optionalBytes", fmt.Sprintf("%v", base64.StdEncoding.EncodeToString(*request.OptionalBytes)))
 	}
 	if len(queryParams) > 0 {

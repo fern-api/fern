@@ -60,11 +60,8 @@ func (f *fileClient) Upload(ctx context.Context, file io.Reader, request *Upload
 	if err := writer.WriteField("fern", fmt.Sprintf("%v", "fern")); err != nil {
 		return response, err
 	}
-	var statusDefaultValue string
-	if request.Status != statusDefaultValue {
-		if err := writer.WriteField("status", fmt.Sprintf("%v", request.Status)); err != nil {
-			return response, err
-		}
+	if err := writer.WriteField("status", fmt.Sprintf("%v", request.Status)); err != nil {
+		return response, err
 	}
 	if err := writer.Close(); err != nil {
 		return response, err
@@ -161,11 +158,8 @@ func (f *fileClient) UploadMultiple(ctx context.Context, file io.Reader, optiona
 			return response, err
 		}
 	}
-	var statusDefaultValue string
-	if request.Status != statusDefaultValue {
-		if err := writer.WriteField("status", fmt.Sprintf("%v", request.Status)); err != nil {
-			return response, err
-		}
+	if err := writer.WriteField("status", fmt.Sprintf("%v", request.Status)); err != nil {
+		return response, err
 	}
 	if err := writer.Close(); err != nil {
 		return response, err

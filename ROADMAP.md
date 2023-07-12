@@ -46,10 +46,10 @@ The following outlines a roadmap for the development of the Go generator.
 - [x] Introduce a better solution for using optional parameters (i.e. `stringPtr` helpers)
 - [x] Generate documentation for all relevant types
 - [x] Support file download and file upload RPCs
+- [x] Revisit default generator output (i.e. whether to generate a `go.mod` by default or not)
 - [ ] If a `Client` type exists, prefix the filename with a `_` to avoid conflicts
 - [ ] Support custom error discriminiation strategy
 - [ ] Generate examples
 - [ ] Support optional client/endpoint variables (e.g. namespace)
 - [ ] Add coordinator logging for better user-facing console progress updates
-- [ ] Revisit default generator output (i.e. whether to generate a `go.mod` by default or not)
 - [ ] Better support for licenses (i.e. move implementation to the layer above the generator)
