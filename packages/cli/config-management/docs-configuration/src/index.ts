@@ -1,6 +1,7 @@
 export {
     type DocsConfiguration,
     type DocsNavigationItem,
-    type ImageReference as ImageReference,
+    type ImageReference,
+    type TypographyConfig,
 } from "./DocsConfiguration";
 export { loadDocsConfiguration } from "./loadDocsConfiguration";

@@ -1,7 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { combineAudiences } from "@fern-api/config-management-commons";
 import { assertNever, entries } from "@fern-api/core-utils";
-import { DocsNavigationItem, ImageReference } from "@fern-api/docs-configuration";
+import { DocsNavigationItem, ImageReference, TypographyConfig } from "@fern-api/docs-configuration";
 import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorGroup } from "@fern-api/generators-configuration";
 import { registerApi } from "@fern-api/register";
@@ -218,7 +218,52 @@ async function convertDocsConfiguration({
         },
         colors: docsDefinition.config.colors,
         navbarLinks: docsDefinition.config.navbarLinks,
+        typography: convertDocsTypographyConfiguration({
+            typographyConfiguration: docsDefinition.config.typography,
+            docsDefinition,
+            uploadUrls,
+            context,
+        }),
     };
+}
+
+function convertDocsTypographyConfiguration({
+    typographyConfiguration,
+    docsDefinition,
+    uploadUrls,
+    context,
+}: {
+    typographyConfiguration?: TypographyConfig;
+    docsDefinition: DocsDefinition;
+    uploadUrls: Record<FernRegistry.docs.v1.write.FilePath, FernRegistry.docs.v1.write.FileS3UploadUrl>;
+    context: TaskContext;
+}): FernRegistry.docs.v1.write.DocsTypographyConfig | undefined {
+    if (typographyConfiguration == null) {
+        return;
+    }
+    const result: FernRegistry.docs.v1.write.DocsTypographyConfig = {};
+
+    for (const key in typographyConfiguration) {
+        const prop = key as keyof TypographyConfig;
+        if (typographyConfiguration[prop] != null) {
+            const filepath = convertAbsoluteFilepathToFdrFilepath(
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                typographyConfiguration[prop]!.absolutePath,
+                docsDefinition
+            );
+            const file = uploadUrls[filepath];
+            if (file == null) {
+                return context.failAndThrow("Failed to locate font file after uploading");
+            }
+            result[prop] = {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                name: typographyConfiguration[prop]!.name,
+                fontFile: file.fileId,
+            };
+        }
+    }
+
+    return result;
 }
 
 async function convertImageReference({
@@ -315,6 +360,16 @@ function getFilepathsToUpload(docsDefinition: DocsDefinition): AbsoluteFilePath[
 
     if (docsDefinition.config.favicon != null) {
         filepaths.push(docsDefinition.config.favicon.filepath);
+    }
+
+    const typographyConfiguration = docsDefinition.config.typography;
+    if (typographyConfiguration) {
+        for (const key in typographyConfiguration) {
+            const fontAbsolutePath = typographyConfiguration[key as keyof TypographyConfig]?.absolutePath;
+            if (fontAbsolutePath != null) {
+                filepaths.push(fontAbsolutePath);
+            }
+        }
     }
 
     return filepaths;

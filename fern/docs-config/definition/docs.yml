@@ -9,7 +9,7 @@ types:
       favicon: optional<string>
       colors: optional<ColorsConfiguration>
       "navbar-links": optional<list<NavbarLink>>
-      typography: optional<Typography>
+      typography: optional<DocsTypographyConfig>
 
   NavigationItem:
     discriminated: false
@@ -29,22 +29,16 @@ types:
       path: string
       href: string
 
-  FontFamilies:
+  DocsTypographyConfig:
     properties:
-      headings:
-        type: optional<string>
-        docs: The font family applied to all headings in the docs. If this is not supplied, it defaults to the body font family.
-      body:
-        type: optional<string>
-        docs: The font family applied to all paragraph content in the docs.
-      code:
-        type: optional<string>
-        docs: The font family applied to all code blocks and inline code snippets in the documentation site.
+      headingsFont: optional<FontConfig>
+      bodyFont: optional<FontConfig>
+      codeFont: optional<FontConfig>
 
-  Typography:
+  FontConfig:
     properties:
-      fontsDir: optional<string>
-      fonts: optional<FontFamilies>
+      name: string
+      path: string
 
   PageConfiguration:
     properties:

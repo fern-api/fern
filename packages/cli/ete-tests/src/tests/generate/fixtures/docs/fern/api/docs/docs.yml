@@ -15,3 +15,11 @@ navigation:
 
 colors:
   accentPrimary: "#ffffFF"
+
+typography:
+  headingsFont:
+    name: WorkSans
+    path: "./fonts/WorkSans-variable.woff2"
+  bodyFont:
+    name: WorkSans
+    path: "./fonts/WorkSans-variable.woff2"
