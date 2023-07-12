@@ -14,16 +14,16 @@ const nextConfig = {
             source: "/:path*",
             destination: "/:host/:path*",
         },
-        {
-            has: [
-                {
-                    type: "host",
-                    value: "(?<host>.*)",
-                },
-            ],
-            source: "/:path*",
-            destination: "/:host/:path*",
-        },
+        // {
+        //     has: [
+        //         {
+        //             type: "host",
+        //             value: "(?<host>.*)",
+        //         },
+        //     ],
+        //     source: "/:path*",
+        //     destination: "/:host/:path*",
+        // },
     ],
 };
 
