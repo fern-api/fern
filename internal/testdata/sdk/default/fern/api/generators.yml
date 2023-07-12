@@ -2,8 +2,8 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-go-model
-        version: latest
+      - name: fernapi/fern-go-sdk
+        version: 0.10.25-rc0
         config:
           module:
             version: "1.19"

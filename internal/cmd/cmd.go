@@ -17,11 +17,33 @@ import (
 	generatorexec "github.com/fern-api/fiddle/sdk/go"
 )
 
-// defaultImports specify the default imports used in the generated
-// go.mod (if any).
-var defaultImports = map[string]string{
-	"github.com/gofrs/uuid/v5": "v5.0.0",
-}
+const (
+	// localFileGenerationDocsLink is displayed to the user whenever they omit
+	// an import path or module path configuration. This is included to help
+	// the user understand how to improve the import paths used in the
+	// generated SDK.
+	localFileGenerationDocsLink = "https://github.com/fern-api/fern-go#local-file-generation"
+
+	// defaultModulePath is used as the default go.mod path used in the generated
+	// SDK.
+	defaultModulePath = "sdk"
+)
+
+var (
+	// defaultImports specify the default imports used in the generated
+	// go.mod (if any).
+	defaultImports = map[string]string{
+		"github.com/gofrs/uuid/v5": "v5.0.0",
+	}
+
+	// defaultModuleConfig is used whenever an import path or module is not
+	// specified. This is the default, configuration-less behavior used by
+	// the generator.
+	defaultModuleConfig = &generator.ModuleConfig{
+		Path:    defaultModulePath,
+		Imports: defaultImports,
+	}
+)
 
 // Config represents the common configuration required from all of
 // the commands (e.g. fern-go-{client,model}).
@@ -81,6 +103,38 @@ func run(fn GeneratorFunc) (retErr error) {
 	); err != nil {
 		return err
 	}
+	// If the Module configuration is specified, use the module's path as the import path.
+	if config.Module != nil {
+		if config.ImportPath == "" {
+			config.ImportPath = config.Module.Path
+		}
+		if config.ImportPath != config.Module.Path {
+			return fmt.Errorf(
+				"both module path (%q) and import path (%q) are specified, but not equal; please remove import path",
+				config.Module.Path,
+				config.ImportPath,
+			)
+		}
+	}
+	if config.ImportPath == "" {
+		// If neither an import path nor a module path are specified, use the default behavior so
+		// that we can still successfully generate a result.
+		if err := sendCoordinatorUpdateLog(
+			coordinator,
+			config.CoordinatorTaskID,
+			generatorexec.LogLevelWarn,
+			fmt.Sprintf("Neither an import path nor a module path was specified; please see %s for details.", localFileGenerationDocsLink),
+		); err != nil {
+			return err
+		}
+		if config.Module == nil {
+			config.Module = defaultModuleConfig
+		} else {
+			// A module configuration is specified, so we only want to set the path to something meaningful.
+			config.Module.Path = defaultModuleConfig.Path
+		}
+		config.ImportPath = config.Module.Path
+	}
 	defer func() {
 		// Now that we've successfully sent the update, wrap the exit update in a function
 		// the call-site can execute as soon as we're done.
@@ -139,19 +193,6 @@ func newConfig(configFilename string) (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
-	importPath := customConfig.ImportPath
-	if moduleConfig != nil {
-		if customConfig.ImportPath == "" {
-			importPath = moduleConfig.Path
-		}
-		if importPath != moduleConfig.Path {
-			return nil, fmt.Errorf(
-				"both module path (%q) and import path (%q) are specified, but not equal; please remove import path",
-				moduleConfig.Path,
-				importPath,
-			)
-		}
-	}
 	var (
 		coordinatorURL    string
 		coordinatorTaskID string
@@ -165,7 +206,7 @@ func newConfig(configFilename string) (*Config, error) {
 		CoordinatorURL:    coordinatorURL,
 		CoordinatorTaskID: coordinatorTaskID,
 		IrFilepath:        config.IrFilepath,
-		ImportPath:        importPath,
+		ImportPath:        customConfig.ImportPath,
 		Module:            moduleConfig,
 		Writer:            writerConfig,
 	}, nil
@@ -276,6 +317,29 @@ func outputModeFromConfig(c *generatorexec.GeneratorConfig) (writer.OutputMode, 
 	default:
 		return nil, fmt.Errorf("unrecognized output configuration mode: %T", outputConfigMode)
 	}
+}
+
+// sendCoordinatorUpdateLog sends a log to the coordinator so that it's displayed on the console.
+func sendCoordinatorUpdateLog(
+	coordinator generatorexec.Service,
+	taskID generatorexec.TaskId,
+	level generatorexec.LogLevel,
+	message string,
+) error {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+	return coordinator.SendUpdate(
+		ctx,
+		taskID,
+		[]*generatorexec.GeneratorUpdate{
+			generatorexec.NewGeneratorUpdateFromLog(
+				&generatorexec.LogUpdate{
+					Level:   level,
+					Message: message,
+				},
+			),
+		},
+	)
 }
 
 func newCoordinatorClient(coordinatorURL string) (generatorexec.Service, error) {
