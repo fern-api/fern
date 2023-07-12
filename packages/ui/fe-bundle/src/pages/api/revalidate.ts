@@ -18,6 +18,8 @@ const handler: NextApiHandler = async (req, res) => {
         }
         return res.json({ revalidated: true });
     } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err);
         // If there was an error, Next.js will continue
         // to show the last successfully generated page
         return res.status(500).send("Error revalidating");
