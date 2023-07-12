@@ -9,11 +9,34 @@ export interface DocsConfiguration {
     favicon: ImageReference | undefined;
     colors: FernRegistry.docs.v1.write.ColorsConfig;
     navbarLinks: FernRegistry.docs.v1.write.NavbarLink[] | undefined;
+    typography?: TypographyConfiguration;
 }
 
 export interface Logo {
     reference: ImageReference;
     href: FernRegistry.docs.v1.write.Url | undefined;
+}
+
+export interface TypographyFontFamilies {
+    /**
+     * The font family applied to all headings in the docs.
+     * If this is not supplied, it defaults to the body font family.
+     */
+    headings?: string;
+    /**
+     * The font family applied to all paragraph content in the docs.
+     */
+    body?: string;
+    /**
+     * The font family applied to all code blocks and inline
+     * code snippets in the documentation site.
+     */
+    code?: string;
+}
+
+export interface TypographyConfiguration {
+    fontsDir?: string;
+    fonts?: TypographyFontFamilies;
 }
 
 export interface ImageReference {
