@@ -1,6 +1,7 @@
 import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
+import { snakeCase } from "lodash-es";
 import React, { useCallback, useMemo, useState } from "react";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { SeparatedElements } from "../../commons/SeparatedElements";
@@ -63,11 +64,11 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
         ) => {
             let anchor = "";
             if (isSubpackage(package_)) {
-                anchor += package_.urlSlug + "_";
+                anchor += snakeCase(package_.urlSlug) + "_";
             }
-            anchor += endpoint.id;
-            anchor += "_" + attributeType + "_";
-            anchor += attribute.key;
+            anchor += snakeCase(endpoint.id);
+            anchor += "-" + attributeType + "-";
+            anchor += snakeCase(attribute.key);
             return anchor;
         },
         [package_, endpoint]
