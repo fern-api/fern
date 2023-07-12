@@ -1,36 +1,43 @@
 import { NextApiHandler, NextApiResponse } from "next";
+import { REGISTRY_SERVICE } from "../../service";
+import { UrlSlugTree } from "../../url-path-resolver/UrlSlugTree";
 
-interface RequestBody {
-    urls: string[];
-}
-
+// TODO support URLs that have a path component, e.g. buildwithfern.com/docs
 const handler: NextApiHandler = async (req, res) => {
-    const { urls } = req.body as RequestBody;
-    // eslint-disable-next-line no-console
-    console.log("Revalidating host:", JSON.stringify(req.headers, undefined, 4));
-
     if (typeof req.headers["x-fern-host"] === "string") {
-        // eslint-disable-next-line no-console
-        console.log("Changing req.headers.host");
         req.headers.host = req.headers["x-fern-host"];
     }
-
-    // eslint-disable-next-line no-console
-    console.log("[2] Revalidating host:", JSON.stringify(req.headers, undefined, 4));
-
-    let success = true;
-
-    success &&= await tryRevalidate(res, "/");
-    for (const _url of urls) {
-        // success &&= await tryRevalidate(res, `/${url}`);
-        // success &&= await tryRevalidate(res, `/${url}/`);
+    const host = req.headers.host;
+    if (host == null) {
+        return res.status(400).send("No host header");
     }
 
-    if (success) {
-        return res.json({ revalidated: true });
-    } else {
-        return res.status(500).send("Error revalidating");
+    const revalidated: string[] = [];
+    const failures: string[] = [];
+
+    const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
+        url: host,
+    });
+    if (!docs.ok) {
+        // eslint-disable-next-line no-console
+        console.error("Failed to fetch docs", docs.error);
+        return res.status(500).send("Faild to load docs for: " + host);
     }
+    const urlSlugTree = new UrlSlugTree(docs.body.definition);
+    const paths = ["/", ...urlSlugTree.getAllSlugs().map((slug) => `/${slug}`)];
+
+    await Promise.all(
+        paths.map(async (path) => {
+            const didSucceed = await tryRevalidate(res, path);
+            if (didSucceed) {
+                revalidated.push(path);
+            } else {
+                failures.push(path);
+            }
+        })
+    );
+
+    return res.json({ revalidated, failures });
 };
 
 async function tryRevalidate(res: NextApiResponse, path: string): Promise<boolean> {

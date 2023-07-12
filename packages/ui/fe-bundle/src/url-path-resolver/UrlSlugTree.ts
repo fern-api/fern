@@ -59,6 +59,37 @@ export class UrlSlugTree {
         return neighbors;
     }
 
+    private allSlugs: string[] | undefined;
+    public getAllSlugs(): string[] {
+        if (this.allSlugs == null) {
+            this.allSlugs = this.getAllSlugsExpensive();
+        }
+
+        return this.allSlugs;
+    }
+
+    private getAllSlugsExpensive(ancestors: string[] = [], root = this.root): string[] {
+        const allSlugs: string[] = [];
+        for (const node of Object.values(root)) {
+            allSlugs.push(...ancestors, node.slug);
+            switch (node.type) {
+                case "api":
+                case "section":
+                case "apiSubpackage":
+                    allSlugs.push(...this.getAllSlugsExpensive([...ancestors, node.slug], node.children));
+                    break;
+                case "clientLibraries":
+                case "endpoint":
+                case "page":
+                case "topLevelEndpoint":
+                    break;
+                default:
+                    assertNever(node);
+            }
+        }
+        return allSlugs;
+    }
+
     private resolveSlugsRecursive({
         slugs,
         children,
