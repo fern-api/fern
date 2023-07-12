@@ -303,6 +303,10 @@ Our full documentation can be found [here](https://www.buildwithfern.com/docs).
 
 We highly value community contributions. See our [CONTRIBUTING.md](/CONTRIBUTING.md) document for more info on how you can contribute!
 
+Heartfelt thanks to everyone who has contributed to Fern so far:
+
+![Fern Contributors](https://contrib.rocks/image?repo=fern-api/fern)
+
 ## Attribution
 
 Thanks to the folks at [Twemoji](https://twemoji.twitter.com/), an open source project, who created the graphic that we use as our logo.
