@@ -6,16 +6,17 @@ import { EndpointContent } from "./EndpointContent";
 export declare namespace Endpoint {
     export interface Props {
         endpoint: FernRegistryApiRead.EndpointDefinition;
+        package: FernRegistryApiRead.ApiDefinitionPackage;
         slug: string;
     }
 }
 
-export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint, slug }) => {
+export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint, slug, package: package_ }) => {
     const { setTargetRef } = useApiPageCenterElement({ slug });
 
     return (
         <EndpointContextProvider>
-            <EndpointContent endpoint={endpoint} setContainerRef={setTargetRef} />
+            <EndpointContent endpoint={endpoint} setContainerRef={setTargetRef} package={package_} />
         </EndpointContextProvider>
     );
 };
