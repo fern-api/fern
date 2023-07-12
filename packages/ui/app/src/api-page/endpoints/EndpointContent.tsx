@@ -55,8 +55,11 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
 
     const computeAnchor = useCallback(
         (
-            attributeType: "request" | "response" | "path",
-            attribute: FernRegistryApiRead.ObjectProperty | FernRegistryApiRead.PathParameter
+            attributeType: "request" | "response" | "path" | "query",
+            attribute:
+                | FernRegistryApiRead.ObjectProperty
+                | FernRegistryApiRead.PathParameter
+                | FernRegistryApiRead.QueryParameter
         ) => {
             let anchor = "";
             if (isSubpackage(package_)) {
@@ -141,7 +144,10 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                 />
                             )}
                             {endpoint.queryParameters.length > 0 && (
-                                <QueryParametersSection queryParameters={endpoint.queryParameters} />
+                                <QueryParametersSection
+                                    queryParameters={endpoint.queryParameters}
+                                    getParameterAnchor={(param) => computeAnchor("query", param)}
+                                />
                             )}
                             {endpoint.request != null && (
                                 <EndpointSection title="Request">
