@@ -16,6 +16,7 @@
 
 package com.fern.java;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fern.irV12.model.commons.TypeId;
 import com.fern.irV12.model.types.AliasTypeDeclaration;
 import com.fern.irV12.model.types.ContainerType;
@@ -101,6 +102,9 @@ public final class PoetTypeNameMapper {
 
         @Override
         public TypeName visitUnknown() {
+            if (customConfig.generateUnknownAsJsonNode()) {
+                return ClassName.get(JsonNode.class);
+            }
             return ClassName.get(Object.class);
         }
 

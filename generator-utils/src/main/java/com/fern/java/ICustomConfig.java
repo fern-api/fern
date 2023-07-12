@@ -32,4 +32,10 @@ public interface ICustomConfig {
     default Boolean enableForwardCompatibleEnum() {
         return false;
     }
+
+    @Value.Default
+    @JsonProperty("generate-unknown-as-json-node")
+    default Boolean generateUnknownAsJsonNode() {
+        return false;
+    }
 }
