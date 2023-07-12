@@ -243,24 +243,49 @@ function convertDocsTypographyConfiguration({
     }
     const result: FernRegistry.docs.v1.write.DocsTypographyConfig = {};
 
-    for (const key in typographyConfiguration) {
-        const prop = key as keyof TypographyConfig;
-        if (typographyConfiguration[prop] != null) {
-            const filepath = convertAbsoluteFilepathToFdrFilepath(
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                typographyConfiguration[prop]!.absolutePath,
-                docsDefinition
-            );
-            const file = uploadUrls[filepath];
-            if (file == null) {
-                return context.failAndThrow("Failed to locate font file after uploading");
-            }
-            result[prop] = {
-                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                name: typographyConfiguration[prop]!.name,
-                fontFile: file.fileId,
-            };
+    if (typographyConfiguration.headingsFont != null) {
+        const filepath = convertAbsoluteFilepathToFdrFilepath(
+            typographyConfiguration.headingsFont.absolutePath,
+            docsDefinition
+        );
+        const file = uploadUrls[filepath];
+        if (file == null) {
+            return context.failAndThrow("Failed to locate headingsFont file after uploading");
         }
+        result.headingsFont = {
+            name: typographyConfiguration.headingsFont.name,
+            fontFile: file.fileId,
+        };
+    }
+
+    if (typographyConfiguration.bodyFont != null) {
+        const filepath = convertAbsoluteFilepathToFdrFilepath(
+            typographyConfiguration.bodyFont.absolutePath,
+            docsDefinition
+        );
+        const file = uploadUrls[filepath];
+        if (file == null) {
+            return context.failAndThrow("Failed to locate bodyFont file after uploading");
+        }
+        result.headingsFont = {
+            name: typographyConfiguration.bodyFont.name,
+            fontFile: file.fileId,
+        };
+    }
+
+    if (typographyConfiguration.codeFont != null) {
+        const filepath = convertAbsoluteFilepathToFdrFilepath(
+            typographyConfiguration.codeFont.absolutePath,
+            docsDefinition
+        );
+        const file = uploadUrls[filepath];
+        if (file == null) {
+            return context.failAndThrow("Failed to locate codeFont file after uploading");
+        }
+        result.headingsFont = {
+            name: typographyConfiguration.codeFont.name,
+            fontFile: file.fileId,
+        };
     }
 
     return result;
@@ -363,13 +388,15 @@ function getFilepathsToUpload(docsDefinition: DocsDefinition): AbsoluteFilePath[
     }
 
     const typographyConfiguration = docsDefinition.config.typography;
-    if (typographyConfiguration) {
-        for (const key in typographyConfiguration) {
-            const fontAbsolutePath = typographyConfiguration[key as keyof TypographyConfig]?.absolutePath;
-            if (fontAbsolutePath != null) {
-                filepaths.push(fontAbsolutePath);
-            }
-        }
+
+    if (typographyConfiguration?.headingsFont != null) {
+        filepaths.push(typographyConfiguration.headingsFont.absolutePath);
+    }
+    if (typographyConfiguration?.bodyFont != null) {
+        filepaths.push(typographyConfiguration.bodyFont.absolutePath);
+    }
+    if (typographyConfiguration?.codeFont != null) {
+        filepaths.push(typographyConfiguration.codeFont.absolutePath);
     }
 
     return filepaths;
