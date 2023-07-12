@@ -9,6 +9,10 @@ const handler: NextApiHandler = async (req, res) => {
     // eslint-disable-next-line no-console
     console.log("Revalidating host:", req.headers);
 
+    if (typeof req.headers["x-fern-host"] === "string") {
+        req.headers.host = req.headers["x-fern-host"];
+    }
+
     let success = true;
 
     success &&= await tryRevalidate(res, "/");
