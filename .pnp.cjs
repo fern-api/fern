@@ -5925,7 +5925,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-fern/docs-config", "npm:0.0.17"],\
-            ["@fern-fern/registry-node", "npm:0.0.1424"],\
+            ["@fern-fern/registry-node", "npm:0.0.1442"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/node", "npm:18.7.18"],\
@@ -6004,7 +6004,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/ui", "workspace:packages/ui/app"],\
-            ["@fern-fern/registry-browser", "npm:0.0.1423"],\
+            ["@fern-fern/registry-browser", "npm:0.0.1441"],\
             ["@tailwindcss/typography", "virtual:9b60843f93b40879d252e7157e551df447110dfbf7733263381f1a30af265b2804b12983457ee32c7facca51b4c4d5cc30287dc9e2725b4cbb8a618f3beae533#npm:0.5.9"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
@@ -6672,7 +6672,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/ir-model", "npm:0.0.2473"],\
-            ["@fern-fern/registry-node", "npm:0.0.1424"],\
+            ["@fern-fern/registry-node", "npm:0.0.1442"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
@@ -6710,7 +6710,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.193"],\
             ["@fern-fern/ir-model", "npm:0.0.2473"],\
-            ["@fern-fern/registry-node", "npm:0.0.1424"],\
+            ["@fern-fern/registry-node", "npm:0.0.1442"],\
             ["@types/decompress", "npm:4.2.4"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
@@ -6826,7 +6826,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:7.18.6"],\
             ["@fern-api/venus-api-sdk", "npm:0.0.20-7-g6ea8dc4"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.193"],\
-            ["@fern-fern/registry-node", "npm:0.0.1424"],\
+            ["@fern-fern/registry-node", "npm:0.0.1442"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -6961,7 +6961,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/react-commons", "workspace:packages/commons/react/react-commons"],\
             ["@fern-api/routing-utils", "workspace:packages/commons/react/routing-utils"],\
             ["@fern-api/theme", "workspace:packages/commons/react/theme"],\
-            ["@fern-fern/registry-browser", "npm:0.0.1423"],\
+            ["@fern-fern/registry-browser", "npm:0.0.1441"],\
             ["@fontsource/ibm-plex-mono", "npm:4.5.13"],\
             ["@headlessui/react", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:1.7.15"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -7447,10 +7447,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/registry-browser", [\
-        ["npm:0.0.1423", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-registry-browser-npm-0.0.1423-c817a92162-0c6ff0b1d6.zip/node_modules/@fern-fern/registry-browser/",\
+        ["npm:0.0.1441", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-registry-browser-npm-0.0.1441-43483323c8-cfd8b5a158.zip/node_modules/@fern-fern/registry-browser/",\
           "packageDependencies": [\
-            ["@fern-fern/registry-browser", "npm:0.0.1423"],\
+            ["@fern-fern/registry-browser", "npm:0.0.1441"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["@ungap/url-search-params", "npm:0.2.2"],\
             ["axios", "npm:1.4.0"],\
@@ -7461,10 +7461,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/registry-node", [\
-        ["npm:0.0.1424", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-registry-node-npm-0.0.1424-4c5365c224-2e7cdb5b1b.zip/node_modules/@fern-fern/registry-node/",\
+        ["npm:0.0.1442", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-registry-node-npm-0.0.1442-cdf07359e8-4c5a544fa5.zip/node_modules/@fern-fern/registry-node/",\
           "packageDependencies": [\
-            ["@fern-fern/registry-node", "npm:0.0.1424"],\
+            ["@fern-fern/registry-node", "npm:0.0.1442"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["@ungap/url-search-params", "npm:0.2.2"],\
             ["axios", "npm:0.27.2"],\
