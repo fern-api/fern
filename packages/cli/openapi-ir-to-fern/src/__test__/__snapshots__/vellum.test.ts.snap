@@ -836,7 +836,10 @@ Upload a document to be indexed and used for search.
                     "docs": "Optionally include the names of all indexes that you'd like this document to be included in",
                     "type": "optional<list<string>>",
                   },
-                  "contents": "file",
+                  "contents": {
+                    "docs": "The file contents of the document.",
+                    "type": "string",
+                  },
                   "external_id": {
                     "docs": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
                     "type": "optional<string>",

@@ -23,6 +23,18 @@ export function convertRequest({
         ? context.resolveRequestBodyReference(requestBody)
         : requestBody;
 
+    // otherwise, convert as json request.
+    const requestBodySchema =
+        resolvedRequestBody.content[APPLICATION_JSON_CONTENT]?.schema ??
+        resolvedRequestBody.content[APPLICATION_JSON_UTF_8_CONTENT]?.schema;
+    if (requestBodySchema != null) {
+        const requestSchema = convertSchema(requestBodySchema, false, context, requestBreadcrumbs, true);
+        return Request.json({
+            description: undefined,
+            schema: requestSchema,
+        });
+    }
+
     // convert as multipart request
     const multipartSchema = resolvedRequestBody.content[MULTIPART_CONTENT]?.schema;
     if (multipartSchema != null) {
@@ -56,18 +68,7 @@ export function convertRequest({
         });
     }
 
-    // otherwise, convert as json request.
-    const requestBodySchema =
-        resolvedRequestBody.content[APPLICATION_JSON_CONTENT]?.schema ??
-        resolvedRequestBody.content[APPLICATION_JSON_UTF_8_CONTENT]?.schema;
-    if (requestBodySchema == null) {
-        return undefined;
-    }
-    const requestSchema = convertSchema(requestBodySchema, false, context, requestBreadcrumbs, true);
-    return Request.json({
-        description: undefined,
-        schema: requestSchema,
-    });
+    return undefined;
 }
 
 interface ResolvedSchema {
