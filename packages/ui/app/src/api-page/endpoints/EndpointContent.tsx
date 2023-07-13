@@ -177,7 +177,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                         {
                                             id: "bad-request",
                                             status: "400: Bad Request",
-                                            description: "The server cannot process the request due to a client error.",
+                                            description: "This error response is an object.",
                                             type: {
                                                 type: "object",
                                                 extends: [],
@@ -198,8 +198,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                         {
                                             id: "unprocessable-entity",
                                             status: "422: Unprocessable Entity",
-                                            description:
-                                                "The request was well-formed but was unable to be followed due to semantic errors.",
+                                            description: "This error response is an object.",
                                             type: {
                                                 type: "object",
                                                 extends: [],
