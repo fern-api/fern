@@ -27,6 +27,9 @@ export const Markdown = React.memo<Markdown.Props>(function Markdown({ children,
             remarkPlugins={REMARK_PLUGINS}
             rehypePlugins={REHYPE_PLUGINS}
             components={{
+                pre({ className, ...props }) {
+                    return <pre className={classNames(className, "border border-border")} {...props} />;
+                },
                 code({ node, inline = false, className, children, ...props }) {
                     if (!inline && className != null) {
                         const match = PRISM_CLASSNAME_REGEX.exec(className);
@@ -35,7 +38,11 @@ export const Markdown = React.memo<Markdown.Props>(function Markdown({ children,
                                 <SyntaxHighlighter
                                     {...props}
                                     style={atomDark}
-                                    customStyle={{ backgroundColor: "transparent" }}
+                                    customStyle={{
+                                        backgroundColor: "transparent",
+                                        padding: 0,
+                                        fontSize: "0.9rem",
+                                    }}
                                     language={match[1]}
                                     PreTag="div"
                                 >
