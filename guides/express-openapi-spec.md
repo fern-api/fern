@@ -120,7 +120,7 @@ Update your `package.json` with a script to generate the OpenAPI spec for your p
 
 In your terminal, run `npm run swagger-autogen` to generate the OpenAPI spec. This command will update the `swagger_output.json` file that was previously created.
 
-Update your index file by importing the `swagger-ui-express` package, the `swagger_output.json` file. Mount the swagger ui middleware on the path `/documentation
+Update your index file by importing the `swagger-ui-express` package, the `swagger_output.json` file. Mount the swagger ui middleware on the path `/documentation`
 . Your index file should look like this:
 
 ```js
