@@ -2069,9 +2069,15 @@ exports[`open api parser deel parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "description": undefined,
-            "name": "MilestoneToCreateFormWithFile",
-            "properties": [],
-            "type": "multipart",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "CreateMilestoneRequest",
+              "nameOverride": undefined,
+              "schema": "MilestoneToCreateContainer",
+              "type": "reference",
+            },
+            "type": "json",
           },
           "requestNameOverride": undefined,
           "response": {
@@ -3391,9 +3397,15 @@ exports[`open api parser deel parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "description": undefined,
-            "name": undefined,
-            "properties": [],
-            "type": "multipart",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "CreateTimesheetRequest",
+              "nameOverride": undefined,
+              "schema": "TimesheetToCreateContainer",
+              "type": "reference",
+            },
+            "type": "json",
           },
           "requestNameOverride": undefined,
           "response": {
@@ -4157,9 +4169,15 @@ exports[`open api parser deel parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "description": undefined,
-            "name": "InvoiceAdjustmentToCreateWithFile",
-            "properties": [],
-            "type": "multipart",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "CreateInvoiceAdjustmentRequest",
+              "nameOverride": undefined,
+              "schema": "InvoiceAdjustmentToCreateContainer",
+              "type": "reference",
+            },
+            "type": "json",
           },
           "requestNameOverride": undefined,
           "response": {
