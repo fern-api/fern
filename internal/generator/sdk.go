@@ -316,6 +316,7 @@ func (f *fileWriter) WriteClient(
 	irEndpoints []*ir.HttpEndpoint,
 	subpackages []*ir.Subpackage,
 	environmentsConfig *ir.EnvironmentsConfig,
+	errorDiscriminationStrategy *ir.ErrorDiscriminationStrategy,
 	fernFilepath *ir.FernFilepath,
 	namePrefix *ir.Name,
 	enableClientSubpackages bool,
@@ -329,6 +330,10 @@ func (f *fileWriter) WriteClient(
 		clientImplName = namePrefix.CamelCase.UnsafeName + clientName
 		clientName = namePrefix.PascalCase.UnsafeName + clientName
 		receiver = typeNameToReceiver(clientImplName)
+	}
+	var errorDiscriminationByPropertyStrategy *ir.ErrorDiscriminationByPropertyStrategy
+	if errorDiscriminationStrategy != nil && errorDiscriminationStrategy.Property != nil {
+		errorDiscriminationByPropertyStrategy = errorDiscriminationStrategy.Property
 	}
 	// Reformat the endpoint data into a structure that's suitable for code generation.
 	var endpoints []*endpoint
@@ -509,7 +514,26 @@ func (f *fileWriter) WriteClient(
 			f.P("}")
 			f.P("apiError := core.NewAPIError(statusCode, errors.New(string(raw)))")
 			f.P("decoder := json.NewDecoder(bytes.NewReader(raw))")
-			f.P("switch statusCode {")
+			var (
+				switchValue              = "statusCode"
+				discriminantContentField = ""
+			)
+			if errorDiscriminationByPropertyStrategy != nil {
+				var (
+					discriminant = errorDiscriminationByPropertyStrategy.Discriminant
+					content      = errorDiscriminationByPropertyStrategy.ContentProperty
+				)
+				switchValue = fmt.Sprintf("discriminant.%s", discriminant.Name.PascalCase.UnsafeName)
+				discriminantContentField = fmt.Sprintf("discriminant.%s", content.Name.PascalCase.UnsafeName)
+				f.P("var discriminant struct {")
+				f.P(discriminant.Name.PascalCase.UnsafeName, " string `json:\"", discriminant.WireValue, "\"`")
+				f.P(content.Name.PascalCase.UnsafeName, " json.RawMessage `json:\"", content.WireValue, "\"`")
+				f.P("}")
+				f.P("if err := decoder.Decode(&discriminant); err != nil {")
+				f.P("return err")
+				f.P("}")
+			}
+			f.P("switch ", switchValue, " {")
 			for _, responseError := range endpoint.Errors {
 				errorDeclaration := f.errors[responseError.Error.ErrorId]
 				errorType := errorDeclaration.Name.Name.PascalCase.UnsafeName
@@ -519,10 +543,18 @@ func (f *fileWriter) WriteClient(
 					errorImportPath := fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
 					errorType = f.imports.Add(errorImportPath) + "." + errorType
 				}
-				f.P("case ", errorDeclaration.StatusCode, ":")
+				if errorDiscriminationByPropertyStrategy != nil {
+					f.P(`case "`, errorDeclaration.DiscriminantValue.WireValue, `":`)
+				} else {
+					f.P("case ", errorDeclaration.StatusCode, ":")
+				}
 				f.P("value := new(", errorType, ")")
 				f.P("value.APIError = apiError")
-				f.P("if err := decoder.Decode(value); err != nil {")
+				if discriminantContentField != "" {
+					f.P("if err := json.Unmarshal(", discriminantContentField, ", value); err != nil {")
+				} else {
+					f.P("if err := decoder.Decode(value); err != nil {")
+				}
 				f.P("return err")
 				f.P("}")
 				f.P("return value")

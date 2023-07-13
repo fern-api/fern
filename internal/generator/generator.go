@@ -3,7 +3,6 @@ package generator
 import (
 	_ "embed"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -117,13 +116,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	}
 	switch mode {
 	case ModeClient:
-		if g.config.ImportPath == "" {
-			return nil, errors.New("the SDK requires an import path configuration")
-		}
-		// TODO: Temporary silent failure to integrate with fiddle - uncomment these lines and return an error here.
-		//if ir.ErrorDiscriminationStrategy != nil && ir.ErrorDiscriminationStrategy.StatusCode == nil {
-		//return nil, errors.New("this generator only supports the status-code error discrimination strategy")
-		//}
 		// Generate the core API files.
 		fileInfo := fileInfoForClientOptionsDefinition()
 		writer := newFileWriter(
@@ -331,6 +323,7 @@ func (g *Generator) generateService(
 		irService.Endpoints,
 		irSubpackages,
 		ir.Environments,
+		ir.ErrorDiscriminationStrategy,
 		clientFernFilepath,
 		namePrefix,
 		g.config.EnableClientSubpackages,
@@ -370,6 +363,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		nil,
 		irSubpackages,
 		nil,
+		ir.ErrorDiscriminationStrategy,
 		clientFernFilepath,
 		namePrefix,
 		g.config.EnableClientSubpackages,
@@ -400,6 +394,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		nil,
 		irSubpackages,
 		nil,
+		ir.ErrorDiscriminationStrategy,
 		clientFernFilepath,
 		nil,
 		g.config.EnableClientSubpackages,

@@ -47,8 +47,8 @@ The following outlines a roadmap for the development of the Go generator.
 - [x] Generate documentation for all relevant types
 - [x] Support file download and file upload RPCs
 - [x] Revisit default generator output (i.e. whether to generate a `go.mod` by default or not)
+- [x] Support custom error discriminiation strategy
 - [ ] If a `Client` type exists, prefix the filename with a `_` to avoid conflicts
-- [ ] Support custom error discriminiation strategy
 - [ ] Generate examples
 - [ ] Support optional client/endpoint variables (e.g. namespace)
 - [ ] Add coordinator logging for better user-facing console progress updates
