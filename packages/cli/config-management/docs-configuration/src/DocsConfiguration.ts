@@ -18,8 +18,8 @@ export interface Logo {
 }
 
 export interface FontConfig {
-    name: string;
     path: string;
+    name?: string;
     absolutePath: AbsoluteFilePath;
 }
 
