@@ -9,7 +9,14 @@ module.exports = {
         "../app/src/**/*.{ts,tsx}",
     ],
     theme: {
-        extend: {},
+        extend: {
+            fontSize: {
+                base: ["0.9575rem", { lineHeight: "1.3rem" }],
+            },
+            listStyleImage: {
+                dash: 'url("/dash.svg")',
+            },
+        },
         colors: ({ colors }) => {
             return {
                 ...colors,
