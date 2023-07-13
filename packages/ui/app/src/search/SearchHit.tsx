@@ -1,5 +1,6 @@
 import { Icon } from "@blueprintjs/core";
 import { visitDiscriminatedUnion } from "@fern-api/core-utils";
+import Link from "next/link";
 import { Snippet } from "react-instantsearch-hooks-web";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useSearchContext } from "../search-context/useSearchContext";
@@ -16,12 +17,13 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
     const { closeSearchDialog } = useSearchContext();
 
     return (
-        <button
+        <Link
             className="hover:bg-accentHighlight group flex w-full items-center space-x-3 space-y-1 rounded-md p-2"
             onClick={() => {
                 closeSearchDialog();
                 navigateToPath(hit.path);
             }}
+            href={`/${hit.path}`}
         >
             <Icon
                 className="text-text-default group-hover:text-text-stark"
@@ -56,6 +58,6 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
                     />
                 </div>
             </div>
-        </button>
+        </Link>
     );
 };
