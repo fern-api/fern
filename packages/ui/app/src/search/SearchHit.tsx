@@ -18,7 +18,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
 
     return (
         <Link
-            className="hover:bg-accentHighlight group flex w-full items-center space-x-3 space-y-1 rounded-md p-2 hover:no-underline"
+            className="hover:bg-accentHighlight group flex w-full items-center space-x-3 space-y-1 rounded-md px-3 py-2 hover:no-underline"
             onClick={() => {
                 closeSearchDialog();
                 navigateToPath(hit.path);
