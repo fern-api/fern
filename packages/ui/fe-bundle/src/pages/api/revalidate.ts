@@ -7,7 +7,7 @@ export interface Request {
 }
 
 const handler: NextApiHandler = async (req, res) => {
-    const url = req.body.url;
+    const url = req.body?.url;
 
     if (url == null) {
         return res.status(400).send("Property 'url' is missing from request.");
