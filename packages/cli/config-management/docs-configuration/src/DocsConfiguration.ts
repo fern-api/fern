@@ -9,7 +9,7 @@ export interface DocsConfiguration {
     favicon: ImageReference | undefined;
     colors: FernRegistry.docs.v1.write.ColorsConfig;
     navbarLinks: FernRegistry.docs.v1.write.NavbarLink[] | undefined;
-    typography?: TypographyConfig;
+    typography: TypographyConfig | undefined;
 }
 
 export interface Logo {

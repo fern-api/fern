@@ -7,7 +7,9 @@ import {
     DocsConfiguration,
     DocsNavigationConfiguration,
     DocsNavigationItem,
+    FontConfig,
     ImageReference,
+    TypographyConfig,
 } from "./DocsConfiguration";
 
 export async function convertDocsConfiguration({
@@ -19,7 +21,7 @@ export async function convertDocsConfiguration({
     absolutePathOfConfiguration: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<DocsConfiguration> {
-    const { navigation, colors, favicon, logo, navbarLinks, title } = rawDocsConfiguration;
+    const { navigation, colors, favicon, logo, navbarLinks, title, typography } = rawDocsConfiguration;
     return {
         navigation: convertNavigationConfiguration(navigation, absolutePathOfConfiguration),
         title,
@@ -36,6 +38,39 @@ export async function convertDocsConfiguration({
         favicon: favicon != null ? convertImageReference(favicon, absolutePathOfConfiguration) : undefined,
         colors: convertColorsConfiguration(colors ?? {}, context),
         navbarLinks: navbarLinks != null ? convertNavbarLinks(navbarLinks) : undefined,
+        typography:
+            typography != null ? convertTypographyConfiguration(typography, absolutePathOfConfiguration) : undefined,
+    };
+}
+
+function convertTypographyConfiguration(
+    rawTypography: RawDocs.DocsTypographyConfig,
+    absolutePathOfConfiguration: AbsoluteFilePath
+): TypographyConfig {
+    return {
+        headingsFont:
+            rawTypography.headingsFont != null
+                ? convertFontConfig(rawTypography.headingsFont, absolutePathOfConfiguration)
+                : undefined,
+        bodyFont:
+            rawTypography.bodyFont != null
+                ? convertFontConfig(rawTypography.bodyFont, absolutePathOfConfiguration)
+                : undefined,
+        codeFont:
+            rawTypography.codeFont != null
+                ? convertFontConfig(rawTypography.codeFont, absolutePathOfConfiguration)
+                : undefined,
+    };
+}
+
+function convertFontConfig(
+    rawFontConfig: RawDocs.FontConfig,
+    absolutePathOfConfiguration: AbsoluteFilePath
+): FontConfig {
+    return {
+        name: rawFontConfig.name,
+        path: rawFontConfig.path,
+        absolutePath: resolve(dirname(absolutePathOfConfiguration), rawFontConfig.path),
     };
 }
 
