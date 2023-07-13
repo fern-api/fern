@@ -19,7 +19,7 @@ export interface Logo {
 
 export interface FontConfig {
     path: string;
-    name?: string;
+    name: string | undefined;
     absolutePath: AbsoluteFilePath;
 }
 
@@ -28,16 +28,16 @@ export interface TypographyConfig {
      * The font family applied to all headings in the docs.
      * If this is not supplied, it defaults to the body font family.
      */
-    headingsFont?: FontConfig;
+    headingsFont: FontConfig | undefined;
     /**
      * The font family applied to all paragraph content in the docs.
      */
-    bodyFont?: FontConfig;
+    bodyFont: FontConfig | undefined;
     /**
      * The font family applied to all code blocks and inline
      * code snippets in the documentation site.
      */
-    codeFont?: FontConfig;
+    codeFont: FontConfig | undefined;
 }
 
 export interface ImageReference {
