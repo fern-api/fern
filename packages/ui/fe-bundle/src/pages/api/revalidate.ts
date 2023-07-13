@@ -4,6 +4,8 @@ import { UrlSlugTree } from "../../url-path-resolver/UrlSlugTree";
 
 // TODO support URLs that have a path component, e.g. buildwithfern.com/docs
 const handler: NextApiHandler = async (req, res) => {
+    // when we call res.revalidate() nextjs uses
+    // req.headers.host to make the network request
     if (typeof req.headers["x-fern-host"] === "string") {
         req.headers.host = req.headers["x-fern-host"];
     }
