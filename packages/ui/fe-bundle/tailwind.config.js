@@ -9,7 +9,11 @@ module.exports = {
         "../app/src/**/*.{ts,tsx}",
     ],
     theme: {
-        extend: {},
+        extend: {
+            listStyleImage: {
+                dash: 'url("/dash.svg")',
+            },
+        },
         colors: ({ colors }) => {
             return {
                 ...colors,
