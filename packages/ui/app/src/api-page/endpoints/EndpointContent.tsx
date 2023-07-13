@@ -1,4 +1,5 @@
 import { visitDiscriminatedUnion } from "@fern-api/core-utils";
+import { FernRegistry } from "@fern-fern/registry-browser";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import { snakeCase } from "lodash-es";
@@ -10,6 +11,7 @@ import { Markdown } from "../markdown/Markdown";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useEndpointContext } from "./endpoint-context/useEndpointContext";
 import { EndpointExamples } from "./endpoint-examples/EndpointExamples";
+import { EndpointErrorsSection } from "./EndpointErrorsSection";
 import { EndpointMethodPill } from "./EndpointMethodPill";
 import { EndpointPathParameter } from "./EndpointPathParameter";
 import { EndpointRequestSection } from "./EndpointRequestSection";
@@ -168,6 +170,56 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                     />
                                 </EndpointSection>
                             )}
+                            <EndpointSection title="Errors">
+                                <EndpointErrorsSection
+                                    // TODO: Make these dynamic!
+                                    errors={[
+                                        {
+                                            id: "bad-request",
+                                            status: "400: Bad Request",
+                                            description: "The server cannot process the request due to a client error.",
+                                            type: {
+                                                type: "object",
+                                                extends: [],
+                                                properties: [
+                                                    {
+                                                        key: "error",
+                                                        valueType: {
+                                                            type: "id",
+                                                            value: FernRegistry.api.v1.read.TypeId("fake_error_object"),
+                                                        },
+                                                        description:
+                                                            "An object containing information about the error that occurred.",
+                                                        htmlDescription: "papa",
+                                                    },
+                                                ],
+                                            },
+                                        },
+                                        {
+                                            id: "unprocessable-entity",
+                                            status: "422: Unprocessable Entity",
+                                            description:
+                                                "The request was well-formed but was unable to be followed due to semantic errors.",
+                                            type: {
+                                                type: "object",
+                                                extends: [],
+                                                properties: [
+                                                    {
+                                                        key: "error",
+                                                        valueType: {
+                                                            type: "id",
+                                                            value: FernRegistry.api.v1.read.TypeId("fake_error_object"),
+                                                        },
+                                                        description:
+                                                            "An object containing information about the error that occurred.",
+                                                        htmlDescription: "papa",
+                                                    },
+                                                ],
+                                            },
+                                        },
+                                    ]}
+                                />
+                            </EndpointSection>
                         </div>
                     </div>
                 </div>
