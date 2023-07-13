@@ -253,7 +253,7 @@ function convertDocsTypographyConfiguration({
             return context.failAndThrow("Failed to locate headingsFont file after uploading");
         }
         result.headingsFont = {
-            name: typographyConfiguration.headingsFont.name || `font:headings:${file.fileId}`,
+            name: typographyConfiguration.headingsFont.name ?? `font:headings:${file.fileId}`,
             fontFile: file.fileId,
         };
     }
@@ -268,7 +268,7 @@ function convertDocsTypographyConfiguration({
             return context.failAndThrow("Failed to locate bodyFont file after uploading");
         }
         result.bodyFont = {
-            name: typographyConfiguration.bodyFont.name || `font:body:${file.fileId}`,
+            name: typographyConfiguration.bodyFont.name ?? `font:body:${file.fileId}`,
             fontFile: file.fileId,
         };
     }
@@ -283,7 +283,7 @@ function convertDocsTypographyConfiguration({
             return context.failAndThrow("Failed to locate codeFont file after uploading");
         }
         result.codeFont = {
-            name: typographyConfiguration.codeFont.name || `font:code:${file.fileId}`,
+            name: typographyConfiguration.codeFont.name ?? `font:code:${file.fileId}`,
             fontFile: file.fileId,
         };
     }
