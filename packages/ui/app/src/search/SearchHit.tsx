@@ -18,7 +18,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
 
     return (
         <Link
-            className="hover:bg-accentHighlight group flex w-full items-center space-x-3 space-y-1 rounded-md p-2"
+            className="hover:bg-accentHighlight group flex w-full items-center space-x-3 space-y-1 rounded-md p-2 hover:no-underline"
             onClick={() => {
                 closeSearchDialog();
                 navigateToPath(hit.path);
@@ -26,7 +26,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
             href={`/${hit.path}`}
         >
             <Icon
-                className="text-text-default group-hover:text-text-stark"
+                className="!text-text-default group-hover:!text-text-stark"
                 size={18}
                 icon={visitDiscriminatedUnion(hit, "type")._visit({
                     endpoint: () => "code",
