@@ -79,6 +79,13 @@ func (u *userClient) Get(ctx context.Context, id string) (string, error) {
 				return err
 			}
 			return value
+		case 400:
+			value := new(UntypedError)
+			value.APIError = apiError
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			return value
 		}
 		return apiError
 	}
@@ -116,6 +123,13 @@ func (u *userClient) Update(ctx context.Context, id string, request string) (str
 		switch statusCode {
 		case 426:
 			value := new(UpgradeError)
+			value.APIError = apiError
+			if err := decoder.Decode(value); err != nil {
+				return err
+			}
+			return value
+		case 400:
+			value := new(UntypedError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
 				return err

@@ -5,3 +5,4 @@ error-discrimination:
   strategy: status-code
 errors:
   - user.UpgradeError 
+  - user.UntypedError

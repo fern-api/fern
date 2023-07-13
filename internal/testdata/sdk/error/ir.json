@@ -584,6 +584,96 @@
                 },
                 "_type": "container"
             }
+        },
+        "error_user:UntypedError": {
+            "name": {
+                "name": {
+                    "originalName": "UntypedError",
+                    "camelCase": {
+                        "unsafeName": "untypedError",
+                        "safeName": "untypedError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "untyped_error",
+                        "safeName": "untyped_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNTYPED_ERROR",
+                        "safeName": "UNTYPED_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UntypedError",
+                        "safeName": "UntypedError"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
+                },
+                "errorId": "error_user:UntypedError"
+            },
+            "discriminantValue": {
+                "name": {
+                    "originalName": "UntypedError",
+                    "camelCase": {
+                        "unsafeName": "untypedError",
+                        "safeName": "untypedError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "untyped_error",
+                        "safeName": "untyped_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNTYPED_ERROR",
+                        "safeName": "UNTYPED_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UntypedError",
+                        "safeName": "UntypedError"
+                    }
+                },
+                "wireValue": "UntypedError"
+            },
+            "statusCode": 400
         }
     },
     "services": {
@@ -1032,6 +1122,73 @@
                                 },
                                 "errorId": "error_user:UpgradeError"
                             }
+                        },
+                        {
+                            "error": {
+                                "name": {
+                                    "originalName": "UntypedError",
+                                    "camelCase": {
+                                        "unsafeName": "untypedError",
+                                        "safeName": "untypedError"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "untyped_error",
+                                        "safeName": "untyped_error"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "UNTYPED_ERROR",
+                                        "safeName": "UNTYPED_ERROR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "UntypedError",
+                                        "safeName": "UntypedError"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "user",
+                                            "camelCase": {
+                                                "unsafeName": "user",
+                                                "safeName": "user"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "user",
+                                                "safeName": "user"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "USER",
+                                                "safeName": "USER"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "User",
+                                                "safeName": "User"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
+                                        "originalName": "user",
+                                        "camelCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "USER",
+                                            "safeName": "USER"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "User",
+                                            "safeName": "User"
+                                        }
+                                    }
+                                },
+                                "errorId": "error_user:UntypedError"
+                            }
                         }
                     ],
                     "examples": []
@@ -1259,6 +1416,73 @@
                                 },
                                 "errorId": "error_user:UpgradeError"
                             }
+                        },
+                        {
+                            "error": {
+                                "name": {
+                                    "originalName": "UntypedError",
+                                    "camelCase": {
+                                        "unsafeName": "untypedError",
+                                        "safeName": "untypedError"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "untyped_error",
+                                        "safeName": "untyped_error"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "UNTYPED_ERROR",
+                                        "safeName": "UNTYPED_ERROR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "UntypedError",
+                                        "safeName": "UntypedError"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "user",
+                                            "camelCase": {
+                                                "unsafeName": "user",
+                                                "safeName": "user"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "user",
+                                                "safeName": "user"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "USER",
+                                                "safeName": "USER"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "User",
+                                                "safeName": "User"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
+                                        "originalName": "user",
+                                        "camelCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "user",
+                                            "safeName": "user"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "USER",
+                                            "safeName": "USER"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "User",
+                                            "safeName": "User"
+                                        }
+                                    }
+                                },
+                                "errorId": "error_user:UntypedError"
+                            }
                         }
                     ],
                     "examples": []
@@ -1367,7 +1591,8 @@
                 "error_user:UserNotFoundError",
                 "error_user:NotImplementedError",
                 "error_user:TeapotError",
-                "error_user:UpgradeError"
+                "error_user:UpgradeError",
+                "error_user:UntypedError"
             ],
             "subpackages": [],
             "hasEndpointsInTree": true

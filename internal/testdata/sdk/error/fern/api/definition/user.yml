@@ -16,6 +16,9 @@ errors:
     status-code: 426
     type: literal<"upgrade">
 
+  UntypedError:
+    status-code: 400
+
 types:
   UserNotFoundErrorBody:
     properties:

@@ -847,27 +847,37 @@ func (f *fileWriter) WriteEnvironments(environmentsConfig *ir.EnvironmentsConfig
 
 // WriteError writes the structured error types.
 func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
-	var (
-		typeName   = errorDeclaration.Name.Name.PascalCase.UnsafeName
-		receiver   = typeNameToReceiver(typeName)
-		importPath = fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
-		value      = typeReferenceToGoType(errorDeclaration.Type, f.types, f.imports, f.baseImportPath, importPath)
-	)
-	var literal string
-	isLiteral := errorDeclaration.Type.Container != nil && errorDeclaration.Type.Container.Literal != nil
-	if isLiteral {
-		literal = literalToValue(errorDeclaration.Type.Container.Literal)
-	}
-
 	// Generate the error type declaration.
+	var (
+		typeName = errorDeclaration.Name.Name.PascalCase.UnsafeName
+		receiver = typeNameToReceiver(typeName)
+	)
 	f.WriteDocs(errorDeclaration.Docs)
 	f.P("type ", typeName, " struct {")
 	f.P("*core.APIError")
 	if errorDeclaration.Type == nil {
 		// This error doesn't have a body, so we only need to include the status code.
+		// We still needto implement the json.Unmarshaler and json.Marshaler though.
+		f.P("}")
+		f.P()
+		f.P("func (", receiver, "*", typeName, ") UnmarshalJSON(data []byte) error {")
+		f.P(receiver, ".StatusCode = ", errorDeclaration.StatusCode)
+		f.P("return nil")
+		f.P("}")
+		f.P()
+		f.P("func (", receiver, "*", typeName, ") MarshalJSON() ([]byte, error) {")
+		f.P("return nil, nil")
 		f.P("}")
 		f.P()
 		return nil
+	}
+	var (
+		importPath = fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
+		value      = typeReferenceToGoType(errorDeclaration.Type, f.types, f.imports, f.baseImportPath, importPath)
+	)
+	var literal string
+	if errorDeclaration.Type.Container != nil && errorDeclaration.Type.Container.Literal != nil {
+		literal = literalToValue(errorDeclaration.Type.Container.Literal)
 	}
 	f.P("Body ", value)
 	f.P("}")
@@ -884,7 +894,7 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	f.P("if err := json.Unmarshal(data, &body); err != nil {")
 	f.P("return err")
 	f.P("}")
-	if isLiteral {
+	if literal != "" {
 		// If the error specifies a literal, it will only succeed if the literal matches exactly.
 		f.P("if body != ", literal, " {")
 		f.P(`return fmt.Errorf("expected literal %q, but found %q", `, literal, ", body)")
@@ -898,7 +908,7 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 
 	// Implement the json.Marshaler.
 	f.P("func (", receiver, "*", typeName, ") MarshalJSON() ([]byte, error) {")
-	if isLiteral {
+	if literal != "" {
 		f.P("return json.Marshal(", literal, ")")
 	} else {
 		f.P("return json.Marshal(", receiver, ".Body)")
