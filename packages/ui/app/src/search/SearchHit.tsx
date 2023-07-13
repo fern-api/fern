@@ -40,6 +40,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
                     <Snippet
                         className="text-text-stark group-hover:text-text-stark line-clamp-1 text-start"
                         attribute="title"
+                        highlightedTagName="span"
                         hit={hit}
                     />
                     <div className="text-text-default group-hover:text-text-stark text-xs uppercase tracking-widest">
@@ -54,6 +55,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
                     <Snippet
                         className="text-text-default group-hover:text-text-stark line-clamp-1 text-start"
                         attribute="subtitle"
+                        highlightedTagName="span"
                         hit={hit}
                     />
                 </div>
