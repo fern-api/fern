@@ -37,8 +37,13 @@ types:
 
   FontConfig:
     properties:
-      name: optional<string>
-      path: string
+      path:
+        type: string
+        docs: The relative path of the font file.
+      name:
+        type: optional<string>
+        docs: |
+          If the `name` is not supplied, Fern will default it to a randomly generated name that will be used to reference your custom font in the eventually injected CSS in the docs.
 
   PageConfiguration:
     properties:
