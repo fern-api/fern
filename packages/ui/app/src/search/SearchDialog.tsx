@@ -27,8 +27,8 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
                 <div className="flex min-h-screen items-start justify-center p-4">
                     <Dialog.Overlay className="fixed inset-0 bg-slate-600/40 backdrop-blur-sm" />
                     <div className="z-10 mx-3 mb-8 mt-10 flex w-full max-w-2xl flex-col overflow-hidden rounded-md bg-gray-950 text-left align-middle shadow-2xl">
-                        <div className={classNames(styles.searchBox, "flex items-center space-x-3 px-3")}>
-                            <Icon className="text-text-muted" icon="search" size={14} />
+                        <div className={classNames(styles.searchBox, "flex items-center space-x-3 px-5")}>
+                            <Icon className="text-text-default" icon="search" size={14} />
                             <SearchBox
                                 inputMode="text"
                                 autoFocus
@@ -41,7 +41,7 @@ export const SearchDialog: React.FC<SearchDialog.Props> = (providedProps) => {
                                     resetIcon: "hidden",
                                     submit: "hidden",
                                     submitIcon: "hidden",
-                                    input: "w-full text-text-default placeholder:text-text-muted bg-transparent py-5",
+                                    input: "w-full text-base text-text-default placeholder:text-text-default bg-transparent py-5",
                                 }}
                             />
                         </div>
