@@ -17,13 +17,10 @@ export declare namespace Docs {
         resolvedUrlPath: ResolvedUrlPath;
         nextPath: ResolvedUrlPath | null;
         previousPath: ResolvedUrlPath | null;
-        args: string;
     }
 }
 
-export default function Docs({ docs, resolvedUrlPath, nextPath, previousPath, args }: Docs.Props): JSX.Element {
-    // eslint-disable-next-line no-console
-    console.log(args);
+export default function Docs({ docs, resolvedUrlPath, nextPath, previousPath }: Docs.Props): JSX.Element {
     return (
         <main className={inter.className}>
             <Head>
@@ -42,11 +39,7 @@ export default function Docs({ docs, resolvedUrlPath, nextPath, previousPath, ar
     );
 }
 
-export const getStaticProps: GetStaticProps<Docs.Props> = async (args) => {
-    // eslint-disable-next-line no-console
-    console.log(args);
-
-    const { params = {} } = args;
+export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }) => {
     const host = params.host as string | undefined;
     const slugArray = params.slug as string[] | undefined;
 
@@ -64,7 +57,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async (args) => {
         console.error("Failed to fetch docs", docs.error);
         return {
             notFound: true,
-            // revalidate: true,
+            revalidate: true,
         };
     }
 
@@ -74,10 +67,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async (args) => {
         if (firstNavigationItem != null) {
             slug = firstNavigationItem.urlSlug;
         } else {
-            return {
-                notFound: true,
-                // revalidate: true,
-            };
+            return { notFound: true, revalidate: true };
         }
     }
 
@@ -93,10 +83,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async (args) => {
     }
 
     if (resolvedUrlPath == null) {
-        return {
-            notFound: true,
-            // revalidate: true,
-        };
+        return { notFound: true, revalidate: true };
     }
 
     return {
@@ -105,9 +92,8 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async (args) => {
             resolvedUrlPath,
             nextPath: (await urlPathResolver.getNextNavigatableItem(resolvedUrlPath)) ?? null,
             previousPath: (await urlPathResolver.getPreviousNavigatableItem(resolvedUrlPath)) ?? null,
-            args: JSON.stringify(args),
         },
-        // revalidate: true,
+        revalidate: true,
     };
 };
 

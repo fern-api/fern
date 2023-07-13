@@ -5,7 +5,7 @@ navbar-links:
     url: https://github.com/
 
 navigation:
-  - page: hihihii
+  - page: Foo
     path: foo.md
   - section: Section
     contents:
