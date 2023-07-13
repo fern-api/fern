@@ -379,15 +379,101 @@ Upload a document to be indexed and used for search.
           "queryParameters": [],
           "request": {
             "description": undefined,
-            "schema": {
-              "description": undefined,
-              "file": undefined,
-              "generatedName": "DocumentsUploadRequest",
-              "nameOverride": undefined,
-              "schema": "UploadDocumentRequestBodyRequest",
-              "type": "reference",
-            },
-            "type": "json",
+            "name": "UploadDocumentRequestBodyRequest",
+            "properties": [
+              {
+                "description": undefined,
+                "key": "add_to_index_names",
+                "schema": {
+                  "json": {
+                    "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+                    "type": "nullable",
+                    "value": {
+                      "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+                      "type": "array",
+                      "value": {
+                        "description": undefined,
+                        "schema": {
+                          "maxLength": undefined,
+                          "minLength": 1,
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  },
+                  "type": "json",
+                },
+              },
+              {
+                "description": undefined,
+                "key": "external_id",
+                "schema": {
+                  "json": {
+                    "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                    "type": "nullable",
+                    "value": {
+                      "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                      "schema": {
+                        "maxLength": undefined,
+                        "minLength": 1,
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                  "type": "json",
+                },
+              },
+              {
+                "description": undefined,
+                "key": "label",
+                "schema": {
+                  "json": {
+                    "description": "A human-friendly name for this document. Typically the filename.",
+                    "schema": {
+                      "maxLength": undefined,
+                      "minLength": 1,
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "type": "json",
+                },
+              },
+              {
+                "description": undefined,
+                "key": "contents",
+                "schema": {
+                  "type": "file",
+                },
+              },
+              {
+                "description": undefined,
+                "key": "keywords",
+                "schema": {
+                  "json": {
+                    "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                    "type": "nullable",
+                    "value": {
+                      "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                      "type": "array",
+                      "value": {
+                        "description": undefined,
+                        "schema": {
+                          "maxLength": undefined,
+                          "minLength": 1,
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  },
+                  "type": "json",
+                },
+              },
+            ],
+            "type": "multipart",
           },
           "requestNameOverride": undefined,
           "response": {
