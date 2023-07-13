@@ -11,6 +11,7 @@ export declare namespace InternalTypeReferenceDefinitions {
         type: FernRegistryApiRead.TypeReference;
         isCollapsible: boolean;
         className?: string;
+        getPropertyAnchor?: (property: FernRegistryApiRead.ObjectProperty) => string;
     }
 }
 
@@ -18,6 +19,7 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
     type,
     isCollapsible,
     className,
+    getPropertyAnchor,
 }) => {
     const { resolveTypeById } = useApiDefinitionContext();
 
@@ -30,32 +32,61 @@ export const InternalTypeReferenceDefinitions: React.FC<InternalTypeReferenceDef
                         type={typeShape.value}
                         isCollapsible={isCollapsible}
                         className={className}
+                        getPropertyAnchor={getPropertyAnchor}
                     />
                 );
             }
-            return <InternalTypeDefinition key={typeId} typeShape={typeShape} isCollapsible={isCollapsible} />;
+            return (
+                <InternalTypeDefinition
+                    key={typeId}
+                    typeShape={typeShape}
+                    isCollapsible={isCollapsible}
+                    getPropertyAnchor={getPropertyAnchor}
+                />
+            );
         },
         primitive: () => null,
         list: ({ itemType }) => (
             <ListTypeContextProvider>
-                <InternalTypeReferenceDefinitions type={itemType} isCollapsible={isCollapsible} className={className} />
+                <InternalTypeReferenceDefinitions
+                    type={itemType}
+                    isCollapsible={isCollapsible}
+                    className={className}
+                    getPropertyAnchor={getPropertyAnchor}
+                />
             </ListTypeContextProvider>
         ),
         set: ({ itemType }) => (
             <ListTypeContextProvider>
-                <InternalTypeReferenceDefinitions type={itemType} isCollapsible={isCollapsible} className={className} />
+                <InternalTypeReferenceDefinitions
+                    type={itemType}
+                    isCollapsible={isCollapsible}
+                    className={className}
+                    getPropertyAnchor={getPropertyAnchor}
+                />
             </ListTypeContextProvider>
         ),
         optional: ({ itemType }) => (
-            <InternalTypeReferenceDefinitions type={itemType} isCollapsible={isCollapsible} className={className} />
+            <InternalTypeReferenceDefinitions
+                type={itemType}
+                isCollapsible={isCollapsible}
+                className={className}
+                getPropertyAnchor={getPropertyAnchor}
+            />
         ),
         map: ({ keyType, valueType }) => (
             <MapTypeContextProvider>
-                <InternalTypeReferenceDefinitions type={keyType} isCollapsible={isCollapsible} className={className} />
+                <InternalTypeReferenceDefinitions
+                    type={keyType}
+                    isCollapsible={isCollapsible}
+                    className={className}
+                    getPropertyAnchor={getPropertyAnchor}
+                />
                 <InternalTypeReferenceDefinitions
                     type={valueType}
                     isCollapsible={isCollapsible}
                     className={className}
+                    getPropertyAnchor={getPropertyAnchor}
                 />
             </MapTypeContextProvider>
         ),

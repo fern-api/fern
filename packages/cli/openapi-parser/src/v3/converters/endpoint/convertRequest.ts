@@ -8,6 +8,38 @@ export const APPLICATION_JSON_CONTENT = "application/json";
 export const APPLICATION_JSON_UTF_8_CONTENT = "application/json; charset=utf-8";
 export const MULTIPART_CONTENT = "multipart/form-data";
 
+function getMultipartFormDataRequest(
+    requestBody: OpenAPIV3.RequestBodyObject
+): OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined {
+    return requestBody.content[MULTIPART_CONTENT]?.schema;
+}
+
+function getApplicationJsonRequest(
+    requestBody: OpenAPIV3.RequestBodyObject
+): OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined {
+    return (
+        requestBody.content[APPLICATION_JSON_CONTENT]?.schema ??
+        requestBody.content[APPLICATION_JSON_UTF_8_CONTENT]?.schema
+    );
+}
+
+function multipartRequestHasFile(
+    multipartSchema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject,
+    document: OpenAPIV3.Document
+): boolean {
+    const resolvedMultipartSchema = isReferenceObject(multipartSchema)
+        ? resolveSchema(multipartSchema, document)
+        : {
+              id: undefined,
+              schema: multipartSchema,
+          };
+    return (
+        Object.entries(resolvedMultipartSchema.schema.properties ?? {}).find(([_, definition]) => {
+            return !isReferenceObject(definition) && definition.type === "string" && definition.format === "binary";
+        }) != null
+    );
+}
+
 export function convertRequest({
     requestBody,
     document,
@@ -23,9 +55,14 @@ export function convertRequest({
         ? context.resolveRequestBodyReference(requestBody)
         : requestBody;
 
+    const multipartSchema = getMultipartFormDataRequest(resolvedRequestBody);
+    const jsonSchema = getApplicationJsonRequest(resolvedRequestBody);
+
     // convert as multipart request
-    const multipartSchema = resolvedRequestBody.content[MULTIPART_CONTENT]?.schema;
-    if (multipartSchema != null) {
+    if (
+        (multipartSchema != null && jsonSchema == null) ||
+        (multipartSchema != null && multipartRequestHasFile(multipartSchema, document))
+    ) {
         const resolvedMultipartSchema = isReferenceObject(multipartSchema)
             ? resolveSchema(multipartSchema, document)
             : {
@@ -57,13 +94,10 @@ export function convertRequest({
     }
 
     // otherwise, convert as json request.
-    const requestBodySchema =
-        resolvedRequestBody.content[APPLICATION_JSON_CONTENT]?.schema ??
-        resolvedRequestBody.content[APPLICATION_JSON_UTF_8_CONTENT]?.schema;
-    if (requestBodySchema == null) {
+    if (jsonSchema == null) {
         return undefined;
     }
-    const requestSchema = convertSchema(requestBodySchema, false, context, requestBreadcrumbs, true);
+    const requestSchema = convertSchema(jsonSchema, false, context, requestBreadcrumbs, true);
     return Request.json({
         description: undefined,
         schema: requestSchema,

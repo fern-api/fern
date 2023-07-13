@@ -1,6 +1,7 @@
 import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
+import { snakeCase } from "lodash-es";
 import React, { useCallback, useMemo, useState } from "react";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
 import { SeparatedElements } from "../../commons/SeparatedElements";
@@ -19,15 +20,24 @@ import { getEndpointEnvironmentUrl } from "./getEndpointEnvironmentUrl";
 import { PathParametersSection } from "./PathParametersSection";
 import { QueryParametersSection } from "./QueryParametersSection";
 
+// TODO: Might want to place this type guard elsewhere
+function isSubpackage(
+    package_: FernRegistryApiRead.ApiDefinitionPackage
+): package_ is FernRegistryApiRead.ApiDefinitionSubpackage {
+    return typeof (package_ as FernRegistryApiRead.ApiDefinitionSubpackage).subpackageId === "string";
+}
+
 export declare namespace EndpointContent {
     export interface Props {
         endpoint: FernRegistryApiRead.EndpointDefinition;
+        package: FernRegistryApiRead.ApiDefinitionPackage;
         setContainerRef: (ref: HTMLElement | null) => void;
     }
 }
 
 export const EndpointContent = React.memo<EndpointContent.Props>(function EndpointContent({
     endpoint,
+    package: package_,
     setContainerRef,
 }) {
     const { setHoveredRequestPropertyPath, setHoveredResponsePropertyPath } = useEndpointContext();
@@ -42,6 +52,26 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
             setHoveredResponsePropertyPath(isHovering ? jsonPropertyPath : undefined);
         },
         [setHoveredResponsePropertyPath]
+    );
+
+    const computeAnchor = useCallback(
+        (
+            attributeType: "request" | "response" | "path" | "query",
+            attribute:
+                | FernRegistryApiRead.ObjectProperty
+                | FernRegistryApiRead.PathParameter
+                | FernRegistryApiRead.QueryParameter
+        ) => {
+            let anchor = "";
+            if (isSubpackage(package_)) {
+                anchor += snakeCase(package_.urlSlug) + "_";
+            }
+            anchor += snakeCase(endpoint.id);
+            anchor += "-" + attributeType + "-";
+            anchor += snakeCase(attribute.key);
+            return anchor;
+        },
+        [package_, endpoint]
     );
 
     const [titleHeight, setTitleHeight] = useState<number>();
@@ -109,16 +139,23 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                     <div className="mt-8 flex">
                         <div className="flex flex-1 flex-col gap-12">
                             {endpoint.path.pathParameters.length > 0 && (
-                                <PathParametersSection pathParameters={endpoint.path.pathParameters} />
+                                <PathParametersSection
+                                    pathParameters={endpoint.path.pathParameters}
+                                    getParameterAnchor={(param) => computeAnchor("path", param)}
+                                />
                             )}
                             {endpoint.queryParameters.length > 0 && (
-                                <QueryParametersSection queryParameters={endpoint.queryParameters} />
+                                <QueryParametersSection
+                                    queryParameters={endpoint.queryParameters}
+                                    getParameterAnchor={(param) => computeAnchor("query", param)}
+                                />
                             )}
                             {endpoint.request != null && (
                                 <EndpointSection title="Request">
                                     <EndpointRequestSection
                                         httpRequest={endpoint.request}
                                         onHoverProperty={onHoverRequestProperty}
+                                        getPropertyAnchor={(property) => computeAnchor("request", property)}
                                     />
                                 </EndpointSection>
                             )}
@@ -127,6 +164,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                     <EndpointResponseSection
                                         httpResponse={endpoint.response}
                                         onHoverProperty={onHoverResponseProperty}
+                                        getPropertyAnchor={(property) => computeAnchor("response", property)}
                                     />
                                 </EndpointSection>
                             )}
