@@ -10,3 +10,4 @@ export const DOCS_DIRECTORY = "docs";
 export const DOCS_CONFIGURATION_FILENAME = "docs.yml";
 export const PROJECT_CONFIG_FILENAME = "fern.config.json";
 export const DEFAULT_WORSPACE_FOLDER_NAME = "api";
+export const FERNIGNORE_FILENAME = ".fernignore";
