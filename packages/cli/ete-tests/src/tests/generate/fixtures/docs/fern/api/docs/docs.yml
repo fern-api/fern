@@ -15,3 +15,9 @@ navigation:
 
 colors:
   accentPrimary: "#ffffFF"
+
+typography:
+  headingsFont:
+    path: ./fonts/WorkSans-variable.woff2
+  bodyFont:
+    path: ./fonts/WorkSans-variable.woff2

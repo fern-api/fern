@@ -9,6 +9,7 @@ types:
       favicon: optional<string>
       colors: optional<ColorsConfiguration>
       "navbar-links": optional<list<NavbarLink>>
+      typography: optional<DocsTypographyConfig>
 
   NavigationItem:
     discriminated: false
@@ -27,6 +28,22 @@ types:
     properties:
       path: string
       href: string
+
+  DocsTypographyConfig:
+    properties:
+      headingsFont: optional<FontConfig>
+      bodyFont: optional<FontConfig>
+      codeFont: optional<FontConfig>
+
+  FontConfig:
+    properties:
+      path:
+        type: string
+        docs: The relative path of the font file.
+      name:
+        type: optional<string>
+        docs: |
+          If the `name` is not supplied, Fern will default it to a generated name that will be used to reference your custom font in the eventually injected CSS in the docs.
 
   PageConfiguration:
     properties:

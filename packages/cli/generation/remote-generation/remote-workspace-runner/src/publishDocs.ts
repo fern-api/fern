@@ -1,7 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { combineAudiences } from "@fern-api/config-management-commons";
 import { assertNever, entries } from "@fern-api/core-utils";
-import { DocsNavigationItem, ImageReference } from "@fern-api/docs-configuration";
+import { DocsNavigationItem, FontConfig, ImageReference, TypographyConfig } from "@fern-api/docs-configuration";
 import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorGroup } from "@fern-api/generators-configuration";
 import { registerApi } from "@fern-api/register";
@@ -218,6 +218,82 @@ async function convertDocsConfiguration({
         },
         colors: docsDefinition.config.colors,
         navbarLinks: docsDefinition.config.navbarLinks,
+        typography: convertDocsTypographyConfiguration({
+            typographyConfiguration: docsDefinition.config.typography,
+            docsDefinition,
+            uploadUrls,
+            context,
+        }),
+    };
+}
+
+function convertDocsTypographyConfiguration({
+    typographyConfiguration,
+    docsDefinition,
+    uploadUrls,
+    context,
+}: {
+    typographyConfiguration?: TypographyConfig;
+    docsDefinition: DocsDefinition;
+    uploadUrls: Record<FernRegistry.docs.v1.write.FilePath, FernRegistry.docs.v1.write.FileS3UploadUrl>;
+    context: TaskContext;
+}): FernRegistry.docs.v1.write.DocsTypographyConfig | undefined {
+    if (typographyConfiguration == null) {
+        return;
+    }
+    const result: FernRegistry.docs.v1.write.DocsTypographyConfig = {
+        headingsFont: convertFont({
+            font: typographyConfiguration.headingsFont,
+            context,
+            docsDefinition,
+            label: "headings",
+            uploadUrls,
+        }),
+        bodyFont: convertFont({
+            font: typographyConfiguration.bodyFont,
+            context,
+            docsDefinition,
+            label: "body",
+            uploadUrls,
+        }),
+        codeFont: convertFont({
+            font: typographyConfiguration.codeFont,
+            context,
+            docsDefinition,
+            label: "code",
+            uploadUrls,
+        }),
+    };
+    return result;
+}
+
+function convertFont({
+    font,
+    docsDefinition,
+    uploadUrls,
+    context,
+    label,
+}: {
+    font: FontConfig | undefined;
+    docsDefinition: DocsDefinition;
+    uploadUrls: Record<FernRegistry.docs.v1.write.FilePath, FernRegistry.docs.v1.write.FileS3UploadUrl>;
+    context: TaskContext;
+    label: string;
+}): FernRegistry.docs.v1.write.FontConfig | undefined {
+    if (font == null) {
+        return;
+    }
+
+    const filepath = convertAbsoluteFilepathToFdrFilepath(font.absolutePath, docsDefinition);
+
+    const file = uploadUrls[filepath];
+    if (file == null) {
+        return context.failAndThrow(`Failed to locate ${label} font file after uploading`);
+    }
+
+    return {
+        name: font.name ?? `font:headings:${file.fileId}`,
+        fontFile: file.fileId,
     };
 }
 
@@ -315,6 +391,18 @@ function getFilepathsToUpload(docsDefinition: DocsDefinition): AbsoluteFilePath[
 
     if (docsDefinition.config.favicon != null) {
         filepaths.push(docsDefinition.config.favicon.filepath);
+    }
+
+    const typographyConfiguration = docsDefinition.config.typography;
+
+    if (typographyConfiguration?.headingsFont != null) {
+        filepaths.push(typographyConfiguration.headingsFont.absolutePath);
+    }
+    if (typographyConfiguration?.bodyFont != null) {
+        filepaths.push(typographyConfiguration.bodyFont.absolutePath);
+    }
+    if (typographyConfiguration?.codeFont != null) {
+        filepaths.push(typographyConfiguration.codeFont.absolutePath);
     }
 
     return filepaths;
