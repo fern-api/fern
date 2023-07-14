@@ -292,7 +292,7 @@ function convertFont({
     }
 
     return {
-        name: font.name ?? `font:headings:${file.fileId}`,
+        name: font.name ?? `font:${label}:${file.fileId}`,
         fontFile: file.fileId,
     };
 }
