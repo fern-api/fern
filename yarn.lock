@@ -3256,7 +3256,6 @@ __metadata:
     decompress: ^4.2.1
     depcheck: ^1.4.3
     eslint: ^8.26.0
-    glob: ^10.3.0
     jest: ^29.4.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
