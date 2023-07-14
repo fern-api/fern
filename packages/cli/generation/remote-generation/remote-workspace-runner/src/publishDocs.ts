@@ -1,7 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { combineAudiences } from "@fern-api/config-management-commons";
 import { assertNever, entries } from "@fern-api/core-utils";
-import { DocsNavigationItem, ImageReference, TypographyConfig } from "@fern-api/docs-configuration";
+import { DocsNavigationItem, FontConfig, ImageReference, TypographyConfig } from "@fern-api/docs-configuration";
 import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorGroup } from "@fern-api/generators-configuration";
 import { registerApi } from "@fern-api/register";
@@ -241,54 +241,60 @@ function convertDocsTypographyConfiguration({
     if (typographyConfiguration == null) {
         return;
     }
-    const result: FernRegistry.docs.v1.write.DocsTypographyConfig = {};
-
-    if (typographyConfiguration.headingsFont != null) {
-        const filepath = convertAbsoluteFilepathToFdrFilepath(
-            typographyConfiguration.headingsFont.absolutePath,
-            docsDefinition
-        );
-        const file = uploadUrls[filepath];
-        if (file == null) {
-            return context.failAndThrow("Failed to locate headingsFont file after uploading");
-        }
-        result.headingsFont = {
-            name: typographyConfiguration.headingsFont.name ?? `font:headings:${file.fileId}`,
-            fontFile: file.fileId,
-        };
-    }
-
-    if (typographyConfiguration.bodyFont != null) {
-        const filepath = convertAbsoluteFilepathToFdrFilepath(
-            typographyConfiguration.bodyFont.absolutePath,
-            docsDefinition
-        );
-        const file = uploadUrls[filepath];
-        if (file == null) {
-            return context.failAndThrow("Failed to locate bodyFont file after uploading");
-        }
-        result.bodyFont = {
-            name: typographyConfiguration.bodyFont.name ?? `font:body:${file.fileId}`,
-            fontFile: file.fileId,
-        };
-    }
-
-    if (typographyConfiguration.codeFont != null) {
-        const filepath = convertAbsoluteFilepathToFdrFilepath(
-            typographyConfiguration.codeFont.absolutePath,
-            docsDefinition
-        );
-        const file = uploadUrls[filepath];
-        if (file == null) {
-            return context.failAndThrow("Failed to locate codeFont file after uploading");
-        }
-        result.codeFont = {
-            name: typographyConfiguration.codeFont.name ?? `font:code:${file.fileId}`,
-            fontFile: file.fileId,
-        };
-    }
-
+    const result: FernRegistry.docs.v1.write.DocsTypographyConfig = {
+        headingsFont: convertFont({
+            font: typographyConfiguration.headingsFont,
+            context,
+            docsDefinition,
+            label: "headings",
+            uploadUrls,
+        }),
+        bodyFont: convertFont({
+            font: typographyConfiguration.bodyFont,
+            context,
+            docsDefinition,
+            label: "body",
+            uploadUrls,
+        }),
+        codeFont: convertFont({
+            font: typographyConfiguration.codeFont,
+            context,
+            docsDefinition,
+            label: "code",
+            uploadUrls,
+        }),
+    };
     return result;
+}
+
+function convertFont({
+    font,
+    docsDefinition,
+    uploadUrls,
+    context,
+    label,
+}: {
+    font: FontConfig | undefined;
+    docsDefinition: DocsDefinition;
+    uploadUrls: Record<FernRegistry.docs.v1.write.FilePath, FernRegistry.docs.v1.write.FileS3UploadUrl>;
+    context: TaskContext;
+    label: string;
+}): FernRegistry.docs.v1.write.FontConfig | undefined {
+    if (font == null) {
+        return;
+    }
+
+    const filepath = convertAbsoluteFilepathToFdrFilepath(font.absolutePath, docsDefinition);
+
+    const file = uploadUrls[filepath];
+    if (file == null) {
+        return context.failAndThrow(`Failed to locate ${label} font file after uploading`);
+    }
+
+    return {
+        name: font.name ?? `font:headings:${file.fileId}`,
+        fontFile: file.fileId,
+    };
 }
 
 async function convertImageReference({

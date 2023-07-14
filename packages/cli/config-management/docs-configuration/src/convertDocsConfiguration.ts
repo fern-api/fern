@@ -69,7 +69,6 @@ function convertFontConfig(
 ): FontConfig {
     return {
         name: rawFontConfig.name,
-        path: rawFontConfig.path,
         absolutePath: resolve(dirname(absolutePathOfConfiguration), rawFontConfig.path),
     };
 }
