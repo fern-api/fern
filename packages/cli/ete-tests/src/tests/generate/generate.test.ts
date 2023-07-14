@@ -20,7 +20,7 @@ describe("fern generate", () => {
 
     const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
     for (const fixtureName of FIXTURES) {
-        // eslint-disable-next-line jest/expect-expect, jest/no-disabled-tests
+        // eslint-disable-next-line jest/no-disabled-tests
         it.skip(
             // eslint-disable-next-line jest/valid-title
             fixtureName,
