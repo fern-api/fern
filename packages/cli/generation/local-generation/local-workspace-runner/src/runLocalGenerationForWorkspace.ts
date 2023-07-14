@@ -1,22 +1,16 @@
 import { Audiences } from "@fern-api/config-management-commons";
-import { AbsoluteFilePath, doesPathExist, streamObjectToFile } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import { GeneratorGroup, GeneratorInvocation } from "@fern-api/generators-configuration";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { migrateIntermediateRepresentationForGenerator } from "@fern-api/ir-migrations";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
-import decompress from "decompress";
-import { cp, readFile, readdir, rm } from "fs/promises";
 import os from "os";
-import path, { join } from "path";
+import path from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
+import { LocalTaskHandler } from "./LocalTaskHandler";
 import { runGenerator } from "./run-generator/runGenerator";
-import { globSync } from "glob";
-import { promisify } from "util";
-import { exec } from "child_process";
-
-const EXEC = promisify(exec);
 
 export async function runLocalGenerationForWorkspace({
     organization,
@@ -120,7 +114,12 @@ async function writeFilesToDiskAndRunGenerator({
         keepDocker,
     });
 
-    await copyGeneratedFiles({absolutePathToLocalOutput, absolutePathToTmpOutputDirectory, context});
+    const taskHandler = new LocalTaskHandler({
+        context,
+        absolutePathToLocalOutput,
+        absolutePathToTmpOutputDirectory,
+    });
+    await taskHandler.copyGeneratedFiles();
 }
 
 async function writeIrToFile({
@@ -156,94 +155,4 @@ async function writeIrToFile({
     const absolutePathToIr = AbsoluteFilePath.of(irFile.path);
     await streamObjectToFile(absolutePathToIr, migratedIntermediateRepresentation, { pretty: true });
     return absolutePathToIr;
-}
-
-async function copyGeneratedFiles({
-    absolutePathToLocalOutput,
-    absolutePathToTmpOutputDirectory,
-    context,
-}: {
-    absolutePathToLocalOutput: AbsoluteFilePath;
-    absolutePathToTmpOutputDirectory: AbsoluteFilePath;
-    context: TaskContext;
-}): Promise<void> {
-    const [firstLocalOutputItem, ...remaininglocalOutputItems] = await readdir(absolutePathToTmpOutputDirectory);
-    if (firstLocalOutputItem == null) {
-        return;
-    }
-    // await rm(absolutePathToLocalOutput, { force: true, recursive: true });
-    const absolutePathToFernignore = AbsoluteFilePath.of(path.join(absolutePathToLocalOutput, ".fernignore"));
-    try {
-        const absolutePathToFernignoreExists = await doesPathExist(absolutePathToFernignore);
-        if (absolutePathToFernignoreExists) {
-            const filesToBeIgnoredByFern = await resolveFilesToBeIgnoredByFern({
-                absolutePathToFernignore,
-                absolutePathToLocalOutput,
-            });
-            await EXEC("git init", {cwd: absolutePathToLocalOutput});
-            await EXEC("git add .", {cwd: absolutePathToLocalOutput});
-            await EXEC("git commit -m \"initial\"", {cwd: absolutePathToLocalOutput});
-            await EXEC("git rm -rf .", {cwd: absolutePathToLocalOutput});
-            await copyFilesIntoAbsolutePathToLocalOutput({
-                firstLocalOutputItem,
-                remaininglocalOutputItems,
-                absolutePathToLocalOutput,
-                absolutePathToTmpOutputDirectory,
-            });
-            await EXEC(`git reset -- ${filesToBeIgnoredByFern.join(" ")}`, {cwd: absolutePathToLocalOutput});
-            await EXEC("git restore .", {cwd: absolutePathToLocalOutput});
-            await rm(`${absolutePathToLocalOutput}${path.sep}.git`, { force: true, recursive: true});
-        } else {
-            await rm(absolutePathToLocalOutput, { force: true, recursive: true });
-            await copyFilesIntoAbsolutePathToLocalOutput({
-                firstLocalOutputItem,
-                remaininglocalOutputItems,
-                absolutePathToLocalOutput,
-                absolutePathToTmpOutputDirectory,
-            });
-        }
-    } catch(error) {
-        const gitPathExists = await doesPathExist(AbsoluteFilePath.of(path.join(absolutePathToLocalOutput, ".git")));
-        if (gitPathExists) {
-            await rm(`${absolutePathToLocalOutput}${path.sep}.git`, { force: true, recursive: true});
-        }
-        context.failAndThrow("Error encountered while fern generating locally", error);
-    }
-}
-
-async function resolveFilesToBeIgnoredByFern({
-    absolutePathToFernignore,
-    absolutePathToLocalOutput,
-}: {
-    absolutePathToFernignore: AbsoluteFilePath;
-    absolutePathToLocalOutput: AbsoluteFilePath;
-}): Promise<string[]> {
-    let filesToBeIgnoredByFern: string[] = [".fernignore"];
-    const absolutePathToFernignoreContent = await readFile(absolutePathToFernignore, "utf-8");
-    filesToBeIgnoredByFern = filesToBeIgnoredByFern.concat(absolutePathToFernignoreContent.trim().split(/\r?\n/));
-    filesToBeIgnoredByFern = filesToBeIgnoredByFern.filter(filePattern => filePattern !== "" && !filePattern.startsWith("#"));
-    filesToBeIgnoredByFern = globSync(filesToBeIgnoredByFern, {
-        cwd: absolutePathToLocalOutput, root: "", dot: true, nobrace: false, noext: false, matchBase: true
-    });
-    return filesToBeIgnoredByFern;
-}
-
-async function copyFilesIntoAbsolutePathToLocalOutput({
-    firstLocalOutputItem,
-    remaininglocalOutputItems,
-    absolutePathToLocalOutput,
-    absolutePathToTmpOutputDirectory,
-}: {
-    firstLocalOutputItem: string;
-    remaininglocalOutputItems: string[];
-    absolutePathToLocalOutput: AbsoluteFilePath;
-    absolutePathToTmpOutputDirectory: AbsoluteFilePath;
-}): Promise<void> {
-    if (firstLocalOutputItem.endsWith(".zip") && remaininglocalOutputItems.length === 0) {
-        await decompress(join(absolutePathToTmpOutputDirectory, firstLocalOutputItem), absolutePathToLocalOutput, {
-            strip: 1,
-        });
-    } else {
-        await cp(absolutePathToTmpOutputDirectory, absolutePathToLocalOutput, { recursive: true });
-    }
 }
