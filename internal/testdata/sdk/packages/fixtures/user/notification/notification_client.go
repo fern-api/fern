@@ -46,6 +46,7 @@ func (n *notificationClient) List(ctx context.Context, userId string) ([]*Notifi
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		n.header,
 		nil,
 	); err != nil {

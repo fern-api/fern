@@ -674,6 +674,106 @@
                 "wireValue": "UntypedError"
             },
             "statusCode": 400
+        },
+        "error_user:OptionalStringError": {
+            "name": {
+                "name": {
+                    "originalName": "OptionalStringError",
+                    "camelCase": {
+                        "unsafeName": "optionalStringError",
+                        "safeName": "optionalStringError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "optional_string_error",
+                        "safeName": "optional_string_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "OPTIONAL_STRING_ERROR",
+                        "safeName": "OPTIONAL_STRING_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "OptionalStringError",
+                        "safeName": "OptionalStringError"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "user",
+                            "camelCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "user",
+                                "safeName": "user"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "USER",
+                                "safeName": "USER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "User",
+                                "safeName": "User"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "user",
+                        "camelCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "user",
+                            "safeName": "user"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "USER",
+                            "safeName": "USER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "User",
+                            "safeName": "User"
+                        }
+                    }
+                },
+                "errorId": "error_user:OptionalStringError"
+            },
+            "discriminantValue": {
+                "name": {
+                    "originalName": "OptionalStringError",
+                    "camelCase": {
+                        "unsafeName": "optionalStringError",
+                        "safeName": "optionalStringError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "optional_string_error",
+                        "safeName": "optional_string_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "OPTIONAL_STRING_ERROR",
+                        "safeName": "OPTIONAL_STRING_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "OptionalStringError",
+                        "safeName": "OptionalStringError"
+                    }
+                },
+                "wireValue": "OptionalStringError"
+            },
+            "statusCode": 500,
+            "type": {
+                "container": {
+                    "optional": {
+                        "primitive": "STRING",
+                        "_type": "primitive"
+                    },
+                    "_type": "optional"
+                },
+                "_type": "container"
+            }
         }
     },
     "services": {
@@ -1592,7 +1692,8 @@
                 "error_user:NotImplementedError",
                 "error_user:TeapotError",
                 "error_user:UpgradeError",
-                "error_user:UntypedError"
+                "error_user:UntypedError",
+                "error_user:OptionalStringError"
             ],
             "subpackages": [],
             "hasEndpointsInTree": true

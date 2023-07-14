@@ -51,6 +51,7 @@ func (u *userClient) SetName(ctx context.Context, userId string, request string)
 		http.MethodPost,
 		request,
 		&response,
+		false,
 		u.header,
 		nil,
 	); err != nil {
@@ -74,6 +75,7 @@ func (u *userClient) SetNameV2(ctx context.Context, userId string, request *SetN
 		http.MethodPost,
 		request,
 		&response,
+		false,
 		u.header,
 		nil,
 	); err != nil {
@@ -92,7 +94,7 @@ func (u *userClient) SetNameV3(ctx context.Context, userId string, request *SetN
 	headers := u.header.Clone()
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
 
-	response := new(SetNameRequestV3Body)
+	var response *SetNameRequestV3Body
 	if err := core.DoRequest(
 		ctx,
 		u.httpClient,
@@ -100,6 +102,7 @@ func (u *userClient) SetNameV3(ctx context.Context, userId string, request *SetN
 		http.MethodPost,
 		request,
 		&response,
+		false,
 		headers,
 		nil,
 	); err != nil {
@@ -118,7 +121,7 @@ func (u *userClient) SetNameV3Optional(ctx context.Context, userId string, reque
 	headers := u.header.Clone()
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
 
-	response := new(SetNameRequestV3Body)
+	var response *SetNameRequestV3Body
 	if err := core.DoRequest(
 		ctx,
 		u.httpClient,
@@ -126,6 +129,7 @@ func (u *userClient) SetNameV3Optional(ctx context.Context, userId string, reque
 		http.MethodPost,
 		request,
 		&response,
+		true,
 		headers,
 		nil,
 	); err != nil {
@@ -152,6 +156,7 @@ func (u *userClient) SetNameV4(ctx context.Context, userId string, request *SetN
 		http.MethodPost,
 		request,
 		&response,
+		false,
 		headers,
 		nil,
 	); err != nil {
@@ -178,6 +183,7 @@ func (u *userClient) SetNameV5(ctx context.Context, userId string, request *SetN
 		http.MethodPost,
 		request,
 		&response,
+		false,
 		headers,
 		nil,
 	); err != nil {

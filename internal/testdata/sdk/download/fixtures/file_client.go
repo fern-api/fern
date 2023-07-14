@@ -48,6 +48,7 @@ func (f *fileClient) Download(ctx context.Context, filename string) (io.Reader, 
 		http.MethodGet,
 		nil,
 		response,
+		false,
 		f.header,
 		nil,
 	); err != nil {

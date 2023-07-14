@@ -59,6 +59,7 @@ func (u *userClient) GetName(ctx context.Context, userId string, request *GetNam
 		http.MethodGet,
 		request,
 		&response,
+		false,
 		headers,
 		nil,
 	); err != nil {

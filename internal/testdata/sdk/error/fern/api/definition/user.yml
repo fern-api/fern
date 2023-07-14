@@ -19,6 +19,10 @@ errors:
   UntypedError:
     status-code: 400
 
+  OptionalStringError:
+    status-code: 500
+    type: optional<string>
+
 types:
   UserNotFoundErrorBody:
     properties:

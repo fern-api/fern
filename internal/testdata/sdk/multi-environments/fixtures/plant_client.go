@@ -45,6 +45,7 @@ func (p *plantClient) GetPlant(ctx context.Context) (string, error) {
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		p.header,
 		nil,
 	); err != nil {

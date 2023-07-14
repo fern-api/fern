@@ -57,6 +57,7 @@ func (c *client) GetFoo(ctx context.Context) ([]*Foo, error) {
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		c.header,
 		nil,
 	); err != nil {
@@ -98,7 +99,7 @@ func (c *client) PostFoo(ctx context.Context, request *Bar) (*Foo, error) {
 		return apiError
 	}
 
-	response := new(Foo)
+	var response *Foo
 	if err := core.DoRequest(
 		ctx,
 		c.httpClient,
@@ -106,6 +107,7 @@ func (c *client) PostFoo(ctx context.Context, request *Bar) (*Foo, error) {
 		http.MethodPost,
 		request,
 		&response,
+		false,
 		c.header,
 		errorDecoder,
 	); err != nil {
@@ -140,7 +142,7 @@ func (c *client) GetFooFooId(ctx context.Context, fooId Id) (*Foo, error) {
 		return apiError
 	}
 
-	response := new(Foo)
+	var response *Foo
 	if err := core.DoRequest(
 		ctx,
 		c.httpClient,
@@ -148,6 +150,7 @@ func (c *client) GetFooFooId(ctx context.Context, fooId Id) (*Foo, error) {
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		c.header,
 		errorDecoder,
 	); err != nil {
@@ -196,7 +199,7 @@ func (c *client) PatchFooFooId(ctx context.Context, fooId Id, request *Foo) (*Fo
 		return apiError
 	}
 
-	response := new(Foo)
+	var response *Foo
 	if err := core.DoRequest(
 		ctx,
 		c.httpClient,
@@ -204,6 +207,7 @@ func (c *client) PatchFooFooId(ctx context.Context, fooId Id, request *Foo) (*Fo
 		http.MethodPatch,
 		request,
 		&response,
+		false,
 		c.header,
 		errorDecoder,
 	); err != nil {
@@ -245,6 +249,7 @@ func (c *client) DeleteFooFooId(ctx context.Context, fooId Id) error {
 		http.MethodDelete,
 		nil,
 		nil,
+		false,
 		c.header,
 		errorDecoder,
 	); err != nil {
@@ -286,7 +291,7 @@ func (c *client) PostFooFooIdRun(ctx context.Context, fooId Id) (*Foo, error) {
 		return apiError
 	}
 
-	response := new(Foo)
+	var response *Foo
 	if err := core.DoRequest(
 		ctx,
 		c.httpClient,
@@ -294,6 +299,7 @@ func (c *client) PostFooFooIdRun(ctx context.Context, fooId Id) (*Foo, error) {
 		http.MethodPost,
 		nil,
 		&response,
+		false,
 		c.header,
 		errorDecoder,
 	); err != nil {
@@ -357,6 +363,7 @@ func (c *client) PostFooBatchCreate(ctx context.Context, request []*Bar) ([]*Foo
 		http.MethodPost,
 		request,
 		&response,
+		false,
 		c.header,
 		errorDecoder,
 	); err != nil {
@@ -405,6 +412,7 @@ func (c *client) PostFooBatchDelete(ctx context.Context, request []Id) error {
 		http.MethodPost,
 		request,
 		nil,
+		false,
 		c.header,
 		errorDecoder,
 	); err != nil {

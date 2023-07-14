@@ -13,7 +13,7 @@ type ContentTooLargeError struct {
 }
 
 func (c *ContentTooLargeError) UnmarshalJSON(data []byte) error {
-	body := new(Error)
+	var body *Error
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}

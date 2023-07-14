@@ -97,6 +97,7 @@ func (u *userClient) Get(ctx context.Context, id string) (string, error) {
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		u.header,
 		errorDecoder,
 	); err != nil {

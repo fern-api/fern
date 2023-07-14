@@ -89,6 +89,7 @@ func DoRequest(
 	method string,
 	request any,
 	response any,
+	responseIsOptional bool,
 	endpointHeaders http.Header,
 	errorDecoder func(int, io.Reader) error,
 ) error {
@@ -123,7 +124,7 @@ func DoRequest(
 
 	// Check if the call was cancelled before we return the error
 	// associated with the call and/or unmarshal the response data.
-	if err = ctx.Err(); err != nil {
+	if err := ctx.Err(); err != nil {
 		return err
 	}
 
@@ -138,8 +139,14 @@ func DoRequest(
 		// types, so we just read the body as-is, and
 		// put it into a normal error.
 		bytes, err := io.ReadAll(resp.Body)
-		if err != nil {
+		if err != nil && err != io.EOF {
 			return err
+		}
+		if err == io.EOF {
+			// The error didn't have a response body,
+			// so all we can do is return an error
+			// with the status code.
+			return NewAPIError(resp.StatusCode, nil)
 		}
 		return NewAPIError(resp.StatusCode, errors.New(string(bytes)))
 	}
@@ -147,14 +154,20 @@ func DoRequest(
 	// Mutate the response parameter in-place.
 	if response != nil {
 		if writer, ok := response.(io.Writer); ok {
-			if _, err := io.Copy(writer, resp.Body); err != nil {
-				return err
-			}
+			_, err = io.Copy(writer, resp.Body)
 		} else {
-			decoder := json.NewDecoder(resp.Body)
-			if err := decoder.Decode(response); err != nil {
-				return err
+			err = json.NewDecoder(resp.Body).Decode(response)
+		}
+		if err != nil {
+			if err == io.EOF {
+				if responseIsOptional {
+					// The response is optional, so we should ignore the
+					// io.EOF error
+					return nil
+				}
+				return fmt.Errorf("expected a %T response, but the server responded with nothing", response)
 			}
+			return err
 		}
 	}
 

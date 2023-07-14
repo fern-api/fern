@@ -46,6 +46,7 @@ func (u *userClient) List(ctx context.Context) ([]*user.User, error) {
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		u.header,
 		nil,
 	); err != nil {

@@ -49,6 +49,7 @@ func (n *notificationClient) List(ctx context.Context, userId string) ([]*notifi
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		n.header,
 		nil,
 	); err != nil {
@@ -64,7 +65,7 @@ func (n *notificationClient) Foo(ctx context.Context, userId string, fooId strin
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/notifications/foo/%v", userId, fooId)
 
-	response := new(fixtures.Foo)
+	var response *fixtures.Foo
 	if err := core.DoRequest(
 		ctx,
 		n.httpClient,
@@ -72,6 +73,7 @@ func (n *notificationClient) Foo(ctx context.Context, userId string, fooId strin
 		http.MethodPost,
 		nil,
 		&response,
+		false,
 		n.header,
 		nil,
 	); err != nil {

@@ -62,7 +62,7 @@ func (u *userClient) GetUsername(ctx context.Context, request *GetUsersRequest) 
 		endpointURL += "?" + queryParams.Encode()
 	}
 
-	response := new(User)
+	var response *User
 	if err := core.DoRequest(
 		ctx,
 		u.httpClient,
@@ -70,6 +70,7 @@ func (u *userClient) GetUsername(ctx context.Context, request *GetUsersRequest) 
 		http.MethodGet,
 		request,
 		&response,
+		false,
 		u.header,
 		nil,
 	); err != nil {

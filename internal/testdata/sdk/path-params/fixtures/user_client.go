@@ -48,6 +48,7 @@ func (u *userClient) GetUser(ctx context.Context, userId string) (string, error)
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		u.header,
 		nil,
 	); err != nil {
@@ -71,6 +72,7 @@ func (u *userClient) GetUserV2(ctx context.Context, userId string) (string, erro
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		u.header,
 		nil,
 	); err != nil {
@@ -94,6 +96,7 @@ func (u *userClient) GetUserV3(ctx context.Context, userId string, infoId string
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		u.header,
 		nil,
 	); err != nil {

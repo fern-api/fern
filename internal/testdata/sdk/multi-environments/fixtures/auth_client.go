@@ -47,6 +47,7 @@ func (a *authClient) GetAuth(ctx context.Context) (string, error) {
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		a.header,
 		nil,
 	); err != nil {
@@ -70,6 +71,7 @@ func (a *authClient) ListAuth(ctx context.Context) ([]string, error) {
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		a.header,
 		nil,
 	); err != nil {
@@ -93,6 +95,7 @@ func (a *authClient) ListPlants(ctx context.Context) ([]string, error) {
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		a.header,
 		nil,
 	); err != nil {

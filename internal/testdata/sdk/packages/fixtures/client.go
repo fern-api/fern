@@ -54,6 +54,7 @@ func (c *client) GetFoo(ctx context.Context) ([]*Foo, error) {
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		c.header,
 		nil,
 	); err != nil {
@@ -95,7 +96,7 @@ func (c *client) PostFoo(ctx context.Context, request *Foo) (*Foo, error) {
 		return apiError
 	}
 
-	response := new(Foo)
+	var response *Foo
 	if err := core.DoRequest(
 		ctx,
 		c.httpClient,
@@ -103,6 +104,7 @@ func (c *client) PostFoo(ctx context.Context, request *Foo) (*Foo, error) {
 		http.MethodPost,
 		request,
 		&response,
+		false,
 		c.header,
 		errorDecoder,
 	); err != nil {

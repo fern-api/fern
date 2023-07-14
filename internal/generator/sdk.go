@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"path"
 	"sort"
+	"strconv"
 	"strings"
 
 	"github.com/fern-api/fern-go/internal/fern/ir"
@@ -568,7 +569,7 @@ func (f *fileWriter) WriteClient(
 
 		// Prepare a response variable.
 		if endpoint.ResponseType != "" {
-			f.P(fmt.Sprintf(endpoint.ResponseInitializerFormat, strings.TrimLeft(endpoint.ResponseType, "*")))
+			f.P(fmt.Sprintf(endpoint.ResponseInitializerFormat, endpoint.ResponseType))
 		}
 
 		if len(endpoint.FileProperties) > 0 || len(endpoint.FileBodyProperties) > 0 {
@@ -636,6 +637,7 @@ func (f *fileWriter) WriteClient(
 		f.P(endpoint.Method, ",")
 		f.P(endpoint.RequestValueName, ",")
 		f.P(endpoint.ResponseParameterName, ",")
+		f.P(strconv.FormatBool(endpoint.ResponseIsOptionalParameter), ",")
 		f.P(headersParameter, ",")
 		f.P(endpoint.ErrorDecoderParameterName, ",")
 		f.P("); err != nil {")
@@ -669,29 +671,30 @@ func (f *fileWriter) WriteClient(
 // All of the fields are pre-formatted so that they can all be simple
 // strings.
 type endpoint struct {
-	Name                      *ir.Name
-	Docs                      *string
-	PathParameterDocs         []*string
-	ImportPath                string
-	RequestParameterName      string
-	RequestValueName          string
-	ResponseType              string
-	ResponseParameterName     string
-	ResponseInitializerFormat string
-	PathParameterNames        string
-	SignatureParameters       string
-	ReturnValues              string
-	SuccessfulReturnValues    string
-	ErrorReturnValues         string
-	BaseURL                   string
-	PathSuffix                string
-	Method                    string
-	ErrorDecoderParameterName string
-	Errors                    ir.ResponseErrors
-	QueryParameters           []*ir.QueryParameter
-	Headers                   []*ir.HttpHeader
-	FileProperties            []*ir.FileProperty
-	FileBodyProperties        []*ir.InlinedRequestBodyProperty
+	Name                        *ir.Name
+	Docs                        *string
+	PathParameterDocs           []*string
+	ImportPath                  string
+	RequestParameterName        string
+	RequestValueName            string
+	ResponseType                string
+	ResponseParameterName       string
+	ResponseInitializerFormat   string
+	ResponseIsOptionalParameter bool
+	PathParameterNames          string
+	SignatureParameters         string
+	ReturnValues                string
+	SuccessfulReturnValues      string
+	ErrorReturnValues           string
+	BaseURL                     string
+	PathSuffix                  string
+	Method                      string
+	ErrorDecoderParameterName   string
+	Errors                      ir.ResponseErrors
+	QueryParameters             []*ir.QueryParameter
+	Headers                     []*ir.HttpHeader
+	FileProperties              []*ir.FileProperty
+	FileBodyProperties          []*ir.InlinedRequestBodyProperty
 }
 
 // signatureForEndpoint returns a signature template for the given endpoint.
@@ -774,13 +777,12 @@ func (f *fileWriter) endpointFromIR(
 		successfulReturnValues    string
 		errorReturnValues         string
 	)
+	var responseIsOptionalParameter bool
 	if irEndpoint.Response != nil {
 		if irEndpoint.Response.Json != nil {
 			responseType = typeReferenceToGoType(irEndpoint.Response.Json.ResponseBodyType, f.types, f.imports, f.baseImportPath, importPath)
 			responseInitializerFormat = "var response %s"
-			if named := maybeDeclaredTypeName(irEndpoint.Response.Json.ResponseBodyType); named != nil && isPointer(f.types[named.TypeId]) {
-				responseInitializerFormat = "response := new(%s)"
-			}
+			responseIsOptionalParameter = irEndpoint.Response.Json.ResponseBodyType.Container != nil && irEndpoint.Response.Json.ResponseBodyType.Container.Optional != nil
 			responseParameterName = "&response"
 			signatureReturnValues = fmt.Sprintf("(%s, error)", responseType)
 			successfulReturnValues = "response, nil"
@@ -846,29 +848,30 @@ func (f *fileWriter) endpointFromIR(
 	}
 
 	return &endpoint{
-		Name:                      irEndpoint.Name,
-		Docs:                      irEndpoint.Docs,
-		PathParameterDocs:         pathParameterDocs,
-		ImportPath:                importPath,
-		RequestParameterName:      requestParameterName,
-		RequestValueName:          requestValueName,
-		ResponseType:              responseType,
-		ResponseParameterName:     responseParameterName,
-		ResponseInitializerFormat: responseInitializerFormat,
-		PathParameterNames:        strings.Join(pathParameterNames, ", "),
-		SignatureParameters:       signatureParameters,
-		ReturnValues:              signatureReturnValues,
-		SuccessfulReturnValues:    successfulReturnValues,
-		ErrorReturnValues:         errorReturnValues,
-		BaseURL:                   baseURL,
-		PathSuffix:                pathSuffix,
-		Method:                    irMethodToMethodEnum(irEndpoint.Method),
-		ErrorDecoderParameterName: errorDecoderParameterName,
-		Errors:                    irEndpoint.Errors,
-		QueryParameters:           irEndpoint.QueryParameters,
-		Headers:                   irEndpoint.Headers,
-		FileProperties:            fileProperties,
-		FileBodyProperties:        fileBodyProperties,
+		Name:                        irEndpoint.Name,
+		Docs:                        irEndpoint.Docs,
+		PathParameterDocs:           pathParameterDocs,
+		ImportPath:                  importPath,
+		RequestParameterName:        requestParameterName,
+		RequestValueName:            requestValueName,
+		ResponseType:                responseType,
+		ResponseParameterName:       responseParameterName,
+		ResponseInitializerFormat:   responseInitializerFormat,
+		ResponseIsOptionalParameter: responseIsOptionalParameter,
+		PathParameterNames:          strings.Join(pathParameterNames, ", "),
+		SignatureParameters:         signatureParameters,
+		ReturnValues:                signatureReturnValues,
+		SuccessfulReturnValues:      successfulReturnValues,
+		ErrorReturnValues:           errorReturnValues,
+		BaseURL:                     baseURL,
+		PathSuffix:                  pathSuffix,
+		Method:                      irMethodToMethodEnum(irEndpoint.Method),
+		ErrorDecoderParameterName:   errorDecoderParameterName,
+		Errors:                      irEndpoint.Errors,
+		QueryParameters:             irEndpoint.QueryParameters,
+		Headers:                     irEndpoint.Headers,
+		FileProperties:              fileProperties,
+		FileBodyProperties:          fileBodyProperties,
 	}, nil
 }
 
@@ -916,13 +919,15 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	f.P()
 
 	// Implement the json.Unmarshaler.
-	format := "var body %s"
-	if errorDeclaration.Type.Named != nil && isPointer(f.types[errorDeclaration.Type.Named.TypeId]) {
-		format = "body := new(%s)"
-		value = strings.TrimLeft(value, "*")
-	}
+	isOptional := errorDeclaration.Type.Container != nil && errorDeclaration.Type.Container.Optional != nil
 	f.P("func (", receiver, "*", typeName, ") UnmarshalJSON(data []byte) error {")
-	f.P(fmt.Sprintf(format, value))
+	if isOptional {
+		f.P("if len(data) == 0 {")
+		f.P(receiver, ".StatusCode = ", errorDeclaration.StatusCode)
+		f.P("return nil")
+		f.P("}")
+	}
+	f.P(fmt.Sprintf("var body %s", value))
 	f.P("if err := json.Unmarshal(data, &body); err != nil {")
 	f.P("return err")
 	f.P("}")
@@ -942,6 +947,11 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	f.P("func (", receiver, "*", typeName, ") MarshalJSON() ([]byte, error) {")
 	if literal != "" {
 		f.P("return json.Marshal(", literal, ")")
+	} else if isOptional {
+		f.P("if ", receiver, ".Body == nil {")
+		f.P("return nil, nil")
+		f.P("}")
+		f.P("return json.Marshal(", receiver, ".Body)")
 	} else {
 		f.P("return json.Marshal(", receiver, ".Body)")
 	}
@@ -1444,19 +1454,6 @@ func needsRequestParameter(endpoint *ir.HttpEndpoint) bool {
 		return endpoint.RequestBody.FileUpload == nil || fileUploadHasBodyProperties(endpoint.RequestBody.FileUpload)
 	}
 	return true
-}
-
-// maybeDeclaredTypeName returns the declared type name associated with
-// the given type reference, if any. Note that this only recurses through
-// nested optional containers; all other container types are ignored.
-func maybeDeclaredTypeName(typeReference *ir.TypeReference) *ir.DeclaredTypeName {
-	if typeReference.Named != nil {
-		return typeReference.Named
-	}
-	if typeReference.Container != nil && typeReference.Container.Optional != nil {
-		return maybeDeclaredTypeName(typeReference.Container.Optional)
-	}
-	return nil
 }
 
 // maybePrimitive recurses into the given value type, returning its underlying primitive

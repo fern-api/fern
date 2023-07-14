@@ -41,7 +41,7 @@ func (c *client) GetUserNotification(ctx context.Context, userId string, notific
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/notifications/%v", userId, notificationId)
 
-	response := new(Notification)
+	var response *Notification
 	if err := core.DoRequest(
 		ctx,
 		c.httpClient,
@@ -49,6 +49,7 @@ func (c *client) GetUserNotification(ctx context.Context, userId string, notific
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		c.header,
 		nil,
 	); err != nil {

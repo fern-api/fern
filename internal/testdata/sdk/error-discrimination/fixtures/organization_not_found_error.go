@@ -13,7 +13,7 @@ type OrganizationNotFoundError struct {
 }
 
 func (o *OrganizationNotFoundError) UnmarshalJSON(data []byte) error {
-	body := new(OrganizationNotFoundErrorBody)
+	var body *OrganizationNotFoundErrorBody
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}

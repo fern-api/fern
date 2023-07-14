@@ -98,6 +98,7 @@ func (u *userClient) Get(ctx context.Context, id string) (string, error) {
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		u.header,
 		errorDecoder,
 	); err != nil {
@@ -147,6 +148,7 @@ func (u *userClient) Update(ctx context.Context, id string, request string) (str
 		http.MethodPost,
 		request,
 		&response,
+		false,
 		u.header,
 		errorDecoder,
 	); err != nil {

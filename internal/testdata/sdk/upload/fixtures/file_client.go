@@ -75,6 +75,7 @@ func (f *fileClient) Upload(ctx context.Context, file io.Reader, request *Upload
 		http.MethodPost,
 		requestBuffer,
 		&response,
+		false,
 		f.header,
 		nil,
 	); err != nil {
@@ -116,6 +117,7 @@ func (f *fileClient) UploadSimple(ctx context.Context, file io.Reader) (string, 
 		http.MethodPost,
 		requestBuffer,
 		&response,
+		false,
 		f.header,
 		nil,
 	); err != nil {
@@ -173,6 +175,7 @@ func (f *fileClient) UploadMultiple(ctx context.Context, file io.Reader, optiona
 		http.MethodPost,
 		requestBuffer,
 		&response,
+		false,
 		f.header,
 		nil,
 	); err != nil {

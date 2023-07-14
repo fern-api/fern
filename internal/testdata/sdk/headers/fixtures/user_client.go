@@ -71,6 +71,7 @@ func (u *userClient) SetName(ctx context.Context, userId string, request *SetNam
 		http.MethodPost,
 		request,
 		&response,
+		false,
 		headers,
 		nil,
 	); err != nil {

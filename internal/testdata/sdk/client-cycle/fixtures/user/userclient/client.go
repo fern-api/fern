@@ -46,7 +46,7 @@ func (c *client) GetUser(ctx context.Context, userId string) (*user.User, error)
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v", userId)
 
-	response := new(user.User)
+	var response *user.User
 	if err := core.DoRequest(
 		ctx,
 		c.httpClient,
@@ -54,6 +54,7 @@ func (c *client) GetUser(ctx context.Context, userId string) (*user.User, error)
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		c.header,
 		nil,
 	); err != nil {

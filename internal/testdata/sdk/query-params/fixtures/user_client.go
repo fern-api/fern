@@ -59,6 +59,7 @@ func (u *userClient) GetAllUsers(ctx context.Context, request *GetAllUsersReques
 		http.MethodGet,
 		request,
 		&response,
+		false,
 		headers,
 		nil,
 	); err != nil {

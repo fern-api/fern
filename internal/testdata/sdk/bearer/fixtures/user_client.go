@@ -45,6 +45,7 @@ func (u *userClient) Get(ctx context.Context) (string, error) {
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		u.header,
 		nil,
 	); err != nil {

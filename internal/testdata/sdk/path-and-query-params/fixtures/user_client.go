@@ -55,6 +55,7 @@ func (u *userClient) GetUser(ctx context.Context, userId string, request *GetUse
 		http.MethodGet,
 		request,
 		&response,
+		false,
 		u.header,
 		nil,
 	); err != nil {

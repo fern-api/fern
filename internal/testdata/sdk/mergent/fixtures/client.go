@@ -63,6 +63,7 @@ func (c *client) GetTasks(ctx context.Context) ([]*Task, error) {
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		c.header,
 		nil,
 	); err != nil {
@@ -104,7 +105,7 @@ func (c *client) PostTasks(ctx context.Context, request *TaskNew) (*Task, error)
 		return apiError
 	}
 
-	response := new(Task)
+	var response *Task
 	if err := core.DoRequest(
 		ctx,
 		c.httpClient,
@@ -112,6 +113,7 @@ func (c *client) PostTasks(ctx context.Context, request *TaskNew) (*Task, error)
 		http.MethodPost,
 		request,
 		&response,
+		false,
 		c.header,
 		errorDecoder,
 	); err != nil {
@@ -147,7 +149,7 @@ func (c *client) GetTasksTaskId(ctx context.Context, taskId Id) (*Task, error) {
 		return apiError
 	}
 
-	response := new(Task)
+	var response *Task
 	if err := core.DoRequest(
 		ctx,
 		c.httpClient,
@@ -155,6 +157,7 @@ func (c *client) GetTasksTaskId(ctx context.Context, taskId Id) (*Task, error) {
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		c.header,
 		errorDecoder,
 	); err != nil {
@@ -204,7 +207,7 @@ func (c *client) PatchTasksTaskId(ctx context.Context, taskId Id, request *Task)
 		return apiError
 	}
 
-	response := new(Task)
+	var response *Task
 	if err := core.DoRequest(
 		ctx,
 		c.httpClient,
@@ -212,6 +215,7 @@ func (c *client) PatchTasksTaskId(ctx context.Context, taskId Id, request *Task)
 		http.MethodPatch,
 		request,
 		&response,
+		false,
 		c.header,
 		errorDecoder,
 	); err != nil {
@@ -254,6 +258,7 @@ func (c *client) DeleteTasksTaskId(ctx context.Context, taskId Id) error {
 		http.MethodDelete,
 		nil,
 		nil,
+		false,
 		c.header,
 		errorDecoder,
 	); err != nil {
@@ -298,7 +303,7 @@ func (c *client) PostTasksTaskIdRun(ctx context.Context, taskId Id) (*Task, erro
 		return apiError
 	}
 
-	response := new(Task)
+	var response *Task
 	if err := core.DoRequest(
 		ctx,
 		c.httpClient,
@@ -306,6 +311,7 @@ func (c *client) PostTasksTaskIdRun(ctx context.Context, taskId Id) (*Task, erro
 		http.MethodPost,
 		nil,
 		&response,
+		false,
 		c.header,
 		errorDecoder,
 	); err != nil {
@@ -373,6 +379,7 @@ func (c *client) PostTasksBatchCreate(ctx context.Context, request []*TaskNew) (
 		http.MethodPost,
 		request,
 		&response,
+		false,
 		c.header,
 		errorDecoder,
 	); err != nil {
@@ -425,6 +432,7 @@ func (c *client) PostTasksBatchDelete(ctx context.Context, request []Id) error {
 		http.MethodPost,
 		request,
 		nil,
+		false,
 		c.header,
 		errorDecoder,
 	); err != nil {
@@ -448,6 +456,7 @@ func (c *client) GetSchedules(ctx context.Context) ([]*Schedule, error) {
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		c.header,
 		nil,
 	); err != nil {
@@ -482,7 +491,7 @@ func (c *client) PostSchedules(ctx context.Context, request *ScheduleNew) (*Sche
 		return apiError
 	}
 
-	response := new(Schedule)
+	var response *Schedule
 	if err := core.DoRequest(
 		ctx,
 		c.httpClient,
@@ -490,6 +499,7 @@ func (c *client) PostSchedules(ctx context.Context, request *ScheduleNew) (*Sche
 		http.MethodPost,
 		request,
 		&response,
+		false,
 		c.header,
 		errorDecoder,
 	); err != nil {
@@ -525,7 +535,7 @@ func (c *client) GetSchedulesScheduleId(ctx context.Context, scheduleId Id) (*Sc
 		return apiError
 	}
 
-	response := new(Schedule)
+	var response *Schedule
 	if err := core.DoRequest(
 		ctx,
 		c.httpClient,
@@ -533,6 +543,7 @@ func (c *client) GetSchedulesScheduleId(ctx context.Context, scheduleId Id) (*Sc
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		c.header,
 		errorDecoder,
 	); err != nil {
@@ -575,7 +586,7 @@ func (c *client) PatchSchedulesScheduleId(ctx context.Context, scheduleId Id, re
 		return apiError
 	}
 
-	response := new(Schedule)
+	var response *Schedule
 	if err := core.DoRequest(
 		ctx,
 		c.httpClient,
@@ -583,6 +594,7 @@ func (c *client) PatchSchedulesScheduleId(ctx context.Context, scheduleId Id, re
 		http.MethodPatch,
 		request,
 		&response,
+		false,
 		c.header,
 		errorDecoder,
 	); err != nil {
@@ -625,6 +637,7 @@ func (c *client) DeleteSchedulesScheduleId(ctx context.Context, scheduleId Id) e
 		http.MethodDelete,
 		nil,
 		nil,
+		false,
 		c.header,
 		errorDecoder,
 	); err != nil {
@@ -668,6 +681,7 @@ func (c *client) GetSchedulesScheduleIdTasks(ctx context.Context, scheduleId Id)
 		http.MethodGet,
 		nil,
 		&response,
+		false,
 		c.header,
 		errorDecoder,
 	); err != nil {

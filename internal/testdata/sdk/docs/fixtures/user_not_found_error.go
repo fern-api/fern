@@ -14,7 +14,7 @@ type UserNotFoundError struct {
 }
 
 func (u *UserNotFoundError) UnmarshalJSON(data []byte) error {
-	body := new(User)
+	var body *User
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
