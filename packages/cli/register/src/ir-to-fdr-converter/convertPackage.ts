@@ -63,6 +63,7 @@ function convertService(
             ),
             request: irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
             response: irEndpoint.response != null ? convertResponse(irEndpoint.response) : undefined,
+            errors: convertResponseErrors(irEndpoint.errors, ir),
             examples: irEndpoint.examples.map((example) => convertExampleEndpointCall(example, ir)),
         })
     );
@@ -186,6 +187,24 @@ function convertResponse(irResponse: Ir.http.HttpResponse): FernRegistry.api.v1.
     } else {
         return undefined;
     }
+}
+
+function convertResponseErrors(
+    irResponseErrors: Ir.http.ResponseErrors,
+    ir: Ir.ir.IntermediateRepresentation
+): FernRegistry.api.v1.register.ErrorDeclaration[] {
+    const errors: FernRegistry.api.v1.register.ErrorDeclaration[] = [];
+    for (const irResponseError of irResponseErrors) {
+        const errorDeclaration = ir.errors[irResponseError.error.errorId];
+        if (errorDeclaration) {
+            errors.push({
+                type: errorDeclaration.type == null ? undefined : convertTypeReference(errorDeclaration.type),
+                statusCode: errorDeclaration.statusCode,
+                description: errorDeclaration.docs ?? undefined,
+            });
+        }
+    }
+    return errors;
 }
 
 function convertExampleEndpointCall(
