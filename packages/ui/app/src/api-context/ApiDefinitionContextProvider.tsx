@@ -29,54 +29,6 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
     const resolveTypeById = useCallback(
         (typeId: FernRegistryApiRead.TypeId): FernRegistryApiRead.TypeDefinition => {
             const type = apiDefinition.types[typeId];
-            // TODO: Remove this after demo!
-            if (typeId === "fake_error_object") {
-                const typeDef: FernRegistryApiRead.TypeDefinition = {
-                    name: "Error object",
-                    shape: {
-                        type: "object",
-                        extends: [],
-                        properties: [
-                            {
-                                key: "errorId",
-                                valueType: { type: "primitive", value: { type: "string" } },
-                                description: "An error ID",
-                            },
-                            {
-                                key: "description",
-                                valueType: { type: "primitive", value: { type: "string" } },
-                                description: "A human readable description of the error",
-                            },
-                            {
-                                key: "diagnosticsId",
-                                valueType: { type: "primitive", value: { type: "string" } },
-                                description:
-                                    "An ID that you can quote when contacting the support team (support@primer.io).",
-                            },
-                            {
-                                key: "validationErrors",
-                                valueType: {
-                                    type: "list",
-                                    itemType: {
-                                        type: "map",
-                                        keyType: {
-                                            type: "primitive",
-                                            value: {
-                                                type: "string",
-                                            },
-                                        },
-                                        valueType: {
-                                            type: "unknown",
-                                        },
-                                    },
-                                },
-                                description: "Returned in case of a badly formed request",
-                            },
-                        ],
-                    },
-                };
-                return typeDef;
-            }
             if (type == null) {
                 throw new Error("Type does not exist");
             }
