@@ -63,9 +63,7 @@ function convertService(
             ),
             request: irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
             response: irEndpoint.response != null ? convertResponse(irEndpoint.response) : undefined,
-            errors: irEndpoint.errors
-                .map((responseError) => convertResponseError(responseError, ir))
-                .filter((d) => !!d) as FernRegistry.api.v1.register.ErrorDeclaration[],
+            errors: convertResponseErrors(irEndpoint.errors, ir),
             examples: irEndpoint.examples.map((example) => convertExampleEndpointCall(example, ir)),
         })
     );
@@ -191,19 +189,22 @@ function convertResponse(irResponse: Ir.http.HttpResponse): FernRegistry.api.v1.
     }
 }
 
-function convertResponseError(
-    irResponseError: Ir.http.ResponseError,
+function convertResponseErrors(
+    irResponseErrors: Ir.http.ResponseErrors,
     ir: Ir.ir.IntermediateRepresentation
-): FernRegistry.api.v1.register.ErrorDeclaration | null {
-    const errorDeclaration = ir.errors[irResponseError.error.errorId];
-    // TODO: The errorDeclaration.type == null check here may not be correct. Confirm before merging.
-    if (errorDeclaration == null || errorDeclaration.type == null) {
-        return null;
+): FernRegistry.api.v1.register.ErrorDeclaration[] {
+    const errors: FernRegistry.api.v1.register.ErrorDeclaration[] = [];
+    for (const irResponseError of irResponseErrors) {
+        const errorDeclaration = ir.errors[irResponseError.error.errorId];
+        if (errorDeclaration) {
+            errors.push({
+                type: errorDeclaration.type == null ? undefined : convertTypeReference(errorDeclaration.type),
+                statusCode: errorDeclaration.statusCode,
+                description: errorDeclaration.docs ?? undefined,
+            });
+        }
     }
-    return {
-        type: convertTypeReference(errorDeclaration.type),
-        statusCode: errorDeclaration.statusCode,
-    };
+    return errors;
 }
 
 function convertExampleEndpointCall(
