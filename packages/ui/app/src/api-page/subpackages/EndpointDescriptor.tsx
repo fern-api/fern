@@ -1,8 +1,8 @@
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import { MouseEventHandler } from "react";
 import { HttpMethodIcon } from "../../commons/HttpMethodIcon";
 import { MonospaceText } from "../../commons/monospace/MonospaceText";
-import { visitDiscriminatedUnion } from "../../utils/visitDiscriminatedUnion";
 import { getPathParameterAsString } from "../endpoints/getEndpointTitleAsString";
 
 export declare namespace EndpointDescriptor {
