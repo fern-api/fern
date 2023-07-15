@@ -6,6 +6,7 @@ export const SdkCustomConfigSchema = z.strictObject({
     neverThrowErrors: z.optional(z.boolean()),
     namespaceExport: z.optional(z.string()),
     outputEsm: z.optional(z.boolean()),
+    outputSourceFiles: z.optional(z.boolean()),
     includeCredentialsOnCrossOriginRequests: z.optional(z.boolean()),
     bundle: z.optional(z.boolean()),
     allowCustomFetcher: z.optional(z.boolean()),

@@ -72,6 +72,16 @@ const FIXTURES: FixtureInfo[] = [
         targetRuntime: JavaScriptRuntime.NODE,
     },
     {
+        path: "output-source-files-imdb",
+        orgName: "fern",
+        outputMode: "local",
+        apiName: "api",
+        customConfig: {
+            outputSourceFiles: true,
+        },
+        targetRuntime: JavaScriptRuntime.NODE,
+    },
+    {
         path: "nursery-status-code",
         orgName: "fern",
         outputMode: "github",

@@ -148,6 +148,19 @@ export class PersistedTypescriptProject {
         await this.zipDirectoryContents(directoryOfDecompressedPack, { logger, destinationZip });
     }
 
+    public async copySrcAsZipTo({
+        destinationZip,
+        logger,
+    }: {
+        destinationZip: AbsoluteFilePath;
+        logger: Logger;
+    }): Promise<void> {
+        if (!this.hasBuilt) {
+            await this.build(logger);
+        }
+        await this.zipDirectoryContents(join(this.directory, this.srcDirectory), { logger, destinationZip });
+    }
+
     public async copyDistAsZipTo({
         destinationZip,
         logger,

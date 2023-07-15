@@ -112,10 +112,17 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     });
                 },
                 downloadFiles: async () => {
-                    await typescriptProject.copyDistAsZipTo({
-                        destinationZip,
-                        logger,
-                    });
+                    if (this.outputSourceFiles(customConfig)) {
+                        await typescriptProject.copySrcAsZipTo({
+                            destinationZip,
+                            logger,
+                        });
+                    } else {
+                        await typescriptProject.copyDistAsZipTo({
+                            destinationZip,
+                            logger,
+                        });
+                    }
                 },
                 _other: ({ type }) => {
                     throw new Error(`${type} mode is not implemented`);
@@ -150,6 +157,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         intermediateRepresentation: IntermediateRepresentation;
     }): Promise<PersistedTypescriptProject>;
     protected abstract isPackagePrivate(customConfig: CustomConfig): boolean;
+    protected abstract outputSourceFiles(customConfig: CustomConfig): boolean;
 }
 
 class GeneratorContextImpl implements GeneratorContext {
