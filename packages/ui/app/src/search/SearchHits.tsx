@@ -41,7 +41,7 @@ export const SearchHits: React.FC = () => {
         >
             <div
                 className={classNames(
-                    "text-text-default flex w-full flex-col items-center py-3",
+                    "text-text-default flex w-full flex-col items-center",
                     progress === "success" && hits.length > 0 ? "min-h-[6rem]" : "min-h-[3rem]"
                 )}
             >

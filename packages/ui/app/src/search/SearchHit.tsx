@@ -18,28 +18,31 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
 
     return (
         <Link
-            className="hover:bg-accentHighlight group flex w-full items-center space-x-3 space-y-1 rounded-md p-2"
+            className="group flex w-full items-center space-x-4 space-y-1 rounded-md px-3 py-2 hover:bg-neutral-800/50 hover:no-underline"
             onClick={() => {
                 closeSearchDialog();
                 navigateToPath(hit.path);
             }}
             href={`/${hit.path}`}
         >
-            <Icon
-                className="text-text-default group-hover:text-text-stark"
-                size={18}
-                icon={visitDiscriminatedUnion(hit, "type")._visit({
-                    endpoint: () => "code",
-                    page: () => "document",
-                    _other: () => "document",
-                })}
-            />
+            <div className="border-border-concealed flex flex-col items-center justify-center rounded-md border p-1">
+                <Icon
+                    className="!text-text-default group-hover:!text-text-stark"
+                    size={14}
+                    icon={visitDiscriminatedUnion(hit, "type")._visit({
+                        endpoint: () => "code",
+                        page: () => "document",
+                        _other: () => "document",
+                    })}
+                />
+            </div>
 
             <div className="flex w-full flex-col space-y-1.5">
                 <div className="flex justify-between">
                     <Snippet
                         className="text-text-stark group-hover:text-text-stark line-clamp-1 text-start"
                         attribute="title"
+                        highlightedTagName="span"
                         hit={hit}
                     />
                     <div className="text-text-default group-hover:text-text-stark text-xs uppercase tracking-widest">
@@ -54,6 +57,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
                     <Snippet
                         className="text-text-default group-hover:text-text-stark line-clamp-1 text-start"
                         attribute="subtitle"
+                        highlightedTagName="span"
                         hit={hit}
                     />
                 </div>
