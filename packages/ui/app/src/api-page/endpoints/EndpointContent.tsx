@@ -1,5 +1,4 @@
 import { visitDiscriminatedUnion } from "@fern-api/core-utils";
-import { FernRegistry } from "@fern-fern/registry-browser";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import { snakeCase } from "lodash-es";
@@ -170,55 +169,11 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                     />
                                 </EndpointSection>
                             )}
-                            <EndpointSection title="Errors">
-                                <EndpointErrorsSection
-                                    // TODO: Make these dynamic!
-                                    errors={[
-                                        {
-                                            id: "bad-request",
-                                            status: "400: Bad Request",
-                                            description: "This error response is an object.",
-                                            type: {
-                                                type: "object",
-                                                extends: [],
-                                                properties: [
-                                                    {
-                                                        key: "error",
-                                                        valueType: {
-                                                            type: "id",
-                                                            value: FernRegistry.api.v1.read.TypeId("fake_error_object"),
-                                                        },
-                                                        description:
-                                                            "An object containing information about the error that occurred.",
-                                                        htmlDescription: "papa",
-                                                    },
-                                                ],
-                                            },
-                                        },
-                                        {
-                                            id: "unprocessable-entity",
-                                            status: "422: Unprocessable Entity",
-                                            description: "This error response is an object.",
-                                            type: {
-                                                type: "object",
-                                                extends: [],
-                                                properties: [
-                                                    {
-                                                        key: "error",
-                                                        valueType: {
-                                                            type: "id",
-                                                            value: FernRegistry.api.v1.read.TypeId("fake_error_object"),
-                                                        },
-                                                        description:
-                                                            "An object containing information about the error that occurred.",
-                                                        htmlDescription: "papa",
-                                                    },
-                                                ],
-                                            },
-                                        },
-                                    ]}
-                                />
-                            </EndpointSection>
+                            {endpoint.errors.length > 0 && (
+                                <EndpointSection title="Errors">
+                                    <EndpointErrorsSection errors={endpoint.errors} />
+                                </EndpointSection>
+                            )}
                         </div>
                     </div>
                 </div>
