@@ -15,6 +15,22 @@ type GeneratorPublishTarget struct {
 	Postman *PostmanConfig
 }
 
+func NewGeneratorPublishTargetFromMaven(value *MavenRegistryConfigV2) *GeneratorPublishTarget {
+	return &GeneratorPublishTarget{Type: "maven", Maven: value}
+}
+
+func NewGeneratorPublishTargetFromNpm(value *NpmRegistryConfigV2) *GeneratorPublishTarget {
+	return &GeneratorPublishTarget{Type: "npm", Npm: value}
+}
+
+func NewGeneratorPublishTargetFromPypi(value *PypiRegistryConfig) *GeneratorPublishTarget {
+	return &GeneratorPublishTarget{Type: "pypi", Pypi: value}
+}
+
+func NewGeneratorPublishTargetFromPostman(value *PostmanConfig) *GeneratorPublishTarget {
+	return &GeneratorPublishTarget{Type: "postman", Postman: value}
+}
+
 func (g *GeneratorPublishTarget) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

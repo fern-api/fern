@@ -13,6 +13,14 @@ type ExitStatusUpdate struct {
 	Error      *ErrorExitStatusUpdate
 }
 
+func NewExitStatusUpdateFromSuccessful(value *SuccessfulStatusUpdate) *ExitStatusUpdate {
+	return &ExitStatusUpdate{Type: "successful", Successful: value}
+}
+
+func NewExitStatusUpdateFromError(value *ErrorExitStatusUpdate) *ExitStatusUpdate {
+	return &ExitStatusUpdate{Type: "error", Error: value}
+}
+
 func (e *ExitStatusUpdate) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"_type"`

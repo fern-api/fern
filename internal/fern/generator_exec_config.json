@@ -6,6 +6,9 @@
         },
         "path": "generatorexec"
     },
+    "customConfig": {
+      "importPath": "github.com/fern-api/fern-go/internal/fern/generatorexec"
+    },
     "workspaceName": "generator-exec",
     "organization": "fernbot",
     "environment": {

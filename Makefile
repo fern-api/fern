@@ -1,7 +1,7 @@
 .PHONY: build
 build:
-	docker build -f ./docker/Dockerfile.sdk -t fernapi/fern-go-sdk --build-arg GITHUB_TOKEN=${GITHUB_TOKEN} .
-	docker build -f ./docker/Dockerfile.model -t fernapi/fern-go-model --build-arg GITHUB_TOKEN=${GITHUB_TOKEN} .
+	docker build -f ./docker/Dockerfile.sdk -t fernapi/fern-go-sdk .
+	docker build -f ./docker/Dockerfile.model -t fernapi/fern-go-model .
 	docker tag fernapi/fern-go-sdk fernapi/fern-go-sdk:0.10.25-rc0
 
 .PHONY: generate

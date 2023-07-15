@@ -13,6 +13,14 @@ type PackageCoordinate struct {
 	Maven *MavenCoordinate
 }
 
+func NewPackageCoordinateFromNpm(value *NpmCoordinate) *PackageCoordinate {
+	return &PackageCoordinate{Type: "npm", Npm: value}
+}
+
+func NewPackageCoordinateFromMaven(value *MavenCoordinate) *PackageCoordinate {
+	return &PackageCoordinate{Type: "maven", Maven: value}
+}
+
 func (p *PackageCoordinate) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"_type"`

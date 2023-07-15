@@ -7,9 +7,6 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Configure GitHub credentials
-          command: git config --global url."https://${GITHUB_TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
-      - run:
           name: Run tests
           command: make test
 
@@ -27,13 +24,13 @@ jobs:
           command: |
             projectVersion=$(./scripts/git-version.sh)
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
-            docker buildx build --platform linux/amd64,linux/arm64 -f ./docker/Dockerfile.model -t fernapi/fern-go-model:${projectVersion} --build-arg GITHUB_TOKEN=${GITHUB_TOKEN} . --push
+            docker buildx build --platform linux/amd64,linux/arm64 -f ./docker/Dockerfile.model -t fernapi/fern-go-model:${projectVersion} . --push
       - run:
           name: Publish SDK Docker
           command: |
             projectVersion=$(./scripts/git-version.sh)
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
-            docker buildx build --platform linux/amd64,linux/arm64 -f ./docker/Dockerfile.sdk -t fernapi/fern-go-sdk:${projectVersion} --build-arg GITHUB_TOKEN=${GITHUB_TOKEN} . --push
+            docker buildx build --platform linux/amd64,linux/arm64 -f ./docker/Dockerfile.sdk -t fernapi/fern-go-sdk:${projectVersion} . --push
 
 workflows:
   build:

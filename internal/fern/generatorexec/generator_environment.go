@@ -13,6 +13,14 @@ type GeneratorEnvironment struct {
 	Remote *RemoteGeneratorEnvironment
 }
 
+func NewGeneratorEnvironmentFromLocal(value any) *GeneratorEnvironment {
+	return &GeneratorEnvironment{Type: "local", Local: value}
+}
+
+func NewGeneratorEnvironmentFromRemote(value *RemoteGeneratorEnvironment) *GeneratorEnvironment {
+	return &GeneratorEnvironment{Type: "remote", Remote: value}
+}
+
 func (g *GeneratorEnvironment) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"_type"`

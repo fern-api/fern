@@ -17,6 +17,30 @@ type GeneratorUpdate struct {
 	ExitStatusUpdate *ExitStatusUpdate
 }
 
+func NewGeneratorUpdateFromInit(value *InitUpdate) *GeneratorUpdate {
+	return &GeneratorUpdate{Type: "init", Init: value}
+}
+
+func NewGeneratorUpdateFromInitV2(value *InitUpdateV2) *GeneratorUpdate {
+	return &GeneratorUpdate{Type: "initV2", InitV2: value}
+}
+
+func NewGeneratorUpdateFromLog(value *LogUpdate) *GeneratorUpdate {
+	return &GeneratorUpdate{Type: "log", Log: value}
+}
+
+func NewGeneratorUpdateFromPublishing(value *PackageCoordinate) *GeneratorUpdate {
+	return &GeneratorUpdate{Type: "publishing", Publishing: value}
+}
+
+func NewGeneratorUpdateFromPublished(value *PackageCoordinate) *GeneratorUpdate {
+	return &GeneratorUpdate{Type: "published", Published: value}
+}
+
+func NewGeneratorUpdateFromExitStatusUpdate(value *ExitStatusUpdate) *GeneratorUpdate {
+	return &GeneratorUpdate{Type: "exitStatusUpdate", ExitStatusUpdate: value}
+}
+
 func (g *GeneratorUpdate) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"_type"`

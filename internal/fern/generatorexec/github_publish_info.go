@@ -15,6 +15,22 @@ type GithubPublishInfo struct {
 	Pypi    *PypiGithubPublishInfo
 }
 
+func NewGithubPublishInfoFromNpm(value *NpmGithubPublishInfo) *GithubPublishInfo {
+	return &GithubPublishInfo{Type: "npm", Npm: value}
+}
+
+func NewGithubPublishInfoFromMaven(value *MavenGithubPublishInfo) *GithubPublishInfo {
+	return &GithubPublishInfo{Type: "maven", Maven: value}
+}
+
+func NewGithubPublishInfoFromPostman(value *PostmanGithubPublishInfo) *GithubPublishInfo {
+	return &GithubPublishInfo{Type: "postman", Postman: value}
+}
+
+func NewGithubPublishInfoFromPypi(value *PypiGithubPublishInfo) *GithubPublishInfo {
+	return &GithubPublishInfo{Type: "pypi", Pypi: value}
+}
+
 func (g *GithubPublishInfo) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

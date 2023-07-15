@@ -14,6 +14,18 @@ type OutputMode struct {
 	Github        *GithubOutputMode
 }
 
+func NewOutputModeFromPublish(value *GeneratorPublishConfig) *OutputMode {
+	return &OutputMode{Type: "publish", Publish: value}
+}
+
+func NewOutputModeFromDownloadFiles(value any) *OutputMode {
+	return &OutputMode{Type: "downloadFiles", DownloadFiles: value}
+}
+
+func NewOutputModeFromGithub(value *GithubOutputMode) *OutputMode {
+	return &OutputMode{Type: "github", Github: value}
+}
+
 func (o *OutputMode) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`

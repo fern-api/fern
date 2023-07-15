@@ -4,13 +4,6 @@ WORKDIR /workspace
 
 RUN apk add --no-cache ca-certificates git
 
-# Setup arguments that grants GitHub access (re: private Go modules).
-ARG GITHUB_TOKEN
-RUN git config --global url."https://${GITHUB_TOKEN}:x-oauth-basic@github.com/".insteadOf "https://github.com/"
-
-# Explicitly configure the private Go modules we depend on.
-ENV GOPRIVATE=github.com/fern-api
-
 COPY go.mod go.sum /workspace/
 RUN go mod download
 
