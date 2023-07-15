@@ -4,7 +4,6 @@ import { ApiPackageContents } from "../ApiPackageContents";
 import { Markdown } from "../markdown/Markdown";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
-import { SubpackageEndpointsOverview } from "./SubpackageEndpointsOverview";
 import { SubpackageTitle } from "./SubpackageTitle";
 
 export declare namespace ApiSubpackage {
@@ -30,9 +29,7 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId, slu
                 {subpackage.description != null && (
                     <div className="flex flex-col items-start space-y-5 pt-10 md:flex-row md:space-x-[5vw] md:space-y-0">
                         <Markdown className="flex-1">{subpackage.description}</Markdown>
-                        <div className="flex-1">
-                            <SubpackageEndpointsOverview subpackage={subpackage} slug={slug} />
-                        </div>
+                        <div className="flex-1" />
                     </div>
                 )}
             </ApiPageMargins>
