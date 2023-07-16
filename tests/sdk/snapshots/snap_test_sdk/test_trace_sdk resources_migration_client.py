@@ -8,7 +8,7 @@ import pydantic
 
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ...core.remove_none_from_headers import remove_none_from_headers
+from ...core.remove_none_from_dict import remove_none_from_dict
 from ...environment import FernIrEnvironment
 from .types.migration import Migration
 
@@ -22,9 +22,7 @@ class MigrationClient:
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", "migration-info/all"),
-            headers=remove_none_from_headers(
-                {**self._client_wrapper.get_headers(), "admin-key-header": admin_key_header}
-            ),
+            headers=remove_none_from_dict({**self._client_wrapper.get_headers(), "admin-key-header": admin_key_header}),
             timeout=None,
         )
         try:
@@ -45,9 +43,7 @@ class AsyncMigrationClient:
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", "migration-info/all"),
-            headers=remove_none_from_headers(
-                {**self._client_wrapper.get_headers(), "admin-key-header": admin_key_header}
-            ),
+            headers=remove_none_from_dict({**self._client_wrapper.get_headers(), "admin-key-header": admin_key_header}),
             timeout=None,
         )
         try:

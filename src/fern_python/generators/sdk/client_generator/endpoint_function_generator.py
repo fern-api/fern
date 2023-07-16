@@ -199,10 +199,7 @@ class EndpointFunctionGenerator:
                         patch=lambda: "PATCH",
                         delete=lambda: "DELETE",
                     ),
-                    query_parameters=[
-                        (query_parameter.name.wire_value, self._get_reference_to_query_parameter(query_parameter))
-                        for query_parameter in endpoint.query_parameters
-                    ],
+                    query_parameters=self._get_query_parameters_for_endpoint(endpoint=endpoint),
                     request_body=(
                         self._context.core_utilities.jsonable_encoder(reference_to_request_body)
                         if reference_to_request_body is not None
@@ -385,8 +382,34 @@ class EndpointFunctionGenerator:
 
             writer.write_line("},")
 
-        return self._context.core_utilities.remove_none_from_headers(
+        return self._context.core_utilities.remove_none_from_dict(
             AST.Expression(AST.CodeWriter(write_headers_dict)),
+        )
+
+    def _get_query_parameters_for_endpoint(
+        self,
+        *,
+        endpoint: ir_types.HttpEndpoint,
+    ) -> Optional[AST.Expression]:
+        query_parameters = [
+            (query_parameter.name.wire_value, self._get_reference_to_query_parameter(query_parameter))
+            for query_parameter in endpoint.query_parameters
+        ]
+
+        if len(query_parameters) == 0:
+            return None
+
+        def write_query_parameters_dict(writer: AST.NodeWriter) -> None:
+            writer.write("{")
+            for i, (query_param_key, query_param_value) in enumerate(query_parameters):
+                writer.write(f'"{query_param_key}": ')
+                writer.write_node(query_param_value)
+                writer.write(", ")
+
+            writer.write_line("},")
+
+        return self._context.core_utilities.remove_none_from_dict(
+            AST.Expression(AST.CodeWriter(write_query_parameters_dict)),
         )
 
     def _is_datetime(

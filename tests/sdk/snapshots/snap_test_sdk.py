@@ -16,7 +16,7 @@ snapshots['test_circular_imports filepaths'] = [
     'src/my_org/core/client_wrapper.py',
     'src/my_org/core/datetime_utils.py',
     'src/my_org/core/jsonable_encoder.py',
-    'src/my_org/core/remove_none_from_headers.py',
+    'src/my_org/core/remove_none_from_dict.py',
     'src/my_org/resources/__init__.py',
     'src/my_org/resources/a/__init__.py',
     'src/my_org/resources/a/types/__init__.py',
@@ -40,7 +40,7 @@ snapshots['test_circular_imports src_my_org_core_datetime_utils'] = FileSnapshot
 
 snapshots['test_circular_imports src_my_org_core_jsonable_encoder'] = FileSnapshot('snap_test_sdk/test_circular_imports src_my_org_core_jsonable_encoder.py')
 
-snapshots['test_circular_imports src_my_org_core_remove_none_from_headers'] = FileSnapshot('snap_test_sdk/test_circular_imports src_my_org_core_remove_none_from_headers.py')
+snapshots['test_circular_imports src_my_org_core_remove_none_from_dict'] = FileSnapshot('snap_test_sdk/test_circular_imports src_my_org_core_remove_none_from_dict.py')
 
 snapshots['test_circular_imports src_my_org_resources___init__'] = FileSnapshot('snap_test_sdk/test_circular_imports src_my_org_resources___init__.py')
 
@@ -70,7 +70,7 @@ snapshots['test_file_upload_sdk core_datetime_utils'] = FileSnapshot('snap_test_
 
 snapshots['test_file_upload_sdk core_jsonable_encoder'] = FileSnapshot('snap_test_sdk/test_file_upload_sdk core_jsonable_encoder.py')
 
-snapshots['test_file_upload_sdk core_remove_none_from_headers'] = FileSnapshot('snap_test_sdk/test_file_upload_sdk core_remove_none_from_headers.py')
+snapshots['test_file_upload_sdk core_remove_none_from_dict'] = FileSnapshot('snap_test_sdk/test_file_upload_sdk core_remove_none_from_dict.py')
 
 snapshots['test_file_upload_sdk filepaths'] = [
     '__init__.py',
@@ -80,7 +80,7 @@ snapshots['test_file_upload_sdk filepaths'] = [
     'core/client_wrapper.py',
     'core/datetime_utils.py',
     'core/jsonable_encoder.py',
-    'core/remove_none_from_headers.py',
+    'core/remove_none_from_dict.py',
     'resources/__init__.py',
     'resources/movie/__init__.py',
     'resources/movie/client.py',
@@ -106,7 +106,7 @@ snapshots['test_github_no_publish_sdk filepaths'] = [
     'src/fern/core/client_wrapper.py',
     'src/fern/core/datetime_utils.py',
     'src/fern/core/jsonable_encoder.py',
-    'src/fern/core/remove_none_from_headers.py',
+    'src/fern/core/remove_none_from_dict.py',
     'src/fern/resources/__init__.py',
     'src/fern/resources/movie/__init__.py',
     'src/fern/resources/movie/client.py',
@@ -133,7 +133,7 @@ snapshots['test_github_no_publish_sdk src_fern_core_datetime_utils'] = FileSnaps
 
 snapshots['test_github_no_publish_sdk src_fern_core_jsonable_encoder'] = FileSnapshot('snap_test_sdk/test_github_no_publish_sdk src_fern_core_jsonable_encoder.py')
 
-snapshots['test_github_no_publish_sdk src_fern_core_remove_none_from_headers'] = FileSnapshot('snap_test_sdk/test_github_no_publish_sdk src_fern_core_remove_none_from_headers.py')
+snapshots['test_github_no_publish_sdk src_fern_core_remove_none_from_dict'] = FileSnapshot('snap_test_sdk/test_github_no_publish_sdk src_fern_core_remove_none_from_dict.py')
 
 snapshots['test_github_no_publish_sdk src_fern_resources___init__'] = FileSnapshot('snap_test_sdk/test_github_no_publish_sdk src_fern_resources___init__.py')
 
@@ -162,7 +162,7 @@ snapshots['test_github_sdk filepaths'] = [
     'src/fern/core/client_wrapper.py',
     'src/fern/core/datetime_utils.py',
     'src/fern/core/jsonable_encoder.py',
-    'src/fern/core/remove_none_from_headers.py',
+    'src/fern/core/remove_none_from_dict.py',
     'src/fern/my_client.py',
     'src/fern/resources/__init__.py',
     'src/fern/resources/movie/__init__.py',
@@ -190,7 +190,7 @@ snapshots['test_github_sdk src_fern_core_datetime_utils'] = FileSnapshot('snap_t
 
 snapshots['test_github_sdk src_fern_core_jsonable_encoder'] = FileSnapshot('snap_test_sdk/test_github_sdk src_fern_core_jsonable_encoder.py')
 
-snapshots['test_github_sdk src_fern_core_remove_none_from_headers'] = FileSnapshot('snap_test_sdk/test_github_sdk src_fern_core_remove_none_from_headers.py')
+snapshots['test_github_sdk src_fern_core_remove_none_from_dict'] = FileSnapshot('snap_test_sdk/test_github_sdk src_fern_core_remove_none_from_dict.py')
 
 snapshots['test_github_sdk src_fern_my_client'] = FileSnapshot('snap_test_sdk/test_github_sdk src_fern_my_client.py')
 
@@ -232,7 +232,7 @@ snapshots['test_multiple_urls_sdk core_datetime_utils'] = FileSnapshot('snap_tes
 
 snapshots['test_multiple_urls_sdk core_jsonable_encoder'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk core_jsonable_encoder.py')
 
-snapshots['test_multiple_urls_sdk core_remove_none_from_headers'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk core_remove_none_from_headers.py')
+snapshots['test_multiple_urls_sdk core_remove_none_from_dict'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk core_remove_none_from_dict.py')
 
 snapshots['test_multiple_urls_sdk environment'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk environment.py')
 
@@ -244,7 +244,7 @@ snapshots['test_multiple_urls_sdk filepaths'] = [
     'core/client_wrapper.py',
     'core/datetime_utils.py',
     'core/jsonable_encoder.py',
-    'core/remove_none_from_headers.py',
+    'core/remove_none_from_dict.py',
     'environment.py',
     'resources/__init__.py',
     'resources/a/__init__.py',
@@ -298,7 +298,7 @@ snapshots['test_publish_sdk filepaths'] = [
     'src/fern/api/core/client_wrapper.py',
     'src/fern/api/core/datetime_utils.py',
     'src/fern/api/core/jsonable_encoder.py',
-    'src/fern/api/core/remove_none_from_headers.py',
+    'src/fern/api/core/remove_none_from_dict.py',
     'src/fern/api/resources/__init__.py',
     'src/fern/api/resources/movie/__init__.py',
     'src/fern/api/resources/movie/client.py',
@@ -325,7 +325,7 @@ snapshots['test_publish_sdk src_fern_api_core_datetime_utils'] = FileSnapshot('s
 
 snapshots['test_publish_sdk src_fern_api_core_jsonable_encoder'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_core_jsonable_encoder.py')
 
-snapshots['test_publish_sdk src_fern_api_core_remove_none_from_headers'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_core_remove_none_from_headers.py')
+snapshots['test_publish_sdk src_fern_api_core_remove_none_from_dict'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_core_remove_none_from_dict.py')
 
 snapshots['test_publish_sdk src_fern_api_resources___init__'] = FileSnapshot('snap_test_sdk/test_publish_sdk src_fern_api_resources___init__.py')
 
@@ -361,7 +361,7 @@ snapshots['test_streaming_sdk core_datetime_utils'] = FileSnapshot('snap_test_sd
 
 snapshots['test_streaming_sdk core_jsonable_encoder'] = FileSnapshot('snap_test_sdk/test_streaming_sdk core_jsonable_encoder.py')
 
-snapshots['test_streaming_sdk core_remove_none_from_headers'] = FileSnapshot('snap_test_sdk/test_streaming_sdk core_remove_none_from_headers.py')
+snapshots['test_streaming_sdk core_remove_none_from_dict'] = FileSnapshot('snap_test_sdk/test_streaming_sdk core_remove_none_from_dict.py')
 
 snapshots['test_streaming_sdk filepaths'] = [
     '__init__.py',
@@ -371,7 +371,7 @@ snapshots['test_streaming_sdk filepaths'] = [
     'core/client_wrapper.py',
     'core/datetime_utils.py',
     'core/jsonable_encoder.py',
-    'core/remove_none_from_headers.py',
+    'core/remove_none_from_dict.py',
     'resources/__init__.py',
     'resources/ai/__init__.py',
     'resources/ai/client.py',
@@ -403,7 +403,7 @@ snapshots['test_trace_sdk core_datetime_utils'] = FileSnapshot('snap_test_sdk/te
 
 snapshots['test_trace_sdk core_jsonable_encoder'] = FileSnapshot('snap_test_sdk/test_trace_sdk core_jsonable_encoder.py')
 
-snapshots['test_trace_sdk core_remove_none_from_headers'] = FileSnapshot('snap_test_sdk/test_trace_sdk core_remove_none_from_headers.py')
+snapshots['test_trace_sdk core_remove_none_from_dict'] = FileSnapshot('snap_test_sdk/test_trace_sdk core_remove_none_from_dict.py')
 
 snapshots['test_trace_sdk environment'] = FileSnapshot('snap_test_sdk/test_trace_sdk environment.py')
 
@@ -415,7 +415,7 @@ snapshots['test_trace_sdk filepaths'] = [
     'core/client_wrapper.py',
     'core/datetime_utils.py',
     'core/jsonable_encoder.py',
-    'core/remove_none_from_headers.py',
+    'core/remove_none_from_dict.py',
     'environment.py',
     'resources/__init__.py',
     'resources/admin/__init__.py',

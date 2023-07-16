@@ -43,12 +43,12 @@ class CoreUtilities:
         )
         self._copy_file_to_project(
             project=project,
-            relative_filepath_on_disk="remove_none_from_headers.py",
+            relative_filepath_on_disk="remove_none_from_dict.py",
             filepath_in_project=Filepath(
                 directories=self.filepath,
-                file=Filepath.FilepathPart(module_name="remove_none_from_headers"),
+                file=Filepath.FilepathPart(module_name="remove_none_from_dict"),
             ),
-            exports={"remove_none_from_headers"},
+            exports={"remove_none_from_dict"},
         )
 
     def _copy_file_to_project(
@@ -128,14 +128,14 @@ class CoreUtilities:
                 ),
             )
 
-    def remove_none_from_headers(self, headers: AST.Expression) -> AST.Expression:
+    def remove_none_from_dict(self, headers: AST.Expression) -> AST.Expression:
         return AST.Expression(
             AST.FunctionInvocation(
                 function_definition=AST.Reference(
                     qualified_name_excluding_import=(),
                     import_=AST.ReferenceImport(
-                        module=AST.Module.local(*self._module_path, "remove_none_from_headers"),
-                        named_import="remove_none_from_headers",
+                        module=AST.Module.local(*self._module_path, "remove_none_from_dict"),
+                        named_import="remove_none_from_dict",
                     ),
                 ),
                 args=[headers],

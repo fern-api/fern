@@ -11,7 +11,7 @@ from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.datetime_utils import serialize_datetime
 from ...core.jsonable_encoder import jsonable_encoder
-from ...core.remove_none_from_headers import remove_none_from_headers
+from ...core.remove_none_from_dict import remove_none_from_dict
 from .errors.invalid_movie_error import InvalidMovieError
 from .errors.movie_already_exists_error import MovieAlreadyExistsError
 from .errors.movie_not_found_error import MovieNotFoundError
@@ -48,7 +48,7 @@ class MovieClient:
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment}/", "movie/all-movies"),
-            headers=remove_none_from_headers(
+            headers=remove_none_from_dict(
                 {**self._client_wrapper.get_headers(), "literal_header": "hello world", "string_header": string_header}
             ),
             timeout=60,
@@ -75,14 +75,18 @@ class MovieClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment}/", "movie/movie"),
-            params={
-                "date": str(date),
-                "datetime": serialize_datetime(datetime),
-                "optional_date": str(optional_date) if optional_date is not None else None,
-                "optional_datetime": serialize_datetime(optional_datetime) if optional_datetime is not None else None,
-                "boolean": boolean,
-                "optional_boolean": optional_boolean,
-            },
+            params=remove_none_from_dict(
+                {
+                    "date": str(date),
+                    "datetime": serialize_datetime(datetime),
+                    "optional_date": str(optional_date) if optional_date is not None else None,
+                    "optional_datetime": serialize_datetime(optional_datetime)
+                    if optional_datetime is not None
+                    else None,
+                    "boolean": boolean,
+                    "optional_boolean": optional_boolean,
+                }
+            ),
             json=jsonable_encoder(request),
             headers=self._client_wrapper.get_headers(),
             timeout=60,
@@ -149,7 +153,7 @@ class AsyncMovieClient:
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment}/", "movie/all-movies"),
-            headers=remove_none_from_headers(
+            headers=remove_none_from_dict(
                 {**self._client_wrapper.get_headers(), "literal_header": "hello world", "string_header": string_header}
             ),
             timeout=60,
@@ -176,14 +180,18 @@ class AsyncMovieClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment}/", "movie/movie"),
-            params={
-                "date": str(date),
-                "datetime": serialize_datetime(datetime),
-                "optional_date": str(optional_date) if optional_date is not None else None,
-                "optional_datetime": serialize_datetime(optional_datetime) if optional_datetime is not None else None,
-                "boolean": boolean,
-                "optional_boolean": optional_boolean,
-            },
+            params=remove_none_from_dict(
+                {
+                    "date": str(date),
+                    "datetime": serialize_datetime(datetime),
+                    "optional_date": str(optional_date) if optional_date is not None else None,
+                    "optional_datetime": serialize_datetime(optional_datetime)
+                    if optional_datetime is not None
+                    else None,
+                    "boolean": boolean,
+                    "optional_boolean": optional_boolean,
+                }
+            ),
             json=jsonable_encoder(request),
             headers=self._client_wrapper.get_headers(),
             timeout=60,

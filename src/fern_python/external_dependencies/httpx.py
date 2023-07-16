@@ -1,4 +1,4 @@
-from typing import List, Optional, Tuple
+from typing import Optional
 
 from fern_python.codegen import AST
 
@@ -34,7 +34,7 @@ class HttpX:
         *,
         url: AST.Expression,
         method: str,
-        query_parameters: List[Tuple[str, AST.Expression]],
+        query_parameters: Optional[AST.Expression],
         request_body: Optional[AST.Expression],
         headers: Optional[AST.Expression],
         files: Optional[AST.Expression],
@@ -47,16 +47,10 @@ class HttpX:
         reference_to_client: AST.Expression,
     ) -> AST.Expression:
         def add_request_params(*, writer: AST.NodeWriter) -> None:
-            if len(query_parameters) > 0:
-                writer.write("params={")
-
-                for i, (query_parameter_key, query_parameter_value) in enumerate(query_parameters):
-                    if i > 0:
-                        writer.write(", ")
-                    writer.write(f'"{query_parameter_key}": ')
-                    writer.write_node(query_parameter_value)
-
-                writer.write_line("},")
+            if query_parameters is not None:
+                writer.write("params=")
+                writer.write_node(query_parameters)
+                writer.write_line(",")
 
             if request_body is not None:
                 writer.write("data=" if files is not None else "json=")
