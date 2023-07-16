@@ -16,6 +16,7 @@ import { Docs } from "./docs/Docs";
 import { ResolvedUrlPath } from "./ResolvedUrlPath";
 
 FocusStyleManager.onlyShowFocusOnTabs();
+const sss = "hsl(0, 0%, 40%)";
 
 export declare namespace App {
     export interface Props {
