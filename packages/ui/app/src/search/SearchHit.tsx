@@ -45,7 +45,7 @@ export const SearchHit: React.FC<SearchHit.Props> = ({ hit }) => {
                         highlightedTagName="span"
                         hit={hit}
                     />
-                    <div className="text-text-default group-hover:text-text-stark text-xs uppercase tracking-widest">
+                    <div className="group-hover:text-text-stark text-xs uppercase tracking-widest text-[#666]">
                         {visitDiscriminatedUnion(hit, "type")._visit({
                             page: () => "Page",
                             endpoint: () => "Endpoint",
