@@ -1,8 +1,10 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
 import { lstat, readdir, readFile } from "fs/promises";
 import { OpenAPIDefinition, OpenAPIFile } from "./types/Workspace";
 
 export async function loadAndValidateOpenAPIDefinition(
+    context: TaskContext,
     absolutePathToDefinition: AbsoluteFilePath,
     relativeFilePath: RelativeFilePath = RelativeFilePath.of(".")
 ): Promise<OpenAPIDefinition> {
@@ -14,6 +16,7 @@ export async function loadAndValidateOpenAPIDefinition(
         const stats = await lstat(absoluteFilepathToFile);
         if (stats.isDirectory()) {
             const subDirectory = await loadAndValidateOpenAPIDefinition(
+                context,
                 absolutePathToDefinition,
                 join(relativeFilePath, RelativeFilePath.of(file))
             );
@@ -30,6 +33,11 @@ export async function loadAndValidateOpenAPIDefinition(
             );
         }
     }
+
+    if (openAPIFile == null) {
+        context.failAndThrow(`OpenAPI document missing in directory ${absolutePathToDefinition}`);
+    }
+
     return {
         absolutePath: join(absolutePathToDefinition, relativeFilePath),
         file: openAPIFile,

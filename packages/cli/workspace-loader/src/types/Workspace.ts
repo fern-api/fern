@@ -18,7 +18,7 @@ export interface OpenAPIWorkspace {
 
 export interface OpenAPIDefinition {
     absolutePath: AbsoluteFilePath;
-    file: OpenAPIFile | undefined;
+    file: OpenAPIFile;
     subDirectories: OpenAPIDefinition[];
 }
 
