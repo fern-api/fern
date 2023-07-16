@@ -27,6 +27,7 @@ from .endpoint_function_generator import EndpointFunctionGenerator
 class ConstructorParameter:
     constructor_parameter_name: str
     type_hint: AST.TypeHint
+    private_member_name: typing.Optional[str] = None
     initializer: Optional[AST.Expression] = None
 
 
@@ -128,6 +129,7 @@ class RootClientGenerator:
                 type_hint=AST.TypeHint(self._context.get_reference_to_environments_class())
                 if self._environment_is_enum()
                 else AST.TypeHint.str_(),
+                private_member_name=RootClientGenerator.ENVIRONMENT_MEMBER_NAME,
                 initializer=AST.Expression(
                     self._context.ir.environments.environments.visit(
                         single_base_url=lambda single_base_url_environments: SingleBaseUrlEnvironmentGenerator(
@@ -194,6 +196,9 @@ class RootClientGenerator:
                     ),
                 )
             )
+            for param in self._get_constructor_parameters(is_async=is_async):
+                if param.private_member_name is not None:
+                    writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
             writer.write(f"self.{self._get_client_wrapper_member_name()} = ")
             writer.write_node(
                 AST.ClassInstantiation(
