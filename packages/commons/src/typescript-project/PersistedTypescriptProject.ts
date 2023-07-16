@@ -71,9 +71,7 @@ export class PersistedTypescriptProject {
             return;
         }
 
-        if (!this.hasInstalled) {
-            await this.installDependencies(logger);
-        }
+        await this.installDependencies(logger);
 
         const yarn = createLoggingExecutable("yarn", {
             cwd: this.directory,
@@ -89,9 +87,7 @@ export class PersistedTypescriptProject {
             return;
         }
 
-        if (!this.hasFormatted) {
-            await this.format(logger);
-        }
+        await this.format(logger);
 
         const yarn = createLoggingExecutable("yarn", {
             cwd: this.directory,
@@ -119,9 +115,7 @@ export class PersistedTypescriptProject {
         destinationZip: AbsoluteFilePath;
         logger: Logger;
     }): Promise<void> {
-        if (!this.hasBuilt) {
-            await this.build(logger);
-        }
+        await this.build(logger);
 
         const npm = createLoggingExecutable("npm", {
             cwd: this.directory,
@@ -155,9 +149,7 @@ export class PersistedTypescriptProject {
         destinationZip: AbsoluteFilePath;
         logger: Logger;
     }): Promise<void> {
-        if (!this.hasBuilt) {
-            await this.build(logger);
-        }
+        await this.format(logger);
         await this.zipDirectoryContents(join(this.directory, this.srcDirectory), { logger, destinationZip });
     }
 
@@ -168,9 +160,7 @@ export class PersistedTypescriptProject {
         destinationZip: AbsoluteFilePath;
         logger: Logger;
     }): Promise<void> {
-        if (!this.hasBuilt) {
-            await this.build(logger);
-        }
+        await this.build(logger);
         await this.zipDirectoryContents(join(this.directory, this.distDirectory), { logger, destinationZip });
     }
 
@@ -199,9 +189,7 @@ export class PersistedTypescriptProject {
         publishInfo: PublishInfo;
         dryRun: boolean;
     }): Promise<void> {
-        if (!this.hasBuilt) {
-            await this.build(logger);
-        }
+        await this.build(logger);
 
         const npm = createLoggingExecutable("npm", {
             cwd: this.directory,
