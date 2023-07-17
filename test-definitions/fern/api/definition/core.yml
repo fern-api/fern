@@ -1,0 +1,59 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  ApiErrorCode:
+    enum:
+      - invalid_request
+      - invalid_credentials
+      - forbidden
+      - resource_not_found
+      - conflict
+      - unavailable
+      - unknown
+
+  ApiErrorBody:
+    properties:
+      code: ApiErrorCode
+      message: string
+
+  ApiError:
+    properties:
+      error: ApiErrorBody
+    docs: Represents the general interface of an API error. The body of every error returned by the API contains `code` and `message` fields.
+
+  CreatedAt:
+    type: integer
+    docs: The time at which the object was created, measured in milliseconds since the Unix epoch
+    examples:
+      - name: Example0
+        value: 1671631795145
+
+  UpdatedAt:
+    type: integer
+    docs: The time at which the object was last updated, measured in milliseconds since the Unix epoch
+    examples:
+      - name: Example0
+        value: 1671631799692
+
+errors:
+  InvalidRequestError:
+    status-code: 400
+    type: ApiError
+  InvalidCredentialsError:
+    status-code: 401
+    type: ApiError
+  ForbiddenError:
+    status-code: 403
+    type: ApiError
+  ResourceNotFoundError:
+    status-code: 404
+    type: ApiError
+  ConflictError:
+    status-code: 409
+    type: ApiError
+  InternalError:
+    status-code: 500
+    type: ApiError
+  ServiceUnavailableError:
+    status-code: 503
+    type: ApiError

@@ -1,0 +1,21 @@
+name: api
+
+auth: Authorization
+
+display-name: Test API
+
+auth-schemes:
+  Authorization:
+    header: Authorization
+    type: optional<string>
+    prefix: Bearer
+    name: secretKey
+
+environments:
+  Production: https://api.buildwithfern.com
+  Staging: https://staging.buildwithfern.com
+
+default-environment: Production
+
+error-discrimination:
+  strategy: status-code

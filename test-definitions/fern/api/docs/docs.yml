@@ -1,0 +1,13 @@
+navigation:
+  - section: Welcome
+    contents:
+      - page: Introduction
+        path: ./intro.md
+  - api: API Reference
+title: Test Documentation | Fern
+colors:
+  accentPrimary: "#6467f2"
+navbar-links:
+  - text: GitHub
+    url: https://github.com/fern-api/fern
+    style: primary
