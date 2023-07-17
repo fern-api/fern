@@ -503,13 +503,13 @@ class EndpointFunctionGenerator:
         return self._context.ir.environments is not None
 
     def _get_path_parameter_name(self, path_parameter: ir_types.PathParameter) -> str:
-        return path_parameter.name.snake_case.unsafe_name
+        return path_parameter.name.snake_case.safe_name
 
     def _get_header_parameter_name(self, header: ir_types.HttpHeader) -> str:
-        return header.name.name.snake_case.unsafe_name
+        return header.name.name.snake_case.safe_name
 
     def _get_query_parameter_name(self, query_parameter: ir_types.QueryParameter) -> str:
-        return query_parameter.name.name.snake_case.unsafe_name
+        return query_parameter.name.name.snake_case.safe_name
 
     def _get_literal_header_value(self, header: ir_types.HttpHeader) -> Optional[str]:
         type = header.value_type.get_as_union()
