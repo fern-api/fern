@@ -1,0 +1,562 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fdr {"name":"simple"} 1`] = `
+"{
+    "types": {
+        "type_commons:UndiscriminatedUnion": {
+            "name": "UndiscriminatedUnion",
+            "shape": {
+                "variants": [
+                    {
+                        "type": {
+                            "value": {
+                                "type": "string"
+                            },
+                            "type": "primitive"
+                        }
+                    },
+                    {
+                        "type": {
+                            "itemType": {
+                                "value": {
+                                    "type": "string"
+                                },
+                                "type": "primitive"
+                            },
+                            "type": "list"
+                        }
+                    },
+                    {
+                        "type": {
+                            "value": {
+                                "type": "integer"
+                            },
+                            "type": "primitive"
+                        }
+                    },
+                    {
+                        "type": {
+                            "itemType": {
+                                "itemType": {
+                                    "value": {
+                                        "type": "integer"
+                                    },
+                                    "type": "primitive"
+                                },
+                                "type": "list"
+                            },
+                            "type": "list"
+                        }
+                    }
+                ],
+                "type": "undiscriminatedUnion"
+            }
+        },
+        "type_director:Director": {
+            "name": "Director",
+            "shape": {
+                "extends": [],
+                "properties": [
+                    {
+                        "key": "name",
+                        "valueType": {
+                            "value": {
+                                "type": "string"
+                            },
+                            "type": "primitive"
+                        }
+                    },
+                    {
+                        "key": "age",
+                        "valueType": {
+                            "value": "type_director:Age",
+                            "type": "id"
+                        }
+                    }
+                ],
+                "type": "object"
+            }
+        },
+        "type_director:Age": {
+            "name": "Age",
+            "shape": {
+                "value": {
+                    "value": {
+                        "type": "integer"
+                    },
+                    "type": "primitive"
+                },
+                "type": "alias"
+            }
+        },
+        "type_director:LiteralString": {
+            "name": "LiteralString",
+            "shape": {
+                "value": {
+                    "value": {
+                        "value": "hello",
+                        "type": "stringLiteral"
+                    },
+                    "type": "literal"
+                },
+                "type": "alias"
+            }
+        },
+        "type_imdb:CurrencyAmount": {
+            "name": "CurrencyAmount",
+            "shape": {
+                "value": {
+                    "value": {
+                        "type": "string"
+                    },
+                    "type": "primitive"
+                },
+                "type": "alias"
+            }
+        },
+        "type_imdb:MovieId": {
+            "name": "MovieId",
+            "shape": {
+                "value": {
+                    "value": {
+                        "type": "string"
+                    },
+                    "type": "primitive"
+                },
+                "type": "alias"
+            }
+        },
+        "type_imdb:ActorId": {
+            "name": "ActorId",
+            "shape": {
+                "value": {
+                    "value": {
+                        "type": "string"
+                    },
+                    "type": "primitive"
+                },
+                "type": "alias"
+            }
+        },
+        "type_imdb:Movie": {
+            "name": "Movie",
+            "shape": {
+                "extends": [],
+                "properties": [
+                    {
+                        "key": "id",
+                        "valueType": {
+                            "value": "type_imdb:MovieId",
+                            "type": "id"
+                        }
+                    },
+                    {
+                        "key": "title",
+                        "valueType": {
+                            "value": {
+                                "type": "string"
+                            },
+                            "type": "primitive"
+                        }
+                    },
+                    {
+                        "key": "rating",
+                        "valueType": {
+                            "value": {
+                                "type": "double"
+                            },
+                            "type": "primitive"
+                        }
+                    }
+                ],
+                "type": "object"
+            }
+        },
+        "type_imdb:CreateMovieRequest": {
+            "name": "CreateMovieRequest",
+            "shape": {
+                "extends": [],
+                "properties": [
+                    {
+                        "key": "title",
+                        "valueType": {
+                            "value": {
+                                "type": "string"
+                            },
+                            "type": "primitive"
+                        }
+                    },
+                    {
+                        "key": "ratings",
+                        "valueType": {
+                            "itemType": {
+                                "value": {
+                                    "type": "double"
+                                },
+                                "type": "primitive"
+                            },
+                            "type": "list"
+                        }
+                    }
+                ],
+                "type": "object"
+            }
+        },
+        "type_imdb:DirectorWrapper": {
+            "name": "DirectorWrapper",
+            "shape": {
+                "extends": [],
+                "properties": [
+                    {
+                        "key": "director",
+                        "valueType": {
+                            "value": "type_director:Director",
+                            "type": "id"
+                        }
+                    }
+                ],
+                "type": "object"
+            }
+        },
+        "type_imdb:Person": {
+            "name": "Person",
+            "shape": {
+                "discriminant": "type",
+                "variants": [
+                    {
+                        "discriminantValue": "actor",
+                        "additionalProperties": {
+                            "extends": [],
+                            "properties": [
+                                {
+                                    "key": "value",
+                                    "valueType": {
+                                        "value": "type_imdb:ActorId",
+                                        "type": "id"
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "discriminantValue": "director",
+                        "additionalProperties": {
+                            "extends": [
+                                "type_director:Director"
+                            ],
+                            "properties": []
+                        }
+                    },
+                    {
+                        "discriminantValue": "producer",
+                        "additionalProperties": {
+                            "extends": [],
+                            "properties": []
+                        }
+                    },
+                    {
+                        "description": "i am docs",
+                        "discriminantValue": "cinematographer",
+                        "additionalProperties": {
+                            "extends": [],
+                            "properties": []
+                        }
+                    }
+                ],
+                "type": "discriminatedUnion"
+            }
+        },
+        "type_imdb:RecursiveType": {
+            "name": "RecursiveType",
+            "shape": {
+                "extends": [
+                    "type_imdb:CreateMovieRequest"
+                ],
+                "properties": [
+                    {
+                        "key": "selfReferencing",
+                        "valueType": {
+                            "itemType": {
+                                "value": "type_imdb:RecursiveType",
+                                "type": "id"
+                            },
+                            "type": "list"
+                        }
+                    }
+                ],
+                "type": "object"
+            }
+        }
+    },
+    "subpackages": {
+        "subpackage_commons": {
+            "subpackageId": "subpackage_commons",
+            "name": "commons",
+            "endpoints": [],
+            "types": [
+                "type_commons:UndiscriminatedUnion"
+            ],
+            "subpackages": []
+        },
+        "subpackage_director": {
+            "subpackageId": "subpackage_director",
+            "name": "director",
+            "endpoints": [],
+            "types": [
+                "type_director:Director",
+                "type_director:Age",
+                "type_director:LiteralString"
+            ],
+            "subpackages": []
+        },
+        "subpackage_imdb": {
+            "subpackageId": "subpackage_imdb",
+            "name": "imdb",
+            "endpoints": [
+                {
+                    "auth": false,
+                    "method": "POST",
+                    "id": "createMovie",
+                    "name": "Create Movie",
+                    "path": {
+                        "pathParameters": [],
+                        "parts": [
+                            {
+                                "value": "/movies",
+                                "type": "literal"
+                            },
+                            {
+                                "value": "",
+                                "type": "literal"
+                            }
+                        ]
+                    },
+                    "queryParameters": [],
+                    "headers": [],
+                    "request": {
+                        "type": {
+                            "value": {
+                                "value": "type_imdb:CreateMovieRequest",
+                                "type": "id"
+                            },
+                            "type": "reference"
+                        }
+                    },
+                    "response": {
+                        "type": {
+                            "value": {
+                                "value": "type_imdb:MovieId",
+                                "type": "id"
+                            },
+                            "type": "reference"
+                        }
+                    },
+                    "errors": [
+                        {
+                            "statusCode": 400
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "path": "/movies",
+                            "pathParameters": {},
+                            "queryParameters": {},
+                            "headers": {},
+                            "requestBody": {
+                                "title": "Shrek",
+                                "ratings": [
+                                    10,
+                                    10,
+                                    10,
+                                    10
+                                ]
+                            },
+                            "responseStatusCode": 200,
+                            "responseBody": "shrek-123"
+                        },
+                        {
+                            "path": "/movies",
+                            "pathParameters": {},
+                            "queryParameters": {},
+                            "headers": {},
+                            "requestBody": {
+                                "title": "Winnie the Pooh",
+                                "ratings": [
+                                    1,
+                                    2,
+                                    3
+                                ]
+                            },
+                            "responseStatusCode": 200,
+                            "responseBody": "shrek-123"
+                        }
+                    ]
+                },
+                {
+                    "auth": false,
+                    "method": "GET",
+                    "id": "getMovie",
+                    "name": "Get Movie by Id",
+                    "path": {
+                        "pathParameters": [
+                            {
+                                "key": "movieId",
+                                "type": {
+                                    "value": "type_imdb:MovieId",
+                                    "type": "id"
+                                }
+                            }
+                        ],
+                        "parts": [
+                            {
+                                "value": "/movies",
+                                "type": "literal"
+                            },
+                            {
+                                "value": "/",
+                                "type": "literal"
+                            },
+                            {
+                                "value": "movieId",
+                                "type": "pathParameter"
+                            },
+                            {
+                                "value": "",
+                                "type": "literal"
+                            }
+                        ]
+                    },
+                    "queryParameters": [
+                        {
+                            "key": "movieName",
+                            "type": {
+                                "value": {
+                                    "type": "string"
+                                },
+                                "type": "primitive"
+                            }
+                        }
+                    ],
+                    "headers": [],
+                    "response": {
+                        "type": {
+                            "value": {
+                                "value": "type_imdb:Movie",
+                                "type": "id"
+                            },
+                            "type": "reference"
+                        }
+                    },
+                    "errors": [
+                        {
+                            "type": {
+                                "value": {
+                                    "type": "string"
+                                },
+                                "type": "primitive"
+                            },
+                            "statusCode": 404
+                        },
+                        {
+                            "statusCode": 400
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "path": "/movies/id-123",
+                            "pathParameters": {
+                                "movieId": "id-123"
+                            },
+                            "queryParameters": {
+                                "movieName": "hello"
+                            },
+                            "headers": {},
+                            "responseStatusCode": 200,
+                            "responseBody": {
+                                "id": "id-123",
+                                "title": "Shrek",
+                                "rating": 10
+                            }
+                        },
+                        {
+                            "path": "/movies/id-123",
+                            "pathParameters": {
+                                "movieId": "id-123"
+                            },
+                            "queryParameters": {
+                                "movieName": "hello"
+                            },
+                            "headers": {},
+                            "responseStatusCode": 404,
+                            "responseBody": "id-123"
+                        }
+                    ]
+                },
+                {
+                    "auth": false,
+                    "method": "DELETE",
+                    "id": "delete",
+                    "name": "Delete",
+                    "path": {
+                        "pathParameters": [
+                            {
+                                "key": "movieId",
+                                "type": {
+                                    "value": "type_imdb:MovieId",
+                                    "type": "id"
+                                }
+                            }
+                        ],
+                        "parts": [
+                            {
+                                "value": "/movies",
+                                "type": "literal"
+                            },
+                            {
+                                "value": "/",
+                                "type": "literal"
+                            },
+                            {
+                                "value": "movieId",
+                                "type": "pathParameter"
+                            },
+                            {
+                                "value": "",
+                                "type": "literal"
+                            }
+                        ]
+                    },
+                    "queryParameters": [],
+                    "headers": [],
+                    "errors": [
+                        {
+                            "statusCode": 400
+                        }
+                    ],
+                    "examples": []
+                }
+            ],
+            "types": [
+                "type_imdb:CurrencyAmount",
+                "type_imdb:MovieId",
+                "type_imdb:ActorId",
+                "type_imdb:Movie",
+                "type_imdb:CreateMovieRequest",
+                "type_imdb:DirectorWrapper",
+                "type_imdb:Person",
+                "type_imdb:RecursiveType"
+            ],
+            "subpackages": []
+        }
+    },
+    "rootPackage": {
+        "endpoints": [],
+        "types": [],
+        "subpackages": [
+            "subpackage_commons",
+            "subpackage_director",
+            "subpackage_imdb"
+        ]
+    }
+}"
+`;
