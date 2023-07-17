@@ -1,6 +1,6 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
-import { generateFdrAsString } from "./generateFdrAsString";
+import { generateFdrApiDefinitionAsString } from "./generateFdrApiDefinitionAsString";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
@@ -25,7 +25,7 @@ describe("fdr", () => {
             `${JSON.stringify(fixture)}`,
             async () => {
                 const fixturePath = join(FIXTURES_DIR, RelativeFilePath.of(fixture.name));
-                const fdrContents = await generateFdrAsString({
+                const fdrContents = await generateFdrApiDefinitionAsString({
                     fixturePath,
                     language: fixture.language,
                     audiences: fixture.audiences,

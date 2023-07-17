@@ -3,7 +3,7 @@ import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { readFile, rm } from "fs/promises";
 import { runFernCli } from "../../utils/runFernCli";
 
-export async function generateFdrAsString({
+export async function generateFdrApiDefinitionAsString({
     fixturePath,
     language,
     audiences,
