@@ -9,7 +9,7 @@ import path from "path";
 import { CliContext } from "../../cli-context/CliContext";
 import { generateIrForFernWorkspace } from "../generate-ir/generateIrForFernWorkspace";
 
-export async function generateFdrForWorkspaces({
+export async function generateFdrApiDefinitionForWorkspaces({
     project,
     outputFilepath,
     cliContext,

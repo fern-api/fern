@@ -18,7 +18,7 @@ import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
-import { generateFdrForWorkspaces } from "./commands/generate-fdr/generateFdrForWorkspaces";
+import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
@@ -356,7 +356,7 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Filter the FDR API definition for certain audiences",
                 }),
         async (argv) => {
-            await generateFdrForWorkspaces({
+            await generateFdrApiDefinitionForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineWorkspace: argv.api,
                     defaultToAllWorkspaces: false,
