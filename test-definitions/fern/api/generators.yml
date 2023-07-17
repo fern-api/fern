@@ -1,0 +1,7 @@
+default-group: staging
+
+groups:
+  staging:
+    docs:
+      domain: fern-test-def.docs.dev.buildwithfern.com
+    generators: []
