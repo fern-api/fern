@@ -111,6 +111,8 @@ poetry.toml
 """,
         )
         project.add_file(".github/workflows/ci.yml", self._get_github_workflow(output_mode))
+        project.add_file("tests/__init__.py", "")
+        project.add_file("tests/__test__client.py", self._get_client_test())
 
     def _get_github_workflow(self, output_mode: GithubOutputMode) -> str:
         workflow_yaml = """name: ci
@@ -133,6 +135,22 @@ jobs:
         run: poetry install
       - name: Compile
         run: poetry run mypy .
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+      - name: Set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.7
+      - name: Bootstrap poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python - -y
+      - name: Install dependencies
+        run: poetry install
+      - name: Test
+        run: poetry run pytest .
 """
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()
@@ -165,6 +183,15 @@ jobs:
           {publish_info_union.password_environment_variable}: ${{{{ secrets.{publish_info_union.password_environment_variable} }}}}
 """
         return workflow_yaml
+
+    def _get_client_test(self) -> str:
+        return """import pytest
+
+# Get started with writing tests with pytest at https://docs.pytest.org
+@pytest.mark.skip(reason="Unimplemented")
+def test_client() -> None:
+    assert True == True
+"""
 
     @abstractmethod
     def run(

@@ -88,6 +88,7 @@ python = "^{self.python_version}"
 {deps}
 [tool.poetry.dev-dependencies]
 mypy = "0.971"
+pytest = "^7.4.0"
 """
 
     @dataclass(frozen=True)

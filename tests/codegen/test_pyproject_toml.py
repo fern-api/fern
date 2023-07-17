@@ -40,6 +40,7 @@ pydantic = "^1.10.2"
 
 [tool.poetry.dev-dependencies]
 mypy = "0.971"
+pytest = "^7.4.0"
 
 [build-system]
 requires = ["poetry-core"]
