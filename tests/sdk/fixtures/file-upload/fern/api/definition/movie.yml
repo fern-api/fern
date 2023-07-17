@@ -16,5 +16,12 @@ service:
             name: string
             contents: file
 
+    downloadMovie:
+      method: GET
+      path: /movie/{movieId}
+      path-parameters:
+        movieId: MovieId
+      response: file
+
 types:
   MovieId: string

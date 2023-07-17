@@ -35,6 +35,22 @@ class MovieClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def download_movie(self, movie_id: MovieId) -> typing.Iterator[bytes]:
+        with self._client_wrapper.httpx_client.stream(
+            "GET",
+            urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
+            headers=self._client_wrapper.get_headers(),
+            timeout=60,
+        ) as _response:
+            if 200 <= _response.status_code < 300:
+                for _chunk in _response.iter_bytes():
+                    yield _chunk
+            try:
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncMovieClient:
     def __init__(self, *, environment: str, client_wrapper: AsyncClientWrapper):
@@ -57,3 +73,19 @@ class AsyncMovieClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def download_movie(self, movie_id: MovieId) -> typing.AsyncIterator[bytes]:
+        async with self._client_wrapper.httpx_client.stream(
+            "GET",
+            urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
+            headers=self._client_wrapper.get_headers(),
+            timeout=60,
+        ) as _response:
+            if 200 <= _response.status_code < 300:
+                async for _chunk in _response.aiter_bytes():
+                    yield _chunk
+            try:
+                _response_json = _response.json()
+            except JSONDecodeError:
+                raise ApiError(status_code=_response.status_code, body=_response.text)
+            raise ApiError(status_code=_response.status_code, body=_response_json)

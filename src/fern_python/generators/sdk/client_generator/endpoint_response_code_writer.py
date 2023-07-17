@@ -11,6 +11,7 @@ class EndpointResponseCodeWriter:
     RESPONSE_VARIABLE = "_response"
     RESPONSE_JSON_VARIABLE = "_response_json"
     STREAM_TEXT_VARIABLE = "_text"
+    FILE_CHUNK_VARIABLE = "_chunk"
 
     def __init__(
         self,
@@ -82,6 +83,22 @@ class EndpointResponseCodeWriter:
         )
         writer.write_newline_if_last_line_not()
 
+    def _handle_success_file_download(self, *, writer: AST.NodeWriter) -> None:
+        if self._is_async:
+            writer.write("async ")
+        writer.write_line(
+            f"for {EndpointResponseCodeWriter.FILE_CHUNK_VARIABLE} in {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.{self._get_iter_bytes_method(is_async=self._is_async)}(): "
+        )
+        with writer.indent():
+            writer.write(f"yield {EndpointResponseCodeWriter.FILE_CHUNK_VARIABLE}")
+        writer.write_newline_if_last_line_not()
+
+    def _get_iter_bytes_method(self, *, is_async: bool) -> str:
+        if is_async:
+            return "aiter_bytes"
+        else:
+            return "iter_bytes"
+
     def _write_status_code_discriminated_response_handler(self, *, writer: AST.NodeWriter) -> None:
         writer.write_line(f"if 200 <= {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.status_code < 300:")
         with writer.indent():
@@ -96,7 +113,7 @@ class EndpointResponseCodeWriter:
                     streaming=lambda stream_response: self._handle_success_stream(
                         writer=writer, stream_response=stream_response
                     ),
-                    file_download=raise_file_download_unsupported,
+                    file_download=lambda _: self._handle_success_file_download(writer=writer),
                 )
 
         for error in self._endpoint.errors.get_as_list():
@@ -157,7 +174,7 @@ class EndpointResponseCodeWriter:
                     streaming=lambda stream_response: self._handle_success_stream(
                         writer=writer, stream_response=stream_response
                     ),
-                    file_download=raise_file_download_unsupported,
+                    file_download=lambda _: self._handle_success_file_download(writer=writer),
                 )
 
         if self._endpoint.response is None:
@@ -228,15 +245,13 @@ class EndpointResponseCodeWriter:
 
     def _get_response_body_type(self, response: ir_types.HttpResponse) -> AST.TypeHint:
         return response.visit(
-            file_download=raise_file_download_unsupported,
+            file_download=lambda _: AST.TypeHint.async_iterator(AST.TypeHint.bytes())
+            if self._is_async
+            else AST.TypeHint.iterator(AST.TypeHint.bytes()),
             json=lambda json_response: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                 json_response.response_body_type
             ),
         )
-
-
-def raise_file_download_unsupported(file_download_response: ir_types.FileDownloadResponse) -> Never:
-    raise RuntimeError("File download is not supported")
 
 
 def raise_maybe_streaming_unsupported(maybe_streaming_response: ir_types.MaybeStreamingResponse) -> Never:
