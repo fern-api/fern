@@ -38,7 +38,7 @@ export async function generateFdrApiDefinitionForWorkspaces({
 
                 const resolvedOutputFilePath = path.resolve(outputFilepath);
                 await writeFile(resolvedOutputFilePath, await stringifyLargeObject(apiDefinition, { pretty: true }));
-                context.logger.info(`Wrote IR to ${resolvedOutputFilePath}`);
+                context.logger.info(`Wrote FDR API definition to ${resolvedOutputFilePath}`);
             });
         })
     );
