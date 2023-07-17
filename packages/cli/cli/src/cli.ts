@@ -345,10 +345,6 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     string: true,
                     description: "Only run the command on the provided API",
                 })
-                .option("language", {
-                    choices: Object.values(GenerationLanguage),
-                    description: "Generate FDR API definition for a particular language",
-                })
                 .option("audience", {
                     type: "array",
                     string: true,
@@ -363,7 +359,6 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }),
                 outputFilepath: resolve(cwd(), argv.pathToOutput),
                 cliContext,
-                generationLanguage: argv.language,
                 audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" },
             });
         }

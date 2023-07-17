@@ -1,6 +1,5 @@
 import { Audiences } from "@fern-api/config-management-commons";
 import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
-import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { Project } from "@fern-api/project-loader";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { convertOpenApiWorkspaceToFernWorkspace } from "@fern-api/workspace-loader";
@@ -13,13 +12,11 @@ export async function generateFdrApiDefinitionForWorkspaces({
     project,
     outputFilepath,
     cliContext,
-    generationLanguage,
     audiences,
 }: {
     project: Project;
     outputFilepath: AbsoluteFilePath;
     cliContext: CliContext;
-    generationLanguage: GenerationLanguage | undefined;
     audiences: Audiences;
 }): Promise<void> {
     await Promise.all(
@@ -33,7 +30,7 @@ export async function generateFdrApiDefinitionForWorkspaces({
                 const intermediateRepresentation = await generateIrForFernWorkspace({
                     workspace: fernWorkspace,
                     context,
-                    generationLanguage,
+                    generationLanguage: undefined,
                     audiences,
                 });
 
