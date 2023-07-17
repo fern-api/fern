@@ -112,7 +112,7 @@ poetry.toml
         )
         project.add_file(".github/workflows/ci.yml", self._get_github_workflow(output_mode))
         project.add_file("tests/__init__.py", "")
-        project.add_file("tests/__test__client.py", self._get_client_test())
+        project.add_file("tests/test_client.py", self._get_client_test())
 
     def _get_github_workflow(self, output_mode: GithubOutputMode) -> str:
         workflow_yaml = """name: ci

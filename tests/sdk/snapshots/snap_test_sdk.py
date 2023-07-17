@@ -25,7 +25,7 @@ snapshots['test_circular_imports filepaths'] = [
     'src/my_org/types/importing_a.py',
     'src/my_org/types/root_type.py',
     'tests/__init__.py',
-    'tests/__test__client.py'
+    'tests/test_client.py'
 ]
 
 snapshots['test_circular_imports src_my_org___init__'] = FileSnapshot('snap_test_sdk/test_circular_imports src_my_org___init__.py')
@@ -60,7 +60,7 @@ snapshots['test_circular_imports src_my_org_types_root_type'] = FileSnapshot('sn
 
 snapshots['test_circular_imports tests___init__'] = FileSnapshot('snap_test_sdk/test_circular_imports tests___init__.py')
 
-snapshots['test_circular_imports tests___test__client'] = FileSnapshot('snap_test_sdk/test_circular_imports tests___test__client.py')
+snapshots['test_circular_imports tests_test_client'] = FileSnapshot('snap_test_sdk/test_circular_imports tests_test_client.py')
 
 snapshots['test_file_upload_sdk __init__'] = FileSnapshot('snap_test_sdk/test_file_upload_sdk __init__.py')
 
@@ -124,7 +124,7 @@ snapshots['test_github_no_publish_sdk filepaths'] = [
     'src/fern/resources/movie/types/movie.py',
     'src/fern/resources/movie/types/movie_id.py',
     'tests/__init__.py',
-    'tests/__test__client.py'
+    'tests/test_client.py'
 ]
 
 snapshots['test_github_no_publish_sdk src_fern___init__'] = FileSnapshot('snap_test_sdk/test_github_no_publish_sdk src_fern___init__.py')
@@ -165,7 +165,7 @@ snapshots['test_github_no_publish_sdk src_fern_resources_movie_types_movie_id'] 
 
 snapshots['test_github_no_publish_sdk tests___init__'] = FileSnapshot('snap_test_sdk/test_github_no_publish_sdk tests___init__.py')
 
-snapshots['test_github_no_publish_sdk tests___test__client'] = FileSnapshot('snap_test_sdk/test_github_no_publish_sdk tests___test__client.py')
+snapshots['test_github_no_publish_sdk tests_test_client'] = FileSnapshot('snap_test_sdk/test_github_no_publish_sdk tests_test_client.py')
 
 snapshots['test_github_sdk filepaths'] = [
     'src/fern/__init__.py',
@@ -189,7 +189,7 @@ snapshots['test_github_sdk filepaths'] = [
     'src/fern/resources/movie/types/movie_id.py',
     'src/fern/resources/movie/types/person.py',
     'tests/__init__.py',
-    'tests/__test__client.py'
+    'tests/test_client.py'
 ]
 
 snapshots['test_github_sdk src_fern___init__'] = FileSnapshot('snap_test_sdk/test_github_sdk src_fern___init__.py')
@@ -234,7 +234,7 @@ snapshots['test_github_sdk src_fern_resources_movie_types_person'] = FileSnapsho
 
 snapshots['test_github_sdk tests___init__'] = FileSnapshot('snap_test_sdk/test_github_sdk tests___init__.py')
 
-snapshots['test_github_sdk tests___test__client'] = FileSnapshot('snap_test_sdk/test_github_sdk tests___test__client.py')
+snapshots['test_github_sdk tests_test_client'] = FileSnapshot('snap_test_sdk/test_github_sdk tests_test_client.py')
 
 snapshots['test_multiple_urls_sdk __init__'] = FileSnapshot('snap_test_sdk/test_multiple_urls_sdk __init__.py')
 
