@@ -2,7 +2,7 @@ name: api
 
 auth: Authorization
 
-display-name: Primer API
+display-name: Test API
 
 auth-schemes:
   Authorization:
