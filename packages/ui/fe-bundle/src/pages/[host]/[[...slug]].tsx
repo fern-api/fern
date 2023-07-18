@@ -8,6 +8,7 @@ import Head from "next/head";
 import { REGISTRY_SERVICE } from "../../service";
 import { getSlugFromUrl } from "../../url-path-resolver/getSlugFromUrl";
 import { UrlPathResolver } from "../../url-path-resolver/UrlPathResolver";
+import { generateFontFaces, loadDocTypography } from "../../utils/theme/loadDocsTypography";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,27 +16,50 @@ export declare namespace Docs {
     export interface Props {
         docs: FernRegistryDocsReadV2.LoadDocsForUrlResponse;
         resolvedUrlPath: ResolvedUrlPath;
+        typographyStyleSheet?: string;
         nextPath: ResolvedUrlPath | null;
         previousPath: ResolvedUrlPath | null;
     }
 }
 
-export default function Docs({ docs, resolvedUrlPath, nextPath, previousPath }: Docs.Props): JSX.Element {
+function Typography({ stylesheet }: { stylesheet: string }) {
     return (
-        <main className={inter.className}>
-            <Head>
-                {docs.definition.config.title != null && <title>{docs.definition.config.title}</title>}
-                {docs.definition.config.favicon != null && (
-                    <link rel="icon" id="favicon" href={docs.definition.files[docs.definition.config.favicon]}></link>
-                )}
-            </Head>
-            <App
-                docs={docs}
-                resolvedUrlPath={resolvedUrlPath}
-                nextPath={nextPath ?? undefined}
-                previousPath={previousPath ?? undefined}
-            />
-        </main>
+        // eslint-disable-next-line react/no-unknown-property
+        <style id="fern-font-stylesheet" jsx global>
+            {stylesheet}
+        </style>
+    );
+}
+
+export default function Docs({
+    docs,
+    typographyStyleSheet,
+    resolvedUrlPath,
+    nextPath,
+    previousPath,
+}: Docs.Props): JSX.Element {
+    return (
+        <>
+            {typographyStyleSheet != null && <Typography stylesheet={typographyStyleSheet} />}
+            <main className={inter.className}>
+                <Head>
+                    {docs.definition.config.title != null && <title>{docs.definition.config.title}</title>}
+                    {docs.definition.config.favicon != null && (
+                        <link
+                            rel="icon"
+                            id="favicon"
+                            href={docs.definition.files[docs.definition.config.favicon]}
+                        ></link>
+                    )}
+                </Head>
+                <App
+                    docs={docs}
+                    resolvedUrlPath={resolvedUrlPath}
+                    nextPath={nextPath ?? undefined}
+                    previousPath={previousPath ?? undefined}
+                />
+            </main>
+        </>
     );
 }
 
@@ -86,9 +110,13 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         return { notFound: true, revalidate: true };
     }
 
+    const typographyConfig = loadDocTypography(docs.body.definition);
+    const typographyStyleSheet = generateFontFaces(typographyConfig);
+
     return {
         props: {
             docs: docs.body,
+            typographyStyleSheet,
             resolvedUrlPath,
             nextPath: (await urlPathResolver.getNextNavigatableItem(resolvedUrlPath)) ?? null,
             previousPath: (await urlPathResolver.getPreviousNavigatableItem(resolvedUrlPath)) ?? null,
