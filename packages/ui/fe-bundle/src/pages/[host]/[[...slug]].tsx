@@ -10,6 +10,10 @@ import { getSlugFromUrl } from "../../url-path-resolver/getSlugFromUrl";
 import { UrlPathResolver } from "../../url-path-resolver/UrlPathResolver";
 import { generateFontFaces, loadDocTypography } from "../../utils/theme/loadDocsTypography";
 
+function classNames(...classes: (string | undefined)[]): string {
+    return classes.filter((c) => c != null).join(" ");
+}
+
 const inter = Inter({ subsets: ["latin"] });
 
 export declare namespace Docs {
@@ -41,7 +45,7 @@ export default function Docs({
     return (
         <>
             {typographyStyleSheet != null && <Typography stylesheet={typographyStyleSheet} />}
-            <main className={inter.className}>
+            <main className={classNames(inter.className, "typography-font-body")}>
                 <Head>
                     {docs.definition.config.title != null && <title>{docs.definition.config.title}</title>}
                     {docs.definition.config.favicon != null && (

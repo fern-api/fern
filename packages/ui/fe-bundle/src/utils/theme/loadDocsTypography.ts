@@ -81,6 +81,14 @@ export function generateFontFaces(generationConfiguration: GenerationFontConfig[
             h1, h2, h3, h4, h5, h6 {
                 font-family: '${fontConfig.fontName}', sans-serif;
             }
+
+            :root {
+              --typography-heading-font-family: '${fontConfig.fontName}', sans-serif;
+            }
+
+            .typography-font-heading {
+              font-family: var(--typography-heading-font-family);
+            }
           `;
             fontFaces.push(fontFace);
         }
@@ -94,8 +102,12 @@ export function generateFontFaces(generationConfiguration: GenerationFontConfig[
                 font-style: normal;
             }
 
-            * {
-                font-family: '${fontConfig.fontName}', sans-serif;
+            :root {
+              --typography-body-font-family: '${fontConfig.fontName}', sans-serif;
+            }
+
+            .typography-font-body {
+              font-family: var(--typography-body-font-family);
             }
           `;
             fontFaces.push(fontFace);
@@ -112,6 +124,14 @@ export function generateFontFaces(generationConfiguration: GenerationFontConfig[
 
             code, pre {
                 font-family: '${fontConfig.fontName}', monospace;
+            }
+
+            :root {
+              --typography-code-font-family: '${fontConfig.fontName}', sans-serif;
+            }
+
+            .typography-font-code {
+              font-family: var(--typography-code-font-family), Monospace;
             }
           `;
             fontFaces.push(fontFace);

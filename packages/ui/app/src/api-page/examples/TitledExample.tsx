@@ -60,7 +60,8 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                     className={classNames(
                         styles.code,
                         className,
-                        "flex flex-1 leading-relaxed text-xs bg-gray-dark/40 min-w-0"
+                        "flex flex-1 leading-relaxed text-xs bg-gray-dark/40 min-w-0",
+                        "typography-font-code"
                     )}
                 >
                     <div className="flex-1 overflow-auto whitespace-pre py-4" ref={setContentRef}>
