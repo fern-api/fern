@@ -147,10 +147,15 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                     <div
                         {...containerCallbacks}
                         className={classNames(
-                            "flex gap-1 items-center cursor-pointer px-2 py-1 transition",
-                            isHovering ? "text-text-default" : "text-text-default"
+                            "flex gap-1 items-center cursor-pointer px-2 py-1 transition text-text-default border-b border-border",
+                            {
+                                "border-opacity-0": isCollapsed,
+                            }
                         )}
-                        onClick={toggleIsCollapsed}
+                        onClick={(e) => {
+                            toggleIsCollapsed();
+                            e.stopPropagation();
+                        }}
                     >
                         <Icon
                             className={classNames(
