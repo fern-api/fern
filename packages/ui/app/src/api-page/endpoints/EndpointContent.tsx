@@ -84,6 +84,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
         },
         [titleHeight]
     );
+    const [selectedErrorIndex, setSelectedErrorIndex] = useState<number | null>(null);
 
     const environmentUrl = useMemo(() => getEndpointEnvironmentUrl(endpoint), [endpoint]);
 
@@ -171,7 +172,13 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                             )}
                             {endpoint.errors.length > 0 && (
                                 <EndpointSection title="Errors">
-                                    <EndpointErrorsSection errors={endpoint.errors} />
+                                    <EndpointErrorsSection
+                                        errors={endpoint.errors}
+                                        onClickError={(_, idx) => {
+                                            setSelectedErrorIndex(idx === selectedErrorIndex ? null : idx);
+                                        }}
+                                        selectedErrorIndex={selectedErrorIndex}
+                                    />
                                 </EndpointSection>
                             )}
                         </div>

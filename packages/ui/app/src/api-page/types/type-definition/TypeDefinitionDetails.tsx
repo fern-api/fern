@@ -12,7 +12,6 @@ export declare namespace TypeDefinitionDetails {
 export const TypeDefinitionDetails: React.FC<TypeDefinitionDetails.Props> = ({ elements, separatorText }) => {
     return (
         <div className="flex flex-col">
-            <TypeComponentSeparator />
             <SeparatedElements
                 separator={
                     separatorText != null ? (
