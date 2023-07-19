@@ -159,7 +159,7 @@ jobs:
 
             workflow_yaml += f"""
   publish:
-    needs: [ compile ]
+    needs: [compile, test]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
