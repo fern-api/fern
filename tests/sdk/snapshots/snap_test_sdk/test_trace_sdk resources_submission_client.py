@@ -20,6 +20,12 @@ class SubmissionClient:
         self._client_wrapper = client_wrapper
 
     def create_execution_session(self, language: Language) -> ExecutionSessionResponse:
+        """
+        Returns sessionId and execution server URL for session. Spins up server.
+
+        Parameters:
+            - language: Language.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/create-session/{language}"),
@@ -35,6 +41,12 @@ class SubmissionClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_execution_session(self, session_id: str) -> typing.Optional[ExecutionSessionResponse]:
+        """
+        Returns execution server URL for session. Returns empty if session isn't registered.
+
+        Parameters:
+            - session_id: str.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/{session_id}"),
@@ -50,6 +62,12 @@ class SubmissionClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def stop_execution_session(self, session_id: str) -> None:
+        """
+        Stops execution session.
+
+        Parameters:
+            - session_id: str.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/stop/{session_id}"),
@@ -86,6 +104,12 @@ class AsyncSubmissionClient:
         self._client_wrapper = client_wrapper
 
     async def create_execution_session(self, language: Language) -> ExecutionSessionResponse:
+        """
+        Returns sessionId and execution server URL for session. Spins up server.
+
+        Parameters:
+            - language: Language.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/create-session/{language}"),
@@ -101,6 +125,12 @@ class AsyncSubmissionClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_execution_session(self, session_id: str) -> typing.Optional[ExecutionSessionResponse]:
+        """
+        Returns execution server URL for session. Returns empty if session isn't registered.
+
+        Parameters:
+            - session_id: str.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/{session_id}"),
@@ -116,6 +146,12 @@ class AsyncSubmissionClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def stop_execution_session(self, session_id: str) -> None:
+        """
+        Stops execution session.
+
+        Parameters:
+            - session_id: str.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/stop/{session_id}"),

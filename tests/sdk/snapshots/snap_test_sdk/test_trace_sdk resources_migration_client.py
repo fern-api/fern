@@ -19,6 +19,10 @@ class MigrationClient:
         self._client_wrapper = client_wrapper
 
     def get_attempted_migrations(self, *, admin_key_header: str) -> typing.List[Migration]:
+        """
+        Parameters:
+            - admin_key_header: str.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", "migration-info/all"),
@@ -40,6 +44,10 @@ class AsyncMigrationClient:
         self._client_wrapper = client_wrapper
 
     async def get_attempted_migrations(self, *, admin_key_header: str) -> typing.List[Migration]:
+        """
+        Parameters:
+            - admin_key_header: str.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", "migration-info/all"),

@@ -22,6 +22,10 @@ class AiClient:
         self._client_wrapper = client_wrapper
 
     def generate_stream(self, *, num_events: int) -> typing.Iterator[StreamResponse]:
+        """
+        Parameters:
+            - num_events: int.
+        """
         with self._client_wrapper.httpx_client.stream(
             "POST",
             urllib.parse.urljoin(f"{self._environment}/", "generate-stream"),
@@ -48,6 +52,10 @@ class AsyncAiClient:
         self._client_wrapper = client_wrapper
 
     async def generate_stream(self, *, num_events: int) -> typing.AsyncIterator[StreamResponse]:
+        """
+        Parameters:
+            - num_events: int.
+        """
         async with self._client_wrapper.httpx_client.stream(
             "POST",
             urllib.parse.urljoin(f"{self._environment}/", "generate-stream"),

@@ -20,6 +20,9 @@ class ProblemClient:
         self._client_wrapper = client_wrapper
 
     def get_lightweight_problems(self) -> typing.List[LightweightProblemInfoV2]:
+        """
+        Returns lightweight versions of all problems
+        """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", "problems-v2/lightweight-problem-info"),
@@ -35,6 +38,9 @@ class ProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_problems(self) -> typing.List[ProblemInfoV2]:
+        """
+        Returns latest versions of all problems
+        """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", "problems-v2/problem-info"),
@@ -50,6 +56,12 @@ class ProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_latest_problem(self, problem_id: ProblemId) -> ProblemInfoV2:
+        """
+        Returns latest version of a problem
+
+        Parameters:
+            - problem_id: ProblemId.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", f"problems-v2/problem-info/{problem_id}"),
@@ -65,6 +77,14 @@ class ProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_problem_version(self, problem_id: ProblemId, problem_version: int) -> ProblemInfoV2:
+        """
+        Returns requested version of a problem
+
+        Parameters:
+            - problem_id: ProblemId.
+
+            - problem_version: int.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(
@@ -88,6 +108,9 @@ class AsyncProblemClient:
         self._client_wrapper = client_wrapper
 
     async def get_lightweight_problems(self) -> typing.List[LightweightProblemInfoV2]:
+        """
+        Returns lightweight versions of all problems
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", "problems-v2/lightweight-problem-info"),
@@ -103,6 +126,9 @@ class AsyncProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_problems(self) -> typing.List[ProblemInfoV2]:
+        """
+        Returns latest versions of all problems
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", "problems-v2/problem-info"),
@@ -118,6 +144,12 @@ class AsyncProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_latest_problem(self, problem_id: ProblemId) -> ProblemInfoV2:
+        """
+        Returns latest version of a problem
+
+        Parameters:
+            - problem_id: ProblemId.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", f"problems-v2/problem-info/{problem_id}"),
@@ -133,6 +165,14 @@ class AsyncProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_problem_version(self, problem_id: ProblemId, problem_version: int) -> ProblemInfoV2:
+        """
+        Returns requested version of a problem
+
+        Parameters:
+            - problem_id: ProblemId.
+
+            - problem_version: int.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(

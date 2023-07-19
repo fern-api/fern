@@ -38,6 +38,18 @@ class PlaylistClient:
         optional_datetime: typing.Optional[dt.datetime] = None,
         request: PlaylistCreateRequest,
     ) -> Playlist:
+        """
+        Create a new playlist
+
+        Parameters:
+            - service_param: int.
+
+            - datetime: dt.datetime.
+
+            - optional_datetime: typing.Optional[dt.datetime].
+
+            - request: PlaylistCreateRequest.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/create"),
@@ -71,6 +83,23 @@ class PlaylistClient:
         optional_multiple_field: typing.Union[typing.Optional[str], typing.List[str]],
         multiple_field: typing.Union[str, typing.List[str]],
     ) -> typing.List[Playlist]:
+        """
+        Returns the user's playlists
+
+        Parameters:
+            - service_param: int.
+
+            - limit: typing.Optional[int].
+
+            - other_field: str. i'm another field
+
+            - multi_line_docs: str. I'm a multiline
+                                    description
+
+            - optional_multiple_field: typing.Union[typing.Optional[str], typing.List[str]].
+
+            - multiple_field: typing.Union[str, typing.List[str]].
+        """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/all"),
@@ -95,6 +124,14 @@ class PlaylistClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_playlist(self, service_param: int, playlist_id: PlaylistId) -> Playlist:
+        """
+        Returns a playlist
+
+        Parameters:
+            - service_param: int.
+
+            - playlist_id: PlaylistId.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
@@ -119,6 +156,16 @@ class PlaylistClient:
     def update_playlist(
         self, service_param: int, playlist_id: PlaylistId, *, request: typing.Optional[UpdatePlaylistRequest] = None
     ) -> typing.Optional[Playlist]:
+        """
+        Updates a playlist
+
+        Parameters:
+            - service_param: int.
+
+            - playlist_id: PlaylistId.
+
+            - request: typing.Optional[UpdatePlaylistRequest].
+        """
         _response = self._client_wrapper.httpx_client.request(
             "PUT",
             urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
@@ -140,6 +187,14 @@ class PlaylistClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete_playlist(self, service_param: int, playlist_id: PlaylistId) -> None:
+        """
+        Deletes a playlist
+
+        Parameters:
+            - service_param: int.
+
+            - playlist_id: PlaylistId.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
@@ -168,6 +223,18 @@ class AsyncPlaylistClient:
         optional_datetime: typing.Optional[dt.datetime] = None,
         request: PlaylistCreateRequest,
     ) -> Playlist:
+        """
+        Create a new playlist
+
+        Parameters:
+            - service_param: int.
+
+            - datetime: dt.datetime.
+
+            - optional_datetime: typing.Optional[dt.datetime].
+
+            - request: PlaylistCreateRequest.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/create"),
@@ -201,6 +268,23 @@ class AsyncPlaylistClient:
         optional_multiple_field: typing.Union[typing.Optional[str], typing.List[str]],
         multiple_field: typing.Union[str, typing.List[str]],
     ) -> typing.List[Playlist]:
+        """
+        Returns the user's playlists
+
+        Parameters:
+            - service_param: int.
+
+            - limit: typing.Optional[int].
+
+            - other_field: str. i'm another field
+
+            - multi_line_docs: str. I'm a multiline
+                                    description
+
+            - optional_multiple_field: typing.Union[typing.Optional[str], typing.List[str]].
+
+            - multiple_field: typing.Union[str, typing.List[str]].
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/all"),
@@ -225,6 +309,14 @@ class AsyncPlaylistClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_playlist(self, service_param: int, playlist_id: PlaylistId) -> Playlist:
+        """
+        Returns a playlist
+
+        Parameters:
+            - service_param: int.
+
+            - playlist_id: PlaylistId.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
@@ -249,6 +341,16 @@ class AsyncPlaylistClient:
     async def update_playlist(
         self, service_param: int, playlist_id: PlaylistId, *, request: typing.Optional[UpdatePlaylistRequest] = None
     ) -> typing.Optional[Playlist]:
+        """
+        Updates a playlist
+
+        Parameters:
+            - service_param: int.
+
+            - playlist_id: PlaylistId.
+
+            - request: typing.Optional[UpdatePlaylistRequest].
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "PUT",
             urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
@@ -270,6 +372,14 @@ class AsyncPlaylistClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete_playlist(self, service_param: int, playlist_id: PlaylistId) -> None:
+        """
+        Deletes a playlist
+
+        Parameters:
+            - service_param: int.
+
+            - playlist_id: PlaylistId.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),

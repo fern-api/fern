@@ -74,10 +74,19 @@ class EndpointFunctionGenerator:
             if self._endpoint.request_body is not None
             else None
         )
-
+        named_parameters = self._get_endpoint_named_parameters(
+            service=self._service,
+            endpoint=self._endpoint,
+            request_body_parameters=request_body_parameters,
+        )
         function_declaration = AST.FunctionDeclaration(
             name=self._endpoint.name.get_as_name().snake_case.unsafe_name,
             is_async=self._is_async,
+            docstring=self._get_docstring_for_endpoint(
+                endpoint=self._endpoint,
+                named_parameters=named_parameters,
+                path_parameters=self._endpoint.all_path_parameters,
+            ),
             signature=AST.FunctionSignature(
                 parameters=[
                     AST.FunctionParameter(
@@ -88,11 +97,7 @@ class EndpointFunctionGenerator:
                     )
                     for path_parameter in self._endpoint.all_path_parameters
                 ],
-                named_parameters=self._get_endpoint_named_parameters(
-                    service=self._service,
-                    endpoint=self._endpoint,
-                    request_body_parameters=request_body_parameters,
-                ),
+                named_parameters=named_parameters,
                 return_type=self._get_response_body_type(self._endpoint.sdk_response, self._is_async)
                 if self._endpoint.sdk_response is not None
                 else AST.TypeHint.none(),
@@ -125,6 +130,7 @@ class EndpointFunctionGenerator:
             parameters.append(
                 AST.NamedFunctionParameter(
                     name=self._get_query_parameter_name(query_parameter),
+                    docs=query_parameter.docs,
                     type_hint=AST.TypeHint.union(
                         query_parameter_type_hint,
                         AST.TypeHint.list(
@@ -146,6 +152,7 @@ class EndpointFunctionGenerator:
                 parameters.append(
                     AST.NamedFunctionParameter(
                         name=self._get_header_parameter_name(header),
+                        docs=header.docs,
                         type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                             header.value_type
                         ),
@@ -226,6 +233,96 @@ class EndpointFunctionGenerator:
             )
 
         return AST.CodeWriter(write)
+
+    def _get_docstring_for_endpoint(
+        self,
+        endpoint: ir_types.HttpEndpoint,
+        named_parameters: List[AST.NamedFunctionParameter],
+        path_parameters: List[ir_types.PathParameter],
+    ) -> Optional[AST.CodeWriter]:
+        if endpoint.docs is None and len(named_parameters) == 0 and len(path_parameters) == 0:
+            return None
+
+        # Consolidate the named parameters and path parameters in a single list.
+        parameters: List[AST.NamedFunctionParameter] = []
+        parameters = self._named_parameters_from_path_parameters(path_parameters)
+        parameters.extend(named_parameters)
+
+        def write(writer: AST.NodeWriter) -> None:
+            if endpoint.docs is not None:
+                writer.write_line(endpoint.docs)
+            if len(parameters) == 0:
+                return
+            if endpoint.docs is not None:
+                # Include a line between the endpoint docs and field docs.
+                writer.write_line()
+            writer.write_line("Parameters:")
+            with writer.indent():
+                for i, param in enumerate(parameters):
+                    if i > 0:
+                        writer.write_line()
+
+                    if param.docs is None:
+                        writer.write(f"- {param.name}: ")
+                        if param.type_hint is not None:
+                            writer.write_node(param.type_hint)
+                        writer.write_line(".")
+                        continue
+
+                    split = param.docs.split("\n")
+                    if len(split) == 1:
+                        writer.write(f"- {param.name}: ")
+                        if param.type_hint is not None:
+                            writer.write_node(param.type_hint)
+                        writer.write_line(f". {param.docs}")
+                        continue
+
+                    # Handle multi-line comments at the same level of indentation for the same field,
+                    # e.g.
+                    #
+                    #  - userId: str. This is a multi-line comment.
+                    #                 This one has three lines
+                    #                 in total.
+                    #
+                    #  - request: Request. The request body.
+                    #
+                    indent = ""
+                    for i, line in enumerate(split):
+                        if i == 0:
+                            # Determine the level of indentation we need by capturing the length
+                            # before and after we write the type hint.
+                            writer.write(f"- {param.name}: ")
+                            before = writer.size()
+                            if param.type_hint is not None:
+                                writer.write_node(param.type_hint)
+                            after = writer.size()
+                            writer.write_line(f". {line}")
+                            indent = " " * (len(param.name) + (after - before) + 4)
+                            continue
+                        writer.write(f" {indent} {line}")
+                        if i < len(split) - 1:
+                            writer.write_line()
+
+        return AST.CodeWriter(write)
+
+    def _named_parameters_have_docs(self, named_parameters: List[AST.NamedFunctionParameter]) -> bool:
+        return named_parameters is not None and any(param.docs is not None for param in named_parameters)
+
+    def _named_parameters_from_path_parameters(
+        self, path_parameters: List[ir_types.PathParameter]
+    ) -> List[AST.NamedFunctionParameter]:
+        named_parameters: List[AST.NamedFunctionParameter] = []
+        for path_parameter in path_parameters:
+            named_parameters.append(
+                AST.NamedFunctionParameter(
+                    name=self._get_path_parameter_name(path_parameter),
+                    docs=path_parameter.docs,
+                    type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                        path_parameter.value_type
+                    ),
+                ),
+            )
+        return named_parameters
 
     def _get_path_for_endpoint(self, endpoint: ir_types.HttpEndpoint) -> AST.Expression:
         # remove leading slash so that urljoin concatenates

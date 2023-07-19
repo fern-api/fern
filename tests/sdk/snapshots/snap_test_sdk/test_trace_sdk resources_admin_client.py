@@ -29,6 +29,12 @@ class AdminClient:
         self._client_wrapper = client_wrapper
 
     def update_test_submission_status(self, submission_id: SubmissionId, *, request: TestSubmissionStatus) -> None:
+        """
+        Parameters:
+            - submission_id: SubmissionId.
+
+            - request: TestSubmissionStatus.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.value}/", f"admin/store-test-submission-status/{submission_id}"),
@@ -45,6 +51,12 @@ class AdminClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def send_test_submission_update(self, submission_id: SubmissionId, *, request: TestSubmissionUpdate) -> None:
+        """
+        Parameters:
+            - submission_id: SubmissionId.
+
+            - request: TestSubmissionUpdate.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
@@ -65,6 +77,12 @@ class AdminClient:
     def update_workspace_submission_status(
         self, submission_id: SubmissionId, *, request: WorkspaceSubmissionStatus
     ) -> None:
+        """
+        Parameters:
+            - submission_id: SubmissionId.
+
+            - request: WorkspaceSubmissionStatus.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
@@ -85,6 +103,12 @@ class AdminClient:
     def send_workspace_submission_update(
         self, submission_id: SubmissionId, *, request: WorkspaceSubmissionUpdate
     ) -> None:
+        """
+        Parameters:
+            - submission_id: SubmissionId.
+
+            - request: WorkspaceSubmissionUpdate.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
@@ -110,6 +134,16 @@ class AdminClient:
         result: TestCaseResultWithStdout,
         trace_responses: typing.List[TraceResponse],
     ) -> None:
+        """
+        Parameters:
+            - submission_id: SubmissionId.
+
+            - test_case_id: str.
+
+            - result: TestCaseResultWithStdout.
+
+            - trace_responses: typing.List[TraceResponse].
+        """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
@@ -131,6 +165,14 @@ class AdminClient:
     def store_traced_test_case_v_2(
         self, submission_id: SubmissionId, test_case_id: TestCaseId, *, request: typing.List[TraceResponseV2]
     ) -> None:
+        """
+        Parameters:
+            - submission_id: SubmissionId.
+
+            - test_case_id: TestCaseId.
+
+            - request: typing.List[TraceResponseV2].
+        """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
@@ -156,6 +198,14 @@ class AdminClient:
         workspace_run_details: WorkspaceRunDetails,
         trace_responses: typing.List[TraceResponse],
     ) -> None:
+        """
+        Parameters:
+            - submission_id: SubmissionId.
+
+            - workspace_run_details: WorkspaceRunDetails.
+
+            - trace_responses: typing.List[TraceResponse].
+        """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
@@ -174,6 +224,12 @@ class AdminClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def store_traced_workspace_v_2(self, submission_id: SubmissionId, *, request: typing.List[TraceResponseV2]) -> None:
+        """
+        Parameters:
+            - submission_id: SubmissionId.
+
+            - request: typing.List[TraceResponseV2].
+        """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
@@ -200,6 +256,12 @@ class AsyncAdminClient:
     async def update_test_submission_status(
         self, submission_id: SubmissionId, *, request: TestSubmissionStatus
     ) -> None:
+        """
+        Parameters:
+            - submission_id: SubmissionId.
+
+            - request: TestSubmissionStatus.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.value}/", f"admin/store-test-submission-status/{submission_id}"),
@@ -216,6 +278,12 @@ class AsyncAdminClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def send_test_submission_update(self, submission_id: SubmissionId, *, request: TestSubmissionUpdate) -> None:
+        """
+        Parameters:
+            - submission_id: SubmissionId.
+
+            - request: TestSubmissionUpdate.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
@@ -236,6 +304,12 @@ class AsyncAdminClient:
     async def update_workspace_submission_status(
         self, submission_id: SubmissionId, *, request: WorkspaceSubmissionStatus
     ) -> None:
+        """
+        Parameters:
+            - submission_id: SubmissionId.
+
+            - request: WorkspaceSubmissionStatus.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
@@ -256,6 +330,12 @@ class AsyncAdminClient:
     async def send_workspace_submission_update(
         self, submission_id: SubmissionId, *, request: WorkspaceSubmissionUpdate
     ) -> None:
+        """
+        Parameters:
+            - submission_id: SubmissionId.
+
+            - request: WorkspaceSubmissionUpdate.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
@@ -281,6 +361,16 @@ class AsyncAdminClient:
         result: TestCaseResultWithStdout,
         trace_responses: typing.List[TraceResponse],
     ) -> None:
+        """
+        Parameters:
+            - submission_id: SubmissionId.
+
+            - test_case_id: str.
+
+            - result: TestCaseResultWithStdout.
+
+            - trace_responses: typing.List[TraceResponse].
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
@@ -302,6 +392,14 @@ class AsyncAdminClient:
     async def store_traced_test_case_v_2(
         self, submission_id: SubmissionId, test_case_id: TestCaseId, *, request: typing.List[TraceResponseV2]
     ) -> None:
+        """
+        Parameters:
+            - submission_id: SubmissionId.
+
+            - test_case_id: TestCaseId.
+
+            - request: typing.List[TraceResponseV2].
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
@@ -327,6 +425,14 @@ class AsyncAdminClient:
         workspace_run_details: WorkspaceRunDetails,
         trace_responses: typing.List[TraceResponse],
     ) -> None:
+        """
+        Parameters:
+            - submission_id: SubmissionId.
+
+            - workspace_run_details: WorkspaceRunDetails.
+
+            - trace_responses: typing.List[TraceResponse].
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
@@ -347,6 +453,12 @@ class AsyncAdminClient:
     async def store_traced_workspace_v_2(
         self, submission_id: SubmissionId, *, request: typing.List[TraceResponseV2]
     ) -> None:
+        """
+        Parameters:
+            - submission_id: SubmissionId.
+
+            - request: typing.List[TraceResponseV2].
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(

@@ -10,10 +10,12 @@ class FunctionParameter(AstNode):
         self,
         *,
         name: str,
+        docs: Optional[str] = None,
         type_hint: Optional[TypeHint] = None,
         initializer: Optional[Expression] = None,
     ):
         self.name = name
+        self.docs = docs
         self.type_hint = type_hint
         self.initializer = initializer
 

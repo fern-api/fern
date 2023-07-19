@@ -28,6 +28,10 @@ class MovieClient:
         self._client_wrapper = client_wrapper
 
     def get_movie(self, movie_id: MovieId) -> Movie:
+        """
+        Parameters:
+            - movie_id: MovieId.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
@@ -45,6 +49,10 @@ class MovieClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_all_movies(self, *, string_header: str) -> typing.List[Movie]:
+        """
+        Parameters:
+            - string_header: str.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment}/", "movie/all-movies"),
@@ -72,6 +80,22 @@ class MovieClient:
         optional_boolean: typing.Optional[bool] = None,
         request: Movie,
     ) -> None:
+        """
+        Parameters:
+            - date: dt.date.
+
+            - datetime: dt.datetime.
+
+            - optional_date: typing.Optional[dt.date].
+
+            - optional_datetime: typing.Optional[dt.datetime].
+
+            - boolean: bool.
+
+            - optional_boolean: typing.Optional[bool].
+
+            - request: Movie.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment}/", "movie/movie"),
@@ -106,6 +130,14 @@ class MovieClient:
     def delete_movie(
         self, movie_id: MovieId, *, required_property: str, optional_property: typing.Optional[str] = OMIT
     ) -> None:
+        """
+        Parameters:
+            - movie_id: MovieId.
+
+            - required_property: str.
+
+            - optional_property: typing.Optional[str].
+        """
         _request: typing.Dict[str, typing.Any] = {"required_property": required_property}
         if optional_property is not OMIT:
             _request["optional_property"] = optional_property
@@ -133,6 +165,10 @@ class AsyncMovieClient:
         self._client_wrapper = client_wrapper
 
     async def get_movie(self, movie_id: MovieId) -> Movie:
+        """
+        Parameters:
+            - movie_id: MovieId.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
@@ -150,6 +186,10 @@ class AsyncMovieClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_all_movies(self, *, string_header: str) -> typing.List[Movie]:
+        """
+        Parameters:
+            - string_header: str.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment}/", "movie/all-movies"),
@@ -177,6 +217,22 @@ class AsyncMovieClient:
         optional_boolean: typing.Optional[bool] = None,
         request: Movie,
     ) -> None:
+        """
+        Parameters:
+            - date: dt.date.
+
+            - datetime: dt.datetime.
+
+            - optional_date: typing.Optional[dt.date].
+
+            - optional_datetime: typing.Optional[dt.datetime].
+
+            - boolean: bool.
+
+            - optional_boolean: typing.Optional[bool].
+
+            - request: Movie.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment}/", "movie/movie"),
@@ -211,6 +267,14 @@ class AsyncMovieClient:
     async def delete_movie(
         self, movie_id: MovieId, *, required_property: str, optional_property: typing.Optional[str] = OMIT
     ) -> None:
+        """
+        Parameters:
+            - movie_id: MovieId.
+
+            - required_property: str.
+
+            - optional_property: typing.Optional[str].
+        """
         _request: typing.Dict[str, typing.Any] = {"required_property": required_property}
         if optional_property is not OMIT:
             _request["optional_property"] = optional_property

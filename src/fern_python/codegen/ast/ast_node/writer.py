@@ -7,6 +7,10 @@ from typing import Optional, Type
 
 class Writer(ABC):
     @abstractmethod
+    def size(self) -> int:
+        ...
+
+    @abstractmethod
     def write(self, content: str) -> None:
         ...
 

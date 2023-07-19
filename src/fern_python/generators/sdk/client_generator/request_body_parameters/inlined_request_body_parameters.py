@@ -29,6 +29,7 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
             parameters.append(
                 AST.NamedFunctionParameter(
                     name=self._get_property_name(property),
+                    docs=property.docs,
                     type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                         property.value_type
                     ),

@@ -10,11 +10,13 @@ class NamedFunctionParameter(FunctionParameter):
         self,
         *,
         name: str,
+        docs: Optional[str] = None,
         type_hint: Optional[TypeHint] = None,
         initializer: Optional[Expression] = None,
     ):
         super().__init__(
             name=name,
+            docs=docs,
             type_hint=type_hint,
             initializer=(
                 Expression(TypeHint.none())

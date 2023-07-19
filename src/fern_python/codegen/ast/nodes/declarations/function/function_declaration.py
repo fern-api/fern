@@ -3,7 +3,6 @@ from typing import Optional, Sequence
 from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ....references import Module, Reference, ReferenceImport
 from ...code_writer import CodeWriter
-from ...docstring import Docstring
 from .function_signature import FunctionSignature
 
 OVERLOAD_DECORATOR = Reference(
@@ -23,7 +22,7 @@ class FunctionDeclaration(AstNode):
         body: CodeWriter,
         overloads: Sequence[FunctionSignature] = None,
         decorators: Sequence[AstNode] = None,
-        docstring: Docstring = None,
+        docstring: Optional[CodeWriter] = None,
         is_async: Optional[bool] = False,
     ):
         self.name = name

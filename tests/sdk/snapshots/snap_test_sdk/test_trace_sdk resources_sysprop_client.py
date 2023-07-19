@@ -18,6 +18,12 @@ class SyspropClient:
         self._client_wrapper = client_wrapper
 
     def set_num_warm_instances(self, language: Language, num_warm_instances: int) -> None:
+        """
+        Parameters:
+            - language: Language.
+
+            - num_warm_instances: int.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "PUT",
             urllib.parse.urljoin(
@@ -56,6 +62,12 @@ class AsyncSyspropClient:
         self._client_wrapper = client_wrapper
 
     async def set_num_warm_instances(self, language: Language, num_warm_instances: int) -> None:
+        """
+        Parameters:
+            - language: Language.
+
+            - num_warm_instances: int.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "PUT",
             urllib.parse.urljoin(

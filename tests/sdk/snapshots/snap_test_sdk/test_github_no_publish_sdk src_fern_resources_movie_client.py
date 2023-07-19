@@ -28,6 +28,10 @@ class MovieClient:
         self._client_wrapper = client_wrapper
 
     def get_movie(self, movie_id: MovieId) -> Movie:
+        """
+        Parameters:
+            - movie_id: MovieId.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
@@ -70,6 +74,22 @@ class MovieClient:
         optional_boolean: typing.Optional[bool] = None,
         request: Movie,
     ) -> None:
+        """
+        Parameters:
+            - date: dt.date.
+
+            - datetime: dt.datetime.
+
+            - optional_date: typing.Optional[dt.date].
+
+            - optional_datetime: typing.Optional[dt.datetime].
+
+            - boolean: bool.
+
+            - optional_boolean: typing.Optional[bool].
+
+            - request: Movie.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment}/", "movie/movie"),
@@ -102,6 +122,10 @@ class MovieClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete_movie(self, movie_id: MovieId) -> None:
+        """
+        Parameters:
+            - movie_id: MovieId.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._environment}/", f"movie/{movie_id}"),
@@ -125,6 +149,10 @@ class AsyncMovieClient:
         self._client_wrapper = client_wrapper
 
     async def get_movie(self, movie_id: MovieId) -> Movie:
+        """
+        Parameters:
+            - movie_id: MovieId.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
@@ -167,6 +195,22 @@ class AsyncMovieClient:
         optional_boolean: typing.Optional[bool] = None,
         request: Movie,
     ) -> None:
+        """
+        Parameters:
+            - date: dt.date.
+
+            - datetime: dt.datetime.
+
+            - optional_date: typing.Optional[dt.date].
+
+            - optional_datetime: typing.Optional[dt.datetime].
+
+            - boolean: bool.
+
+            - optional_boolean: typing.Optional[bool].
+
+            - request: Movie.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment}/", "movie/movie"),
@@ -199,6 +243,10 @@ class AsyncMovieClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete_movie(self, movie_id: MovieId) -> None:
+        """
+        Parameters:
+            - movie_id: MovieId.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._environment}/", f"movie/{movie_id}"),

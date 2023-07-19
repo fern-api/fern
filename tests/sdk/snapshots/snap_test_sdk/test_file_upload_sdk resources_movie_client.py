@@ -19,6 +19,14 @@ class MovieClient:
         self._client_wrapper = client_wrapper
 
     def upload_movie(self, movie_id: MovieId, *, name: str, contents: typing.IO) -> None:
+        """
+        Parameters:
+            - movie_id: MovieId.
+
+            - name: str.
+
+            - contents: typing.IO.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
@@ -36,6 +44,10 @@ class MovieClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def download_movie(self, movie_id: MovieId) -> typing.Iterator[bytes]:
+        """
+        Parameters:
+            - movie_id: MovieId.
+        """
         with self._client_wrapper.httpx_client.stream(
             "GET",
             urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
@@ -58,6 +70,14 @@ class AsyncMovieClient:
         self._client_wrapper = client_wrapper
 
     async def upload_movie(self, movie_id: MovieId, *, name: str, contents: typing.IO) -> None:
+        """
+        Parameters:
+            - movie_id: MovieId.
+
+            - name: str.
+
+            - contents: typing.IO.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
@@ -75,6 +95,10 @@ class AsyncMovieClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def download_movie(self, movie_id: MovieId) -> typing.AsyncIterator[bytes]:
+        """
+        Parameters:
+            - movie_id: MovieId.
+        """
         async with self._client_wrapper.httpx_client.stream(
             "GET",
             urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),

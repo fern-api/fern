@@ -28,6 +28,10 @@ class AClient:
         self._client_wrapper = client_wrapper
 
     def get_movie(self, movie_id: MovieId) -> Movie:
+        """
+        Parameters:
+            - movie_id: MovieId.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.server_a}/", f"movie/movie/{movie_id}"),
@@ -60,6 +64,10 @@ class AClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def create_movie(self, *, request: Movie) -> None:
+        """
+        Parameters:
+            - request: Movie.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.server_a}/", "movie/movie"),
@@ -80,6 +88,10 @@ class AClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete_movie(self, movie_id: MovieId) -> None:
+        """
+        Parameters:
+            - movie_id: MovieId.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._environment.server_a}/", f"movie/{movie_id}"),
@@ -105,6 +117,10 @@ class AsyncAClient:
         self._client_wrapper = client_wrapper
 
     async def get_movie(self, movie_id: MovieId) -> Movie:
+        """
+        Parameters:
+            - movie_id: MovieId.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._environment.server_a}/", f"movie/movie/{movie_id}"),
@@ -137,6 +153,10 @@ class AsyncAClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def create_movie(self, *, request: Movie) -> None:
+        """
+        Parameters:
+            - request: Movie.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.server_a}/", "movie/movie"),
@@ -157,6 +177,10 @@ class AsyncAClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete_movie(self, movie_id: MovieId) -> None:
+        """
+        Parameters:
+            - movie_id: MovieId.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._environment.server_a}/", f"movie/{movie_id}"),

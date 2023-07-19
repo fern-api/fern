@@ -28,6 +28,12 @@ class ProblemClient:
         self._client_wrapper = client_wrapper
 
     def create_problem(self, *, request: CreateProblemRequest) -> CreateProblemResponse:
+        """
+        Creates a problem
+
+        Parameters:
+            - request: CreateProblemRequest.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.value}/", "problem-crud/create"),
@@ -44,6 +50,14 @@ class ProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update_problem(self, problem_id: ProblemId, *, request: CreateProblemRequest) -> UpdateProblemResponse:
+        """
+        Updates a problem
+
+        Parameters:
+            - problem_id: ProblemId.
+
+            - request: CreateProblemRequest.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.value}/", f"problem-crud/update/{problem_id}"),
@@ -60,6 +74,12 @@ class ProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def delete_problem(self, problem_id: ProblemId) -> None:
+        """
+        Soft deletes a problem
+
+        Parameters:
+            - problem_id: ProblemId.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._environment.value}/", f"problem-crud/delete/{problem_id}"),
@@ -77,6 +97,22 @@ class ProblemClient:
     def get_default_starter_files(
         self, *, input_params: typing.List[VariableTypeAndName], output_type: VariableType, method_name: str
     ) -> GetDefaultStarterFilesResponse:
+        """
+        Returns default starter files for problem
+
+        Parameters:
+            - input_params: typing.List[VariableTypeAndName].
+
+            - output_type: VariableType.
+
+            - method_name: str. The name of the `method` that the student has to complete.
+                                The method name cannot include the following characters:
+                                  - Greater Than `>`
+                                  - Less Than `<``
+                                  - Equals `=`
+                                  - Period `.`
+
+        """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.value}/", "problem-crud/default-starter-files"),
@@ -99,6 +135,12 @@ class AsyncProblemClient:
         self._client_wrapper = client_wrapper
 
     async def create_problem(self, *, request: CreateProblemRequest) -> CreateProblemResponse:
+        """
+        Creates a problem
+
+        Parameters:
+            - request: CreateProblemRequest.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.value}/", "problem-crud/create"),
@@ -115,6 +157,14 @@ class AsyncProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def update_problem(self, problem_id: ProblemId, *, request: CreateProblemRequest) -> UpdateProblemResponse:
+        """
+        Updates a problem
+
+        Parameters:
+            - problem_id: ProblemId.
+
+            - request: CreateProblemRequest.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.value}/", f"problem-crud/update/{problem_id}"),
@@ -131,6 +181,12 @@ class AsyncProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def delete_problem(self, problem_id: ProblemId) -> None:
+        """
+        Soft deletes a problem
+
+        Parameters:
+            - problem_id: ProblemId.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._environment.value}/", f"problem-crud/delete/{problem_id}"),
@@ -148,6 +204,22 @@ class AsyncProblemClient:
     async def get_default_starter_files(
         self, *, input_params: typing.List[VariableTypeAndName], output_type: VariableType, method_name: str
     ) -> GetDefaultStarterFilesResponse:
+        """
+        Returns default starter files for problem
+
+        Parameters:
+            - input_params: typing.List[VariableTypeAndName].
+
+            - output_type: VariableType.
+
+            - method_name: str. The name of the `method` that the student has to complete.
+                                The method name cannot include the following characters:
+                                  - Greater Than `>`
+                                  - Less Than `<``
+                                  - Equals `=`
+                                  - Period `.`
+
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.value}/", "problem-crud/default-starter-files"),

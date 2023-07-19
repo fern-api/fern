@@ -9,6 +9,9 @@ class MetadataLoadingNodeWriter(NodeWriter):
     def __init__(self) -> None:
         self.metadata = AstNodeMetadata()
 
+    def size(self) -> int:
+        return 0
+
     def write(self, content: str) -> None:
         pass
 

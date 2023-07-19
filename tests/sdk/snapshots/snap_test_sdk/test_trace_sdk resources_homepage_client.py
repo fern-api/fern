@@ -37,6 +37,10 @@ class HomepageClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def set_homepage_problems(self, *, request: typing.List[ProblemId]) -> None:
+        """
+        Parameters:
+            - request: typing.List[ProblemId].
+        """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.value}/", "homepage-problems"),
@@ -74,6 +78,10 @@ class AsyncHomepageClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def set_homepage_problems(self, *, request: typing.List[ProblemId]) -> None:
+        """
+        Parameters:
+            - request: typing.List[ProblemId].
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._environment.value}/", "homepage-problems"),

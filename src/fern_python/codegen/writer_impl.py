@@ -19,6 +19,9 @@ class WriterImpl(AST.Writer):
         self._content = ""
         self._should_format = should_format
 
+    def size(self) -> int:
+        return len(self._content)
+
     def write(self, content: str) -> None:
         content_ends_in_newline = len(content) > 0 and content[-1] == "\n"
 
