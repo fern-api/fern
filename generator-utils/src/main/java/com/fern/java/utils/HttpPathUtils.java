@@ -15,8 +15,8 @@
  */
 package com.fern.java.utils;
 
-import com.fern.irV12.model.http.HttpPath;
-import com.fern.irV12.model.http.HttpPathPart;
+import com.fern.irV16.model.http.HttpPath;
+import com.fern.irV16.model.http.HttpPathPart;
 
 public final class HttpPathUtils {
 

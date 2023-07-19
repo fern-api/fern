@@ -16,10 +16,10 @@
 
 package com.fern.java.spring.generators.spring;
 
-import com.fern.irV12.model.http.HttpHeader;
-import com.fern.irV12.model.http.PathParameter;
-import com.fern.irV12.model.http.QueryParameter;
-import com.fern.irV12.model.types.TypeReference;
+import com.fern.irV16.model.http.HttpHeader;
+import com.fern.irV16.model.http.PathParameter;
+import com.fern.irV16.model.http.QueryParameter;
+import com.fern.irV16.model.types.TypeReference;
 import com.fern.java.AbstractGeneratorContext;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ParameterSpec;

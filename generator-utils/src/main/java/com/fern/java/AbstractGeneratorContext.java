@@ -17,11 +17,11 @@
 package com.fern.java;
 
 import com.fern.generator.exec.model.config.GeneratorConfig;
-import com.fern.irV12.model.commons.ErrorId;
-import com.fern.irV12.model.commons.TypeId;
-import com.fern.irV12.model.errors.ErrorDeclaration;
-import com.fern.irV12.model.ir.IntermediateRepresentation;
-import com.fern.irV12.model.types.TypeDeclaration;
+import com.fern.irV16.model.commons.ErrorId;
+import com.fern.irV16.model.commons.TypeId;
+import com.fern.irV16.model.errors.ErrorDeclaration;
+import com.fern.irV16.model.ir.IntermediateRepresentation;
+import com.fern.irV16.model.types.TypeDeclaration;
 import java.util.Map;
 
 public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFactory, U extends ICustomConfig> {

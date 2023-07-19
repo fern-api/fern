@@ -16,10 +16,10 @@
 
 package com.fern.java.generators.auth;
 
-import com.fern.irV12.model.auth.HeaderAuthScheme;
-import com.fern.irV12.model.types.AliasTypeDeclaration;
-import com.fern.irV12.model.types.PrimitiveType;
-import com.fern.irV12.model.types.ResolvedTypeReference;
+import com.fern.irV16.model.auth.HeaderAuthScheme;
+import com.fern.irV16.model.types.AliasTypeDeclaration;
+import com.fern.irV16.model.types.PrimitiveType;
+import com.fern.irV16.model.types.ResolvedTypeReference;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.generators.AliasGenerator;
@@ -32,8 +32,11 @@ public final class HeaderAuthGenerator extends AbstractFileGenerator {
         super(
                 generatorContext
                         .getPoetClassNameFactory()
-                        .getCoreClassName(
-                                headerAuthScheme.getName().getPascalCase().getSafeName()),
+                        .getCoreClassName(headerAuthScheme
+                                .getName()
+                                .getName()
+                                .getPascalCase()
+                                .getSafeName()),
                 generatorContext);
         this.headerAuthScheme = headerAuthScheme;
     }

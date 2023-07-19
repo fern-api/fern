@@ -16,11 +16,11 @@
 
 package com.fern.java.spring.generators;
 
-import com.fern.irV12.model.commons.TypeId;
-import com.fern.irV12.model.http.HttpService;
-import com.fern.irV12.model.http.InlinedRequestBody;
-import com.fern.irV12.model.types.DeclaredTypeName;
-import com.fern.irV12.model.types.ObjectTypeDeclaration;
+import com.fern.irV16.model.commons.TypeId;
+import com.fern.irV16.model.http.HttpService;
+import com.fern.irV16.model.http.InlinedRequestBody;
+import com.fern.irV16.model.types.DeclaredTypeName;
+import com.fern.irV16.model.types.ObjectTypeDeclaration;
 import com.fern.java.InlinedRequestBodyUtils;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.generators.ObjectGenerator;

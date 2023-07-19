@@ -16,10 +16,10 @@
 
 package com.fern.java.client.generators.endpoint;
 
-import com.fern.irV12.model.http.HttpEndpoint;
-import com.fern.irV12.model.http.HttpPath;
-import com.fern.irV12.model.http.HttpPathPart;
-import com.fern.irV12.model.http.HttpService;
+import com.fern.irV16.model.http.HttpEndpoint;
+import com.fern.irV16.model.http.HttpPath;
+import com.fern.irV16.model.http.HttpPathPart;
+import com.fern.irV16.model.http.HttpService;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.squareup.javapoet.ClassName;

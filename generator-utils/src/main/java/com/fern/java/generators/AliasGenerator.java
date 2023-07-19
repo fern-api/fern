@@ -17,9 +17,9 @@
 package com.fern.java.generators;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.fern.irV12.model.types.AliasTypeDeclaration;
-import com.fern.irV12.model.types.PrimitiveType;
-import com.fern.irV12.model.types.TypeReference;
+import com.fern.irV16.model.types.AliasTypeDeclaration;
+import com.fern.irV16.model.types.PrimitiveType;
+import com.fern.irV16.model.types.TypeReference;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
 import com.fern.java.output.GeneratedJavaFile;
@@ -226,8 +226,18 @@ public final class AliasGenerator extends AbstractFileGenerator {
         }
 
         @Override
+        public CodeBlock visitDate() {
+            return CodeBlock.of("return $L", VALUE_FIELD_NAME);
+        }
+
+        @Override
         public CodeBlock visitUuid() {
             return CodeBlock.of("return $L.$L()", VALUE_FIELD_NAME, "toString");
+        }
+
+        @Override
+        public CodeBlock visitBase64() {
+            return CodeBlock.of("return $L", VALUE_FIELD_NAME);
         }
 
         @Override
@@ -271,8 +281,18 @@ public final class AliasGenerator extends AbstractFileGenerator {
         }
 
         @Override
+        public CodeBlock visitDate() {
+            return visitString();
+        }
+
+        @Override
         public CodeBlock visitUuid() {
             return CodeBlock.of("return $L.hashCode()", VALUE_FIELD_NAME);
+        }
+
+        @Override
+        public CodeBlock visitBase64() {
+            return visitString();
         }
 
         @Override

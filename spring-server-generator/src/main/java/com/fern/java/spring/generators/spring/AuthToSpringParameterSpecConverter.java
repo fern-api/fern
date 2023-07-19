@@ -16,11 +16,11 @@
 
 package com.fern.java.spring.generators.spring;
 
-import com.fern.irV12.model.auth.ApiAuth;
-import com.fern.irV12.model.auth.AuthScheme;
-import com.fern.irV12.model.auth.HeaderAuthScheme;
-import com.fern.irV12.model.commons.WithDocs;
-import com.fern.irV12.model.http.HttpEndpoint;
+import com.fern.irV16.model.auth.ApiAuth;
+import com.fern.irV16.model.auth.AuthScheme;
+import com.fern.irV16.model.auth.HeaderAuthScheme;
+import com.fern.irV16.model.commons.WithDocs;
+import com.fern.irV16.model.http.HttpEndpoint;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.fern.java.output.GeneratedAuthFiles;
@@ -94,7 +94,7 @@ public final class AuthToSpringParameterSpecConverter {
         public ParameterSpec visitHeader(HeaderAuthScheme value) {
             return ParameterSpec.builder(getTypeName(), parameterName)
                     .addAnnotation(AnnotationSpec.builder(RequestHeader.class)
-                            .addMember("value", "$S", value.getHeader())
+                            .addMember("value", "$S", value.getName().getWireValue())
                             .build())
                     .build();
         }

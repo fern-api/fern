@@ -16,10 +16,10 @@
 
 package com.fern.java.client.generators;
 
-import com.fern.irV12.model.auth.AuthScheme;
-import com.fern.irV12.model.auth.HeaderAuthScheme;
-import com.fern.irV12.model.commons.TypeId;
-import com.fern.irV12.model.commons.WithDocs;
+import com.fern.irV16.model.auth.AuthScheme;
+import com.fern.irV16.model.auth.HeaderAuthScheme;
+import com.fern.irV16.model.commons.TypeId;
+import com.fern.irV16.model.commons.WithDocs;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
@@ -127,8 +127,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
         generatorContext.getIr().getAuth().getSchemes().forEach(authScheme -> authScheme.visit(authSchemeHandler));
         generatorContext.getIr().getHeaders().forEach(httpHeader -> {
             authSchemeHandler.visitHeader(HeaderAuthScheme.builder()
-                    .name(httpHeader.getName().getName())
-                    .header(httpHeader.getName().getWireValue())
+                    .name(httpHeader.getName())
                     .valueType(httpHeader.getValueType())
                     .docs(httpHeader.getDocs())
                     .build());
@@ -259,7 +258,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
 
         @Override
         public Void visitHeader(HeaderAuthScheme header) {
-            String headerCamelCase = header.getName().getCamelCase().getSafeName();
+            String headerCamelCase = header.getName().getName().getCamelCase().getSafeName();
             MethodSpec tokenMethod = MethodSpec.methodBuilder(headerCamelCase)
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(String.class, headerCamelCase)
@@ -270,7 +269,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                         .addStatement(
                                 "this.$L.addHeader($S, $S + $L)",
                                 CLIENT_OPTIONS_BUILDER_NAME,
-                                header.getHeader(),
+                                header.getName().getWireValue(),
                                 header.getPrefix().get(),
                                 headerCamelCase)
                         .addStatement("return this")
@@ -280,7 +279,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                         .addStatement(
                                 "this.$L.addHeader($S, $L)",
                                 CLIENT_OPTIONS_BUILDER_NAME,
-                                header.getHeader(),
+                                header.getName().getWireValue(),
                                 headerCamelCase)
                         .addStatement("return this")
                         .build());

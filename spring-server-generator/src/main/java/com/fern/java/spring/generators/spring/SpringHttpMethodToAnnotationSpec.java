@@ -15,8 +15,8 @@
  */
 package com.fern.java.spring.generators.spring;
 
-import com.fern.irV12.model.http.HttpEndpoint;
-import com.fern.irV12.model.http.HttpMethod;
+import com.fern.irV16.model.http.HttpEndpoint;
+import com.fern.irV16.model.http.HttpMethod;
 import com.fern.java.utils.HttpPathUtils;
 import com.squareup.javapoet.AnnotationSpec;
 import java.util.Optional;
