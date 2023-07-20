@@ -22,7 +22,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
     const content = useMemo(() => {
         switch (path.type) {
             case "markdown-page":
-                return <Markdown>{path.markdownContent}</Markdown>;
+                return <Markdown type="markdown">{path.markdownContent}</Markdown>;
             case "mdx-page":
                 return <MdxContent mdx={path.serializedMdxContent} />;
             default:
