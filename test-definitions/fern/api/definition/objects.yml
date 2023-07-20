@@ -1,0 +1,37 @@
+service:
+  auth: false
+  base-path: /base
+  endpoints:
+    listIds:
+      path: /ids
+      method: GET
+      docs: Retrieves all object IDs
+      display-name: List object IDs
+      response: list<string>
+    getRandomId:
+      path: /ids/random
+      method: GET
+      docs: Retrieves the ID of a random object
+      display-name: Retrieve random object ID
+      response: string
+    update:
+      path: /schedule
+      method: POST
+      docs: Updates an object
+      display-name: Update object
+    checkIfExpired:
+      path: /objects/{object_id}/check
+      method: GET
+      docs: Checks if an object has expired
+      display-name: Check if object has expired
+      path-parameters:
+        object_id: string
+      response: boolean
+    markForDeletion:
+      path: /objects/{object_id}/mark
+      method: POST
+      docs: Marks an object for deletion
+      display-name: Mark object for deletion
+      path-parameters:
+        object_id: string
+      response: unknown
