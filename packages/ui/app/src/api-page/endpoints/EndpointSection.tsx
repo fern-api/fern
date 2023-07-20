@@ -15,7 +15,7 @@ export const EndpointSection: React.FC<EndpointSection.Props> = ({ title, descri
             </div>
             {description != null && (
                 <div className="mb-2">
-                    <Markdown>{description}</Markdown>
+                    <Markdown type="api">{description}</Markdown>
                 </div>
             )}
             <div className="flex flex-col">{children}</div>

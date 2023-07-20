@@ -150,7 +150,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                     </div>
                     {endpoint.description != null && (
                         <div className="mt-6">
-                            <Markdown>{endpoint.description}</Markdown>
+                            <Markdown type="api">{endpoint.description}</Markdown>
                         </div>
                     )}
                     <div className="mt-8 flex">

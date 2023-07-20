@@ -29,7 +29,9 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId, slu
                 </div>
                 {subpackage.description != null && (
                     <div className="flex flex-col items-start space-y-5 pt-10 md:flex-row md:space-x-[5vw] md:space-y-0">
-                        <Markdown className="flex-1">{subpackage.description}</Markdown>
+                        <Markdown type="api" className="flex-1">
+                            {subpackage.description}
+                        </Markdown>
                         <div className="flex-1" />
                     </div>
                 )}

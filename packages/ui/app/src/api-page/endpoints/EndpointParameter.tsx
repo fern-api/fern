@@ -25,7 +25,7 @@ export const EndpointParameter: React.FC<EndpointParameter.Props> = ({ name, des
                     <TypeShorthand type={type} plural={false} />
                 </div>
             </div>
-            {description != null && <Markdown>{description}</Markdown>}
+            {description != null && <Markdown type="api">{description}</Markdown>}
             <TypeReferenceDefinitions type={type} isCollapsible />
         </div>
     );

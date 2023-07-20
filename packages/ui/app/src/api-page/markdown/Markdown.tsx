@@ -10,6 +10,11 @@ import styles from "./Markdown.module.scss";
 
 export declare namespace Markdown {
     export interface Props {
+        /**
+         * - `"markdown"`: Markdown pages.
+         * - `"api"`: API reference pages.
+         */
+        type: "markdown" | "api";
         children: string;
         className?: string;
     }
@@ -20,7 +25,7 @@ const REHYPE_PLUGINS = [rehypeRaw];
 
 const PRISM_CLASSNAME_REGEX = /language-(\w+)/;
 
-export const Markdown = React.memo<Markdown.Props>(function Markdown({ children, className }) {
+export const Markdown = React.memo<Markdown.Props>(function Markdown({ type, children, className }) {
     return (
         <ReactMarkdown
             className={classNames(className, styles.container, "prose prose-sm dark:prose-invert max-w-none")}
@@ -103,7 +108,14 @@ export const Markdown = React.memo<Markdown.Props>(function Markdown({ children,
                 p: ({ node, ...props }) => (
                     <p
                         {...props}
-                        className={classNames("mb-3 text-base font-light text-text-default leading-7", props.className)}
+                        className={classNames(
+                            "mb-3",
+                            {
+                                "text-base font-light text-text-default leading-7": type === "markdown",
+                                "text-sm text-text-default leading-6": type === "api",
+                            },
+                            props.className
+                        )}
                     />
                 ),
                 ul: ({ node, ...props }) => (
