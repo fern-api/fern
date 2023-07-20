@@ -27,7 +27,7 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
                         })}
                         onClick={() => onClickError(e, idx)}
                     >
-                        <div className="rounded bg-red-500/10 p-1 text-xs text-red-400">{e.statusCode}</div>
+                        <div className="rounded bg-red-500/20 p-1 text-xs text-red-400">{e.statusCode}</div>
                         <div className="text-text-default mt-3 text-start text-base">{e.description}</div>
                         {idx === selectedErrorIndex && (
                             <div className="text-start">

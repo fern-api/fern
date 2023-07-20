@@ -8,20 +8,14 @@ import { useCopyToClipboard } from "./useCopyToClipboard";
 export declare namespace TitledExample {
     export interface Props {
         title: string;
-        titleRightContent?: JSX.Element;
+        type: "primary" | "warning";
         actions?: JSX.Element;
         className?: string;
         children: JSX.Element | ((parent: HTMLElement | undefined) => JSX.Element);
     }
 }
 
-export const TitledExample: React.FC<TitledExample.Props> = ({
-    title,
-    titleRightContent,
-    className,
-    actions,
-    children,
-}) => {
+export const TitledExample: React.FC<TitledExample.Props> = ({ title, type, className, actions, children }) => {
     const [contentRef, setContentRef] = useState<HTMLElement | null>(null);
 
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(contentRef?.innerText);
@@ -33,10 +27,21 @@ export const TitledExample: React.FC<TitledExample.Props> = ({
                 className
             )}
         >
-            <div className="border-border flex h-10 items-center justify-between border-b bg-white/10 py-1 pl-3 pr-2">
-                <div className="flex items-center gap-2">
-                    <div className="text-xs uppercase tracking-wide text-neutral-300">{title}</div>
-                    {titleRightContent}
+            <div
+                className={classNames("border-border flex h-10 items-center justify-between border-b py-1 pl-3 pr-2", {
+                    "bg-white/10": type === "primary",
+                    "bg-red-500/20": type === "warning",
+                })}
+            >
+                <div className="flex items-center">
+                    <div
+                        className={classNames("text-xs uppercase tracking-wide", {
+                            "text-neutral-300": type === "primary",
+                            "text-red-400": type === "warning",
+                        })}
+                    >
+                        {title}
+                    </div>
                 </div>
                 <div className="flex gap-2">
                     {actions}
