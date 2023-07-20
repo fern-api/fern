@@ -2,6 +2,7 @@ import { FernRegistry } from "@fern-fern/registry-browser";
 import classNames from "classnames";
 import { type JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
+import { TypeShorthand } from "../types/type-shorthand/TypeShorthand";
 
 export declare namespace EndpointErrorsSection {
     export interface Props {
@@ -36,8 +37,15 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
                             onClickError(e, idx, event);
                         }}
                     >
-                        <div className="rounded bg-red-500/20 p-1 text-xs text-red-400">{e.statusCode}</div>
-                        <div className="text-text-default mt-3 text-start text-base">{e.description}</div>
+                        <div className="flex items-baseline space-x-2">
+                            <div className="rounded bg-red-500/20 p-1 text-xs text-red-400">{e.statusCode}</div>
+                            <div className="text-text-default text-xs">
+                                {e.type != null && <TypeShorthand type={e.type} plural={false} />}
+                            </div>
+                        </div>
+                        <div className="text-text-default mt-3 text-start text-base font-light leading-7">
+                            {e.description}
+                        </div>
                         {idx === selectedErrorIndex && (
                             <div className="text-start">
                                 {e.type != null && (
