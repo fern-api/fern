@@ -95,7 +95,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                 ref={setContainerRef}
             >
                 <div className="flex flex-1 flex-col">
-                    <div className="pb-8 pt-20 text-3xl font-medium" ref={setTitleRef}>
+                    <div className="typography-font-heading pb-8 pt-20 text-3xl font-medium" ref={setTitleRef}>
                         <EndpointTitle endpoint={endpoint} />
                     </div>
                     <div className="flex">
