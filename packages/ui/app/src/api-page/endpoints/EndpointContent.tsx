@@ -32,6 +32,7 @@ export declare namespace EndpointContent {
     export interface Props {
         endpoint: FernRegistryApiRead.EndpointDefinition;
         package: FernRegistryApiRead.ApiDefinitionPackage;
+        hideBottomSeparator?: boolean;
         setContainerRef: (ref: HTMLElement | null) => void;
     }
 }
@@ -39,6 +40,7 @@ export declare namespace EndpointContent {
 export const EndpointContent = React.memo<EndpointContent.Props>(function EndpointContent({
     endpoint,
     package: package_,
+    hideBottomSeparator = false,
     setContainerRef,
 }) {
     const { setHoveredRequestPropertyPath, setHoveredResponsePropertyPath } = useEndpointContext();
@@ -97,7 +99,12 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
     const environmentUrl = useMemo(() => getEndpointEnvironmentUrl(endpoint), [endpoint]);
 
     return (
-        <ApiPageMargins onClick={() => setSelectedErrorIndex(null)}>
+        <ApiPageMargins
+            className={classNames("pb-20", {
+                "border-border border-b": !hideBottomSeparator,
+            })}
+            onClick={() => setSelectedErrorIndex(null)}
+        >
             <div
                 className={classNames("flex min-w-0 flex-1 space-x-[5vw]", "flex-col md:flex-row")}
                 ref={setContainerRef}
