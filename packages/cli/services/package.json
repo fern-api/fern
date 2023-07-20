@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@fern-api/venus-api-sdk": "0.0.20-7-g6ea8dc4",
-    "@fern-fern/fiddle-sdk": "^0.0.284",
+    "@fern-fern/fiddle-sdk": "^0.0.285",
     "@fern-fern/registry-node": "0.0.1472"
   },
   "devDependencies": {
