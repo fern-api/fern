@@ -92,6 +92,7 @@ function convertOutputMode(generator: GeneratorInvocationSchema): FernFiddle.Out
         return FernFiddle.OutputMode.github({
             owner: generator.github.repository.slice(0, indexOfFirstSlash),
             repo: generator.github.repository.slice(indexOfFirstSlash + 1),
+            makePr: generator.github.mode === "pull-request",
             publishInfo: generator.output != null ? getGithubPublishInfo(generator.output) : undefined,
         });
     }
