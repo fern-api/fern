@@ -97,7 +97,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
     const environmentUrl = useMemo(() => getEndpointEnvironmentUrl(endpoint), [endpoint]);
 
     return (
-        <ApiPageMargins>
+        <ApiPageMargins onClick={() => setSelectedErrorIndex(null)}>
             <div
                 className={classNames("flex min-w-0 flex-1 space-x-[5vw]", "flex-col md:flex-row")}
                 ref={setContainerRef}
@@ -182,8 +182,9 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                 <EndpointSection title="Errors">
                                     <EndpointErrorsSection
                                         errors={endpoint.errors}
-                                        onClickError={(_, idx) => {
-                                            setSelectedErrorIndex(idx === selectedErrorIndex ? null : idx);
+                                        onClickError={(_, idx, event) => {
+                                            event.stopPropagation();
+                                            setSelectedErrorIndex(idx);
                                         }}
                                         onHoverProperty={onHoverResponseProperty}
                                         selectedErrorIndex={selectedErrorIndex}
