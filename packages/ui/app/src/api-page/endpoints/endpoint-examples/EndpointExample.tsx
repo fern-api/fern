@@ -18,7 +18,13 @@ export const EndpointExample: React.FC<EndpointExample.Props> = ({ endpoint, exa
         <div className="flex min-h-0 min-w-0 flex-1 flex-col">
             <div className="flex min-h-0 flex-1 flex-col">
                 <div className="grid min-h-0 flex-1 grid-rows-[repeat(auto-fit,_minmax(0,_min-content))] flex-col gap-6">
-                    <TitledExample title="Request" type="primary">
+                    <TitledExample
+                        title="Request"
+                        type="primary"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                        }}
+                    >
                         {(parent) => (
                             <CurlExample
                                 endpoint={endpoint}
@@ -32,6 +38,9 @@ export const EndpointExample: React.FC<EndpointExample.Props> = ({ endpoint, exa
                         <TitledExample
                             title={example.responseStatusCode >= 400 ? "Error Response" : "Response"}
                             type={example.responseStatusCode >= 400 ? "warning" : "primary"}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                            }}
                         >
                             {(parent) => (
                                 <JsonExample

@@ -1,7 +1,7 @@
 import { Button, Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import classNames from "classnames";
-import { useState } from "react";
+import { MouseEventHandler, useState } from "react";
 import styles from "./TitledExample.module.scss";
 import { useCopyToClipboard } from "./useCopyToClipboard";
 
@@ -12,10 +12,18 @@ export declare namespace TitledExample {
         actions?: JSX.Element;
         className?: string;
         children: JSX.Element | ((parent: HTMLElement | undefined) => JSX.Element);
+        onClick?: MouseEventHandler<HTMLDivElement>;
     }
 }
 
-export const TitledExample: React.FC<TitledExample.Props> = ({ title, type, className, actions, children }) => {
+export const TitledExample: React.FC<TitledExample.Props> = ({
+    title,
+    type,
+    className,
+    actions,
+    children,
+    onClick,
+}) => {
     const [contentRef, setContentRef] = useState<HTMLElement | null>(null);
 
     const { copyToClipboard, wasJustCopied } = useCopyToClipboard(contentRef?.innerText);
@@ -26,6 +34,7 @@ export const TitledExample: React.FC<TitledExample.Props> = ({ title, type, clas
                 "flex flex-col rounded-xl border border-border overflow-hidden basis-full",
                 className
             )}
+            onClick={onClick}
         >
             <div
                 className={classNames("border-border flex h-10 items-center justify-between border-b py-1 pl-3 pr-2", {
