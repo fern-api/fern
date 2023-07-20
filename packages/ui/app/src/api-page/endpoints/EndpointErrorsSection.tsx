@@ -1,10 +1,12 @@
 import { FernRegistry } from "@fern-fern/registry-browser";
 import classNames from "classnames";
+import { type JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { TypeReferenceDefinitions } from "../types/type-reference/TypeReferenceDefinitions";
 
 export declare namespace EndpointErrorsSection {
     export interface Props {
         errors: FernRegistry.api.v1.read.ErrorDeclaration[];
+        onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
         onClickError: (e: FernRegistry.api.v1.read.ErrorDeclaration, index: number) => void;
         selectedErrorIndex: number | null;
     }
@@ -13,6 +15,7 @@ export declare namespace EndpointErrorsSection {
 export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
     errors,
     selectedErrorIndex,
+    onHoverProperty,
     onClickError,
 }) => {
     return (
@@ -31,7 +34,13 @@ export const EndpointErrorsSection: React.FC<EndpointErrorsSection.Props> = ({
                         <div className="text-text-default mt-3 text-start text-base">{e.description}</div>
                         {idx === selectedErrorIndex && (
                             <div className="text-start">
-                                {e.type != null && <TypeReferenceDefinitions isCollapsible={false} type={e.type} />}
+                                {e.type != null && (
+                                    <TypeReferenceDefinitions
+                                        isCollapsible={false}
+                                        type={e.type}
+                                        onHoverProperty={onHoverProperty}
+                                    />
+                                )}
                             </div>
                         )}
                     </button>

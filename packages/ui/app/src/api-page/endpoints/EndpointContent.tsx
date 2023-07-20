@@ -185,6 +185,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                         onClickError={(_, idx) => {
                                             setSelectedErrorIndex(idx === selectedErrorIndex ? null : idx);
                                         }}
+                                        onHoverProperty={onHoverResponseProperty}
                                         selectedErrorIndex={selectedErrorIndex}
                                     />
                                 </EndpointSection>
