@@ -365,6 +365,11 @@ public final class FernFernClientBuilder {
         return this;
     }
 
+    public FernFernClientBuilder appName(String appName) {
+        clientOptionsBuilder.appName(appName);
+        return this;
+    }
+
     public FernFernClient build() {
         clientOptionsBuilder.environment(this.environment);
         return new FernFernClient(clientOptionsBuilder.build());
@@ -391,15 +396,19 @@ public final class ClientOptions {
 
     private final OkHttpClient httpClient;
 
+    private String appName;
+
     private ClientOptions(
             Environment environment,
             Map<String, String> headers,
             Map<String, Supplier<String>> headerSuppliers,
-            OkHttpClient httpClient) {
+            OkHttpClient httpClient,
+            String appName) {
         this.environment = environment;
         this.headers = headers;
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
+        this.appName = appName;
     }
 
     public Environment environment() {
@@ -418,6 +427,10 @@ public final class ClientOptions {
         return this.httpClient;
     }
 
+    public String appName() {
+        return this.appName;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
@@ -428,6 +441,8 @@ public final class ClientOptions {
         private final Map<String, String> headers = new HashMap<>();
 
         private final Map<String, Supplier<String>> headerSuppliers = new HashMap<>();
+
+        private String appName;
 
         public Builder environment(Environment environment) {
             this.environment = environment;
@@ -444,8 +459,13 @@ public final class ClientOptions {
             return this;
         }
 
+        public Builder appName(String appName) {
+            this.appName = appName;
+            return this;
+        }
+
         public ClientOptions build() {
-            return new ClientOptions(environment, headers, headerSuppliers, new OkHttpClient());
+            return new ClientOptions(environment, headers, headerSuppliers, new OkHttpClient(), this.appName);
         }
     }
 }
@@ -793,6 +813,30 @@ public class BlogClient {
             if (_response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(
                         _response.body().string(), new TypeReference<List<BlogPost>>() {});
+            }
+            throw new RuntimeException();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String useVariable() {
+        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("posts")
+                .addPathSegments("use-variable")
+                .addPathSegment(clientOptions.appName())
+                .build();
+        Request _request = new Request.Builder()
+                .url(_httpUrl)
+                .method("POST", null)
+                .headers(Headers.of(clientOptions.headers()))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response _response = clientOptions.httpClient().newCall(_request).execute();
+            if (_response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), String.class);
             }
             throw new RuntimeException();
         } catch (Exception e) {

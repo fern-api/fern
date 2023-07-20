@@ -84,3 +84,11 @@ service:
       method: GET
       path: ""
       response: list<BlogPost>
+
+    useVariable:
+      method: POST
+      path: /use-variable/{appName}
+      path-parameters:
+        appName:
+          variable: $appName
+      response: string

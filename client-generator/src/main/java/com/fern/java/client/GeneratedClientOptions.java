@@ -16,10 +16,12 @@
 
 package com.fern.java.client;
 
+import com.fern.irV16.model.variables.VariableId;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
+import java.util.Map;
 import org.immutables.value.Value;
 
 @Value.Immutable
@@ -31,6 +33,8 @@ public abstract class GeneratedClientOptions extends AbstractGeneratedJavaFile {
     public abstract MethodSpec headers();
 
     public abstract MethodSpec httpClient();
+
+    public abstract Map<VariableId, MethodSpec> variableGetters();
 
     public abstract ClassName builderClassName();
 

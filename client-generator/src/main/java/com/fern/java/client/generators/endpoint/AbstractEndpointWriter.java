@@ -27,6 +27,7 @@ import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass;
 import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass;
+import com.fern.java.client.generators.endpoint.HttpUrlBuilder.PathParamInfo;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.ClassName;
@@ -101,6 +102,8 @@ public abstract class AbstractEndpointWriter {
                                 .getCamelCase()
                                 .getSafeName())
                         .orElse(null),
+                clientOptionsField,
+                generatedClientOptions,
                 CodeBlock.of(
                         "this.$L.$N().$L()",
                         clientOptionsField.name,
@@ -209,26 +212,35 @@ public abstract class AbstractEndpointWriter {
     private List<ParameterSpec> getPathParameters() {
         List<ParameterSpec> pathParameterSpecs = new ArrayList<>();
         httpService.getPathParameters().forEach(pathParameter -> {
-            pathParameterSpecs.add(convertPathParameter(pathParameter));
+            if (pathParameter.getVariable().isPresent()) {
+                return;
+            }
+            pathParameterSpecs.add(convertPathParameter(pathParameter).poetParam());
         });
         httpEndpoint.getPathParameters().forEach(pathParameter -> {
-            pathParameterSpecs.add(convertPathParameter(pathParameter));
+            if (pathParameter.getVariable().isPresent()) {
+                return;
+            }
+            pathParameterSpecs.add(convertPathParameter(pathParameter).poetParam());
         });
         return pathParameterSpecs;
     }
 
-    private Map<String, ParameterSpec> convertPathParametersToSpecMap(List<PathParameter> pathParameters) {
+    private Map<String, PathParamInfo> convertPathParametersToSpecMap(List<PathParameter> pathParameters) {
         return pathParameters.stream()
                 .collect(Collectors.toMap(
                         pathParameter -> pathParameter.getName().getOriginalName(), this::convertPathParameter));
     }
 
-    private ParameterSpec convertPathParameter(PathParameter pathParameter) {
-        return ParameterSpec.builder(
-                        clientGeneratorContext
-                                .getPoetTypeNameMapper()
-                                .convertToTypeName(true, pathParameter.getValueType()),
-                        pathParameter.getName().getCamelCase().getSafeName())
+    private PathParamInfo convertPathParameter(PathParameter pathParameter) {
+        return PathParamInfo.builder()
+                .irParam(pathParameter)
+                .poetParam(ParameterSpec.builder(
+                                clientGeneratorContext
+                                        .getPoetTypeNameMapper()
+                                        .convertToTypeName(true, pathParameter.getValueType()),
+                                pathParameter.getName().getCamelCase().getSafeName())
+                        .build())
                 .build();
     }
 

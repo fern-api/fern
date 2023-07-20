@@ -20,10 +20,15 @@ import com.fern.irV16.model.http.HttpEndpoint;
 import com.fern.irV16.model.http.HttpPath;
 import com.fern.irV16.model.http.HttpPathPart;
 import com.fern.irV16.model.http.HttpService;
+import com.fern.irV16.model.http.PathParameter;
+import com.fern.irV16.model.variables.VariableId;
+import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
+import com.squareup.javapoet.FieldSpec;
+import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
@@ -40,19 +45,25 @@ public final class HttpUrlBuilder {
     private final CodeBlock baseUrlReference;
     private final HttpEndpoint httpEndpoint;
     private final HttpService httpService;
-    private final Map<String, ParameterSpec> servicePathParameters;
-    private final Map<String, ParameterSpec> endpointPathParameters;
+    private final FieldSpec clientOptionsField;
+    private final GeneratedClientOptions generatedClientOptions;
+    private final Map<String, PathParamInfo> servicePathParameters;
+    private final Map<String, PathParamInfo> endpointPathParameters;
 
     public HttpUrlBuilder(
             String httpUrlname,
             String requestName,
+            FieldSpec clientOptionsField,
+            GeneratedClientOptions generatedClientOptions,
             CodeBlock baseUrlReference,
             HttpEndpoint httpEndpoint,
             HttpService httpService,
-            Map<String, ParameterSpec> servicePathParameters,
-            Map<String, ParameterSpec> endpointPathParameters) {
+            Map<String, PathParamInfo> servicePathParameters,
+            Map<String, PathParamInfo> endpointPathParameters) {
         this.httpUrlname = httpUrlname;
         this.requestName = requestName;
+        this.clientOptionsField = clientOptionsField;
+        this.generatedClientOptions = generatedClientOptions;
         this.baseUrlReference = baseUrlReference;
         this.httpEndpoint = httpEndpoint;
         this.httpService = httpService;
@@ -119,20 +130,33 @@ public final class HttpUrlBuilder {
                 .build();
     }
 
-    private static void addHttpPathToCodeBlock(
+    private void addHttpPathToCodeBlock(
             CodeBlock.Builder codeBlock,
             HttpPath httpPath,
-            Map<String, ParameterSpec> pathParameters,
+            Map<String, PathParamInfo> pathParameters,
             boolean addNewLine) {
         String strippedHead = stripLeadingAndTrailingSlash(httpPath.getHead());
         if (!strippedHead.isEmpty()) {
             codeBlock.add(".addPathSegments($S)", strippedHead);
         }
         for (HttpPathPart httpPathPart : httpPath.getParts()) {
-            ParameterSpec poetPathParameter = pathParameters.get(httpPathPart.getPathParameter());
-            codeBlock.add(
-                    "\n.addPathSegment($L)",
-                    PoetTypeNameStringifier.stringify(poetPathParameter.name, poetPathParameter.type));
+            PathParamInfo poetPathParameter = pathParameters.get(httpPathPart.getPathParameter());
+            if (poetPathParameter.irParam().getVariable().isPresent()) {
+                VariableId variableId =
+                        poetPathParameter.irParam().getVariable().get();
+                MethodSpec variableGetter =
+                        generatedClientOptions.variableGetters().get(variableId);
+                codeBlock.add(
+                        "\n.addPathSegment($L)",
+                        PoetTypeNameStringifier.stringify(
+                                clientOptionsField.name + "." + variableGetter.name + "()",
+                                poetPathParameter.poetParam().type));
+            } else {
+                codeBlock.add(
+                        "\n.addPathSegment($L)",
+                        PoetTypeNameStringifier.stringify(
+                                poetPathParameter.poetParam().name, poetPathParameter.poetParam().type));
+            }
             String pathTail = stripLeadingAndTrailingSlash(httpPathPart.getTail());
             if (!pathTail.isEmpty()) {
                 codeBlock.add("\n.addPathSegments($S)", pathTail);
@@ -168,6 +192,18 @@ public final class HttpUrlBuilder {
 
         static ImmutableGeneratedHttpUrl.InitializationBuildStage builder() {
             return ImmutableGeneratedHttpUrl.builder();
+        }
+    }
+
+    @Value.Immutable
+    @StagedBuilderImmutablesStyle
+    public interface PathParamInfo {
+        PathParameter irParam();
+
+        ParameterSpec poetParam();
+
+        static ImmutablePathParamInfo.IrParamBuildStage builder() {
+            return ImmutablePathParamInfo.builder();
         }
     }
 }

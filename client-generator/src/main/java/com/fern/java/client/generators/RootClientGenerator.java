@@ -173,6 +173,28 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                     .build());
         }
 
+        generatorContext.getIr().getVariables().stream()
+                .map(variableDeclaration -> {
+                    String variableName =
+                            variableDeclaration.getName().getCamelCase().getSafeName();
+                    return MethodSpec.methodBuilder(variableName)
+                            .addModifiers(Modifier.PUBLIC)
+                            .returns(builderName)
+                            .addParameter(
+                                    generatorContext
+                                            .getPoetTypeNameMapper()
+                                            .convertToTypeName(true, variableDeclaration.getType()),
+                                    variableName)
+                            .addStatement(
+                                    "$L.$N($L)",
+                                    CLIENT_OPTIONS_BUILDER_NAME,
+                                    generatedClientOptions.variableGetters().get(variableDeclaration.getId()),
+                                    variableName)
+                            .addStatement("return this")
+                            .build();
+                })
+                .forEach(typeSpecBuilder::addMethod);
+
         MethodSpec buildMethod = MethodSpec.methodBuilder("build")
                 .addModifiers(Modifier.PUBLIC)
                 .returns(className)

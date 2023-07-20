@@ -16,20 +16,26 @@
 
 package com.fern.java.client.generators;
 
+import com.fern.irV16.model.variables.VariableDeclaration;
+import com.fern.irV16.model.variables.VariableId;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 import okhttp3.OkHttpClient;
 
@@ -75,12 +81,15 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         MethodSpec environmentGetter = createGetter(environmentField);
         MethodSpec headersGetter = getHeadersGetter();
         MethodSpec httpClientGetter = createGetter(OKHTTP_CLIENT_FIELD);
+        Map<VariableId, FieldSpec> variableFields = getVariableFields();
+        Map<VariableId, MethodSpec> variableGetters = getVariableGetters(variableFields);
         TypeSpec clientOptionsTypeSpec = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addField(environmentField)
                 .addField(HEADERS_FIELD)
                 .addField(HEADER_SUPPLIERS_FIELD)
                 .addField(OKHTTP_CLIENT_FIELD)
+                .addFields(variableFields.values())
                 .addMethod(MethodSpec.constructorBuilder()
                         .addModifiers(Modifier.PRIVATE)
                         .addParameter(ParameterSpec.builder(environmentField.type, environmentField.name)
@@ -91,20 +100,30 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                 .build())
                         .addParameter(ParameterSpec.builder(OKHTTP_CLIENT_FIELD.type, OKHTTP_CLIENT_FIELD.name)
                                 .build())
+                        .addParameters(variableFields.values().stream()
+                                .map(fieldSpec -> ParameterSpec.builder(fieldSpec.type, fieldSpec.name)
+                                        .build())
+                                .collect(Collectors.toList()))
                         .addStatement("this.$L = $L", environmentField.name, environmentField.name)
                         .addStatement("this.$L = $L", HEADERS_FIELD.name, HEADERS_FIELD.name)
                         .addStatement("this.$L = $L", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
                         .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
+                        .addStatement(CodeBlock.join(
+                                variableFields.values().stream()
+                                        .map(fieldSpec -> CodeBlock.of("this.$N = $N", fieldSpec, fieldSpec))
+                                        .collect(Collectors.toList()),
+                                "\n"))
                         .build())
                 .addMethod(environmentGetter)
                 .addMethod(headersGetter)
                 .addMethod(httpClientGetter)
+                .addMethods(variableGetters.values())
                 .addMethod(MethodSpec.methodBuilder("builder")
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                         .returns(builderClassName)
                         .addStatement("return new $T()", builderClassName)
                         .build())
-                .addType(createBuilder())
+                .addType(createBuilder(variableFields))
                 .build();
         JavaFile environmentsFile =
                 JavaFile.builder(className.packageName(), clientOptionsTypeSpec).build();
@@ -115,6 +134,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .headers(headersGetter)
                 .httpClient(httpClientGetter)
                 .builderClassName(builderClassName)
+                .putAllVariableGetters(variableGetters)
                 .build();
     }
 
@@ -130,7 +150,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .build();
     }
 
-    private TypeSpec createBuilder() {
+    private TypeSpec createBuilder(Map<VariableId, FieldSpec> variableFields) {
         return TypeSpec.classBuilder(builderClassName)
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
                 .addField(FieldSpec.builder(environmentField.type, environmentField.name)
@@ -142,10 +162,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addField(HEADER_SUPPLIERS_FIELD.toBuilder()
                         .initializer("new $T<>()", HashMap.class)
                         .build())
+                .addFields(variableFields.values())
                 .addMethod(getEnvironmentBuilder())
                 .addMethod(getHeaderBuilder())
                 .addMethod(getHeaderSupplierBuilder())
-                .addMethod(getBuildMethod())
+                .addMethods(getVariableBuilders(variableFields))
+                .addMethod(getBuildMethod(variableFields))
                 .build();
     }
 
@@ -181,18 +203,84 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .build();
     }
 
-    private MethodSpec getBuildMethod() {
-        return MethodSpec.methodBuilder("build")
-                .addModifiers(Modifier.PUBLIC)
-                .returns(className)
-                .addStatement(
-                        "return new $T($L, $L, $L, new $T())",
-                        className,
-                        environmentField.name,
-                        HEADERS_FIELD.name,
-                        HEADER_SUPPLIERS_FIELD.name,
-                        OkHttpClient.class)
-                .build();
+    private Map<VariableId, FieldSpec> getVariableFields() {
+        return generatorContext.getIr().getVariables().stream()
+                .collect(Collectors.toMap(VariableDeclaration::getId, variableDeclaration -> FieldSpec.builder(
+                                generatorContext
+                                        .getPoetTypeNameMapper()
+                                        .convertToTypeName(true, variableDeclaration.getType()),
+                                variableDeclaration.getName().getCamelCase().getSafeName(),
+                                Modifier.PRIVATE)
+                        .build()));
+    }
+
+    private List<MethodSpec> getVariableBuilders(Map<VariableId, FieldSpec> variableFields) {
+        return generatorContext.getIr().getVariables().stream()
+                .map(variableDeclaration -> {
+                    FieldSpec variableField = variableFields.get(variableDeclaration.getId());
+                    String variableParameterName =
+                            variableDeclaration.getName().getCamelCase().getSafeName();
+                    return MethodSpec.methodBuilder(
+                                    variableDeclaration.getName().getCamelCase().getSafeName())
+                            .addModifiers(Modifier.PUBLIC)
+                            .returns(builderClassName)
+                            .addParameter(
+                                    generatorContext
+                                            .getPoetTypeNameMapper()
+                                            .convertToTypeName(true, variableDeclaration.getType()),
+                                    variableParameterName)
+                            .addStatement("this.$N = $L", variableField, variableParameterName)
+                            .addStatement("return this", variableField)
+                            .build();
+                })
+                .collect(Collectors.toList());
+    }
+
+    private Map<VariableId, MethodSpec> getVariableGetters(Map<VariableId, FieldSpec> variableFields) {
+        return generatorContext.getIr().getVariables().stream()
+                .collect(Collectors.toMap(VariableDeclaration::getId, variableDeclaration -> {
+                    FieldSpec variableField = variableFields.get(variableDeclaration.getId());
+                    TypeName variableTypeName = generatorContext
+                            .getPoetTypeNameMapper()
+                            .convertToTypeName(true, variableDeclaration.getType());
+                    return MethodSpec.methodBuilder(
+                                    variableDeclaration.getName().getCamelCase().getSafeName())
+                            .addModifiers(Modifier.PUBLIC)
+                            .returns(variableTypeName)
+                            .addStatement("return this.$N", variableField)
+                            .build();
+                }));
+    }
+
+    private MethodSpec getBuildMethod(Map<VariableId, FieldSpec> variableFields) {
+        if (variableFields.isEmpty()) {
+            return MethodSpec.methodBuilder("build")
+                    .addModifiers(Modifier.PUBLIC)
+                    .returns(className)
+                    .addStatement(
+                            "return new $T($L, $L, $L, new $T())",
+                            className,
+                            environmentField.name,
+                            HEADERS_FIELD.name,
+                            HEADER_SUPPLIERS_FIELD.name,
+                            OkHttpClient.class)
+                    .build();
+        } else {
+            String variableArgs = variableFields.values().stream()
+                    .map(variableField -> "this." + variableField.name)
+                    .collect(Collectors.joining(","));
+            return MethodSpec.methodBuilder("build")
+                    .addModifiers(Modifier.PUBLIC)
+                    .returns(className)
+                    .addStatement(
+                            "return new $T($L, $L, $L, new $T()," + variableArgs + ")",
+                            className,
+                            environmentField.name,
+                            HEADERS_FIELD.name,
+                            HEADER_SUPPLIERS_FIELD.name,
+                            OkHttpClient.class)
+                    .build();
+        }
     }
 
     private static MethodSpec createGetter(FieldSpec fieldSpec) {

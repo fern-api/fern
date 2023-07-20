@@ -9,5 +9,8 @@ headers:
     name: apiVersion
     type: string
     docs: The version of the API that you are on.
+variables:
+  appName:
+    type: string
 error-discrimination:
   strategy: status-code
