@@ -10,10 +10,11 @@ export declare namespace ApiSubpackage {
     export interface Props {
         subpackageId: FernRegistryApiRead.SubpackageId;
         slug: string;
+        isLastInParentPackage: boolean;
     }
 }
 
-export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId, slug }) => {
+export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId, slug, isLastInParentPackage }) => {
     const { resolveSubpackageById } = useApiDefinitionContext();
 
     const subpackage = resolveSubpackageById(subpackageId);
@@ -33,7 +34,12 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId, slu
                     </div>
                 )}
             </ApiPageMargins>
-            <ApiPackageContents key={subpackageId} package={subpackage} slug={slug} />
+            <ApiPackageContents
+                key={subpackageId}
+                package={subpackage}
+                slug={slug}
+                isLastInParentPackage={isLastInParentPackage}
+            />
         </>
     );
 };

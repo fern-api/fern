@@ -9,7 +9,7 @@ import { JsonPropertyPath } from "../examples/json-example/contexts/JsonProperty
 import { Markdown } from "../markdown/Markdown";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useEndpointContext } from "./endpoint-context/useEndpointContext";
-import { EndpointExamples } from "./endpoint-examples/EndpointExamples";
+import { EndpointExample } from "./endpoint-examples/EndpointExample";
 import { EndpointErrorsSection } from "./EndpointErrorsSection";
 import { EndpointMethodPill } from "./EndpointMethodPill";
 import { EndpointPathParameter } from "./EndpointPathParameter";
@@ -32,6 +32,7 @@ export declare namespace EndpointContent {
     export interface Props {
         endpoint: FernRegistryApiRead.EndpointDefinition;
         package: FernRegistryApiRead.ApiDefinitionPackage;
+        hideBottomSeparator?: boolean;
         setContainerRef: (ref: HTMLElement | null) => void;
     }
 }
@@ -39,6 +40,7 @@ export declare namespace EndpointContent {
 export const EndpointContent = React.memo<EndpointContent.Props>(function EndpointContent({
     endpoint,
     package: package_,
+    hideBottomSeparator = false,
     setContainerRef,
 }) {
     const { setHoveredRequestPropertyPath, setHoveredResponsePropertyPath } = useEndpointContext();
@@ -85,11 +87,24 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
         [titleHeight]
     );
     const [selectedErrorIndex, setSelectedErrorIndex] = useState<number | null>(null);
+    const selectedError = selectedErrorIndex == null ? null : endpoint.errors[selectedErrorIndex] ?? null;
+    const example = useMemo(() => {
+        if (selectedError == null) {
+            // Look for success example
+            return endpoint.examples.find((e) => e.responseStatusCode >= 200 && e.responseStatusCode < 300) ?? null;
+        }
+        return endpoint.examples.find((e) => e.responseStatusCode === selectedError.statusCode) ?? null;
+    }, [endpoint.examples, selectedError]);
 
     const environmentUrl = useMemo(() => getEndpointEnvironmentUrl(endpoint), [endpoint]);
 
     return (
-        <ApiPageMargins>
+        <ApiPageMargins
+            className={classNames("pb-20", {
+                "border-border border-b": !hideBottomSeparator,
+            })}
+            onClick={() => setSelectedErrorIndex(null)}
+        >
             <div
                 className={classNames("flex min-w-0 flex-1 space-x-[5vw]", "flex-col md:flex-row")}
                 ref={setContainerRef}
@@ -174,9 +189,11 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                 <EndpointSection title="Errors">
                                     <EndpointErrorsSection
                                         errors={endpoint.errors}
-                                        onClickError={(_, idx) => {
-                                            setSelectedErrorIndex(idx === selectedErrorIndex ? null : idx);
+                                        onClickError={(_, idx, event) => {
+                                            event.stopPropagation();
+                                            setSelectedErrorIndex(idx);
                                         }}
+                                        onHoverProperty={onHoverResponseProperty}
                                         selectedErrorIndex={selectedErrorIndex}
                                     />
                                 </EndpointSection>
@@ -200,11 +217,11 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                             marginTop: titleHeight - 40,
                         }}
                     >
-                        <EndpointExamples endpoint={endpoint} />
+                        {example && <EndpointExample endpoint={endpoint} example={example} />}
                     </div>
                 )}
                 <div className="flex max-h-[150vh] md:hidden">
-                    <EndpointExamples endpoint={endpoint} />
+                    {example && <EndpointExample endpoint={endpoint} example={example} />}
                 </div>
             </div>
         </ApiPageMargins>

@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 imports:
-  core: core.yml
+  root: __package__.yml
   user: core.user.yml
 
 service:
@@ -23,7 +23,7 @@ service:
             docs: If set to `"false"`, only test users will be returned.
       response: UsersList
       errors:
-        - core.InternalError
+        - root.InternalServerError
 
     get:
       audiences:
@@ -37,8 +37,8 @@ service:
         user_id: user.UserId
       response: user.User
       errors:
-        - core.ResourceNotFoundError
-        - core.InternalError
+        - root.NotFoundError
+        - root.InternalServerError
 
     create:
       audiences:
@@ -52,9 +52,9 @@ service:
         body: user.UserCreateParams
       response: user.User
       errors:
-        - core.InvalidRequestError
-        - core.ForbiddenError
-        - core.InternalError
+        - root.BadRequestError
+        - root.ForbiddenError
+        - root.InternalServerError
 
     update:
       audiences:
@@ -71,11 +71,11 @@ service:
         body: user.UserUpdateParams
       response: user.User
       errors:
-        - core.InvalidRequestError
-        - core.ForbiddenError
-        - core.ResourceNotFoundError
-        - core.InternalError
-        - core.ServiceUnavailableError
+        - root.BadRequestError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
 
     delete:
       audiences:
@@ -88,9 +88,9 @@ service:
         user_id: user.UserId
       response: user.User
       errors:
-        - core.ResourceNotFoundError
-        - core.InternalError
-        - core.ServiceUnavailableError
+        - root.NotFoundError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
 
 types:
   UsersList:

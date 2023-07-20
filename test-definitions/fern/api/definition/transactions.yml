@@ -7,7 +7,7 @@ service:
       method: GET
       docs: Retrieves all transactions
       display-name: List transactions
-      response: Transaction
+      response: list<Transaction>
     get:
       path: /{transaction_id}
       method: GET

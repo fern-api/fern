@@ -16,7 +16,7 @@ export const ApiPage: React.FC = () => {
             {apiSection.artifacts != null && areApiArtifactsNonEmpty(apiSection.artifacts) && (
                 <ApiArtifacts apiArtifacts={apiSection.artifacts} />
             )}
-            <ApiPackageContents package={apiDefinition.rootPackage} slug={apiSlug} />
+            <ApiPackageContents package={apiDefinition.rootPackage} slug={apiSlug} isLastInParentPackage={false} />
             <ApiPageMargins>
                 <BottomNavigationButtons />
             </ApiPageMargins>
