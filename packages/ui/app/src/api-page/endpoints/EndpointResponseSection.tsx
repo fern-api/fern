@@ -22,7 +22,7 @@ export const EndpointResponseSection: React.FC<EndpointResponseSection.Props> = 
     return (
         <div className="flex flex-col">
             <Description description={httpResponse.description ?? undefined} />
-            <div className="text-text-default mb-5">
+            <div className="text-text-default border-border border-b pb-5">
                 {"This endpoint "}
                 {visitDiscriminatedUnion(httpResponse.type, "type")._visit<JSX.Element | string>({
                     object: () => "returns an object",
