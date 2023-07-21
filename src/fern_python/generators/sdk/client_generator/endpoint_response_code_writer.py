@@ -222,6 +222,14 @@ class EndpointResponseCodeWriter:
         writer.write_newline_if_last_line_not()
 
     def _deserialize_json_response(self, *, writer: AST.NodeWriter) -> None:
+        # in streaming responses, we need to call read() or aread()
+        # before deserializing or httpx will raise ResponseNotRead
+        if self._endpoint.sdk_response is not None and self._endpoint.sdk_response.get_as_union().type == "streaming":
+            writer.write_line(
+                f"await {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.aread()"
+                if self._is_async
+                else f"{EndpointResponseCodeWriter.RESPONSE_VARIABLE}.read()"
+            )
         writer.write_line(
             f"{EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE} = {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.json()"
         )
