@@ -118,7 +118,10 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                                             undefined,
                                             ts.factory.createIdentifier("event"),
                                             undefined,
-                                            context.externalDependencies.axios.AxiosProgressEvent._getReferenceToType()
+                                            ts.factory.createTypeReferenceNode(
+                                                ts.factory.createIdentifier("ProgressEvent"),
+                                                undefined
+                                            )
                                         ),
                                     ],
                                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)

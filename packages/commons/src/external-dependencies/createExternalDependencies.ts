@@ -1,6 +1,5 @@
 import { DependencyManager } from "../dependency-manager/DependencyManager";
 import { ImportsManager } from "../imports-manager";
-import { AxiosImpl } from "./axios/AxiosImpl";
 import { ExpressImpl } from "./express/ExpressImpl";
 import { ExternalDependencies } from "./ExternalDependencies";
 import { FormDataImpl } from "./form-data/FormDataImpl";
@@ -27,6 +26,5 @@ export function createExternalDependencies({
         fs: new FsImpl({ importsManager, dependencyManager }),
         stream: new StreamImpl({ importsManager, dependencyManager }),
         URLSearchParams: new URLSearchParamsImpl({ importsManager, dependencyManager }),
-        axios: new AxiosImpl({ importsManager, dependencyManager }),
     };
 }

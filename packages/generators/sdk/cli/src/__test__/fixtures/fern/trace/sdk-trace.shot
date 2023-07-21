@@ -16425,7 +16425,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
           },
           Object {
             "contents": "import { default as URLSearchParams } from \\"@ungap/url-search-params\\";
-import { AxiosAdapter, AxiosProgressEvent } from \\"axios\\";
+import { AxiosAdapter } from \\"axios\\";
 import { APIResponse } from \\"./APIResponse\\";
 export declare type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 export declare namespace Fetcher {
@@ -16440,7 +16440,7 @@ export declare namespace Fetcher {
         withCredentials?: boolean;
         responseType?: \\"json\\" | \\"blob\\";
         adapter?: AxiosAdapter;
-        onUploadProgress?: (event: AxiosProgressEvent) => void;
+        onUploadProgress?: (event: ProgressEvent) => void;
     }
     type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
     interface FailedStatusCodeError {
@@ -35500,7 +35500,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
               },
               Object {
                 "contents": "import { default as URLSearchParams } from \\"@ungap/url-search-params\\";
-import { AxiosAdapter, AxiosProgressEvent } from \\"axios\\";
+import { AxiosAdapter } from \\"axios\\";
 import { APIResponse } from \\"./APIResponse\\";
 export declare type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 export declare namespace Fetcher {
@@ -35515,7 +35515,7 @@ export declare namespace Fetcher {
         withCredentials?: boolean;
         responseType?: \\"json\\" | \\"blob\\";
         adapter?: AxiosAdapter;
-        onUploadProgress?: (event: AxiosProgressEvent) => void;
+        onUploadProgress?: (event: ProgressEvent) => void;
     }
     type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
     interface FailedStatusCodeError {
@@ -57095,7 +57095,7 @@ Object.defineProperty(exports, \\"TraceApiEnvironment\\", { enumerable: true, ge
     \\"dependencies\\": {
         \\"@types/url-join\\": \\"4.0.1\\",
         \\"@ungap/url-search-params\\": \\"0.2.2\\",
-        \\"axios\\": \\"1.4.0\\",
+        \\"axios\\": \\"0.27.2\\",
         \\"js-base64\\": \\"3.7.2\\",
         \\"url-join\\": \\"4.0.1\\"
     },

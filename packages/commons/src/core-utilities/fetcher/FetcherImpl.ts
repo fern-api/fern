@@ -13,7 +13,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         originalPathOnDocker: "/assets/fetcher" as const,
         pathInCoreUtilities: [{ nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
-            dependencyManager.addDependency("axios", "1.4.0");
+            dependencyManager.addDependency("axios", "0.27.2");
             dependencyManager.addDependency("@ungap/url-search-params", "0.2.2");
         },
     };
