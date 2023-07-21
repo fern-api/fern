@@ -48,6 +48,9 @@ export async function runGenerator({
         JSON.stringify(await FernGeneratorExecParsing.GeneratorConfig.json(config), undefined, 4)
     );
 
+    // HACKHACK: sleep for 5s to make sure dir is updated
+    await new Promise((f) => setTimeout(f, 500));
+
     await runDocker({
         imageName,
         args: [DOCKER_GENERATOR_CONFIG_PATH],
