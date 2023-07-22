@@ -26,6 +26,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
     "json-stream-stringify": "^3.0.1",
     "tmp-promise": "^3.0.3"
   },
