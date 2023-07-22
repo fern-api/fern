@@ -1,32 +1,21 @@
-import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import { snakeCase } from "lodash-es";
 import React, { useCallback, useMemo, useState } from "react";
-import { MonospaceText } from "../../commons/monospace/MonospaceText";
-import { SeparatedElements } from "../../commons/SeparatedElements";
+import { isSubpackage } from "../../util/package";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Markdown } from "../markdown/Markdown";
 import { ApiPageMargins } from "../page-margins/ApiPageMargins";
 import { useEndpointContext } from "./endpoint-context/useEndpointContext";
 import { EndpointExample } from "./endpoint-examples/EndpointExample";
 import { EndpointErrorsSection } from "./EndpointErrorsSection";
-import { EndpointMethodPill } from "./EndpointMethodPill";
-import { EndpointPathParameter } from "./EndpointPathParameter";
 import { EndpointRequestSection } from "./EndpointRequestSection";
 import { EndpointResponseSection } from "./EndpointResponseSection";
 import { EndpointSection } from "./EndpointSection";
 import { EndpointTitle } from "./EndpointTitle";
-import { getEndpointEnvironmentUrl } from "./getEndpointEnvironmentUrl";
+import { EndpointUrl } from "./EndpointUrl";
 import { PathParametersSection } from "./PathParametersSection";
 import { QueryParametersSection } from "./QueryParametersSection";
-
-// TODO: Might want to place this type guard elsewhere
-function isSubpackage(
-    package_: FernRegistryApiRead.ApiDefinitionPackage
-): package_ is FernRegistryApiRead.ApiDefinitionSubpackage {
-    return typeof (package_ as FernRegistryApiRead.ApiDefinitionSubpackage).subpackageId === "string";
-}
 
 export declare namespace EndpointContent {
     export interface Props {
@@ -96,8 +85,6 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
         return endpoint.examples.find((e) => e.responseStatusCode === selectedError.statusCode) ?? null;
     }, [endpoint.examples, selectedError]);
 
-    const environmentUrl = useMemo(() => getEndpointEnvironmentUrl(endpoint), [endpoint]);
-
     return (
         <ApiPageMargins
             className={classNames("pb-20", {
@@ -113,41 +100,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                     <div className="typography-font-heading pb-8 pt-20 text-3xl font-medium" ref={setTitleRef}>
                         <EndpointTitle endpoint={endpoint} />
                     </div>
-                    <div className="flex">
-                        <div className="flex overflow-hidden rounded">
-                            <EndpointMethodPill endpoint={endpoint} />
-                            <MonospaceText className="text-text-default flex flex-wrap items-center bg-white/5 px-2 py-1">
-                                {environmentUrl}
-                                {endpoint.path.parts.map((part, index) => (
-                                    <React.Fragment key={index}>
-                                        {visitDiscriminatedUnion(part, "type")._visit<JSX.Element | string | null>({
-                                            literal: (literal) => (
-                                                <SeparatedElements
-                                                    separator={
-                                                        <>
-                                                            /<wbr />
-                                                        </>
-                                                    }
-                                                >
-                                                    {literal.value.split("/").map((part, index) => (
-                                                        <React.Fragment key={index}>{part}</React.Fragment>
-                                                    ))}
-                                                </SeparatedElements>
-                                            ),
-                                            pathParameter: (pathParameter) => (
-                                                <>
-                                                    <wbr />
-                                                    <EndpointPathParameter pathParameter={pathParameter.value} />
-                                                    <wbr />
-                                                </>
-                                            ),
-                                            _other: () => null,
-                                        })}
-                                    </React.Fragment>
-                                ))}
-                            </MonospaceText>
-                        </div>
-                    </div>
+                    <EndpointUrl endpoint={endpoint} />
                     {endpoint.description != null && (
                         <div className="mt-6">
                             <Markdown type="api">{endpoint.description}</Markdown>
