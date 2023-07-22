@@ -25,7 +25,7 @@ The Fern CLI can generate the following types of artifacts:
 
 ### 🌿 Client libraries & SDKs
 
-Whether you call them client libraries, SDKs, bindings, or wrappers, Fern generates idiomatic SDKS you can use to interact with your APIs. This makes it trivial to keep your SDKs in sync with your backend, and eliminates the need to write the SDKs manually.
+Whether you call them client libraries, SDKs, bindings, or wrappers, Fern generates idiomatic SDKs you can use to interact with your APIs. This makes it trivial to keep your SDKs in sync with your backend, and eliminates the need to write the SDKs manually.
 
 Currently, the following languages are supported:
 
