@@ -48,7 +48,10 @@ export async function runGenerator({
         JSON.stringify(await FernGeneratorExecParsing.GeneratorConfig.json(config), undefined, 4)
     );
 
-    await waitUntilPathExists(absolutePathToWriteConfigJson, 5_000);
+    const doesConfigJsonExist = await waitUntilPathExists(absolutePathToWriteConfigJson, 5_000);
+    if (!doesConfigJsonExist) {
+        throw new Error(`Failed to create ${absolutePathToWriteConfigJson}`);
+    }
 
     await runDocker({
         imageName,
