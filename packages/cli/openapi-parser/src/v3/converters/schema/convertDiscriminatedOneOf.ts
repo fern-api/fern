@@ -34,6 +34,12 @@ export function convertDiscriminatedOneOf({
                 false,
                 [schema]
             );
+            context.markReferencedByDiscriminatedUnion(
+                {
+                    $ref: schema,
+                },
+                discriminant
+            );
             return [discriminantValue, subtypeReference];
         })
     );
