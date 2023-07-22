@@ -29671,6 +29671,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       },
       "securitySchemes": {
         "squidex-oauth-auth": {
+          "tokenVariableName": undefined,
           "type": "bearer",
         },
       },

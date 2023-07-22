@@ -5395,6 +5395,7 @@ exports[`open api parser hathora parse open api 1`] = `
       },
       "securitySchemes": {
         "auth0": {
+          "tokenVariableName": undefined,
           "type": "bearer",
         },
       },
