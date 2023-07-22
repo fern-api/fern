@@ -3,28 +3,35 @@ import { AbsoluteFilePath } from "./AbsoluteFilePath";
 import { doesPathExist } from "./doesPathExist";
 
 export async function waitUntilPathExists(filepath: AbsoluteFilePath, timeoutMs: number): Promise<boolean> {
-    return waitUntilPathExistsWithDeadline({ filepath, deadline: Date.now() + timeoutMs });
+    const controller = new AbortController();
+    return Promise.race([
+        waitUntilPathExistsWithExponentialBackoff({ filepath, controller }).then(() => true),
+        delay(timeoutMs).then(() => {
+            controller.abort();
+            return false;
+        }),
+    ]);
 }
 
-async function waitUntilPathExistsWithDeadline({
+async function waitUntilPathExistsWithExponentialBackoff({
     filepath,
-    deadline,
+    controller,
     delayMs = 50,
 }: {
     filepath: AbsoluteFilePath;
-    deadline: number;
+    controller: AbortController;
     delayMs?: number;
-}): Promise<boolean> {
+}): Promise<void> {
+    if (controller.signal.aborted) {
+        return;
+    }
     if (await doesPathExist(filepath)) {
-        return true;
+        return;
     }
     await delay(delayMs);
-    if (Date.now() > deadline) {
-        return false;
-    }
-    return waitUntilPathExistsWithDeadline({
+    return waitUntilPathExistsWithExponentialBackoff({
         filepath,
-        deadline,
+        controller,
         // exponential backoff
         delayMs: delayMs * 2,
     });
