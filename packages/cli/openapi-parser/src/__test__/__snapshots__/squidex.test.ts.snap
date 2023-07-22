@@ -114,6 +114,7 @@ exports[`open api parser squidex parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -242,6 +243,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -691,6 +693,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -919,6 +922,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1154,6 +1158,7 @@ You will be assigned as owner of the new team automatically.",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1282,6 +1287,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1973,6 +1979,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2070,6 +2077,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2154,6 +2162,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2238,6 +2247,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2334,6 +2344,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2430,6 +2441,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2623,6 +2635,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3758,6 +3771,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3914,6 +3928,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4060,6 +4075,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4144,6 +4160,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4228,6 +4245,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4312,6 +4330,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4396,6 +4415,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4721,6 +4741,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4852,6 +4873,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -5330,6 +5352,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -5907,6 +5930,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -6035,6 +6059,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -6942,6 +6967,7 @@ You will be assigned as owner of the new team automatically.",
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -7026,6 +7052,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -7274,6 +7301,7 @@ You will be assigned as owner of the new team automatically.",
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -7372,6 +7400,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -7470,6 +7499,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -8032,6 +8062,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -8120,6 +8151,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -8222,6 +8254,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -8736,6 +8769,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -8834,6 +8868,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -9441,6 +9476,7 @@ You will be assigned as owner of the new team automatically.",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -10148,6 +10184,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -10232,6 +10269,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -10378,6 +10416,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -10528,6 +10567,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -10903,6 +10943,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -11179,6 +11220,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -11342,6 +11384,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -11517,6 +11560,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -11645,6 +11689,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -11774,6 +11819,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -11858,6 +11904,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -12059,6 +12106,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -12497,6 +12545,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -12581,6 +12630,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -12782,6 +12832,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -12929,6 +12980,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -13105,6 +13157,7 @@ You will be assigned as owner of the new app automatically.",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -13295,6 +13348,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -13413,6 +13467,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -13541,6 +13596,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -13669,6 +13725,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -13753,6 +13810,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,

@@ -80,6 +80,7 @@ Here are some of the most used payload fields explained (you can find the full p
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -232,6 +233,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -292,6 +294,7 @@ Each consumer User entity needs three mandatory fields:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -454,6 +457,7 @@ Each consumer Business entity needs three mandatory fields:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -622,6 +626,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -689,6 +694,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
