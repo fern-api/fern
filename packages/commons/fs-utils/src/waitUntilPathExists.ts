@@ -3,14 +3,18 @@ import { AbsoluteFilePath } from "./AbsoluteFilePath";
 import { doesPathExist } from "./doesPathExist";
 
 export async function waitUntilPathExists(filepath: AbsoluteFilePath, timeoutMs: number): Promise<boolean> {
-    return waitUntilPathExistsWithDeadline(filepath, Date.now() + timeoutMs);
+    return waitUntilPathExistsWithDeadline({ filepath, deadline: Date.now() + timeoutMs });
 }
 
-async function waitUntilPathExistsWithDeadline(
-    filepath: AbsoluteFilePath,
-    deadline: number,
-    delayMs = 50
-): Promise<boolean> {
+async function waitUntilPathExistsWithDeadline({
+    filepath,
+    deadline,
+    delayMs = 50,
+}: {
+    filepath: AbsoluteFilePath;
+    deadline: number;
+    delayMs?: number;
+}): Promise<boolean> {
     if (await doesPathExist(filepath)) {
         return true;
     }
@@ -18,10 +22,10 @@ async function waitUntilPathExistsWithDeadline(
     if (Date.now() > deadline) {
         return false;
     }
-    return waitUntilPathExistsWithDeadline(
+    return waitUntilPathExistsWithDeadline({
         filepath,
         deadline,
         // exponential backoff
-        delayMs * 2
-    );
+        delayMs: delayMs * 2,
+    });
 }
