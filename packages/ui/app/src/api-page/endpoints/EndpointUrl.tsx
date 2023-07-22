@@ -20,15 +20,19 @@ export const EndpointUrl: React.FC<EndpointUrl.Props> = ({ endpoint }) => {
                 {endpoint.method}
             </div>
             <div className="flex items-center space-x-1.5 py-1">
-                <div className="text-text-default">{environmentUrl}</div>
+                <div className="text-text-default whitespace-nowrap font-light">{environmentUrl}</div>
                 {endpointPathParts
                     .map((part) =>
                         visitDiscriminatedUnion(part, "type")._visit({
                             literal: (literal) => {
-                                return <div className="text-text-default whitespace-nowrap">{literal.value}</div>;
+                                return (
+                                    <div className="text-text-default whitespace-nowrap font-light">
+                                        {literal.value}
+                                    </div>
+                                );
                             },
                             pathParameter: (pathParameter) => (
-                                <div className="bg-accentHighlight text-accentPrimary flex items-center justify-center whitespace-nowrap rounded px-1 py-0.5 font-mono">
+                                <div className="bg-accentHighlight text-accentPrimary flex items-center justify-center whitespace-nowrap rounded px-1 py-0.5 font-mono text-xs">
                                     {pathParameter.name}
                                 </div>
                             ),
