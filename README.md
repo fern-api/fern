@@ -15,7 +15,7 @@
 
 </div>
 
-Fern is an open source toolkit for designing, building, and consuming REST APIs. With Fern, you can generate client libraries, API documentation and boilerplate for your backend server.
+Fern is an open source toolkit for designing, building, and consuming REST APIs. With Fern, you can generate client libraries, API documentation, and boilerplate for your backend server.
 
 Fern is **fully compatible with OpenAPI.** You can use your existing OpenAPI spec to generate code and documentation with Fern. If you're not a fan of OpenAPI, you can also use Fern's [simpler format](#the-fern-specification) to define your API.
 
