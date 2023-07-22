@@ -96,11 +96,15 @@ types:
   SecurityScheme:
     union:
       basic: BasicSecurityScheme
-      bearer: {}
+      bearer: BearerSecurityScheme
       header: HeaderSecurityScheme
       query:
         type: QuerySecurityScheme
         docs: parameter sent as a security scheme
+
+  BearerSecurityScheme:
+    properties:
+      tokenVariableName: optional<string>
 
   BasicSecurityScheme:
     properties:
