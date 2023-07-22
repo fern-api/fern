@@ -9,3 +9,4 @@ export { RelativeFilePath } from "./RelativeFilePath";
 export { resolve } from "./resolve";
 export { streamObjectToFile } from "./streamObjectToFile";
 export { stringifyLargeObject } from "./stringifyLargeObject";
+export { waitUntilPathExists } from "./waitUntilPathExists";

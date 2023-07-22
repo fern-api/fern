@@ -1,5 +1,5 @@
 import { runDocker } from "@fern-api/docker-utils";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, waitUntilPathExists } from "@fern-api/fs-utils";
 import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { writeFile } from "fs/promises";
 import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_GENERATOR_CONFIG_PATH, DOCKER_PATH_TO_IR } from "./constants";
@@ -48,8 +48,7 @@ export async function runGenerator({
         JSON.stringify(await FernGeneratorExecParsing.GeneratorConfig.json(config), undefined, 4)
     );
 
-    // HACKHACK: sleep for 500ms to make sure dir is updated
-    await new Promise((f) => setTimeout(f, 500));
+    await waitUntilPathExists(absolutePathToWriteConfigJson, 5_000);
 
     await runDocker({
         imageName,
