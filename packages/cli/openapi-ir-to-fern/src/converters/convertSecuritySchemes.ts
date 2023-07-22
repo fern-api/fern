@@ -7,6 +7,7 @@ export interface FernAuth {
 }
 
 const BASIC_AUTH_SCHEME = "BasicAuthScheme";
+const BEARER_AUTH_SCHEME = "BearerAuthScheme";
 
 export function convertSecuritySchemes(securitySchemes: Record<SecuritySchemeId, SecurityScheme>): FernAuth {
     let auth: string | undefined = undefined;
@@ -38,6 +39,21 @@ export function convertSecuritySchemes(securitySchemes: Record<SecuritySchemeId,
             }
         } else if (securityScheme.type === "bearer" && auth == null) {
             auth = "bearer";
+
+            let addBearerAuthScheme = false;
+            const bearerAuthScheme: RawSchemas.AuthSchemeDeclarationSchema = {
+                scheme: "bearer",
+            };
+            if (securityScheme.tokenVariableName != null) {
+                bearerAuthScheme.token = {
+                    name: securityScheme.tokenVariableName,
+                };
+                addBearerAuthScheme = true;
+            }
+            if (addBearerAuthScheme) {
+                auth = BEARER_AUTH_SCHEME;
+                authSchemes[BEARER_AUTH_SCHEME] = bearerAuthScheme;
+            }
         }
 
         if (securityScheme.type === "header") {

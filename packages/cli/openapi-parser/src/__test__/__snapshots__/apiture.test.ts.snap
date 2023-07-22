@@ -7203,6 +7203,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       },
       "securitySchemes": {
         "accessToken": {
+          "tokenVariableName": undefined,
           "type": "bearer",
         },
         "apiKey": {

@@ -28105,9 +28105,11 @@ exports[`open api parser deel parse open api 1`] = `
       },
       "securitySchemes": {
         "deelToken": {
+          "tokenVariableName": undefined,
           "type": "bearer",
         },
         "oauth2": {
+          "tokenVariableName": undefined,
           "type": "bearer",
         },
       },

@@ -37603,6 +37603,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "usernameVariableName": undefined,
         },
         "bearerAuth": {
+          "tokenVariableName": undefined,
           "type": "bearer",
         },
       },

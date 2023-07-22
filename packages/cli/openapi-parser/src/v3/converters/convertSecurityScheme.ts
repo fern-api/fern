@@ -1,6 +1,7 @@
 import { SecurityScheme } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { OpenAPIExtension } from "../extensions/extensions";
+import { FernOpenAPIExtension } from "../extensions/fernExtensions";
 import { getBasicSecuritySchemeNames } from "../extensions/getBasicSecuritySchemeNames";
 import { getExtension } from "../extensions/getExtension";
 import { isReferenceObject } from "../utils/isReferenceObject";
@@ -22,7 +23,10 @@ function convertSecuritySchemeHelper(securityScheme: OpenAPIV3.SecuritySchemeObj
             prefix: bearerFormat != null ? "Bearer" : undefined,
         });
     } else if (securityScheme.type === "http" && securityScheme.scheme === "bearer") {
-        return SecurityScheme.bearer();
+        const tokenVariableName = getExtension<string>(securityScheme, FernOpenAPIExtension.BEARER_TOKEN_VARIABLE_NAME);
+        return SecurityScheme.bearer({
+            tokenVariableName: tokenVariableName ?? undefined,
+        });
     } else if (securityScheme.type === "http" && securityScheme.scheme === "basic") {
         const basicSecuritySchemeNaming = getBasicSecuritySchemeNames(securityScheme);
         return SecurityScheme.basic({
@@ -30,9 +34,13 @@ function convertSecuritySchemeHelper(securityScheme: OpenAPIV3.SecuritySchemeObj
             passwordVariableName: basicSecuritySchemeNaming.passwordVariable ?? undefined,
         });
     } else if (securityScheme.type === "openIdConnect") {
-        return SecurityScheme.bearer();
+        return SecurityScheme.bearer({
+            tokenVariableName: undefined,
+        });
     } else if (securityScheme.type === "oauth2") {
-        return SecurityScheme.bearer();
+        return SecurityScheme.bearer({
+            tokenVariableName: undefined,
+        });
     }
     throw new Error(`Failed to convert security scheme ${JSON.stringify(securityScheme)}`);
 }
