@@ -10,6 +10,11 @@ export const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/";
 export const RESPONSE_REFERENCE_PREFIX = "#/components/responses/";
 export const REQUEST_BODY_REFERENCE_PREFIX = "#/components/requestBodies/";
 
+export interface DiscriminatedUnionReference {
+    discriminants: Set<string>;
+    numReferences: number;
+}
+
 export abstract class AbstractOpenAPIV3ParserContext {
     public logger: Logger;
     public document: OpenAPIV3.Document;
@@ -123,6 +128,12 @@ export abstract class AbstractOpenAPIV3ParserContext {
         statusCode: number,
         schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject
     ): void;
+
+    public abstract markReferencedByDiscriminatedUnion(schema: OpenAPIV3.ReferenceObject, discrminant: string): void;
+
+    public abstract getReferencesFromDiscriminatedUnion(
+        schema: OpenAPIV3.ReferenceObject
+    ): DiscriminatedUnionReference | undefined;
 
     public abstract getErrors(): Record<StatusCode, HttpError>;
 }
