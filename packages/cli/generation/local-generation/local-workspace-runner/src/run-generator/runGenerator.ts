@@ -1,4 +1,3 @@
-import { delay } from "@fern-api/core-utils";
 import { runDocker } from "@fern-api/docker-utils";
 import { AbsoluteFilePath, waitUntilPathExists } from "@fern-api/fs-utils";
 import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
@@ -53,8 +52,6 @@ export async function runGenerator({
     if (!doesConfigJsonExist) {
         throw new Error(`Failed to create ${absolutePathToWriteConfigJson}`);
     }
-    // HACKHACK: wait 5 seconds just to be sure
-    await delay(5_000);
 
     await runDocker({
         imageName,
