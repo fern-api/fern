@@ -6967,6 +6967,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/registry-browser", "npm:0.10.1-15-g59bbd4f"],\
             ["@fontsource/ibm-plex-mono", "npm:4.5.13"],\
             ["@headlessui/react", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:1.7.15"],\
+            ["@react-hook/size", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:2.1.2"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/marked", "npm:5.0.0"],\
@@ -8604,6 +8605,99 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@popperjs-core-npm-2.11.6-5bcdc104bd-47fb328cec.zip/node_modules/@popperjs/core/",\
           "packageDependencies": [\
             ["@popperjs/core", "npm:2.11.6"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@react-hook/latest", [\
+        ["npm:1.0.3", {\
+          "packageLocation": "./.yarn/cache/@react-hook-latest-npm-1.0.3-3d70c2d1bb-2408c9cd35.zip/node_modules/@react-hook/latest/",\
+          "packageDependencies": [\
+            ["@react-hook/latest", "npm:1.0.3"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:78fbeec43156f7d9842cfe299fa668d8b09f444494f8ce73505e441305cb0080fb1f9ffdfafc575cbda715c8b32e4911a5de387fa6d04128a467321a8e7744f9#npm:1.0.3", {\
+          "packageLocation": "./.yarn/__virtual__/@react-hook-latest-virtual-a309ac1452/0/cache/@react-hook-latest-npm-1.0.3-3d70c2d1bb-2408c9cd35.zip/node_modules/@react-hook/latest/",\
+          "packageDependencies": [\
+            ["@react-hook/latest", "virtual:78fbeec43156f7d9842cfe299fa668d8b09f444494f8ce73505e441305cb0080fb1f9ffdfafc575cbda715c8b32e4911a5de387fa6d04128a467321a8e7744f9#npm:1.0.3"],\
+            ["@types/react", "npm:18.0.20"],\
+            ["react", "npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@react-hook/passive-layout-effect", [\
+        ["npm:1.2.1", {\
+          "packageLocation": "./.yarn/cache/@react-hook-passive-layout-effect-npm-1.2.1-ef94afc326-217cb8aa90.zip/node_modules/@react-hook/passive-layout-effect/",\
+          "packageDependencies": [\
+            ["@react-hook/passive-layout-effect", "npm:1.2.1"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:aadb4fd13d58f57f7d0bbe7e84f7290b793d3d02bc9acfb417ae9b4d6efb90a5cc41891193983960727e6cad2d133b1bb8478e9783f39d79e99ffb09c015ce6e#npm:1.2.1", {\
+          "packageLocation": "./.yarn/__virtual__/@react-hook-passive-layout-effect-virtual-58a906e8d1/0/cache/@react-hook-passive-layout-effect-npm-1.2.1-ef94afc326-217cb8aa90.zip/node_modules/@react-hook/passive-layout-effect/",\
+          "packageDependencies": [\
+            ["@react-hook/passive-layout-effect", "virtual:aadb4fd13d58f57f7d0bbe7e84f7290b793d3d02bc9acfb417ae9b4d6efb90a5cc41891193983960727e6cad2d133b1bb8478e9783f39d79e99ffb09c015ce6e#npm:1.2.1"],\
+            ["@types/react", "npm:18.0.20"],\
+            ["react", "npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@react-hook/resize-observer", [\
+        ["npm:1.2.6", {\
+          "packageLocation": "./.yarn/cache/@react-hook-resize-observer-npm-1.2.6-d061739cf7-d2ff6c50e8.zip/node_modules/@react-hook/resize-observer/",\
+          "packageDependencies": [\
+            ["@react-hook/resize-observer", "npm:1.2.6"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:aadb4fd13d58f57f7d0bbe7e84f7290b793d3d02bc9acfb417ae9b4d6efb90a5cc41891193983960727e6cad2d133b1bb8478e9783f39d79e99ffb09c015ce6e#npm:1.2.6", {\
+          "packageLocation": "./.yarn/__virtual__/@react-hook-resize-observer-virtual-78fbeec431/0/cache/@react-hook-resize-observer-npm-1.2.6-d061739cf7-d2ff6c50e8.zip/node_modules/@react-hook/resize-observer/",\
+          "packageDependencies": [\
+            ["@react-hook/resize-observer", "virtual:aadb4fd13d58f57f7d0bbe7e84f7290b793d3d02bc9acfb417ae9b4d6efb90a5cc41891193983960727e6cad2d133b1bb8478e9783f39d79e99ffb09c015ce6e#npm:1.2.6"],\
+            ["@juggle/resize-observer", "npm:3.4.0"],\
+            ["@react-hook/latest", "virtual:78fbeec43156f7d9842cfe299fa668d8b09f444494f8ce73505e441305cb0080fb1f9ffdfafc575cbda715c8b32e4911a5de387fa6d04128a467321a8e7744f9#npm:1.0.3"],\
+            ["@react-hook/passive-layout-effect", "virtual:aadb4fd13d58f57f7d0bbe7e84f7290b793d3d02bc9acfb417ae9b4d6efb90a5cc41891193983960727e6cad2d133b1bb8478e9783f39d79e99ffb09c015ce6e#npm:1.2.1"],\
+            ["@types/react", "npm:18.0.20"],\
+            ["react", "npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@react-hook/size", [\
+        ["npm:2.1.2", {\
+          "packageLocation": "./.yarn/cache/@react-hook-size-npm-2.1.2-92849cc367-89876e9395.zip/node_modules/@react-hook/size/",\
+          "packageDependencies": [\
+            ["@react-hook/size", "npm:2.1.2"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:2.1.2", {\
+          "packageLocation": "./.yarn/__virtual__/@react-hook-size-virtual-aadb4fd13d/0/cache/@react-hook-size-npm-2.1.2-92849cc367-89876e9395.zip/node_modules/@react-hook/size/",\
+          "packageDependencies": [\
+            ["@react-hook/size", "virtual:c1b7ca91a5799e60329815466dccbe7f893556fdd6dba6b5c5549e8bb5c8ffc7ec5e0b3fb490c58655b6d9159288a1c54e2696b11fa0f31865e90fe9db002e1c#npm:2.1.2"],\
+            ["@react-hook/passive-layout-effect", "virtual:aadb4fd13d58f57f7d0bbe7e84f7290b793d3d02bc9acfb417ae9b4d6efb90a5cc41891193983960727e6cad2d133b1bb8478e9783f39d79e99ffb09c015ce6e#npm:1.2.1"],\
+            ["@react-hook/resize-observer", "virtual:aadb4fd13d58f57f7d0bbe7e84f7290b793d3d02bc9acfb417ae9b4d6efb90a5cc41891193983960727e6cad2d133b1bb8478e9783f39d79e99ffb09c015ce6e#npm:1.2.6"],\
+            ["@types/react", "npm:18.0.20"],\
+            ["react", "npm:18.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react",\
+            "react"\
           ],\
           "linkType": "HARD"\
         }]\

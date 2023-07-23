@@ -15,7 +15,7 @@ export const EndpointExample: React.FC<EndpointExample.Props> = ({ endpoint, exa
     const { hoveredRequestPropertyPath, hoveredResponsePropertyPath } = useEndpointContext();
 
     return (
-        <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+        <div className="flex min-h-0 flex-1 flex-col">
             <div className="flex min-h-0 flex-1 flex-col">
                 <div className="grid min-h-0 flex-1 grid-rows-[repeat(auto-fit,_minmax(0,_min-content))] flex-col gap-6">
                     <TitledExample
