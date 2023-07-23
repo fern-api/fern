@@ -85,6 +85,8 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
         return endpoint.examples.find((e) => e.responseStatusCode === selectedError.statusCode) ?? null;
     }, [endpoint.examples, selectedError]);
 
+    const endpointExample = example ? <EndpointExample endpoint={endpoint} example={example} /> : null;
+
     return (
         <ApiPageMargins
             className={classNames("pb-20", {
@@ -92,8 +94,8 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
             })}
             onClick={() => setSelectedErrorIndex(null)}
         >
-            <div className="flex min-w-0 flex-1 flex-col md:flex-row md:space-x-[5vw]" ref={setContainerRef}>
-                <div className="flex flex-1 flex-col">
+            <div className="flex min-w-0 flex-1 flex-col lg:flex-row lg:space-x-[4vw]" ref={setContainerRef}>
+                <div className="flex min-w-0 max-w-2xl flex-1 flex-col">
                     <div className="typography-font-heading pb-8 pt-20 text-3xl font-medium" ref={setTitleRef}>
                         <EndpointTitle endpoint={endpoint} />
                     </div>
@@ -156,25 +158,24 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                 {titleHeight != null && (
                     <div
                         className={classNames(
-                            "flex-1 sticky self-start top-0 min-w-0",
+                            "flex-1 sticky self-start top-0 min-w-sm max-w-lg",
                             // the py-10 is the same as the 40px below
                             "py-10",
                             // the 4rem is the same as the h-10 as the Header
                             "max-h-[calc(100vh-4rem)]",
                             // hide on mobile,
-                            "hidden md:flex"
+                            "hidden lg:flex"
                         )}
                         style={{
                             // the 40px is the same as the py-10 above
                             marginTop: titleHeight - 40,
                         }}
                     >
-                        {example && <EndpointExample endpoint={endpoint} example={example} />}
+                        {endpointExample}
                     </div>
                 )}
-                <div className="mt-10 flex max-h-[150vh] md:mt-0 md:hidden">
-                    {example && <EndpointExample endpoint={endpoint} example={example} />}
-                </div>
+
+                <div className="mt-10 flex max-h-[150vh] lg:mt-0 lg:hidden">{endpointExample}</div>
             </div>
         </ApiPageMargins>
     );

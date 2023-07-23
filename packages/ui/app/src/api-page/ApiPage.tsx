@@ -9,7 +9,7 @@ export const ApiPage: React.FC = () => {
     const { apiDefinition, apiSlug, apiSection } = useApiDefinitionContext();
 
     return (
-        <div className="min-h-0 overflow-y-auto pb-36">
+        <div className="min-h-0 overflow-y-auto overflow-x-hidden pb-36">
             <ApiPageMargins>
                 <div className="mt-20 pb-2 text-4xl font-medium">{apiSection.title}</div>
             </ApiPageMargins>
