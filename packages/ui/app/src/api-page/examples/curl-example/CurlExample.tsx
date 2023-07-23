@@ -62,15 +62,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
             }
         }
 
-        const requestContentType =
-            endpoint.request != null
-                ? visitDiscriminatedUnion(endpoint.request.type, "type")._visit({
-                      object: () => "application/json",
-                      reference: () => "application/json",
-                      fileUpload: () => "multipart/form-data",
-                      _other: () => undefined,
-                  })
-                : undefined;
+        const requestContentType = endpoint.request != null ? endpoint.request.contentType : undefined;
         if (requestContentType != null) {
             parts.push({
                 type: "line",
