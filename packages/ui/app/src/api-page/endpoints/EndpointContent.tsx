@@ -92,15 +92,14 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
             })}
             onClick={() => setSelectedErrorIndex(null)}
         >
-            <div
-                className={classNames("flex min-w-0 flex-1 space-x-[5vw]", "flex-col md:flex-row")}
-                ref={setContainerRef}
-            >
+            <div className="flex min-w-0 flex-1 flex-col md:flex-row md:space-x-[5vw]" ref={setContainerRef}>
                 <div className="flex flex-1 flex-col">
                     <div className="typography-font-heading pb-8 pt-20 text-3xl font-medium" ref={setTitleRef}>
                         <EndpointTitle endpoint={endpoint} />
                     </div>
-                    <EndpointUrl endpoint={endpoint} />
+                    <div className="flex flex-col items-start">
+                        <EndpointUrl endpoint={endpoint} />
+                    </div>
                     {endpoint.description != null && (
                         <div className="mt-6">
                             <Markdown type="api">{endpoint.description}</Markdown>
@@ -173,7 +172,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                         {example && <EndpointExample endpoint={endpoint} example={example} />}
                     </div>
                 )}
-                <div className="flex max-h-[150vh] md:hidden">
+                <div className="mt-10 flex max-h-[150vh] md:mt-0 md:hidden">
                     {example && <EndpointExample endpoint={endpoint} example={example} />}
                 </div>
             </div>
