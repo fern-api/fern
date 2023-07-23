@@ -57,9 +57,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                     optional: this.optional.bind(this),
                     set: this.set.bind(this),
                     map: this.map.bind(this),
-                    literal: () => {
-                        throw new Error("Literals are unsupported!");
-                    },
+                    literal: this.literal.bind(this),
                     _unknown: () => {
                         throw new Error("Unknown ContainerType: " + containerType._type);
                     },
