@@ -402,6 +402,10 @@ function getFilepathsToUpload(docsDefinition: DocsDefinition): AbsoluteFilePath[
         filepaths.push(docsDefinition.config.favicon.filepath);
     }
 
+    if (docsDefinition.config.backgroundImage != null) {
+        filepaths.push(docsDefinition.config.backgroundImage.filepath);
+    }
+
     const typographyConfiguration = docsDefinition.config.typography;
 
     if (typographyConfiguration?.headingsFont != null) {
