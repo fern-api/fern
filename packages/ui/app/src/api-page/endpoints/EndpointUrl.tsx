@@ -1,18 +1,22 @@
 import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
-import React, { useCallback, useMemo } from "react";
+import React, { PropsWithChildren, useCallback, useMemo } from "react";
 import { divideEndpointPathToParts, type EndpointPathPart } from "../../util/endpoint";
 import styles from "./EndpointUrl.module.scss";
 
 export declare namespace EndpointUrl {
     export type Props = React.PropsWithChildren<{
+        urlStyle: "default" | "overflow";
         endpoint: FernRegistryApiRead.EndpointDefinition;
         className?: string;
     }>;
 }
 
-export const EndpointUrl: React.FC<EndpointUrl.Props> = ({ endpoint, className }) => {
+export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<EndpointUrl.Props>>(function EndpointUrl(
+    { endpoint, className, urlStyle },
+    ref
+) {
     const endpointPathParts = useMemo(() => divideEndpointPathToParts(endpoint), [endpoint]);
 
     const renderPathParts = useCallback((parts: EndpointPathPart[]) => {
@@ -40,6 +44,7 @@ export const EndpointUrl: React.FC<EndpointUrl.Props> = ({ endpoint, className }
 
     return (
         <div
+            ref={ref}
             className={classNames(
                 "border-border-concealed flex h-9 overflow-x-hidden items-center rounded-lg border bg-neutral-700/20 px-3 py-0.5",
                 className
@@ -49,13 +54,12 @@ export const EndpointUrl: React.FC<EndpointUrl.Props> = ({ endpoint, className }
                 {endpoint.method}
             </div>
             <div
-                className={classNames(
-                    styles.urlContainer,
-                    "ml-3 flex shrink grow items-center space-x-1 overflow-x-hidden"
-                )}
+                className={classNames("ml-3 flex shrink grow items-center space-x-1 overflow-x-hidden", {
+                    [styles.urlOverflowContainer ?? ""]: urlStyle === "overflow",
+                })}
             >
                 {renderPathParts(endpointPathParts)}
             </div>
         </div>
     );
-};
+});

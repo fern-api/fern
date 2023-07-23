@@ -1,6 +1,6 @@
 import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 
-type EndpointPathPart =
+export type EndpointPathPart =
     | {
           type: "literal";
           value: string;
