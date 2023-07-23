@@ -36,10 +36,10 @@ void yargs(hideBin(process.argv))
         }
     )
     .command("check-cli-release-blockers", "Check that there are no release blockers for CLI", noop, async () => {
-        await checkReleaseBlockers("cli-release-blockers.yml");
+        await checkReleaseBlockers("release-blockers-cli.yml");
     })
     .command("check-docs-release-blockers", "Check that there are no release blockers for docs", noop, async () => {
-        await checkReleaseBlockers("docs-release-blockers.yml");
+        await checkReleaseBlockers("release-blockers-docs.yml");
     })
     .demandCommand()
     .showHelpOnFail(true)
