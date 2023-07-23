@@ -9,14 +9,14 @@ exports[`open api parser hume parse open api 1`] = `
       "endpoints": [
         {
           "audiences": [],
-          "authed": false,
+          "authed": true,
           "description": "Sort and filter jobs.",
           "errorStatusCode": [],
           "generatedRequestName": "ListJobsRequest",
           "headers": [],
           "internal": undefined,
           "method": "GET",
-          "operationId": "listJobs",
+          "operationId": "list_jobs",
           "path": "/v0/batch/jobs",
           "pathParameters": [],
           "queryParameters": [
@@ -131,7 +131,7 @@ exports[`open api parser hume parse open api 1`] = `
                 "file": undefined,
                 "generatedName": "ListJobsResponseItem",
                 "nameOverride": undefined,
-                "schema": "Job<Request>",
+                "schema": "Job_Request",
                 "type": "reference",
               },
             },
@@ -142,19 +142,19 @@ exports[`open api parser hume parse open api 1`] = `
           "server": [],
           "summary": "List Jobs",
           "tags": [
-            "[3] List Jobs",
+            "List Jobs",
           ],
         },
         {
           "audiences": [],
-          "authed": false,
+          "authed": true,
           "description": "Start a new batch job.",
           "errorStatusCode": [],
           "generatedRequestName": "StartJobRequest",
           "headers": [],
           "internal": undefined,
           "method": "POST",
-          "operationId": "startJob",
+          "operationId": "start_job",
           "path": "/v0/batch/jobs",
           "pathParameters": [],
           "queryParameters": [],
@@ -189,19 +189,19 @@ exports[`open api parser hume parse open api 1`] = `
           "server": [],
           "summary": "Start Job",
           "tags": [
-            "[1] Start Job",
+            "Start Job",
           ],
         },
         {
           "audiences": [],
-          "authed": false,
+          "authed": true,
           "description": "Get the JSON predictions of a completed job.",
           "errorStatusCode": [],
           "generatedRequestName": "GetJobPredictionsRequest",
           "headers": [],
           "internal": undefined,
           "method": "GET",
-          "operationId": "getJobPredictions",
+          "operationId": "get_job_predictions",
           "path": "/v0/batch/jobs/{id}/predictions",
           "pathParameters": [
             {
@@ -243,19 +243,19 @@ exports[`open api parser hume parse open api 1`] = `
           "server": [],
           "summary": "Get Job Predictions",
           "tags": [
-            "[2] Get Job Predictions",
+            "Get Job Predictions",
           ],
         },
         {
           "audiences": [],
-          "authed": false,
+          "authed": true,
           "description": "Get the artifacts ZIP of a completed job.",
           "errorStatusCode": [],
           "generatedRequestName": "GetJobArtifactsRequest",
           "headers": [],
           "internal": undefined,
           "method": "GET",
-          "operationId": "getJobArtifacts",
+          "operationId": "get_job_artifacts",
           "path": "/v0/batch/jobs/{id}/artifacts",
           "pathParameters": [
             {
@@ -285,19 +285,19 @@ exports[`open api parser hume parse open api 1`] = `
           "server": [],
           "summary": "Get Job Artifacts",
           "tags": [
-            "[2] Get Job Predictions",
+            "Get Job Predictions",
           ],
         },
         {
           "audiences": [],
-          "authed": false,
+          "authed": true,
           "description": "Get the request details and state of a given job.",
           "errorStatusCode": [],
-          "generatedRequestName": "GetJobDetailsRequest",
+          "generatedRequestName": "GetJobRequest",
           "headers": [],
           "internal": undefined,
           "method": "GET",
-          "operationId": "getJobDetails",
+          "operationId": "get_job",
           "path": "/v0/batch/jobs/{id}",
           "pathParameters": [
             {
@@ -323,9 +323,9 @@ exports[`open api parser hume parse open api 1`] = `
             "schema": {
               "description": undefined,
               "file": undefined,
-              "generatedName": "GetJobDetailsResponse",
+              "generatedName": "GetJobResponse",
               "nameOverride": undefined,
-              "schema": "Job<Request>",
+              "schema": "Job_Request",
               "type": "reference",
             },
             "type": "json",
@@ -335,7 +335,7 @@ exports[`open api parser hume parse open api 1`] = `
           "server": [],
           "summary": "Get Job Details",
           "tags": [
-            "[2] Get Job Predictions",
+            "Get Job Predictions",
           ],
         },
       ],
@@ -346,7 +346,7 @@ exports[`open api parser hume parse open api 1`] = `
         "When",
         "SortBy",
         "Direction",
-        "Job<Request>",
+        "Job_Request",
         "JobId",
         "SourceResult",
         "Models",
@@ -373,21 +373,21 @@ exports[`open api parser hume parse open api 1`] = `
         "Prosody",
         "Language",
         "Ner",
-        "Predictions<optional<Null>, FacePrediction>",
-        "Predictions<optional<Null>, BurstPrediction>",
-        "Predictions<optional<TranscriptionMetadata>, ProsodyPrediction>",
-        "Predictions<optional<TranscriptionMetadata>, LanguagePrediction>",
-        "Predictions<optional<TranscriptionMetadata>, NerPrediction>",
-        "Predictions<optional<Null>, FacemeshPrediction>",
+        "Predictions_optional_Null_FacePrediction",
+        "Predictions_optional_Null_BurstPrediction",
+        "Predictions_optional_TranscriptionMetadata_ProsodyPrediction",
+        "Predictions_optional_TranscriptionMetadata_LanguagePrediction",
+        "Predictions_optional_TranscriptionMetadata_NerPrediction",
+        "Predictions_optional_Null_FacemeshPrediction",
         "ModelsPredictions",
         "Null",
-        "GroupedPredictions<BurstPrediction>",
-        "GroupedPredictions<FacePrediction>",
-        "GroupedPredictions<FacemeshPrediction>",
+        "GroupedPredictions_BurstPrediction",
+        "GroupedPredictions_FacePrediction",
+        "GroupedPredictions_FacemeshPrediction",
         "TranscriptionMetadata",
-        "GroupedPredictions<LanguagePrediction>",
-        "GroupedPredictions<NerPrediction>",
-        "GroupedPredictions<ProsodyPrediction>",
+        "GroupedPredictions_LanguagePrediction",
+        "GroupedPredictions_NerPrediction",
+        "GroupedPredictions_ProsodyPrediction",
         "Window",
         "File",
         "Prediction",
@@ -493,7 +493,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": "Whether to send an email notification to the user upon job completion/failure.",
+                  "description": "Whether to send an email notification to the user upon job failure.",
                   "schema": {
                     "type": "boolean",
                   },
@@ -1476,7 +1476,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
           ],
         },
-        "GroupedPredictions<BurstPrediction>": {
+        "GroupedPredictions_BurstPrediction": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": undefined,
@@ -1517,7 +1517,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           ],
           "type": "object",
         },
-        "GroupedPredictions<FacePrediction>": {
+        "GroupedPredictions_FacePrediction": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": undefined,
@@ -1558,7 +1558,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           ],
           "type": "object",
         },
-        "GroupedPredictions<FacemeshPrediction>": {
+        "GroupedPredictions_FacemeshPrediction": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": undefined,
@@ -1599,7 +1599,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           ],
           "type": "object",
         },
-        "GroupedPredictions<LanguagePrediction>": {
+        "GroupedPredictions_LanguagePrediction": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": undefined,
@@ -1640,7 +1640,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           ],
           "type": "object",
         },
-        "GroupedPredictions<NerPrediction>": {
+        "GroupedPredictions_NerPrediction": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": undefined,
@@ -1681,7 +1681,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           ],
           "type": "object",
         },
-        "GroupedPredictions<ProsodyPrediction>": {
+        "GroupedPredictions_ProsodyPrediction": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": undefined,
@@ -1756,7 +1756,31 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           ],
           "type": "object",
         },
-        "Job<Request>": {
+        "JobId": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "JobId",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "jobIdJobId",
+              "key": "job_id",
+              "schema": {
+                "description": "The ID of the started job.",
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "Job_Request": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": undefined,
@@ -1768,7 +1792,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "generatedName": "jobRequestUserId",
               "key": "user_id",
               "schema": {
-                "description": undefined,
+                "description": "Your user ID.",
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -1782,7 +1806,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "generatedName": "jobRequestJobId",
               "key": "job_id",
               "schema": {
-                "description": undefined,
+                "description": "The ID associated with this job.",
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -1815,30 +1839,6 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
                 "nameOverride": undefined,
                 "schema": "State",
                 "type": "reference",
-              },
-            },
-          ],
-          "type": "object",
-        },
-        "JobId": {
-          "allOf": [],
-          "allOfPropertyConflicts": [],
-          "description": undefined,
-          "generatedName": "JobId",
-          "nameOverride": undefined,
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "jobIdJobId",
-              "key": "job_id",
-              "schema": {
-                "description": "The ID of the started job.",
-                "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
-                },
-                "type": "primitive",
               },
             },
           ],
@@ -2199,7 +2199,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
                   "file": undefined,
                   "generatedName": "ModelsPredictionsFace",
                   "nameOverride": undefined,
-                  "schema": "Predictions<optional<Null>, FacePrediction>",
+                  "schema": "Predictions_optional_Null_FacePrediction",
                   "type": "reference",
                 },
               },
@@ -2216,7 +2216,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
                   "file": undefined,
                   "generatedName": "ModelsPredictionsBurst",
                   "nameOverride": undefined,
-                  "schema": "Predictions<optional<Null>, BurstPrediction>",
+                  "schema": "Predictions_optional_Null_BurstPrediction",
                   "type": "reference",
                 },
               },
@@ -2233,7 +2233,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
                   "file": undefined,
                   "generatedName": "ModelsPredictionsProsody",
                   "nameOverride": undefined,
-                  "schema": "Predictions<optional<TranscriptionMetadata>, ProsodyPrediction>",
+                  "schema": "Predictions_optional_TranscriptionMetadata_ProsodyPrediction",
                   "type": "reference",
                 },
               },
@@ -2250,7 +2250,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
                   "file": undefined,
                   "generatedName": "ModelsPredictionsLanguage",
                   "nameOverride": undefined,
-                  "schema": "Predictions<optional<TranscriptionMetadata>, LanguagePrediction>",
+                  "schema": "Predictions_optional_TranscriptionMetadata_LanguagePrediction",
                   "type": "reference",
                 },
               },
@@ -2267,7 +2267,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
                   "file": undefined,
                   "generatedName": "ModelsPredictionsNer",
                   "nameOverride": undefined,
-                  "schema": "Predictions<optional<TranscriptionMetadata>, NerPrediction>",
+                  "schema": "Predictions_optional_TranscriptionMetadata_NerPrediction",
                   "type": "reference",
                 },
               },
@@ -2284,7 +2284,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
                   "file": undefined,
                   "generatedName": "ModelsPredictionsFacemesh",
                   "nameOverride": undefined,
-                  "schema": "Predictions<optional<Null>, FacemeshPrediction>",
+                  "schema": "Predictions_optional_Null_FacemeshPrediction",
                   "type": "reference",
                 },
               },
@@ -2556,7 +2556,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           ],
           "type": "object",
         },
-        "Predictions<optional<Null>, BurstPrediction>": {
+        "Predictions_optional_Null_BurstPrediction": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": undefined,
@@ -2592,7 +2592,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
                   "file": undefined,
                   "generatedName": "PredictionsOptionalNullBurstPredictionGroupedPredictionsItem",
                   "nameOverride": undefined,
-                  "schema": "GroupedPredictions<BurstPrediction>",
+                  "schema": "GroupedPredictions_BurstPrediction",
                   "type": "reference",
                 },
               },
@@ -2600,7 +2600,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           ],
           "type": "object",
         },
-        "Predictions<optional<Null>, FacePrediction>": {
+        "Predictions_optional_Null_FacePrediction": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": undefined,
@@ -2636,7 +2636,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
                   "file": undefined,
                   "generatedName": "PredictionsOptionalNullFacePredictionGroupedPredictionsItem",
                   "nameOverride": undefined,
-                  "schema": "GroupedPredictions<FacePrediction>",
+                  "schema": "GroupedPredictions_FacePrediction",
                   "type": "reference",
                 },
               },
@@ -2644,7 +2644,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           ],
           "type": "object",
         },
-        "Predictions<optional<Null>, FacemeshPrediction>": {
+        "Predictions_optional_Null_FacemeshPrediction": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": undefined,
@@ -2680,7 +2680,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
                   "file": undefined,
                   "generatedName": "PredictionsOptionalNullFacemeshPredictionGroupedPredictionsItem",
                   "nameOverride": undefined,
-                  "schema": "GroupedPredictions<FacemeshPrediction>",
+                  "schema": "GroupedPredictions_FacemeshPrediction",
                   "type": "reference",
                 },
               },
@@ -2688,7 +2688,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           ],
           "type": "object",
         },
-        "Predictions<optional<TranscriptionMetadata>, LanguagePrediction>": {
+        "Predictions_optional_TranscriptionMetadata_LanguagePrediction": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": undefined,
@@ -2724,7 +2724,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
                   "file": undefined,
                   "generatedName": "PredictionsOptionalTranscriptionMetadataLanguagePredictionGroupedPredictionsItem",
                   "nameOverride": undefined,
-                  "schema": "GroupedPredictions<LanguagePrediction>",
+                  "schema": "GroupedPredictions_LanguagePrediction",
                   "type": "reference",
                 },
               },
@@ -2732,7 +2732,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           ],
           "type": "object",
         },
-        "Predictions<optional<TranscriptionMetadata>, NerPrediction>": {
+        "Predictions_optional_TranscriptionMetadata_NerPrediction": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": undefined,
@@ -2768,7 +2768,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
                   "file": undefined,
                   "generatedName": "PredictionsOptionalTranscriptionMetadataNerPredictionGroupedPredictionsItem",
                   "nameOverride": undefined,
-                  "schema": "GroupedPredictions<NerPrediction>",
+                  "schema": "GroupedPredictions_NerPrediction",
                   "type": "reference",
                 },
               },
@@ -2776,7 +2776,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           ],
           "type": "object",
         },
-        "Predictions<optional<TranscriptionMetadata>, ProsodyPrediction>": {
+        "Predictions_optional_TranscriptionMetadata_ProsodyPrediction": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": undefined,
@@ -2812,7 +2812,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
                   "file": undefined,
                   "generatedName": "PredictionsOptionalTranscriptionMetadataProsodyPredictionGroupedPredictionsItem",
                   "nameOverride": undefined,
-                  "schema": "GroupedPredictions<ProsodyPrediction>",
+                  "schema": "GroupedPredictions_ProsodyPrediction",
                   "type": "reference",
                 },
               },
@@ -3307,20 +3307,40 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "type": "object",
         },
         "Source_File": {
+          "allOf": [
+            {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "File",
+              "nameOverride": undefined,
+              "schema": "File",
+              "type": "reference",
+            },
+          ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
-          "file": undefined,
           "generatedName": "SourceFile",
           "nameOverride": undefined,
-          "schema": "File",
-          "type": "reference",
+          "properties": [],
+          "type": "object",
         },
         "Source_Url": {
+          "allOf": [
+            {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "Url",
+              "nameOverride": undefined,
+              "schema": "Url",
+              "type": "reference",
+            },
+          ],
+          "allOfPropertyConflicts": [],
           "description": undefined,
-          "file": undefined,
           "generatedName": "SourceUrl",
           "nameOverride": undefined,
-          "schema": "Url",
-          "type": "reference",
+          "properties": [],
+          "type": "object",
         },
         "State": {
           "oneOf": {
@@ -3382,22 +3402,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "description": undefined,
           "generatedName": "StateCompleted",
           "nameOverride": undefined,
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "stateCompletedStatus",
-              "key": "status",
-              "schema": {
-                "description": undefined,
-                "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
+          "properties": [],
           "type": "object",
         },
         "State_Failed": {
@@ -3415,22 +3420,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "description": undefined,
           "generatedName": "StateFailed",
           "nameOverride": undefined,
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "stateFailedStatus",
-              "key": "status",
-              "schema": {
-                "description": undefined,
-                "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
+          "properties": [],
           "type": "object",
         },
         "State_InProgress": {
@@ -3448,22 +3438,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "description": undefined,
           "generatedName": "StateInProgress",
           "nameOverride": undefined,
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "stateInProgressStatus",
-              "key": "status",
-              "schema": {
-                "description": undefined,
-                "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
+          "properties": [],
           "type": "object",
         },
         "State_Queued": {
@@ -3481,22 +3456,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "description": undefined,
           "generatedName": "StateQueued",
           "nameOverride": undefined,
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "stateQueuedStatus",
-              "key": "status",
-              "schema": {
-                "description": undefined,
-                "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
+          "properties": [],
           "type": "object",
         },
         "Status": {
@@ -3756,7 +3716,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "type": "object",
         },
       },
-      "securitySchemes": {},
+      "securitySchemes": {
+        "Authentication": {
+          "headerName": "X-Hume-Api-Key",
+          "prefix": undefined,
+          "type": "header",
+        },
+      },
       "servers": [
         {
           "description": undefined,
@@ -3765,17 +3731,17 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
       ],
       "tags": {
-        "[1] Start Job": {
+        "Get Job Predictions": {
           "description": undefined,
-          "id": "[1] Start Job",
+          "id": "Get Job Predictions",
         },
-        "[2] Get Job Predictions": {
+        "List Jobs": {
           "description": undefined,
-          "id": "[2] Get Job Predictions",
+          "id": "List Jobs",
         },
-        "[3] List Jobs": {
+        "Start Job": {
           "description": undefined,
-          "id": "[3] List Jobs",
+          "id": "Start Job",
         },
       },
       "title": "Hume AI Batch API",

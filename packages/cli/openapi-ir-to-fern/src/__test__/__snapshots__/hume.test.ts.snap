@@ -3,17 +3,79 @@
 exports[`open api parser hume simple 1`] = `
 {
   "definitionFiles": {
-    "1StartJob.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
+    "__package__.yml": {
+      "errors": {},
       "service": {
         "auth": false,
         "base-path": "",
-        "display-name": "[1] Start Job",
         "endpoints": {
-          "startJob": {
-            "auth": false,
+          "Get Job Predictions": {
+            "auth": true,
+            "display-name": "Get Job Predictions",
+            "docs": "Get the JSON predictions of a completed job.",
+            "errors": [],
+            "method": "GET",
+            "path": "/v0/batch/jobs/{id}/predictions",
+            "path-parameters": {
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "list<SourceResult>",
+            },
+          },
+          "List Jobs": {
+            "auth": true,
+            "display-name": "List Jobs",
+            "docs": "Sort and filter jobs.",
+            "errors": [],
+            "method": "GET",
+            "path": "/v0/batch/jobs",
+            "request": {
+              "name": "ListJobsRequest",
+              "query-parameters": {
+                "direction": {
+                  "allow-multiple": undefined,
+                  "docs": "The sort direction.",
+                  "type": "optional<Direction>",
+                },
+                "limit": {
+                  "allow-multiple": undefined,
+                  "docs": "The maximum number of jobs to include in the response.",
+                  "type": "optional<integer>",
+                },
+                "sort_by": {
+                  "allow-multiple": undefined,
+                  "docs": "The job timestamp to sort by.",
+                  "type": "optional<SortBy>",
+                },
+                "status": {
+                  "allow-multiple": true,
+                  "docs": "Include only jobs with these statuses.",
+                  "type": "optional<Status>",
+                },
+                "timestamp_ms": {
+                  "allow-multiple": undefined,
+                  "docs": "Defaults to the current date and time. See \`when\`.",
+                  "type": "optional<integer>",
+                },
+                "when": {
+                  "allow-multiple": undefined,
+                  "docs": "Include only jobs that were created before or after \`timestamp_ms\`.",
+                  "type": "optional<When>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "list<JobRequest>",
+            },
+          },
+          "Start Job": {
+            "auth": true,
             "display-name": "Start Job",
             "docs": "Start a new batch job.",
             "errors": [],
@@ -28,15 +90,15 @@ exports[`open api parser hume simple 1`] = `
                   },
                   "models": {
                     "docs": undefined,
-                    "type": "optional<root.Models>",
+                    "type": "optional<Models>",
                   },
                   "notify": {
-                    "docs": "Whether to send an email notification to the user upon job completion/failure.",
+                    "docs": "Whether to send an email notification to the user upon job failure.",
                     "type": "optional<boolean>",
                   },
                   "transcription": {
                     "docs": undefined,
-                    "type": "optional<root.Transcription>",
+                    "type": "optional<Transcription>",
                   },
                   "urls": {
                     "docs": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
@@ -52,140 +114,11 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             },
             "response": {
               "docs": "",
-              "type": "root.JobId",
+              "type": "JobId",
             },
           },
         },
       },
-    },
-    "2GetJobPredictions.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
-      "service": {
-        "auth": false,
-        "base-path": "",
-        "display-name": "[2] Get Job Predictions",
-        "endpoints": {
-          "getJobArtifacts": {
-            "auth": false,
-            "display-name": "Get Job Artifacts",
-            "docs": "Get the artifacts ZIP of a completed job.",
-            "errors": [],
-            "method": "GET",
-            "path": "/v0/batch/jobs/{id}/artifacts",
-            "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "file",
-            },
-          },
-          "getJobDetails": {
-            "auth": false,
-            "display-name": "Get Job Details",
-            "docs": "Get the request details and state of a given job.",
-            "errors": [],
-            "method": "GET",
-            "path": "/v0/batch/jobs/{id}",
-            "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "root.JobRequest",
-            },
-          },
-          "getJobPredictions": {
-            "auth": false,
-            "display-name": "Get Job Predictions",
-            "docs": "Get the JSON predictions of a completed job.",
-            "errors": [],
-            "method": "GET",
-            "path": "/v0/batch/jobs/{id}/predictions",
-            "path-parameters": {
-              "id": {
-                "docs": undefined,
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "list<root.SourceResult>",
-            },
-          },
-        },
-      },
-    },
-    "3ListJobs.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
-      "service": {
-        "auth": false,
-        "base-path": "",
-        "display-name": "[3] List Jobs",
-        "endpoints": {
-          "listJobs": {
-            "auth": false,
-            "display-name": "List Jobs",
-            "docs": "Sort and filter jobs.",
-            "errors": [],
-            "method": "GET",
-            "path": "/v0/batch/jobs",
-            "request": {
-              "name": "ListJobsRequest",
-              "query-parameters": {
-                "direction": {
-                  "allow-multiple": undefined,
-                  "docs": "The sort direction.",
-                  "type": "optional<root.Direction>",
-                },
-                "limit": {
-                  "allow-multiple": undefined,
-                  "docs": "The maximum number of jobs to include in the response.",
-                  "type": "optional<integer>",
-                },
-                "sort_by": {
-                  "allow-multiple": undefined,
-                  "docs": "The job timestamp to sort by.",
-                  "type": "optional<root.SortBy>",
-                },
-                "status": {
-                  "allow-multiple": true,
-                  "docs": "Include only jobs with these statuses.",
-                  "type": "optional<root.Status>",
-                },
-                "timestamp_ms": {
-                  "allow-multiple": undefined,
-                  "docs": "Defaults to the current date and time. See \`when\`.",
-                  "type": "optional<integer>",
-                },
-                "when": {
-                  "allow-multiple": undefined,
-                  "docs": "Include only jobs that were created before or after \`timestamp_ms\`.",
-                  "type": "optional<root.When>",
-                },
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "list<root.JobRequest>",
-            },
-          },
-        },
-      },
-    },
-    "__package__.yml": {
-      "errors": {},
-      "service": undefined,
       "types": {
         "Bcp47Tag": {
           "docs": undefined,
@@ -713,7 +646,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "docs": undefined,
           "properties": {
             "job_id": {
-              "docs": undefined,
+              "docs": "The ID associated with this job.",
               "type": "string",
             },
             "request": {
@@ -725,7 +658,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "type": "State",
             },
             "user_id": {
-              "docs": undefined,
+              "docs": "Your user ID.",
               "type": "string",
             },
           },
@@ -1155,7 +1088,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "SourceFile": {
           "docs": undefined,
-          "type": "File",
+          "extends": [
+            "File",
+          ],
+          "properties": {},
         },
         "SourceResult": {
           "docs": undefined,
@@ -1176,7 +1112,10 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "SourceUrl": {
           "docs": undefined,
-          "type": "Url",
+          "extends": [
+            "Url",
+          ],
+          "properties": {},
         },
         "State": {
           "base-properties": {},
@@ -1206,48 +1145,28 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "extends": [
             "Completed",
           ],
-          "properties": {
-            "status": {
-              "docs": undefined,
-              "type": "string",
-            },
-          },
+          "properties": {},
         },
         "StateFailed": {
           "docs": undefined,
           "extends": [
             "Failed",
           ],
-          "properties": {
-            "status": {
-              "docs": undefined,
-              "type": "string",
-            },
-          },
+          "properties": {},
         },
         "StateInProgress": {
           "docs": undefined,
           "extends": [
             "InProgress",
           ],
-          "properties": {
-            "status": {
-              "docs": undefined,
-              "type": "string",
-            },
-          },
+          "properties": {},
         },
         "StateQueued": {
           "docs": undefined,
           "extends": [
             "Queued",
           ],
-          "properties": {
-            "status": {
-              "docs": undefined,
-              "type": "string",
-            },
-          },
+          "properties": {},
         },
         "Status": {
           "docs": undefined,
@@ -1361,8 +1280,65 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
       },
     },
+    "getJobPredictions.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "display-name": "Get Job Predictions",
+        "endpoints": {
+          "get_job": {
+            "auth": true,
+            "display-name": "Get Job Details",
+            "docs": "Get the request details and state of a given job.",
+            "errors": [],
+            "method": "GET",
+            "path": "/v0/batch/jobs/{id}",
+            "path-parameters": {
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.JobRequest",
+            },
+          },
+          "get_job_artifacts": {
+            "auth": true,
+            "display-name": "Get Job Artifacts",
+            "docs": "Get the artifacts ZIP of a completed job.",
+            "errors": [],
+            "method": "GET",
+            "path": "/v0/batch/jobs/{id}/artifacts",
+            "path-parameters": {
+              "id": {
+                "docs": undefined,
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "file",
+            },
+          },
+        },
+      },
+    },
   },
   "rootApiFile": {
+    "auth": "Authentication",
+    "auth-schemes": {
+      "Authentication": {
+        "header": "X-Hume-Api-Key",
+        "name": "apiKey",
+        "prefix": undefined,
+        "type": "string",
+      },
+    },
     "default-environment": "default",
     "display-name": "Hume AI Batch API",
     "environments": {

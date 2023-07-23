@@ -185,7 +185,7 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                                     />
                                 </EndpointSection>
                             )}
-                            {endpoint.errors.length > 0 && (
+                            {process.env.NEXT_PUBLIC_DISPLAY_ERRORS === "true" && endpoint.errors.length > 0 && (
                                 <EndpointSection title="Errors">
                                     <EndpointErrorsSection
                                         errors={endpoint.errors}
