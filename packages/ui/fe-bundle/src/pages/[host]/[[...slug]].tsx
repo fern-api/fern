@@ -8,6 +8,7 @@ import Head from "next/head";
 import { REGISTRY_SERVICE } from "../../service";
 import { getSlugFromUrl } from "../../url-path-resolver/getSlugFromUrl";
 import { UrlPathResolver } from "../../url-path-resolver/UrlPathResolver";
+import { loadDocsBackgroundImage } from "../../utils/theme/loadDocsBackgroundImage";
 import { generateFontFaces, loadDocTypography } from "../../utils/theme/loadDocsTypography";
 
 function classNames(...classes: (string | undefined)[]): string {
@@ -20,17 +21,19 @@ export declare namespace Docs {
     export interface Props {
         docs: FernRegistryDocsReadV2.LoadDocsForUrlResponse;
         resolvedUrlPath: ResolvedUrlPath;
-        typographyStyleSheet?: string;
+        typographyStyleSheet: string | undefined;
+        backgroundImageStyleSheet: string | undefined;
         nextPath: ResolvedUrlPath | null;
         previousPath: ResolvedUrlPath | null;
     }
 }
 
-function Typography({ stylesheet }: { stylesheet: string }) {
+function StyleSheets({ stylesheets }: { stylesheets: string[] }) {
+    const mergedSheet = stylesheets.join("\n");
     return (
         // eslint-disable-next-line react/no-unknown-property
-        <style id="fern-font-stylesheet" jsx global>
-            {stylesheet}
+        <style id="fern-stylesheets" jsx global>
+            {mergedSheet}
         </style>
     );
 }
@@ -38,22 +41,20 @@ function Typography({ stylesheet }: { stylesheet: string }) {
 export default function Docs({
     docs,
     typographyStyleSheet,
+    backgroundImageStyleSheet,
     resolvedUrlPath,
     nextPath,
     previousPath,
 }: Docs.Props): JSX.Element {
+    const stylesheets = [typographyStyleSheet, backgroundImageStyleSheet].filter((s) => s != null) as string[];
     return (
         <>
-            {typographyStyleSheet != null && <Typography stylesheet={typographyStyleSheet} />}
+            <StyleSheets stylesheets={stylesheets} />
             <main className={classNames(inter.className, "typography-font-body")}>
                 <Head>
                     {docs.definition.config.title != null && <title>{docs.definition.config.title}</title>}
                     {docs.definition.config.favicon != null && (
-                        <link
-                            rel="icon"
-                            id="favicon"
-                            href={docs.definition.files[docs.definition.config.favicon]}
-                        ></link>
+                        <link rel="icon" id="favicon" href={docs.definition.files[docs.definition.config.favicon]} />
                     )}
                 </Head>
                 <App
@@ -117,10 +118,13 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
     const typographyConfig = loadDocTypography(docs.body.definition);
     const typographyStyleSheet = generateFontFaces(typographyConfig);
 
+    const backgroundImageStyleSheet = loadDocsBackgroundImage(docs.body.definition);
+
     return {
         props: {
             docs: docs.body,
             typographyStyleSheet,
+            backgroundImageStyleSheet,
             resolvedUrlPath,
             nextPath: (await urlPathResolver.getNextNavigatableItem(resolvedUrlPath)) ?? null,
             previousPath: (await urlPathResolver.getPreviousNavigatableItem(resolvedUrlPath)) ?? null,

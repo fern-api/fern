@@ -5,6 +5,12 @@ export default function Document(): JSX.Element {
         <Html lang="en">
             <Head />
             <body className="overscroll-y-none">
+                <span
+                    style={{
+                        backgroundImage: "var(--docs-background-image)",
+                    }}
+                    className="fixed inset-0 bg-fixed bg-right-top bg-no-repeat"
+                ></span>
                 <Main />
                 <NextScript />
             </body>
