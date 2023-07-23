@@ -88,6 +88,7 @@ types:
       name: commons.Name
       extends: list<types.DeclaredTypeName>
       properties: list<InlinedRequestBodyProperty>
+      contentType: optional<string>
   InlinedRequestBodyProperty:
     extends: commons.WithDocs
     properties:
@@ -109,6 +110,7 @@ types:
     extends: commons.WithDocs
     properties:
       requestBodyType: types.TypeReference
+      contentType: optional<string>
   SdkRequest:
     properties:
       requestParameterName: commons.Name

@@ -138,21 +138,29 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FernRegistry.ap
     return {
         type: Ir.http.HttpRequestBody._visit<FernRegistry.api.v1.register.HttpRequestBodyShape>(irRequest, {
             inlinedRequestBody: (inlinedRequestBody) => {
-                return FernRegistry.api.v1.register.HttpRequestBodyShape.object({
-                    extends: inlinedRequestBody.extends.map((extension) => convertTypeId(extension.typeId)),
-                    properties: inlinedRequestBody.properties.map(
-                        (property): FernRegistry.api.v1.register.ObjectProperty => ({
-                            description: property.docs ?? undefined,
-                            key: property.name.wireValue,
-                            valueType: convertTypeReference(property.valueType),
+                return FernRegistry.api.v1.register.HttpRequestBodyShape.json({
+                    contentType: inlinedRequestBody.contentType ?? "application/json",
+                    shape: FernRegistry.api.v1.register.JsonRequestBodyShape.object(
+                        FernRegistry.api.v1.register.HttpRequestBodyShape.object({
+                            extends: inlinedRequestBody.extends.map((extension) => convertTypeId(extension.typeId)),
+                            properties: inlinedRequestBody.properties.map(
+                                (property): FernRegistry.api.v1.register.ObjectProperty => ({
+                                    description: property.docs ?? undefined,
+                                    key: property.name.wireValue,
+                                    valueType: convertTypeReference(property.valueType),
+                                })
+                            ),
                         })
                     ),
                 });
             },
             reference: (reference) => {
-                return FernRegistry.api.v1.register.HttpRequestBodyShape.reference(
-                    convertTypeReference(reference.requestBodyType)
-                );
+                return FernRegistry.api.v1.register.HttpRequestBodyShape.json({
+                    contentType: reference.contentType ?? "application/json",
+                    shape: FernRegistry.api.v1.register.JsonRequestBodyShape.reference(
+                        convertTypeReference(reference.requestBodyType)
+                    ),
+                });
             },
             fileUpload: () => FernRegistry.api.v1.register.HttpRequestBodyShape.fileUpload(),
             _unknown: () => {
