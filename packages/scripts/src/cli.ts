@@ -35,8 +35,11 @@ void yargs(hideBin(process.argv))
             });
         }
     )
-    .command("check-release-blockers", "Check that there are no release blockers", noop, async () => {
-        await checkReleaseBlockers();
+    .command("check-cli-release-blockers", "Check that there are no release blockers for CLI", noop, async () => {
+        await checkReleaseBlockers("release-blockers-cli.yml");
+    })
+    .command("check-docs-release-blockers", "Check that there are no release blockers for docs", noop, async () => {
+        await checkReleaseBlockers("release-blockers-docs.yml");
     })
     .demandCommand()
     .showHelpOnFail(true)
