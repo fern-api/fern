@@ -6,6 +6,8 @@ import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from
 
 export const APPLICATION_JSON_CONTENT = "application/json";
 export const APPLICATION_JSON_UTF_8_CONTENT = "application/json; charset=utf-8";
+export const APPLICATION_VND_JSON = "application/x-ndjson";
+
 export const MULTIPART_CONTENT = "multipart/form-data";
 
 function getMultipartFormDataRequest(
@@ -14,13 +16,55 @@ function getMultipartFormDataRequest(
     return requestBody.content[MULTIPART_CONTENT]?.schema;
 }
 
-function getApplicationJsonRequest(
-    requestBody: OpenAPIV3.RequestBodyObject
-): OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined {
-    return (
-        requestBody.content[APPLICATION_JSON_CONTENT]?.schema ??
-        requestBody.content[APPLICATION_JSON_UTF_8_CONTENT]?.schema
-    );
+interface ParsedApplicationJsonRequest {
+    schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
+    // populated if the content type is not application/json
+    overridenContentType?: string;
+}
+
+function getApplicationJsonRequest(requestBody: OpenAPIV3.RequestBodyObject): ParsedApplicationJsonRequest | undefined {
+    const applicationJsonSchema = getSchemaForContentType({
+        contentType: APPLICATION_JSON_CONTENT,
+        media: requestBody.content,
+    });
+    if (applicationJsonSchema != null) {
+        return {
+            schema: applicationJsonSchema,
+        };
+    }
+
+    const applicationJsonUtf8Schema = getSchemaForContentType({
+        contentType: APPLICATION_JSON_UTF_8_CONTENT,
+        media: requestBody.content,
+    });
+    if (applicationJsonUtf8Schema != null) {
+        return {
+            schema: applicationJsonUtf8Schema,
+        };
+    }
+
+    const applicationVndJsonSchema = getSchemaForContentType({
+        contentType: APPLICATION_VND_JSON,
+        media: requestBody.content,
+    });
+    if (applicationVndJsonSchema != null) {
+        return {
+            schema: applicationVndJsonSchema,
+            overridenContentType: APPLICATION_VND_JSON,
+        };
+    }
+
+    return undefined;
+}
+
+function getSchemaForContentType({
+    contentType,
+    media,
+}: {
+    contentType: string;
+    media: Record<string, OpenAPIV3.MediaTypeObject>;
+}): OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined {
+    return media[contentType]?.schema;
 }
 
 function multipartRequestHasFile(
@@ -97,10 +141,11 @@ export function convertRequest({
     if (jsonSchema == null) {
         return undefined;
     }
-    const requestSchema = convertSchema(jsonSchema, false, context, requestBreadcrumbs, true);
+    const requestSchema = convertSchema(jsonSchema.schema, false, context, requestBreadcrumbs, true);
     return Request.json({
         description: undefined,
         schema: requestSchema,
+        contentType: jsonSchema.overridenContentType,
     });
 }
 

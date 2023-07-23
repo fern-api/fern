@@ -639,6 +639,7 @@ in the DevPortal.
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -725,6 +726,7 @@ in the DevPortal.
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -917,6 +919,7 @@ in the DevPortal.
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1020,6 +1023,7 @@ in the DevPortal.
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1857,6 +1861,7 @@ To delete links in bulk, we recommend looping through the list of links you want
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1962,6 +1967,7 @@ To delete links in bulk, we recommend looping through the list of links you want
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3225,6 +3231,7 @@ If you try to access older information than what we can access, we will return a
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3329,6 +3336,7 @@ If you try to access older information than what we can access, we will return a
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3416,6 +3424,7 @@ If you try to access older information than what we can access, we will return a
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4156,6 +4165,7 @@ If you try to access older information than what we can access, we will return a
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4247,6 +4257,7 @@ If you try to access older information than what we can access, we will return a
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -5140,6 +5151,7 @@ If you try to access older information than what we can access, we will return a
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -5231,6 +5243,7 @@ If you try to access older information than what we can access, we will return a
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -6020,6 +6033,7 @@ If you try to access older information than what we can access, we will return a
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -6130,6 +6144,7 @@ If you try to access older information than what we can access, we will return a
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -6820,6 +6835,7 @@ If you try to access older information than what we can access, we will return a
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "oneOf": {
@@ -7390,6 +7406,7 @@ If you try to access older information than what we can access, we will return a
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -7905,6 +7922,7 @@ If you try to access older information than what we can access, we will return a
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -8301,6 +8319,7 @@ If you try to access older information than what we can access, we will return a
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -8388,6 +8407,7 @@ If you try to access older information than what we can access, we will return a
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -8826,6 +8846,7 @@ If you try to access older information than what we can access, we will return a
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -8917,6 +8938,7 @@ If you try to access older information than what we can access, we will return a
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -9368,6 +9390,7 @@ If you try to access older information than what we can access, we will return a
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -9454,6 +9477,7 @@ If you try to access older information than what we can access, we will return a
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -10036,6 +10060,7 @@ If you try to access older information than what we can access, we will return a
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -10431,6 +10456,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -10522,6 +10548,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -10973,6 +11000,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -11575,6 +11603,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -11940,6 +11969,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -12129,6 +12159,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -12188,6 +12219,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -12369,6 +12401,7 @@ For example:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -12972,6 +13005,7 @@ For example:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "oneOf": {
@@ -13424,6 +13458,7 @@ For example:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "oneOf": {
@@ -13839,6 +13874,7 @@ For example:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "oneOf": {
@@ -14361,6 +14397,7 @@ For example:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -14480,6 +14517,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,

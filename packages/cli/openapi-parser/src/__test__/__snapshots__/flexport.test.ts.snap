@@ -28,6 +28,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -444,6 +445,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1246,6 +1248,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1487,6 +1490,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1896,6 +1900,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2015,6 +2020,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2980,6 +2986,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4578,6 +4585,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4833,6 +4841,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -5243,6 +5252,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -5500,6 +5510,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -5910,6 +5921,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -6167,6 +6179,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -6611,6 +6624,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -6868,6 +6882,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -8423,6 +8438,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -8680,6 +8696,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -9760,6 +9777,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -9959,6 +9977,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -11283,6 +11302,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -11402,6 +11422,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],

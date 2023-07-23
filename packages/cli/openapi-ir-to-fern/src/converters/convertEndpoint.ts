@@ -275,6 +275,10 @@ function getRequest({
                 convertedRequest.value.name = requestNameOverride ?? generatedRequestName;
             }
 
+            if (request.contentType != null) {
+                convertedRequest.value["content-type"] = request.contentType;
+            }
+
             return convertedRequest;
         }
         const properties = Object.fromEntries(
@@ -318,14 +322,19 @@ function getRequest({
         if (extendedSchemas.length > 0) {
             requestBodySchema.extends = extendedSchemas;
         }
+
+        const convertedRequestValue: RawSchemas.HttpRequestSchema = {
+            name: requestNameOverride ?? resolvedSchema.nameOverride ?? resolvedSchema.generatedName,
+            "query-parameters": queryParameters,
+            headers,
+            body: requestBodySchema,
+        };
+        if (request.contentType != null) {
+            convertedRequestValue["content-type"] = request.contentType;
+        }
         return {
             schemaIdsToExclude: maybeSchemaId != null ? [maybeSchemaId] : [],
-            value: {
-                name: requestNameOverride ?? resolvedSchema.nameOverride ?? resolvedSchema.generatedName,
-                "query-parameters": queryParameters,
-                headers,
-                body: requestBodySchema,
-            },
+            value: convertedRequestValue,
             additionalTypeDeclarations,
         };
     } else {

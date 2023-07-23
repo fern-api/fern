@@ -2034,6 +2034,7 @@ In the [Embedded Flow](doc:embedded-flow), the \`inquiry-id\` is the first param
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -3618,6 +3619,7 @@ Note that this action will trigger any associated workflows and webhooks.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -4201,6 +4203,7 @@ Note that this action will trigger any associated workflows and webhooks.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -4980,6 +4983,7 @@ Note that this action will trigger any associated workflows and webhooks.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -6627,6 +6631,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -7844,6 +7849,7 @@ After the Account is created, you can create Inquiries with the \`account-id\` t
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -9428,6 +9434,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -9882,6 +9889,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -11265,6 +11273,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -12072,6 +12081,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -12703,6 +12713,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -13731,6 +13742,7 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -14040,6 +14052,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -14340,6 +14353,7 @@ A match_type of 'email_address' will need to match the entire email address of a
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -14676,6 +14690,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -15013,6 +15028,7 @@ Common values for id_class include 'pp' for passport and 'dl' for driver license
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -15349,6 +15365,7 @@ Both IPv4 and IPv6 are supported.",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -15684,6 +15701,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -16018,6 +16036,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -16384,6 +16403,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -17095,6 +17115,7 @@ The columns we allow are
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -18861,6 +18882,7 @@ The columns we allow are
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -19941,6 +19963,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -20081,6 +20104,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -20221,6 +20245,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -20361,6 +20386,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -20501,6 +20527,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -20641,6 +20668,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -20781,6 +20809,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -20937,6 +20966,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -21077,6 +21107,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -21460,6 +21491,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -21606,6 +21638,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -22025,6 +22058,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -22468,6 +22502,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -22614,6 +22649,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -23033,6 +23069,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -23452,6 +23489,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -25600,6 +25638,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -26670,6 +26709,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -29087,6 +29127,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -29925,6 +29966,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -31006,6 +31048,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -31130,6 +31173,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -31254,6 +31298,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -31382,6 +31427,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -31506,6 +31552,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -31630,6 +31677,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -31819,6 +31867,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -33379,6 +33428,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -34110,6 +34160,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -34843,6 +34894,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -35026,6 +35078,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -35205,6 +35258,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -35590,6 +35644,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -36134,6 +36189,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -36678,6 +36734,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -37499,6 +37556,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -42992,6 +43050,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -43826,6 +43885,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -45004,6 +45064,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -45391,6 +45452,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -45866,6 +45928,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -46253,6 +46316,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -46602,6 +46666,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -47703,6 +47768,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -48210,6 +48276,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -48892,6 +48959,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -49827,6 +49895,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -51158,6 +51227,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -51862,6 +51932,7 @@ The inquiry can still be resumed after expiry.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],

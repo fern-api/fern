@@ -17,7 +17,12 @@ export function convertHttpRequestBody({
     file: FernFileContext;
 }): HttpRequestBody | undefined {
     if (typeof request === "string") {
-        return HttpRequestBody.reference(convertReferenceHttpRequestBody(request, file));
+        return HttpRequestBody.reference(
+            convertReferenceHttpRequestBody({
+                requestBody: request,
+                file,
+            })
+        );
     }
 
     if (request?.body == null) {
@@ -61,6 +66,7 @@ export function convertHttpRequestBody({
             extends: getExtensionsAsList(request.body.extends).map((extended) =>
                 parseTypeName({ typeName: extended, file })
             ),
+            contentType: request["content-type"],
             properties:
                 request.body.properties != null
                     ? Object.entries(request.body.properties).map(([propertyKey, propertyDefinition]) =>
@@ -75,16 +81,28 @@ export function convertHttpRequestBody({
         });
     }
 
-    return HttpRequestBody.reference(convertReferenceHttpRequestBody(request.body, file));
+    return HttpRequestBody.reference(
+        convertReferenceHttpRequestBody({
+            requestBody: request.body,
+            file,
+            contentType: request["content-type"],
+        })
+    );
 }
 
-export function convertReferenceHttpRequestBody(
-    requestBody: RawSchemas.HttpReferencedRequestBodySchema | string,
-    file: FernFileContext
-): HttpRequestBodyReference {
+export function convertReferenceHttpRequestBody({
+    requestBody,
+    file,
+    contentType,
+}: {
+    requestBody: RawSchemas.HttpReferencedRequestBodySchema | string;
+    file: FernFileContext;
+    contentType?: string;
+}): HttpRequestBodyReference {
     return {
         docs: typeof requestBody !== "string" ? requestBody.docs : undefined,
         requestBodyType: file.parseTypeReference(requestBody),
+        contentType,
     };
 }
 

@@ -335,11 +335,15 @@ exports[`fdr {"name":"simple"} 1`] = `
                     "headers": [],
                     "request": {
                         "type": {
-                            "value": {
-                                "value": "type_imdb:CreateMovieRequest",
-                                "type": "id"
+                            "contentType": "application/json",
+                            "shape": {
+                                "value": {
+                                    "value": "type_imdb:CreateMovieRequest",
+                                    "type": "id"
+                                },
+                                "type": "reference"
                             },
-                            "type": "reference"
+                            "type": "json"
                         }
                     },
                     "response": {

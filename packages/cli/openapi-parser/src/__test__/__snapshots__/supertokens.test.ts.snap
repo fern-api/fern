@@ -79,6 +79,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -278,6 +279,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -686,6 +688,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -859,6 +862,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -1062,6 +1066,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -1503,6 +1508,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -1735,6 +1741,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -1940,6 +1947,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -2135,6 +2143,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "oneOf": {
@@ -2486,6 +2495,7 @@ Passing the optional deviceId signifies a resend code flow.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "oneOf": {
@@ -2901,6 +2911,7 @@ Passing the optional deviceId signifies a resend code flow.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -3381,6 +3392,7 @@ Passing the optional deviceId signifies a resend code flow.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "oneOf": {
@@ -3790,6 +3802,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -4006,6 +4019,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -4201,6 +4215,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -4594,6 +4609,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -4788,6 +4804,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -5177,6 +5194,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -5501,6 +5519,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -5729,6 +5748,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -6655,6 +6675,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -6800,6 +6821,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -7084,6 +7106,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -7279,6 +7302,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -7550,6 +7574,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -7726,6 +7751,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -7868,6 +7894,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -8054,6 +8081,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -8553,6 +8581,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -8896,6 +8925,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -9223,6 +9253,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -9761,6 +9792,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -10038,6 +10070,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "oneOf": {
@@ -10235,6 +10268,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -10540,6 +10574,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -11022,6 +11057,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -11399,6 +11435,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -11557,6 +11594,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -12017,6 +12055,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -12177,6 +12216,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -12451,6 +12491,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "oneOf": {
@@ -13190,6 +13231,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -13495,6 +13537,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -15054,6 +15097,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -15550,6 +15594,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],

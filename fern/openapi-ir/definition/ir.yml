@@ -203,6 +203,7 @@ types:
     extends: WithDescription
     properties:
       schema: Schema
+      contentType: optional<string>
 
   MultipartRequest:
     extends: WithDescription

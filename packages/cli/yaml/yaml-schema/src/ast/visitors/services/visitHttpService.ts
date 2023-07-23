@@ -125,6 +125,7 @@ async function visitEndpoint({
                         }
                     }
                 },
+                "content-type": noop,
                 headers: async (headers) => {
                     await visitHeaders({
                         headers,
