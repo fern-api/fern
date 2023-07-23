@@ -16,6 +16,12 @@ module.exports = {
             listStyleImage: {
                 dash: 'url("/dash.svg")',
             },
+            minWidth: {
+                sm: "24rem",
+                md: "28rem",
+                lg: "32rem",
+                xl: "36rem",
+            },
         },
         colors: ({ colors }) => {
             return {
