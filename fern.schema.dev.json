@@ -365,6 +365,7 @@
                           "name": {
                             "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
                           },
+                          "content-type": { "type": "string" },
                           "query-parameters": {
                             "type": "object",
                             "additionalProperties": {
