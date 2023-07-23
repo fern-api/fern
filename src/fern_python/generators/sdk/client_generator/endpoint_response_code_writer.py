@@ -41,7 +41,7 @@ class EndpointResponseCodeWriter:
         if self._is_async:
             writer.write("async ")
         writer.write_line(
-            f"for {EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE} in {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.{self._get_iter_text_method(is_async=self._is_async)}(): "
+            f"for {EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE} in {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.{self._get_iter_lines_method(is_async=self._is_async)}(): "
         )
         with writer.indent():
             writer.write_line(f"if len({EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE}) == 0:")
@@ -58,11 +58,11 @@ class EndpointResponseCodeWriter:
             )
         writer.write_line("return")
 
-    def _get_iter_text_method(self, *, is_async: bool) -> str:
+    def _get_iter_lines_method(self, *, is_async: bool) -> str:
         if is_async:
-            return "aiter_text"
+            return "aiter_lines"
         else:
-            return "iter_text"
+            return "iter_lines"
 
     def _handle_success_json(
         self, *, writer: AST.NodeWriter, json_response: ir_types.JsonResponse, use_response_json: bool
