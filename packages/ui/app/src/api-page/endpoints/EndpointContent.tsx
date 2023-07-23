@@ -99,8 +99,8 @@ export const EndpointContent = React.memo<EndpointContent.Props>(function Endpoi
                     <div className="typography-font-heading pb-8 pt-20 text-3xl font-medium" ref={setTitleRef}>
                         <EndpointTitle endpoint={endpoint} />
                     </div>
-                    <div className="flex flex-col items-start">
-                        <EndpointUrl endpoint={endpoint} />
+                    <div className="flex max-w-full flex-col items-start">
+                        <EndpointUrl className="max-w-full" endpoint={endpoint} />
                     </div>
                     {endpoint.description != null && (
                         <div className="mt-6">
