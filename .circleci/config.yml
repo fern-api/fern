@@ -253,7 +253,7 @@ jobs:
             export FERN_TOKEN="$FERN_ORG_TOKEN_PROD"
             npx fern-api generate --api ir-types-v22 --group sdks
 
-  check-release-is-allowed:
+  check-cli-release-is-allowed:
     docker:
       - image: cimg/node:lts
     steps:
@@ -262,12 +262,23 @@ jobs:
           pkg-manager: yarn-berry
       - run:
           name: Check release blockers
-          command: yarn check-release-blockers
+          command: yarn check-cli-release-blockers
       - run:
           name: Ensure JSON schema is up to date
           command: |
             yarn generate-json-schema
             git --no-pager diff --exit-code
+
+  check-docs-release-is-allowed:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn-berry
+      - run:
+          name: Check release blockers
+          command: yarn check-docs-release-blockers
 
   deploy-docs-preview:
     docker:
@@ -423,7 +434,7 @@ workflows:
             tags:
               only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
           requires:
-            - check-release-is-allowed
+            - check-cli-release-is-allowed
             - check
             - organize-imports
             - compile
@@ -482,7 +493,7 @@ workflows:
             tags:
               only: /^docs@([0-9]+)\.([0-9]+)\.([0-9]+)$/
           requires:
-            - check-release-is-allowed
+            - check-docs-release-is-allowed
             - check
             - organize-imports
             - compile
@@ -495,7 +506,14 @@ workflows:
             - vercel-prod
             - fe-algolia-prod
 
-      - check-release-is-allowed:
+      - check-docs-release-is-allowed:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^docs@([0-9]+)\.([0-9]+)\.([0-9]+)$/
+
+      - check-cli-release-is-allowed:
           filters:
             branches:
               ignore: /.*/
