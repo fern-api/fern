@@ -2,8 +2,10 @@ import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import React, { PropsWithChildren, useCallback, useMemo } from "react";
+import { useApiDefinitionContext } from "../../api-context/useApiDefinitionContext";
 import { divideEndpointPathToParts, type EndpointPathPart } from "../../util/endpoint";
 import styles from "./EndpointUrl.module.scss";
+import { getEndpointEnvironmentUrl } from "./getEndpointEnvironmentUrl";
 
 export declare namespace EndpointUrl {
     export type Props = React.PropsWithChildren<{
@@ -17,30 +19,40 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
     { endpoint, className, urlStyle },
     ref
 ) {
+    const { apiDefinition } = useApiDefinitionContext();
     const endpointPathParts = useMemo(() => divideEndpointPathToParts(endpoint), [endpoint]);
 
-    const renderPathParts = useCallback((parts: EndpointPathPart[]) => {
-        return parts
-            .map((part) =>
-                visitDiscriminatedUnion(part, "type")._visit({
-                    literal: (literal) => {
-                        return <div className="text-text-default whitespace-nowrap font-light">{literal.value}</div>;
-                    },
-                    pathParameter: (pathParameter) => (
-                        <div className="bg-accentHighlight text-accentPrimary flex items-center justify-center whitespace-nowrap rounded px-1 py-0.5 font-mono text-xs">
-                            :{pathParameter.name}
-                        </div>
-                    ),
-                    _other: () => null,
-                })
-            )
-            .map((jsx) => (
-                <>
-                    <div className="text-text-default">/</div>
-                    {jsx}
-                </>
-            ));
-    }, []);
+    const renderPathParts = useCallback(
+        (parts: EndpointPathPart[]) => {
+            const elements: (JSX.Element | null)[] = [];
+            if (apiDefinition.hasMultipleBaseUrls === true) {
+                const url = getEndpointEnvironmentUrl(endpoint);
+                if (url != null) {
+                    elements.push(<div className="text-text-default whitespace-nowrap font-light">{url}</div>);
+                }
+            }
+            parts.forEach((p) => {
+                elements.push(
+                    <div className="text-text-default">/</div>,
+                    visitDiscriminatedUnion(p, "type")._visit({
+                        literal: (literal) => {
+                            return (
+                                <div className="text-text-default whitespace-nowrap font-light">{literal.value}</div>
+                            );
+                        },
+                        pathParameter: (pathParameter) => (
+                            <div className="bg-accentHighlight text-accentPrimary flex items-center justify-center whitespace-nowrap rounded px-1 py-0.5 font-mono text-xs">
+                                :{pathParameter.name}
+                            </div>
+                        ),
+                        _other: () => null,
+                    })
+                );
+            });
+            return elements;
+        },
+        [apiDefinition.hasMultipleBaseUrls, endpoint]
+    );
 
     return (
         <div
