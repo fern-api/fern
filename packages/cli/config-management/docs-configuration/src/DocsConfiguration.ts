@@ -7,6 +7,7 @@ export interface DocsConfiguration {
     title: string | undefined;
     logo: Logo | undefined;
     favicon: ImageReference | undefined;
+    backgroundImage: ImageReference | undefined;
     colors: FernRegistry.docs.v1.write.ColorsConfig;
     navbarLinks: FernRegistry.docs.v1.write.NavbarLink[] | undefined;
     typography: TypographyConfig | undefined;
