@@ -189,20 +189,5 @@ function parseHexColorCode(value: string | undefined): number | undefined {
 }
 
 function convertNavbarLinks(rawConfig: RawDocs.NavbarLink[]): FernRegistry.docs.v1.write.NavbarLink[] {
-    return rawConfig.map((item) => {
-        return {
-            text: item.text,
-            url: item.url,
-            style: item.style != null ? convertNavbarLinkStyle(item.style) : undefined,
-        };
-    });
-}
-
-function convertNavbarLinkStyle(rawConfig: RawDocs.NavbarLinkStyle): FernRegistry.docs.v1.write.NavbarLinkStyle {
-    switch (rawConfig) {
-        case "primary":
-            return FernRegistry.docs.v1.write.NavbarLinkStyle.Primary;
-        default:
-            assertNever(rawConfig);
-    }
+    return rawConfig as FernRegistry.docs.v1.write.NavbarLink[];
 }
