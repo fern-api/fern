@@ -16,7 +16,7 @@
 
 </div>
 
-This repository contains the source for the [Fern](https://buildwithfern.com) generators that produce Java artifacts:
+This repository contains the source for the [Fern]([https://buildwithfern.com](https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern-java&utm_content=repo-contains)) generators that produce Java artifacts:
 
 - `fernapi/fern-java-sdk`
 - `fernapi/fern-java-model`
