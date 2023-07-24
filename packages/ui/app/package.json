@@ -37,7 +37,7 @@
     "@fern-api/react-commons": "workspace:*",
     "@fern-api/routing-utils": "workspace:*",
     "@fern-api/theme": "workspace:*",
-    "@fern-fern/registry-browser": "0.10.1-15-g59bbd4f",
+    "@fern-fern/registry-browser": "0.11.1-1-g35623b3",
     "@fontsource/ibm-plex-mono": "^4.5.13",
     "@headlessui/react": "^1.7.15",
     "@react-hook/size": "^2.1.2",
