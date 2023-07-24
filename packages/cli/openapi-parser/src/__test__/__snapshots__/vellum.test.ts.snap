@@ -271,7 +271,18 @@ Executes a deployed Workflow and streams back its results.",
             "type": "json",
           },
           "requestNameOverride": undefined,
-          "response": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "ExecuteWorkflowStreamResponse",
+              "nameOverride": undefined,
+              "schema": "WorkflowStreamEvent",
+              "type": "reference",
+            },
+            "type": "json",
+          },
           "responseIsStreaming": true,
           "sdkName": undefined,
           "server": [
@@ -296,6 +307,7 @@ Generate a completion using a previously defined deployment.
 **Note:** Uses a base url of \`https://predict.vellum.ai\`.",
           "errorStatusCode": [
             400,
+            403,
             404,
             500,
           ],
@@ -357,6 +369,7 @@ Generate a stream of completions using a previously defined deployment.
 **Note:** Uses a base url of \`https://predict.vellum.ai\`.",
           "errorStatusCode": [
             400,
+            403,
             404,
             500,
           ],
@@ -369,7 +382,7 @@ Generate a stream of completions using a previously defined deployment.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "contentType": "application/x-ndjson",
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -382,7 +395,18 @@ Generate a stream of completions using a previously defined deployment.
             "type": "json",
           },
           "requestNameOverride": undefined,
-          "response": undefined,
+          "response": {
+            "description": "",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "GenerateStreamResponse",
+              "nameOverride": undefined,
+              "schema": "GenerateStreamResponse",
+              "type": "reference",
+            },
+            "type": "json",
+          },
           "responseIsStreaming": true,
           "sdkName": undefined,
           "server": [
@@ -1086,6 +1110,19 @@ Upload a document to be indexed and used for search.
             "type": "unknown",
           },
         },
+        "403": {
+          "description": undefined,
+          "generatedName": "ForbiddenError",
+          "nameOverride": null,
+          "schema": {
+            "description": undefined,
+            "file": undefined,
+            "generatedName": "ForbiddenErrorBody",
+            "nameOverride": undefined,
+            "schema": "GenerateErrorResponse",
+            "type": "reference",
+          },
+        },
         "404": {
           "description": undefined,
           "generatedName": "NotFoundError",
@@ -1121,7 +1158,9 @@ Upload a document to be indexed and used for search.
         "DeploymentRead",
         "DocumentIndexRead",
         "PaginatedSlimDocumentList",
+        "WorkflowStreamEvent",
         "GenerateResponse",
+        "GenerateStreamResponse",
         "ModelVersionRead",
         "ModelVersionCompilePromptResponse",
         "RegisterPromptResponse",
@@ -1131,7 +1170,6 @@ Upload a document to be indexed and used for search.
         "UploadDocumentResponse",
         "ChatMessageRole",
         "ConditionalNodeResultData",
-        "ChatMessage",
         "DeploymentNodeResultData",
         "DeploymentReadStatusEnum",
         "EnvironmentEnum",
@@ -1184,6 +1222,7 @@ Upload a document to be indexed and used for search.
         "ScenarioInput",
         "SandboxMetricInputParams",
         "ScenarioInputTypeEnum",
+        "ChatMessage",
         "SearchNodeResultData",
         "SearchRequestOptionsRequest",
         "SearchWeightsRequest",
@@ -1200,11 +1239,14 @@ Upload a document to be indexed and used for search.
         "TerminalNodeResultOutput",
         "ScenarioInputRequest",
         "SandboxMetricInputParamsRequest",
+        "WorkflowExecutionEventErrorCode",
         "WorkflowNodeResultEvent",
         "WorkflowResultEvent",
-        "WorkflowNodeResultEventStateEnum",
+        "WorkflowNodeResultEventState",
         "WorkflowNodeResultData",
-        "WorkflowResultEventStateEnum",
+        "WorkflowEventError",
+        "WorkflowResultEventOutputData",
+        "GenerateErrorResponse",
         "RegisterPromptErrorResponse",
       ],
       "schemas": {
@@ -1401,96 +1443,6 @@ Upload a document to be indexed and used for search.
                     },
                     "type": "primitive",
                   },
-                },
-              },
-            },
-          ],
-          "type": "object",
-        },
-        "ConstantValueChatHistoryVariable": {
-          "allOf": [],
-          "allOfPropertyConflicts": [],
-          "description": undefined,
-          "generatedName": "ConstantValueChatHistoryVariable",
-          "nameOverride": undefined,
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "constantValueChatHistoryVariableValue",
-              "key": "value",
-              "schema": {
-                "description": undefined,
-                "type": "nullable",
-                "value": {
-                  "description": undefined,
-                  "type": "array",
-                  "value": {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "ConstantValueChatHistoryVariableValueItem",
-                    "nameOverride": undefined,
-                    "schema": "ChatMessage",
-                    "type": "reference",
-                  },
-                },
-              },
-            },
-          ],
-          "type": "object",
-        },
-        "ConstantValueJsonVariable": {
-          "allOf": [],
-          "allOfPropertyConflicts": [],
-          "description": undefined,
-          "generatedName": "ConstantValueJsonVariable",
-          "nameOverride": undefined,
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "constantValueJsonVariableValue",
-              "key": "value",
-              "schema": {
-                "description": undefined,
-                "type": "nullable",
-                "value": {
-                  "description": undefined,
-                  "key": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
-                  },
-                  "type": "map",
-                  "value": {
-                    "type": "unknown",
-                  },
-                },
-              },
-            },
-          ],
-          "type": "object",
-        },
-        "ConstantValueStringVariable": {
-          "allOf": [],
-          "allOfPropertyConflicts": [],
-          "description": undefined,
-          "generatedName": "ConstantValueStringVariable",
-          "nameOverride": undefined,
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "constantValueStringVariableValue",
-              "key": "value",
-              "schema": {
-                "description": undefined,
-                "type": "nullable",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
-                  },
-                  "type": "primitive",
                 },
               },
             },
@@ -2477,6 +2429,28 @@ Upload a document to be indexed and used for search.
                   "nameOverride": undefined,
                   "schema": "WorkflowRequestInputRequest",
                   "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "executeWorkflowStreamRequestExternalId",
+              "key": "external_id",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": "Optionally include a unique identifier for tracking purposes.",
+                  "type": "nullable",
+                  "value": {
+                    "description": "Optionally include a unique identifier for tracking purposes.",
+                    "schema": {
+                      "maxLength": undefined,
+                      "minLength": 1,
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                 },
               },
             },
@@ -3587,6 +3561,7 @@ Upload a document to be indexed and used for search.
 * \`GOOGLE\` - Google
 * \`HOSTED\` - Hosted
 * \`MOSAICML\` - MosaicML
+* \`MYSTIC\` - Mystic
 * \`OPENAI\` - OpenAI
 * \`PYQ\` - Pyq",
                 "file": undefined,
@@ -4713,6 +4688,7 @@ Upload a document to be indexed and used for search.
 * \`GOOGLE\` - Google
 * \`HOSTED\` - Hosted
 * \`MOSAICML\` - MosaicML
+* \`MYSTIC\` - Mystic
 * \`OPENAI\` - OpenAI
 * \`PYQ\` - Pyq",
           "generatedName": "ProviderEnum",
@@ -4748,6 +4724,12 @@ Upload a document to be indexed and used for search.
               "generatedName": "MOSAICML",
               "nameOverride": undefined,
               "value": "MOSAICML",
+            },
+            {
+              "description": undefined,
+              "generatedName": "MYSTIC",
+              "nameOverride": undefined,
+              "value": "MYSTIC",
             },
             {
               "description": undefined,
@@ -5082,6 +5064,7 @@ Upload a document to be indexed and used for search.
 * \`GOOGLE\` - Google
 * \`HOSTED\` - Hosted
 * \`MOSAICML\` - MosaicML
+* \`MYSTIC\` - Mystic
 * \`OPENAI\` - OpenAI
 * \`PYQ\` - Pyq",
                 "file": undefined,
@@ -6682,6 +6665,88 @@ Upload a document to be indexed and used for search.
           ],
           "type": "object",
         },
+        "TerminalNodeChatHistoryResult": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "TerminalNodeChatHistoryResult",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "terminalNodeChatHistoryResultName",
+              "key": "name",
+              "schema": {
+                "description": "The unique name given to the terminal node that produced this output.",
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "terminalNodeChatHistoryResultValue",
+              "key": "value",
+              "schema": {
+                "description": undefined,
+                "type": "array",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "TerminalNodeChatHistoryResultValueItem",
+                  "nameOverride": undefined,
+                  "schema": "ChatMessage",
+                  "type": "reference",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "TerminalNodeJsonResult": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "TerminalNodeJsonResult",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "terminalNodeJsonResultName",
+              "key": "name",
+              "schema": {
+                "description": "The unique name given to the terminal node that produced this output.",
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "terminalNodeJsonResultValue",
+              "key": "value",
+              "schema": {
+                "description": undefined,
+                "key": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "map",
+                "value": {
+                  "type": "unknown",
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
         "TerminalNodeResult": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -6739,31 +6804,69 @@ Upload a document to be indexed and used for search.
               "CHAT_HISTORY": {
                 "description": undefined,
                 "file": undefined,
-                "generatedName": "ComponentsSchemasConstantValueChatHistoryVariable",
+                "generatedName": "ComponentsSchemasTerminalNodeChatHistoryResult",
                 "nameOverride": undefined,
-                "schema": "ConstantValueChatHistoryVariable",
+                "schema": "TerminalNodeChatHistoryResult",
                 "type": "reference",
               },
               "JSON": {
                 "description": undefined,
                 "file": undefined,
-                "generatedName": "ComponentsSchemasConstantValueJsonVariable",
+                "generatedName": "ComponentsSchemasTerminalNodeJsonResult",
                 "nameOverride": undefined,
-                "schema": "ConstantValueJsonVariable",
+                "schema": "TerminalNodeJsonResult",
                 "type": "reference",
               },
               "STRING": {
                 "description": undefined,
                 "file": undefined,
-                "generatedName": "ComponentsSchemasConstantValueStringVariable",
+                "generatedName": "ComponentsSchemasTerminalNodeStringResult",
                 "nameOverride": undefined,
-                "schema": "ConstantValueStringVariable",
+                "schema": "TerminalNodeStringResult",
                 "type": "reference",
               },
             },
             "type": "discriminated",
           },
           "type": "oneOf",
+        },
+        "TerminalNodeStringResult": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "TerminalNodeStringResult",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "terminalNodeStringResultName",
+              "key": "name",
+              "schema": {
+                "description": "The unique name given to the terminal node that produced this output.",
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "terminalNodeStringResultValue",
+              "key": "value",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "type": "object",
         },
         "TestSuiteTestCase": {
           "allOf": [],
@@ -7165,6 +7268,64 @@ Upload a document to be indexed and used for search.
           ],
           "type": "object",
         },
+        "WorkflowEventError": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "WorkflowEventError",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "workflowEventErrorMessage",
+              "key": "message",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "workflowEventErrorCode",
+              "key": "code",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "WorkflowEventErrorCode",
+                "nameOverride": undefined,
+                "schema": "WorkflowExecutionEventErrorCode",
+                "type": "reference",
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "WorkflowExecutionEventErrorCode": {
+          "description": "* \`WORKFLOW_INITIALIZATION\` - WORKFLOW_INITIALIZATION
+* \`NODE_EXECUTION\` - NODE_EXECUTION",
+          "generatedName": "WorkflowExecutionEventErrorCode",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [
+            {
+              "description": undefined,
+              "generatedName": "WORKFLOW_INITIALIZATION",
+              "nameOverride": undefined,
+              "value": "WORKFLOW_INITIALIZATION",
+            },
+            {
+              "description": undefined,
+              "generatedName": "NODE_EXECUTION",
+              "nameOverride": undefined,
+              "value": "NODE_EXECUTION",
+            },
+          ],
+        },
         "WorkflowExecutionNodeResultEvent": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -7172,6 +7333,42 @@ Upload a document to be indexed and used for search.
           "generatedName": "WorkflowExecutionNodeResultEvent",
           "nameOverride": undefined,
           "properties": [
+            {
+              "conflict": {},
+              "generatedName": "workflowExecutionNodeResultEventRunId",
+              "key": "run_id",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "workflowExecutionNodeResultEventExternalId",
+              "key": "external_id",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "nullable",
+                  "value": {
+                    "description": undefined,
+                    "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
             {
               "conflict": {},
               "generatedName": "workflowExecutionNodeResultEventData",
@@ -7195,6 +7392,42 @@ Upload a document to be indexed and used for search.
           "generatedName": "WorkflowExecutionWorkflowResultEvent",
           "nameOverride": undefined,
           "properties": [
+            {
+              "conflict": {},
+              "generatedName": "workflowExecutionWorkflowResultEventRunId",
+              "key": "run_id",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "workflowExecutionWorkflowResultEventExternalId",
+              "key": "external_id",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "nullable",
+                  "value": {
+                    "description": undefined,
+                    "schema": {
+                      "maxLength": undefined,
+                      "minLength": undefined,
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            },
             {
               "conflict": {},
               "generatedName": "workflowExecutionWorkflowResultEventData",
@@ -7330,7 +7563,7 @@ Upload a document to be indexed and used for search.
                 "file": undefined,
                 "generatedName": "WorkflowNodeResultEventState",
                 "nameOverride": undefined,
-                "schema": "WorkflowNodeResultEventStateEnum",
+                "schema": "WorkflowNodeResultEventState",
                 "type": "reference",
               },
             },
@@ -7385,12 +7618,11 @@ Upload a document to be indexed and used for search.
                   "type": "nullable",
                   "value": {
                     "description": undefined,
-                    "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
-                    },
-                    "type": "primitive",
+                    "file": undefined,
+                    "generatedName": "WorkflowNodeResultEventError",
+                    "nameOverride": undefined,
+                    "schema": "WorkflowEventError",
+                    "type": "reference",
                   },
                 },
               },
@@ -7398,12 +7630,12 @@ Upload a document to be indexed and used for search.
           ],
           "type": "object",
         },
-        "WorkflowNodeResultEventStateEnum": {
+        "WorkflowNodeResultEventState": {
           "description": "* \`INITIATED\` - INITIATED
 * \`STREAMING\` - STREAMING
 * \`FULFILLED\` - FULFILLED
 * \`REJECTED\` - REJECTED",
-          "generatedName": "WorkflowNodeResultEventStateEnum",
+          "generatedName": "WorkflowNodeResultEventState",
           "nameOverride": undefined,
           "type": "enum",
           "values": [
@@ -7613,20 +7845,6 @@ Upload a document to be indexed and used for search.
             },
             {
               "conflict": {},
-              "generatedName": "workflowResultEventWorkflowResultId",
-              "key": "workflow_result_id",
-              "schema": {
-                "description": undefined,
-                "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "conflict": {},
               "generatedName": "workflowResultEventState",
               "key": "state",
               "schema": {
@@ -7634,7 +7852,7 @@ Upload a document to be indexed and used for search.
                 "file": undefined,
                 "generatedName": "WorkflowResultEventState",
                 "nameOverride": undefined,
-                "schema": "WorkflowResultEventStateEnum",
+                "schema": "WorkflowNodeResultEventState",
                 "type": "reference",
               },
             },
@@ -7654,6 +7872,23 @@ Upload a document to be indexed and used for search.
             },
             {
               "conflict": {},
+              "generatedName": "workflowResultEventOutput",
+              "key": "output",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "file": undefined,
+                  "generatedName": "WorkflowResultEventOutput",
+                  "nameOverride": undefined,
+                  "schema": "WorkflowResultEventOutputData",
+                  "type": "reference",
+                },
+              },
+            },
+            {
+              "conflict": {},
               "generatedName": "workflowResultEventError",
               "key": "error",
               "schema": {
@@ -7664,12 +7899,11 @@ Upload a document to be indexed and used for search.
                   "type": "nullable",
                   "value": {
                     "description": undefined,
-                    "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
-                    },
-                    "type": "primitive",
+                    "file": undefined,
+                    "generatedName": "WorkflowResultEventError",
+                    "nameOverride": undefined,
+                    "schema": "WorkflowEventError",
+                    "type": "reference",
                   },
                 },
               },
@@ -7677,33 +7911,313 @@ Upload a document to be indexed and used for search.
           ],
           "type": "object",
         },
-        "WorkflowResultEventStateEnum": {
-          "description": "* \`INITIATED\` - INITIATED
-* \`FULFILLED\` - FULFILLED
-* \`REJECTED\` - REJECTED",
-          "generatedName": "WorkflowResultEventStateEnum",
+        "WorkflowResultEventOutputData": {
+          "oneOf": {
+            "commonProperties": [],
+            "description": undefined,
+            "discriminantProperty": "type",
+            "generatedName": "WorkflowResultEventOutputData",
+            "nameOverride": undefined,
+            "schemas": {
+              "CHAT_HISTORY": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ComponentsSchemasWorkflowResultEventOutputDataChatHistory",
+                "nameOverride": undefined,
+                "schema": "WorkflowResultEventOutputDataChatHistory",
+                "type": "reference",
+              },
+              "JSON": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ComponentsSchemasWorkflowResultEventOutputDataJson",
+                "nameOverride": undefined,
+                "schema": "WorkflowResultEventOutputDataJSON",
+                "type": "reference",
+              },
+              "STRING": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ComponentsSchemasWorkflowResultEventOutputDataString",
+                "nameOverride": undefined,
+                "schema": "WorkflowResultEventOutputDataString",
+                "type": "reference",
+              },
+            },
+            "type": "discriminated",
+          },
+          "type": "oneOf",
+        },
+        "WorkflowResultEventOutputDataChatHistory": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "WorkflowResultEventOutputDataChatHistory",
           "nameOverride": undefined,
-          "type": "enum",
-          "values": [
+          "properties": [
             {
-              "description": undefined,
-              "generatedName": "INITIATED",
-              "nameOverride": undefined,
-              "value": "INITIATED",
+              "conflict": {},
+              "generatedName": "workflowResultEventOutputDataChatHistoryName",
+              "key": "name",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
             },
             {
-              "description": undefined,
-              "generatedName": "FULFILLED",
-              "nameOverride": undefined,
-              "value": "FULFILLED",
+              "conflict": {},
+              "generatedName": "workflowResultEventOutputDataChatHistoryState",
+              "key": "state",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "WorkflowResultEventOutputDataChatHistoryState",
+                "nameOverride": undefined,
+                "schema": "WorkflowNodeResultEventState",
+                "type": "reference",
+              },
             },
             {
-              "description": undefined,
-              "generatedName": "REJECTED",
-              "nameOverride": undefined,
-              "value": "REJECTED",
+              "conflict": {},
+              "generatedName": "workflowResultEventOutputDataChatHistoryNodeId",
+              "key": "node_id",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "workflowResultEventOutputDataChatHistoryDelta",
+              "key": "delta",
+              "schema": {
+                "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
+                "type": "nullable",
+                "value": {
+                  "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "workflowResultEventOutputDataChatHistoryValue",
+              "key": "value",
+              "schema": {
+                "description": undefined,
+                "type": "optional",
+                "value": {
+                  "description": undefined,
+                  "type": "nullable",
+                  "value": {
+                    "description": undefined,
+                    "type": "array",
+                    "value": {
+                      "description": undefined,
+                      "file": undefined,
+                      "generatedName": "WorkflowResultEventOutputDataChatHistoryValueItem",
+                      "nameOverride": undefined,
+                      "schema": "ChatMessage",
+                      "type": "reference",
+                    },
+                  },
+                },
+              },
             },
           ],
+          "type": "object",
+        },
+        "WorkflowResultEventOutputDataJSON": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "WorkflowResultEventOutputDataJson",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "workflowResultEventOutputDataJsonName",
+              "key": "name",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "workflowResultEventOutputDataJsonState",
+              "key": "state",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "WorkflowResultEventOutputDataJsonState",
+                "nameOverride": undefined,
+                "schema": "WorkflowNodeResultEventState",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "workflowResultEventOutputDataJsonNodeId",
+              "key": "node_id",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "workflowResultEventOutputDataJsonDelta",
+              "key": "delta",
+              "schema": {
+                "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
+                "type": "nullable",
+                "value": {
+                  "description": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "workflowResultEventOutputDataJsonValue",
+              "key": "value",
+              "schema": {
+                "description": undefined,
+                "type": "nullable",
+                "value": {
+                  "description": undefined,
+                  "key": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "map",
+                  "value": {
+                    "type": "unknown",
+                  },
+                },
+              },
+            },
+          ],
+          "type": "object",
+        },
+        "WorkflowResultEventOutputDataString": {
+          "allOf": [],
+          "allOfPropertyConflicts": [],
+          "description": undefined,
+          "generatedName": "WorkflowResultEventOutputDataString",
+          "nameOverride": undefined,
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "workflowResultEventOutputDataStringName",
+              "key": "name",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "workflowResultEventOutputDataStringState",
+              "key": "state",
+              "schema": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "WorkflowResultEventOutputDataStringState",
+                "nameOverride": undefined,
+                "schema": "WorkflowNodeResultEventState",
+                "type": "reference",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "workflowResultEventOutputDataStringNodeId",
+              "key": "node_id",
+              "schema": {
+                "description": undefined,
+                "schema": {
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "workflowResultEventOutputDataStringDelta",
+              "key": "delta",
+              "schema": {
+                "description": "The newly output string value, meant to be concatenated with all previous. Will be non-null for events of state STREAMING.",
+                "type": "nullable",
+                "value": {
+                  "description": "The newly output string value, meant to be concatenated with all previous. Will be non-null for events of state STREAMING.",
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+            {
+              "conflict": {},
+              "generatedName": "workflowResultEventOutputDataStringValue",
+              "key": "value",
+              "schema": {
+                "description": "The entire string value. Will be non-null for events of state FULFILLED.",
+                "type": "nullable",
+                "value": {
+                  "description": "The entire string value. Will be non-null for events of state FULFILLED.",
+                  "schema": {
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "type": "string",
+                  },
+                  "type": "primitive",
+                },
+              },
+            },
+          ],
+          "type": "object",
         },
         "WorkflowStreamEvent": {
           "oneOf": {

@@ -6,7 +6,6 @@ import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from
 
 export const APPLICATION_JSON_CONTENT = "application/json";
 export const APPLICATION_JSON_UTF_8_CONTENT = "application/json; charset=utf-8";
-export const APPLICATION_VND_JSON = "application/x-ndjson";
 
 export const MULTIPART_CONTENT = "multipart/form-data";
 
@@ -42,18 +41,6 @@ function getApplicationJsonRequest(requestBody: OpenAPIV3.RequestBodyObject): Pa
             schema: applicationJsonUtf8Schema,
         };
     }
-
-    const applicationVndJsonSchema = getSchemaForContentType({
-        contentType: APPLICATION_VND_JSON,
-        media: requestBody.content,
-    });
-    if (applicationVndJsonSchema != null) {
-        return {
-            schema: applicationVndJsonSchema,
-            overridenContentType: APPLICATION_VND_JSON,
-        };
-    }
-
     return undefined;
 }
 
