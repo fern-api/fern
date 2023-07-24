@@ -68,15 +68,15 @@ export class UrlSlugTree {
         return this.allSlugs;
     }
 
-    private getAllSlugsExpensive(ancestors: string[] = [], root = this.root): string[] {
+    private getAllSlugsExpensive(root = this.root): string[] {
         const allSlugs: string[] = [];
         for (const node of Object.values(root)) {
-            allSlugs.push(...ancestors, node.slug);
+            allSlugs.push(node.slug);
             switch (node.type) {
                 case "api":
                 case "section":
                 case "apiSubpackage":
-                    allSlugs.push(...this.getAllSlugsExpensive([...ancestors, node.slug], node.children));
+                    allSlugs.push(...this.getAllSlugsExpensive(node.children));
                     break;
                 case "clientLibraries":
                 case "endpoint":
