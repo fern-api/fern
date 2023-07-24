@@ -61,9 +61,6 @@
     "remark-gfm": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.19.1",
-    "@babel/preset-env": "^7.19.1",
-    "@babel/preset-typescript": "^7.18.6",
     "@types/jest": "^29.0.3",
     "@types/lodash-es": "^4.17.7",
     "@types/marked": "^5.0.0",

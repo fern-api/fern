@@ -36,9 +36,6 @@
     "openapi-types": "^12.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.19.1",
-    "@babel/preset-env": "^7.19.1",
-    "@babel/preset-typescript": "^7.18.6",
     "@types/jest": "^29.0.3",
     "@types/lodash-es": "^4.17.7",
     "@types/node": "^18.7.18",

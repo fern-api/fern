@@ -1,14 +1,4 @@
 {
-  "ignores": [
-    "@types/jest",
-    "@types/node",
-    "@babel/core",
-    "@babel/preset-env",
-    "@babel/preset-typescript",
-    "@types/react",
-    "@types/react-dom",
-    "autoprefixer",
-    "postcss"
-  ],
+  "ignores": ["@types/jest", "@types/node", "@types/react", "@types/react-dom", "autoprefixer", "postcss"],
   "ignore-patterns": ["lib"]
 }
