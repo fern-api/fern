@@ -1,11 +1,1 @@
-{
-  "ignores": [
-    "@types/jest",
-    "@types/node",
-    "@babel/core",
-    "@babel/preset-env",
-    "@babel/preset-typescript",
-    "@types/tmp"
-  ],
-  "ignore-patterns": ["lib"]
-}
+{ "ignores": ["@types/jest", "@types/node", "@types/tmp"], "ignore-patterns": ["lib"] }
