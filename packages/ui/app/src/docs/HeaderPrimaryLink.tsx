@@ -12,13 +12,15 @@ export const HeaderPrimaryLink: React.FC<HeaderPrimaryLink.Props> = ({ navbarLin
     return (
         <a
             className={classNames(
-                "pl-4 pr-2.5 py-1.5 flex space-x-1.5 items-center !no-underline !text-accentPrimary transition rounded-full border border-accentPrimary/50 hover:border-accentPrimary bg-accentHighlight hover:bg-accentHighlight/20"
+                "group pl-4 pr-2.5 py-1.5 flex space-x-1.5 items-center !no-underline !text-accentPrimary transition rounded-full border border-accentPrimary/50 hover:border-accentPrimary bg-accentHighlight hover:bg-accentHighlight/20"
             )}
             href={navbarLink.url}
             rel="noreferrer noopener"
         >
             <span>{navbarLink.text}</span>
-            <ChevronRightIcon className="h-3 w-3" />
+            <div className="flex h-4 w-4 items-center">
+                <ChevronRightIcon className="h-3 w-3 transition group-hover:translate-x-1 group-hover:scale-125" />
+            </div>
         </a>
     );
 };
