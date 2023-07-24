@@ -119,7 +119,7 @@ groups:
         version: 0.0.14
         config:
           module:
-            path: github.com/<YOUR_ORGANIZATION/<YOUR_REPOSITORY>
+            path: github.com/<YOUR_ORGANIZATION>/<YOUR_REPOSITORY>
             version: "1.19"
         output:
           location: local-file-system
