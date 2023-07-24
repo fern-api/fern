@@ -23,8 +23,11 @@ function itFixture(fixtureName: string) {
                 reject: false,
             });
 
-            // for some reason, locally the output contains a newline that Circle doesn't...
-            expect(stripAnsi(stdout).trim()).toMatchSnapshot();
+            expect(
+                stripAnsi(stdout)
+                    // for some reason, locally the output contains a newline that Circle doesn't
+                    .trim()
+            ).toMatchSnapshot();
         },
         90_000
     );
