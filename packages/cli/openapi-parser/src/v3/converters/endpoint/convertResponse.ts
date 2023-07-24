@@ -8,6 +8,7 @@ import { convertSchema } from "../convertSchemas";
 const APPLICATION_JSON_CONTENT = "application/json";
 const APPLICATION_JSON_UTF_8_CONTENT = "application/json; charset=utf-8";
 const TEXT_PLAIN_CONTENT = "text/plain";
+const APPLICATION_VND_JSON = "application/x-ndjson";
 
 const APPLICATION_OCTET_STREAM_CONTENT = "application/octet-stream";
 
@@ -80,7 +81,8 @@ function convertResolvedResponse({
     const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
     const responseSchema =
         resolvedResponse.content?.[APPLICATION_JSON_CONTENT]?.schema ??
-        resolvedResponse.content?.[APPLICATION_JSON_UTF_8_CONTENT]?.schema;
+        resolvedResponse.content?.[APPLICATION_JSON_UTF_8_CONTENT]?.schema ??
+        resolvedResponse.content?.[APPLICATION_VND_JSON]?.schema;
     if (responseSchema != null) {
         return {
             type: "json",
