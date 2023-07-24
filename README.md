@@ -70,7 +70,7 @@ groups:
       - name: fernapi/fern-go-sdk
         version: 0.0.14
         config:
-          importPath: github.com/<YOUR_ORGANIZATION/<YOUR_REPOSITORY>/generated/go
+          importPath: github.com/<YOUR_ORGANIZATION>/<YOUR_REPOSITORY>/generated/go
         output:
           location: local-file-system
           path: ../../generated/go
