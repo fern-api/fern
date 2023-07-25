@@ -50,7 +50,7 @@ By default, Fern runs the generators in the cloud. To run a generator on your lo
 
 All generator releases are published in the [Releases section of the GitHub repository](https://github.com/fern-api/fern-openapi/releases). You can directly use these version numbers in your generator configuration files.
 
-For instance, if you want to use version `0.0.28` of the OpenAPI generator:
+For instance, if you want to use version `0.0.27` of the OpenAPI generator:
 
 ```yaml
 default-group: local
@@ -58,7 +58,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-openapi
-        version: 0.0.28
+        version: 0.0.27
         output:
           location: local-file-system
           path: ../../generated/openapi
