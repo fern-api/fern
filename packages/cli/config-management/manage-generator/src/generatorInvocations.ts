@@ -2,7 +2,7 @@ import { GeneratorInvocationSchema, GeneratorName } from "@fern-api/generators-c
 
 export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocationSchema, "name">> = {
     [GeneratorName.JAVA]: {
-        version: "0.3.7",
+        version: "0.0.122",
     },
     [GeneratorName.TYPESCRIPT_EXPRESS]: {
         version: "0.7.2",
