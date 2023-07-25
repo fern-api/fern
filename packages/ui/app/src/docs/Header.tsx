@@ -18,7 +18,7 @@ export const Header: React.FC = () => {
     const logoContent = hasLogo && (
         <img
             src={resolveFile(logo)}
-            className="max-h-full"
+            className="max-h-full object-contain"
             style={{
                 height: logoHeight ?? DEFAULT_LOGO_HEIGHT,
             }}
