@@ -27,6 +27,7 @@ types:
   LogoInfo:
     properties:
       path: string
+      height: optional<double>
       href: string
 
   DocsTypographyConfig:
