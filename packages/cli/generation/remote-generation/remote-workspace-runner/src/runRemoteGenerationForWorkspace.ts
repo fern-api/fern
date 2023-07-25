@@ -2,7 +2,6 @@ import { FernToken } from "@fern-api/auth";
 import { GeneratorGroup } from "@fern-api/generators-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
-import { publishDocs } from "./publishDocs";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator";
 
 export async function runRemoteGenerationForWorkspace({
@@ -30,24 +29,23 @@ export async function runRemoteGenerationForWorkspace({
     const interactiveTasks: Promise<boolean>[] = [];
 
     if (generatorGroup.docs != null) {
-        const generatorDocsConfig = generatorGroup.docs;
         interactiveTasks.push(
-            context.runInteractiveTask({ name: "Publish docs" }, async (interactiveTaskContext) => {
-                if (workspace.docsDefinition == null) {
-                    interactiveTaskContext.failAndThrow("Docs are not configured.");
-                    return;
-                }
-                await publishDocs({
-                    docsDefinition: workspace.docsDefinition,
-                    customDomains: generatorDocsConfig.customDomains,
-                    domain: generatorDocsConfig.domain,
-                    token,
-                    organization,
-                    context,
-                    workspace,
-                    generatorGroup,
-                    version,
-                });
+            context.runInteractiveTask({ name: "Publish docs" }, async () => {
+                // if (workspace.docsDefinition == null) {
+                //     interactiveTaskContext.failAndThrow("Docs are not configured.");
+                //     return;
+                // }
+                // await publishDocs({
+                //     docsDefinition: workspace.docsDefinition,
+                //     customDomains: generatorDocsConfig.customDomains,
+                //     domain: generatorDocsConfig.domain,
+                //     token,
+                //     organization,
+                //     context,
+                //     workspace,
+                //     generatorGroup,
+                //     version,
+                // });
             })
         );
     }

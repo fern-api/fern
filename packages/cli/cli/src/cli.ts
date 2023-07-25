@@ -224,8 +224,8 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         async (argv) => {
             await addGeneratorToWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineWorkspace: argv.api,
-                    defaultToAllWorkspaces: false,
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false,
                 }),
                 generatorName: argv.generator,
                 groupName: argv.group,
@@ -271,8 +271,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
         async (argv) => {
             await generateWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineWorkspace: argv.api,
-                    defaultToAllWorkspaces: false,
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false,
                 }),
                 cliContext,
                 version: argv.version,
@@ -317,8 +317,8 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         async (argv) => {
             await generateIrForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineWorkspace: argv.api,
-                    defaultToAllWorkspaces: false,
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false,
                 }),
                 irFilepath: resolve(cwd(), argv.pathToOutput),
                 cliContext,
@@ -354,8 +354,8 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         async (argv) => {
             await generateFdrApiDefinitionForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineWorkspace: argv.api,
-                    defaultToAllWorkspaces: false,
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false,
                 }),
                 outputFilepath: resolve(cwd(), argv.pathToOutput),
                 cliContext,
@@ -381,8 +381,8 @@ function addRegisterCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 }),
         async (argv) => {
             const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                commandLineWorkspace: argv.api,
-                defaultToAllWorkspaces: false,
+                commandLineApiWorkspace: argv.api,
+                defaultToAllApiWorkspaces: false,
             });
 
             const token = await cliContext.runTask((context) => {
@@ -409,8 +409,8 @@ function addRegisterV2Command(cli: Argv<GlobalCliOptions>, cliContext: CliContex
             }),
         async (argv) => {
             const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                commandLineWorkspace: argv.api,
-                defaultToAllWorkspaces: false,
+                commandLineApiWorkspace: argv.api,
+                defaultToAllApiWorkspaces: false,
             });
 
             const token = await cliContext.runTask((context) => {
@@ -437,8 +437,8 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
         async (argv) => {
             await validateWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineWorkspace: argv.api,
-                    defaultToAllWorkspaces: true,
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: true,
                 }),
                 cliContext,
             });
@@ -522,8 +522,8 @@ function addFormatCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             });
             await formatWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineWorkspace: argv.api,
-                    defaultToAllWorkspaces: true,
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: true,
                 }),
                 cliContext,
                 shouldFix: !argv.ci,
@@ -544,8 +544,8 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
         async (argv) => {
             await writeDefinitionForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineWorkspace: argv.api,
-                    defaultToAllWorkspaces: true,
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: true,
                 }),
                 cliContext,
             });
@@ -566,6 +566,6 @@ async function loadProjectAndRegisterWorkspacesWithContext(
     });
     context.finish();
 
-    cliContext.registerWorkspaces(project.workspaces);
+    cliContext.registerWorkspaces(project.apiWorkspaces);
     return project;
 }

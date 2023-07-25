@@ -1,12 +1,12 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { loadWorkspace } from "@fern-api/workspace-loader";
+import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 
 export async function getIrForApi(absolutePathToWorkspace: AbsoluteFilePath): Promise<IntermediateRepresentation> {
     const context = createMockTaskContext();
-    const workspace = await loadWorkspace({
+    const workspace = await loadAPIWorkspace({
         absolutePathToWorkspace,
         context,
         cliVersion: "0.0.0",

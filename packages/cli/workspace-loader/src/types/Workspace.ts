@@ -7,7 +7,6 @@ import { ParsedFernFile } from "./FernFile";
 
 export interface DocsWorkspace {
     type: "docs";
-    name: string | undefined;
     absoluteFilepath: AbsoluteFilePath;
     docsDefinition: DocsDefinition;
 }

@@ -20,7 +20,7 @@ export async function generateFdrApiDefinitionForWorkspaces({
     audiences: Audiences;
 }): Promise<void> {
     await Promise.all(
-        project.workspaces.map(async (workspace) => {
+        project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const fernWorkspace =
                     workspace.type === "openapi"

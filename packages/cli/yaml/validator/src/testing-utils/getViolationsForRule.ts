@@ -1,7 +1,7 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { loadWorkspace } from "@fern-api/workspace-loader";
+import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import stripAnsi from "strip-ansi";
 import { Rule } from "../Rule";
 import { runRulesOnWorkspace } from "../validateFernWorkspace";
@@ -18,7 +18,7 @@ export async function getViolationsForRule({
     rule,
     absolutePathToWorkspace,
 }: getViolationsForRule.Args): Promise<ValidationViolation[]> {
-    const parseResult = await loadWorkspace({
+    const parseResult = await loadAPIWorkspace({
         absolutePathToWorkspace,
         context: createMockTaskContext(),
         cliVersion: "0.0.0",

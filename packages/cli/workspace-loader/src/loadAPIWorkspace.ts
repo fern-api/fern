@@ -10,9 +10,6 @@ import { processPackageMarkers } from "./processPackageMarkers";
 import { WorkspaceLoader } from "./types/Result";
 import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
 
-// const absolutePathToDocsDefinition = join(absolutePathToWorkspace, RelativeFilePath.of(DOCS_DIRECTORY));
-// const docsDefinition = await loadDocsDefinition({ absolutePathToDocsDefinition, context });
-
 export async function loadAPIWorkspace({
     absolutePathToWorkspace,
     context,

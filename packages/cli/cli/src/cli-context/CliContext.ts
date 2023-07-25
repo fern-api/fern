@@ -2,7 +2,7 @@ import { createLogger, LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { getPosthogManager } from "@fern-api/posthog-manager";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { FernCliError, Finishable, PosthogEvent, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
-import { Workspace } from "@fern-api/workspace-loader";
+import { APIWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
 import { CliEnvironment } from "./CliEnvironment";
@@ -133,7 +133,7 @@ export class CliContext {
     }
 
     private longestWorkspaceName: string | undefined;
-    public registerWorkspaces(workspaces: readonly Workspace[]): void {
+    public registerWorkspaces(workspaces: readonly APIWorkspace[]): void {
         const longestWorkspaceName = maxBy(
             workspaces.map((workspace) => workspace.name),
             (name) => name.length
@@ -152,7 +152,7 @@ export class CliContext {
     }
 
     public async runTaskForWorkspace(
-        workspace: Workspace,
+        workspace: APIWorkspace,
         run: (context: TaskContext) => void | Promise<void>
     ): Promise<void> {
         await this.runTaskWithInit(this.constructTaskInitForWorkspace(workspace), run);
@@ -191,7 +191,7 @@ export class CliContext {
 
     public readonly logger = createLogger(this.log.bind(this));
 
-    private constructTaskInitForWorkspace(workspace: Workspace): TaskContextImpl.Init {
+    private constructTaskInitForWorkspace(workspace: APIWorkspace): TaskContextImpl.Init {
         const prefixWithoutPadding = wrapWorkspaceNameForPrefix(workspace.name);
 
         // we want all the prefixes to be the same length, so use this.longestWorkspaceName

@@ -1,11 +1,11 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { APIS_DIRECTORY, FERN_DIRECTORY, getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
-import { loadAPIWorkspace } from "@fern-api/workspace-loader";
+import { APIWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { readdir } from "fs/promises";
 import { handleFailedWorkspaceParserResult } from "./handleFailedWorkspaceParserResult";
-import { InlinedAPIWorkspace, MultipleAPIWorkspaces, NamedApiWorkspace, Project } from "./Project";
+import { Project } from "./Project";
 
 export declare namespace loadProject {
     export interface Args {
@@ -33,7 +33,7 @@ export async function loadProject({
         return context.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`);
     }
 
-    const apis = await loadApis({
+    const apiWorkspaces = await loadApis({
         cliName,
         fernDirectory,
         cliVersion,
@@ -44,7 +44,8 @@ export async function loadProject({
 
     return {
         config: await loadProjectConfig({ directory: fernDirectory, context }),
-        apis,
+        apiWorkspaces,
+        docsWorkspaces: [],
     };
 }
 
@@ -62,7 +63,7 @@ async function loadApis({
     cliVersion: string;
     commandLineApiWorkspace: string | undefined;
     defaultToAllApiWorkspaces: boolean;
-}): Promise<InlinedAPIWorkspace | MultipleAPIWorkspaces> {
+}): Promise<APIWorkspace[]> {
     const apisDirectory = join(fernDirectory, RelativeFilePath.of(APIS_DIRECTORY));
     const apisDirectoryExists = await doesPathExist(apisDirectory);
     if (apisDirectoryExists) {
@@ -97,7 +98,7 @@ async function loadApis({
             return context.failAndThrow(message);
         }
 
-        const apiWorkspaces: NamedApiWorkspace[] = [];
+        const apiWorkspaces: APIWorkspace[] = [];
 
         await Promise.all(
             apiWorkspaceDirectoryNames.map(async (workspaceDirectoryName) => {
@@ -107,10 +108,7 @@ async function loadApis({
                     cliVersion,
                 });
                 if (workspace.didSucceed) {
-                    apiWorkspaces.push({
-                        name: workspaceDirectoryName,
-                        value: workspace.workspace,
-                    });
+                    apiWorkspaces.push(workspace.workspace);
                 } else {
                     handleFailedWorkspaceParserResult(workspace, context.logger);
                     context.failAndThrow();
@@ -118,24 +116,21 @@ async function loadApis({
             })
         );
 
-        return {
-            type: "multi",
-            workspaces: apiWorkspaces,
-        };
+        return apiWorkspaces;
     }
 
+    if (commandLineApiWorkspace != null) {
+        return context.failAndThrow("--api only supported when you have mutliple APIs");
+    }
     const workspace = await loadAPIWorkspace({
         absolutePathToWorkspace: join(fernDirectory, RelativeFilePath.of(fernDirectory)),
         context,
         cliVersion,
     });
     if (workspace.didSucceed) {
-        return {
-            type: "inlined",
-            workspace: workspace.workspace,
-        };
+        return [workspace.workspace];
     } else {
         handleFailedWorkspaceParserResult(workspace, context.logger);
-        context.failAndThrow();
+        return context.failAndThrow();
     }
 }

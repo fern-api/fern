@@ -1,1 +1,1 @@
-export { addDocsToWorkspace } from "./addDocsToWorkspace";
+export { addDocsToProject } from "./addDocsToWorkspace";
