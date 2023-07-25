@@ -17,7 +17,7 @@ export const HeaderPrimaryLink: React.FC<HeaderPrimaryLink.Props> = ({ navbarLin
             href={navbarLink.url}
             rel="noreferrer noopener"
         >
-            <span>{navbarLink.text}</span>
+            <span className="whitespace-nowrap">{navbarLink.text}</span>
             <div className="flex h-4 w-4 items-center">
                 <ChevronRightIcon className="h-3 w-3 transition group-hover:translate-x-1 group-hover:scale-125" />
             </div>
