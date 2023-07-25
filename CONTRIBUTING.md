@@ -40,7 +40,7 @@ code .
 
 Install `go` by following [this guide](https://go.dev/doc/install).
 
-Then install the `fern-go-model` and `fern-go-sdk` comamnds by running:
+Then install the `fern-go-model` and `fern-go-sdk` commands by running:
 
 ```sh
 make install
