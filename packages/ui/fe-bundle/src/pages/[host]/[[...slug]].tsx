@@ -8,6 +8,7 @@ import Head from "next/head";
 import { REGISTRY_SERVICE } from "../../service";
 import { getSlugFromUrl } from "../../url-path-resolver/getSlugFromUrl";
 import { UrlPathResolver } from "../../url-path-resolver/UrlPathResolver";
+import { isUnversionedNavigationConfig } from "../../utils/docs";
 import { generateFontFaces, loadDocTypography } from "../../utils/theme/loadDocsTypography";
 
 function classNames(...classes: (string | undefined)[]): string {
@@ -90,7 +91,12 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
     }
 
     let slug = getSlugFromUrl({ pathname, basePath: docs.body.baseUrl.basePath });
+
     if (slug === "") {
+        if (!isUnversionedNavigationConfig(docs.body.definition.config.navigation)) {
+            // TODO: Implement
+            throw new Error("Not supporting versioned navigation yet.");
+        }
         const firstNavigationItem = docs.body.definition.config.navigation.items[0];
         if (firstNavigationItem != null) {
             slug = firstNavigationItem.urlSlug;

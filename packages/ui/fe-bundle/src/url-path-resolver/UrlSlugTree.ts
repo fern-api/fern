@@ -1,12 +1,17 @@
 import { assertNever, noop, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
+import { isUnversionedNavigationConfig } from "../utils/docs";
 
 export class UrlSlugTree {
     private root: Record<UrlSlug, UrlSlugTreeNode>;
     private nodeToNeighbors: Record<UrlSlug, UrlSlugNeighbors> = {};
 
     constructor(private readonly docsDefinition: FernRegistryDocsRead.DocsDefinition) {
+        if (!isUnversionedNavigationConfig(docsDefinition.config.navigation)) {
+            // TODO: Implement
+            throw new Error("Not supporting versioned navigation yet.");
+        }
         this.root = this.constructSlugToNodeRecord({
             items: docsDefinition.config.navigation.items,
             parentSlug: "",
