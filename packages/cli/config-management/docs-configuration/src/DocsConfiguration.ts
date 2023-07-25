@@ -45,9 +45,20 @@ export interface ImageReference {
     filepath: AbsoluteFilePath;
 }
 
-export interface DocsNavigationConfiguration {
+export interface UnversionedDocsNavigation {
+    type: "unversioned";
     items: DocsNavigationItem[];
 }
+
+export interface VersionedDocsNavigation {
+    type: "versioned";
+    versions: {
+        items: DocsNavigationItem[];
+        version: string;
+    }[];
+}
+
+export type DocsNavigationConfiguration = UnversionedDocsNavigation | VersionedDocsNavigation;
 
 export type DocsNavigationItem = DocsNavigationItem.Page | DocsNavigationItem.Section | DocsNavigationItem.ApiSection;
 

@@ -2,7 +2,7 @@ types:
   DocsConfiguration:
     properties:
       instances: list<DocsInstances>
-      navigation: list<NavigationItem>
+      navigation: NavigationConfig
       title:
         type: optional<string>
         docs: used as tab bar title, and in the navbar if no logo is defined
@@ -16,6 +16,17 @@ types:
     properties:
       url: string
       "custom-domain": optional<string>
+
+  NavigationConfig:
+    discriminated: false
+    union:
+      - list<NavigationItem>
+      - list<VersionedNavigationLayout>
+
+  VersionedNavigationLayout:
+    properties:
+      version: string
+      layout: list<NavigationItem>
 
   NavigationItem:
     discriminated: false

@@ -1,6 +1,12 @@
 import { FernToken } from "@fern-api/auth";
 import { assertNever, entries } from "@fern-api/core-utils";
-import { DocsNavigationItem, FontConfig, ImageReference, TypographyConfig } from "@fern-api/docs-configuration";
+import {
+    DocsNavigationConfiguration,
+    DocsNavigationItem,
+    FontConfig,
+    ImageReference,
+    TypographyConfig,
+} from "@fern-api/docs-configuration";
 import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { registerApi } from "@fern-api/register";
 import { createFdrService } from "@fern-api/services";
@@ -190,21 +196,15 @@ async function convertDocsConfiguration({
                       context,
                   })
                 : undefined,
-        navigation: {
-            items: await Promise.all(
-                docsDefinition.config.navigation.items.map((item) =>
-                    convertNavigationItem({
-                        item,
-                        docsDefinition,
-                        organization,
-                        fernWorkspaces,
-                        context,
-                        token,
-                        version,
-                    })
-                )
-            ),
-        },
+        navigation: await convertNavigationConfig({
+            navigationConfig: docsDefinition.config.navigation,
+            docsDefinition,
+            organization,
+            fernWorkspaces,
+            context,
+            token,
+            version,
+        }),
         colors: docsDefinition.config.colors,
         navbarLinks: docsDefinition.config.navbarLinks,
         typography: convertDocsTypographyConfiguration({
@@ -214,6 +214,70 @@ async function convertDocsConfiguration({
             context,
         }),
     };
+}
+
+async function convertNavigationConfig({
+    navigationConfig,
+    docsDefinition,
+    organization,
+    fernWorkspaces,
+    context,
+    token,
+    version,
+}: {
+    navigationConfig: DocsNavigationConfiguration;
+    docsDefinition: DocsDefinition;
+    organization: string;
+    fernWorkspaces: FernWorkspace[];
+    context: TaskContext;
+    token: FernToken;
+    version: string | undefined;
+}): Promise<FernRegistry.docs.v1.write.NavigationConfig> {
+    switch (navigationConfig.type) {
+        case "unversioned":
+            return {
+                items: await Promise.all(
+                    navigationConfig.items.map((item) =>
+                        convertNavigationItem({
+                            item,
+                            docsDefinition,
+                            organization,
+                            fernWorkspaces,
+                            context,
+                            token,
+                            version,
+                        })
+                    )
+                ),
+            };
+        case "versioned":
+            return {
+                versions: await Promise.all(
+                    navigationConfig.versions.map(async (configVersion) => {
+                        return {
+                            config: {
+                                items: await Promise.all(
+                                    configVersion.items.map(async (item) =>
+                                        convertNavigationItem({
+                                            item,
+                                            docsDefinition,
+                                            organization,
+                                            fernWorkspaces,
+                                            context,
+                                            token,
+                                            version,
+                                        })
+                                    )
+                                ),
+                            },
+                            version: configVersion.version,
+                        };
+                    })
+                ),
+            };
+        default:
+            assertNever(navigationConfig);
+    }
 }
 
 function convertDocsTypographyConfiguration({
