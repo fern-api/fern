@@ -10,6 +10,7 @@ describe("loadWorkspace", () => {
             absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/simple")),
             context: createMockTaskContext(),
             cliVersion: "0.0.0",
+            workspaceName: undefined,
         });
         expect(workspace.didSucceed).toBe(true);
         assert(workspace.didSucceed);

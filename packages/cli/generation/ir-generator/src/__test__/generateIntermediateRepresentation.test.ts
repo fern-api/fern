@@ -46,6 +46,7 @@ describe("generateIntermediateRepresentation", () => {
                 ),
                 context: createMockTaskContext(),
                 cliVersion: "0.0.0",
+                workspaceName: undefined,
             });
             if (!workspace.didSucceed) {
                 throw new Error("Failed to load workspace: " + JSON.stringify(workspace.failures, undefined, 4));

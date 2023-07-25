@@ -10,6 +10,7 @@ export async function getIrForApi(absolutePathToWorkspace: AbsoluteFilePath): Pr
         absolutePathToWorkspace,
         context,
         cliVersion: "0.0.0",
+        workspaceName: undefined,
     });
     if (!workspace.didSucceed) {
         return context.failAndThrow("Failed to load workspace", workspace.failures);

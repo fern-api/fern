@@ -118,6 +118,7 @@ async function validateLocalDependencyAndGetDefinition({
         absolutePathToWorkspace: dependency.absoluteFilepath,
         context,
         cliVersion,
+        workspaceName: undefined,
     });
     if (!loadDependencyWorkspaceResult.didSucceed) {
         context.failWithoutThrowing("Failed to load api definition", loadDependencyWorkspaceResult.failures);
@@ -229,6 +230,7 @@ async function validateVersionedDependencyAndGetDefinition({
         absolutePathToWorkspace: pathToDependency,
         context,
         cliVersion: response.body.cliVersion,
+        workspaceName: undefined,
     });
     if (!loadDependencyWorkspaceResult.didSucceed) {
         context.failWithoutThrowing(

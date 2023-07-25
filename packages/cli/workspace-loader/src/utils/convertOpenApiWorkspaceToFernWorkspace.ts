@@ -26,6 +26,7 @@ export async function convertOpenApiWorkspaceToFernWorkspace(
         dependenciesConfiguration: {
             dependencies: {},
         },
+        workspaceName: openapiWorkspace.workspaceName,
         definition: {
             // these files doesn't live on disk, so there's no absolute filepath
             absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
