@@ -2,7 +2,8 @@ import { createOrganizationIfDoesNotExist, getCurrentUser } from "@fern-api/auth
 import { AbsoluteFilePath, cwd, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import {
-    DEFAULT_WORSPACE_FOLDER_NAME,
+    APIS_DIRECTORY,
+    DEFAULT_API_WORSPACE_FOLDER_NAME,
     FERN_DIRECTORY,
     ProjectConfigSchema,
     PROJECT_CONFIG_FILENAME,
@@ -62,7 +63,7 @@ export async function initialize({
         });
     }
 
-    const directoryOfWorkspace = await getDirectoryOfNewWorkspace({ pathToFernDirectory });
+    const directoryOfWorkspace = await getDirectoryOfNewAPIWorkspace({ pathToFernDirectory });
     if (openApiPath != null) {
         await createOpenAPIWorkspace({ directoryOfWorkspace, openAPIFilePath: openApiPath });
     } else {
@@ -87,19 +88,26 @@ async function writeProjectConfig({
     await writeFile(filepath, JSON.stringify(projectConfig, undefined, 4));
 }
 
-async function getDirectoryOfNewWorkspace({ pathToFernDirectory }: { pathToFernDirectory: AbsoluteFilePath }) {
-    let pathToWorkspaceDirectory: AbsoluteFilePath = join(
-        pathToFernDirectory,
-        RelativeFilePath.of(DEFAULT_WORSPACE_FOLDER_NAME)
-    );
+async function getDirectoryOfNewAPIWorkspace({ pathToFernDirectory }: { pathToFernDirectory: AbsoluteFilePath }) {
+    const pathToApisDirectory: AbsoluteFilePath = join(pathToFernDirectory, RelativeFilePath.of(APIS_DIRECTORY));
+    const apisDirectoryExists = await doesPathExist(pathToApisDirectory);
 
-    let attemptCount = 0;
-    while (await doesPathExist(pathToWorkspaceDirectory)) {
-        pathToWorkspaceDirectory = join(
-            pathToFernDirectory,
-            RelativeFilePath.of(`${DEFAULT_WORSPACE_FOLDER_NAME}${++attemptCount}`)
+    if (apisDirectoryExists) {
+        let attemptCount = 0;
+        let apiWorkspaceDirectory = join(
+            pathToApisDirectory,
+            RelativeFilePath.of(`${DEFAULT_API_WORSPACE_FOLDER_NAME}`)
         );
+        while (await doesPathExist(apiWorkspaceDirectory)) {
+            apiWorkspaceDirectory = join(
+                pathToApisDirectory,
+                RelativeFilePath.of(`${DEFAULT_API_WORSPACE_FOLDER_NAME}${++attemptCount}`)
+            );
+        }
+        return apiWorkspaceDirectory;
     }
 
-    return pathToWorkspaceDirectory;
+    return pathToFernDirectory;
+
+    // TODO(dsinghvi): handle the case where you go from single -> multi workspace
 }

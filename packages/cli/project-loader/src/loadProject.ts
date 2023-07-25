@@ -123,7 +123,7 @@ async function loadApis({
         return context.failAndThrow("--api only supported when you have mutliple APIs");
     }
     const workspace = await loadAPIWorkspace({
-        absolutePathToWorkspace: join(fernDirectory, RelativeFilePath.of(fernDirectory)),
+        absolutePathToWorkspace: fernDirectory,
         context,
         cliVersion,
     });

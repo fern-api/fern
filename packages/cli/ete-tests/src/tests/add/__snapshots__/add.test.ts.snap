@@ -7,17 +7,15 @@ exports[`fern add fern add <generator> 1`] = `
       {
         "contents": [
           {
-            "contents": [
-              {
-                "contents": "name: api
+            "contents": "name: api
 error-discrimination:
   strategy: status-code
 ",
-                "name": "api.yml",
-                "type": "file",
-              },
-              {
-                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+            "name": "api.yml",
+            "type": "file",
+          },
+          {
+            "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 service:
   auth: false
@@ -78,15 +76,23 @@ errors:
     status-code: 404
     type: MovieId
 ",
-                "name": "imdb.yml",
-                "type": "file",
-              },
-            ],
-            "name": "definition",
-            "type": "directory",
+            "name": "imdb.yml",
+            "type": "file",
           },
-          {
-            "contents": "default-group: local
+        ],
+        "name": "definition",
+        "type": "directory",
+      },
+      {
+        "contents": "{
+    "organization": "fern",
+    "version": "0.0.0"
+}",
+        "name": "fern.config.json",
+        "type": "file",
+      },
+      {
+        "contents": "default-group: local
 groups:
   local:
     generators:
@@ -105,19 +111,7 @@ groups:
       - name: fernapi/fern-postman
         version: 0.0.25
 ",
-            "name": "generators.yml",
-            "type": "file",
-          },
-        ],
-        "name": "api",
-        "type": "directory",
-      },
-      {
-        "contents": "{
-    "organization": "fern",
-    "version": "0.0.0"
-}",
-        "name": "fern.config.json",
+        "name": "generators.yml",
         "type": "file",
       },
     ],
@@ -134,17 +128,15 @@ exports[`fern add fern add docs 1`] = `
       {
         "contents": [
           {
-            "contents": [
-              {
-                "contents": "name: api
+            "contents": "name: api
 error-discrimination:
   strategy: status-code
 ",
-                "name": "api.yml",
-                "type": "file",
-              },
-              {
-                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+            "name": "api.yml",
+            "type": "file",
+          },
+          {
+            "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 service:
   auth: false
@@ -205,32 +197,23 @@ errors:
     status-code: 404
     type: MovieId
 ",
-                "name": "imdb.yml",
-                "type": "file",
-              },
-            ],
-            "name": "definition",
-            "type": "directory",
+            "name": "imdb.yml",
+            "type": "file",
           },
-          {
-            "contents": [
-              {
-                "contents": "title: fern
-navigation:
-  - api: API Reference
-colors:
-  accentPrimary: '#ffffff'
-logo: ./logo.png
-",
-                "name": "docs.yml",
-                "type": "file",
-              },
-            ],
-            "name": "docs",
-            "type": "directory",
-          },
-          {
-            "contents": "default-group: local
+        ],
+        "name": "definition",
+        "type": "directory",
+      },
+      {
+        "contents": "{
+    "organization": "fern",
+    "version": "0.0.0"
+}",
+        "name": "fern.config.json",
+        "type": "file",
+      },
+      {
+        "contents": "default-group: local
 groups:
   local:
     generators:
@@ -244,24 +227,8 @@ groups:
         output:
           location: local-file-system
           path: ../../generated/openapi
-  docs-group:
-    generators: []
-    docs:
-      domain: fern.dev.docs.buildwithfern.com
 ",
-            "name": "generators.yml",
-            "type": "file",
-          },
-        ],
-        "name": "api",
-        "type": "directory",
-      },
-      {
-        "contents": "{
-    "organization": "fern",
-    "version": "0.0.0"
-}",
-        "name": "fern.config.json",
+        "name": "generators.yml",
         "type": "file",
       },
     ],

@@ -5,9 +5,15 @@ exports[`fern init init openapi 1`] = `
   {
     "contents": [
       {
-        "contents": [
-          {
-            "contents": "default-group: local
+        "contents": "{
+    "organization": "fern",
+    "version": "0.0.0"
+}",
+        "name": "fern.config.json",
+        "type": "file",
+      },
+      {
+        "contents": "default-group: local
 groups:
   local:
     generators:
@@ -22,13 +28,13 @@ groups:
           location: local-file-system
           path: ../../generated/openapi
 ",
-            "name": "generators.yml",
-            "type": "file",
-          },
+        "name": "generators.yml",
+        "type": "file",
+      },
+      {
+        "contents": [
           {
-            "contents": [
-              {
-                "contents": "openapi: "3.0.0"
+            "contents": "openapi: "3.0.0"
 info:
   version: 1.0.0
   title: Swagger Petstore
@@ -142,24 +148,12 @@ components:
         message:
           type: string
 ",
-                "name": "petstore-openapi.yml",
-                "type": "file",
-              },
-            ],
-            "name": "openapi",
-            "type": "directory",
+            "name": "petstore-openapi.yml",
+            "type": "file",
           },
         ],
-        "name": "api",
+        "name": "openapi",
         "type": "directory",
-      },
-      {
-        "contents": "{
-    "organization": "fern",
-    "version": "0.0.0"
-}",
-        "name": "fern.config.json",
-        "type": "file",
       },
     ],
     "name": "fern",
@@ -173,9 +167,15 @@ exports[`fern init init openapi url 1`] = `
   {
     "contents": [
       {
-        "contents": [
-          {
-            "contents": "default-group: local
+        "contents": "{
+    "organization": "fern",
+    "version": "0.0.0"
+}",
+        "name": "fern.config.json",
+        "type": "file",
+      },
+      {
+        "contents": "default-group: local
 groups:
   local:
     generators:
@@ -190,13 +190,13 @@ groups:
           location: local-file-system
           path: ../../generated/openapi
 ",
-            "name": "generators.yml",
-            "type": "file",
-          },
+        "name": "generators.yml",
+        "type": "file",
+      },
+      {
+        "contents": [
           {
-            "contents": [
-              {
-                "contents": "openapi: 3.0.2
+            "contents": "openapi: 3.0.2
 info:
   title: Swagger Petstore - OpenAPI 3.0
   description: >-
@@ -1015,24 +1015,12 @@ components:
       name: api_key
       in: header
 ",
-                "name": "openapi.yml",
-                "type": "file",
-              },
-            ],
-            "name": "openapi",
-            "type": "directory",
+            "name": "openapi.yml",
+            "type": "file",
           },
         ],
-        "name": "api",
+        "name": "openapi",
         "type": "directory",
-      },
-      {
-        "contents": "{
-    "organization": "fern",
-    "version": "0.0.0"
-}",
-        "name": "fern.config.json",
-        "type": "file",
       },
     ],
     "name": "fern",
@@ -1046,17 +1034,15 @@ exports[`fern init no existing fern directory 1`] = `
   {
     "contents": [
       {
-        "contents": [
-          {
-            "contents": "name: api
+        "contents": "name: api
 error-discrimination:
   strategy: status-code
 ",
-            "name": "api.yml",
-            "type": "file",
-          },
-          {
-            "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+        "name": "api.yml",
+        "type": "file",
+      },
+      {
+        "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 service:
   auth: false
@@ -1117,15 +1103,23 @@ errors:
     status-code: 404
     type: MovieId
 ",
-            "name": "imdb.yml",
-            "type": "file",
-          },
-        ],
-        "name": "definition",
-        "type": "directory",
+        "name": "imdb.yml",
+        "type": "file",
       },
-      {
-        "contents": "default-group: local
+    ],
+    "name": "definition",
+    "type": "directory",
+  },
+  {
+    "contents": "{
+    "organization": "fern",
+    "version": "0.0.0"
+}",
+    "name": "fern.config.json",
+    "type": "file",
+  },
+  {
+    "contents": "default-group: local
 groups:
   local:
     generators:
@@ -1140,19 +1134,7 @@ groups:
           location: local-file-system
           path: ../../generated/openapi
 ",
-        "name": "generators.yml",
-        "type": "file",
-      },
-    ],
-    "name": "api",
-    "type": "directory",
-  },
-  {
-    "contents": "{
-    "organization": "fern",
-    "version": "0.0.0"
-}",
-    "name": "fern.config.json",
+    "name": "generators.yml",
     "type": "file",
   },
 ]
