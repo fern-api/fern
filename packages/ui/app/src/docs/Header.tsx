@@ -7,9 +7,8 @@ import { HeaderSecondaryLink } from "./HeaderSecondaryLink";
 
 export const Header: React.FC = () => {
     const { resolveFile, docsDefinition } = useDocsContext();
-    const { logo, logoHref, navbarLinks } = docsDefinition.config;
+    const { logo, logoHeight, logoHref, navbarLinks } = docsDefinition.config;
 
-    const logoHeight = 20 as number | undefined; // TODO: Make dynamic
     const hasLogo = logo != null;
     const hasLogoHref = logoHref != null;
 
