@@ -59,6 +59,8 @@ To run the unit tests: `yarn test`.
 
 To run the integration tests: `yarn test:ete`.
 
+Many of our tests rely on [Jest snapshot testing](https://jestjs.io/docs/snapshot-testing). To rewrite snapshots, use `-u`: `yarn test -u` and `yarn test:ete -u`.
+
 ### CLI
 
 To build the CLI, run either:
