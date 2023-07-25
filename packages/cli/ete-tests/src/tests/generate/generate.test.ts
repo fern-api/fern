@@ -4,7 +4,7 @@ import stripAnsi from "strip-ansi";
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "../init/init";
 
-const FIXTURES = ["docs"];
+const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
 describe("fern generate", () => {
     it("default api (fern init)", async () => {
@@ -17,20 +17,17 @@ describe("fern generate", () => {
         expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of("generated/typescript")))).toBe(true);
     }, 180_000);
 
-    const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
-    for (const fixtureName of FIXTURES) {
-        // eslint-disable-next-line jest/no-disabled-tests
-        it.skip(
-            // eslint-disable-next-line jest/valid-title
-            fixtureName,
-            async () => {
-                await runFernCli(["generate"], {
-                    cwd: join(fixturesDir, RelativeFilePath.of(fixtureName)),
-                });
-            },
-            180_000
-        );
-    }
+    // to prevent overloading algolia, we only
+    // run the docs test on main or tags
+    (isOnMainOrReleaseOnCircle() ? it : it.skip)(
+        "docs",
+        async () => {
+            await runFernCli(["generate"], {
+                cwd: join(fixturesDir, RelativeFilePath.of("docs")),
+            });
+        },
+        180_000
+    );
 
     it("missing docs page", async () => {
         const { stdout } = await runFernCli(["generate"], {
@@ -45,3 +42,8 @@ describe("fern generate", () => {
         ).toMatchSnapshot();
     });
 });
+
+function isOnMainOrReleaseOnCircle(): boolean {
+    const { CIRCLE_BRANCH, CIRCLE_TAG } = process.env;
+    return CIRCLE_BRANCH === "main" || CIRCLE_TAG != null;
+}
