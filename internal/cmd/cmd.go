@@ -2,13 +2,10 @@ package cmd
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"fmt"
-	"net/http"
 	"os"
 	"strings"
-	"time"
 
 	"github.com/fern-api/fern-go"
 	"github.com/fern-api/fern-go/internal/coordinator"
@@ -35,7 +32,8 @@ var (
 	// defaultImports specify the default imports used in the generated
 	// go.mod (if any).
 	defaultImports = map[string]string{
-		"github.com/gofrs/uuid/v5": "v5.0.0",
+		"github.com/gofrs/uuid/v5":    "v5.0.0",
+		"github.com/stretchr/testify": "v1.8.4",
 	}
 
 	// defaultModuleConfig is used whenever an import path or module is not
@@ -138,7 +136,7 @@ func run(fn GeneratorFunc) (retErr error) {
 	if err != nil {
 		return err
 	}
-	if err := writeFiles(config.Writer, config.Module, files); err != nil {
+	if err := writeFiles(coordinator, config.Writer, config.Module, files); err != nil {
 		return err
 	}
 	return nil
@@ -188,11 +186,12 @@ func newConfig(configFilename string) (*Config, error) {
 
 // writeFiles writes the given files according to the configuration.
 func writeFiles(
+	coordinator *coordinator.Client,
 	writerConfig *writer.Config,
 	moduleConfig *generator.ModuleConfig,
 	files []*generator.File,
 ) error {
-	writer, err := writer.New(writerConfig)
+	writer, err := writer.New(coordinator, writerConfig)
 	if err != nil {
 		return err
 	}
@@ -292,41 +291,4 @@ func outputModeFromConfig(c *generatorexec.GeneratorConfig) (writer.OutputMode, 
 	default:
 		return nil, fmt.Errorf("unrecognized output configuration mode: %T", outputConfigMode)
 	}
-}
-
-// sendCoordinatorUpdateLog sends a log to the coordinator so that it's displayed on the console.
-func sendCoordinatorUpdateLog(
-	coordinator generatorexec.Service,
-	taskID generatorexec.TaskId,
-	level generatorexec.LogLevel,
-	message string,
-) error {
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-	defer cancel()
-	return coordinator.SendUpdate(
-		ctx,
-		taskID,
-		[]*generatorexec.GeneratorUpdate{
-			generatorexec.NewGeneratorUpdateFromLog(
-				&generatorexec.LogUpdate{
-					Level:   level,
-					Message: message,
-				},
-			),
-		},
-	)
-}
-
-func newCoordinatorClient(coordinatorURL string) (generatorexec.Service, error) {
-	if coordinatorURL == "" {
-		return &nopCoordinatorClient{}, nil
-	}
-	// TODO: Properly instrument a http.Client.
-	return generatorexec.NewClient(coordinatorURL, http.DefaultClient)
-}
-
-type nopCoordinatorClient struct{}
-
-func (*nopCoordinatorClient) SendUpdate(_ context.Context, _ generatorexec.TaskId, _ []*generatorexec.GeneratorUpdate) error {
-	return nil
 }

@@ -15,6 +15,9 @@ var (
 	//go:embed sdk/core/core.go
 	coreFile string
 
+	//go:embed sdk/core/core_test.go
+	coreTestFile string
+
 	//go:embed sdk/core/pointer.go
 	pointerFile string
 )

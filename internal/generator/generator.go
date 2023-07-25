@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/fern-api/fern-go/internal/coordinator"
+	"github.com/fern-api/fern-go/internal/fern/generatorexec"
 	"github.com/fern-api/fern-go/internal/fern/ir"
 	fernir "github.com/fern-api/fern-go/internal/fern/ir"
 )
@@ -42,6 +43,20 @@ type Generator struct {
 type File struct {
 	Path    string
 	Content []byte
+}
+
+// NewFile returns a new *File with the given content, and send a log to the coordinator.
+func NewFile(coordinator *coordinator.Client, filename string, content []byte) *File {
+	// It's OK if we fail to send an update to the coordinator - we shouldn't fail
+	// generation when we'd otherwise succeed just because a log is missed.
+	_ = coordinator.Log(
+		generatorexec.LogLevelDebug,
+		fmt.Sprintf("Generated %s", filename),
+	)
+	return &File{
+		Path:    filename,
+		Content: content,
+	}
 }
 
 // New returns a new *Generator.
@@ -180,6 +195,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		}
 		files = append(files, file)
 		files = append(files, newCoreFile(g.coordinator))
+		files = append(files, newCoreTestFile(g.coordinator))
 		files = append(files, newPointerFile(g.coordinator, ir.ApiName, generatedNames))
 
 		// Generate the error types, if any.
@@ -422,7 +438,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 // Note that this is a temporary solution - ideally this integration
 // exists outside of the generator and is handled at the layer above.
 func newLicenseFile(coordinator *coordinator.Client) *File {
-	return newFile(
+	return NewFile(
 		coordinator,
 		licenseFilename,
 		[]byte(licenseMIT),
@@ -460,7 +476,7 @@ func newPointerFile(coordinator *coordinator.Client, apiName *ir.Name, generated
 		}
 	}
 	if useCorePackage {
-		return newFile(
+		return NewFile(
 			coordinator,
 			"core/pointer.go",
 			[]byte(pointerFile),
@@ -481,7 +497,7 @@ func newPointerFile(coordinator *coordinator.Client, apiName *ir.Name, generated
 		fmt.Sprintf("package %s", strings.ToLower(apiName.CamelCase.SafeName)),
 		1,
 	)
-	return newFile(
+	return NewFile(
 		coordinator,
 		filename,
 		[]byte(content),
@@ -489,10 +505,18 @@ func newPointerFile(coordinator *coordinator.Client, apiName *ir.Name, generated
 }
 
 func newCoreFile(coordinator *coordinator.Client) *File {
-	return newFile(
+	return NewFile(
 		coordinator,
 		"core/core.go",
 		[]byte(coreFile),
+	)
+}
+
+func newCoreTestFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/core_test.go",
+		[]byte(coreTestFile),
 	)
 }
 

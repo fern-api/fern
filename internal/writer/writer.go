@@ -3,6 +3,7 @@ package writer
 import (
 	"fmt"
 
+	"github.com/fern-api/fern-go/internal/coordinator"
 	"github.com/fern-api/fern-go/internal/generator"
 )
 
@@ -13,10 +14,10 @@ type Writer interface {
 }
 
 // New returns a new Writer.
-func New(config *Config) (Writer, error) {
+func New(coordinator *coordinator.Client, config *Config) (Writer, error) {
 	switch mode := config.Mode.(type) {
 	case *GithubConfig:
-		return newGithubWriter(mode)
+		return newGithubWriter(coordinator, mode)
 	case *LocalConfig:
 		return newLocalWriter(mode)
 	}

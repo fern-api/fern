@@ -81,6 +81,10 @@ func (a *APIError) Error() string {
 	return fmt.Sprintf("%d: %s", a.StatusCode, a.err.Error())
 }
 
+// ErrorDecoder decodes *http.Response errors and returns a
+// typed API error (e.g. *APIError).
+type ErrorDecoder func(statusCode int, body io.Reader) error
+
 // DoRequest issues a JSON request to the given url.
 func DoRequest(
 	ctx context.Context,
@@ -91,7 +95,7 @@ func DoRequest(
 	response any,
 	responseIsOptional bool,
 	endpointHeaders http.Header,
-	errorDecoder func(int, io.Reader) error,
+	errorDecoder ErrorDecoder,
 ) error {
 	var requestBody io.Reader
 	if request != nil {

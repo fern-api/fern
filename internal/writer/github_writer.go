@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/fern-api/fern-go/internal/coordinator"
 	"github.com/fern-api/fern-go/internal/generator"
 )
 
@@ -31,12 +32,14 @@ func NewGithubConfig(path string, repoURL string) (*GithubConfig, error) {
 }
 
 type githubWriter struct {
-	config *GithubConfig
+	coordinator *coordinator.Client
+	config      *GithubConfig
 }
 
-func newGithubWriter(config *GithubConfig) (*githubWriter, error) {
+func newGithubWriter(coordinator *coordinator.Client, config *GithubConfig) (*githubWriter, error) {
 	return &githubWriter{
-		config: config,
+		coordinator: coordinator,
+		config:      config,
 	}, nil
 }
 
@@ -50,7 +53,7 @@ func (g *githubWriter) WriteFiles(files []*generator.File) error {
 	}
 	// If we're writing to a GitHub repository, we want to include a GitHub Actions
 	// workflow that verifies the generated code compiles.
-	files = append(files, newGitHubActionsFile())
+	files = append(files, newGitHubActionsFile(g.coordinator))
 	if err := os.MkdirAll(g.config.Path, 0755); err != nil {
 		return err
 	}
@@ -67,9 +70,10 @@ func (g *githubWriter) WriteFiles(files []*generator.File) error {
 }
 
 // newCIWorkflowFile returns a new Github Actions
-func newGitHubActionsFile() *generator.File {
-	return &generator.File{
-		Path:    githubActionsFilename,
-		Content: []byte(githubActionsFile),
-	}
+func newGitHubActionsFile(coordinator *coordinator.Client) *generator.File {
+	return generator.NewFile(
+		coordinator,
+		githubActionsFilename,
+		[]byte(githubActionsFile),
+	)
 }

@@ -11,7 +11,6 @@ import (
 	"strings"
 
 	"github.com/fern-api/fern-go/internal/coordinator"
-	"github.com/fern-api/fern-go/internal/fern/generatorexec"
 	"github.com/fern-api/fern-go/internal/fern/ir"
 	"golang.org/x/tools/go/ast/astutil"
 )
@@ -105,13 +104,13 @@ func (f *fileWriter) File() (*File, error) {
 		return nil, err
 	}
 
-	return newFile(f.coordinator, f.filename, formatted), nil
+	return NewFile(f.coordinator, f.filename, formatted), nil
 }
 
 // DocsFile acts like File, but is tailored to write docs.go files.
 func (f *fileWriter) DocsFile() *File {
 	f.P("package ", f.packageName)
-	return newFile(f.coordinator, f.filename, append([]byte(fileHeader), f.buffer.Bytes()...))
+	return NewFile(f.coordinator, f.filename, append([]byte(fileHeader), f.buffer.Bytes()...))
 }
 
 // WriteDocs is a convenience function to writes the given documentation, if any.
@@ -135,20 +134,6 @@ func (f *fileWriter) SetFilename(filename string) {
 // SetPackage overwrites the file writer's configured package name.
 func (f *fileWriter) SetPackage(packageName string) {
 	f.packageName = packageName
-}
-
-// newFile returns a new *File with the given content, and send a log to the coordinator.
-func newFile(coordinator *coordinator.Client, filename string, content []byte) *File {
-	// It's OK if we fail to send an update to the coordinator - we shouldn't fail
-	// generation when we'd otherwise succeed just because a log is missed.
-	_ = coordinator.Log(
-		generatorexec.LogLevelDebug,
-		fmt.Sprintf("Generated %s", filename),
-	)
-	return &File{
-		Path:    filename,
-		Content: content,
-	}
 }
 
 // removeUnusedImports parses the buffer, interpreting it as Go code,
