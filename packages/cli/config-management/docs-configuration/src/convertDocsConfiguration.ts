@@ -37,6 +37,7 @@ export async function convertDocsConfiguration({
                           absolutePathOfConfiguration,
                           context,
                       }),
+                      height: typeof logo === "object" ? logo.height : undefined,
                       href: typeof logo === "object" ? FernRegistry.docs.v1.write.Url(logo.href) : undefined,
                   }
                 : undefined,
