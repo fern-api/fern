@@ -3,6 +3,7 @@ import { useCallback } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useSearchContext } from "../search-context/useSearchContext";
 import { useSearchService } from "../services/useSearchService";
+import { isUnversionedNavigationConfig } from "../util/docs";
 import { BuiltWithFern } from "./BuiltWithFern";
 import { SidebarContext, SidebarContextValue } from "./context/SidebarContext";
 import styles from "./Sidebar.module.scss";
@@ -21,6 +22,11 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ expandAllSections = false }) 
     const searchService = useSearchService();
 
     const contextValue = useCallback((): SidebarContextValue => ({ expandAllSections }), [expandAllSections]);
+
+    if (!isUnversionedNavigationConfig(docsDefinition.config.navigation)) {
+        // TODO: Implement
+        return null;
+    }
 
     return (
         <SidebarContext.Provider value={contextValue}>
