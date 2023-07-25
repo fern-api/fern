@@ -5,14 +5,20 @@ import { GeneratorsConfiguration } from "@fern-api/generators-configuration";
 import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/yaml-schema";
 import { ParsedFernFile } from "./FernFile";
 
-export type Workspace = FernWorkspace | OpenAPIWorkspace;
+export interface DocsWorkspace {
+    type: "docs";
+    name: string | undefined;
+    absoluteFilepath: AbsoluteFilePath;
+    docsDefinition: DocsDefinition;
+}
+
+export type APIWorkspace = FernWorkspace | OpenAPIWorkspace;
 
 export interface OpenAPIWorkspace {
     type: "openapi";
     name: string;
     absoluteFilepath: AbsoluteFilePath;
     generatorsConfiguration: GeneratorsConfiguration;
-    docsDefinition: DocsDefinition | undefined;
     definition: OpenAPIDefinition;
 }
 
@@ -36,7 +42,6 @@ export interface FernWorkspace {
     generatorsConfiguration: GeneratorsConfiguration;
     dependenciesConfiguration: DependenciesConfiguration;
     definition: FernDefinition;
-    docsDefinition: DocsDefinition | undefined;
 }
 
 export interface FernDefinition {
