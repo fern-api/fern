@@ -24,7 +24,7 @@ export const Docs: React.FC = () => {
             style={{ backgroundImage: `url('${nebulaImage.src}')` }}
         >
             {searchService.isAvailable && <SearchDialog isOpen={isSearchDialogOpen} onClose={closeSearchDialog} />}
-            <div className="border-border bg-background sticky inset-x-0 top-0 border-b">
+            <div className="border-border bg-background sticky inset-x-0 top-0 z-20 border-b">
                 <Header />
                 <div className="flex md:hidden">
                     <MobileSidebar />
