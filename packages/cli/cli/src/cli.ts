@@ -21,6 +21,7 @@ import { formatWorkspaces } from "./commands/format/formatWorkspaces";
 import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
+import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
 import { upgrade } from "./commands/upgrade/upgrade";
@@ -289,16 +290,13 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     useLocalDocker: argv.local,
                 });
             } else if (argv.docs != null) {
-                if (argv.group) {
+                if (argv.group != null) {
                     cliContext.logger.warn("--group is ignored when generating docs");
                 }
-                if (argv.local) {
-                    cliContext.logger.warn("--local is ignored when generating docs");
-                }
-                if (argv.version) {
+                if (argv.version != null) {
                     cliContext.logger.warn("--version is ignored when generating docs");
                 }
-                await generateAPIWorkspaces({
+                await generateDocsWorkspace({
                     project: await loadProjectAndRegisterWorkspacesWithContext(
                         cliContext,
                         {
@@ -308,11 +306,6 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                         true
                     ),
                     cliContext,
-                    version: argv.version,
-                    groupName: argv.group,
-                    shouldLogS3Url: argv.printZipUrl,
-                    keepDocker: argv.keepDocker,
-                    useLocalDocker: argv.local,
                 });
             }
         }

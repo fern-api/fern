@@ -34,4 +34,9 @@ export async function runRemoteGenerationForDocsWorkspace({
             })
         );
     }
+
+    const results = await Promise.all(interactiveTasks);
+    if (results.some((didSucceed) => !didSucceed)) {
+        context.failAndThrow();
+    }
 }

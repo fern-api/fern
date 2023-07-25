@@ -3263,19 +3263,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/manage-docs-configuration@workspace:packages/cli/config-management/manage-docs-configuration"
   dependencies:
-    "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/generators-configuration": "workspace:*"
-    "@fern-api/project-configuration": "workspace:*"
-    "@fern-api/task-context": "workspace:*"
-    "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/docs-config": 0.0.23
     "@types/jest": ^29.0.3
-    "@types/js-yaml": ^4.0.5
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
     eslint: ^8.26.0
     jest: ^29.4.0
-    js-yaml: ^4.1.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4

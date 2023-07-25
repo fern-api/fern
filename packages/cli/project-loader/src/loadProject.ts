@@ -1,11 +1,5 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import {
-    APIS_DIRECTORY,
-    DOCS_CONFIGURATION_FILENAME,
-    FERN_DIRECTORY,
-    getFernDirectory,
-    loadProjectConfig,
-} from "@fern-api/project-configuration";
+import { APIS_DIRECTORY, FERN_DIRECTORY, getFernDirectory, loadProjectConfig } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { APIWorkspace, DocsWorkspace, loadAPIWorkspace, loadDocsDefinition } from "@fern-api/workspace-loader";
 import chalk from "chalk";
@@ -62,15 +56,14 @@ async function loadDocs({
     fernDirectory: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<DocsWorkspace | undefined> {
-    const docsConfigurationFile = join(fernDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME));
     const docsDefinition = await loadDocsDefinition({
-        absolutePathToDocsDefinition: docsConfigurationFile,
+        absolutePathToDocsDefinition: fernDirectory,
         context,
     });
     if (docsDefinition != null) {
         return {
             type: "docs",
-            absoluteFilepath: docsConfigurationFile,
+            absoluteFilepath: fernDirectory,
             docsDefinition,
         };
     }

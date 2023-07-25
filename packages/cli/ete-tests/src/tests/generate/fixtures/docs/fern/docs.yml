@@ -12,7 +12,7 @@ navigation:
     contents:
       - page: Foo
         path: foo.md
-  - api: API Reference
+  - title: API Reference
 
 colors:
   accentPrimary: "#ffffFF"
