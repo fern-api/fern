@@ -594,7 +594,6 @@ async function loadProjectAndRegisterWorkspacesWithContext(
     });
     context.finish();
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (registerDocsWorkspace && project.docsWorkspaces != null) {
         cliContext.registerWorkspaces([...project.apiWorkspaces, project.docsWorkspaces]);
     } else {

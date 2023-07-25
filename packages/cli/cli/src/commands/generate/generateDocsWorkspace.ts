@@ -13,7 +13,6 @@ export async function generateDocsWorkspace({
     cliContext: CliContext;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (docsWorkspace == null) {
         return;
     }
