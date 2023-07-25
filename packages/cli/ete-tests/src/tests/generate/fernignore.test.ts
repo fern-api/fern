@@ -1,4 +1,3 @@
-/* eslint-disable jest/expect-expect */
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FERNIGNORE_FILENAME } from "@fern-api/project-configuration";
 import { writeFile } from "fs/promises";
@@ -22,6 +21,7 @@ Practice schema-first API design with Fern
 `;
 
 describe("fern generate --local", () => {
+    // eslint-disable-next-line jest/expect-expect
     it("Keep files listed in .fernignore from unmodified", async () => {
         const pathOfDirectory = await init();
         await runFernCli(["generate", "--local", "--keepDocker"], {
