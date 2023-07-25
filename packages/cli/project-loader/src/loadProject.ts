@@ -67,7 +67,7 @@ async function loadApis({
     const apisDirectory = join(fernDirectory, RelativeFilePath.of(APIS_DIRECTORY));
     const apisDirectoryExists = await doesPathExist(apisDirectory);
     if (apisDirectoryExists) {
-        const apiDirectoryContents = await readdir(fernDirectory, { withFileTypes: true });
+        const apiDirectoryContents = await readdir(apisDirectory, { withFileTypes: true });
 
         const apiWorkspaceDirectoryNames = apiDirectoryContents.reduce<string[]>((all, item) => {
             if (item.isDirectory()) {
@@ -103,7 +103,7 @@ async function loadApis({
         await Promise.all(
             apiWorkspaceDirectoryNames.map(async (workspaceDirectoryName) => {
                 const workspace = await loadAPIWorkspace({
-                    absolutePathToWorkspace: join(fernDirectory, RelativeFilePath.of(workspaceDirectoryName)),
+                    absolutePathToWorkspace: join(apisDirectory, RelativeFilePath.of(workspaceDirectoryName)),
                     context,
                     cliVersion,
                 });
