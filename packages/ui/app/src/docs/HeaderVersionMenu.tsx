@@ -2,6 +2,7 @@ import { Menu, Transition } from "@headlessui/react";
 import classNames from "classnames";
 import { Fragment } from "react";
 import { CheckIcon } from "../commons/icons/CheckIcon";
+import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 
 export declare namespace HeaderVersionMenu {
     export interface Props {
@@ -17,8 +18,19 @@ export const HeaderVersionMenu: React.FC<HeaderVersionMenu.Props> = ({ versions,
         <div className="flex w-32">
             <Menu as="div" className="relative inline-block text-left">
                 <div className="my-auto">
-                    <Menu.Button className="border-border bg-gray-dark/50 hover:bg-gray-dark text-text-muted hover:text-text-default inline-flex w-full justify-center rounded-full border px-3 py-1.5 text-xs">
-                        {selectedVersion}
+                    <Menu.Button className="border-border bg-gray-dark/50 hover:bg-gray-dark text-text-muted hover:text-text-default group inline-flex w-full justify-center space-x-1.5 rounded-full border py-1.5 pl-3 pr-1.5 text-xs">
+                        {({ open }) => {
+                            return (
+                                <>
+                                    <span className="transition-colors">{selectedVersion}</span>
+                                    <ChevronDownIcon
+                                        className={classNames("h-4 w-4 transition", {
+                                            "rotate-180": open,
+                                        })}
+                                    />
+                                </>
+                            );
+                        }}
                     </Menu.Button>
                 </div>
                 <Transition
