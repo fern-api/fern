@@ -10,6 +10,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/fern-api/fern-go/internal/coordinator"
+	"github.com/fern-api/fern-go/internal/fern/generatorexec"
 	"github.com/fern-api/fern-go/internal/fern/ir"
 	"golang.org/x/tools/go/ast/astutil"
 )
@@ -28,6 +30,8 @@ type fileWriter struct {
 	types          map[ir.TypeId]*ir.TypeDeclaration
 	errors         map[ir.ErrorId]*ir.ErrorDeclaration
 	buffer         *bytes.Buffer
+
+	coordinator *coordinator.Client
 }
 
 func newFileWriter(
@@ -36,6 +40,7 @@ func newFileWriter(
 	baseImportPath string,
 	types map[ir.TypeId]*ir.TypeDeclaration,
 	errors map[ir.ErrorId]*ir.ErrorDeclaration,
+	coordinator *coordinator.Client,
 ) *fileWriter {
 	// The default set of imports used in the generated output.
 	// These imports are removed from the generated output if
@@ -71,6 +76,7 @@ func newFileWriter(
 		types:          types,
 		errors:         errors,
 		buffer:         new(bytes.Buffer),
+		coordinator:    coordinator,
 	}
 }
 
@@ -85,7 +91,7 @@ func (f *fileWriter) P(elements ...any) {
 // File formats and writes the content stored in the writer's buffer into a *File.
 func (f *fileWriter) File() (*File, error) {
 	// Start with the package declaration and import statements.
-	header := newFileWriter(f.filename, f.packageName, f.baseImportPath, f.types, f.errors)
+	header := newFileWriter(f.filename, f.packageName, f.baseImportPath, f.types, f.errors, f.coordinator)
 	header.P(fileHeader)
 	header.P("package ", f.packageName)
 	header.P("import (")
@@ -98,18 +104,27 @@ func (f *fileWriter) File() (*File, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &File{
-		Path:    f.filename,
-		Content: formatted,
-	}, nil
+
+	return f.file(formatted), nil
 }
 
 // DocsFile acts like File, but is tailored to write docs.go files.
 func (f *fileWriter) DocsFile() *File {
 	f.P("package ", f.packageName)
+	return f.file(append([]byte(fileHeader), f.buffer.Bytes()...))
+}
+
+// file returns a new *File with the given content, and send a log to the coordinator.
+func (f *fileWriter) file(content []byte) *File {
+	// It's OK if we fail to send an update to the coordinator - we shouldn't fail
+	// generation when we'd otherwise succeed just because a log is missed.
+	_ = f.coordinator.Log(
+		generatorexec.LogLevelInfo,
+		fmt.Sprintf("Generated %s", f.filename),
+	)
 	return &File{
 		Path:    f.filename,
-		Content: append([]byte(fileHeader), f.buffer.Bytes()...),
+		Content: content,
 	}
 }
 

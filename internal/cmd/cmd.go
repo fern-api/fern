@@ -11,10 +11,12 @@ import (
 	"time"
 
 	"github.com/fern-api/fern-go"
+	"github.com/fern-api/fern-go/internal/coordinator"
 	"github.com/fern-api/fern-go/internal/fern/generatorexec"
 	"github.com/fern-api/fern-go/internal/generator"
 	"github.com/fern-api/fern-go/internal/goexec"
 	"github.com/fern-api/fern-go/internal/writer"
+	"go.uber.org/multierr"
 )
 
 const (
@@ -59,7 +61,7 @@ type Config struct {
 }
 
 // GeneratorFunc is a function that generates files.
-type GeneratorFunc func(*Config) ([]*generator.File, error)
+type GeneratorFunc func(*Config, *coordinator.Client) ([]*generator.File, error)
 
 // Run runs the given command that produces generated files.
 func Run(usage string, fn GeneratorFunc) {
@@ -86,22 +88,8 @@ func run(fn GeneratorFunc) (retErr error) {
 	if err != nil {
 		return err
 	}
-	coordinator, err := newCoordinatorClient(config.CoordinatorURL)
-	if err != nil {
-		return err
-	}
-	// Setup a new request context for the initial update.
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-	defer cancel()
-	if err := coordinator.SendUpdate(
-		ctx,
-		config.CoordinatorTaskID,
-		[]*generatorexec.GeneratorUpdate{
-			generatorexec.NewGeneratorUpdateFromInitV2(
-				&generatorexec.InitUpdateV2{},
-			),
-		},
-	); err != nil {
+	coordinator := coordinator.NewClient(config.CoordinatorURL, config.CoordinatorTaskID)
+	if err := coordinator.Init(); err != nil {
 		return err
 	}
 	// If the Module configuration is specified, use the module's path as the import path.
@@ -120,9 +108,7 @@ func run(fn GeneratorFunc) (retErr error) {
 	if config.ImportPath == "" {
 		// If neither an import path nor a module path are specified, use the default behavior so
 		// that we can still successfully generate a result.
-		if err := sendCoordinatorUpdateLog(
-			coordinator,
-			config.CoordinatorTaskID,
+		if err := coordinator.Log(
 			generatorexec.LogLevelWarn,
 			fmt.Sprintf("Neither an import path nor a module path was specified; please see %s for details.", localFileGenerationDocsLink),
 		); err != nil {
@@ -137,10 +123,6 @@ func run(fn GeneratorFunc) (retErr error) {
 		config.ImportPath = config.Module.Path
 	}
 	defer func() {
-		// Now that we've successfully sent the update, wrap the exit update in a function
-		// the call-site can execute as soon as we're done.
-		ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-		defer cancel()
 		exitStatusUpdate := generatorexec.NewExitStatusUpdateFromSuccessful(new(generatorexec.SuccessfulStatusUpdate))
 		if retErr != nil {
 			// The generator returned an error, so we send an error update to the coordinator.
@@ -150,19 +132,9 @@ func run(fn GeneratorFunc) (retErr error) {
 				},
 			)
 		}
-		// TODO: Combine this error so that the original error is preserved on the console.
-		err := coordinator.SendUpdate(
-			ctx,
-			config.CoordinatorTaskID,
-			[]*generatorexec.GeneratorUpdate{
-				generatorexec.NewGeneratorUpdateFromExitStatusUpdate(exitStatusUpdate),
-			},
-		)
-		if retErr == nil {
-			retErr = err
-		}
+		retErr = multierr.Append(retErr, coordinator.Exit(exitStatusUpdate))
 	}()
-	files, err := fn(config)
+	files, err := fn(config, coordinator)
 	if err != nil {
 		return err
 	}

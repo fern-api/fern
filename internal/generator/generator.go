@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/fern-api/fern-go/internal/coordinator"
 	"github.com/fern-api/fern-go/internal/fern/ir"
 	fernir "github.com/fern-api/fern-go/internal/fern/ir"
 )
@@ -33,7 +34,8 @@ const (
 
 // Generator represents the Go code generator.
 type Generator struct {
-	config *Config
+	config      *Config
+	coordinator *coordinator.Client
 }
 
 // File is a generated file.
@@ -43,9 +45,10 @@ type File struct {
 }
 
 // New returns a new *Generator.
-func New(config *Config) (*Generator, error) {
+func New(config *Config, coordinator *coordinator.Client) (*Generator, error) {
 	return &Generator{
-		config: config,
+		config:      config,
+		coordinator: coordinator,
 	}, nil
 }
 
@@ -83,7 +86,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	// First write all of the package-level documentation, if any (i.e. in a doc.go file).
 	if ir.RootPackage != nil && ir.RootPackage.Docs != nil && len(*ir.RootPackage.Docs) > 0 {
 		fileInfo := fileInfoForPackage(ir.ApiName, ir.RootPackage.FernFilepath)
-		writer := newFileWriter(fileInfo.filename, fileInfo.packageName, "", nil, nil)
+		writer := newFileWriter(fileInfo.filename, fileInfo.packageName, "", nil, nil, g.coordinator)
 		writer.WriteDocs(ir.RootPackage.Docs)
 		files = append(files, writer.DocsFile())
 	}
@@ -92,7 +95,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			continue
 		}
 		fileInfo := fileInfoForPackage(ir.ApiName, subpackage.FernFilepath)
-		writer := newFileWriter(fileInfo.filename, fileInfo.packageName, "", nil, nil)
+		writer := newFileWriter(fileInfo.filename, fileInfo.packageName, "", nil, nil, g.coordinator)
 		writer.WriteDocs(subpackage.Docs)
 		files = append(files, writer.DocsFile())
 	}
@@ -104,6 +107,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ImportPath,
 			ir.Types,
 			ir.Errors,
+			g.coordinator,
 		)
 		if err := writer.WriteType(irType); err != nil {
 			return nil, err
@@ -124,6 +128,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ImportPath,
 			ir.Types,
 			ir.Errors,
+			g.coordinator,
 		)
 		if err := writer.WriteClientOptionsDefinition(ir.Auth, ir.Headers); err != nil {
 			return nil, err
@@ -142,6 +147,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ImportPath,
 				ir.Types,
 				ir.Errors,
+				g.coordinator,
 			)
 			if err := writer.WriteEnvironments(ir.Environments); err != nil {
 				return nil, err
@@ -160,6 +166,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ImportPath,
 			ir.Types,
 			ir.Errors,
+			g.coordinator,
 		)
 		if generatedInCore := writer.WriteClientOptions(ir.Auth, ir.Headers, generatedNames); generatedInCore {
 			// Rewrite the client options file destination.
@@ -184,6 +191,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ImportPath,
 				ir.Types,
 				ir.Errors,
+				g.coordinator,
 			)
 			if err := writer.WriteError(irError); err != nil {
 				return nil, err
@@ -295,6 +303,7 @@ func (g *Generator) generateService(
 			g.config.ImportPath,
 			ir.Types,
 			ir.Errors,
+			g.coordinator,
 		)
 		if err := writer.WriteRequestType(irService.Name.FernFilepath, irEndpoint); err != nil {
 			return nil, err
@@ -318,6 +327,7 @@ func (g *Generator) generateService(
 		g.config.ImportPath,
 		ir.Types,
 		ir.Errors,
+		g.coordinator,
 	)
 	if err := writer.WriteClient(
 		irService.Endpoints,
@@ -358,6 +368,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		g.config.ImportPath,
 		ir.Types,
 		ir.Errors,
+		g.coordinator,
 	)
 	if err := writer.WriteClient(
 		nil,
@@ -389,6 +400,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		g.config.ImportPath,
 		ir.Types,
 		ir.Errors,
+		g.coordinator,
 	)
 	if err := writer.WriteClient(
 		nil,

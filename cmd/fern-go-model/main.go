@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/fern-api/fern-go/internal/cmd"
+	"github.com/fern-api/fern-go/internal/coordinator"
 	"github.com/fern-api/fern-go/internal/generator"
 )
 
@@ -18,7 +19,7 @@ func main() {
 	cmd.Run(usage, run)
 }
 
-func run(config *cmd.Config) ([]*generator.File, error) {
+func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File, error) {
 	generatorConfig, err := generator.NewConfig(
 		config.DryRun,
 		config.EnableClientSubpackages,
@@ -29,7 +30,7 @@ func run(config *cmd.Config) ([]*generator.File, error) {
 	if err != nil {
 		return nil, err
 	}
-	g, err := generator.New(generatorConfig)
+	g, err := generator.New(generatorConfig, coordinator)
 	if err != nil {
 		return nil, err
 	}
