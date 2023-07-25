@@ -179,8 +179,8 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			return nil, err
 		}
 		files = append(files, file)
-		files = append(files, newCoreFile())
-		files = append(files, newPointerFile(ir.ApiName, generatedNames))
+		files = append(files, newCoreFile(g.coordinator))
+		files = append(files, newPointerFile(g.coordinator, ir.ApiName, generatedNames))
 
 		// Generate the error types, if any.
 		for _, irError := range ir.Errors {
@@ -279,7 +279,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		//
 		// Note that the license file is required to support
 		// Go's package docs (re: https://pkg.go.dev/license-policy).
-		files = append(files, newLicenseFile())
+		files = append(files, newLicenseFile(g.coordinator))
 	}
 	return files, nil
 }
@@ -421,11 +421,12 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 //
 // Note that this is a temporary solution - ideally this integration
 // exists outside of the generator and is handled at the layer above.
-func newLicenseFile() *File {
-	return &File{
-		Path:    licenseFilename,
-		Content: []byte(licenseMIT),
-	}
+func newLicenseFile(coordinator *coordinator.Client) *File {
+	return newFile(
+		coordinator,
+		licenseFilename,
+		[]byte(licenseMIT),
+	)
 }
 
 // readIR reads the *InermediateRepresentation from the given filename.
@@ -448,7 +449,7 @@ func readIR(irFilename string) (*ir.IntermediateRepresentation, error) {
 // access the helpers alongside the rest of the top-level definitions. However,
 // if any naming conflict exists between the generated types, this file is
 // deposited in the core package.
-func newPointerFile(apiName *ir.Name, generatedNames map[string]struct{}) *File {
+func newPointerFile(coordinator *coordinator.Client, apiName *ir.Name, generatedNames map[string]struct{}) *File {
 	// First determine whether or not we need to generate the type in the
 	// core package.
 	var useCorePackage bool
@@ -459,10 +460,11 @@ func newPointerFile(apiName *ir.Name, generatedNames map[string]struct{}) *File 
 		}
 	}
 	if useCorePackage {
-		return &File{
-			Path:    "core/pointer.go",
-			Content: []byte(pointerFile),
-		}
+		return newFile(
+			coordinator,
+			"core/pointer.go",
+			[]byte(pointerFile),
+		)
 	}
 	// We're going to generate the pointers at the root of the repository,
 	// so now we need to determine whether or not we can use the standard
@@ -479,17 +481,19 @@ func newPointerFile(apiName *ir.Name, generatedNames map[string]struct{}) *File 
 		fmt.Sprintf("package %s", strings.ToLower(apiName.CamelCase.SafeName)),
 		1,
 	)
-	return &File{
-		Path:    filename,
-		Content: []byte(content),
-	}
+	return newFile(
+		coordinator,
+		filename,
+		[]byte(content),
+	)
 }
 
-func newCoreFile() *File {
-	return &File{
-		Path:    "core/core.go",
-		Content: []byte(coreFile),
-	}
+func newCoreFile(coordinator *coordinator.Client) *File {
+	return newFile(
+		coordinator,
+		"core/core.go",
+		[]byte(coreFile),
+	)
 }
 
 type fileInfo struct {
