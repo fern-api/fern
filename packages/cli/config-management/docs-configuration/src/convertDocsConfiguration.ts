@@ -21,8 +21,9 @@ export async function convertDocsConfiguration({
     absolutePathOfConfiguration: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<DocsConfiguration> {
-    const { navigation, colors, favicon, logo, navbarLinks, title, typography } = rawDocsConfiguration;
+    const { instances, navigation, colors, favicon, logo, navbarLinks, title, typography } = rawDocsConfiguration;
     return {
+        instances,
         navigation: await convertNavigationConfiguration({
             rawConfig: navigation,
             absolutePathOfConfiguration,
@@ -163,7 +164,8 @@ async function convertNavigationItem({
     if (isRawApiSectionConfig(rawConfig)) {
         return {
             type: "apiSection",
-            title: rawConfig.api,
+            title: rawConfig.title,
+            apiName: rawConfig.api ?? undefined,
             audiences:
                 rawConfig.audiences != null ? { type: "select", audiences: rawConfig.audiences } : { type: "all" },
         };

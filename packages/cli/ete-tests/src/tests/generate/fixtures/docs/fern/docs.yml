@@ -1,3 +1,6 @@
+instances:
+  - url: ferndevtest.docs.dev.buildwithfern.com
+
 logo: ./fern.png
 
 navbar-links: []

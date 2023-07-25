@@ -1,3 +1,4 @@
+instances: []
 navigation:
   - page: Missing
     path: missing.md

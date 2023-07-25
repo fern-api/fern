@@ -4,5 +4,5 @@ import { APIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 export interface Project {
     config: ProjectConfig;
     apiWorkspaces: APIWorkspace[];
-    docsWorkspaces: DocsWorkspace[];
+    docsWorkspaces: DocsWorkspace | undefined;
 }

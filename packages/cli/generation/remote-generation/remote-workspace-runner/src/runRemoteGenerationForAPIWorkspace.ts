@@ -4,7 +4,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator";
 
-export async function runRemoteGenerationForWorkspace({
+export async function runRemoteGenerationForAPIWorkspace({
     organization,
     workspace,
     context,
@@ -21,34 +21,12 @@ export async function runRemoteGenerationForWorkspace({
     shouldLogS3Url: boolean;
     token: FernToken;
 }): Promise<void> {
-    if (generatorGroup.docs == null && generatorGroup.generators.length === 0) {
+    if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
         return;
     }
 
     const interactiveTasks: Promise<boolean>[] = [];
-
-    if (generatorGroup.docs != null) {
-        interactiveTasks.push(
-            context.runInteractiveTask({ name: "Publish docs" }, async () => {
-                // if (workspace.docsDefinition == null) {
-                //     interactiveTaskContext.failAndThrow("Docs are not configured.");
-                //     return;
-                // }
-                // await publishDocs({
-                //     docsDefinition: workspace.docsDefinition,
-                //     customDomains: generatorDocsConfig.customDomains,
-                //     domain: generatorDocsConfig.domain,
-                //     token,
-                //     organization,
-                //     context,
-                //     workspace,
-                //     generatorGroup,
-                //     version,
-                // });
-            })
-        );
-    }
 
     interactiveTasks.push(
         ...generatorGroup.generators.map((generatorInvocation) =>

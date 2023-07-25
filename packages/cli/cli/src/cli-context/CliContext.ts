@@ -2,7 +2,7 @@ import { createLogger, LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { getPosthogManager } from "@fern-api/posthog-manager";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { FernCliError, Finishable, PosthogEvent, Startable, TaskContext, TaskResult } from "@fern-api/task-context";
-import { APIWorkspace } from "@fern-api/workspace-loader";
+import { Workspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
 import { CliEnvironment } from "./CliEnvironment";
@@ -133,9 +133,9 @@ export class CliContext {
     }
 
     private longestWorkspaceName: string | undefined;
-    public registerWorkspaces(workspaces: readonly APIWorkspace[]): void {
+    public registerWorkspaces(workspaces: readonly Workspace[]): void {
         const longestWorkspaceName = maxBy(
-            workspaces.map((workspace) => workspace.name),
+            workspaces.map((workspace) => (workspace.type === "docs" ? "docs" : workspace.name)),
             (name) => name.length
         );
         if (longestWorkspaceName != null) {
@@ -152,7 +152,7 @@ export class CliContext {
     }
 
     public async runTaskForWorkspace(
-        workspace: APIWorkspace,
+        workspace: Workspace,
         run: (context: TaskContext) => void | Promise<void>
     ): Promise<void> {
         await this.runTaskWithInit(this.constructTaskInitForWorkspace(workspace), run);
@@ -191,8 +191,8 @@ export class CliContext {
 
     public readonly logger = createLogger(this.log.bind(this));
 
-    private constructTaskInitForWorkspace(workspace: APIWorkspace): TaskContextImpl.Init {
-        const prefixWithoutPadding = wrapWorkspaceNameForPrefix(workspace.name);
+    private constructTaskInitForWorkspace(workspace: Workspace): TaskContextImpl.Init {
+        const prefixWithoutPadding = wrapWorkspaceNameForPrefix(workspace.type === "docs" ? "docs" : workspace.name);
 
         // we want all the prefixes to be the same length, so use this.longestWorkspaceName
         // if it's defined. (+1 so there's a space after the prefix)

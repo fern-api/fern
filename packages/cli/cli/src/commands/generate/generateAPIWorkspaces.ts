@@ -3,9 +3,9 @@ import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext";
-import { generateWorkspace } from "./generateWorkspace";
+import { generateWorkspace } from "./generateAPIWorkspace";
 
-export async function generateWorkspaces({
+export async function generateAPIWorkspaces({
     project,
     cliContext,
     version,

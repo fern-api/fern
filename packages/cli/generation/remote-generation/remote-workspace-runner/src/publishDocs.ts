@@ -1,9 +1,7 @@
 import { FernToken } from "@fern-api/auth";
-import { combineAudiences } from "@fern-api/config-management-commons";
 import { assertNever, entries } from "@fern-api/core-utils";
 import { DocsNavigationItem, FontConfig, ImageReference, TypographyConfig } from "@fern-api/docs-configuration";
 import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
-import { GeneratorGroup } from "@fern-api/generators-configuration";
 import { registerApi } from "@fern-api/register";
 import { createFdrService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
@@ -19,9 +17,8 @@ export async function publishDocs({
     docsDefinition,
     domain,
     customDomains,
-    workspace,
+    fernWorkspaces,
     context,
-    generatorGroup,
     version,
 }: {
     token: FernToken;
@@ -29,9 +26,8 @@ export async function publishDocs({
     docsDefinition: DocsDefinition;
     domain: string;
     customDomains: string[];
-    workspace: FernWorkspace;
+    fernWorkspaces: FernWorkspace[];
     context: TaskContext;
-    generatorGroup: GeneratorGroup;
     version: string | undefined;
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
@@ -41,7 +37,7 @@ export async function publishDocs({
     const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsRegister({
         domain,
         customDomains,
-        apiId: FernRegistry.ApiId(workspace.definition.rootApiFile.contents.name),
+        apiId: FernRegistry.ApiId(""),
         orgId: FernRegistry.OrgId(organization),
         filepaths: filepathsToUpload.map((filepath) => convertAbsoluteFilepathToFdrFilepath(filepath, docsDefinition)),
     });
@@ -84,10 +80,9 @@ export async function publishDocs({
     const registerDocsRequest = await constructRegisterDocsRequest({
         docsDefinition,
         organization,
-        workspace,
+        fernWorkspaces,
         context,
         token,
-        generatorGroup,
         uploadUrls,
         version,
     });
@@ -121,19 +116,17 @@ export async function publishDocs({
 async function constructRegisterDocsRequest({
     docsDefinition,
     organization,
-    workspace,
+    fernWorkspaces,
     context,
     token,
-    generatorGroup,
     uploadUrls,
     version,
 }: {
     docsDefinition: DocsDefinition;
     organization: string;
-    workspace: FernWorkspace;
+    fernWorkspaces: FernWorkspace[];
     context: TaskContext;
     token: FernToken;
-    generatorGroup: GeneratorGroup;
     uploadUrls: Record<FernRegistry.docs.v1.write.FilePath, FernRegistry.docs.v1.write.FileS3UploadUrl>;
     version: string | undefined;
 }): Promise<FernRegistry.docs.v2.write.RegisterDocsRequest> {
@@ -149,10 +142,9 @@ async function constructRegisterDocsRequest({
             config: await convertDocsConfiguration({
                 docsDefinition,
                 organization,
-                workspace,
+                fernWorkspaces,
                 context,
                 token,
-                generatorGroup,
                 uploadUrls,
                 version,
             }),
@@ -163,19 +155,17 @@ async function constructRegisterDocsRequest({
 async function convertDocsConfiguration({
     docsDefinition,
     organization,
-    workspace,
+    fernWorkspaces,
     context,
     token,
-    generatorGroup,
     uploadUrls,
     version,
 }: {
     docsDefinition: DocsDefinition;
     organization: string;
-    workspace: FernWorkspace;
+    fernWorkspaces: FernWorkspace[];
     context: TaskContext;
     token: FernToken;
-    generatorGroup: GeneratorGroup;
     uploadUrls: Record<FernRegistry.docs.v1.write.FilePath, FernRegistry.docs.v1.write.FileS3UploadUrl>;
     version: string | undefined;
 }): Promise<FernRegistry.docs.v1.write.DocsConfig> {
@@ -207,10 +197,9 @@ async function convertDocsConfiguration({
                         item,
                         docsDefinition,
                         organization,
-                        workspace,
+                        fernWorkspaces,
                         context,
                         token,
-                        generatorGroup,
                         version,
                     })
                 )
@@ -320,19 +309,17 @@ async function convertNavigationItem({
     item,
     docsDefinition,
     organization,
-    workspace,
+    fernWorkspaces,
     context,
     token,
-    generatorGroup,
     version,
 }: {
     item: DocsNavigationItem;
     docsDefinition: DocsDefinition;
     organization: string;
-    workspace: FernWorkspace;
+    fernWorkspaces: FernWorkspace[];
     context: TaskContext;
     token: FernToken;
-    generatorGroup: GeneratorGroup;
     version: string | undefined;
 }): Promise<FernRegistry.docs.v1.write.NavigationItem> {
     switch (item.type) {
@@ -350,10 +337,9 @@ async function convertNavigationItem({
                             item: nestedItem,
                             docsDefinition,
                             organization,
-                            workspace,
+                            fernWorkspaces,
                             context,
                             token,
-                            generatorGroup,
                             version,
                         })
                     )
@@ -362,20 +348,39 @@ async function convertNavigationItem({
         case "apiSection": {
             const apiDefinitionId = await registerApi({
                 organization,
-                workspace,
+                workspace: getFernWorkspaceForApiSection({ apiSection: item, fernWorkspaces }),
                 context,
                 token,
-                audiences: combineAudiences(generatorGroup.audiences, item.audiences),
+                audiences: item.audiences,
             });
             return FernRegistry.docs.v1.write.NavigationItem.api({
                 title: item.title,
                 api: apiDefinitionId,
-                artifacts: constructArtifacts({ generatorGroup, version }),
             });
         }
         default:
             assertNever(item);
     }
+}
+
+function getFernWorkspaceForApiSection({
+    apiSection,
+    fernWorkspaces,
+}: {
+    apiSection: DocsNavigationItem.ApiSection;
+    fernWorkspaces: FernWorkspace[];
+}): FernWorkspace {
+    if (fernWorkspaces.length === 1 && fernWorkspaces[0] != null) {
+        return fernWorkspaces[0];
+    } else if (apiSection.apiName != null) {
+        const fernWorkspace = fernWorkspaces.find((workspace) => {
+            return workspace.name === apiSection.apiName;
+        });
+        if (fernWorkspace != null) {
+            return fernWorkspace;
+        }
+    }
+    throw new Error("Failed to load API Definition referenced in docs");
 }
 
 function constructPageId(pathToPage: RelativeFilePath): FernRegistry.docs.v1.write.PageId {
@@ -410,51 +415,4 @@ function getFilepathsToUpload(docsDefinition: DocsDefinition): AbsoluteFilePath[
 
 function convertAbsoluteFilepathToFdrFilepath(filepath: AbsoluteFilePath, docsDefinition: DocsDefinition) {
     return FernRegistry.docs.v1.write.FilePath(relative(docsDefinition.absoluteFilepath, filepath));
-}
-
-function constructArtifacts({
-    generatorGroup,
-    version,
-}: {
-    generatorGroup: GeneratorGroup;
-    version: string | undefined;
-}): FernRegistry.docs.v1.write.ApiArtifacts | undefined {
-    if (version == null) {
-        return undefined;
-    }
-    const sdks: FernRegistry.docs.v1.write.PublishedSdk[] = [];
-    for (const generator of generatorGroup.generators) {
-        if (generator.outputMode.type !== "github" || generator.outputMode.publishInfo == null) {
-            continue;
-        }
-
-        const githubRepoName = `${generator.outputMode.owner}/${generator.outputMode.repo}`;
-        const sdk = generator.outputMode.publishInfo._visit<FernRegistry.docs.v1.write.PublishedSdk | undefined>({
-            npm: (npm) =>
-                FernRegistry.docs.v1.write.PublishedSdk.npm({
-                    packageName: npm.packageName,
-                    githubRepoName,
-                    version,
-                }),
-            maven: (maven) =>
-                FernRegistry.docs.v1.write.PublishedSdk.maven({
-                    coordinate: maven.coordinate,
-                    githubRepoName,
-                    version,
-                }),
-            pypi: (pypi) =>
-                FernRegistry.docs.v1.write.PublishedSdk.pypi({
-                    packageName: pypi.packageName,
-                    githubRepoName,
-                    version,
-                }),
-            postman: () => undefined,
-            _other: () => undefined,
-        });
-        if (sdk != null) {
-            sdks.push(sdk);
-        }
-    }
-
-    return { sdks };
 }

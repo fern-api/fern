@@ -20,7 +20,7 @@ import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorT
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
 import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
-import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
+import { generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
 import { upgrade } from "./commands/upgrade/upgrade";
@@ -253,6 +253,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     string: true,
                     description: "Only run the command on the provided API",
                 })
+                .option("docs", {
+                    boolean: true,
+                    description: "Generate a documentation website",
+                })
                 .option("printZipUrl", {
                     boolean: true,
                     hidden: true,
@@ -269,18 +273,48 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description: "Prevent auto-deletion of the Docker containers.",
                 }),
         async (argv) => {
-            await generateWorkspaces({
-                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineApiWorkspace: argv.api,
-                    defaultToAllApiWorkspaces: false,
-                }),
-                cliContext,
-                version: argv.version,
-                groupName: argv.group,
-                shouldLogS3Url: argv.printZipUrl,
-                keepDocker: argv.keepDocker,
-                useLocalDocker: argv.local,
-            });
+            if (argv.api != null && argv.docs != null) {
+                return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
+            } else if (argv.api != null) {
+                await generateAPIWorkspaces({
+                    project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        commandLineApiWorkspace: argv.api,
+                        defaultToAllApiWorkspaces: false,
+                    }),
+                    cliContext,
+                    version: argv.version,
+                    groupName: argv.group,
+                    shouldLogS3Url: argv.printZipUrl,
+                    keepDocker: argv.keepDocker,
+                    useLocalDocker: argv.local,
+                });
+            } else if (argv.docs != null) {
+                if (argv.group) {
+                    cliContext.logger.warn("--group is ignored when generating docs");
+                }
+                if (argv.local) {
+                    cliContext.logger.warn("--local is ignored when generating docs");
+                }
+                if (argv.version) {
+                    cliContext.logger.warn("--version is ignored when generating docs");
+                }
+                await generateAPIWorkspaces({
+                    project: await loadProjectAndRegisterWorkspacesWithContext(
+                        cliContext,
+                        {
+                            commandLineApiWorkspace: argv.api,
+                            defaultToAllApiWorkspaces: false,
+                        },
+                        true
+                    ),
+                    cliContext,
+                    version: argv.version,
+                    groupName: argv.group,
+                    shouldLogS3Url: argv.printZipUrl,
+                    keepDocker: argv.keepDocker,
+                    useLocalDocker: argv.local,
+                });
+            }
         }
     );
 }
@@ -555,7 +589,8 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
 
 async function loadProjectAndRegisterWorkspacesWithContext(
     cliContext: CliContext,
-    args: Omit<loadProject.Args, "context" | "cliName" | "cliVersion">
+    args: Omit<loadProject.Args, "context" | "cliName" | "cliVersion">,
+    registerDocsWorkspace = false
 ): Promise<Project> {
     const context = cliContext.addTask().start();
     const project = await loadProject({
@@ -566,6 +601,12 @@ async function loadProjectAndRegisterWorkspacesWithContext(
     });
     context.finish();
 
-    cliContext.registerWorkspaces(project.apiWorkspaces);
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (registerDocsWorkspace && project.docsWorkspaces != null) {
+        cliContext.registerWorkspaces([...project.apiWorkspaces, project.docsWorkspaces]);
+    } else {
+        cliContext.registerWorkspaces(project.apiWorkspaces);
+    }
+
     return project;
 }

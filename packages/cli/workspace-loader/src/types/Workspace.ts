@@ -5,6 +5,8 @@ import { GeneratorsConfiguration } from "@fern-api/generators-configuration";
 import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/yaml-schema";
 import { ParsedFernFile } from "./FernFile";
 
+export type Workspace = DocsWorkspace | APIWorkspace;
+
 export interface DocsWorkspace {
     type: "docs";
     absoluteFilepath: AbsoluteFilePath;

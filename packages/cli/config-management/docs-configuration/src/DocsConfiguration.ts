@@ -1,8 +1,10 @@
 import { Audiences } from "@fern-api/config-management-commons";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { DocsInstances } from "@fern-fern/docs-config/api";
 import type { FernRegistry } from "@fern-fern/registry-node";
 
 export interface DocsConfiguration {
+    instances: DocsInstances[];
     navigation: DocsNavigationConfiguration;
     title: string | undefined;
     logo: Logo | undefined;
@@ -65,6 +67,7 @@ export declare namespace DocsNavigationItem {
     export interface ApiSection {
         type: "apiSection";
         title: string;
+        apiName: string | undefined;
         audiences: Audiences;
     }
 }
