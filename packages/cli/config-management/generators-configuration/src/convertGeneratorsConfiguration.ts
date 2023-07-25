@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { readFile } from "fs";
 import {
     GenerationLanguage,
     GeneratorGroup,
@@ -11,6 +12,7 @@ import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
 import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
+import { GithubLicenseSchema } from "./schemas/GithubLicenseSchema";
 
 export function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
@@ -77,7 +79,7 @@ function convertGenerator({
         name: generator.name,
         version: generator.version,
         config: generator.config,
-        outputMode: convertOutputMode(generator),
+        outputMode: convertOutputMode({ absolutePathToGeneratorsConfiguration, generator }),
         absolutePathToLocalOutput:
             generator.output?.location === "local-file-system"
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.output.path)
@@ -86,13 +88,26 @@ function convertGenerator({
     };
 }
 
-function convertOutputMode(generator: GeneratorInvocationSchema): FernFiddle.OutputMode {
+function convertOutputMode({
+    absolutePathToGeneratorsConfiguration,
+    generator,
+}: {
+    absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
+    generator: GeneratorInvocationSchema;
+}): FernFiddle.OutputMode {
     if (generator.github != null) {
         const indexOfFirstSlash = generator.github.repository.indexOf("/");
         return FernFiddle.OutputMode.github({
             owner: generator.github.repository.slice(0, indexOfFirstSlash),
             repo: generator.github.repository.slice(indexOfFirstSlash + 1),
             makePr: generator.github.mode === "pull-request",
+            license:
+                generator.github.license != null
+                    ? getGithubLicense({
+                          absolutePathToGeneratorsConfiguration,
+                          githubLicenseSchema: generator.github.license,
+                      })
+                    : undefined,
             publishInfo: generator.output != null ? getGithubPublishInfo(generator.output) : undefined,
         });
     }
@@ -138,6 +153,21 @@ function convertOutputMode(generator: GeneratorInvocationSchema): FernFiddle.Out
         default:
             assertNever(generator.output);
     }
+}
+
+function getGithubLicense({
+    absolutePathToGeneratorsConfiguration,
+    githubLicenseSchema,
+}: {
+    absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
+    githubLicenseSchema: GithubLicenseSchema;
+}): FernFiddle.GithubLicense {
+    if (githubLicenseSchema === "MIT" || githubLicenseSchema === "Apache-2.0") {
+        return FernFiddle.GithubLicense.id(githubLicenseSchema);
+    }
+    const licenseFile = resolve(dirname(absolutePathToGeneratorsConfiguration), githubLicenseSchema);
+    const licenseContent = readFile(licenseFile);
+    return FernFiddle.GithubLicense.file(licenseContent.toString());
 }
 
 function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubPublishInfo {
