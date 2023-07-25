@@ -2938,7 +2938,7 @@ __metadata:
   dependencies:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/ui": "workspace:*"
-    "@fern-fern/registry-browser": 0.11.1-1-g35623b3
+    "@fern-fern/registry-browser": 0.11.1-2-gd8ee803
     "@tailwindcss/typography": ^0.5.9
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3735,7 +3735,7 @@ __metadata:
     "@fern-api/react-commons": "workspace:*"
     "@fern-api/routing-utils": "workspace:*"
     "@fern-api/theme": "workspace:*"
-    "@fern-fern/registry-browser": 0.11.1-1-g35623b3
+    "@fern-fern/registry-browser": 0.11.1-2-gd8ee803
     "@fontsource/ibm-plex-mono": ^4.5.13
     "@headlessui/react": ^1.7.15
     "@react-hook/size": ^2.1.2
@@ -4142,16 +4142,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/registry-browser@npm:0.11.1-1-g35623b3":
-  version: 0.11.1-1-g35623b3
-  resolution: "@fern-fern/registry-browser@npm:0.11.1-1-g35623b3"
+"@fern-fern/registry-browser@npm:0.11.1-2-gd8ee803":
+  version: 0.11.1-2-gd8ee803
+  resolution: "@fern-fern/registry-browser@npm:0.11.1-2-gd8ee803"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 1.4.0
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: 4c4fd44de21df8a697392c68b96bfb3745e57228895222aef79b19897914f3fd6da29c17ac08a6a0e00cb85caea8f1a82bf15b6da86e2389e44f2eb92498d04c
+  checksum: d317940b7d7c0ad661ef32e172f8777adcaec13b43f44b23baa349d7efc3a5fb49192caf7abdc5aca17d200487d0914b211c7ca7972329458002047f7e90bb1a
   languageName: node
   linkType: hard
 
