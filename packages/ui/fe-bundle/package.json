@@ -40,7 +40,7 @@
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/ui": "workspace:*",
-    "@fern-fern/registry-browser": "0.11.1-3-g62f25ca",
+    "@fern-fern/registry-browser": "0.11.1-2-gd8ee803",
     "next": "^13.4.4",
     "next-mdx-remote": "^4.4.1",
     "react": "^18.2.0",
