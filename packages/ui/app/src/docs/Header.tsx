@@ -4,10 +4,13 @@ import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { HeaderPrimaryLink } from "./HeaderPrimaryLink";
 import { HeaderSecondaryLink } from "./HeaderSecondaryLink";
+import { HeaderVersionMenu } from "./HeaderVersionMenu";
 
 export const Header: React.FC = () => {
     const { resolveFile, docsDefinition } = useDocsContext();
     const { logo, logoHeight, logoHref, navbarLinks } = docsDefinition.config;
+
+    const versions = ["v1.2", "v1.1"]; // TODO: Make dynamic
 
     const hasLogo = logo != null;
     const hasLogoHref = logoHref != null;
@@ -22,13 +25,18 @@ export const Header: React.FC = () => {
         />
     );
     const logoSection = hasLogo && (
-        <div className="flex h-full py-1">
+        <div className="relative flex h-full items-center space-x-3 py-1">
             {hasLogoHref ? (
                 <a href={logoHref} className="flex items-center">
                     {logoContent}
                 </a>
             ) : (
                 <div className="flex items-center">{logoContent}</div>
+            )}
+            {versions.length > 0 && (
+                <div>
+                    <HeaderVersionMenu versions={versions} selectedIndex={0} />
+                </div>
             )}
         </div>
     );
