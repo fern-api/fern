@@ -19,7 +19,7 @@ describe("fern generate", () => {
 
     // to prevent overloading algolia, we only
     // run the docs test on main or tags
-    (isOnMainOrReleaseOnCircle() ? it : it.skip)(
+    (isOnMainOrTagOnCircle() ? it : it.skip)(
         "docs",
         async () => {
             await runFernCli(["generate"], {
@@ -43,7 +43,7 @@ describe("fern generate", () => {
     });
 });
 
-function isOnMainOrReleaseOnCircle(): boolean {
+function isOnMainOrTagOnCircle(): boolean {
     const { CIRCLE_BRANCH, CIRCLE_TAG } = process.env;
     return CIRCLE_BRANCH === "main" || CIRCLE_TAG != null;
 }
