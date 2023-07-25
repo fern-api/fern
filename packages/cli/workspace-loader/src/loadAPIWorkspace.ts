@@ -14,10 +14,12 @@ export async function loadAPIWorkspace({
     absolutePathToWorkspace,
     context,
     cliVersion,
+    workspaceName,
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
     cliVersion: string;
+    workspaceName: string | undefined;
 }): Promise<WorkspaceLoader.Result> {
     const generatorsConfiguration = await loadGeneratorsConfiguration({ absolutePathToWorkspace, context });
 
@@ -31,6 +33,7 @@ export async function loadAPIWorkspace({
             workspace: {
                 type: "openapi",
                 name: "api",
+                workspaceName,
                 absoluteFilepath: absolutePathToWorkspace,
                 generatorsConfiguration,
                 definition: openApiDefinition,
@@ -74,6 +77,7 @@ export async function loadAPIWorkspace({
             absoluteFilepath: absolutePathToWorkspace,
             generatorsConfiguration,
             dependenciesConfiguration,
+            workspaceName,
             definition: {
                 absoluteFilepath: absolutePathToDefinition,
                 rootApiFile: structuralValidationResult.rootApiFile,

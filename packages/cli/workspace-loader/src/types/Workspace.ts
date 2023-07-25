@@ -9,6 +9,7 @@ export type Workspace = DocsWorkspace | APIWorkspace;
 
 export interface DocsWorkspace {
     type: "docs";
+    workspaceName: string | undefined;
     absoluteFilepath: AbsoluteFilePath;
     docsDefinition: DocsDefinition;
 }
@@ -17,6 +18,7 @@ export type APIWorkspace = FernWorkspace | OpenAPIWorkspace;
 
 export interface OpenAPIWorkspace {
     type: "openapi";
+    workspaceName: string | undefined;
     name: string;
     absoluteFilepath: AbsoluteFilePath;
     generatorsConfiguration: GeneratorsConfiguration;
@@ -39,6 +41,7 @@ export interface OpenAPIFile {
 export interface FernWorkspace {
     type: "fern";
     name: string;
+    workspaceName: string | undefined;
     absoluteFilepath: AbsoluteFilePath;
     generatorsConfiguration: GeneratorsConfiguration;
     dependenciesConfiguration: DependenciesConfiguration;

@@ -76,6 +76,7 @@ async function loadDocs({
             type: "docs",
             absoluteFilepath: fernDirectory,
             docsDefinition,
+            workspaceName: undefined,
         };
     }
     return undefined;
@@ -138,6 +139,7 @@ async function loadApis({
                     absolutePathToWorkspace: join(apisDirectory, RelativeFilePath.of(workspaceDirectoryName)),
                     context,
                     cliVersion,
+                    workspaceName: workspaceDirectoryName,
                 });
                 if (workspace.didSucceed) {
                     apiWorkspaces.push(workspace.workspace);
@@ -158,6 +160,7 @@ async function loadApis({
         absolutePathToWorkspace: fernDirectory,
         context,
         cliVersion,
+        workspaceName: undefined,
     });
     if (workspace.didSucceed) {
         return [workspace.workspace];

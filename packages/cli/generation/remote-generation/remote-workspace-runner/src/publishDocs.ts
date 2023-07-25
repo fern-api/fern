@@ -439,7 +439,7 @@ function getFernWorkspaceForApiSection({
         return fernWorkspaces[0];
     } else if (apiSection.apiName != null) {
         const fernWorkspace = fernWorkspaces.find((workspace) => {
-            return workspace.name === apiSection.apiName;
+            return workspace.workspaceName === apiSection.apiName;
         });
         if (fernWorkspace != null) {
             return fernWorkspace;
