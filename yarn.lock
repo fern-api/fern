@@ -2873,7 +2873,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-fern/docs-config": 0.0.29
+    "@fern-fern/docs-config": 0.0.30
     "@fern-fern/registry-node": 0.11.1-3-g62f25ca
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.5
@@ -2938,7 +2938,7 @@ __metadata:
   dependencies:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/ui": "workspace:*"
-    "@fern-fern/registry-browser": 0.11.1-3-g62f25ca
+    "@fern-fern/registry-browser": 0.11.1-2-gd8ee803
     "@tailwindcss/typography": ^0.5.9
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3727,7 +3727,7 @@ __metadata:
     "@fern-api/react-commons": "workspace:*"
     "@fern-api/routing-utils": "workspace:*"
     "@fern-api/theme": "workspace:*"
-    "@fern-fern/registry-browser": 0.11.1-3-g62f25ca
+    "@fern-fern/registry-browser": 0.11.1-2-gd8ee803
     "@fontsource/ibm-plex-mono": ^4.5.13
     "@headlessui/react": ^1.7.15
     "@react-hook/size": ^2.1.2
@@ -3916,10 +3916,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-fern/docs-config@npm:0.0.29":
-  version: 0.0.29
-  resolution: "@fern-fern/docs-config@npm:0.0.29"
-  checksum: 83215399191419ebcb84d3f05434c4dfe45a8d30bd723f1aab67b1328cd110f05e1c0f41214bea7256e036621f1b8d22e80db9a71aa857b061d1834972b823c2
+"@fern-fern/docs-config@npm:0.0.30":
+  version: 0.0.30
+  resolution: "@fern-fern/docs-config@npm:0.0.30"
+  checksum: b8d53d757e95b19252650a8199b1c587e5283fe65acfab0143795112990be2297e75ccfa31c28ec18347e7fe175ad8001a67c2a3d083dc6daf9507a9d31206a9
   languageName: node
   linkType: hard
 
@@ -4134,16 +4134,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/registry-browser@npm:0.11.1-3-g62f25ca":
-  version: 0.11.1-3-g62f25ca
-  resolution: "@fern-fern/registry-browser@npm:0.11.1-3-g62f25ca"
+"@fern-fern/registry-browser@npm:0.11.1-2-gd8ee803":
+  version: 0.11.1-2-gd8ee803
+  resolution: "@fern-fern/registry-browser@npm:0.11.1-2-gd8ee803"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 1.4.0
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: aebedd801d852e11851a2ce81b867be38db7fb645324a7f890b54cba14b7d7cbd0267dc7e2a8fb8caf45bb4cad3023f9f4f76f4950b844b29be453264fe715ee
+  checksum: d317940b7d7c0ad661ef32e172f8777adcaec13b43f44b23baa349d7efc3a5fb49192caf7abdc5aca17d200487d0914b211c7ca7972329458002047f7e90bb1a
   languageName: node
   linkType: hard
 

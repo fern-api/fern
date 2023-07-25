@@ -1,19 +1,28 @@
 import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import classNames from "classnames";
+import { DEFAULT_LOGO_HEIGHT } from "../config";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { HeaderPrimaryLink } from "./HeaderPrimaryLink";
 import { HeaderSecondaryLink } from "./HeaderSecondaryLink";
 
 export const Header: React.FC = () => {
     const { resolveFile, docsDefinition } = useDocsContext();
-    const { logo, logoHref, navbarLinks } = docsDefinition.config;
+    const { logo, logoHeight, logoHref, navbarLinks } = docsDefinition.config;
 
     const hasLogo = logo != null;
     const hasLogoHref = logoHref != null;
 
-    const logoContent = hasLogo && <img className="max-h-5" src={resolveFile(logo)} />;
+    const logoContent = hasLogo && (
+        <img
+            src={resolveFile(logo)}
+            className="max-h-full"
+            style={{
+                height: logoHeight ?? DEFAULT_LOGO_HEIGHT,
+            }}
+        />
+    );
     const logoSection = hasLogo && (
-        <div className="flex max-h-full">
+        <div className="flex h-full py-1">
             {hasLogoHref ? (
                 <a href={logoHref} className="flex items-center">
                     {logoContent}
@@ -39,7 +48,7 @@ export const Header: React.FC = () => {
     return (
         <div
             className={classNames(
-                "flex justify-between items-center shrink-0 py-4 pl-4 pr-4",
+                "flex justify-between items-center shrink-0 pl-4 pr-4",
                 // this matches with the calc() in the EndpointContent examples section
                 "h-16"
             )}

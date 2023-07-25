@@ -16,6 +16,7 @@ export interface DocsConfiguration {
 
 export interface Logo {
     reference: ImageReference;
+    height: FernRegistry.docs.v1.write.Height | undefined;
     href: FernRegistry.docs.v1.write.Url | undefined;
 }
 
