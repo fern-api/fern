@@ -20,6 +20,7 @@ const inter = Inter({ subsets: ["latin"] });
 export declare namespace Docs {
     export interface Props {
         docs: FernRegistryDocsReadV2.LoadDocsForUrlResponse;
+        activeVersion: string | null;
         resolvedUrlPath: ResolvedUrlPath;
         typographyStyleSheet?: string;
         nextPath: ResolvedUrlPath | null;
@@ -38,6 +39,7 @@ function Typography({ stylesheet }: { stylesheet: string }) {
 
 export default function Docs({
     docs,
+    activeVersion,
     typographyStyleSheet,
     resolvedUrlPath,
     nextPath,
@@ -59,6 +61,7 @@ export default function Docs({
                 </Head>
                 <App
                     docs={docs}
+                    activeVersion={activeVersion}
                     resolvedUrlPath={resolvedUrlPath}
                     nextPath={nextPath ?? undefined}
                     previousPath={previousPath ?? undefined}
@@ -136,6 +139,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                 return {
                     props: {
                         docs: docs.body,
+                        activeVersion: latestVersion.version,
                         typographyStyleSheet,
                         resolvedUrlPath,
                         nextPath: nextPath ?? null,
@@ -189,6 +193,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
             return {
                 props: {
                     docs: docs.body,
+                    activeVersion: version,
                     typographyStyleSheet,
                     resolvedUrlPath,
                     nextPath: nextPath ?? null,
@@ -236,6 +241,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         return {
             props: {
                 docs: docs.body,
+                activeVersion: null,
                 typographyStyleSheet,
                 resolvedUrlPath,
                 nextPath: nextPath ?? null,
