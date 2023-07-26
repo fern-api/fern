@@ -7,13 +7,11 @@ import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
 export declare namespace HeaderVersionMenu {
     export interface Props {
         versions: string[];
-        selectedIndex: number | undefined;
+        selectedId: string | undefined;
     }
 }
 
-export const HeaderVersionMenu: React.FC<HeaderVersionMenu.Props> = ({ versions, selectedIndex }) => {
-    const selectedVersion = selectedIndex == null ? undefined : versions[selectedIndex];
-
+export const HeaderVersionMenu: React.FC<HeaderVersionMenu.Props> = ({ versions, selectedId }) => {
     return (
         <div className="flex w-32">
             <Menu as="div" className="relative inline-block text-left">
@@ -22,7 +20,7 @@ export const HeaderVersionMenu: React.FC<HeaderVersionMenu.Props> = ({ versions,
                         {({ open }) => {
                             return (
                                 <>
-                                    <span className="transition-colors">{selectedVersion}</span>
+                                    <span className="transition-colors">{selectedId}</span>
                                     <ChevronDownIcon
                                         className={classNames("h-4 w-4 transition", {
                                             "rotate-180": open,
@@ -47,27 +45,28 @@ export const HeaderVersionMenu: React.FC<HeaderVersionMenu.Props> = ({ versions,
                             {versions.map((version, idx) => (
                                 <Menu.Item key={idx}>
                                     {({ active }) => (
-                                        <button
+                                        <a
                                             className={classNames(
-                                                "flex w-full justify-between items-center text-xs p-2",
+                                                "flex w-full justify-between !no-underline items-center text-xs p-2",
                                                 {
                                                     "bg-neutral-900": active,
                                                     "bg-neutral-950": !active,
-                                                    "text-accentPrimary": idx === selectedIndex,
-                                                    "text-text-muted": idx !== selectedIndex,
+                                                    "!text-accentPrimary": version === selectedId,
+                                                    "!text-text-muted": version !== selectedId,
                                                     "rounded-t-md": idx === 0,
                                                     "rounded-b-md": idx === versions.length - 1,
                                                 }
                                             )}
+                                            href={`/${idx === 0 ? "" : version}`} // TODO: This needs to be changed when we know which version is latest
                                         >
                                             <span>{version}</span>
                                             <CheckIcon
                                                 className={classNames("h-3 w-3", {
-                                                    visible: idx === selectedIndex,
-                                                    invisible: idx !== selectedIndex,
+                                                    visible: version === selectedId,
+                                                    invisible: version !== selectedId,
                                                 })}
                                             />
-                                        </button>
+                                        </a>
                                     )}
                                 </Menu.Item>
                             ))}
