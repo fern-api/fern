@@ -376,7 +376,7 @@ paths:
       tags:
         - video encoder
       summary: Get job status using client id
-      operationId: status_video_encoder_status_client_id__client_id__get
+      operationId: status_client_id_video_encoder_status_client_id__client_id__get
       parameters:
         - required: true
           schema:
@@ -407,7 +407,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/VideoEncoderRequest'
+              $ref: '#/components/schemas/EncoderRequest'
         required: true
       responses:
         '201':
@@ -485,12 +485,94 @@ paths:
         - Embeddings
       summary: Generate embeddings for a text string given a model
       description: Provide a text string and model as input to generate embeddings.
-      operationId: infer_v1_embeddings__post
+      operationId: createEmbedding
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/EmbeddingRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - HTTPBearer: []
+  /unity_server/status/{job_id}:
+    get:
+      tags:
+        - Unity server
+      summary: Get job status using job id
+      operationId: status_unity_server_status__job_id__get
+      parameters:
+        - required: true
+          schema:
+            title: Job Id
+          name: job_id
+          in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - HTTPBearer: []
+  /unity_server/start:
+    post:
+      tags:
+        - Unity server
+      summary: Start
+      operationId: start_unity_server_start_post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnityServerRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+        - HTTPBearer: []
+  /v1/completions/:
+    post:
+      tags:
+        - Completions
+      summary: Creates a completion for the provided prompt and parameters.
+      description: >-
+        Given a prompt, the model will return one or more predicted completions,
+        and can also return the probabilities of alternative tokens at each
+        position.
+      operationId: createCompletion
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompletionsRequest'
         required: true
       responses:
         '200':
@@ -518,6 +600,63 @@ paths:
               schema: {}
 components:
   schemas:
+    AudioEncoderProperties:
+      title: AudioEncoderProperties
+      type: object
+      properties:
+        bitrate:
+          title: Bitrate
+          type: string
+        sample_rate:
+          title: Sample Rate
+          type: integer
+        channels:
+          title: Channels
+          type: integer
+          default: 2
+        quality:
+          title: Quality
+          type: string
+    CompletionsRequest:
+      title: CompletionsRequest
+      required:
+        - prompt
+      type: object
+      properties:
+        prompt:
+          title: Prompt
+          anyOf:
+            - type: string
+            - type: array
+              items:
+                type: string
+        max_tokens:
+          title: Max Tokens
+          type: integer
+          default: 16
+        temperature:
+          title: Temperature
+          type: number
+          default: 1
+        top_p:
+          title: Top P
+          type: number
+          default: 1
+        'n':
+          title: 'N'
+          type: integer
+          default: 1
+        stream:
+          title: Stream
+          type: boolean
+          default: false
+        logprobs:
+          title: Logprobs
+          type: integer
+        echo:
+          title: Echo
+          type: boolean
+          default: false
     ControlNet:
       title: ControlNet
       required:
@@ -655,6 +794,102 @@ components:
         model:
           title: Model
           type: string
+    EncoderRequest:
+      title: EncoderRequest
+      type: object
+      properties:
+        inputs:
+          title: Inputs
+          type: array
+          items:
+            $ref: '#/components/schemas/URL'
+        outputs:
+          title: Outputs
+          type: array
+          items:
+            $ref: '#/components/schemas/URL'
+        video_encoder_codec:
+          title: Video Encoder Codec
+          type: string
+          default: hevc_nvenc
+        video_properties:
+          $ref: '#/components/schemas/VideoEncoderProperties'
+        audio_encoder_codec:
+          title: Audio Encoder Codec
+          type: string
+          default: copy
+        audio_properties:
+          $ref: '#/components/schemas/AudioEncoderProperties'
+        file_format:
+          title: File Format
+          type: string
+          default: mp4
+        filters:
+          title: Filters
+          type: array
+          items:
+            $ref: '#/components/schemas/Filter'
+        kwargs:
+          title: Kwargs
+          type: object
+          default: {}
+        callback:
+          title: Callback
+          type: string
+        client_job_id:
+          title: Client Job Id
+          type: string
+        input_url:
+          title: Input Url
+          type: string
+          description: Use \`inputs_url\` instead
+          deprecated: true
+        output_url:
+          title: Output Url
+          type: string
+          description: Use \`outputs_url\` instead
+          deprecated: true
+        content_type:
+          title: Content Type
+          type: string
+          description: Use \`inputs_url.content_type\` instead
+          deprecated: true
+    Filter:
+      title: Filter
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+        inputs:
+          title: Inputs
+          type: array
+          items:
+            type: string
+          default: []
+        output:
+          title: Output
+          type: array
+          items:
+            type: string
+          default:
+            - video
+        args:
+          title: Args
+          type: array
+          items:
+            type: string
+          default: []
+        kwargs:
+          title: Kwargs
+          type: object
+          default: {}
+        label:
+          title: Label
+          type: string
+          default: filter
     HTTPValidationError:
       title: HTTPValidationError
       type: object
@@ -816,6 +1051,35 @@ components:
           title: Instance Name
           type: string
           default: sks
+    URL:
+      title: URL
+      required:
+        - url
+      type: object
+      properties:
+        url:
+          title: Url
+          type: string
+        content_type:
+          title: Content Type
+          type: string
+          default: ''
+        label:
+          title: Label
+          type: string
+          default: url
+        streams:
+          title: Streams
+          type: array
+          items:
+            type: string
+          default:
+            - video
+            - audio
+    UnityServerRequest:
+      title: UnityServerRequest
+      type: object
+      properties: {}
     ValidationError:
       title: ValidationError
       required:
@@ -844,12 +1108,6 @@ components:
         fps:
           title: Fps
           type: number
-        width:
-          title: Width
-          type: integer
-        height:
-          title: Height
-          type: integer
         bitrate:
           title: Bitrate
           type: string
@@ -861,39 +1119,6 @@ components:
           title: Tune
           type: string
           default: hq
-    VideoEncoderRequest:
-      title: VideoEncoderRequest
-      required:
-        - input_url
-        - output_url
-      type: object
-      properties:
-        input_url:
-          title: Input Url
-          type: string
-        output_url:
-          title: Output Url
-          type: string
-        video_encoder_codec:
-          title: Video Encoder Codec
-          type: string
-          default: hevc_nvenc
-        video_properties:
-          $ref: '#/components/schemas/VideoEncoderProperties'
-        video_filters:
-          title: Video Filters
-          type: array
-          items:
-            type: object
-        callback:
-          title: Callback
-          type: string
-        content_type:
-          title: Content Type
-          type: string
-        client_job_id:
-          title: Client Job Id
-          type: string
     routers__dreambooth__Prompt:
       title: Prompt
       required:
