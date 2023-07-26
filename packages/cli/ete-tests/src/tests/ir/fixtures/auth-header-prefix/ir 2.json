@@ -1,0 +1,110 @@
+{
+    "apiName": {
+        "originalName": "my-api",
+        "camelCase": {
+            "unsafeName": "myApi",
+            "safeName": "myApi"
+        },
+        "snakeCase": {
+            "unsafeName": "my_api",
+            "safeName": "my_api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "MY_API",
+            "safeName": "MY_API"
+        },
+        "pascalCase": {
+            "unsafeName": "MyApi",
+            "safeName": "MyApi"
+        }
+    },
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [
+            {
+                "name": {
+                    "name": {
+                        "originalName": "ApiKey",
+                        "camelCase": {
+                            "unsafeName": "apiKey",
+                            "safeName": "apiKey"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "api_key",
+                            "safeName": "api_key"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "API_KEY",
+                            "safeName": "API_KEY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ApiKey",
+                            "safeName": "ApiKey"
+                        }
+                    },
+                    "wireValue": "Authorization"
+                },
+                "valueType": {
+                    "primitive": "STRING",
+                    "_type": "primitive"
+                },
+                "prefix": "ApiKey",
+                "_type": "header"
+            }
+        ]
+    },
+    "headers": [],
+    "types": {},
+    "errors": {},
+    "services": {},
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceId",
+                    "safeName": "errorInstanceId"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceId",
+                    "safeName": "ErrorInstanceId"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "pathParameters": [],
+    "variables": [],
+    "subpackages": {},
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": []
+        },
+        "types": [],
+        "errors": [],
+        "subpackages": [],
+        "hasEndpointsInTree": false
+    },
+    "sdkConfig": {
+        "isAuthMandatory": true,
+        "hasStreamingEndpoints": false,
+        "hasFileDownloadEndpoints": false,
+        "platformHeaders": {
+            "language": "X-Fern-Language",
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version"
+        }
+    }
+}
