@@ -32,7 +32,7 @@
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/docs-config": "0.0.27",
+    "@fern-fern/docs-config": "0.0.33",
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {
