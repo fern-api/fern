@@ -22,11 +22,13 @@ interface DocsInfoVersioned {
     versions: string[];
     activeVersion: string;
     activeNavigationConfig: FernRegistryDocsReadV1.UnversionedNavigationConfig;
+    rootSlug: string;
 }
 
 interface DocsInfoUnversioned {
     type: "unversioned";
     activeNavigationConfig: FernRegistryDocsReadV1.UnversionedNavigationConfig;
+    rootSlug: string;
 }
 
 export declare namespace Docs {
@@ -155,6 +157,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                             type: "versioned",
                             activeVersion: latestVersion.version,
                             activeNavigationConfig: latestVersion.config,
+                            rootSlug: latestVersion.version,
                             versions: navigationConfig.versions.map(({ version: v }) => v),
                         },
                         typographyStyleSheet,
@@ -225,6 +228,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                         type: "versioned",
                         versions: navigationConfig.versions.map(({ version: v }) => v),
                         activeNavigationConfig: configData.config,
+                        rootSlug: version,
                         activeVersion: version,
                     },
 
@@ -279,6 +283,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                 docsInfo: {
                     type: "unversioned",
                     activeNavigationConfig: navigationConfig,
+                    rootSlug: "",
                 },
                 typographyStyleSheet,
                 resolvedUrlPath,

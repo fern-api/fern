@@ -23,11 +23,13 @@ interface DocsInfoVersioned {
     versions: string[];
     activeVersion: string;
     activeNavigationConfig: FernRegistryDocsReadV1.UnversionedNavigationConfig;
+    rootSlug: string;
 }
 
 interface DocsInfoUnversioned {
     type: "unversioned";
     activeNavigationConfig: FernRegistryDocsReadV1.UnversionedNavigationConfig;
+    rootSlug: string;
 }
 
 type DocsInfo = DocsInfoVersioned | DocsInfoUnversioned;
