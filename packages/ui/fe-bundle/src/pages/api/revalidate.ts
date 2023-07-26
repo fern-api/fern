@@ -1,6 +1,7 @@
 import { NextApiHandler, NextApiResponse } from "next";
 import { REGISTRY_SERVICE } from "../../service";
 import { UrlSlugTree } from "../../url-path-resolver/UrlSlugTree";
+import { isVersionedNavigationConfig } from "../../utils/docs";
 
 export interface Request {
     url: string;
@@ -30,13 +31,38 @@ const handler: NextApiHandler = async (req, res) => {
         console.error("Failed to fetch docs", docs.error);
         return res.status(500).send("Failed to load docs for: " + url);
     }
-    const urlSlugTree = new UrlSlugTree(docs.body.definition);
-    const paths = ["/", ...urlSlugTree.getAllSlugs().map((slug) => `/${slug}`)];
+
+    const { navigation: navigationConfig } = docs.body.definition.config;
+
+    let pathsToRevalidate: string[] = [];
+
+    if (isVersionedNavigationConfig(navigationConfig)) {
+        navigationConfig.versions.forEach(({ version, config }, idx) => {
+            const urlSlugTree = new UrlSlugTree({
+                navigation: config,
+                loadApiDefinition: (id) => docs.body.definition.apis[id],
+            });
+            let pathsForVersion;
+            if (idx === 0) {
+                // TODO: Need more info to know whether this is the latest version. If it is then we want to skip version prefix
+                pathsForVersion = ["/", ...urlSlugTree.getAllSlugs().map((slug) => `/${slug}`)];
+            } else {
+                pathsForVersion = [`/${version}`, ...urlSlugTree.getAllSlugs().map((slug) => `/${version}/${slug}`)];
+            }
+            pathsToRevalidate.push(...pathsForVersion);
+        });
+    } else {
+        const urlSlugTree = new UrlSlugTree({
+            navigation: navigationConfig,
+            loadApiDefinition: (id) => docs.body.definition.apis[id],
+        });
+        pathsToRevalidate = ["/", ...urlSlugTree.getAllSlugs().map((slug) => `/${slug}`)];
+    }
 
     const revalidated: string[] = [];
     const failures: string[] = [];
     await Promise.all(
-        paths.map(async (path) => {
+        pathsToRevalidate.map(async (path) => {
             const didSucceed = await tryRevalidate(res, path);
             if (didSucceed) {
                 revalidated.push(path);
