@@ -7,13 +7,14 @@ import { HeaderSecondaryLink } from "./HeaderSecondaryLink";
 import { HeaderVersionMenu } from "./HeaderVersionMenu";
 
 export const Header: React.FC = () => {
-    const { resolveFile, docsDefinition } = useDocsContext();
+    const { resolveFile, docsDefinition, docsInfo } = useDocsContext();
     const { logo, logoHeight, logoHref, navbarLinks } = docsDefinition.config;
 
-    const versions = ["v1.2", "v1.1"]; // TODO: Make dynamic
-
+    const hasMultipleVersions = docsInfo.type === "versioned";
     const hasLogo = logo != null;
     const hasLogoHref = logoHref != null;
+
+    const selectedIndex = 0; // TODO: Implement
 
     const logoContent = hasLogo && (
         <img
@@ -33,9 +34,9 @@ export const Header: React.FC = () => {
             ) : (
                 <div className="flex items-center">{logoContent}</div>
             )}
-            {versions.length > 0 && (
+            {hasMultipleVersions && (
                 <div>
-                    <HeaderVersionMenu versions={versions} selectedIndex={0} />
+                    <HeaderVersionMenu versions={docsInfo.versions} selectedIndex={selectedIndex} />
                 </div>
             )}
         </div>

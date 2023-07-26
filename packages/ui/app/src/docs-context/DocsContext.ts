@@ -8,6 +8,20 @@ export const DocsContext = React.createContext<() => DocsContextValue>(() => {
     throw new Error("DocsContextValueProvider is not present in this tree.");
 });
 
+interface DocsInfoVersioned {
+    type: "versioned";
+    versions: string[];
+    activeVersion: string;
+    activeNavigationConfig: FernRegistryDocsRead.UnversionedNavigationConfig;
+}
+
+interface DocsInfoUnversioned {
+    type: "unversioned";
+    activeNavigationConfig: FernRegistryDocsRead.UnversionedNavigationConfig;
+}
+
+export type DocsInfo = DocsInfoVersioned | DocsInfoUnversioned;
+
 export interface DocsContextValue {
     resolveApi: (apiId: FernRegistry.ApiDefinitionId) => FernRegistryApiRead.ApiDefinition;
     resolvePage: (pageId: FernRegistryDocsRead.PageId) => FernRegistryDocsRead.PageContent;
@@ -20,8 +34,7 @@ export interface DocsContextValue {
     registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
 
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
-
-    activeVersion: string | null;
+    docsInfo: DocsInfo;
 
     // controlled
     selectedSlug: string | undefined;
