@@ -7,7 +7,7 @@ import { HeaderSecondaryLink } from "./HeaderSecondaryLink";
 import { HeaderVersionMenu } from "./HeaderVersionMenu";
 
 export const Header: React.FC = () => {
-    const { resolveFile, docsDefinition, docsInfo } = useDocsContext();
+    const { resolveFile, docsDefinition, docsInfo, setActiveVersion, navigateToPath } = useDocsContext();
     const { logo, logoHeight, logoHref, navbarLinks } = docsDefinition.config;
 
     const hasMultipleVersions = docsInfo.type === "versioned";
@@ -34,7 +34,14 @@ export const Header: React.FC = () => {
             )}
             {hasMultipleVersions && (
                 <div>
-                    <HeaderVersionMenu versions={docsInfo.versions} selectedId={docsInfo.activeVersion} />
+                    <HeaderVersionMenu
+                        versions={docsInfo.versions}
+                        selectedId={docsInfo.activeVersion}
+                        onClickVersion={(v) => {
+                            setActiveVersion(v);
+                            navigateToPath(`/${v}`);
+                        }}
+                    />
                 </div>
             )}
         </div>

@@ -37,6 +37,7 @@ export interface DocsContextValue {
 
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
     docsInfo: DocsInfo;
+    setActiveVersion: (version: string) => void;
 
     // controlled
     selectedSlug: string | undefined;
