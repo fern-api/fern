@@ -169,15 +169,26 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
             }
         } else {
             // The slug must contain the version. If not, return not found
+
             const { version, rest } = extractVersionFromSlug(slug);
             if (version == null || version.length === 0) {
                 return { notFound: true, revalidate: true };
             }
             slug = rest;
+
             // Find the version in docs definition
             const configData = navigationConfig.versions.find((c) => c.version === version);
             if (configData == null) {
                 return { notFound: true, revalidate: true };
+            }
+
+            if (slug === "") {
+                const [firstNavigationItem] = configData.config.items;
+                if (firstNavigationItem != null) {
+                    slug = firstNavigationItem.urlSlug;
+                } else {
+                    return { notFound: true, revalidate: true };
+                }
             }
 
             const urlPathResolver = new UrlPathResolver({

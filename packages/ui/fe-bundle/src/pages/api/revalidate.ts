@@ -37,18 +37,12 @@ const handler: NextApiHandler = async (req, res) => {
     let pathsToRevalidate: string[] = [];
 
     if (isVersionedNavigationConfig(navigationConfig)) {
-        navigationConfig.versions.forEach(({ version, config }, idx) => {
+        navigationConfig.versions.forEach(({ version, config }) => {
             const urlSlugTree = new UrlSlugTree({
                 navigation: config,
                 loadApiDefinition: (id) => docs.body.definition.apis[id],
             });
-            let pathsForVersion;
-            if (idx === 0) {
-                // TODO: Need more info to know whether this is the latest version. If it is then we want to skip version prefix
-                pathsForVersion = ["/", ...urlSlugTree.getAllSlugs().map((slug) => `/${slug}`)];
-            } else {
-                pathsForVersion = [`/${version}`, ...urlSlugTree.getAllSlugs().map((slug) => `/${version}/${slug}`)];
-            }
+            const pathsForVersion = [`/${version}`, ...urlSlugTree.getAllSlugs().map((slug) => `/${version}/${slug}`)];
             pathsToRevalidate.push(...pathsForVersion);
         });
     } else {

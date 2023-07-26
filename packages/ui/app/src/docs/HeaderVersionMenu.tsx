@@ -57,7 +57,7 @@ export const HeaderVersionMenu: React.FC<HeaderVersionMenu.Props> = ({ versions,
                                                     "rounded-b-md": idx === versions.length - 1,
                                                 }
                                             )}
-                                            href={`/${idx === 0 ? "" : version}`} // TODO: This needs to be changed when we know which version is latest
+                                            href={`/${version}`}
                                         >
                                             <span>{version}</span>
                                             <CheckIcon
