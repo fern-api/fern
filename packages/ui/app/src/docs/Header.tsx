@@ -14,8 +14,6 @@ export const Header: React.FC = () => {
     const hasLogo = logo != null;
     const hasLogoHref = logoHref != null;
 
-    const selectedIndex = 0; // TODO: Implement
-
     const logoContent = hasLogo && (
         <img
             src={resolveFile(logo)}
@@ -36,7 +34,7 @@ export const Header: React.FC = () => {
             )}
             {hasMultipleVersions && (
                 <div>
-                    <HeaderVersionMenu versions={docsInfo.versions} selectedIndex={selectedIndex} />
+                    <HeaderVersionMenu versions={docsInfo.versions} selectedId={docsInfo.activeVersion} />
                 </div>
             )}
         </div>
