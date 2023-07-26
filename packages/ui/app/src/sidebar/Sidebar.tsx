@@ -3,7 +3,6 @@ import { useCallback } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useSearchContext } from "../search-context/useSearchContext";
 import { useSearchService } from "../services/useSearchService";
-import { isUnversionedNavigationConfig } from "../util/docs";
 import { BuiltWithFern } from "./BuiltWithFern";
 import { SidebarContext, SidebarContextValue } from "./context/SidebarContext";
 import styles from "./Sidebar.module.scss";
@@ -17,16 +16,11 @@ export declare namespace Sidebar {
 }
 
 export const Sidebar: React.FC<Sidebar.Props> = ({ expandAllSections = false }) => {
-    const { docsDefinition } = useDocsContext();
+    const { docsInfo } = useDocsContext();
     const { openSearchDialog } = useSearchContext();
     const searchService = useSearchService();
 
     const contextValue = useCallback((): SidebarContextValue => ({ expandAllSections }), [expandAllSections]);
-
-    if (!isUnversionedNavigationConfig(docsDefinition.config.navigation)) {
-        // TODO: Implement
-        return null;
-    }
 
     return (
         <SidebarContext.Provider value={contextValue}>
@@ -35,7 +29,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ expandAllSections = false }) 
                     {searchService.isAvailable && <SidebarSearchBar onClick={openSearchDialog} />}
                 </div>
                 <div className={classNames("flex flex-1 flex-col overflow-y-auto pb-6", styles.scrollingContainer)}>
-                    <SidebarItems navigationItems={docsDefinition.config.navigation.items} slug="" />
+                    <SidebarItems navigationItems={docsInfo.activeNavigationConfig.items} slug="" />
                 </div>
                 <BuiltWithFern />
             </div>

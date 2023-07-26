@@ -5,13 +5,13 @@ import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
 import { ResolvedUrlPath } from "../ResolvedUrlPath";
-import { DocsContext, DocsContextValue } from "./DocsContext";
+import { DocsContext, DocsContextValue, type DocsInfo } from "./DocsContext";
 import { useSlugListeners } from "./useSlugListeners";
 
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
-        activeVersion: string | null;
+        docsInfo: DocsInfo;
         resolvedUrlPath: ResolvedUrlPath;
         nextPath: ResolvedUrlPath | undefined;
         previousPath: ResolvedUrlPath | undefined;
@@ -20,7 +20,7 @@ export declare namespace DocsContextProvider {
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     docsDefinition,
-    activeVersion,
+    docsInfo,
     resolvedUrlPath,
     nextPath,
     previousPath,
@@ -123,7 +123,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             resolvePage,
             resolveFile,
             docsDefinition,
-            activeVersion,
+            docsInfo,
             registerNavigateToPathListener: navigateToPathListeners.registerListener,
             navigateToPath,
             onScrollToPath,
@@ -135,7 +135,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
         }),
         [
             docsDefinition,
-            activeVersion,
+            docsInfo,
             navigateToPath,
             navigateToPathListeners.registerListener,
             nextPath,

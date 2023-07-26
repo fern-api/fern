@@ -3,6 +3,7 @@ import "@blueprintjs/core/lib/css/blueprint.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "@blueprintjs/popover2/lib/css/blueprint-popover2.css";
 import "@blueprintjs/select/lib/css/blueprint-select.css";
+import * as FernRegistryDocsReadV1 from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v2/resources/read";
 import "@fontsource/ibm-plex-mono";
 import classNames from "classnames";
@@ -17,17 +18,31 @@ import { ResolvedUrlPath } from "./ResolvedUrlPath";
 
 FocusStyleManager.onlyShowFocusOnTabs();
 
+interface DocsInfoVersioned {
+    type: "versioned";
+    versions: string[];
+    activeVersion: string;
+    activeNavigationConfig: FernRegistryDocsReadV1.UnversionedNavigationConfig;
+}
+
+interface DocsInfoUnversioned {
+    type: "unversioned";
+    activeNavigationConfig: FernRegistryDocsReadV1.UnversionedNavigationConfig;
+}
+
+type DocsInfo = DocsInfoVersioned | DocsInfoUnversioned;
+
 export declare namespace App {
     export interface Props {
         docs: FernRegistryDocsRead.LoadDocsForUrlResponse;
-        activeVersion: string | null;
+        docsInfo: DocsInfo;
         resolvedUrlPath: ResolvedUrlPath;
         nextPath: ResolvedUrlPath | undefined;
         previousPath: ResolvedUrlPath | undefined;
     }
 }
 
-export const App: React.FC<App.Props> = ({ docs, activeVersion, resolvedUrlPath, nextPath, previousPath }) => {
+export const App: React.FC<App.Props> = ({ docs, docsInfo, resolvedUrlPath, nextPath, previousPath }) => {
     useEffect(() => {
         if (process.env.NEXT_PUBLIC_POSTHOG_API_KEY != null && process.env.NEXT_PUBLIC_POSTHOG_API_KEY.length > 0) {
             initializePosthog(process.env.NEXT_PUBLIC_POSTHOG_API_KEY);
@@ -42,7 +57,7 @@ export const App: React.FC<App.Props> = ({ docs, activeVersion, resolvedUrlPath,
                 ),
                 <DocsContextProvider
                     docsDefinition={docs.definition}
-                    activeVersion={activeVersion}
+                    docsInfo={docsInfo}
                     resolvedUrlPath={resolvedUrlPath}
                     nextPath={nextPath}
                     previousPath={previousPath}
