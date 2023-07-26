@@ -5,20 +5,20 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.0.122",
     },
     [GeneratorName.TYPESCRIPT_EXPRESS]: {
-        version: "0.2.2",
+        version: "0.7.2",
         output: {
             location: "local-file-system",
             path: "../../src/fern",
         },
     },
     [GeneratorName.JAVA_MODEL]: {
-        version: "0.3.6",
+        version: "0.3.7",
     },
     [GeneratorName.JAVA_SDK]: {
-        version: "0.3.6",
+        version: "0.3.7",
     },
     [GeneratorName.JAVA_SPRING]: {
-        version: "0.3.6",
+        version: "0.3.7",
         output: {
             location: "local-file-system",
             path: "../../src/main/java/com/fern",
@@ -28,16 +28,16 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         },
     },
     [GeneratorName.TYPESCRIPT]: {
-        version: "0.0.247",
+        version: "0.7.2",
     },
     [GeneratorName.TYPESCRIPT_SDK]: {
-        version: "0.5.25",
+        version: "0.7.2",
     },
     [GeneratorName.TYPESCRIPT_NODE_SDK]: {
-        version: "0.6.4",
+        version: "0.7.2",
     },
     [GeneratorName.TYPESCRIPT_BROWSER_SDK]: {
-        version: "0.6.4",
+        version: "0.7.2",
     },
     [GeneratorName.PYTHON_PYDANTIC]: {
         version: "0.3.7",
@@ -53,10 +53,10 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.3.7",
     },
     [GeneratorName.GO_MODEL]: {
-        version: "0.0.1",
+        version: "0.0.14",
     },
     [GeneratorName.GO_SDK]: {
-        version: "0.0.3",
+        version: "0.0.14",
         output: {
             location: "local-file-system",
             path: "../../sdk/go",
