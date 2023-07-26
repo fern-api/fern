@@ -20,13 +20,14 @@ FocusStyleManager.onlyShowFocusOnTabs();
 export declare namespace App {
     export interface Props {
         docs: FernRegistryDocsRead.LoadDocsForUrlResponse;
+        activeVersion: string | null;
         resolvedUrlPath: ResolvedUrlPath;
         nextPath: ResolvedUrlPath | undefined;
         previousPath: ResolvedUrlPath | undefined;
     }
 }
 
-export const App: React.FC<App.Props> = ({ docs, resolvedUrlPath, nextPath, previousPath }) => {
+export const App: React.FC<App.Props> = ({ docs, activeVersion, resolvedUrlPath, nextPath, previousPath }) => {
     useEffect(() => {
         if (process.env.NEXT_PUBLIC_POSTHOG_API_KEY != null && process.env.NEXT_PUBLIC_POSTHOG_API_KEY.length > 0) {
             initializePosthog(process.env.NEXT_PUBLIC_POSTHOG_API_KEY);
@@ -41,6 +42,7 @@ export const App: React.FC<App.Props> = ({ docs, resolvedUrlPath, nextPath, prev
                 ),
                 <DocsContextProvider
                     docsDefinition={docs.definition}
+                    activeVersion={activeVersion}
                     resolvedUrlPath={resolvedUrlPath}
                     nextPath={nextPath}
                     previousPath={previousPath}

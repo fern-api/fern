@@ -11,6 +11,7 @@ import { useSlugListeners } from "./useSlugListeners";
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
+        activeVersion: string | null;
         resolvedUrlPath: ResolvedUrlPath;
         nextPath: ResolvedUrlPath | undefined;
         previousPath: ResolvedUrlPath | undefined;
@@ -19,6 +20,7 @@ export declare namespace DocsContextProvider {
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     docsDefinition,
+    activeVersion,
     resolvedUrlPath,
     nextPath,
     previousPath,
@@ -121,6 +123,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             resolvePage,
             resolveFile,
             docsDefinition,
+            activeVersion,
             registerNavigateToPathListener: navigateToPathListeners.registerListener,
             navigateToPath,
             onScrollToPath,
@@ -132,6 +135,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
         }),
         [
             docsDefinition,
+            activeVersion,
             navigateToPath,
             navigateToPathListeners.registerListener,
             nextPath,
