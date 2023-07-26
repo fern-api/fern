@@ -5,7 +5,6 @@ import * as FernRegistryDocsReadV2 from "@fern-fern/registry-browser/api/resourc
 import { GetStaticPaths, GetStaticProps } from "next";
 import { Inter } from "next/font/google";
 import Head from "next/head";
-import { StyleSheet } from "../../components/renderers/Stylesheet";
 import { REGISTRY_SERVICE } from "../../service";
 import { getSlugFromUrl } from "../../url-path-resolver/getSlugFromUrl";
 import { UrlPathResolver } from "../../url-path-resolver/UrlPathResolver";
@@ -31,22 +30,34 @@ export declare namespace Docs {
 
 export default function Docs({
     docs,
-    typographyStyleSheet,
-    backgroundImageStyleSheet,
+    typographyStyleSheet = "",
+    backgroundImageStyleSheet = "",
     resolvedUrlPath,
     nextPath,
     previousPath,
 }: Docs.Props): JSX.Element {
     return (
         <>
-            {typographyStyleSheet != null && <StyleSheet stylesheet={typographyStyleSheet} />}
-            {backgroundImageStyleSheet != null && <StyleSheet stylesheet={backgroundImageStyleSheet} />}
             <main className={classNames(inter.className, "typography-font-body")}>
+                {/* 
+                    We concatenate all global styles into a single instance,
+                    as styled JSX will only create one instance of global styles
+                    for each component.
+                */}
+                {/* eslint-disable-next-line react/no-unknown-property */}
+                <style jsx global>
+                    {`
+                        ${typographyStyleSheet}
+                        ${backgroundImageStyleSheet}
+                    `}
+                </style>
                 <Head>
                     {docs.definition.config.title != null && <title>{docs.definition.config.title}</title>}
                     {docs.definition.config.favicon != null && (
                         <link rel="icon" id="favicon" href={docs.definition.files[docs.definition.config.favicon]} />
                     )}
+                    {/* {typographyStyleSheet != null && <style id="typography-stylesheet">{typographyStyleSheet}</style>}
+                    {backgroundImageStyleSheet != null && <style id="bg-image-stylesheet">{backgroundImageStyleSheet}</style>} */}
                 </Head>
                 <App
                     docs={docs}

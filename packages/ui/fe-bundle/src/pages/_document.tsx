@@ -10,7 +10,7 @@ export default function Document(): JSX.Element {
                         backgroundImage: "var(--docs-background-image)",
                     }}
                     className="fixed inset-0 bg-fixed bg-right-top bg-no-repeat"
-                ></span>
+                />
                 <Main />
                 <NextScript />
             </body>
