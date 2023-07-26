@@ -3,6 +3,7 @@ import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources
 import React, { useCallback } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { ApiDefinitionContext, ApiDefinitionContextValue } from "./ApiDefinitionContext";
+import { mockTypes } from "./mockTypes";
 
 export declare namespace ApiDefinitionContextProvider {
     export type Props = React.PropsWithChildren<{
@@ -28,7 +29,10 @@ export const ApiDefinitionContextProvider: React.FC<ApiDefinitionContextProvider
 
     const resolveTypeById = useCallback(
         (typeId: FernRegistryApiRead.TypeId): FernRegistryApiRead.TypeDefinition => {
-            const type = apiDefinition.types[typeId];
+            let type = apiDefinition.types[typeId];
+            if (type == null) {
+                type = mockTypes[typeId];
+            }
             if (type == null) {
                 throw new Error("Type does not exist");
             }
