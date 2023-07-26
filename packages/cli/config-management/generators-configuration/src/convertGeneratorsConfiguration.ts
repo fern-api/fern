@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { readFile } from "fs";
+import { readFileSync } from "fs";
 import {
     GenerationLanguage,
     GeneratorGroup,
@@ -162,11 +162,11 @@ function getGithubLicense({
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     githubLicenseSchema: GithubLicenseSchema;
 }): FernFiddle.GithubLicense {
-    if (githubLicenseSchema === "MIT" || githubLicenseSchema === "Apache-2.0") {
-        return FernFiddle.GithubLicense.id(githubLicenseSchema);
+    if (typeof githubLicenseSchema === "string") {
+        return FernFiddle.GithubLicense.id(getFiddleLicenseIdFromGithubLicense(githubLicenseSchema));
     }
-    const licenseFile = resolve(dirname(absolutePathToGeneratorsConfiguration), githubLicenseSchema);
-    const licenseContent = readFile(licenseFile);
+    const licenseFile = resolve(dirname(absolutePathToGeneratorsConfiguration), githubLicenseSchema.custom);
+    const licenseContent = readFileSync(licenseFile);
     return FernFiddle.GithubLicense.file(licenseContent.toString());
 }
 
@@ -215,6 +215,15 @@ function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubP
         default:
             assertNever(output);
     }
+}
+
+function getFiddleLicenseIdFromGithubLicense(githubLicense: string): FernFiddle.GithubLicenseId {
+    for (const [_, value] of Object.entries(FernFiddle.GithubLicenseId)) {
+        if (githubLicense === value) {
+            return value;
+        }
+    }
+    throw new Error("Unsupported license: " + String(githubLicense));
 }
 
 function getLanguageFromGeneratorName(generatorName: string) {
