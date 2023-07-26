@@ -56,8 +56,6 @@ export default function Docs({
                     {docs.definition.config.favicon != null && (
                         <link rel="icon" id="favicon" href={docs.definition.files[docs.definition.config.favicon]} />
                     )}
-                    {/* {typographyStyleSheet != null && <style id="typography-stylesheet">{typographyStyleSheet}</style>}
-                    {backgroundImageStyleSheet != null && <style id="bg-image-stylesheet">{backgroundImageStyleSheet}</style>} */}
                 </Head>
                 <App
                     docs={docs}
