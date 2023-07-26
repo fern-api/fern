@@ -1,6 +1,5 @@
 import { PLATFORM } from "@fern-api/core-utils";
 import { useKeyboardCommand } from "@fern-api/react-commons";
-import classNames from "classnames";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { MobileSidebar } from "../mobile-sidebar/MobileSidebar";
 import { useSearchContext } from "../search-context/useSearchContext";
@@ -32,7 +31,7 @@ export const Docs: React.FC = () => {
                 </div>
             </div>
             <div className="flex min-h-0 flex-1">
-                <div className={classNames("w-64", "hidden md:flex")}>
+                <div className="hidden w-64 md:flex">
                     <Sidebar />
                 </div>
                 <div className="flex min-w-0 flex-1 flex-col">

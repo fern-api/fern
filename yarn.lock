@@ -2551,9 +2551,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/auth@workspace:packages/cli/auth"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/services": "workspace:*"
@@ -2577,9 +2574,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/cli@workspace:packages/cli/cli"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/auth": "workspace:*"
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
@@ -2653,9 +2647,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/common-components@workspace:packages/commons/react/common-components"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.11.5
     "@blueprintjs/icons": ^4.4.0
     "@fern-api/loadable": "workspace:*"
@@ -2680,9 +2671,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/compile-root@workspace:packages/_root"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/auth": "workspace:*"
     "@fern-api/cli": "workspace:*"
     "@fern-api/common-components": "workspace:*"
@@ -2748,9 +2736,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/config-management-commons@workspace:packages/cli/config-management/commons"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@types/jest": ^29.0.3
@@ -2769,9 +2754,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/contexted-dialog@workspace:packages/commons/react/contexted-dialog"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.11.5
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/react-commons": "workspace:*"
@@ -2798,9 +2780,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/core-utils@workspace:packages/commons/core-utils"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/ua-parser-js": ^0.7.36
@@ -2819,9 +2798,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/demo-setup@workspace:packages/demo-setup"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/auth": "workspace:*"
     "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
     "@fern-fern/postman-sdk": ^0.0.20
@@ -2852,9 +2828,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/dependencies-configuration@workspace:packages/cli/config-management/dependencies-configuration"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
@@ -2877,9 +2850,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/docker-utils@workspace:packages/cli/generation/local-generation/docker-utils"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": "workspace:*"
     "@types/dockerode": ^3.3.9
     "@types/jest": ^29.0.3
@@ -2898,16 +2868,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/docs-configuration@workspace:packages/cli/config-management/docs-configuration"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-fern/docs-config": 0.0.31
-    "@fern-fern/registry-node": 0.11.0-1-g6a0b1c6
+    "@fern-fern/registry-node": 0.11.1-2-gd8ee803
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.5
     "@types/node": ^18.7.18
@@ -2929,9 +2896,6 @@ __metadata:
     "@aws-cdk/aws-s3": ^1.202.0
     "@aws-cdk/aws-s3-deployment": ^1.202.0
     "@aws-cdk/core": ^1.202.0
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-fern/fern-cloud-sdk": ^0.0.42
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -2948,9 +2912,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/ete-tests@workspace:packages/cli/ete-tests"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
@@ -2975,12 +2936,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/fe-bundle@workspace:packages/ui/fe-bundle"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/ui": "workspace:*"
-    "@fern-fern/registry-browser": 0.11.0-1-g6a0b1c6
+    "@fern-fern/registry-browser": 0.11.1-2-gd8ee803
     "@tailwindcss/typography": ^0.5.9
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3009,9 +2967,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/fonts@workspace:packages/commons/react/fonts"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
@@ -3031,9 +2986,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/fs-utils@workspace:packages/commons/fs-utils"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3052,9 +3004,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/generators-configuration@workspace:packages/cli/config-management/generators-configuration"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
@@ -3080,9 +3029,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/init@workspace:packages/cli/init"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/auth": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
@@ -3112,9 +3058,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/ir-generator@workspace:packages/cli/generation/ir-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
@@ -3143,9 +3086,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/ir-migrations@workspace:packages/cli/generation/ir-migrations"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
@@ -3193,9 +3133,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/json-schema@workspace:packages/cli/yaml/json-schema"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^29.0.3
@@ -3216,9 +3153,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/loadable@workspace:packages/commons/loadable"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3235,9 +3169,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/local-workspace-runner@workspace:packages/cli/generation/local-generation/local-workspace-runner"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/docker-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
@@ -3269,9 +3200,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/logger@workspace:packages/cli/logger"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3289,9 +3217,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/logging-execa@workspace:packages/commons/logging-execa"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/logger": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3310,9 +3235,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/login@workspace:packages/cli/login"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/auth": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/posthog-manager": "workspace:*"
@@ -3341,9 +3263,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/manage-docs-configuration@workspace:packages/cli/config-management/manage-docs-configuration"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
@@ -3367,9 +3286,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/manage-generator@workspace:packages/cli/config-management/manage-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/task-context": "workspace:*"
@@ -3388,9 +3304,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/openapi-ir-to-fern@workspace:packages/cli/openapi-ir-to-fern"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/openapi-parser": "workspace:*"
@@ -3416,9 +3329,6 @@ __metadata:
   resolution: "@fern-api/openapi-migrator@workspace:packages/cli/openapi-migrator"
   dependencies:
     "@apidevtools/swagger-parser": ^10.1.0
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/task-context": "workspace:*"
@@ -3442,9 +3352,6 @@ __metadata:
   resolution: "@fern-api/openapi-parser@workspace:packages/cli/openapi-parser"
   dependencies:
     "@apidevtools/swagger-parser": ^10.1.0
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
@@ -3470,9 +3377,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/posthog-manager@workspace:packages/cli/posthog-manager"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/auth": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
@@ -3494,9 +3398,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/project-configuration@workspace:packages/cli/config-management/project-configuration"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
@@ -3517,9 +3418,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/project-loader@workspace:packages/cli/project-loader"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
@@ -3545,9 +3443,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/react-commons@workspace:packages/commons/react/react-commons"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.11.5
     "@fern-api/core-utils": "workspace:*"
     "@types/jest": ^29.0.3
@@ -3570,9 +3465,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/react-query-utils@workspace:packages/commons/react/react-query-utils"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/loadable": "workspace:*"
     "@tanstack/react-query": ^4.29.7
     "@types/jest": ^29.0.3
@@ -3594,9 +3486,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/register@workspace:packages/cli/register"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/auth": "workspace:*"
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
@@ -3605,7 +3494,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/ir-model": 0.0.2653
-    "@fern-fern/registry-node": 0.11.0-1-g6a0b1c6
+    "@fern-fern/registry-node": 0.11.1-2-gd8ee803
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -3623,9 +3512,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/remote-workspace-runner@workspace:packages/cli/generation/remote-generation/remote-workspace-runner"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/auth": "workspace:*"
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
@@ -3641,7 +3527,7 @@ __metadata:
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.285
     "@fern-fern/ir-model": 0.0.2653
-    "@fern-fern/registry-node": 0.11.0-1-g6a0b1c6
+    "@fern-fern/registry-node": 0.11.1-2-gd8ee803
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
@@ -3668,9 +3554,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/routing-utils@workspace:packages/commons/react/routing-utils"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.11.5
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3694,9 +3577,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/scripts@workspace:packages/scripts"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/json-schema": "workspace:*"
     "@types/jest": ^29.0.3
@@ -3727,9 +3607,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/semver-utils@workspace:packages/cli/semver-utils"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -3746,12 +3623,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/services@workspace:packages/cli/services"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
     "@fern-fern/fiddle-sdk": ^0.0.285
-    "@fern-fern/registry-node": 0.11.0-1-g6a0b1c6
+    "@fern-fern/registry-node": 0.11.1-2-gd8ee803
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -3767,9 +3641,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/split-view@workspace:packages/commons/react/split-view"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.11.5
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/react-commons": "workspace:*"
@@ -3797,9 +3668,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/task-context@workspace:packages/cli/task-context"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/logger": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3816,9 +3684,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/theme@workspace:packages/commons/react/theme"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.11.5
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3841,9 +3706,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/toaster@workspace:packages/commons/react/toaster"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.11.5
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3865,9 +3727,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/ui@workspace:packages/ui/app"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.11.5
     "@blueprintjs/icons": ^4.4.0
     "@blueprintjs/popover2": ^1.8.0
@@ -3876,9 +3735,10 @@ __metadata:
     "@fern-api/react-commons": "workspace:*"
     "@fern-api/routing-utils": "workspace:*"
     "@fern-api/theme": "workspace:*"
-    "@fern-fern/registry-browser": 0.11.0-1-g6a0b1c6
+    "@fern-fern/registry-browser": 0.11.1-2-gd8ee803
     "@fontsource/ibm-plex-mono": ^4.5.13
     "@headlessui/react": ^1.7.15
+    "@react-hook/size": ^2.1.2
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/marked": ^5.0.0
@@ -3918,9 +3778,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/validator@workspace:packages/cli/yaml/validator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
@@ -3961,9 +3818,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/workspace-loader@workspace:packages/cli/workspace-loader"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/dependencies-configuration": "workspace:*"
     "@fern-api/docs-configuration": "workspace:*"
@@ -4003,9 +3857,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/yaml-formatter@workspace:packages/cli/yaml/formatter"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
@@ -4028,9 +3879,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/yaml-migrations@workspace:packages/cli/yaml/yaml-migrations"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
@@ -4062,9 +3910,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/yaml-schema@workspace:packages/cli/yaml/yaml-schema"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-fern/ir-model": 0.0.2653
     "@types/jest": ^29.0.3
@@ -4297,29 +4142,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/registry-browser@npm:0.11.0-1-g6a0b1c6":
-  version: 0.11.0-1-g6a0b1c6
-  resolution: "@fern-fern/registry-browser@npm:0.11.0-1-g6a0b1c6"
+"@fern-fern/registry-browser@npm:0.11.1-2-gd8ee803":
+  version: 0.11.1-2-gd8ee803
+  resolution: "@fern-fern/registry-browser@npm:0.11.1-2-gd8ee803"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 1.4.0
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: d78c0519b4a5691101e5fa9cac01581f4b9b267736ae3c07535dd6784b94bc6d3abaec7d0fac66842efec31bee036a54553ac3761898ea7421de205abd24a7e4
+  checksum: d317940b7d7c0ad661ef32e172f8777adcaec13b43f44b23baa349d7efc3a5fb49192caf7abdc5aca17d200487d0914b211c7ca7972329458002047f7e90bb1a
   languageName: node
   linkType: hard
 
-"@fern-fern/registry-node@npm:0.11.0-1-g6a0b1c6":
-  version: 0.11.0-1-g6a0b1c6
-  resolution: "@fern-fern/registry-node@npm:0.11.0-1-g6a0b1c6"
+"@fern-fern/registry-node@npm:0.11.1-2-gd8ee803":
+  version: 0.11.1-2-gd8ee803
+  resolution: "@fern-fern/registry-node@npm:0.11.1-2-gd8ee803"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: 63965b72b69cb62105090d5db37c1663fdcf22676be882846684396b4c4c7ced6ff4a4cbd5860db9845afd13e1c6f84547bd1bb4b1c43bc4fe0132f3a8b8e761
+  checksum: b773d67740aac42cf87d76ab89c96ff9992065be825d3557b6562fca35795c2c7436717555fe1419b3687472d62c1bc165642ec71192b031d1306229184aa330
   languageName: node
   linkType: hard
 
@@ -4738,7 +4583,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@juggle/resize-observer@npm:^3.4.0":
+"@juggle/resize-observer@npm:^3.3.1, @juggle/resize-observer@npm:^3.4.0":
   version: 3.4.0
   resolution: "@juggle/resize-observer@npm:3.4.0"
   checksum: 2505028c05cc2e17639fcad06218b1c4b60f932a4ebb4b41ab546ef8c157031ae377e3f560903801f6d01706dbefd4943b6c4704bf19ed86dfa1c62f1473a570
@@ -5230,6 +5075,49 @@ __metadata:
   version: 2.11.6
   resolution: "@popperjs/core@npm:2.11.6"
   checksum: 47fb328cec1924559d759b48235c78574f2d71a8a6c4c03edb6de5d7074078371633b91e39bbf3f901b32aa8af9b9d8f82834856d2f5737a23475036b16817f0
+  languageName: node
+  linkType: hard
+
+"@react-hook/latest@npm:^1.0.2":
+  version: 1.0.3
+  resolution: "@react-hook/latest@npm:1.0.3"
+  peerDependencies:
+    react: ">=16.8"
+  checksum: 2408c9cd35c5cfa7697b6da3bc5eebef254a932ade70955074c474f23be7dd3e2f81bbba12edcc9208bd0f89c6ed366d6b11d4f6d7b1052877a0bac8f74afad4
+  languageName: node
+  linkType: hard
+
+"@react-hook/passive-layout-effect@npm:^1.2.0":
+  version: 1.2.1
+  resolution: "@react-hook/passive-layout-effect@npm:1.2.1"
+  peerDependencies:
+    react: ">=16.8"
+  checksum: 217cb8aa90fb8e677672319a9a466d7752890cf4357c76df000b207696e9cc717cf2ee88080671cc9dae238a82f92093ab4f61ab2f6032d2a8db958fc7d99b5d
+  languageName: node
+  linkType: hard
+
+"@react-hook/resize-observer@npm:^1.2.1":
+  version: 1.2.6
+  resolution: "@react-hook/resize-observer@npm:1.2.6"
+  dependencies:
+    "@juggle/resize-observer": ^3.3.1
+    "@react-hook/latest": ^1.0.2
+    "@react-hook/passive-layout-effect": ^1.2.0
+  peerDependencies:
+    react: ">=16.8"
+  checksum: d2ff6c50e847514acad774f2a4010fb1e6782a231ae00c9507c1a98028b3a26399e35f094170918f11b1eeafc581d60da7641bc178d496abf00c56eee8a6b36b
+  languageName: node
+  linkType: hard
+
+"@react-hook/size@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "@react-hook/size@npm:2.1.2"
+  dependencies:
+    "@react-hook/passive-layout-effect": ^1.2.0
+    "@react-hook/resize-observer": ^1.2.1
+  peerDependencies:
+    react: ">=16.8"
+  checksum: 89876e93957f420ba63518b60992b46ca82b0d12da0cf50ad487461e0b4230ec0e036ecf100840e2b2e93c9101895ad33e8bd6bc02a25641c28c904a09ab2563
   languageName: node
   linkType: hard
 
@@ -9671,7 +9559,7 @@ env-cmd@toddbluhm/env-cmd:
     jsonc-parser: ~2.2.1
     lint-staged: ^13.0.3
     lodash-es: ^4.17.21
-    mrlint: ^0.0.122
+    mrlint: ^0.0.124
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     react: ^18.2.0
@@ -13566,12 +13454,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.122":
-  version: 0.0.122
-  resolution: "mrlint@npm:0.0.122"
+"mrlint@npm:^0.0.124":
+  version: 0.0.124
+  resolution: "mrlint@npm:0.0.124"
   bin:
     mrlint: cli.cjs
-  checksum: a384c16d54def6932046f093f0a1cb79ada0fbf2cbba1cec0cd88e8a62cb60a2aa102f8854c29db3bcea1f3e755952f7798f9457906e4a8a24b6a6b56083f98d
+  checksum: 05d11793604bb37f51822a785a9558fa66d9b81517a7c9ede9b5f7091a806ded267f4fe9ecb273e58abe1ba17e2265f1305b5b686adced912c127e065285a30d
   languageName: node
   linkType: hard
 

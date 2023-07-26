@@ -190,6 +190,7 @@ async function convertDocsConfiguration({
                       context,
                   })
                 : undefined,
+        logoHeight: docsDefinition.config.logo?.height,
         logoHref: docsDefinition.config.logo?.href,
         favicon:
             docsDefinition.config.favicon != null

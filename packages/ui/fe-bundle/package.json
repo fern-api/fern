@@ -40,16 +40,13 @@
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/ui": "workspace:*",
-    "@fern-fern/registry-browser": "0.11.0-1-g6a0b1c6",
+    "@fern-fern/registry-browser": "0.11.1-2-gd8ee803",
     "next": "^13.4.4",
     "next-mdx-remote": "^4.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.19.1",
-    "@babel/preset-env": "^7.19.1",
-    "@babel/preset-typescript": "^7.18.6",
     "@tailwindcss/typography": "^0.5.9",
     "@types/jest": "^29.0.3",
     "@types/node": "^18.7.18",

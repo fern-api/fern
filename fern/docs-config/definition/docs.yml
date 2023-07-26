@@ -30,6 +30,7 @@ types:
   LogoInfo:
     properties:
       path: string
+      height: optional<double>
       href: string
 
   DocsTypographyConfig:
@@ -68,11 +69,16 @@ types:
       accentPrimary: optional<string>
 
   NavbarLink:
-    properties:
-      text: string
-      url: string
-      style: optional<NavbarLinkStyle>
+    union:
+      primary: NavbarPrimaryLink
+      secondary: NavbarSecondaryLink
 
-  NavbarLinkStyle:
-    enum:
-      - primary
+  NavbarPrimaryLink:
+    properties:
+      url: string
+      text: string
+
+  NavbarSecondaryLink:
+    properties:
+      url: string
+      text: string

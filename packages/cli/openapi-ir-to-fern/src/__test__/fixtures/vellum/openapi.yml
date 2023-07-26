@@ -249,6 +249,12 @@ paths:
               schema:
                 $ref: "#/components/schemas/GenerateErrorResponse"
           description: ""
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerateErrorResponse"
+          description: ""
         "404":
           content:
             application/json:
@@ -277,7 +283,7 @@ paths:
         - generate-stream
       requestBody:
         content:
-          application/x-ndjson:
+          application/json:
             schema:
               $ref: "#/components/schemas/GenerateStreamBodyRequest"
         required: true
@@ -291,6 +297,12 @@ paths:
                 $ref: "#/components/schemas/GenerateStreamResponse"
           description: ""
         "400":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenerateErrorResponse"
+          description: ""
+        "403":
           content:
             application/json:
               schema:
@@ -773,45 +785,6 @@ components:
         source_handle_id:
           type: string
           nullable: true
-    ConstantValueChatHistoryVariable:
-      type: object
-      properties:
-        type:
-          type: string
-          readOnly: true
-        value:
-          type: array
-          items:
-            $ref: "#/components/schemas/ChatMessage"
-          nullable: true
-      required:
-        - type
-        - value
-    ConstantValueJsonVariable:
-      type: object
-      properties:
-        type:
-          type: string
-          readOnly: true
-        value:
-          type: object
-          additionalProperties: {}
-          nullable: true
-      required:
-        - type
-        - value
-    ConstantValueStringVariable:
-      type: object
-      properties:
-        type:
-          type: string
-          readOnly: true
-        value:
-          type: string
-          nullable: true
-      required:
-        - type
-        - value
     ContentType:
       enum:
         - STRING
@@ -1154,6 +1127,11 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/WorkflowRequestInputRequest"
+        external_id:
+          type: string
+          nullable: true
+          minLength: 1
+          description: Optionally include a unique identifier for tracking purposes.
       required:
         - inputs
     FinishReasonEnum:
@@ -1508,6 +1486,7 @@ components:
             * `GOOGLE` - Google
             * `HOSTED` - Hosted
             * `MOSAICML` - MosaicML
+            * `MYSTIC` - Mystic
             * `OPENAI` - OpenAI
             * `PYQ` - Pyq
         external_id:
@@ -1804,6 +1783,7 @@ components:
         - GOOGLE
         - HOSTED
         - MOSAICML
+        - MYSTIC
         - OPENAI
         - PYQ
       type: string
@@ -1813,6 +1793,7 @@ components:
         * `GOOGLE` - Google
         * `HOSTED` - Hosted
         * `MOSAICML` - MosaicML
+        * `MYSTIC` - Mystic
         * `OPENAI` - OpenAI
         * `PYQ` - Pyq
     RegisterPromptErrorResponse:
@@ -1917,6 +1898,7 @@ components:
             * `GOOGLE` - Google
             * `HOSTED` - Hosted
             * `MOSAICML` - MosaicML
+            * `MYSTIC` - Mystic
             * `OPENAI` - OpenAI
             * `PYQ` - Pyq
         model:
@@ -2402,6 +2384,41 @@ components:
           description: Feedback regarding the quality of previously generated completions
       required:
         - actuals
+    TerminalNodeChatHistoryResult:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The unique name given to the terminal node that produced this
+            output.
+        type:
+          type: string
+          readOnly: true
+        value:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChatMessage"
+      required:
+        - name
+        - type
+        - value
+    TerminalNodeJsonResult:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The unique name given to the terminal node that produced this
+            output.
+        type:
+          type: string
+          readOnly: true
+        value:
+          type: object
+          additionalProperties: {}
+      required:
+        - name
+        - type
+        - value
     TerminalNodeResult:
       type: object
       properties:
@@ -2422,15 +2439,31 @@ components:
         - output
     TerminalNodeResultOutput:
       oneOf:
-        - $ref: "#/components/schemas/ConstantValueStringVariable"
-        - $ref: "#/components/schemas/ConstantValueJsonVariable"
-        - $ref: "#/components/schemas/ConstantValueChatHistoryVariable"
+        - $ref: "#/components/schemas/TerminalNodeStringResult"
+        - $ref: "#/components/schemas/TerminalNodeJsonResult"
+        - $ref: "#/components/schemas/TerminalNodeChatHistoryResult"
       discriminator:
         propertyName: type
         mapping:
-          STRING: "#/components/schemas/ConstantValueStringVariable"
-          JSON: "#/components/schemas/ConstantValueJsonVariable"
-          CHAT_HISTORY: "#/components/schemas/ConstantValueChatHistoryVariable"
+          STRING: "#/components/schemas/TerminalNodeStringResult"
+          JSON: "#/components/schemas/TerminalNodeJsonResult"
+          CHAT_HISTORY: "#/components/schemas/TerminalNodeChatHistoryResult"
+    TerminalNodeStringResult:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The unique name given to the terminal node that produced this
+            output.
+        type:
+          type: string
+          readOnly: true
+        value:
+          type: string
+      required:
+        - name
+        - type
+        - value
     TestSuiteTestCase:
       type: object
       properties:
@@ -2553,9 +2586,32 @@ components:
           $ref: "#/components/schemas/SandboxMetricInputParamsRequest"
       required:
         - inputs
+    WorkflowEventError:
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          $ref: "#/components/schemas/WorkflowExecutionEventErrorCode"
+      required:
+        - code
+        - message
+    WorkflowExecutionEventErrorCode:
+      enum:
+        - WORKFLOW_INITIALIZATION
+        - NODE_EXECUTION
+      type: string
+      description: |-
+        * `WORKFLOW_INITIALIZATION` - WORKFLOW_INITIALIZATION
+        * `NODE_EXECUTION` - NODE_EXECUTION
     WorkflowExecutionNodeResultEvent:
       type: object
       properties:
+        run_id:
+          type: string
+        external_id:
+          type: string
+          nullable: true
         type:
           type: string
           readOnly: true
@@ -2563,10 +2619,16 @@ components:
           $ref: "#/components/schemas/WorkflowNodeResultEvent"
       required:
         - data
+        - run_id
         - type
     WorkflowExecutionWorkflowResultEvent:
       type: object
       properties:
+        run_id:
+          type: string
+        external_id:
+          type: string
+          nullable: true
         type:
           type: string
           readOnly: true
@@ -2574,6 +2636,7 @@ components:
           $ref: "#/components/schemas/WorkflowResultEvent"
       required:
         - data
+        - run_id
         - type
     WorkflowNodeResultData:
       oneOf:
@@ -2602,7 +2665,7 @@ components:
         node_result_id:
           type: string
         state:
-          $ref: "#/components/schemas/WorkflowNodeResultEventStateEnum"
+          $ref: "#/components/schemas/WorkflowNodeResultEventState"
         ts:
           type: string
           format: date-time
@@ -2612,7 +2675,8 @@ components:
             - $ref: "#/components/schemas/WorkflowNodeResultData"
           nullable: true
         error:
-          type: string
+          allOf:
+            - $ref: "#/components/schemas/WorkflowEventError"
           nullable: true
       required:
         - data
@@ -2620,7 +2684,7 @@ components:
         - node_id
         - node_result_id
         - state
-    WorkflowNodeResultEventStateEnum:
+    WorkflowNodeResultEventState:
       enum:
         - INITIATED
         - STREAMING
@@ -2687,31 +2751,122 @@ components:
       properties:
         id:
           type: string
-        workflow_result_id:
-          type: string
         state:
-          $ref: "#/components/schemas/WorkflowResultEventStateEnum"
+          $ref: "#/components/schemas/WorkflowNodeResultEventState"
         ts:
           type: string
           format: date-time
+        output:
+          allOf:
+            - $ref: "#/components/schemas/WorkflowResultEventOutputData"
+          nullable: true
         error:
-          type: string
+          allOf:
+            - $ref: "#/components/schemas/WorkflowEventError"
           nullable: true
       required:
         - id
+        - output
         - state
         - ts
-        - workflow_result_id
-    WorkflowResultEventStateEnum:
-      enum:
-        - INITIATED
-        - FULFILLED
-        - REJECTED
-      type: string
-      description: |-
-        * `INITIATED` - INITIATED
-        * `FULFILLED` - FULFILLED
-        * `REJECTED` - REJECTED
+    WorkflowResultEventOutputData:
+      oneOf:
+        - $ref: "#/components/schemas/WorkflowResultEventOutputDataString"
+        - $ref: "#/components/schemas/WorkflowResultEventOutputDataJSON"
+        - $ref: "#/components/schemas/WorkflowResultEventOutputDataChatHistory"
+      discriminator:
+        propertyName: type
+        mapping:
+          STRING: "#/components/schemas/WorkflowResultEventOutputDataString"
+          JSON: "#/components/schemas/WorkflowResultEventOutputDataJSON"
+          CHAT_HISTORY: "#/components/schemas/WorkflowResultEventOutputDataChatHistory"
+    WorkflowResultEventOutputDataChatHistory:
+      type: object
+      properties:
+        name:
+          type: string
+        state:
+          $ref: "#/components/schemas/WorkflowNodeResultEventState"
+        node_id:
+          type: string
+        type:
+          type: string
+          readOnly: true
+        delta:
+          type: string
+          nullable: true
+          readOnly: true
+          description: The newly output string value. Only relevant for string outputs
+            with a state of STREAMING.
+        value:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChatMessage"
+          nullable: true
+      required:
+        - delta
+        - name
+        - node_id
+        - state
+        - type
+    WorkflowResultEventOutputDataJSON:
+      type: object
+      properties:
+        name:
+          type: string
+        state:
+          $ref: "#/components/schemas/WorkflowNodeResultEventState"
+        node_id:
+          type: string
+        type:
+          type: string
+          readOnly: true
+        delta:
+          type: string
+          nullable: true
+          readOnly: true
+          description: The newly output string value. Only relevant for string outputs
+            with a state of STREAMING.
+        value:
+          type: object
+          additionalProperties: {}
+          nullable: true
+      required:
+        - delta
+        - name
+        - node_id
+        - state
+        - type
+        - value
+    WorkflowResultEventOutputDataString:
+      type: object
+      properties:
+        name:
+          type: string
+        state:
+          $ref: "#/components/schemas/WorkflowNodeResultEventState"
+        node_id:
+          type: string
+        type:
+          type: string
+          readOnly: true
+        delta:
+          type: string
+          nullable: true
+          description: The newly output string value, meant to be concatenated with
+            all previous. Will be non-null for events of state STREAMING.
+        value:
+          type: string
+          nullable: true
+          description: The entire string value. Will be non-null for events of state
+            FULFILLED.
+      required:
+        - delta
+        - name
+        - node_id
+        - state
+        - type
+        - value
     WorkflowStreamEvent:
       oneOf:
         - $ref: "#/components/schemas/WorkflowExecutionWorkflowResultEvent"

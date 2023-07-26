@@ -13,6 +13,10 @@ exports[`open api parser vellum simple 1`] = `
           "status-code": 409,
           "type": "RegisterPromptErrorResponse",
         },
+        "ForbiddenError": {
+          "status-code": 403,
+          "type": "GenerateErrorResponse",
+        },
         "InternalServerError": {
           "status-code": 500,
           "type": "unknown",
@@ -37,6 +41,10 @@ Executes a deployed Workflow and streams back its results.",
             "request": {
               "body": {
                 "properties": {
+                  "external_id": {
+                    "docs": "Optionally include a unique identifier for tracking purposes.",
+                    "type": "optional<string>",
+                  },
                   "inputs": {
                     "docs": undefined,
                     "type": "list<WorkflowRequestInputRequest>",
@@ -59,6 +67,10 @@ Executes a deployed Workflow and streams back its results.",
               "name": "ExecuteWorkflowStreamRequest",
               "query-parameters": undefined,
             },
+            "response-stream": {
+              "docs": "",
+              "type": "WorkflowStreamEvent",
+            },
             "url": "Predict",
           },
           "generate": {
@@ -70,6 +82,7 @@ Generate a completion using a previously defined deployment.
 **Note:** Uses a base url of \`https://predict.vellum.ai\`.",
             "errors": [
               "BadRequestError",
+              "ForbiddenError",
               "NotFoundError",
               "InternalServerError",
             ],
@@ -115,6 +128,7 @@ Generate a stream of completions using a previously defined deployment.
 **Note:** Uses a base url of \`https://predict.vellum.ai\`.",
             "errors": [
               "BadRequestError",
+              "ForbiddenError",
               "NotFoundError",
               "InternalServerError",
             ],
@@ -141,10 +155,13 @@ Generate a stream of completions using a previously defined deployment.
                   },
                 },
               },
-              "content-type": "application/x-ndjson",
               "headers": undefined,
               "name": "GenerateStreamBodyRequest",
               "query-parameters": undefined,
+            },
+            "response-stream": {
+              "docs": "",
+              "type": "GenerateStreamResponse",
             },
             "url": "Predict",
           },
@@ -328,33 +345,6 @@ Used to submit feedback regarding the quality of previously generated completion
           "docs": undefined,
           "properties": {
             "source_handle_id": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-          },
-        },
-        "ConstantValueChatHistoryVariable": {
-          "docs": undefined,
-          "properties": {
-            "value": {
-              "docs": undefined,
-              "type": "optional<list<ChatMessage>>",
-            },
-          },
-        },
-        "ConstantValueJsonVariable": {
-          "docs": undefined,
-          "properties": {
-            "value": {
-              "docs": undefined,
-              "type": "optional<map<string, unknown>>",
-            },
-          },
-        },
-        "ConstantValueStringVariable": {
-          "docs": undefined,
-          "properties": {
-            "value": {
               "docs": undefined,
               "type": "optional<string>",
             },
@@ -993,6 +983,7 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`GOOGLE\` - Google
 * \`HOSTED\` - Hosted
 * \`MOSAICML\` - MosaicML
+* \`MYSTIC\` - Mystic
 * \`OPENAI\` - OpenAI
 * \`PYQ\` - Pyq",
               "type": "ProviderEnum",
@@ -1320,6 +1311,7 @@ Used to submit feedback regarding the quality of previously generated completion
 * \`GOOGLE\` - Google
 * \`HOSTED\` - Hosted
 * \`MOSAICML\` - MosaicML
+* \`MYSTIC\` - Mystic
 * \`OPENAI\` - OpenAI
 * \`PYQ\` - Pyq",
           "enum": [
@@ -1347,6 +1339,11 @@ Used to submit feedback regarding the quality of previously generated completion
               "docs": undefined,
               "name": "MOSAICML",
               "value": "MOSAICML",
+            },
+            {
+              "docs": undefined,
+              "name": "MYSTIC",
+              "value": "MYSTIC",
             },
             {
               "docs": undefined,
@@ -1842,6 +1839,32 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
         },
+        "TerminalNodeChatHistoryResult": {
+          "docs": undefined,
+          "properties": {
+            "name": {
+              "docs": "The unique name given to the terminal node that produced this output.",
+              "type": "string",
+            },
+            "value": {
+              "docs": undefined,
+              "type": "list<ChatMessage>",
+            },
+          },
+        },
+        "TerminalNodeJsonResult": {
+          "docs": undefined,
+          "properties": {
+            "name": {
+              "docs": "The unique name given to the terminal node that produced this output.",
+              "type": "string",
+            },
+            "value": {
+              "docs": undefined,
+              "type": "map<string, unknown>",
+            },
+          },
+        },
         "TerminalNodeResult": {
           "docs": undefined,
           "properties": {
@@ -1867,15 +1890,28 @@ Used to submit feedback regarding the quality of previously generated completion
           "union": {
             "CHAT_HISTORY": {
               "docs": undefined,
-              "type": "ConstantValueChatHistoryVariable",
+              "type": "TerminalNodeChatHistoryResult",
             },
             "JSON": {
               "docs": undefined,
-              "type": "ConstantValueJsonVariable",
+              "type": "TerminalNodeJsonResult",
             },
             "STRING": {
               "docs": undefined,
-              "type": "ConstantValueStringVariable",
+              "type": "TerminalNodeStringResult",
+            },
+          },
+        },
+        "TerminalNodeStringResult": {
+          "docs": undefined,
+          "properties": {
+            "name": {
+              "docs": "The unique name given to the terminal node that produced this output.",
+              "type": "string",
+            },
+            "value": {
+              "docs": undefined,
+              "type": "string",
             },
           },
         },
@@ -1918,12 +1954,49 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
         },
+        "WorkflowEventError": {
+          "docs": undefined,
+          "properties": {
+            "code": {
+              "docs": undefined,
+              "type": "WorkflowExecutionEventErrorCode",
+            },
+            "message": {
+              "docs": undefined,
+              "type": "string",
+            },
+          },
+        },
+        "WorkflowExecutionEventErrorCode": {
+          "docs": "* \`WORKFLOW_INITIALIZATION\` - WORKFLOW_INITIALIZATION
+* \`NODE_EXECUTION\` - NODE_EXECUTION",
+          "enum": [
+            {
+              "docs": undefined,
+              "name": "WORKFLOW_INITIALIZATION",
+              "value": "WORKFLOW_INITIALIZATION",
+            },
+            {
+              "docs": undefined,
+              "name": "NODE_EXECUTION",
+              "value": "NODE_EXECUTION",
+            },
+          ],
+        },
         "WorkflowExecutionNodeResultEvent": {
           "docs": undefined,
           "properties": {
             "data": {
               "docs": undefined,
               "type": "WorkflowNodeResultEvent",
+            },
+            "external_id": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "run_id": {
+              "docs": undefined,
+              "type": "string",
             },
           },
         },
@@ -1933,6 +2006,14 @@ Used to submit feedback regarding the quality of previously generated completion
             "data": {
               "docs": undefined,
               "type": "WorkflowResultEvent",
+            },
+            "external_id": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "run_id": {
+              "docs": undefined,
+              "type": "string",
             },
           },
         },
@@ -1976,7 +2057,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
             "error": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<WorkflowEventError>",
             },
             "id": {
               "docs": undefined,
@@ -1992,7 +2073,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
             "state": {
               "docs": undefined,
-              "type": "WorkflowNodeResultEventStateEnum",
+              "type": "WorkflowNodeResultEventState",
             },
             "ts": {
               "docs": undefined,
@@ -2000,7 +2081,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
           },
         },
-        "WorkflowNodeResultEventStateEnum": {
+        "WorkflowNodeResultEventState": {
           "docs": "* \`INITIATED\` - INITIATED
 * \`STREAMING\` - STREAMING
 * \`FULFILLED\` - FULFILLED
@@ -2091,47 +2172,119 @@ Used to submit feedback regarding the quality of previously generated completion
           "properties": {
             "error": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<WorkflowEventError>",
             },
             "id": {
               "docs": undefined,
               "type": "string",
             },
+            "output": {
+              "docs": undefined,
+              "type": "optional<WorkflowResultEventOutputData>",
+            },
             "state": {
               "docs": undefined,
-              "type": "WorkflowResultEventStateEnum",
+              "type": "WorkflowNodeResultEventState",
             },
             "ts": {
               "docs": undefined,
               "type": "string",
             },
-            "workflow_result_id": {
+          },
+        },
+        "WorkflowResultEventOutputData": {
+          "base-properties": {},
+          "discriminant": "type",
+          "docs": undefined,
+          "union": {
+            "CHAT_HISTORY": {
               "docs": undefined,
-              "type": "string",
+              "type": "WorkflowResultEventOutputDataChatHistory",
+            },
+            "JSON": {
+              "docs": undefined,
+              "type": "WorkflowResultEventOutputDataJson",
+            },
+            "STRING": {
+              "docs": undefined,
+              "type": "WorkflowResultEventOutputDataString",
             },
           },
         },
-        "WorkflowResultEventStateEnum": {
-          "docs": "* \`INITIATED\` - INITIATED
-* \`FULFILLED\` - FULFILLED
-* \`REJECTED\` - REJECTED",
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "INITIATED",
-              "value": "INITIATED",
+        "WorkflowResultEventOutputDataChatHistory": {
+          "docs": undefined,
+          "properties": {
+            "delta": {
+              "docs": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
+              "type": "optional<string>",
             },
-            {
+            "name": {
               "docs": undefined,
-              "name": "FULFILLED",
-              "value": "FULFILLED",
+              "type": "string",
             },
-            {
+            "node_id": {
               "docs": undefined,
-              "name": "REJECTED",
-              "value": "REJECTED",
+              "type": "string",
             },
-          ],
+            "state": {
+              "docs": undefined,
+              "type": "WorkflowNodeResultEventState",
+            },
+            "value": {
+              "docs": undefined,
+              "type": "optional<list<ChatMessage>>",
+            },
+          },
+        },
+        "WorkflowResultEventOutputDataJson": {
+          "docs": undefined,
+          "properties": {
+            "delta": {
+              "docs": "The newly output string value. Only relevant for string outputs with a state of STREAMING.",
+              "type": "optional<string>",
+            },
+            "name": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "node_id": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "state": {
+              "docs": undefined,
+              "type": "WorkflowNodeResultEventState",
+            },
+            "value": {
+              "docs": undefined,
+              "type": "optional<map<string, unknown>>",
+            },
+          },
+        },
+        "WorkflowResultEventOutputDataString": {
+          "docs": undefined,
+          "properties": {
+            "delta": {
+              "docs": "The newly output string value, meant to be concatenated with all previous. Will be non-null for events of state STREAMING.",
+              "type": "optional<string>",
+            },
+            "name": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "node_id": {
+              "docs": undefined,
+              "type": "string",
+            },
+            "state": {
+              "docs": undefined,
+              "type": "WorkflowNodeResultEventState",
+            },
+            "value": {
+              "docs": "The entire string value. Will be non-null for events of state FULFILLED.",
+              "type": "optional<string>",
+            },
+          },
         },
         "WorkflowStreamEvent": {
           "base-properties": {},
@@ -2468,6 +2621,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
 * \`GOOGLE\` - Google
 * \`HOSTED\` - Hosted
 * \`MOSAICML\` - MosaicML
+* \`MYSTIC\` - Mystic
 * \`OPENAI\` - OpenAI
 * \`PYQ\` - Pyq",
                     "type": "root.ProviderEnum",

@@ -297,7 +297,7 @@ Our full documentation can be found [here](https://www.buildwithfern.com/docs).
 
 ## Community
 
-[Join our Discord!](https://discord.com/invite/JkkXumPzcG) We are always here to answer questions and help you get the most use out of Fern.
+[Join our Discord!](https://discord.com/invite/JkkXumPzcG) We are here to answer questions and help you get the most out of Fern.
 
 ## Contributing
 

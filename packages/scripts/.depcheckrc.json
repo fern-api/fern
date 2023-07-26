@@ -1,12 +1,4 @@
 {
-  "ignores": [
-    "@types/jest",
-    "@types/node",
-    "@babel/core",
-    "@babel/preset-env",
-    "@babel/preset-typescript",
-    "esbuild",
-    "@yarnpkg/esbuild-plugin-pnp"
-  ],
+  "ignores": ["@types/jest", "@types/node", "esbuild", "@yarnpkg/esbuild-plugin-pnp"],
   "ignore-patterns": ["lib", "dist"]
 }
