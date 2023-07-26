@@ -165,9 +165,13 @@ function getGithubLicense({
     if (typeof githubLicenseSchema === "string") {
         return FernFiddle.GithubLicense.id(getFiddleLicenseIdFromGithubLicense(githubLicenseSchema));
     }
-    const licenseFile = resolve(dirname(absolutePathToGeneratorsConfiguration), githubLicenseSchema.custom);
-    const licenseContent = readFileSync(licenseFile);
-    return FernFiddle.GithubLicense.file(licenseContent.toString());
+    try {
+        const licenseFile = resolve(dirname(absolutePathToGeneratorsConfiguration), githubLicenseSchema.custom);
+        const licenseContent = readFileSync(licenseFile);
+        return FernFiddle.GithubLicense.file(licenseContent.toString());
+    } catch (err) {
+        throw new Error("Failed to read custom license " + githubLicenseSchema.custom);
+    }
 }
 
 function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubPublishInfo {
