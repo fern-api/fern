@@ -1,19 +1,19 @@
 import { assertNever, noop, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
-import { isUnversionedNavigationConfig } from "../utils/docs";
+
+export interface UrlSlugTreeConfig {
+    navigation: FernRegistryDocsRead.UnversionedNavigationConfig;
+    loadApiDefinition: (id: FernRegistryApiRead.ApiDefinition["id"]) => FernRegistryApiRead.ApiDefinition | undefined;
+}
 
 export class UrlSlugTree {
     private root: Record<UrlSlug, UrlSlugTreeNode>;
     private nodeToNeighbors: Record<UrlSlug, UrlSlugNeighbors> = {};
 
-    constructor(private readonly docsDefinition: FernRegistryDocsRead.DocsDefinition) {
-        if (!isUnversionedNavigationConfig(docsDefinition.config.navigation)) {
-            // TODO: Implement
-            throw new Error("Not supporting versioned navigation yet.");
-        }
+    constructor(private readonly config: UrlSlugTreeConfig) {
         this.root = this.constructSlugToNodeRecord({
-            items: docsDefinition.config.navigation.items,
+            items: config.navigation.items,
             parentSlug: "",
         });
 
@@ -196,7 +196,7 @@ export class UrlSlugTree {
         apiSection: FernRegistryDocsRead.ApiSection;
         slug: string;
     }): UrlSlugTreeNode.Api {
-        const apiDefinition = this.docsDefinition.apis[apiSection.api];
+        const apiDefinition = this.config.loadApiDefinition(apiSection.api);
         if (apiDefinition == null) {
             throw new Error("API definition does not exist: " + apiSection.api);
         }
