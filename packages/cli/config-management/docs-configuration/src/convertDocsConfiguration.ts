@@ -180,6 +180,7 @@ async function convertNavigationItem({
                 rawUnresolvedFilepath: rawConfig.path,
                 context,
             }),
+            slug: rawConfig.slug ?? undefined,
         };
     }
     if (isRawSectionConfig(rawConfig)) {
@@ -191,6 +192,7 @@ async function convertNavigationItem({
                     convertNavigationItem({ rawConfig: item, absolutePathOfConfiguration, context })
                 )
             ),
+            slug: rawConfig.slug ?? undefined,
         };
     }
     if (isRawApiSectionConfig(rawConfig)) {

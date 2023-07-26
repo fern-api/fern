@@ -97,7 +97,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.6.4
+        version: 0.7.2
         output:
           location: local-file-system
           path: ../../generated/typescript
@@ -107,7 +107,7 @@ groups:
           location: local-file-system
           path: ../../generated/openapi
       - name: fernapi/fern-java-sdk
-        version: 0.3.6
+        version: 0.3.7
       - name: fernapi/fern-postman
         version: 0.0.25
 ",
@@ -218,7 +218,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.6.4
+        version: 0.7.2
         output:
           location: local-file-system
           path: ../../generated/typescript

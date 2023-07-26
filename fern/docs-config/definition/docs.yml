@@ -67,11 +67,13 @@ types:
     properties:
       page: string
       path: string
+      slug: optional<string>
 
   SectionConfiguration:
     properties:
       section: string
       contents: list<NavigationItem>
+      slug: optional<string>
 
   ApiSectionConfiguration:
     properties:

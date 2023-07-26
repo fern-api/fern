@@ -2873,8 +2873,8 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-fern/docs-config": 0.0.30
-    "@fern-fern/registry-node": 0.11.1-3-g62f25ca
+    "@fern-fern/docs-config": 0.0.34
+    "@fern-fern/registry-node": 0.11.1-4-gcbb472a
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.5
     "@types/node": ^18.7.18
@@ -3486,7 +3486,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/ir-model": 0.0.2653
-    "@fern-fern/registry-node": 0.11.1-3-g62f25ca
+    "@fern-fern/registry-node": 0.11.1-4-gcbb472a
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -3519,7 +3519,7 @@ __metadata:
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.285
     "@fern-fern/ir-model": 0.0.2653
-    "@fern-fern/registry-node": 0.11.1-3-g62f25ca
+    "@fern-fern/registry-node": 0.11.1-4-gcbb472a
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
@@ -3617,7 +3617,7 @@ __metadata:
   dependencies:
     "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
     "@fern-fern/fiddle-sdk": ^0.0.285
-    "@fern-fern/registry-node": 0.11.1-3-g62f25ca
+    "@fern-fern/registry-node": 0.11.1-4-gcbb472a
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -3916,10 +3916,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-fern/docs-config@npm:0.0.30":
-  version: 0.0.30
-  resolution: "@fern-fern/docs-config@npm:0.0.30"
-  checksum: b8d53d757e95b19252650a8199b1c587e5283fe65acfab0143795112990be2297e75ccfa31c28ec18347e7fe175ad8001a67c2a3d083dc6daf9507a9d31206a9
+"@fern-fern/docs-config@npm:0.0.34":
+  version: 0.0.34
+  resolution: "@fern-fern/docs-config@npm:0.0.34"
+  checksum: c953f06c4687555296cdb7035581b7cdcab55981daca7c2f03a9e407a7c59e0723aa2bb5fcf4824415973f52f866be4f0b6c9b4f3b48e8daa1a120821c823ead
   languageName: node
   linkType: hard
 
@@ -4147,16 +4147,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/registry-node@npm:0.11.1-3-g62f25ca":
-  version: 0.11.1-3-g62f25ca
-  resolution: "@fern-fern/registry-node@npm:0.11.1-3-g62f25ca"
+"@fern-fern/registry-node@npm:0.11.1-4-gcbb472a":
+  version: 0.11.1-4-gcbb472a
+  resolution: "@fern-fern/registry-node@npm:0.11.1-4-gcbb472a"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: 4474fbc8d4778317b1f5df4e74803871d21f194ab21628f22efd87fcff4548c4a7b8c43ed2bc3ee9ebe5c973839b80d3267ba9fed4a55864f3523cbcdf56ab5f
+  checksum: 08da401c4104f8a5af6112be3225a8cb65c5d831c699991a9b70b26791041b183cf5d890ed1728e3640388367172ecd19d85e3b45604b34094b753b308f206b2
   languageName: node
   linkType: hard
 
