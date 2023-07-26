@@ -1,5 +1,6 @@
 import { Menu, Transition } from "@headlessui/react";
 import classNames from "classnames";
+import Link from "next/link";
 import { Fragment } from "react";
 import { CheckIcon } from "../commons/icons/CheckIcon";
 import { ChevronDownIcon } from "../commons/icons/ChevronDownIcon";
@@ -8,10 +9,11 @@ export declare namespace HeaderVersionMenu {
     export interface Props {
         versions: string[];
         selectedId: string | undefined;
+        onClickVersion: (version: string) => void;
     }
 }
 
-export const HeaderVersionMenu: React.FC<HeaderVersionMenu.Props> = ({ versions, selectedId }) => {
+export const HeaderVersionMenu: React.FC<HeaderVersionMenu.Props> = ({ versions, selectedId, onClickVersion }) => {
     return (
         <div className="flex w-32">
             <Menu as="div" className="relative inline-block text-left">
@@ -45,7 +47,7 @@ export const HeaderVersionMenu: React.FC<HeaderVersionMenu.Props> = ({ versions,
                             {versions.map((version, idx) => (
                                 <Menu.Item key={idx}>
                                     {({ active }) => (
-                                        <a
+                                        <Link
                                             className={classNames(
                                                 "flex w-full justify-between !no-underline items-center text-xs p-2",
                                                 {
@@ -58,6 +60,7 @@ export const HeaderVersionMenu: React.FC<HeaderVersionMenu.Props> = ({ versions,
                                                 }
                                             )}
                                             href={`/${version}`}
+                                            onClick={() => onClickVersion(version)}
                                         >
                                             <span>{version}</span>
                                             <CheckIcon
@@ -66,7 +69,7 @@ export const HeaderVersionMenu: React.FC<HeaderVersionMenu.Props> = ({ versions,
                                                     invisible: version !== selectedId,
                                                 })}
                                             />
-                                        </a>
+                                        </Link>
                                     )}
                                 </Menu.Item>
                             ))}
