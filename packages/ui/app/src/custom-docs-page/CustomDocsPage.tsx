@@ -77,7 +77,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
         <div className="flex justify-center gap-20 overflow-y-auto px-[10vw] pt-[10vh]">
             <div className={classNames({ "w-[750px]": !isWebhookPage })}>
                 <div className="mb-8 text-3xl font-bold">{path.page.title}</div>
-                {content}
+                {isWebhookPage ? <div className="max-w-xl">{content}</div> : content}
                 {isWebhookPage && (
                     <ApiDefinitionContextProvider
                         apiSection={{
