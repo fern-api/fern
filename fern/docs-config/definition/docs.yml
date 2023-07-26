@@ -7,7 +7,7 @@ types:
         docs: used as tab bar title, and in the navbar if no logo is defined
       logo: optional<LogoConfiguration>
       favicon: optional<string>
-      backgroundImage:
+      background-image:
         type: optional<string>
         docs: This background image is used to customize the appearance of your docs site.
       colors: optional<ColorsConfiguration>

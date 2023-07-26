@@ -5,6 +5,7 @@ import * as FernRegistryDocsReadV2 from "@fern-fern/registry-browser/api/resourc
 import { GetStaticPaths, GetStaticProps } from "next";
 import { Inter } from "next/font/google";
 import Head from "next/head";
+import { StyleSheet } from "../../components/renderers/Stylesheet";
 import { REGISTRY_SERVICE } from "../../service";
 import { getSlugFromUrl } from "../../url-path-resolver/getSlugFromUrl";
 import { UrlPathResolver } from "../../url-path-resolver/UrlPathResolver";
@@ -28,16 +29,6 @@ export declare namespace Docs {
     }
 }
 
-function StyleSheets({ stylesheets }: { stylesheets: string[] }) {
-    const mergedSheet = stylesheets.join("\n");
-    return (
-        // eslint-disable-next-line react/no-unknown-property
-        <style id="fern-stylesheets" jsx global>
-            {mergedSheet}
-        </style>
-    );
-}
-
 export default function Docs({
     docs,
     typographyStyleSheet,
@@ -46,10 +37,10 @@ export default function Docs({
     nextPath,
     previousPath,
 }: Docs.Props): JSX.Element {
-    const stylesheets = [typographyStyleSheet, backgroundImageStyleSheet].filter((s) => s != null) as string[];
     return (
         <>
-            <StyleSheets stylesheets={stylesheets} />
+            {typographyStyleSheet != null && <StyleSheet stylesheet={typographyStyleSheet} />}
+            {backgroundImageStyleSheet != null && <StyleSheet stylesheet={backgroundImageStyleSheet} />}
             <main className={classNames(inter.className, "typography-font-body")}>
                 <Head>
                     {docs.definition.config.title != null && <title>{docs.definition.config.title}</title>}
