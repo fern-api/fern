@@ -9,7 +9,7 @@ import {
     DocsNavigationItem,
     FontConfig,
     ImageReference,
-    TypographyConfig,
+    TypographyConfig
 } from "./DocsConfiguration";
 
 export async function convertDocsConfiguration({
@@ -46,7 +46,7 @@ export async function convertDocsConfiguration({
                 ? await convertImageReference({ rawImageReference: favicon, absolutePathOfConfiguration, context })
                 : undefined,
         backgroundImage:
-            backgroundImage != null ? convertImageReference(backgroundImage, absolutePathOfConfiguration) : undefined,
+            backgroundImage != null ? await convertImageReference({ rawImageReference: backgroundImage, absolutePathOfConfiguration, context }) : undefined,
         colors: convertColorsConfiguration(colors ?? {}, context),
         navbarLinks: navbarLinks != null ? convertNavbarLinks(navbarLinks) : undefined,
         typography:
