@@ -59,6 +59,7 @@ export declare namespace ExpressGenerator {
         includeOtherInUnionTypes: boolean;
         treatUnknownAsAny: boolean;
         includeSerdeLayer: boolean;
+        outputEsm: boolean;
     }
 }
 
@@ -232,7 +233,7 @@ export class ExpressGenerator {
             npmPackage: this.npmPackage,
             dependencies: this.dependencyManager.getDependencies(),
             tsMorphProject: this.project,
-            outputEsm: false,
+            outputEsm: this.config.outputEsm,
             extraDependencies: {},
         });
     }

@@ -6,7 +6,7 @@ export const ExpressCustomConfigSchema = z.strictObject({
     doNotHandleUnrecognizedErrors: z.optional(z.boolean()),
     treatUnknownAsAny: z.optional(z.boolean()),
     noSerdeLayer: z.optional(z.boolean()),
-
+    outputEsm: z.optional(z.boolean()),
     // beta (not in docs)
     includeUtilsOnUnionMembers: z.optional(z.boolean()),
     includeOtherInUnionTypes: z.optional(z.boolean()),

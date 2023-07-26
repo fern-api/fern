@@ -8,4 +8,5 @@ export interface ExpressCustomConfig {
     includeOtherInUnionTypes: boolean;
     treatUnknownAsAny: boolean;
     noSerdeLayer: boolean;
+    outputEsm: boolean;
 }

@@ -20,6 +20,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
             includeOtherInUnionTypes: parsed?.includeOtherInUnionTypes ?? false,
             treatUnknownAsAny: parsed?.treatUnknownAsAny ?? false,
             noSerdeLayer,
+            outputEsm: parsed?.outputEsm ?? false,
         };
     }
 
@@ -51,6 +52,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
                 includeOtherInUnionTypes: customConfig.includeOtherInUnionTypes,
                 treatUnknownAsAny: customConfig.treatUnknownAsAny,
                 includeSerdeLayer: !customConfig.noSerdeLayer,
+                outputEsm: customConfig.outputEsm,
             },
         });
 
