@@ -1,0 +1,98 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  root: __package__.yml
+  user: core.user.yml
+
+service:
+  auth: false
+  base-path: /users
+  endpoints:
+    list:
+      audiences:
+        - admin
+      path: ""
+      method: GET
+      docs: Returns a list of users that belong to the current project. The users are returned sorted by creation date, with the most recently created users appearing first.
+      display-name: List all users
+      request:
+        name: ListUsersRequest
+        query-parameters:
+          live_mode:
+            type: optional<string>
+            docs: If set to `"false"`, only test users will be returned.
+      response: UsersList
+      errors:
+        - root.InternalServerError
+
+    get:
+      audiences:
+        - admin
+        - client
+      path: /{user_id}
+      method: GET
+      docs: Retrieves the user with the given ID.
+      display-name: Retrieve a user
+      path-parameters:
+        user_id: user.UserId
+      response: user.User
+      errors:
+        - root.NotFoundError
+        - root.InternalServerError
+
+    create:
+      audiences:
+        - admin
+      path: ""
+      method: POST
+      docs: Creates a new user with the given properties.
+      display-name: Create a user
+      request:
+        name: CreateUserRequest
+        body: user.UserCreateParams
+      response: user.User
+      errors:
+        - root.BadRequestError
+        - root.ForbiddenError
+        - root.InternalServerError
+
+    update:
+      audiences:
+        - admin
+        - client
+      path: /{user_id}
+      method: POST
+      docs: Updates the properties of the specified user. Only the provided properties will be updated. Any properties not provided will be left unchanged.
+      display-name: Update a user
+      path-parameters:
+        user_id: user.UserId
+      request:
+        name: UpdateUserRequest
+        body: user.UserUpdateParams
+      response: user.User
+      errors:
+        - root.BadRequestError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+
+    delete:
+      audiences:
+        - admin
+      path: /{user_id}
+      method: DELETE
+      docs: Permanently deletes the specified user and all the data associated with it. This cannot be undone.
+      display-name: Delete a user
+      path-parameters:
+        user_id: user.UserId
+      response: user.User
+      errors:
+        - root.NotFoundError
+        - root.InternalServerError
+        - root.ServiceUnavailableError
+
+types:
+  UsersList:
+    properties:
+      data: list<user.User>

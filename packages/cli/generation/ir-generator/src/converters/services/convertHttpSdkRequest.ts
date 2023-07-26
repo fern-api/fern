@@ -59,7 +59,7 @@ function convertHttpSdkRequestShape({
     }
 
     if (typeof request === "string") {
-        return SdkRequestShape.justRequestBody(convertReferenceHttpRequestBody(request, file));
+        return SdkRequestShape.justRequestBody(convertReferenceHttpRequestBody({ requestBody: request, file }));
     }
 
     const { body } = request;
@@ -74,7 +74,7 @@ function convertHttpSdkRequestShape({
         return undefined;
     }
 
-    return SdkRequestShape.justRequestBody(convertReferenceHttpRequestBody(body, file));
+    return SdkRequestShape.justRequestBody(convertReferenceHttpRequestBody({ requestBody: body, file }));
 }
 
 export function doesRequestHaveNonBodyProperties({

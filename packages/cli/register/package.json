@@ -34,14 +34,11 @@
     "@fern-api/services": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/ir-model": "0.0.1920",
-    "@fern-fern/registry-node": "^0.0.1005",
+    "@fern-fern/ir-model": "0.0.2653",
+    "@fern-fern/registry-node": "0.11.1-2-gd8ee803",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
-    "@babel/core": "^7.19.1",
-    "@babel/preset-env": "^7.19.1",
-    "@babel/preset-typescript": "^7.18.6",
     "@types/jest": "^29.0.3",
     "@types/lodash-es": "^4.17.7",
     "@types/node": "^18.7.18",

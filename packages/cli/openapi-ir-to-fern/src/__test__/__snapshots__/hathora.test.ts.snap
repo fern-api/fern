@@ -1184,9 +1184,9 @@ exports[`open api parser hathora simple 1`] = `
               "name": "RunBuildRequest",
               "query-parameters": undefined,
             },
-            "response": {
+            "response-stream": {
               "docs": "Ok",
-              "type": "file",
+              "type": "text",
             },
           },
         },
@@ -1791,9 +1791,9 @@ exports[`open api parser hathora simple 1`] = `
                 },
               },
             },
-            "response": {
+            "response-stream": {
               "docs": "Ok",
-              "type": "file",
+              "type": "text",
             },
           },
           "GetLogsForDeployment": {
@@ -1827,9 +1827,9 @@ exports[`open api parser hathora simple 1`] = `
                 },
               },
             },
-            "response": {
+            "response-stream": {
               "docs": "Ok",
-              "type": "file",
+              "type": "text",
             },
           },
           "GetLogsForProcess": {
@@ -1863,9 +1863,9 @@ exports[`open api parser hathora simple 1`] = `
                 },
               },
             },
-            "response": {
+            "response-stream": {
               "docs": "Ok",
-              "type": "file",
+              "type": "text",
             },
           },
         },

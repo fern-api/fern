@@ -10,19 +10,63 @@ info:
 servers:
   - url: https://api.hume.ai
 tags:
-  - name: "[1] Start Job"
-  - name: "[2] Get Job Predictions"
-  - name: "[3] List Jobs"
+  - name: Start Job
+  - name: Get Job Predictions
+  - name: List Jobs
 paths:
   "/v0/batch/jobs":
     post:
       tags:
-        - "[1] Start Job"
+        - Start Job
       summary: Start Job
-      operationId: startJob
       description: Start a new batch job.
       requestBody:
         content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                json:
+                  allOf:
+                    - "$ref": "#/components/schemas/BaseRequest"
+                    - default:
+                        callback_url:
+                        models:
+                          burst: {}
+                          face:
+                            descriptions:
+                            facs:
+                            fps_pred: 3
+                            identify_faces: false
+                            min_face_size: 60
+                            prob_threshold: 0.99
+                            save_faces: false
+                          facemesh: {}
+                          language:
+                            granularity: word
+                            identify_speakers: false
+                            sentiment:
+                            toxicity:
+                          ner:
+                            identify_speakers: false
+                          prosody:
+                            granularity: utterance
+                            identify_speakers: false
+                            window:
+                        notify: false
+                        urls: []
+                file:
+                  type: array
+                  description: |-
+                    Local media files (see recommended input filetypes) to be processed.
+
+                    If you wish to supply more than 100 files, consider providing them as an archive (`.zip`, `.tar.gz`, `.tar.bz2`, `.tar.xz`).
+                  items:
+                    type: string
+                    format: binary
+                  maxItems: 100
           application/json; charset=utf-8:
             schema:
               "$ref": "#/components/schemas/BaseRequest"
@@ -34,12 +78,14 @@ paths:
             application/json; charset=utf-8:
               schema:
                 "$ref": "#/components/schemas/JobId"
+      security:
+        - Authentication: []
+      operationId: start_job
     get:
       tags:
-        - "[3] List Jobs"
+        - List Jobs
       summary: List Jobs
       description: Sort and filter jobs.
-      operationId: listJobs
       parameters:
         - name: limit
           schema:
@@ -55,10 +101,10 @@ paths:
           schema:
             type: array
             default:
-              - QUEUED
-              - COMPLETED
               - FAILED
+              - COMPLETED
               - IN_PROGRESS
+              - QUEUED
             items:
               "$ref": "#/components/schemas/Status"
           in: query
@@ -114,13 +160,15 @@ paths:
               schema:
                 type: array
                 items:
-                  "$ref": "#/components/schemas/Job<Request>"
+                  "$ref": "#/components/schemas/Job_Request"
+      security:
+        - Authentication: []
+      operationId: list_jobs
   "/v0/batch/jobs/{id}/predictions":
     get:
       tags:
-        - "[2] Get Job Predictions"
+        - Get Job Predictions
       summary: Get Job Predictions
-      operationId: getJobPredictions
       description: Get the JSON predictions of a completed job.
       parameters:
         - name: id
@@ -140,12 +188,14 @@ paths:
                 type: array
                 items:
                   "$ref": "#/components/schemas/SourceResult"
+      security:
+        - Authentication: []
+      operationId: get_job_predictions
   "/v0/batch/jobs/{id}/artifacts":
     get:
       tags:
-        - "[2] Get Job Predictions"
+        - Get Job Predictions
       summary: Get Job Artifacts
-      operationId: getJobArtifacts
       description: Get the artifacts ZIP of a completed job.
       parameters:
         - name: id
@@ -173,12 +223,14 @@ paths:
               deprecated: false
               schema:
                 type: string
+      security:
+        - Authentication: []
+      operationId: get_job_artifacts
   "/v0/batch/jobs/{id}":
     get:
       tags:
-        - "[2] Get Job Predictions"
+        - Get Job Predictions
       summary: Get Job Details
-      operationId: getJobDetails
       description: Get the request details and state of a given job.
       parameters:
         - name: id
@@ -195,7 +247,10 @@ paths:
           content:
             application/json; charset=utf-8:
               schema:
-                "$ref": "#/components/schemas/Job<Request>"
+                "$ref": "#/components/schemas/Job_Request"
+      security:
+        - Authentication: []
+      operationId: get_job
 components:
   schemas:
     BaseRequest:
@@ -211,7 +266,7 @@ components:
                 face:
                   descriptions:
                   facs:
-                  fps_pred: 3.0
+                  fps_pred: 3
                   identify_faces: false
                   min_face_size: 60
                   prob_threshold: 0.99
@@ -251,7 +306,7 @@ components:
         notify:
           type: boolean
           description: Whether to send an email notification to the user upon job
-            completion/failure.
+            failure.
           default: false
     Bcp47Tag:
       type: string
@@ -290,7 +345,7 @@ components:
       description: A bounding box around a face.
       required:
         - x
-        - "y"
+        - y
         - w
         - h
       properties:
@@ -298,7 +353,7 @@ components:
           type: number
           format: double
           description: x-coordinate of bounding box top left corner.
-        "y":
+        y:
           type: number
           format: double
           description: y-coordinate of bounding box top left corner.
@@ -415,15 +470,15 @@ components:
           format: double
           description: Number of frames per second to process. Other frames will be
             omitted from the response. Set to `0` to process every frame.
-          default: 3.0
+          default: 3
         prob_threshold:
           type: number
           format: double
           description: Face detection probability threshold. Faces detected with a
             probability less than this threshold will be omitted from the response.
           default: 0.99
-          maximum: 1.0
-          minimum: 0.0
+          maximum: 1
+          minimum: 0
         identify_faces:
           type: boolean
           description: Whether to return identifiers for faces across frames. If `true`,
@@ -564,7 +619,7 @@ components:
         - sentence
         - utterance
         - conversational_turn
-    GroupedPredictions<BurstPrediction>:
+    GroupedPredictions_BurstPrediction:
       type: object
       required:
         - id
@@ -579,7 +634,7 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/BurstPrediction"
-    GroupedPredictions<FacePrediction>:
+    GroupedPredictions_FacePrediction:
       type: object
       required:
         - id
@@ -594,7 +649,7 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/FacePrediction"
-    GroupedPredictions<FacemeshPrediction>:
+    GroupedPredictions_FacemeshPrediction:
       type: object
       required:
         - id
@@ -609,7 +664,7 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/FacemeshPrediction"
-    GroupedPredictions<LanguagePrediction>:
+    GroupedPredictions_LanguagePrediction:
       type: object
       required:
         - id
@@ -624,7 +679,7 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/LanguagePrediction"
-    GroupedPredictions<NerPrediction>:
+    GroupedPredictions_NerPrediction:
       type: object
       required:
         - id
@@ -639,7 +694,7 @@ components:
           type: array
           items:
             "$ref": "#/components/schemas/NerPrediction"
-    GroupedPredictions<ProsodyPrediction>:
+    GroupedPredictions_ProsodyPrediction:
       type: object
       required:
         - id
@@ -668,7 +723,7 @@ components:
           type: integer
           format: int64
           description: When this job started (Unix timestamp in milliseconds).
-    Job<Request>:
+    Job_Request:
       type: object
       required:
         - user_id
@@ -679,9 +734,11 @@ components:
         user_id:
           type: string
           format: uuid
+          description: Your user ID.
         job_id:
           type: string
           format: uuid
+          description: The ID associated with this job.
         request:
           "$ref": "#/components/schemas/Request"
         state:
@@ -817,30 +874,27 @@ components:
       properties:
         face:
           allOf:
-            - "$ref": "#/components/schemas/Predictions<optional<Null>, FacePrediction>"
+            - "$ref": "#/components/schemas/Predictions_optional_Null_FacePrediction"
             - description: Response for the facial expression emotion model.
         burst:
           allOf:
-            - "$ref": "#/components/schemas/Predictions<optional<Null>, BurstPrediction>"
+            - "$ref": "#/components/schemas/Predictions_optional_Null_BurstPrediction"
             - description: Response for the vocal burst emotion model.
         prosody:
           allOf:
-            - "$ref": "#/components/schemas/Predictions<optional<TranscriptionMetadata>,
-                ProsodyPrediction>"
+            - "$ref": "#/components/schemas/Predictions_optional_TranscriptionMetadata_ProsodyPrediction"
             - description: Response for the speech prosody emotion model.
         language:
           allOf:
-            - "$ref": "#/components/schemas/Predictions<optional<TranscriptionMetadata>,
-                LanguagePrediction>"
+            - "$ref": "#/components/schemas/Predictions_optional_TranscriptionMetadata_LanguagePrediction"
             - description: Response for the language emotion model.
         ner:
           allOf:
-            - "$ref": "#/components/schemas/Predictions<optional<TranscriptionMetadata>,
-                NerPrediction>"
+            - "$ref": "#/components/schemas/Predictions_optional_TranscriptionMetadata_NerPrediction"
             - description: Response for the NER emotion model.
         facemesh:
           allOf:
-            - "$ref": "#/components/schemas/Predictions<optional<Null>, FacemeshPrediction>"
+            - "$ref": "#/components/schemas/Predictions_optional_Null_FacemeshPrediction"
             - description: Response for the facemesh emotion model.
     Ner:
       type: object
@@ -936,7 +990,7 @@ components:
           description: A file path relative to the top level source URL or file.
         models:
           "$ref": "#/components/schemas/ModelsPredictions"
-    Predictions<optional<Null>, BurstPrediction>:
+    Predictions_optional_Null_BurstPrediction:
       type: object
       required:
         - grouped_predictions
@@ -946,8 +1000,8 @@ components:
         grouped_predictions:
           type: array
           items:
-            "$ref": "#/components/schemas/GroupedPredictions<BurstPrediction>"
-    Predictions<optional<Null>, FacePrediction>:
+            "$ref": "#/components/schemas/GroupedPredictions_BurstPrediction"
+    Predictions_optional_Null_FacePrediction:
       type: object
       required:
         - grouped_predictions
@@ -957,8 +1011,8 @@ components:
         grouped_predictions:
           type: array
           items:
-            "$ref": "#/components/schemas/GroupedPredictions<FacePrediction>"
-    Predictions<optional<Null>, FacemeshPrediction>:
+            "$ref": "#/components/schemas/GroupedPredictions_FacePrediction"
+    Predictions_optional_Null_FacemeshPrediction:
       type: object
       required:
         - grouped_predictions
@@ -968,8 +1022,8 @@ components:
         grouped_predictions:
           type: array
           items:
-            "$ref": "#/components/schemas/GroupedPredictions<FacemeshPrediction>"
-    Predictions<optional<TranscriptionMetadata>, LanguagePrediction>:
+            "$ref": "#/components/schemas/GroupedPredictions_FacemeshPrediction"
+    Predictions_optional_TranscriptionMetadata_LanguagePrediction:
       type: object
       required:
         - grouped_predictions
@@ -979,8 +1033,8 @@ components:
         grouped_predictions:
           type: array
           items:
-            "$ref": "#/components/schemas/GroupedPredictions<LanguagePrediction>"
-    Predictions<optional<TranscriptionMetadata>, NerPrediction>:
+            "$ref": "#/components/schemas/GroupedPredictions_LanguagePrediction"
+    Predictions_optional_TranscriptionMetadata_NerPrediction:
       type: object
       required:
         - grouped_predictions
@@ -990,8 +1044,8 @@ components:
         grouped_predictions:
           type: array
           items:
-            "$ref": "#/components/schemas/GroupedPredictions<NerPrediction>"
-    Predictions<optional<TranscriptionMetadata>, ProsodyPrediction>:
+            "$ref": "#/components/schemas/GroupedPredictions_NerPrediction"
+    Predictions_optional_TranscriptionMetadata_ProsodyPrediction:
       type: object
       required:
         - grouped_predictions
@@ -1001,7 +1055,7 @@ components:
         grouped_predictions:
           type: array
           items:
-            "$ref": "#/components/schemas/GroupedPredictions<ProsodyPrediction>"
+            "$ref": "#/components/schemas/GroupedPredictions_ProsodyPrediction"
     Prosody:
       type: object
       description: "NOTE: the `granularity` field is ignored if transcription is not
@@ -1076,7 +1130,7 @@ components:
                 face:
                   descriptions:
                   facs:
-                  fps_pred: 3.0
+                  fps_pred: 3
                   identify_faces: false
                   min_face_size: 60
                   prob_threshold: 0.99
@@ -1179,9 +1233,23 @@ components:
           description: An error message.
     Source_File:
       allOf:
+        - type: object
+          required:
+            - type
+          properties:
+            type:
+              type: string
+              example: file
         - "$ref": "#/components/schemas/File"
     Source_Url:
       allOf:
+        - type: object
+          required:
+            - type
+          properties:
+            type:
+              type: string
+              example: url
         - "$ref": "#/components/schemas/Url"
     State:
       type: object
@@ -1347,11 +1415,20 @@ components:
           type: number
           format: double
           description: The length of the sliding window.
-          default: 4.0
+          default: 4
           minimum: 0.5
         step:
           type: number
           format: double
           description: The step size of the sliding window.
-          default: 1.0
+          default: 1
           minimum: 0.5
+  securitySchemes:
+    Authentication:
+      type: apiKey
+      name: X-Hume-Api-Key
+      in: header
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true
+  samples-enabled: true

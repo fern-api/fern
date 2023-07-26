@@ -78,7 +78,7 @@ describe("migrateFromV6ToV5", () => {
         expect(migrated.defaultEnvironment).toBe("Production");
     });
 
-    it("throws when using mutliple base-urls per environment", async () => {
+    it("throws when using multiple base-urls per environment", async () => {
         let output = "";
         const context = createMockTaskContext({
             logger: createLogger((_logLevel, ...logs) => {

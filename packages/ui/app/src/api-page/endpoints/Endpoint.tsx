@@ -1,7 +1,4 @@
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import { useEffect } from "react";
-import { useDocsContext } from "../../docs-context/useDocsContext";
-import { useApiPageContext } from "../api-page-context/useApiPageContext";
 import { useApiPageCenterElement } from "../useApiPageCenterElement";
 import { EndpointContextProvider } from "./endpoint-context/EndpointContextProvider";
 import { EndpointContent } from "./EndpointContent";
@@ -9,31 +6,23 @@ import { EndpointContent } from "./EndpointContent";
 export declare namespace Endpoint {
     export interface Props {
         endpoint: FernRegistryApiRead.EndpointDefinition;
+        isLastInApi: boolean;
+        package: FernRegistryApiRead.ApiDefinitionPackage;
         slug: string;
     }
 }
 
-export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint, slug }) => {
-    const { isInVerticalCenter, setTargetRef } = useApiPageCenterElement({ slug });
-    const { onScrollToPath } = useDocsContext();
-    const { containerRef: apiPageContainerRef } = useApiPageContext();
-    useEffect(() => {
-        if (!isInVerticalCenter) {
-            return;
-        }
-
-        const handler = () => {
-            onScrollToPath(slug);
-        };
-        apiPageContainerRef?.addEventListener("scroll", handler, false);
-        return () => {
-            apiPageContainerRef?.removeEventListener("scroll", handler);
-        };
-    }, [apiPageContainerRef, isInVerticalCenter, onScrollToPath, slug]);
+export const Endpoint: React.FC<Endpoint.Props> = ({ endpoint, slug, package: package_, isLastInApi }) => {
+    const { setTargetRef } = useApiPageCenterElement({ slug });
 
     return (
         <EndpointContextProvider>
-            <EndpointContent endpoint={endpoint} setContainerRef={setTargetRef} />
+            <EndpointContent
+                endpoint={endpoint}
+                setContainerRef={setTargetRef}
+                package={package_}
+                hideBottomSeparator={isLastInApi}
+            />
         </EndpointContextProvider>
     );
 };

@@ -29,7 +29,7 @@ export async function loadWorkspace({
     const openApiDirectoryExists = await doesPathExist(absolutePathToOpenAPIDefinition);
 
     if (openApiDirectoryExists) {
-        const openApiDefinition = await loadAndValidateOpenAPIDefinition(absolutePathToOpenAPIDefinition);
+        const openApiDefinition = await loadAndValidateOpenAPIDefinition(context, absolutePathToOpenAPIDefinition);
         return {
             didSucceed: true,
             workspace: {

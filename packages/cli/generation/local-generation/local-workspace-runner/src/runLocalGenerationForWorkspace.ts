@@ -6,11 +6,10 @@ import { migrateIntermediateRepresentationForGenerator } from "@fern-api/ir-migr
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
-import decompress from "decompress";
-import { cp, readdir, rm } from "fs/promises";
 import os from "os";
-import path, { join } from "path";
+import path from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
+import { LocalTaskHandler } from "./LocalTaskHandler";
 import { runGenerator } from "./run-generator/runGenerator";
 
 export async function runLocalGenerationForWorkspace({
@@ -115,19 +114,12 @@ async function writeFilesToDiskAndRunGenerator({
         keepDocker,
     });
 
-    const [firstLocalOutputItem, ...remaininglocalOutputItems] = await readdir(absolutePathToTmpOutputDirectory);
-    if (firstLocalOutputItem == null) {
-        return;
-    }
-    await rm(absolutePathToLocalOutput, { force: true, recursive: true });
-
-    if (firstLocalOutputItem.endsWith(".zip") && remaininglocalOutputItems.length === 0) {
-        await decompress(join(absolutePathToTmpOutputDirectory, firstLocalOutputItem), absolutePathToLocalOutput, {
-            strip: 1,
-        });
-    } else {
-        await cp(absolutePathToTmpOutputDirectory, absolutePathToLocalOutput, { recursive: true });
-    }
+    const taskHandler = new LocalTaskHandler({
+        context,
+        absolutePathToLocalOutput,
+        absolutePathToTmpOutputDirectory,
+    });
+    await taskHandler.copyGeneratedFiles();
 }
 
 async function writeIrToFile({

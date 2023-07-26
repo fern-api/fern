@@ -64,8 +64,8 @@
     "@fern-api/yaml-formatter": "workspace:*",
     "@fern-api/yaml-migrations": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
-    "@fern-fern/fiddle-sdk": "^0.0.193",
-    "@fern-fern/ir-model": "0.0.1920",
+    "@fern-fern/fiddle-sdk": "^0.0.285",
+    "@fern-fern/ir-model": "0.0.2653",
     "ansi-escapes": "^5.0.0",
     "axios": "^0.27.2",
     "boxen": "^7.0.0",
@@ -82,9 +82,6 @@
     "yargs": "^17.4.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.19.1",
-    "@babel/preset-env": "^7.19.1",
-    "@babel/preset-typescript": "^7.18.6",
     "@types/axios": "^0.14.0",
     "@types/boxen": "^3.0.1",
     "@types/is-ci": "^3.0.0",

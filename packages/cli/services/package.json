@@ -28,13 +28,10 @@
   },
   "dependencies": {
     "@fern-api/venus-api-sdk": "0.0.20-7-g6ea8dc4",
-    "@fern-fern/fiddle-sdk": "^0.0.193",
-    "@fern-fern/registry-node": "^0.0.1005"
+    "@fern-fern/fiddle-sdk": "^0.0.285",
+    "@fern-fern/registry-node": "0.11.1-2-gd8ee803"
   },
   "devDependencies": {
-    "@babel/core": "^7.19.1",
-    "@babel/preset-env": "^7.19.1",
-    "@babel/preset-typescript": "^7.18.6",
     "@types/jest": "^29.0.3",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.3",

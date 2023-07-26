@@ -1,6 +1,7 @@
 import { Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
 import { assertNever } from "@fern-api/core-utils";
+import Link from "next/link";
 import { useCallback, useMemo } from "react";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { ResolvedUrlPath } from "../ResolvedUrlPath";
@@ -56,9 +57,10 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
     }, [path]);
 
     return (
-        <div
-            className="text-accentPrimary/80 hover:text-accentPrimary flex cursor-pointer items-center gap-2 rounded transition"
+        <Link
+            className="!text-accentPrimary/80 hover:!text-accentPrimary flex cursor-pointer items-center gap-2 rounded !no-underline transition"
             onClick={onClick}
+            href={`/${path.slug}`}
         >
             {visitDirection({
                 previous: iconElement,
@@ -69,6 +71,6 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
                 previous: null,
                 next: iconElement,
             })}
-        </div>
+        </Link>
     );
 };

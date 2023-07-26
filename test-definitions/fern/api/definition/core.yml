@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  CreatedAt:
+    type: integer
+    docs: The time at which the object was created, measured in milliseconds since the Unix epoch
+    examples:
+      - name: Example0
+        value: 1671631795145
+
+  UpdatedAt:
+    type: integer
+    docs: The time at which the object was last updated, measured in milliseconds since the Unix epoch
+    examples:
+      - name: Example0
+        value: 1671631799692

@@ -95,6 +95,11 @@ async function createJob({
                     `You do not have permission to publish to ${invalidGroup} (expected ${validGroup})`
                 );
             },
+            cannotPublishPypiPackage: ({ validPrefix, invalidPackageName }) => {
+                return context.failAndThrow(
+                    `You do not have permission to publish to ${invalidPackageName} (expected ${validPrefix})`
+                );
+            },
             generatorsDoNotExistError: (value) => {
                 return context.failAndThrow(
                     "Generators do not exist: " +

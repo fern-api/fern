@@ -8,6 +8,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "description": undefined,
       "endpoints": [
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -400,6 +401,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -415,6 +417,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -538,6 +541,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -553,6 +557,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -672,6 +677,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -723,6 +729,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -753,6 +760,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -889,6 +897,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -940,6 +949,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -991,6 +1001,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -1042,6 +1053,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -1266,6 +1278,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -1317,6 +1330,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -1851,6 +1865,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -1866,6 +1881,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -1961,6 +1977,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -2012,6 +2029,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -2043,6 +2061,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -2150,6 +2169,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -2201,6 +2221,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -2232,6 +2253,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -2296,6 +2318,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -2933,6 +2956,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -2948,6 +2972,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -3112,6 +3137,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -3127,6 +3153,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -3291,6 +3318,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -3342,6 +3370,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -3373,6 +3402,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -3559,6 +3589,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -3610,6 +3641,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -3661,6 +3693,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -5155,6 +5188,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -5206,6 +5240,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -5257,6 +5292,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -5308,6 +5344,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -5359,6 +5396,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -7571,6 +7609,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -7586,6 +7625,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -8936,6 +8976,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -10288,6 +10329,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -10339,6 +10381,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -10390,6 +10433,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -11202,6 +11246,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -11217,6 +11262,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -11373,6 +11419,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -11531,6 +11578,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -11582,6 +11630,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -11633,6 +11682,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -11704,6 +11754,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -11719,6 +11770,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -11854,6 +11906,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -11905,6 +11958,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -11936,6 +11990,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -12087,6 +12142,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -12138,6 +12194,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -12204,6 +12261,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -12270,6 +12328,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -13526,6 +13585,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -14781,6 +14841,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -14832,6 +14893,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -14862,6 +14924,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -14934,6 +14997,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -14985,6 +15049,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -16193,6 +16258,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -16244,6 +16310,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -16295,6 +16362,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -16326,6 +16394,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -16379,6 +16448,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -17889,6 +17959,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -18129,6 +18200,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -20033,6 +20105,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -20048,6 +20121,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -21102,6 +21176,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -22158,6 +22233,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -22209,6 +22285,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -22260,6 +22337,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -22981,6 +23059,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -22996,6 +23075,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -23082,6 +23162,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -23097,6 +23178,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -23183,6 +23265,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -23234,6 +23317,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -23265,6 +23349,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -23377,6 +23462,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -23428,6 +23514,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -23479,6 +23566,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -24066,6 +24154,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -24081,6 +24170,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -24130,6 +24220,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -24145,6 +24236,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -24194,6 +24286,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -24245,6 +24338,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -24276,6 +24370,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -24351,6 +24446,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -24402,6 +24498,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -24453,6 +24550,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [],
@@ -24465,6 +24563,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -24555,6 +24654,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -24828,6 +24928,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -24843,6 +24944,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -24951,6 +25053,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -24966,6 +25069,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -25074,6 +25178,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -25125,6 +25230,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -25156,6 +25262,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -25272,6 +25379,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -25287,6 +25395,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -25554,6 +25663,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -26067,6 +26177,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -26132,6 +26243,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -26906,6 +27018,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -26921,6 +27034,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -27308,6 +27422,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -27323,6 +27438,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -27710,6 +27826,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -27761,6 +27878,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -27792,6 +27910,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -27958,6 +28077,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -28009,6 +28129,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -28060,6 +28181,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -28111,6 +28233,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -37510,6 +37633,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "usernameVariableName": undefined,
         },
         "bearerAuth": {
+          "tokenVariableName": undefined,
           "type": "bearer",
         },
       },

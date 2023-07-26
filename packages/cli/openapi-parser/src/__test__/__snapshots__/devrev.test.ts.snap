@@ -8,6 +8,7 @@ exports[`open api parser devrev parse open api 1`] = `
       "description": "DevRev's REST API.",
       "endpoints": [
         {
+          "audiences": [],
           "authed": true,
           "description": "Gets the download URL for the artifact.",
           "errorStatusCode": [
@@ -64,6 +65,7 @@ exports[`open api parser devrev parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Creates an artifact and generates an upload URL for its data.
 ",
@@ -84,6 +86,7 @@ exports[`open api parser devrev parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -117,6 +120,7 @@ exports[`open api parser devrev parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Creates a JWT corresponding to the requested token type for the
 authenticated user.
@@ -138,6 +142,7 @@ authenticated user.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -171,6 +176,7 @@ authenticated user.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Revokes the token that matches the given token ID issued under the
 given Dev organization.
@@ -193,6 +199,7 @@ given Dev organization.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -215,6 +222,7 @@ given Dev organization.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Gets the token metadata corresponding to the given token ID under the
 given Dev organization.
@@ -274,6 +282,7 @@ given Dev organization.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Gets the token metadata for all the tokens corresponding to the given
 token type issued for a given subject.
@@ -376,6 +385,7 @@ subject.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Revokes all the tokens that matches the given token type created by the
 authenticated user.
@@ -398,6 +408,7 @@ authenticated user.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -420,6 +431,7 @@ authenticated user.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Updates token metadata of a token issued under a given Dev
 organization.
@@ -442,6 +454,7 @@ organization.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -475,6 +488,7 @@ organization.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Creates a new enterprise authentication connection for a Dev
 organization. This authentication connection will not be enabled by
@@ -500,6 +514,7 @@ enterprise connections can be created by an organization.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -534,6 +549,7 @@ enterprise connections can be created by an organization.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Deletes an authentication connection. Only enterprise connections which
 are explicitly set up for a Dev organization can be deleted. Default
@@ -557,6 +573,7 @@ connections can not be deleted using this method.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -580,6 +597,7 @@ connections can not be deleted using this method.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieves the details for an authentication connection.",
           "errorStatusCode": [
@@ -637,6 +655,7 @@ connections can not be deleted using this method.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Lists all the authentication connections available for a Dev
 organization. This list will include both social and enterprise
@@ -683,6 +702,7 @@ created by the user.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Enable or disable an authentication connection for a Dev organization.
 Currently, only 1 authentication connection can be enabled at a time.
@@ -708,6 +728,7 @@ disabled.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -731,6 +752,7 @@ disabled.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Updates an authentication connection.",
           "errorStatusCode": [
@@ -751,6 +773,7 @@ disabled.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -785,6 +808,7 @@ disabled.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Lists users within your organization.",
           "errorStatusCode": [
@@ -943,6 +967,7 @@ used.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Gets the authenticated user's information.",
           "errorStatusCode": [
@@ -984,6 +1009,7 @@ used.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Creates new [part](https://devrev.ai/docs/product/parts).",
           "errorStatusCode": [
@@ -1003,6 +1029,7 @@ used.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1036,6 +1063,7 @@ used.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Deletes a [part](https://devrev.ai/docs/product/parts).",
           "errorStatusCode": [
@@ -1056,6 +1084,7 @@ used.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1089,6 +1118,7 @@ used.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Gets a [part's](https://devrev.ai/docs/product/parts) information.
 ",
@@ -1146,6 +1176,7 @@ used.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Lists a collection of [parts](https://devrev.ai/docs/product/parts).
 ",
@@ -1325,6 +1356,7 @@ used.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Updates a [part's](https://devrev.ai/docs/product/parts) information.
 ",
@@ -1346,6 +1378,7 @@ used.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1379,6 +1412,7 @@ used.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Creates a Rev organization in the authenticated user's Dev
 organization.
@@ -1400,6 +1434,7 @@ organization.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1433,6 +1468,7 @@ organization.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Deletes the Rev organization.",
           "errorStatusCode": [
@@ -1453,6 +1489,7 @@ organization.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1486,6 +1523,7 @@ organization.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieves the Rev organization's information.",
           "errorStatusCode": [
@@ -1542,6 +1580,7 @@ organization.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Gets the list of Rev organizations' information belonging to the
 authenticated user's Dev Organization which the user is also authorized
@@ -1780,6 +1819,7 @@ them.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Updates the Rev organization's information.",
           "errorStatusCode": [
@@ -1800,6 +1840,7 @@ them.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1833,6 +1874,7 @@ them.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Creates a new tag, which is used to create associations between objects
 and a logical concept denoted by the tag's name.
@@ -1854,6 +1896,7 @@ and a logical concept denoted by the tag's name.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1887,6 +1930,7 @@ and a logical concept denoted by the tag's name.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Deletes a tag.",
           "errorStatusCode": [
@@ -1907,6 +1951,7 @@ and a logical concept denoted by the tag's name.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1940,6 +1985,7 @@ and a logical concept denoted by the tag's name.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Gets a tag's information.",
           "errorStatusCode": [
@@ -1996,6 +2042,7 @@ and a logical concept denoted by the tag's name.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Lists the available tags.",
           "errorStatusCode": [
@@ -2090,6 +2137,7 @@ used.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Updates a tag's information.",
           "errorStatusCode": [
@@ -2110,6 +2158,7 @@ used.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2143,6 +2192,7 @@ used.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Creates a new entry on an object's timeline.",
           "errorStatusCode": [
@@ -2162,6 +2212,7 @@ used.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2195,6 +2246,7 @@ used.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Gets an entry on an object's timeline.",
           "errorStatusCode": [
@@ -2251,6 +2303,7 @@ used.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Lists the timeline entries for an object.",
           "errorStatusCode": [
@@ -2361,6 +2414,7 @@ used.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Updates an entry on an object's timeline.",
           "errorStatusCode": [
@@ -2380,6 +2434,7 @@ used.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2413,6 +2468,7 @@ used.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Creates a new webhook target.",
           "errorStatusCode": [
@@ -2432,6 +2488,7 @@ used.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2465,6 +2522,7 @@ used.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Deletes the requested webhook.",
           "errorStatusCode": [
@@ -2485,6 +2543,7 @@ used.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2518,6 +2577,7 @@ used.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Gets the requested webhook's information.",
           "errorStatusCode": [
@@ -2574,6 +2634,7 @@ used.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Lists the webhooks.",
           "errorStatusCode": [
@@ -2615,6 +2676,7 @@ used.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Updates the requested webhook.",
           "errorStatusCode": [
@@ -2635,6 +2697,7 @@ used.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2668,6 +2731,7 @@ used.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Creates new work ([issue](https://devrev.ai/docs/product/build),
 [ticket](https://devrev.ai/docs/product/support)) item.
@@ -2689,6 +2753,7 @@ used.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2722,6 +2787,7 @@ used.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Deletes a work item.",
           "errorStatusCode": [
@@ -2742,6 +2808,7 @@ used.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2775,6 +2842,7 @@ used.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Exports a collection of work items.",
           "errorStatusCode": [
@@ -3023,6 +3091,7 @@ organizations.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Gets a work item's information.",
           "errorStatusCode": [
@@ -3079,6 +3148,7 @@ organizations.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Lists a collection of work items.",
           "errorStatusCode": [
@@ -3363,6 +3433,7 @@ organizations.
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Updates a work item's information.",
           "errorStatusCode": [
@@ -3383,6 +3454,7 @@ organizations.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,

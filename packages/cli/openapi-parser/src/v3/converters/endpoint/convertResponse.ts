@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { Response, StatusCode } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
@@ -7,6 +8,7 @@ import { convertSchema } from "../convertSchemas";
 const APPLICATION_JSON_CONTENT = "application/json";
 const APPLICATION_JSON_UTF_8_CONTENT = "application/json; charset=utf-8";
 const TEXT_PLAIN_CONTENT = "text/plain";
+const APPLICATION_VND_JSON = "application/x-ndjson";
 
 const APPLICATION_OCTET_STREAM_CONTENT = "application/octet-stream";
 
@@ -42,18 +44,25 @@ export function convertResponse({
         }
 
         const convertedResponse = convertResolvedResponse({ response, context, responseBreadcrumbs });
-        if (convertedResponse?.type === "json") {
-            return {
-                value: convertedResponse,
-                errorStatusCodes,
-            };
-        } else if (convertedResponse?.type === "file") {
-            return {
-                value: convertedResponse,
-                errorStatusCodes: [],
-            };
+        if (convertedResponse != null) {
+            switch (convertedResponse.type) {
+                case "json":
+                    return {
+                        value: convertedResponse,
+                        errorStatusCodes,
+                    };
+                case "file":
+                case "text":
+                    return {
+                        value: convertedResponse,
+                        errorStatusCodes: [],
+                    };
+                default:
+                    assertNever(convertedResponse);
+            }
         }
     }
+
     return {
         value: undefined,
         errorStatusCodes,
@@ -72,7 +81,8 @@ function convertResolvedResponse({
     const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
     const responseSchema =
         resolvedResponse.content?.[APPLICATION_JSON_CONTENT]?.schema ??
-        resolvedResponse.content?.[APPLICATION_JSON_UTF_8_CONTENT]?.schema;
+        resolvedResponse.content?.[APPLICATION_JSON_UTF_8_CONTENT]?.schema ??
+        resolvedResponse.content?.[APPLICATION_VND_JSON]?.schema;
     if (responseSchema != null) {
         return {
             type: "json",
@@ -81,12 +91,16 @@ function convertResolvedResponse({
         };
     }
 
-    const fileResponseSchema =
-        resolvedResponse.content?.[APPLICATION_OCTET_STREAM_CONTENT]?.schema ??
-        resolvedResponse.content?.[TEXT_PLAIN_CONTENT]?.schema;
-    if (fileResponseSchema != null) {
+    if (resolvedResponse.content?.[APPLICATION_OCTET_STREAM_CONTENT]?.schema != null) {
         return {
             type: "file",
+            description: resolvedResponse.description,
+        };
+    }
+
+    if (resolvedResponse.content?.[TEXT_PLAIN_CONTENT]?.schema != null) {
+        return {
+            type: "text",
             description: resolvedResponse.description,
         };
     }

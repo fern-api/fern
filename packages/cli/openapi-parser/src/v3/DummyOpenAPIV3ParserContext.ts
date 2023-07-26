@@ -1,11 +1,11 @@
 import { TaskContext } from "@fern-api/task-context";
 import { HttpError, SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
-import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext";
+import { AbstractOpenAPIV3ParserContext, DiscriminatedUnionReference } from "./AbstractOpenAPIV3ParserContext";
 
 export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
     constructor({ document, taskContext }: { document: OpenAPIV3.Document; taskContext: TaskContext }) {
-        super({ document, taskContext });
+        super({ document, taskContext, authHeaders: new Set() });
     }
 
     public markSchemaAsReferencedByNonRequest(_schemaId: SchemaId): void {
@@ -25,6 +25,16 @@ export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext 
         _schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject
     ): void {
         return;
+    }
+
+    public markReferencedByDiscriminatedUnion(_schema: OpenAPIV3.ReferenceObject, _discrminant: string): void {
+        return;
+    }
+
+    public getReferencesFromDiscriminatedUnion(
+        _schema: OpenAPIV3.ReferenceObject
+    ): DiscriminatedUnionReference | undefined {
+        return undefined;
     }
 
     public getErrors(): Record<StatusCode, HttpError> {

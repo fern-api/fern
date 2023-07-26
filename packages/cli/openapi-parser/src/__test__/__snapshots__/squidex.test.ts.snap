@@ -8,6 +8,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "description": undefined,
       "endpoints": [
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -97,6 +98,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -112,6 +114,7 @@ exports[`open api parser squidex parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -150,6 +153,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -207,6 +211,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -238,6 +243,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -276,6 +282,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -324,6 +331,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -383,6 +391,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -442,6 +451,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -483,6 +493,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Search the user by query that contains the email address or the part of the email address.",
           "errorStatusCode": [
@@ -546,6 +557,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -603,6 +615,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -649,6 +662,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -679,6 +693,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -717,6 +732,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -758,6 +774,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -815,6 +832,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -872,6 +890,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -903,6 +922,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -941,6 +961,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -999,6 +1020,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -1071,6 +1093,7 @@ exports[`open api parser squidex parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can only retrieve the list of teams when you are authenticated as a user (OpenID implicit flow).
 You will retrieve all teams, where you are assigned as a contributor.",
@@ -1117,6 +1140,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can only create an team when you are authenticated as a user (OpenID implicit flow).
 You will be assigned as owner of the new team automatically.",
@@ -1134,6 +1158,7 @@ You will be assigned as owner of the new team automatically.",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1172,6 +1197,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -1229,6 +1255,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -1260,6 +1287,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1298,6 +1326,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -1355,6 +1384,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -1440,6 +1470,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -1525,6 +1556,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -1582,6 +1614,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -1639,6 +1672,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -1728,6 +1762,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -1817,6 +1852,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -1896,6 +1932,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -1942,6 +1979,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1980,6 +2018,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -2038,6 +2077,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2076,6 +2116,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -2121,6 +2162,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2159,6 +2201,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -2204,6 +2247,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2242,6 +2286,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -2299,6 +2344,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2337,6 +2383,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -2394,6 +2441,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2432,6 +2480,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -2516,6 +2565,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -2585,6 +2635,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2623,6 +2674,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -2719,6 +2771,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "A locked field cannot be updated or deleted.",
           "errorStatusCode": [
@@ -2803,6 +2856,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "A locked field cannot be edited or deleted.",
           "errorStatusCode": [
@@ -2899,6 +2953,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
           "errorStatusCode": [
@@ -2983,6 +3038,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
           "errorStatusCode": [
@@ -3079,6 +3135,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
           "errorStatusCode": [
@@ -3163,6 +3220,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
           "errorStatusCode": [
@@ -3259,6 +3317,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
           "errorStatusCode": [
@@ -3343,6 +3402,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
           "errorStatusCode": [
@@ -3439,6 +3499,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
           "errorStatusCode": [
@@ -3523,6 +3584,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
           "errorStatusCode": [
@@ -3619,6 +3681,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -3676,6 +3739,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -3707,6 +3771,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3745,6 +3810,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -3816,6 +3882,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -3861,6 +3928,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3899,6 +3967,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -3960,6 +4029,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -4005,6 +4075,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4043,6 +4114,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -4088,6 +4160,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4126,6 +4199,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -4171,6 +4245,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4209,6 +4284,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -4254,6 +4330,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4292,6 +4369,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -4337,6 +4415,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4375,6 +4454,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -4447,6 +4527,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -4519,6 +4600,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -4569,6 +4651,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -4626,6 +4709,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -4657,6 +4741,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4695,6 +4780,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -4741,6 +4827,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -4786,6 +4873,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4824,6 +4912,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -4885,6 +4974,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -4957,6 +5047,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -5029,6 +5120,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -5090,6 +5182,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -5166,6 +5259,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -5226,6 +5320,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -5257,6 +5352,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -5295,6 +5391,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -5366,6 +5463,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -5471,6 +5569,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -5517,6 +5616,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -5578,6 +5678,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -5639,6 +5740,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -5685,6 +5787,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -5737,6 +5840,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -5794,6 +5898,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -5825,6 +5930,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -5863,6 +5969,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -5920,6 +6027,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -5951,6 +6059,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -5989,6 +6098,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -6030,6 +6140,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Can be used to test, if the Squidex API is alive and responding.",
           "errorStatusCode": [
@@ -6060,6 +6171,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Can be used to test, if the Squidex API is alive and responding.",
           "errorStatusCode": [
@@ -6105,6 +6217,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -6162,6 +6275,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Provide a list of supported language codes, following the ISO2Code standard.",
           "errorStatusCode": [
@@ -6207,6 +6321,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -6286,6 +6401,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -6365,6 +6481,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -6406,6 +6523,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -6464,6 +6582,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -6522,6 +6641,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -6580,6 +6700,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -6611,6 +6732,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -6642,6 +6764,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errorStatusCode": [
@@ -6748,6 +6871,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errorStatusCode": [
@@ -6843,6 +6967,7 @@ You will be assigned as owner of the new team automatically.",
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -6881,6 +7006,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errorStatusCode": [
@@ -6926,6 +7052,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -6964,6 +7091,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errorStatusCode": [
@@ -7065,6 +7193,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errorStatusCode": [
@@ -7172,6 +7301,7 @@ You will be assigned as owner of the new team automatically.",
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -7210,6 +7340,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errorStatusCode": [
@@ -7269,6 +7400,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -7307,6 +7439,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errorStatusCode": [
@@ -7366,6 +7499,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -7404,6 +7538,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can create an generated documentation for your app at /api/content/{appName}/docs.",
           "errorStatusCode": [
@@ -7510,6 +7645,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errorStatusCode": [
@@ -7585,6 +7721,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errorStatusCode": [
@@ -7688,6 +7825,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errorStatusCode": [
@@ -7791,6 +7929,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errorStatusCode": [],
@@ -7877,6 +8016,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errorStatusCode": [
@@ -7922,6 +8062,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -7964,6 +8105,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errorStatusCode": [
@@ -8009,6 +8151,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -8051,6 +8194,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errorStatusCode": [
@@ -8110,6 +8254,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -8148,6 +8293,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errorStatusCode": [
@@ -8234,6 +8380,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errorStatusCode": [
@@ -8320,6 +8467,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
           "errorStatusCode": [
@@ -8406,6 +8554,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -8486,6 +8635,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "When passing in a version you can retrieve all updates since then.",
           "errorStatusCode": [
@@ -8573,6 +8723,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -8618,6 +8769,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -8656,6 +8808,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -8715,6 +8868,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -8742,6 +8896,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -8817,6 +8972,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "When passing in a version you can retrieve all updates since then.",
           "errorStatusCode": [
@@ -8889,6 +9045,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -8950,6 +9107,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9010,6 +9168,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -9071,6 +9230,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9152,6 +9312,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -9209,6 +9370,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -9256,6 +9418,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -9297,6 +9460,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -9312,6 +9476,7 @@ You will be assigned as owner of the new team automatically.",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -9339,6 +9504,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9632,6 +9798,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9893,6 +10060,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get all asset folders for the app.",
           "errorStatusCode": [
@@ -9984,6 +10152,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -10015,6 +10184,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -10053,6 +10223,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -10098,6 +10269,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -10136,6 +10308,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -10197,6 +10370,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -10242,6 +10416,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -10280,6 +10455,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get all tags for assets.",
           "errorStatusCode": [
@@ -10345,6 +10521,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -10390,6 +10567,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -10436,6 +10614,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get all assets for the app.",
           "errorStatusCode": [
@@ -10609,6 +10788,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can only upload one file at a time. The mime type of the file is not calculated by Squidex and is required correctly.",
           "errorStatusCode": [
@@ -10731,6 +10911,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get all assets for the app.",
           "errorStatusCode": [
@@ -10762,6 +10943,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -10800,6 +10982,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -10871,6 +11054,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can only upload one file at a time. The mime type of the file is not calculated by Squidex and is required correctly.",
           "errorStatusCode": [
@@ -10990,6 +11174,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -11035,6 +11220,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -11073,6 +11259,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -11165,6 +11352,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -11196,6 +11384,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -11238,6 +11427,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Use multipart request to upload an asset.",
           "errorStatusCode": [
@@ -11324,6 +11514,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -11369,6 +11560,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -11407,6 +11599,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -11464,6 +11657,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -11495,6 +11689,7 @@ You will be assigned as owner of the new team automatically.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -11533,6 +11728,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Gets all configured clients for the app with the specified name.",
           "errorStatusCode": [
@@ -11590,6 +11786,7 @@ You will be assigned as owner of the new team automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new client for the app with the specified name.
 The client secret is auto generated on the server and returned. The client does not expire, the access token is valid for 30 days.",
@@ -11622,6 +11819,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -11660,6 +11858,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Only the display name can be changed, create a new client if necessary.",
           "errorStatusCode": [
@@ -11705,6 +11904,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -11743,6 +11943,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "The application that uses this client credentials cannot access the API after it has been revoked.",
           "errorStatusCode": [
@@ -11815,6 +12016,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -11872,6 +12074,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -11903,6 +12106,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -11941,6 +12145,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -11999,6 +12204,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -12071,6 +12277,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -12117,6 +12324,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -12188,6 +12396,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -12246,6 +12455,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -12303,6 +12513,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -12334,6 +12545,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -12372,6 +12584,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -12417,6 +12630,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -12455,6 +12669,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -12527,6 +12742,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -12584,6 +12800,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -12615,6 +12832,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -12653,6 +12871,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -12715,6 +12934,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -12760,6 +12980,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -12798,6 +13019,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -12870,6 +13092,7 @@ The client secret is auto generated on the server and returned. The client does 
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can only retrieve the list of apps when you are authenticated as a user (OpenID implicit flow).
 You will retrieve all apps, where you are assigned as a contributor.",
@@ -12916,6 +13139,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can only create an app when you are authenticated as a user (OpenID implicit flow).
 You will be assigned as owner of the new app automatically.",
@@ -12933,6 +13157,7 @@ You will be assigned as owner of the new app automatically.",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -12971,6 +13196,7 @@ You will be assigned as owner of the new app automatically.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can only retrieve the list of apps when you are authenticated as a user (OpenID implicit flow).
 You will retrieve all apps, where you are assigned as a contributor.",
@@ -13032,6 +13258,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -13089,6 +13316,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -13120,6 +13348,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -13158,6 +13387,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -13205,6 +13435,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -13236,6 +13467,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -13274,6 +13506,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -13331,6 +13564,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -13362,6 +13596,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -13400,6 +13635,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -13457,6 +13693,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -13488,6 +13725,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -13526,6 +13764,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -13571,6 +13810,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -13609,6 +13849,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -29488,6 +29729,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       },
       "securitySchemes": {
         "squidex-oauth-auth": {
+          "tokenVariableName": undefined,
           "type": "bearer",
         },
       },

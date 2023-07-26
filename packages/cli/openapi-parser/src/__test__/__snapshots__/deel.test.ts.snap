@@ -8,6 +8,7 @@ exports[`open api parser deel parse open api 1`] = `
       "description": undefined,
       "endpoints": [
         {
+          "audiences": [],
           "authed": false,
           "description": undefined,
           "errorStatusCode": [
@@ -27,6 +28,7 @@ exports[`open api parser deel parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -60,6 +62,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve the hiring guide data for a country. This data can be used to create Employee of Record (EOR) contract quotes.",
           "errorStatusCode": [
@@ -113,6 +116,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create an Employee of Record (EOR) contract quote. The endpoints creates a contract quote request. Deel will process the information and get back with a quote for this contract.",
           "errorStatusCode": [
@@ -130,6 +134,7 @@ exports[`open api parser deel parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -163,6 +168,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -183,6 +189,7 @@ exports[`open api parser deel parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -216,6 +223,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -236,6 +244,7 @@ exports[`open api parser deel parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -269,6 +278,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -289,6 +299,7 @@ exports[`open api parser deel parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -322,6 +333,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -342,6 +354,7 @@ exports[`open api parser deel parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -375,6 +388,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a list of contracts.",
           "errorStatusCode": [
@@ -595,6 +609,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new Deel contract.",
           "errorStatusCode": [
@@ -615,6 +630,7 @@ exports[`open api parser deel parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -648,6 +664,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a single contract.",
           "errorStatusCode": [
@@ -705,6 +722,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Add an external Id to a Deel contract. You can use this to add a Deel contract's refernece Id in your platform. External Id can be passed as a query parameter in List contract endpoint to find this conract later.",
           "errorStatusCode": [
@@ -740,6 +758,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -773,6 +792,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Attach document to a contract. You can only add one document at a time. If you need to attach more documents please attach a Zip file.",
           "errorStatusCode": [
@@ -843,6 +863,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Overwrite the file currently attached to contract document.",
           "errorStatusCode": [
@@ -913,6 +934,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve an IC contract agreement content in HTML. If no template is specified, the default or currently assigned template will be used. This endpoint does not support EOR and Global Payroll contract types.",
           "errorStatusCode": [
@@ -977,6 +999,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a list of tasks for a given contract.",
           "errorStatusCode": [
@@ -1034,6 +1057,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new task for the contractor.",
           "errorStatusCode": [
@@ -1069,6 +1093,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1102,6 +1127,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Returns an array of alternate email objects",
           "errorStatusCode": [
@@ -1157,6 +1183,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Review multiple tasks to approve or decline the submitted work.",
           "errorStatusCode": [
@@ -1192,6 +1219,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1225,6 +1253,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Review a single task to approve or decline the submitted work.",
           "errorStatusCode": [
@@ -1274,6 +1303,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1307,6 +1337,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Delete task from the contract.",
           "errorStatusCode": [
@@ -1396,6 +1427,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Amend payment details of a contract.",
           "errorStatusCode": [
@@ -1431,6 +1463,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1464,6 +1497,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Terminate an active contract.",
           "errorStatusCode": [
@@ -1499,6 +1533,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1532,6 +1567,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Sign a contract as a client.",
           "errorStatusCode": [
@@ -1567,6 +1603,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1600,6 +1637,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Archive a terminated, cancelled or completed contract.",
           "errorStatusCode": [
@@ -1655,6 +1693,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Invite a worker to sign the contract. Worker will be notified via email.",
           "errorStatusCode": [
@@ -1690,6 +1729,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1723,6 +1763,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Remove invite in order to re-invite a worker to sign the contract.",
           "errorStatusCode": [
@@ -1780,6 +1821,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a list of timesheets found for a contract.",
           "errorStatusCode": [
@@ -1947,6 +1989,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a list of milestones found for a contract.",
           "errorStatusCode": [
@@ -2004,6 +2047,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Add a new milestone to contract.",
           "errorStatusCode": [
@@ -2039,10 +2083,17 @@ exports[`open api parser deel parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
-            "name": "MilestoneToCreateFormWithFile",
-            "properties": [],
-            "type": "multipart",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "CreateMilestoneRequest",
+              "nameOverride": undefined,
+              "schema": "MilestoneToCreateContainer",
+              "type": "reference",
+            },
+            "type": "json",
           },
           "requestNameOverride": undefined,
           "response": {
@@ -2066,6 +2117,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a single milestone.",
           "errorStatusCode": [
@@ -2137,6 +2189,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Delete a single milestone from a contract.",
           "errorStatusCode": [
@@ -2208,6 +2261,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Review a milestone to approve or decline submitted work.",
           "errorStatusCode": [
@@ -2257,6 +2311,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2290,6 +2345,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Review a batch of milestones to approve or reject submitted work.",
           "errorStatusCode": [
@@ -2325,6 +2381,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2358,6 +2415,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a list of off-cycle payments for the given contract id.",
           "errorStatusCode": [
@@ -2415,6 +2473,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Add a new invoice line-item for the purpose of off-cycle payment for a given contract.",
           "errorStatusCode": [
@@ -2450,6 +2509,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2483,6 +2543,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a single off-cycle payment.",
           "errorStatusCode": [
@@ -2554,6 +2615,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Add additional protection against misclassification by upgrading to Deel Premium.",
           "errorStatusCode": [
@@ -2586,6 +2648,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2619,6 +2682,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Remove Deel Premium from an existing contract.",
           "errorStatusCode": [
@@ -2694,6 +2758,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Calculate the final payment due to the contractor when ending the contract.",
           "errorStatusCode": [
@@ -2839,6 +2904,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "First payment is calculated from the number of working/calendar days between their start date and the start of the payment cycle.",
           "errorStatusCode": [
@@ -2856,6 +2922,7 @@ exports[`open api parser deel parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2889,6 +2956,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve the list of time off requests by an employee.",
           "errorStatusCode": [
@@ -2943,6 +3011,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Add a time off request for a full-time employee.",
           "errorStatusCode": [
@@ -2975,6 +3044,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3008,6 +3078,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Edit a time off request for a full-time employee.",
           "errorStatusCode": [
@@ -3054,6 +3125,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3087,6 +3159,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Cancel a time off request for an employee.",
           "errorStatusCode": [
@@ -3155,6 +3228,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a list of timesheets in your Deel account. You can filter the list by providing additional paramters e.g. contract_id, contract_type etc.",
           "errorStatusCode": [
@@ -3324,6 +3398,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Submit work for a contractor.",
           "errorStatusCode": [
@@ -3344,10 +3419,17 @@ exports[`open api parser deel parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
-            "name": undefined,
-            "properties": [],
-            "type": "multipart",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "CreateTimesheetRequest",
+              "nameOverride": undefined,
+              "schema": "TimesheetToCreateContainer",
+              "type": "reference",
+            },
+            "type": "json",
           },
           "requestNameOverride": undefined,
           "response": {
@@ -3371,6 +3453,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a single timesheet entry by Id.",
           "errorStatusCode": [
@@ -3426,6 +3509,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Update a single timesheet entry.",
           "errorStatusCode": [
@@ -3459,6 +3543,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3492,6 +3577,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Delete a single timesheet entry.",
           "errorStatusCode": [
@@ -3565,6 +3651,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Review a timesheet to approve or decline submitted work.",
           "errorStatusCode": [
@@ -3598,6 +3685,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3631,6 +3719,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Review a batch of timesheets to approve or reject submitted work.",
           "errorStatusCode": [
@@ -3651,6 +3740,7 @@ exports[`open api parser deel parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3684,6 +3774,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a list of invoice details for the given contract id.",
           "errorStatusCode": [
@@ -3882,6 +3973,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a list of invoice details. You can filter the list by providing additional paramters e.g. contract_id, contract_type etc.",
           "errorStatusCode": [
@@ -4082,6 +4174,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create an invoice adjustment using this endpoint. For example, you can add a bonus, commission, VAT %, deduction etc. to an invoice.",
           "errorStatusCode": [
@@ -4102,10 +4195,17 @@ exports[`open api parser deel parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
-            "name": "InvoiceAdjustmentToCreateWithFile",
-            "properties": [],
-            "type": "multipart",
+            "schema": {
+              "description": undefined,
+              "file": undefined,
+              "generatedName": "CreateInvoiceAdjustmentRequest",
+              "nameOverride": undefined,
+              "schema": "InvoiceAdjustmentToCreateContainer",
+              "type": "reference",
+            },
+            "type": "json",
           },
           "requestNameOverride": undefined,
           "response": {
@@ -4129,6 +4229,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Update an existing invoice adjustment. It is not possible to update VAT adjustments, we recommend you to delete the existing VAT adjust and create a new one.",
           "errorStatusCode": [
@@ -4162,6 +4263,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4195,6 +4297,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Update an existing invoice adjustment.",
           "errorStatusCode": [
@@ -4268,6 +4371,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Review an invoice adjustment to approve or decline it.",
           "errorStatusCode": [
@@ -4301,6 +4405,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4334,6 +4439,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Review multiple invoice adjustments to approve or decline a batch.",
           "errorStatusCode": [
@@ -4354,6 +4460,7 @@ exports[`open api parser deel parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4387,6 +4494,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a list of legal entities in your account.",
           "errorStatusCode": [
@@ -4429,6 +4537,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a list of countries supported by Deel.",
           "errorStatusCode": [
@@ -4471,6 +4580,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve the list of currencies used by Deel.",
           "errorStatusCode": [
@@ -4513,6 +4623,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a list of pre-defined job titles in Deel platform.",
           "errorStatusCode": [
@@ -4588,6 +4699,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a list of pre-defined seniority level for roles in Deel platform.",
           "errorStatusCode": [
@@ -4646,6 +4758,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a list of pre-defined time off types to register in Deel platform.",
           "errorStatusCode": [
@@ -4689,6 +4802,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve the current organization details. Organization is automatically detected from the auth token.",
           "errorStatusCode": [
@@ -4731,6 +4845,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a list of teams in your organization.",
           "errorStatusCode": [
@@ -4773,6 +4888,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Upload file to Deel storage to use the file attachment feature for other endpoints.",
           "errorStatusCode": [
@@ -4792,6 +4908,7 @@ exports[`open api parser deel parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4825,6 +4942,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "This end-point returns a list of your agreements with Deel.",
           "errorStatusCode": [
@@ -4916,6 +5034,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a list of contract templates in your organization.",
           "errorStatusCode": [
@@ -4957,6 +5076,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a list of time off entitlements for a full-time employee.",
           "errorStatusCode": [
@@ -5011,6 +5131,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "List of time offs for all employees in your organization.",
           "errorStatusCode": [
@@ -5050,6 +5171,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Approve or decline an employee's time off request.",
           "errorStatusCode": [
@@ -5085,6 +5207,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -5118,6 +5241,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a list of paid invoices for your workforce.",
           "errorStatusCode": [
@@ -5225,6 +5349,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get link to download the invoice PDF.",
           "errorStatusCode": [
@@ -5280,6 +5405,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get a link to download the Deel billing invoice PDF.",
           "errorStatusCode": [
@@ -5335,6 +5461,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a list of payments made to Deel.",
           "errorStatusCode": [
@@ -5456,6 +5583,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -5529,6 +5657,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [
@@ -5571,6 +5700,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a list of webhook subscriptions.",
           "errorStatusCode": [
@@ -5613,6 +5743,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new webhooks subscription.",
           "errorStatusCode": [
@@ -5633,6 +5764,7 @@ exports[`open api parser deel parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -5666,6 +5798,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a single webhook subscription.",
           "errorStatusCode": [
@@ -5723,6 +5856,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Edit a webhook subscription.",
           "errorStatusCode": [
@@ -5758,6 +5892,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -5791,6 +5926,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Delete a webhook subscription.",
           "errorStatusCode": [
@@ -5837,6 +5973,7 @@ exports[`open api parser deel parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get a full breakdown of a payment made to Deel. Breakdown will include individual invoices and Deel fee as line items.",
           "errorStatusCode": [
@@ -28003,9 +28140,11 @@ exports[`open api parser deel parse open api 1`] = `
       },
       "securitySchemes": {
         "deelToken": {
+          "tokenVariableName": undefined,
           "type": "bearer",
         },
         "oauth2": {
+          "tokenVariableName": undefined,
           "type": "bearer",
         },
       },

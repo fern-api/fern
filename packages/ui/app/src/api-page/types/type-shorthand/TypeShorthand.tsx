@@ -1,5 +1,5 @@
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import { visitDiscriminatedUnion } from "../../../utils/visitDiscriminatedUnion";
 import { ReferencedTypePreviewPart } from "./ReferencedTypePreviewPart";
 
 export declare namespace TypeShorthand {

@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernDocsConfig as RawDocs } from "@fern-fern/docs-config";
 import { FernRegistry } from "@fern-fern/registry-node";
@@ -7,7 +7,9 @@ import {
     DocsConfiguration,
     DocsNavigationConfiguration,
     DocsNavigationItem,
+    FontConfig,
     ImageReference,
+    TypographyConfig,
 } from "./DocsConfiguration";
 
 export async function convertDocsConfiguration({
@@ -19,48 +21,144 @@ export async function convertDocsConfiguration({
     absolutePathOfConfiguration: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<DocsConfiguration> {
+    const { navigation, colors, favicon, logo, navbarLinks, title, typography } = rawDocsConfiguration;
     return {
-        navigation: convertNavigationConfiguration(rawDocsConfiguration.navigation, absolutePathOfConfiguration),
-        title: rawDocsConfiguration.title,
+        navigation: await convertNavigationConfiguration({
+            rawConfig: navigation,
+            absolutePathOfConfiguration,
+            context,
+        }),
+        title,
         logo:
-            rawDocsConfiguration.logo != null
-                ? convertImageReference(rawDocsConfiguration.logo, absolutePathOfConfiguration)
+            logo != null
+                ? {
+                      reference: await convertImageReference({
+                          rawImageReference: typeof logo === "string" ? logo : logo.path,
+                          absolutePathOfConfiguration,
+                          context,
+                      }),
+                      height: typeof logo === "object" ? logo.height : undefined,
+                      href: typeof logo === "object" ? FernRegistry.docs.v1.write.Url(logo.href) : undefined,
+                  }
                 : undefined,
         favicon:
-            rawDocsConfiguration.favicon != null
-                ? convertImageReference(rawDocsConfiguration.favicon, absolutePathOfConfiguration)
+            favicon != null
+                ? await convertImageReference({ rawImageReference: favicon, absolutePathOfConfiguration, context })
                 : undefined,
-        colors: convertColorsConfiguration(rawDocsConfiguration.colors ?? {}, context),
-        navbarLinks:
-            rawDocsConfiguration.navbarLinks != null ? convertNavbarLinks(rawDocsConfiguration.navbarLinks) : undefined,
+        colors: convertColorsConfiguration(colors ?? {}, context),
+        navbarLinks: navbarLinks != null ? convertNavbarLinks(navbarLinks) : undefined,
+        typography:
+            typography != null
+                ? await convertTypographyConfiguration({
+                      rawTypography: typography,
+                      absolutePathOfConfiguration,
+                      context,
+                  })
+                : undefined,
     };
 }
 
-function convertNavigationConfiguration(
-    rawConfig: RawDocs.NavigationItem[],
-    absolutePathOfConfiguration: AbsoluteFilePath
-): DocsNavigationConfiguration {
+async function convertTypographyConfiguration({
+    rawTypography,
+    absolutePathOfConfiguration,
+    context,
+}: {
+    rawTypography: RawDocs.DocsTypographyConfig;
+    absolutePathOfConfiguration: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<TypographyConfig> {
     return {
-        items: rawConfig.map((item) => convertNavigationItem(item, absolutePathOfConfiguration)),
+        headingsFont:
+            rawTypography.headingsFont != null
+                ? await convertFontConfig({
+                      rawFontConfig: rawTypography.headingsFont,
+                      absolutePathOfConfiguration,
+                      context,
+                  })
+                : undefined,
+        bodyFont:
+            rawTypography.bodyFont != null
+                ? await convertFontConfig({
+                      rawFontConfig: rawTypography.bodyFont,
+                      absolutePathOfConfiguration,
+                      context,
+                  })
+                : undefined,
+        codeFont:
+            rawTypography.codeFont != null
+                ? await convertFontConfig({
+                      rawFontConfig: rawTypography.codeFont,
+                      absolutePathOfConfiguration,
+                      context,
+                  })
+                : undefined,
     };
 }
 
-function convertNavigationItem(
-    rawConfig: RawDocs.NavigationItem,
-    absolutePathOfConfiguration: AbsoluteFilePath
-): DocsNavigationItem {
+async function convertFontConfig({
+    rawFontConfig,
+    absolutePathOfConfiguration,
+    context,
+}: {
+    rawFontConfig: RawDocs.FontConfig;
+    absolutePathOfConfiguration: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<FontConfig> {
+    return {
+        name: rawFontConfig.name,
+        absolutePath: await resolveAndValidateFilepath({
+            absolutePathOfConfiguration,
+            rawUnresolvedFilepath: rawFontConfig.path,
+            context,
+        }),
+    };
+}
+
+async function convertNavigationConfiguration({
+    rawConfig,
+    absolutePathOfConfiguration,
+    context,
+}: {
+    rawConfig: RawDocs.NavigationItem[];
+    absolutePathOfConfiguration: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<DocsNavigationConfiguration> {
+    return {
+        items: await Promise.all(
+            rawConfig.map((item) => convertNavigationItem({ rawConfig: item, absolutePathOfConfiguration, context }))
+        ),
+    };
+}
+
+async function convertNavigationItem({
+    rawConfig,
+    absolutePathOfConfiguration,
+    context,
+}: {
+    rawConfig: RawDocs.NavigationItem;
+    absolutePathOfConfiguration: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<DocsNavigationItem> {
     if (isRawPageConfig(rawConfig)) {
         return {
             type: "page",
             title: rawConfig.page,
-            absolutePath: resolve(dirname(absolutePathOfConfiguration), rawConfig.path),
+            absolutePath: await resolveAndValidateFilepath({
+                absolutePathOfConfiguration,
+                rawUnresolvedFilepath: rawConfig.path,
+                context,
+            }),
         };
     }
     if (isRawSectionConfig(rawConfig)) {
         return {
             type: "section",
             title: rawConfig.section,
-            contents: rawConfig.contents.map((item) => convertNavigationItem(item, absolutePathOfConfiguration)),
+            contents: await Promise.all(
+                rawConfig.contents.map((item) =>
+                    convertNavigationItem({ rawConfig: item, absolutePathOfConfiguration, context })
+                )
+            ),
         };
     }
     if (isRawApiSectionConfig(rawConfig)) {
@@ -89,12 +187,21 @@ function isRawApiSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.Ap
     return (item as RawDocs.ApiSectionConfiguration).api != null;
 }
 
-function convertImageReference(
-    rawImageReference: string,
-    absolutePathOfConfiguration: AbsoluteFilePath
-): ImageReference {
+async function convertImageReference({
+    rawImageReference,
+    absolutePathOfConfiguration,
+    context,
+}: {
+    rawImageReference: string;
+    absolutePathOfConfiguration: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<ImageReference> {
     return {
-        filepath: resolve(dirname(absolutePathOfConfiguration), rawImageReference),
+        filepath: await resolveAndValidateFilepath({
+            absolutePathOfConfiguration,
+            rawUnresolvedFilepath: rawImageReference,
+            context,
+        }),
     };
 }
 
@@ -152,20 +259,37 @@ function parseHexColorCode(value: string | undefined): number | undefined {
 }
 
 function convertNavbarLinks(rawConfig: RawDocs.NavbarLink[]): FernRegistry.docs.v1.write.NavbarLink[] {
-    return rawConfig.map((item) => {
-        return {
-            text: item.text,
-            url: item.url,
-            style: item.style != null ? convertNavbarLinkStyle(item.style) : undefined,
-        };
+    return rawConfig.map((rawNavbarLink) => {
+        switch (rawNavbarLink.type) {
+            case "primary":
+                return FernRegistry.docs.v1.write.NavbarLink.primary({
+                    text: rawNavbarLink.text,
+                    url: rawNavbarLink.url,
+                });
+            case "secondary":
+                return FernRegistry.docs.v1.write.NavbarLink.secondary({
+                    text: rawNavbarLink.text,
+                    url: rawNavbarLink.url,
+                });
+            default:
+                assertNever(rawNavbarLink);
+        }
     });
 }
 
-function convertNavbarLinkStyle(rawConfig: RawDocs.NavbarLinkStyle): FernRegistry.docs.v1.write.NavbarLinkStyle {
-    switch (rawConfig) {
-        case "primary":
-            return FernRegistry.docs.v1.write.NavbarLinkStyle.Primary;
-        default:
-            assertNever(rawConfig);
+async function resolveAndValidateFilepath({
+    rawUnresolvedFilepath,
+    absolutePathOfConfiguration,
+    context,
+}: {
+    rawUnresolvedFilepath: string;
+    absolutePathOfConfiguration: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<AbsoluteFilePath> {
+    const resolved = resolve(dirname(absolutePathOfConfiguration), rawUnresolvedFilepath);
+    const pathExists = await doesPathExist(resolved);
+    if (!pathExists) {
+        context.failAndThrow("Path does not exist: " + rawUnresolvedFilepath);
     }
+    return resolved;
 }

@@ -8,6 +8,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "endpoints": [
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -57,6 +58,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -106,6 +108,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -133,6 +136,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -166,6 +170,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -215,6 +220,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -242,6 +248,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -275,6 +282,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -550,6 +558,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -625,6 +634,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -658,6 +668,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -670,6 +681,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -703,6 +715,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -765,6 +778,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -798,6 +812,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -847,6 +862,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -896,6 +912,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -997,6 +1014,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -1064,6 +1082,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -1113,6 +1132,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -1176,6 +1196,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -1243,6 +1264,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -1270,6 +1292,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1303,6 +1326,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -1330,6 +1354,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1363,6 +1388,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -1390,6 +1416,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1423,6 +1450,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -1503,6 +1531,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -1548,6 +1577,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -1581,6 +1611,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -1718,6 +1749,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -1767,6 +1799,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -1816,6 +1849,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -1865,6 +1899,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -1949,6 +1984,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -1998,6 +2034,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -2047,6 +2084,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -2096,6 +2134,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -2145,6 +2184,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -2231,6 +2271,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -2295,6 +2336,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2328,6 +2370,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -2459,6 +2502,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -2538,6 +2582,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -2571,6 +2616,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -2655,6 +2701,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -2739,6 +2786,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -2825,6 +2873,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -2877,6 +2926,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -2963,6 +3013,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -3015,6 +3066,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -3027,6 +3079,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3060,6 +3113,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -3072,6 +3126,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3105,6 +3160,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -3284,6 +3340,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -3333,6 +3390,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -3382,6 +3440,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -3409,6 +3468,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3442,6 +3502,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -3469,6 +3530,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3502,6 +3564,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -3529,6 +3592,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3562,6 +3626,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -3589,6 +3654,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3622,6 +3688,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -3649,6 +3716,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3682,6 +3750,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -3694,6 +3763,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3727,6 +3797,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -3739,6 +3810,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3772,6 +3844,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -3784,6 +3857,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3817,6 +3891,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -3829,6 +3904,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3862,6 +3938,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -3874,6 +3951,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3907,6 +3985,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -3919,6 +3998,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -3952,6 +4032,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -4131,6 +4212,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -4180,6 +4262,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -4229,6 +4312,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -4256,6 +4340,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4289,6 +4374,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -4316,6 +4402,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4349,6 +4436,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -4376,6 +4464,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4409,6 +4498,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -4458,6 +4548,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -4485,6 +4576,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4518,6 +4610,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -4530,6 +4623,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4563,6 +4657,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -4575,6 +4670,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4608,6 +4704,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -4620,6 +4717,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4653,6 +4751,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -4665,6 +4764,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4698,6 +4798,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -4710,6 +4811,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -4743,6 +4845,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -4825,6 +4928,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -4873,6 +4977,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -4921,6 +5026,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -4955,6 +5061,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -4989,6 +5096,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -5145,6 +5253,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -5179,6 +5288,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -5213,6 +5323,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -5225,6 +5336,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -5258,6 +5370,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -5292,6 +5405,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -5326,6 +5440,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -5406,6 +5521,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -5464,6 +5580,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -5497,6 +5614,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -5524,6 +5642,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -5557,6 +5676,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -5584,6 +5704,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -5617,6 +5738,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -5745,6 +5867,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -5794,6 +5917,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -5843,6 +5967,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -5870,6 +5995,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -5903,6 +6029,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -5952,6 +6079,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -5979,6 +6107,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -6012,6 +6141,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -6061,6 +6191,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -6073,6 +6204,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -6106,6 +6238,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -6155,6 +6288,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -6182,6 +6316,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -6215,6 +6350,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -6242,6 +6378,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -6275,6 +6412,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -6302,6 +6440,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -6335,6 +6474,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -6387,6 +6527,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -6430,6 +6571,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -6463,6 +6605,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -6540,6 +6683,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -6573,6 +6717,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -6607,6 +6752,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -6619,6 +6765,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -6652,6 +6799,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -6813,6 +6961,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -6862,6 +7011,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -6911,6 +7061,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -7033,6 +7184,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -7060,6 +7212,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -7093,6 +7246,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -7120,6 +7274,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -7153,6 +7308,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -7180,6 +7336,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -7213,6 +7370,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -7262,6 +7420,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -7274,6 +7433,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -7307,6 +7467,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -7319,6 +7480,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -7352,6 +7514,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -7364,6 +7527,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -7397,6 +7561,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -7564,6 +7729,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -7613,6 +7779,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -7662,6 +7829,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -7784,6 +7952,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -7811,6 +7980,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -7844,6 +8014,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -7871,6 +8042,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -7904,6 +8076,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -7931,6 +8104,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -7964,6 +8138,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -8013,6 +8188,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -8025,6 +8201,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -8058,6 +8235,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -8070,6 +8248,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -8103,6 +8282,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -8152,6 +8332,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -8201,6 +8382,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -8213,6 +8395,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -8246,6 +8429,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -8258,6 +8442,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -8291,6 +8476,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -8377,6 +8563,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -8389,6 +8576,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -8422,6 +8610,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -8520,6 +8709,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -8589,6 +8779,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -8638,6 +8829,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -8665,6 +8857,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -8698,6 +8891,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -8780,6 +8974,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -8862,6 +9057,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -8923,6 +9119,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -8972,6 +9169,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9021,6 +9219,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9070,6 +9269,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9162,6 +9362,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9203,6 +9404,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9252,6 +9454,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9264,6 +9467,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -9297,6 +9501,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9342,6 +9547,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -9375,6 +9581,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9478,6 +9685,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9527,6 +9735,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9576,6 +9785,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9610,6 +9820,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9644,6 +9855,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9678,6 +9890,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9712,6 +9925,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9746,6 +9960,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9780,6 +9995,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9829,6 +10045,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9863,6 +10080,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -9904,6 +10122,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -9937,6 +10156,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -10017,6 +10237,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -10101,6 +10322,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -10150,6 +10372,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -10199,6 +10422,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -10266,6 +10490,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -10315,6 +10540,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -10364,6 +10590,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -10523,6 +10750,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -10535,6 +10763,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -10568,6 +10797,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -10616,6 +10846,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -10650,6 +10881,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -10747,6 +10979,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -10795,6 +11028,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": undefined,
           "errorStatusCode": [],
@@ -10840,6 +11074,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
           ],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,

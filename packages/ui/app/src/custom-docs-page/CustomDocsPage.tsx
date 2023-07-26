@@ -22,7 +22,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
     const content = useMemo(() => {
         switch (path.type) {
             case "markdown-page":
-                return <Markdown>{path.markdownContent}</Markdown>;
+                return <Markdown type="markdown">{path.markdownContent}</Markdown>;
             case "mdx-page":
                 return <MdxContent mdx={path.serializedMdxContent} />;
             default:
@@ -33,7 +33,7 @@ export const CustomDocsPage: React.FC<CustomDocsPage.Props> = ({ path }) => {
     return (
         <div className="flex justify-center gap-20 overflow-y-auto px-[10vw] pt-[10vh]">
             <div className="w-[750px]">
-                <div className="mb-8 text-4xl font-semibold">{path.page.title}</div>
+                <div className="mb-8 text-3xl font-bold">{path.page.title}</div>
                 {content}
                 <BottomNavigationButtons />
                 <div className="h-20" />

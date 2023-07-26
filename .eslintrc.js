@@ -107,6 +107,7 @@ module.exports = {
                 null: "never",
             },
         ],
+        curly: "error",
         "no-console": "error",
         "react/react-in-jsx-scope": "off",
         "react/prop-types": "off",
@@ -114,5 +115,6 @@ module.exports = {
         "@blueprintjs/classes-constants": "off",
         "tailwindcss/no-custom-classname": "off",
         "@blueprintjs/html-components": "off",
+        "@typescript-eslint/strict-boolean-expressions": "error",
     },
 };

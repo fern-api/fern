@@ -2,6 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { parseReferenceToTypeName } from "@fern-api/ir-generator";
 import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
 import {
+    isRawTextType,
     parseRawFileType,
     recursivelyVisitRawTypeReference,
     TypeReferenceLocation,
@@ -51,6 +52,19 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                         }
                     }
 
+                    if (isRawTextType(typeReference)) {
+                        if (location === TypeReferenceLocation.StreamingResponse) {
+                            return [];
+                        } else {
+                            return [
+                                {
+                                    severity: "error",
+                                    message: "The text type can only be used as a response-stream.",
+                                },
+                            ];
+                        }
+                    }
+
                     const namedTypes = getAllNamedTypes({
                         type: typeReference,
                         relativeFilepath,
@@ -62,6 +76,11 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                             violations.push({
                                 severity: "error",
                                 message: "The file type can only be used as properties in inlined requests.",
+                            });
+                        } else if (namedType.parsed?.typeName != null && isRawTextType(namedType.parsed.typeName)) {
+                            violations.push({
+                                severity: "error",
+                                message: "The text type can only be used as a response-stream.",
                             });
                         } else if (!doesTypeExist(namedType)) {
                             violations.push({

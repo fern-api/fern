@@ -33,7 +33,6 @@ export interface DefinitionFileAstNodeTypes {
     httpEndpoint: { endpointId: string; endpoint: HttpEndpointSchema; service: HttpServiceSchema };
     serviceBaseUrl: string | undefined;
     endpointBaseUrl: { baseUrl: string | undefined; service: HttpServiceSchema };
-    streamCondition: { streamCondition: string | undefined; endpoint: HttpEndpointSchema };
     exampleHttpEndpointCall: {
         example: ExampleEndpointCallSchema;
         endpoint: HttpEndpointSchema;
@@ -78,6 +77,7 @@ export type TypeDeclarationName = { isInlined: false; name: string } | { isInlin
 export const TypeReferenceLocation = {
     InlinedRequestProperty: "inlinedRequestProperty",
     Response: "response",
+    StreamingResponse: "streamingResponse",
 } as const;
 export type TypeReferenceLocation = Values<typeof TypeReferenceLocation>;
 

@@ -12,6 +12,162 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@algolia/cache-browser-local-storage@npm:4.18.0":
+  version: 4.18.0
+  resolution: "@algolia/cache-browser-local-storage@npm:4.18.0"
+  dependencies:
+    "@algolia/cache-common": 4.18.0
+  checksum: 2500b033212fe83d85026bce928176961f8f4ead365697c7810d130768b3de5759e7a7f8b4c98d0010c83398d474c17b6b7512980b836fe53decda6165b3cda5
+  languageName: node
+  linkType: hard
+
+"@algolia/cache-common@npm:4.18.0":
+  version: 4.18.0
+  resolution: "@algolia/cache-common@npm:4.18.0"
+  checksum: 96ec793daca0b02669e01ee5cc4b92a027b31e158376ca56e5c2beee44706f5f876ff6f8167317e8211cb586127e7e6da29149941228febcff5256fa512485b4
+  languageName: node
+  linkType: hard
+
+"@algolia/cache-in-memory@npm:4.18.0":
+  version: 4.18.0
+  resolution: "@algolia/cache-in-memory@npm:4.18.0"
+  dependencies:
+    "@algolia/cache-common": 4.18.0
+  checksum: eb319dee07108372d32caed3103866108b5fbc63400c30f4bf0349448c26895857d7dfb2a91cf64e284fe50fad45ce90cced05c84dd0fc0566abf593f7ba9fa2
+  languageName: node
+  linkType: hard
+
+"@algolia/client-account@npm:4.18.0":
+  version: 4.18.0
+  resolution: "@algolia/client-account@npm:4.18.0"
+  dependencies:
+    "@algolia/client-common": 4.18.0
+    "@algolia/client-search": 4.18.0
+    "@algolia/transporter": 4.18.0
+  checksum: 259abe156420b4e2f53080da34271b311f0859b1414250a5c4f1167274b13e1e44a3176b0355d831fc16bd969acd7bd25b1fa2425a473f8f43c5da5f5a1aaef5
+  languageName: node
+  linkType: hard
+
+"@algolia/client-analytics@npm:4.18.0":
+  version: 4.18.0
+  resolution: "@algolia/client-analytics@npm:4.18.0"
+  dependencies:
+    "@algolia/client-common": 4.18.0
+    "@algolia/client-search": 4.18.0
+    "@algolia/requester-common": 4.18.0
+    "@algolia/transporter": 4.18.0
+  checksum: cf86ec02e647cd07ab3dac6764453749074ee15cd0cde0298da11f583e9af428fbd08f818414f8b43749968be730ba8829f1e6a32e5c0128a7728dcbfbc607ed
+  languageName: node
+  linkType: hard
+
+"@algolia/client-common@npm:4.18.0":
+  version: 4.18.0
+  resolution: "@algolia/client-common@npm:4.18.0"
+  dependencies:
+    "@algolia/requester-common": 4.18.0
+    "@algolia/transporter": 4.18.0
+  checksum: 993b23636ef669859475388c473b69c4bfe40dbfecdcf2c75aac03c23512b3284408f31112eba40a130392311dc006625296614496d622d9e4b3f5f52a70953a
+  languageName: node
+  linkType: hard
+
+"@algolia/client-personalization@npm:4.18.0":
+  version: 4.18.0
+  resolution: "@algolia/client-personalization@npm:4.18.0"
+  dependencies:
+    "@algolia/client-common": 4.18.0
+    "@algolia/requester-common": 4.18.0
+    "@algolia/transporter": 4.18.0
+  checksum: 5b52031733bceb0b9b23a2f09920c1d320126afcce2511c594395681c2156902618eb1193136012a728431d87a72808de1dcaf44af32efc40237388f283aec6f
+  languageName: node
+  linkType: hard
+
+"@algolia/client-search@npm:4.18.0":
+  version: 4.18.0
+  resolution: "@algolia/client-search@npm:4.18.0"
+  dependencies:
+    "@algolia/client-common": 4.18.0
+    "@algolia/requester-common": 4.18.0
+    "@algolia/transporter": 4.18.0
+  checksum: 86bfce7c2e5f290b4fb225e20a708f4000ac945e7c1d2ec5f9285fe2b3eff0881fd98af2d898213d928c19af5c7c045dc169bf5c1c221178cd31a921494039c1
+  languageName: node
+  linkType: hard
+
+"@algolia/events@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "@algolia/events@npm:4.0.1"
+  checksum: 4f63943f4554cfcfed91d8b8c009a49dca192b81056d8c75e532796f64828cd69899852013e81ff3fff07030df8782b9b95c19a3da0845786bdfe22af42442c2
+  languageName: node
+  linkType: hard
+
+"@algolia/logger-common@npm:4.18.0":
+  version: 4.18.0
+  resolution: "@algolia/logger-common@npm:4.18.0"
+  checksum: 562e85124bd81a6214717ff60329253e73723895441f086034d0c2411ffc26b3136c827d5823c8d7cc89fd7bb423be107735a04fc26fec9b7ff34fb49152c9fd
+  languageName: node
+  linkType: hard
+
+"@algolia/logger-console@npm:4.18.0":
+  version: 4.18.0
+  resolution: "@algolia/logger-console@npm:4.18.0"
+  dependencies:
+    "@algolia/logger-common": 4.18.0
+  checksum: 84594bf7547d2e946ff1ebc41d44c3c2a220341872c7b492a29df4c4d9bf9fe058bd693d0c773ea504eb727ce0259a76892488a44edd328ff7dd0e60342d0f14
+  languageName: node
+  linkType: hard
+
+"@algolia/requester-browser-xhr@npm:4.18.0":
+  version: 4.18.0
+  resolution: "@algolia/requester-browser-xhr@npm:4.18.0"
+  dependencies:
+    "@algolia/requester-common": 4.18.0
+  checksum: 8a8410d96c30e09f9928cfd0ebe8f1fcbf0f7f0422304f102874706e056307c76bba93d51b04c8332457e5189dbaa21f207edbd26651fec6528364adf10d73b4
+  languageName: node
+  linkType: hard
+
+"@algolia/requester-common@npm:4.18.0":
+  version: 4.18.0
+  resolution: "@algolia/requester-common@npm:4.18.0"
+  checksum: b7bbbba0dd84f802589079170558fbb7a8d969cd544cdc04ad844b224c4a8abbfbbe97632803639c0a6e67162c06ccf5df40fb52d18fe0304e96abab915230e6
+  languageName: node
+  linkType: hard
+
+"@algolia/requester-node-http@npm:4.18.0":
+  version: 4.18.0
+  resolution: "@algolia/requester-node-http@npm:4.18.0"
+  dependencies:
+    "@algolia/requester-common": 4.18.0
+  checksum: 64508ba6dc7688bc4d1eff3f6040f584812c6e5a957c2e38cb2bb17e73215cf6e4e2cee35b9345a4e0868ecbc13e1dacd002536fe132e3c197e8f80c2fd2355b
+  languageName: node
+  linkType: hard
+
+"@algolia/transporter@npm:4.18.0":
+  version: 4.18.0
+  resolution: "@algolia/transporter@npm:4.18.0"
+  dependencies:
+    "@algolia/cache-common": 4.18.0
+    "@algolia/logger-common": 4.18.0
+    "@algolia/requester-common": 4.18.0
+  checksum: 252b0cafe16d9ce1a97a5ad616e259161ecf040eb851c9673ed218b4100fb37fab3bdff6ae16e6a136e37ab8959386f1acc147f23a7cca802fdd5790e31d5339
+  languageName: node
+  linkType: hard
+
+"@algolia/ui-components-highlight-vdom@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@algolia/ui-components-highlight-vdom@npm:1.2.1"
+  dependencies:
+    "@algolia/ui-components-shared": 1.2.1
+    "@babel/runtime": ^7.0.0
+  checksum: d06721372406678d7d3dcbc75894ff727994e7f71d9d53a0c7b94705d694826977082b4ae2cd1bd847a271661d2b6921ba9ffed26401289d06b1c609415b7e74
+  languageName: node
+  linkType: hard
+
+"@algolia/ui-components-shared@npm:1.2.1, @algolia/ui-components-shared@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@algolia/ui-components-shared@npm:1.2.1"
+  checksum: e0e7c06fbfc855c24283446a903adff3e4523c9a1652cfb187f3d701278d246f9ef23b7d80c0ec9e933f9a835d0a2227906f6e92b4fca5e315e89abcf8049b2f
+  languageName: node
+  linkType: hard
+
 "@alloc/quick-lru@npm:^5.2.0":
   version: 5.2.0
   resolution: "@alloc/quick-lru@npm:5.2.0"
@@ -2007,6 +2163,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.0.0":
+  version: 7.22.5
+  resolution: "@babel/runtime@npm:7.22.5"
+  dependencies:
+    regenerator-runtime: ^0.13.11
+  checksum: 12a50b7de2531beef38840d17af50c55a094253697600cee255311222390c68eed704829308d4fd305e1b3dfbce113272e428e9d9d45b1730e0fede997eaceb1
+  languageName: node
+  linkType: hard
+
 "@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.4, @babel/runtime@npm:^7.8.7":
   version: 7.20.13
   resolution: "@babel/runtime@npm:7.20.13"
@@ -2386,9 +2551,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/auth@workspace:packages/cli/auth"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/services": "workspace:*"
@@ -2412,9 +2574,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/cli@workspace:packages/cli/cli"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/auth": "workspace:*"
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
@@ -2442,8 +2601,8 @@ __metadata:
     "@fern-api/yaml-formatter": "workspace:*"
     "@fern-api/yaml-migrations": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.193
-    "@fern-fern/ir-model": 0.0.1920
+    "@fern-fern/fiddle-sdk": ^0.0.285
+    "@fern-fern/ir-model": 0.0.2653
     "@types/axios": ^0.14.0
     "@types/boxen": ^3.0.1
     "@types/is-ci": ^3.0.0
@@ -2488,9 +2647,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/common-components@workspace:packages/commons/react/common-components"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.11.5
     "@blueprintjs/icons": ^4.4.0
     "@fern-api/loadable": "workspace:*"
@@ -2515,9 +2671,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/compile-root@workspace:packages/_root"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/auth": "workspace:*"
     "@fern-api/cli": "workspace:*"
     "@fern-api/common-components": "workspace:*"
@@ -2583,9 +2736,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/config-management-commons@workspace:packages/cli/config-management/commons"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@types/jest": ^29.0.3
@@ -2604,9 +2754,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/contexted-dialog@workspace:packages/commons/react/contexted-dialog"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.11.5
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/react-commons": "workspace:*"
@@ -2633,20 +2780,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/core-utils@workspace:packages/commons/core-utils"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
+    "@types/ua-parser-js": ^0.7.36
     depcheck: ^1.4.3
     eslint: ^8.26.0
     jest: ^29.4.0
-    lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     strip-ansi: ^7.0.1
     typescript: 4.6.4
+    ua-parser-js: ^1.0.35
   languageName: unknown
   linkType: soft
 
@@ -2654,9 +2798,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/demo-setup@workspace:packages/demo-setup"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/auth": "workspace:*"
     "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
     "@fern-fern/postman-sdk": ^0.0.20
@@ -2687,9 +2828,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/dependencies-configuration@workspace:packages/cli/config-management/dependencies-configuration"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
@@ -2712,9 +2850,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/docker-utils@workspace:packages/cli/generation/local-generation/docker-utils"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": "workspace:*"
     "@types/dockerode": ^3.3.9
     "@types/jest": ^29.0.3
@@ -2733,16 +2868,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/docs-configuration@workspace:packages/cli/config-management/docs-configuration"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-fern/docs-config": 0.0.13
-    "@fern-fern/registry-node": ^0.0.1005
+    "@fern-fern/docs-config": 0.0.27
+    "@fern-fern/registry-node": 0.11.1-2-gd8ee803
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.5
     "@types/node": ^18.7.18
@@ -2764,9 +2896,6 @@ __metadata:
     "@aws-cdk/aws-s3": ^1.202.0
     "@aws-cdk/aws-s3-deployment": ^1.202.0
     "@aws-cdk/core": ^1.202.0
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-fern/fern-cloud-sdk": ^0.0.42
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -2783,9 +2912,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/ete-tests@workspace:packages/cli/ete-tests"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
@@ -2810,12 +2936,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/fe-bundle@workspace:packages/ui/fe-bundle"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/ui": "workspace:*"
-    "@fern-fern/registry-browser": 0.0.1113
+    "@fern-fern/registry-browser": 0.11.1-2-gd8ee803
     "@tailwindcss/typography": ^0.5.9
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -2835,7 +2958,7 @@ __metadata:
     react-dom: ^18.2.0
     sass: ^1.54.0
     stylelint: ^14.14.0
-    tailwindcss: ^3.2.7
+    tailwindcss: ^3.3.2
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
@@ -2844,9 +2967,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/fonts@workspace:packages/commons/react/fonts"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
@@ -2866,9 +2986,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/fs-utils@workspace:packages/commons/fs-utils"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
+    "@fern-api/core-utils": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -2886,15 +3004,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/generators-configuration@workspace:packages/cli/config-management/generators-configuration"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.193
+    "@fern-fern/fiddle-sdk": ^0.0.285
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.5
     "@types/node": ^18.7.18
@@ -2914,9 +3029,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/init@workspace:packages/cli/init"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/auth": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
@@ -2946,9 +3058,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/ir-generator@workspace:packages/cli/generation/ir-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
@@ -2957,7 +3066,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/ir-model": 0.0.1920
+    "@fern-fern/ir-model": 0.0.2653
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -2977,9 +3086,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/ir-migrations@workspace:packages/cli/generation/ir-migrations"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
@@ -2988,7 +3094,7 @@ __metadata:
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/ir-model": 0.0.1920
+    "@fern-fern/ir-model": 0.0.2653
     "@fern-fern/ir-v1-model": 0.0.1
     "@fern-fern/ir-v10-model": 0.0.1
     "@fern-fern/ir-v11-model": 0.0.2
@@ -3001,6 +3107,8 @@ __metadata:
     "@fern-fern/ir-v18-model": 0.0.1
     "@fern-fern/ir-v19-model": 0.0.5
     "@fern-fern/ir-v2-model": 0.0.2
+    "@fern-fern/ir-v20-model": 0.0.2
+    "@fern-fern/ir-v21-model": 0.0.1
     "@fern-fern/ir-v3-model": 0.0.4
     "@fern-fern/ir-v4-model": 0.0.4
     "@fern-fern/ir-v5-model": 0.0.3
@@ -3025,9 +3133,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/json-schema@workspace:packages/cli/yaml/json-schema"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^29.0.3
@@ -3048,9 +3153,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/loadable@workspace:packages/commons/loadable"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3067,15 +3169,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/local-workspace-runner@workspace:packages/cli/generation/local-generation/local-workspace-runner"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/docker-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-migrations": "workspace:*"
+    "@fern-api/logging-execa": "workspace:*"
+    "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/generator-exec-sdk": 0.0.101
@@ -3099,9 +3200,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/logger@workspace:packages/cli/logger"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3119,9 +3217,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/logging-execa@workspace:packages/commons/logging-execa"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/logger": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3140,9 +3235,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/login@workspace:packages/cli/login"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/auth": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/posthog-manager": "workspace:*"
@@ -3171,15 +3263,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/manage-docs-configuration@workspace:packages/cli/config-management/manage-docs-configuration"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/docs-config": 0.0.13
+    "@fern-fern/docs-config": 0.0.27
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.5
     "@types/node": ^18.7.18
@@ -3197,9 +3286,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/manage-generator@workspace:packages/cli/config-management/manage-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/task-context": "workspace:*"
@@ -3218,16 +3304,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/openapi-ir-to-fern@workspace:packages/cli/openapi-ir-to-fern"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/openapi-parser": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/openapi-ir-model": 0.0.81
+    "@fern-fern/openapi-ir-model": ""
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -3246,9 +3329,6 @@ __metadata:
   resolution: "@fern-api/openapi-migrator@workspace:packages/cli/openapi-migrator"
   dependencies:
     "@apidevtools/swagger-parser": ^10.1.0
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/task-context": "workspace:*"
@@ -3272,14 +3352,11 @@ __metadata:
   resolution: "@fern-api/openapi-parser@workspace:packages/cli/openapi-parser"
   dependencies:
     "@apidevtools/swagger-parser": ^10.1.0
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-fern/openapi-ir-model": 0.0.81
+    "@fern-fern/openapi-ir-model": ""
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -3300,9 +3377,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/posthog-manager@workspace:packages/cli/posthog-manager"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/auth": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
@@ -3324,9 +3398,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/project-configuration@workspace:packages/cli/config-management/project-configuration"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
@@ -3347,9 +3418,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/project-loader@workspace:packages/cli/project-loader"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
@@ -3375,9 +3443,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/react-commons@workspace:packages/commons/react/react-commons"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.11.5
     "@fern-api/core-utils": "workspace:*"
     "@types/jest": ^29.0.3
@@ -3400,9 +3465,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/react-query-utils@workspace:packages/commons/react/react-query-utils"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/loadable": "workspace:*"
     "@tanstack/react-query": ^4.29.7
     "@types/jest": ^29.0.3
@@ -3424,9 +3486,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/register@workspace:packages/cli/register"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/auth": "workspace:*"
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
@@ -3434,8 +3493,8 @@ __metadata:
     "@fern-api/services": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/ir-model": 0.0.1920
-    "@fern-fern/registry-node": ^0.0.1005
+    "@fern-fern/ir-model": 0.0.2653
+    "@fern-fern/registry-node": 0.11.1-2-gd8ee803
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -3453,9 +3512,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/remote-workspace-runner@workspace:packages/cli/generation/remote-generation/remote-workspace-runner"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/auth": "workspace:*"
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
@@ -3469,9 +3525,9 @@ __metadata:
     "@fern-api/services": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.193
-    "@fern-fern/ir-model": 0.0.1920
-    "@fern-fern/registry-node": ^0.0.1005
+    "@fern-fern/fiddle-sdk": ^0.0.285
+    "@fern-fern/ir-model": 0.0.2653
+    "@fern-fern/registry-node": 0.11.1-2-gd8ee803
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
@@ -3498,9 +3554,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/routing-utils@workspace:packages/commons/react/routing-utils"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.11.5
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3524,9 +3577,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/scripts@workspace:packages/scripts"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/json-schema": "workspace:*"
     "@types/jest": ^29.0.3
@@ -3557,9 +3607,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/semver-utils@workspace:packages/cli/semver-utils"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -3576,12 +3623,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/services@workspace:packages/cli/services"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
-    "@fern-fern/fiddle-sdk": ^0.0.193
-    "@fern-fern/registry-node": ^0.0.1005
+    "@fern-fern/fiddle-sdk": ^0.0.285
+    "@fern-fern/registry-node": 0.11.1-2-gd8ee803
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -3597,9 +3641,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/split-view@workspace:packages/commons/react/split-view"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.11.5
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/react-commons": "workspace:*"
@@ -3627,9 +3668,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/task-context@workspace:packages/cli/task-context"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/logger": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3646,9 +3684,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/theme@workspace:packages/commons/react/theme"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.11.5
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3671,9 +3706,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/toaster@workspace:packages/commons/react/toaster"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.11.5
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3695,9 +3727,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/ui@workspace:packages/ui/app"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@blueprintjs/core": ^4.11.5
     "@blueprintjs/icons": ^4.4.0
     "@blueprintjs/popover2": ^1.8.0
@@ -3706,17 +3735,21 @@ __metadata:
     "@fern-api/react-commons": "workspace:*"
     "@fern-api/routing-utils": "workspace:*"
     "@fern-api/theme": "workspace:*"
-    "@fern-fern/registry-browser": 0.0.1113
+    "@fern-fern/registry-browser": 0.11.1-2-gd8ee803
     "@fontsource/ibm-plex-mono": ^4.5.13
+    "@headlessui/react": ^1.7.15
+    "@react-hook/size": ^2.1.2
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/marked": ^5.0.0
     "@types/node": ^18.7.18
     "@types/react": ^18.0.20
     "@types/react-syntax-highlighter": ^15.5.6
+    algoliasearch: ^4.18.0
     classnames: ^2.3.1
     depcheck: ^1.4.3
     eslint: ^8.26.0
+    instantsearch.js: ^4.56.3
     jest: ^29.4.0
     lodash-es: ^4.17.21
     marked: ^5.0.3
@@ -3729,6 +3762,7 @@ __metadata:
     react: ^18.2.0
     react-dom: ^18.2.0
     react-icons: ^4.9.0
+    react-instantsearch-hooks-web: ^6.45.0
     react-intersection-observer: ^9.4.3
     react-markdown: ^8.0.5
     react-syntax-highlighter: ^15.5.0
@@ -3744,9 +3778,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/validator@workspace:packages/cli/yaml/validator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
@@ -3755,7 +3786,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/ir-model": 0.0.1920
+    "@fern-fern/ir-model": 0.0.2653
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -3787,9 +3818,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/workspace-loader@workspace:packages/cli/workspace-loader"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/dependencies-configuration": "workspace:*"
     "@fern-api/docs-configuration": "workspace:*"
@@ -3802,7 +3830,7 @@ __metadata:
     "@fern-api/services": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.193
+    "@fern-fern/fiddle-sdk": ^0.0.285
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.5
     "@types/lodash-es": ^4.17.7
@@ -3829,9 +3857,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/yaml-formatter@workspace:packages/cli/yaml/formatter"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
@@ -3854,9 +3879,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/yaml-migrations@workspace:packages/cli/yaml/yaml-migrations"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
@@ -3888,11 +3910,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/yaml-schema@workspace:packages/cli/yaml/yaml-schema"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.19.1
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
-    "@fern-fern/ir-model": 0.0.1920
+    "@fern-fern/ir-model": 0.0.2653
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -3905,10 +3924,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-fern/docs-config@npm:0.0.13":
-  version: 0.0.13
-  resolution: "@fern-fern/docs-config@npm:0.0.13"
-  checksum: 7b26a1105b88c0ac7f17ab5637fd344400f6135cd8536d7211fc99e97e7ddf31fc1949ad41f55d767d0e4fe0b2884d25159ad5503a65cde89a848802af2ae589
+"@fern-fern/docs-config@npm:0.0.27":
+  version: 0.0.27
+  resolution: "@fern-fern/docs-config@npm:0.0.27"
+  checksum: e62e89ec02b38ab2ede29bba33b3ffb4e497e601339868f370f2936f68aebbf98285516537f20900d29d5c6b856c203bcbadc4941bf306dbda4816df754ff757
   languageName: node
   linkType: hard
 
@@ -3925,9 +3944,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/fiddle-sdk@npm:^0.0.193":
-  version: 0.0.193
-  resolution: "@fern-fern/fiddle-sdk@npm:0.0.193"
+"@fern-fern/fiddle-sdk@npm:^0.0.285":
+  version: 0.0.285
+  resolution: "@fern-fern/fiddle-sdk@npm:0.0.285"
   dependencies:
     "@types/basic-auth": ^1.1.3
     "@types/url-join": 4.0.1
@@ -3936,7 +3955,7 @@ __metadata:
     buffer: ^6.0.3
     js-base64: ^3.7.2
     url-join: 4.0.1
-  checksum: 6cf03d10f110aaff96c70a11d80fdf30d27874434585f9032134b7adcf9c803f99560da4d94082e8675f9f91d171bd8b03c95fd0d9da443b4344c09843f2f638
+  checksum: 02e96b28037d1f0efd05ab43d648f97a771ba5f13c311a455d8b9428d0b0eeb5f4e6dffbe6bb848d53074920b741aa50facdcd6c40a34fdc7287445bef256df1
   languageName: node
   linkType: hard
 
@@ -3951,10 +3970,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-model@npm:0.0.1920":
-  version: 0.0.1920
-  resolution: "@fern-fern/ir-model@npm:0.0.1920"
-  checksum: e88ef6dd11e6b56eb6d5069b50ef359b9137b223944254c143a32c96e95962e41ec3194943d17a39e78357543cbddbcf2ede7e9061204a42fa03787f04c23cfd
+"@fern-fern/ir-model@npm:0.0.2653":
+  version: 0.0.2653
+  resolution: "@fern-fern/ir-model@npm:0.0.2653"
+  checksum: f787a7c2b6175a8ebc3bbcb78fe27c49c399aaceee6852858c82d852ee1a457738840e2b688cfa3c94777d60665cdfe1e4e7d8ca929ac0c49c035893e5b42935
   languageName: node
   linkType: hard
 
@@ -4042,6 +4061,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern-fern/ir-v20-model@npm:0.0.2":
+  version: 0.0.2
+  resolution: "@fern-fern/ir-v20-model@npm:0.0.2"
+  checksum: 0e0f6c4a98fdf9ddf7f9774bfa9fab27358db2059da7f287772dbb79ae91e5ef0c2a39978217286e0b12f6d9a164af962710c6411b18409b18f27d994bc42416
+  languageName: node
+  linkType: hard
+
+"@fern-fern/ir-v21-model@npm:0.0.1":
+  version: 0.0.1
+  resolution: "@fern-fern/ir-v21-model@npm:0.0.1"
+  checksum: 278d55fb33733dcc49a3e94e1066a70c359a26ff3975e1630ce2657b01f48caa316ca56f6dbe09c45387e52b6c5dedd2e3f34caaf736113d726375389a91ddf9
+  languageName: node
+  linkType: hard
+
 "@fern-fern/ir-v3-model@npm:0.0.4":
   version: 0.0.4
   resolution: "@fern-fern/ir-v3-model@npm:0.0.4"
@@ -4091,10 +4124,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/openapi-ir-model@npm:0.0.81":
-  version: 0.0.81
-  resolution: "@fern-fern/openapi-ir-model@npm:0.0.81"
-  checksum: dd978b285a135be82d010a232d3f8dbd285631578392dfde987ada49ef3683f9b8b8279f456215cc2fec2eacd0f09ae39439abd1906ff45a05ddc9f5722fe258
+"@fern-fern/openapi-ir-model@npm:":
+  version: 0.0.87
+  resolution: "@fern-fern/openapi-ir-model@npm:0.0.87"
+  checksum: 9a5efd94d78bd3604ef57706500a51a01425341cb466471e4f31980909796a9a82ff60c3d7e6b3dacd74eaf7b6b5a880b871fb22c033165e5278926749a001a3
   languageName: node
   linkType: hard
 
@@ -4109,29 +4142,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/registry-browser@npm:0.0.1113":
-  version: 0.0.1113
-  resolution: "@fern-fern/registry-browser@npm:0.0.1113"
+"@fern-fern/registry-browser@npm:0.11.1-2-gd8ee803":
+  version: 0.11.1-2-gd8ee803
+  resolution: "@fern-fern/registry-browser@npm:0.11.1-2-gd8ee803"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 1.4.0
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: 738a0314ce01a439292eba833e7d077c5265470aa502972e62a78f96e19dd64488635a2bba45f6270f601f0ac3972eda5bb6f14b1aaa57dee6bba918af905573
+  checksum: d317940b7d7c0ad661ef32e172f8777adcaec13b43f44b23baa349d7efc3a5fb49192caf7abdc5aca17d200487d0914b211c7ca7972329458002047f7e90bb1a
   languageName: node
   linkType: hard
 
-"@fern-fern/registry-node@npm:^0.0.1005":
-  version: 0.0.1005
-  resolution: "@fern-fern/registry-node@npm:0.0.1005"
+"@fern-fern/registry-node@npm:0.11.1-2-gd8ee803":
+  version: 0.11.1-2-gd8ee803
+  resolution: "@fern-fern/registry-node@npm:0.11.1-2-gd8ee803"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: e0c7d974dc43651039852d21d106e365debfb18d8cd4087f0cd2ead63e7358b3d09089c666f20d1e0eec3c27b68a4445d0283fb30726e3a812bad2ab35943dc5
+  checksum: b773d67740aac42cf87d76ab89c96ff9992065be825d3557b6562fca35795c2c7436717555fe1419b3687472d62c1bc165642ec71192b031d1306229184aa330
   languageName: node
   linkType: hard
 
@@ -4146,6 +4179,18 @@ __metadata:
   version: 1.1.3
   resolution: "@gar/promisify@npm:1.1.3"
   checksum: 4059f790e2d07bf3c3ff3e0fec0daa8144fe35c1f6e0111c9921bd32106adaa97a4ab096ad7dab1e28ee6a9060083c4d1a4ada42a7f5f3f7a96b8812e2b757c1
+  languageName: node
+  linkType: hard
+
+"@headlessui/react@npm:^1.7.15":
+  version: 1.7.15
+  resolution: "@headlessui/react@npm:1.7.15"
+  dependencies:
+    client-only: ^0.0.1
+  peerDependencies:
+    react: ^16 || ^17 || ^18
+    react-dom: ^16 || ^17 || ^18
+  checksum: f2d11d58499ddf1362a40d84d92b7db932adaccc3596f44f1eead642258280f124497f2b329cee6e04801818bb2e66c42d752ee05f40f8b5239c2f692128e568
   languageName: node
   linkType: hard
 
@@ -4538,7 +4583,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@juggle/resize-observer@npm:^3.4.0":
+"@juggle/resize-observer@npm:^3.3.1, @juggle/resize-observer@npm:^3.4.0":
   version: 3.4.0
   resolution: "@juggle/resize-observer@npm:3.4.0"
   checksum: 2505028c05cc2e17639fcad06218b1c4b60f932a4ebb4b41ab546ef8c157031ae377e3f560903801f6d01706dbefd4943b6c4704bf19ed86dfa1c62f1473a570
@@ -5033,6 +5078,49 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-hook/latest@npm:^1.0.2":
+  version: 1.0.3
+  resolution: "@react-hook/latest@npm:1.0.3"
+  peerDependencies:
+    react: ">=16.8"
+  checksum: 2408c9cd35c5cfa7697b6da3bc5eebef254a932ade70955074c474f23be7dd3e2f81bbba12edcc9208bd0f89c6ed366d6b11d4f6d7b1052877a0bac8f74afad4
+  languageName: node
+  linkType: hard
+
+"@react-hook/passive-layout-effect@npm:^1.2.0":
+  version: 1.2.1
+  resolution: "@react-hook/passive-layout-effect@npm:1.2.1"
+  peerDependencies:
+    react: ">=16.8"
+  checksum: 217cb8aa90fb8e677672319a9a466d7752890cf4357c76df000b207696e9cc717cf2ee88080671cc9dae238a82f92093ab4f61ab2f6032d2a8db958fc7d99b5d
+  languageName: node
+  linkType: hard
+
+"@react-hook/resize-observer@npm:^1.2.1":
+  version: 1.2.6
+  resolution: "@react-hook/resize-observer@npm:1.2.6"
+  dependencies:
+    "@juggle/resize-observer": ^3.3.1
+    "@react-hook/latest": ^1.0.2
+    "@react-hook/passive-layout-effect": ^1.2.0
+  peerDependencies:
+    react: ">=16.8"
+  checksum: d2ff6c50e847514acad774f2a4010fb1e6782a231ae00c9507c1a98028b3a26399e35f094170918f11b1eeafc581d60da7641bc178d496abf00c56eee8a6b36b
+  languageName: node
+  linkType: hard
+
+"@react-hook/size@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "@react-hook/size@npm:2.1.2"
+  dependencies:
+    "@react-hook/passive-layout-effect": ^1.2.0
+    "@react-hook/resize-observer": ^1.2.1
+  peerDependencies:
+    react: ">=16.8"
+  checksum: 89876e93957f420ba63518b60992b46ca82b0d12da0cf50ad487461e0b4230ec0e036ecf100840e2b2e93c9101895ad33e8bd6bc02a25641c28c904a09ab2563
+  languageName: node
+  linkType: hard
+
 "@remix-run/router@npm:1.0.3":
   version: 1.0.3
   resolution: "@remix-run/router@npm:1.0.3"
@@ -5360,6 +5448,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/dom-speech-recognition@npm:^0.0.1":
+  version: 0.0.1
+  resolution: "@types/dom-speech-recognition@npm:0.0.1"
+  checksum: 8b34af73c311580fa17842d72025a6d9d3eb0768f03e8eac91d2699566800efb6e99cba8138c0b44f16a00822ba8a6da00f830aff504cbf996bc86bbe4834fc2
+  languageName: node
+  linkType: hard
+
 "@types/dom4@npm:^2.0.2":
   version: 2.0.2
   resolution: "@types/dom4@npm:2.0.2"
@@ -5416,6 +5511,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/google.maps@npm:^3.45.3":
+  version: 3.53.4
+  resolution: "@types/google.maps@npm:3.53.4"
+  checksum: 389b782b548b9330038bd59d3a33ccc38d776410fd1d97894fb7b595714681310eb987c7e75eb5fbf47c221dffd65c6df004e672f5ad2bc41b030b6eca86ecc4
+  languageName: node
+  linkType: hard
+
 "@types/graceful-fs@npm:^4.1.3":
   version: 4.1.5
   resolution: "@types/graceful-fs@npm:4.1.5"
@@ -5431,6 +5533,13 @@ __metadata:
   dependencies:
     "@types/unist": "*"
   checksum: fff47998f4c11e21a7454b58673f70478740ecdafd95aaf50b70a3daa7da9cdc57315545bf9c039613732c40b7b0e9e49d11d03fe9a4304721cdc3b29a88141e
+  languageName: node
+  linkType: hard
+
+"@types/hogan.js@npm:^3.0.0":
+  version: 3.0.1
+  resolution: "@types/hogan.js@npm:3.0.1"
+  checksum: 93b6a7b31a8905f6bb5cedd95c6fc8db85b07efcb7ef840b3e610108be4ded504c575f68882f0cec1f37db880eabdbdcdf70cbd0039f5c783c751782f2adc897
   languageName: node
   linkType: hard
 
@@ -5682,7 +5791,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/qs@npm:*, @types/qs@npm:^6.9.7":
+"@types/qs@npm:*, @types/qs@npm:^6.5.3, @types/qs@npm:^6.9.7":
   version: 6.9.7
   resolution: "@types/qs@npm:6.9.7"
   checksum: 7fd6f9c25053e9b5bb6bc9f9f76c1d89e6c04f7707a7ba0e44cc01f17ef5284adb82f230f542c2d5557d69407c9a40f0f3515e8319afd14e1e16b5543ac6cdba
@@ -5834,6 +5943,13 @@ __metadata:
   version: 0.2.3
   resolution: "@types/tmp@npm:0.2.3"
   checksum: 0ca45e99b3b3c6959d5c4f4555f73c8007db540cfb0fbbb9373217f9ab85e67eef75193f51a1d6564b0ee6c6f5ffa259d1034d7f7530a5b7ce80acb94cfc4daa
+  languageName: node
+  linkType: hard
+
+"@types/ua-parser-js@npm:^0.7.36":
+  version: 0.7.36
+  resolution: "@types/ua-parser-js@npm:0.7.36"
+  checksum: 8c24d4dc12ed1b8b98195838093391c358c81bf75e9cae0ecec8f7824b441e069daaa17b974a3e257172caddb671439f0c0b44bf43bfcf409b7a574a25aab948
   languageName: node
   linkType: hard
 
@@ -6174,37 +6290,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"acorn-node@npm:^1.8.2":
-  version: 1.8.2
-  resolution: "acorn-node@npm:1.8.2"
-  dependencies:
-    acorn: ^7.0.0
-    acorn-walk: ^7.0.0
-    xtend: ^4.0.2
-  checksum: 02e1564a1ccf8bd1fcefcd01235398af4a9effaf032c5397994ddd275590a72894cb3e26e4b82579ccdda1e48ade7486aef61e771ddae3563ca452b927f443d8
-  languageName: node
-  linkType: hard
-
-"acorn-walk@npm:^7.0.0":
-  version: 7.2.0
-  resolution: "acorn-walk@npm:7.2.0"
-  checksum: 9252158a79b9d92f1bc0dd6acc0fcfb87a67339e84bcc301bb33d6078936d27e35d606b4d35626d2962cd43c256d6f27717e70cbe15c04fff999ab0b2260b21f
-  languageName: node
-  linkType: hard
-
 "acorn-walk@npm:^8.1.1":
   version: 8.2.0
   resolution: "acorn-walk@npm:8.2.0"
   checksum: 1715e76c01dd7b2d4ca472f9c58968516a4899378a63ad5b6c2d668bba8da21a71976c14ec5f5b75f887b6317c4ae0b897ab141c831d741dc76024d8745f1ad1
-  languageName: node
-  linkType: hard
-
-"acorn@npm:^7.0.0":
-  version: 7.4.1
-  resolution: "acorn@npm:7.4.1"
-  bin:
-    acorn: bin/acorn
-  checksum: 1860f23c2107c910c6177b7b7be71be350db9e1080d814493fae143ae37605189504152d1ba8743ba3178d0b37269ce1ffc42b101547fdc1827078f82671e407
   languageName: node
   linkType: hard
 
@@ -6289,6 +6378,39 @@ __metadata:
     require-from-string: ^2.0.2
     uri-js: ^4.2.2
   checksum: 4dc13714e316e67537c8b31bc063f99a1d9d9a497eb4bbd55191ac0dcd5e4985bbb71570352ad6f1e76684fb6d790928f96ba3b2d4fd6e10024be9612fe3f001
+  languageName: node
+  linkType: hard
+
+"algoliasearch-helper@npm:^3.13.2":
+  version: 3.13.3
+  resolution: "algoliasearch-helper@npm:3.13.3"
+  dependencies:
+    "@algolia/events": ^4.0.1
+  peerDependencies:
+    algoliasearch: ">= 3.1 < 6"
+  checksum: a59bcf0ee7811a75969d8accf5240a0f6cd5bed27c1ad3a899ce215b86b82603c861427fb017b9b0d3f32f5d147330de25bebf2cb798d304ed6a8b0af83c44bf
+  languageName: node
+  linkType: hard
+
+"algoliasearch@npm:^4.18.0":
+  version: 4.18.0
+  resolution: "algoliasearch@npm:4.18.0"
+  dependencies:
+    "@algolia/cache-browser-local-storage": 4.18.0
+    "@algolia/cache-common": 4.18.0
+    "@algolia/cache-in-memory": 4.18.0
+    "@algolia/client-account": 4.18.0
+    "@algolia/client-analytics": 4.18.0
+    "@algolia/client-common": 4.18.0
+    "@algolia/client-personalization": 4.18.0
+    "@algolia/client-search": 4.18.0
+    "@algolia/logger-common": 4.18.0
+    "@algolia/logger-console": 4.18.0
+    "@algolia/requester-browser-xhr": 4.18.0
+    "@algolia/requester-common": 4.18.0
+    "@algolia/requester-node-http": 4.18.0
+    "@algolia/transporter": 4.18.0
+  checksum: 0ea62878610dc2cc02c8463fab06c8b6c960b3c90a1c09f9a23deb17d060a9efcf1a2f008824e109f3f0458e643e8345edede8edfc984a453831ff8134160806
   languageName: node
   linkType: hard
 
@@ -7447,7 +7569,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"client-only@npm:0.0.1":
+"client-only@npm:0.0.1, client-only@npm:^0.0.1":
   version: 0.0.1
   resolution: "client-only@npm:0.0.1"
   checksum: 0c16bf660dadb90610553c1d8946a7fdfb81d624adea073b8440b7d795d5b5b08beb3c950c6a2cf16279365a3265158a236876d92bce16423c485c322d7dfaf8
@@ -7556,7 +7678,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"color-name@npm:^1.1.4, color-name@npm:~1.1.4":
+"color-name@npm:~1.1.4":
   version: 1.1.4
   resolution: "color-name@npm:1.1.4"
   checksum: b0445859521eb4021cd0fb0cc1a75cecf67fceecae89b63f62b201cca8d345baf8b952c966862a9d9a2632987d4f6581f0ec8d957dfacece86f0a7919316f610
@@ -8064,13 +8186,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"defined@npm:^1.0.0":
-  version: 1.0.1
-  resolution: "defined@npm:1.0.1"
-  checksum: b1a852300bdb57f297289b55eafdd0c517afaa3ec8190e78fce91b9d8d0c0369d4505ecbdacfd3d98372e664f4a267d9bd793938d4a8c76209c9d9516fbe2101
-  languageName: node
-  linkType: hard
-
 "delayed-stream@npm:~1.0.0":
   version: 1.0.0
   resolution: "delayed-stream@npm:1.0.0"
@@ -8164,19 +8279,6 @@ __metadata:
   version: 3.1.0
   resolution: "detect-newline@npm:3.1.0"
   checksum: ae6cd429c41ad01b164c59ea36f264a2c479598e61cba7c99da24175a7ab80ddf066420f2bec9a1c57a6bead411b4655ff15ad7d281c000a89791f48cbe939e7
-  languageName: node
-  linkType: hard
-
-"detective@npm:^5.2.1":
-  version: 5.2.1
-  resolution: "detective@npm:5.2.1"
-  dependencies:
-    acorn-node: ^1.8.2
-    defined: ^1.0.0
-    minimist: ^1.2.6
-  bin:
-    detective: bin/detective.js
-  checksum: dc4601bbc6be850edb3c2dab7a0eaf5a6169a15ad201679c66d40ea1986df816eeaecd590047f15b0780285f3eeea13b82dca0d4c52a47e744a571e326a72dc9
   languageName: node
   linkType: hard
 
@@ -9457,7 +9559,7 @@ env-cmd@toddbluhm/env-cmd:
     jsonc-parser: ~2.2.1
     lint-staged: ^13.0.3
     lodash-es: ^4.17.21
-    mrlint: ^0.0.122
+    mrlint: ^0.0.124
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     react: ^18.2.0
@@ -10271,6 +10373,18 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"hogan.js@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "hogan.js@npm:3.0.2"
+  dependencies:
+    mkdirp: 0.3.0
+    nopt: 1.0.10
+  bin:
+    hulk: ./bin/hulk
+  checksum: c7bbff84faa9ca265c39f4a2100546ba0388fcc9c5bac8526f488592ce3fcaa042eba6ac25db277f4478ec3855b9bc28ce59acffbf6e8a28d45a17df7590c6aa
+  languageName: node
+  linkType: hard
+
 "hosted-git-info@npm:^2.1.4":
   version: 2.8.9
   resolution: "hosted-git-info@npm:2.8.9"
@@ -10284,6 +10398,13 @@ env-cmd@toddbluhm/env-cmd:
   dependencies:
     lru-cache: "npm:^6.0.0"
   checksum: c3f87b3c2f7eb8c2748c8f49c0c2517c9a95f35d26f4bf54b2a8cba05d2e668f3753548b6ea366b18ec8dadb4e12066e19fa382a01496b0ffa0497eb23cbe461
+  languageName: node
+  linkType: hard
+
+"htm@npm:^3.0.0":
+  version: 3.1.1
+  resolution: "htm@npm:3.1.1"
+  checksum: 1827a0cafffcff69690b048a4df59944086d7503fe5eb7c10b40834439205bdf992941e7aa25e92b3c2c086170565b4ed7c365bc072d31067c6e7a4e478776bd
   languageName: node
   linkType: hard
 
@@ -10559,6 +10680,29 @@ env-cmd@toddbluhm/env-cmd:
     through: ^2.3.6
     wrap-ansi: ^8.0.1
   checksum: dec2a062c0710396e14712bff6e08c0f150ab1021754ab9f66d600dd828abea4263b49ddbf8d100173843cb14cbe790abb8d5d5b2ae9e11b222324638c9674f2
+  languageName: node
+  linkType: hard
+
+"instantsearch.js@npm:4.56.3, instantsearch.js@npm:^4.56.3":
+  version: 4.56.3
+  resolution: "instantsearch.js@npm:4.56.3"
+  dependencies:
+    "@algolia/events": ^4.0.1
+    "@algolia/ui-components-highlight-vdom": ^1.2.1
+    "@algolia/ui-components-shared": ^1.2.1
+    "@types/dom-speech-recognition": ^0.0.1
+    "@types/google.maps": ^3.45.3
+    "@types/hogan.js": ^3.0.0
+    "@types/qs": ^6.5.3
+    algoliasearch-helper: ^3.13.2
+    hogan.js: ^3.0.2
+    htm: ^3.0.0
+    preact: ^10.10.0
+    qs: ^6.5.1 < 6.10
+    search-insights: ^2.6.0
+  peerDependencies:
+    algoliasearch: ">= 3.1 < 6"
+  checksum: 6320263ae4c883686c948489cd318bbae9f4dbf90925fa92310b34478d90f8fe8cd7bee31d2d568a0ad8991c9a36b34c00626855311c0019ba404343c5e202a8
   languageName: node
   linkType: hard
 
@@ -11932,7 +12076,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"lilconfig@npm:^2.0.5, lilconfig@npm:^2.0.6":
+"lilconfig@npm:^2.0.5":
   version: 2.0.6
   resolution: "lilconfig@npm:2.0.6"
   checksum: 40a3cd72f103b1be5975f2ac1850810b61d4053e20ab09be8d3aeddfe042187e1ba70b4651a7e70f95efa1642e7dc8b2ae395b317b7d7753b241b43cef7c0f7d
@@ -13287,6 +13431,13 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"mkdirp@npm:0.3.0":
+  version: 0.3.0
+  resolution: "mkdirp@npm:0.3.0"
+  checksum: 3ec9cda8bd89b64892728e5092bc79e88382e444d4bbde040c2fb8d7034dc70682cfdd729e93241fd5243d2397324c420ef68c717d806db51bf96c0fc80f4b1d
+  languageName: node
+  linkType: hard
+
 "mkdirp@npm:^1.0.3, mkdirp@npm:^1.0.4":
   version: 1.0.4
   resolution: "mkdirp@npm:1.0.4"
@@ -13303,12 +13454,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.122":
-  version: 0.0.122
-  resolution: "mrlint@npm:0.0.122"
+"mrlint@npm:^0.0.124":
+  version: 0.0.124
+  resolution: "mrlint@npm:0.0.124"
   bin:
     mrlint: cli.cjs
-  checksum: a384c16d54def6932046f093f0a1cb79ada0fbf2cbba1cec0cd88e8a62cb60a2aa102f8854c29db3bcea1f3e755952f7798f9457906e4a8a24b6a6b56083f98d
+  checksum: 05d11793604bb37f51822a785a9558fa66d9b81517a7c9ede9b5f7091a806ded267f4fe9ecb273e58abe1ba17e2265f1305b5b686adced912c127e065285a30d
   languageName: node
   linkType: hard
 
@@ -13549,6 +13700,17 @@ env-cmd@toddbluhm/env-cmd:
   version: 2.0.10
   resolution: "node-releases@npm:2.0.10"
   checksum: d784ecde25696a15d449c4433077f5cce620ed30a1656c4abf31282bfc691a70d9618bae6868d247a67914d1be5cc4fde22f65a05f4398cdfb92e0fc83cadfbc
+  languageName: node
+  linkType: hard
+
+"nopt@npm:1.0.10":
+  version: 1.0.10
+  resolution: "nopt@npm:1.0.10"
+  dependencies:
+    abbrev: 1
+  bin:
+    nopt: ./bin/nopt.js
+  checksum: f62575aceaa3be43f365bf37a596b89bbac2e796b001b6d2e2a85c2140a4e378ff919e2753ccba959c4fd344776fc88c29b393bc167fa939fb1513f126f4cd45
   languageName: node
   linkType: hard
 
@@ -14353,19 +14515,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"postcss-import@npm:^14.1.0":
-  version: 14.1.0
-  resolution: "postcss-import@npm:14.1.0"
-  dependencies:
-    postcss-value-parser: ^4.0.0
-    read-cache: ^1.0.0
-    resolve: ^1.1.7
-  peerDependencies:
-    postcss: ^8.0.0
-  checksum: cd45d406e90f67cdab9524352e573cc6b4462b790934a05954e929a6653ebd31288ceebc8ce3c3ed7117ae672d9ebbec57df0bceec0a56e9b259c2e71d47ca86
-  languageName: node
-  linkType: hard
-
 "postcss-import@npm:^15.1.0":
   version: 15.1.0
   resolution: "postcss-import@npm:15.1.0"
@@ -14379,7 +14528,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"postcss-js@npm:^4.0.0, postcss-js@npm:^4.0.1":
+"postcss-js@npm:^4.0.1":
   version: 4.0.1
   resolution: "postcss-js@npm:4.0.1"
   dependencies:
@@ -14387,24 +14536,6 @@ env-cmd@toddbluhm/env-cmd:
   peerDependencies:
     postcss: ^8.4.21
   checksum: 5c1e83efeabeb5a42676193f4357aa9c88f4dc1b3c4a0332c132fe88932b33ea58848186db117cf473049fc233a980356f67db490bd0a7832ccba9d0b3fd3491
-  languageName: node
-  linkType: hard
-
-"postcss-load-config@npm:^3.1.4":
-  version: 3.1.4
-  resolution: "postcss-load-config@npm:3.1.4"
-  dependencies:
-    lilconfig: ^2.0.5
-    yaml: ^1.10.2
-  peerDependencies:
-    postcss: ">=8.0.9"
-    ts-node: ">=9.0.0"
-  peerDependenciesMeta:
-    postcss:
-      optional: true
-    ts-node:
-      optional: true
-  checksum: 1c589504c2d90b1568aecae8238ab993c17dba2c44f848a8f13619ba556d26a1c09644d5e6361b5784e721e94af37b604992f9f3dc0483e687a0cc1cc5029a34
   languageName: node
   linkType: hard
 
@@ -14430,17 +14561,6 @@ env-cmd@toddbluhm/env-cmd:
   version: 0.2.3
   resolution: "postcss-media-query-parser@npm:0.2.3"
   checksum: 8000d4d95b912994928ff86137f5ab0ed4c4ee1498af2336e93d708ae8827a690cd7acbaed55d14684cf44d82c8d44b031c1c69ae6bcd2f9620ea67573888090
-  languageName: node
-  linkType: hard
-
-"postcss-nested@npm:6.0.0":
-  version: 6.0.0
-  resolution: "postcss-nested@npm:6.0.0"
-  dependencies:
-    postcss-selector-parser: ^6.0.10
-  peerDependencies:
-    postcss: ^8.2.14
-  checksum: 2105dc52cd19747058f1a46862c9e454b5a365ac2e7135fc1015d67a8fe98ada2a8d9ee578e90f7a093bd55d3994dd913ba5ff1d5e945b4ed9a8a2992ecc8f10
   languageName: node
   linkType: hard
 
@@ -14507,7 +14627,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"postcss@npm:*, postcss@npm:^8.0.9, postcss@npm:^8.1.10, postcss@npm:^8.4.12, postcss@npm:^8.4.17, postcss@npm:^8.4.21, postcss@npm:^8.4.23":
+"postcss@npm:*, postcss@npm:^8.1.10, postcss@npm:^8.4.12, postcss@npm:^8.4.17, postcss@npm:^8.4.21, postcss@npm:^8.4.23":
   version: 8.4.23
   resolution: "postcss@npm:8.4.23"
   dependencies:
@@ -14556,6 +14676,13 @@ env-cmd@toddbluhm/env-cmd:
   dependencies:
     axios: ^0.27.0
   checksum: f4d530f7194e482abdabe81fc47b375a16b6f5bdd5e17088fea6f3da07cbaf0a95d03cd53ccbc1d3910b10f8ec7be3c3ad5134a4c2f827d0516a46b0345d24a6
+  languageName: node
+  linkType: hard
+
+"preact@npm:^10.10.0":
+  version: 10.15.1
+  resolution: "preact@npm:10.15.1"
+  checksum: dabad11843b19b40b11846a25ff0b1fc4bc58268909e01a7faddb341a40983d24fbe7d44ad6e2c5d35e43091963af616800552fec9af44dd0a2f0f698d1bba1f
   languageName: node
   linkType: hard
 
@@ -14742,6 +14869,13 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"qs@npm:^6.5.1 < 6.10":
+  version: 6.9.7
+  resolution: "qs@npm:6.9.7"
+  checksum: 5bbd263332ccf320a1f36d04a2019a5834dc20bcb736431eaccde2a39dcba03fb26d2fd00174f5d7bc26aaad1cad86124b18440883ac042ea2a0fca6170c1bf1
+  languageName: node
+  linkType: hard
+
 "query-ast@npm:^1.0.3":
   version: 1.0.4
   resolution: "query-ast@npm:1.0.4"
@@ -14831,6 +14965,36 @@ env-cmd@toddbluhm/env-cmd:
   peerDependencies:
     react: "*"
   checksum: 69d1000d02349cf4baa78a0882aff09723d348d910256ea7489dea777abf10f158b27c1b5d3b1d2ec030e21320eae0afcc13f9c9d11afb85a8809c59a23a923c
+  languageName: node
+  linkType: hard
+
+"react-instantsearch-hooks-web@npm:^6.45.0":
+  version: 6.45.0
+  resolution: "react-instantsearch-hooks-web@npm:6.45.0"
+  dependencies:
+    "@babel/runtime": ^7.1.2
+    instantsearch.js: 4.56.3
+    react-instantsearch-hooks: 6.45.0
+  peerDependencies:
+    algoliasearch: ">= 3.1 < 5"
+    react: ">= 16.8.0 < 19"
+    react-dom: ">= 16.8.0 < 19"
+  checksum: 4a2bd0af62a59b41139925c45160ed37d90fd987c3c92b86913ec5be573a603fcac3847962b2b243886896c124c99352d4bf80f7d8d07fb4970fc4e5aaf8b4ca
+  languageName: node
+  linkType: hard
+
+"react-instantsearch-hooks@npm:6.45.0":
+  version: 6.45.0
+  resolution: "react-instantsearch-hooks@npm:6.45.0"
+  dependencies:
+    "@babel/runtime": ^7.1.2
+    algoliasearch-helper: ^3.13.2
+    instantsearch.js: 4.56.3
+    use-sync-external-store: ^1.0.0
+  peerDependencies:
+    algoliasearch: ">= 3.1 < 5"
+    react: ">= 16.8.0 < 19"
+  checksum: 61bda6fc3422b6d685f6628dbad0cac1aa49927d6daa4b4f4c0423925fb6525f8c4089f7660760f0ab5ef3ce9f9a7517847b73975e4646a8bc1607b9b4e906f8
   languageName: node
   linkType: hard
 
@@ -15318,7 +15482,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"resolve@npm:^1.1.7, resolve@npm:^1.10.0, resolve@npm:^1.14.2, resolve@npm:^1.18.1, resolve@npm:^1.20.0, resolve@npm:^1.22.0, resolve@npm:^1.22.1":
+"resolve@npm:^1.1.7, resolve@npm:^1.10.0, resolve@npm:^1.14.2, resolve@npm:^1.18.1, resolve@npm:^1.20.0, resolve@npm:^1.22.0":
   version: 1.22.1
   resolution: "resolve@npm:1.22.1"
   dependencies:
@@ -15357,7 +15521,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"resolve@patch:resolve@^1.1.7#~builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#~builtin<compat/resolve>, resolve@patch:resolve@^1.18.1#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.1#~builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.10.0#~builtin<compat/resolve>":
+"resolve@patch:resolve@^1.1.7#~builtin<compat/resolve>, resolve@patch:resolve@^1.14.2#~builtin<compat/resolve>, resolve@patch:resolve@^1.18.1#~builtin<compat/resolve>, resolve@patch:resolve@^1.20.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.0#~builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.10.0#~builtin<compat/resolve>":
   version: 1.22.1
   resolution: "resolve@patch:resolve@npm%3A1.22.1#~builtin<compat/resolve>::version=1.22.1&hash=c3c19d"
   dependencies:
@@ -15570,6 +15734,13 @@ env-cmd@toddbluhm/env-cmd:
   dependencies:
     invariant: "npm:2.2.4"
   checksum: 0f3b16aea76cdb36e5d19f8c17e65a49b2666824dc037e0853278c6e61b01746283a95c1323bcfc4bf45cf24fdae3515f2ca7f3851e3bf19667f2fb0727a54ec
+  languageName: node
+  linkType: hard
+
+"search-insights@npm:^2.6.0":
+  version: 2.6.0
+  resolution: "search-insights@npm:2.6.0"
+  checksum: cb1d34b1b2485bc676c9f6a4b54749669a625417a891ce6409b5fb48967f55ee1a0483775e895e030993113d182ccafc1e08f3404df1e9e6760f346eeac2b801
   languageName: node
   linkType: hard
 
@@ -16504,42 +16675,6 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^3.2.7":
-  version: 3.2.7
-  resolution: "tailwindcss@npm:3.2.7"
-  dependencies:
-    arg: ^5.0.2
-    chokidar: ^3.5.3
-    color-name: ^1.1.4
-    detective: ^5.2.1
-    didyoumean: ^1.2.2
-    dlv: ^1.1.3
-    fast-glob: ^3.2.12
-    glob-parent: ^6.0.2
-    is-glob: ^4.0.3
-    lilconfig: ^2.0.6
-    micromatch: ^4.0.5
-    normalize-path: ^3.0.0
-    object-hash: ^3.0.0
-    picocolors: ^1.0.0
-    postcss: ^8.0.9
-    postcss-import: ^14.1.0
-    postcss-js: ^4.0.0
-    postcss-load-config: ^3.1.4
-    postcss-nested: 6.0.0
-    postcss-selector-parser: ^6.0.11
-    postcss-value-parser: ^4.2.0
-    quick-lru: ^5.1.1
-    resolve: ^1.22.1
-  peerDependencies:
-    postcss: ^8.0.9
-  bin:
-    tailwind: lib/cli.js
-    tailwindcss: lib/cli.js
-  checksum: 819446bf67acea1fc738f345d80f328b7bb6e6ef4b24070249a11219307045881cf97baed6258cbdcede7fa18886e9c9c41fd0fa087b3e987cf2948560a2f164
-  languageName: node
-  linkType: hard
-
 "tailwindcss@npm:^3.3.2":
   version: 3.3.2
   resolution: "tailwindcss@npm:3.3.2"
@@ -17027,6 +17162,13 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"ua-parser-js@npm:^1.0.35":
+  version: 1.0.35
+  resolution: "ua-parser-js@npm:1.0.35"
+  checksum: 02370d38a0c8b586f2503d1c3bbba5cbc0b97d407282f9023201a99e4c03eae4357a2800fdf50cf80d73ec25c0b0cc5bfbaa03975b0add4043d6e4c86712c9c1
+  languageName: node
+  linkType: hard
+
 "unbox-primitive@npm:^1.0.2":
   version: 1.0.2
   resolution: "unbox-primitive@npm:1.0.2"
@@ -17319,7 +17461,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:^1.2.0":
+"use-sync-external-store@npm:^1.0.0, use-sync-external-store@npm:^1.2.0":
   version: 1.2.0
   resolution: "use-sync-external-store@npm:1.2.0"
   peerDependencies:
@@ -17700,7 +17842,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"xtend@npm:^4.0.0, xtend@npm:^4.0.2":
+"xtend@npm:^4.0.0":
   version: 4.0.2
   resolution: "xtend@npm:4.0.2"
   checksum: ac5dfa738b21f6e7f0dd6e65e1b3155036d68104e67e5d5d1bde74892e327d7e5636a076f625599dc394330a731861e87343ff184b0047fef1360a7ec0a5a36a
@@ -17742,7 +17884,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"yaml@npm:^1.10.0, yaml@npm:^1.10.2":
+"yaml@npm:^1.10.0":
   version: 1.10.2
   resolution: "yaml@npm:1.10.2"
   checksum: ce4ada136e8a78a0b08dc10b4b900936912d15de59905b2bf415b4d33c63df1d555d23acb2a41b23cf9fb5da41c256441afca3d6509de7247daa062fd2c5ea5f

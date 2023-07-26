@@ -10,10 +10,11 @@ export declare namespace ApiSubpackage {
     export interface Props {
         subpackageId: FernRegistryApiRead.SubpackageId;
         slug: string;
+        isLastInParentPackage: boolean;
     }
 }
 
-export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId, slug }) => {
+export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId, slug, isLastInParentPackage }) => {
     const { resolveSubpackageById } = useApiDefinitionContext();
 
     const subpackage = resolveSubpackageById(subpackageId);
@@ -27,13 +28,20 @@ export const ApiSubpackage: React.FC<ApiSubpackage.Props> = ({ subpackageId, slu
                     <SubpackageTitle subpackage={subpackage} />
                 </div>
                 {subpackage.description != null && (
-                    <div className="flex space-x-[5vw] pt-10">
-                        <Markdown className="flex-1">{subpackage.description}</Markdown>
-                        <div className="hidden flex-1 md:flex" />
+                    <div className="flex flex-col items-start space-y-5 pt-10 md:flex-row md:space-x-[5vw] md:space-y-0">
+                        <Markdown type="api" className="flex-1">
+                            {subpackage.description}
+                        </Markdown>
+                        <div className="flex-1" />
                     </div>
                 )}
             </ApiPageMargins>
-            <ApiPackageContents key={subpackageId} package={subpackage} slug={slug} />
+            <ApiPackageContents
+                key={subpackageId}
+                package={subpackage}
+                slug={slug}
+                isLastInParentPackage={isLastInParentPackage}
+            />
         </>
     );
 };

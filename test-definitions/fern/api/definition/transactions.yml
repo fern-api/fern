@@ -1,0 +1,28 @@
+service:
+  auth: false
+  base-path: /transactions
+  endpoints:
+    list:
+      path: ""
+      method: GET
+      docs: Retrieves all transactions
+      display-name: List transactions
+      response: list<Transaction>
+    get:
+      path: /{transaction_id}
+      method: GET
+      docs: Retrieves the transaction with the given ID.
+      display-name: Retrieve a transaction
+      path-parameters:
+        transaction_id: string
+      response: Transaction
+
+types:
+  Transaction:
+    properties:
+      creditor: optional<TransactionUser>
+      debtor: optional<TransactionUser>
+
+  TransactionUser:
+    properties:
+      name: string

@@ -1,0 +1,37 @@
+types:
+  Reason:
+    type: string
+
+  NotFoundErrorBody:
+    properties:
+      code: string
+      message: Reason
+
+errors:
+  BadRequestError:
+    status-code: 400
+    type: unknown
+
+  InvalidCredentialsError:
+    status-code: 401
+    type: set<Reason>
+
+  ForbiddenError:
+    status-code: 403
+    type: list<Reason>
+
+  NotFoundError:
+    status-code: 404
+    type: NotFoundErrorBody
+
+  ConflictError:
+    status-code: 409
+    type: Reason
+
+  InternalServerError:
+    status-code: 500
+    type: boolean
+
+  ServiceUnavailableError:
+    status-code: 503
+    type: integer

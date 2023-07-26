@@ -18,6 +18,7 @@ import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
+import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
@@ -126,6 +127,7 @@ async function tryRunCli(cliContext: CliContext) {
     addAddCommand(cli, cliContext);
     addGenerateCommand(cli, cliContext);
     addIrCommand(cli, cliContext);
+    addFdrCommand(cli, cliContext);
     addValidateCommand(cli, cliContext);
     addRegisterCommand(cli, cliContext);
     addRegisterV2Command(cli, cliContext);
@@ -323,6 +325,41 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 generationLanguage: argv.language,
                 audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" },
                 version: argv.version,
+            });
+        }
+    );
+}
+
+function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "fdr <path-to-output>",
+        false, // hide from help message
+        (yargs) =>
+            yargs
+                .positional("path-to-output", {
+                    type: "string",
+                    description: "Path to write FDR API definition",
+                    demandOption: true,
+                })
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API",
+                })
+                .option("audience", {
+                    type: "array",
+                    string: true,
+                    default: new Array<string>(),
+                    description: "Filter the FDR API definition for certain audiences",
+                }),
+        async (argv) => {
+            await generateFdrApiDefinitionForWorkspaces({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineWorkspace: argv.api,
+                    defaultToAllWorkspaces: false,
+                }),
+                outputFilepath: resolve(cwd(), argv.pathToOutput),
+                cliContext,
+                audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" },
             });
         }
     );

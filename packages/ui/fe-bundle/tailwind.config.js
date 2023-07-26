@@ -9,7 +9,20 @@ module.exports = {
         "../app/src/**/*.{ts,tsx}",
     ],
     theme: {
-        extend: {},
+        extend: {
+            fontSize: {
+                base: ["0.9575rem", { lineHeight: "1.3rem" }],
+            },
+            listStyleImage: {
+                dash: 'url("/dash.svg")',
+            },
+            minWidth: {
+                sm: "24rem",
+                md: "28rem",
+                lg: "32rem",
+                xl: "36rem",
+            },
+        },
         colors: ({ colors }) => {
             return {
                 ...colors,
@@ -20,6 +33,8 @@ module.exports = {
                 "gray-medium": colors.neutral[700],
                 "gray-dark": colors.neutral[800],
                 border: colors.neutral[700],
+                "border-concealed": colors.neutral[800],
+                "text-stark": colors.neutral[200],
                 "text-default": colors.neutral[400],
                 "text-muted": colors.neutral[600],
             };

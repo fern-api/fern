@@ -9,5 +9,5 @@ export declare namespace MonospaceText {
 }
 
 export const MonospaceText: React.FC<MonospaceText.Props> = ({ className, children }) => {
-    return <div className={classNames(className, styles.container)}>{children}</div>;
+    return <div className={classNames(className, styles.container, "typography-font-code")}>{children}</div>;
 };

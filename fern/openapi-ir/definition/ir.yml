@@ -96,11 +96,15 @@ types:
   SecurityScheme:
     union:
       basic: BasicSecurityScheme
-      bearer: {}
+      bearer: BearerSecurityScheme
       header: HeaderSecurityScheme
       query:
         type: QuerySecurityScheme
         docs: parameter sent as a security scheme
+
+  BearerSecurityScheme:
+    properties:
+      tokenVariableName: optional<string>
 
   BasicSecurityScheme:
     properties:
@@ -122,6 +126,7 @@ types:
       authed: boolean
       internal: optional<boolean>
       method: HttpMethod
+      audiences: list<string>
       path:
         type: string
         docs: |
@@ -198,6 +203,7 @@ types:
     extends: WithDescription
     properties:
       schema: Schema
+      contentType: optional<string>
 
   MultipartRequest:
     extends: WithDescription
@@ -222,8 +228,12 @@ types:
     union:
       file: FileResponse
       json: JsonResponse
+      text: TextResponse
 
   FileResponse:
+    extends: WithDescription
+
+  TextResponse:
     extends: WithDescription
 
   JsonResponse:

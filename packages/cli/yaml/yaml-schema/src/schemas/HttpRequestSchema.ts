@@ -5,6 +5,7 @@ import { HttpRequestBodySchema } from "./HttpRequestBodySchema";
 import { WithNameSchema } from "./WithNameSchema";
 
 export const HttpRequestSchema = WithNameSchema.extend({
+    ["content-type"]: z.optional(z.string()),
     ["query-parameters"]: z.optional(z.record(HttpQueryParameterSchema)),
     headers: z.optional(z.record(HttpHeaderSchema)),
     body: z.optional(HttpRequestBodySchema),

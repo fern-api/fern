@@ -5,10 +5,11 @@ types:
       title:
         type: optional<string>
         docs: used as tab bar title, and in the navbar if no logo is defined
-      logo: optional<string>
+      logo: optional<LogoConfiguration>
       favicon: optional<string>
       colors: optional<ColorsConfiguration>
       "navbar-links": optional<list<NavbarLink>>
+      typography: optional<DocsTypographyConfig>
 
   NavigationItem:
     discriminated: false
@@ -16,6 +17,34 @@ types:
       - PageConfiguration
       - SectionConfiguration
       - ApiSectionConfiguration
+
+  LogoConfiguration:
+    discriminated: false
+    union:
+      - string
+      - LogoInfo
+
+  LogoInfo:
+    properties:
+      path: string
+      height: optional<double>
+      href: string
+
+  DocsTypographyConfig:
+    properties:
+      headingsFont: optional<FontConfig>
+      bodyFont: optional<FontConfig>
+      codeFont: optional<FontConfig>
+
+  FontConfig:
+    properties:
+      path:
+        type: string
+        docs: The relative path of the font file.
+      name:
+        type: optional<string>
+        docs: |
+          If the `name` is not supplied, Fern will default it to a generated name that will be used to reference your custom font in the eventually injected CSS in the docs.
 
   PageConfiguration:
     properties:
@@ -37,11 +66,16 @@ types:
       accentPrimary: optional<string>
 
   NavbarLink:
-    properties:
-      text: string
-      url: string
-      style: optional<NavbarLinkStyle>
+    union:
+      primary: NavbarPrimaryLink
+      secondary: NavbarSecondaryLink
 
-  NavbarLinkStyle:
-    enum:
-      - primary
+  NavbarPrimaryLink:
+    properties:
+      url: string
+      text: string
+
+  NavbarSecondaryLink:
+    properties:
+      url: string
+      text: string

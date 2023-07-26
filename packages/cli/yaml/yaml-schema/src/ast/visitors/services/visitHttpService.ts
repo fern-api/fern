@@ -125,6 +125,7 @@ async function visitEndpoint({
                         }
                     }
                 },
+                "content-type": noop,
                 headers: async (headers) => {
                     await visitHeaders({
                         headers,
@@ -194,20 +195,18 @@ async function visitEndpoint({
         audiences: noop,
         method: noop,
         auth: noop,
-        "stream-condition": async (streamCondition) => {
-            await visitor.streamCondition?.({ streamCondition, endpoint }, [
-                ...nodePathForEndpoint,
-                "stream-condition",
-            ]);
-        },
         "response-stream": async (responseStream) => {
             if (responseStream == null) {
                 return;
             }
             if (typeof responseStream === "string") {
-                await visitTypeReference(responseStream, [...nodePathForEndpoint, "response-stream"]);
+                await visitTypeReference(responseStream, [...nodePathForEndpoint, "response-stream"], {
+                    location: TypeReferenceLocation.StreamingResponse,
+                });
             } else {
-                await visitTypeReference(responseStream.type, [...nodePathForEndpoint, "response-stream"]);
+                await visitTypeReference(responseStream.type, [...nodePathForEndpoint, "response-stream"], {
+                    location: TypeReferenceLocation.StreamingResponse,
+                });
             }
         },
         response: async (response) => {

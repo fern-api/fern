@@ -1,5 +1,5 @@
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
-import { visitDiscriminatedUnion } from "../../utils/visitDiscriminatedUnion";
 import { JsonPropertyPath } from "../examples/json-example/contexts/JsonPropertyPath";
 import { Description } from "../types/Description";
 import { TypeDefinition } from "../types/type-definition/TypeDefinition";
@@ -10,14 +10,19 @@ export declare namespace EndpointRequestSection {
     export interface Props {
         httpRequest: FernRegistryApiRead.HttpRequest;
         onHoverProperty?: (path: JsonPropertyPath, opts: { isHovering: boolean }) => void;
+        getPropertyAnchor?: (property: FernRegistryApiRead.ObjectProperty) => string;
     }
 }
 
-export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({ httpRequest, onHoverProperty }) => {
+export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
+    httpRequest,
+    onHoverProperty,
+    getPropertyAnchor,
+}) => {
     return (
         <div className="flex flex-col">
             <Description description={httpRequest.description ?? undefined} />
-            <div className="text-text-default mb-5">
+            <div className="text-text-default border-border border-b pb-5 text-sm leading-6">
                 {"This endpoint expects "}
                 {visitDiscriminatedUnion(httpRequest.type, "type")._visit<JSX.Element | string>({
                     object: () => "an object",
@@ -29,13 +34,19 @@ export const EndpointRequestSection: React.FC<EndpointRequestSection.Props> = ({
             </div>
             {visitDiscriminatedUnion(httpRequest.type, "type")._visit({
                 object: (object) => (
-                    <TypeDefinition typeShape={object} isCollapsible={false} onHoverProperty={onHoverProperty} />
+                    <TypeDefinition
+                        typeShape={object}
+                        isCollapsible={false}
+                        onHoverProperty={onHoverProperty}
+                        getPropertyAnchor={getPropertyAnchor}
+                    />
                 ),
                 reference: (type) => (
                     <TypeReferenceDefinitions
                         type={type.value}
                         isCollapsible={false}
                         onHoverProperty={onHoverProperty}
+                        getPropertyAnchor={getPropertyAnchor}
                     />
                 ),
                 fileUpload: () => null,

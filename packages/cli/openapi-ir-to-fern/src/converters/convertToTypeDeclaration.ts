@@ -139,7 +139,25 @@ export function convertObjectToTypeDeclaration({
 
     const objectTypeDeclaration: RawSchemas.ObjectSchema = {
         docs: schema.description ?? undefined,
-        properties,
+        properties: Object.fromEntries(
+            Object.entries(properties).map(([propertyKey, propertyDefinition]) => {
+                if (startsWithNumber(propertyKey)) {
+                    return [
+                        propertyKey,
+                        typeof propertyDefinition === "string"
+                            ? {
+                                  type: propertyDefinition,
+                                  name: `_${propertyKey}`,
+                              }
+                            : {
+                                  ...propertyDefinition,
+                                  name: `_${propertyKey}`,
+                              },
+                    ];
+                }
+                return [propertyKey, propertyDefinition];
+            })
+        ),
     };
     if (extendedSchemas.length > 0) {
         objectTypeDeclaration.extends = extendedSchemas;
@@ -343,4 +361,9 @@ export function convertOneOfToTypeDeclaration({
         },
         additionalTypeDeclarations,
     };
+}
+
+const STARTS_WITH_NUMBER = /^[0-9]/;
+function startsWithNumber(str: string): boolean {
+    return STARTS_WITH_NUMBER.test(str);
 }

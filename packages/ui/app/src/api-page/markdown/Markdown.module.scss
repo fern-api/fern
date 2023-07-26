@@ -4,7 +4,6 @@
     code {
         font-family: "Berkeley Mono";
         @apply px-2 py-1 rounded before:content-none after:content-none;
-        @apply bg-white/10 #{!important};
     }
 
     pre code {

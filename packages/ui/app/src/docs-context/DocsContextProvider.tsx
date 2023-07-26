@@ -12,12 +12,16 @@ export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
         resolvedUrlPath: ResolvedUrlPath;
+        nextPath: ResolvedUrlPath | undefined;
+        previousPath: ResolvedUrlPath | undefined;
     }>;
 }
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     docsDefinition,
     resolvedUrlPath,
+    nextPath,
+    previousPath,
     children,
 }) => {
     const router = useRouter();
@@ -85,7 +89,6 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
         (slug: string) => {
             setJustNavigated(true);
             setSelectedSlug(slug);
-            void router.push(slug);
             navigateToPathListeners.invokeListeners(slug);
 
             const timeout = setTimeout(() => {
@@ -95,7 +98,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
                 clearTimeout(timeout);
             };
         },
-        [navigateToPathListeners, router]
+        [navigateToPathListeners]
     );
 
     const scrollToPathListeners = useSlugListeners("scrollToPath", { selectedSlug });
@@ -106,7 +109,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
                 return;
             }
             setSelectedSlug(slug);
-            void router.push(slug, undefined, { shallow: true });
+            void router.push(`/${slug}`, undefined, { shallow: true });
             scrollToPathListeners.invokeListeners(slug);
         },
         [justNavigated, router, scrollToPathListeners, selectedSlug]
@@ -123,15 +126,17 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             onScrollToPath,
             registerScrolledToPathListener: scrollToPathListeners.registerListener,
             resolvedPathFromUrl: resolvedUrlPath,
-            nextPath: undefined,
-            previousPath: undefined,
+            nextPath,
+            previousPath,
             selectedSlug,
         }),
         [
             docsDefinition,
             navigateToPath,
             navigateToPathListeners.registerListener,
+            nextPath,
             onScrollToPath,
+            previousPath,
             resolveApi,
             resolveFile,
             resolvePage,

@@ -111,7 +111,7 @@ function stripCommonPrefix(names: string[]): string[] {
 
     let i = 0;
     // while all words have the same character at position i, increment i
-    while (nameZero[i] && names.every((name) => name[i] === nameZero[i])) {
+    while (nameZero[i] != null && names.every((name) => name[i] === nameZero[i])) {
         i++;
     }
 

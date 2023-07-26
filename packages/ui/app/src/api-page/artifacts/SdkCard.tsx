@@ -1,6 +1,6 @@
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { useMemo } from "react";
-import { visitDiscriminatedUnion } from "../../utils/visitDiscriminatedUnion";
 import { NodeJsLogo } from "./sdk-logos/NodeJsLogo";
 import { SdkCardLayout } from "./SdkCardLayout";
 

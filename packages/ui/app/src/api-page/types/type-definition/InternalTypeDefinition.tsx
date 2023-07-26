@@ -1,11 +1,11 @@
 import { Collapse, Icon } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
+import { visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { useBooleanState, useIsHovering } from "@fern-api/react-commons";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import classNames from "classnames";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
-import { visitDiscriminatedUnion } from "../../../utils/visitDiscriminatedUnion";
 import { getAllObjectProperties } from "../../utils/getAllObjectProperties";
 import {
     TypeDefinitionContext,
@@ -22,6 +22,7 @@ export declare namespace InternalTypeDefinition {
     export interface Props {
         typeShape: FernRegistryApiRead.TypeShape;
         isCollapsible: boolean;
+        getPropertyAnchor?: (path: FernRegistryApiRead.ObjectProperty) => string;
     }
 }
 
@@ -32,7 +33,11 @@ interface CollapsibleContent {
     separatorText?: string;
 }
 
-export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({ typeShape, isCollapsible }) => {
+export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
+    typeShape,
+    isCollapsible,
+    getPropertyAnchor,
+}) => {
     const { resolveTypeById } = useApiDefinitionContext();
 
     const collapsableContent = useMemo(
@@ -41,7 +46,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                 alias: () => undefined,
                 object: (object) => ({
                     elements: getAllObjectProperties(object, resolveTypeById).map((property) => (
-                        <ObjectProperty key={property.key} property={property} />
+                        <ObjectProperty key={property.key} property={property} anchor={getPropertyAnchor?.(property)} />
                     )),
                     elementNameSingular: "property",
                     elementNamePlural: "properties",
@@ -69,7 +74,7 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                 }),
                 _other: () => undefined,
             }),
-        [resolveTypeById, typeShape]
+        [resolveTypeById, typeShape, getPropertyAnchor]
     );
 
     const { value: isCollapsed, toggleValue: toggleIsCollapsed } = useBooleanState(true);
@@ -142,10 +147,15 @@ export const InternalTypeDefinition: React.FC<InternalTypeDefinition.Props> = ({
                     <div
                         {...containerCallbacks}
                         className={classNames(
-                            "flex gap-1 items-center cursor-pointer px-2 py-1 transition",
-                            isHovering ? "text-text-default" : "text-text-default"
+                            "flex gap-1 items-center cursor-pointer px-2 py-1 transition text-text-default border-b border-border",
+                            {
+                                "border-opacity-0": isCollapsed,
+                            }
                         )}
-                        onClick={toggleIsCollapsed}
+                        onClick={(e) => {
+                            toggleIsCollapsed();
+                            e.stopPropagation();
+                        }}
                     >
                         <Icon
                             className={classNames(

@@ -8,6 +8,7 @@ exports[`open api parser persona parse open api 1`] = `
       "description": undefined,
       "endpoints": [
         {
+          "audiences": [],
           "authed": true,
           "description": "Creates a new inquiry session and returns \`meta.session-token\`. If the inquiry's status is \`expired\`, changes the status to \`pending\`. The \`session-token\` must be included when loading the inquiry flow if the inquiry's status is \`pending\`. For more information, see [Resuming Inquiries](https://docs.withpersona.com/docs/inquiries-resuming-inquiries).",
           "errorStatusCode": [
@@ -575,6 +576,7 @@ exports[`open api parser persona parse open api 1`] = `
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieves the details of an inquiry that has previously been created.
 
@@ -1984,6 +1986,7 @@ In the [Embedded Flow](doc:embedded-flow), the \`inquiry-id\` is the first param
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Updates an existing inquiry.",
           "errorStatusCode": [
@@ -2031,6 +2034,7 @@ In the [Embedded Flow](doc:embedded-flow), the \`inquiry-id\` is the first param
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -2357,6 +2361,7 @@ In the [Embedded Flow](doc:embedded-flow), the \`inquiry-id\` is the first param
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Permanently deletes personally identifiable information (PII) for an Inquiry and all associated Verifications and Reports. This action cannot be undone. 
 
@@ -2870,6 +2875,7 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve the details of a Report.",
           "errorStatusCode": [],
@@ -3239,6 +3245,7 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Permanently deletes personally identifiable information (PII) for a Report.
 
@@ -3490,6 +3497,7 @@ Note that this will only delete the report -- it does not delete associated acco
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve the details of a specific Verification",
           "errorStatusCode": [],
@@ -3544,6 +3552,7 @@ Note that this will only delete the report -- it does not delete associated acco
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Approves an <<glossary:inquiry>>.
 
@@ -3610,6 +3619,7 @@ Note that this action will trigger any associated workflows and webhooks.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -4126,6 +4136,7 @@ Note that this action will trigger any associated workflows and webhooks.",
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Declines an <<glossary:inquiry>>.
 
@@ -4192,6 +4203,7 @@ Note that this action will trigger any associated workflows and webhooks.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -4708,6 +4720,7 @@ Note that this action will trigger any associated workflows and webhooks.",
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve the details of an Account that has previously been created.",
           "errorStatusCode": [
@@ -4905,6 +4918,7 @@ Note that this action will trigger any associated workflows and webhooks.",
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Updates an existing Account.",
           "errorStatusCode": [
@@ -4969,6 +4983,7 @@ Note that this action will trigger any associated workflows and webhooks.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -5534,6 +5549,7 @@ Note that this action will trigger any associated workflows and webhooks.",
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Permanently deletes personally identifiable information (PII) for an Account and all associated Inquiries, Verifications and Reports. This action cannot be undone. 
 
@@ -5847,6 +5863,7 @@ Note: An account is still updatable after redaction. If you want to delete data 
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Returns a list of your organization's inquiries.
 
@@ -6562,6 +6579,7 @@ Note that this endpoint aggregates inquiries across all <<glossary:template>>(s)
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new inquiry with optional pre-filled attributes. 
 
@@ -6613,6 +6631,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -7481,6 +7500,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Returns a list of your organization's <<glossary:account>>(s).",
           "errorStatusCode": [],
@@ -7777,6 +7797,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Creates a new Account for your organization.
 
@@ -7828,6 +7849,7 @@ After the Account is created, you can create Inquiries with the \`account-id\` t
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -8377,6 +8399,7 @@ After the Account is created, you can create Inquiries with the \`account-id\` t
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "**This endpoint is deprecated as of v2023-01-05. See [Downloading Files](downloading-files) for updated instructions.**
 
@@ -8449,6 +8472,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [],
@@ -8540,6 +8564,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve the details of an API Log that has previously been created.",
           "errorStatusCode": [
@@ -8973,6 +8998,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve the details of a Document.",
           "errorStatusCode": [
@@ -9358,6 +9384,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new generic document.",
           "errorStatusCode": [
@@ -9407,6 +9434,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -9796,6 +9824,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Updates an existing generic document. Can only update \`initiated\` documents.",
           "errorStatusCode": [
@@ -9860,6 +9889,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -10239,6 +10269,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Submit a generic document for processing. Can only submit \`initiated\` documents with files attached.",
           "errorStatusCode": [
@@ -10617,6 +10648,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new database verification",
           "errorStatusCode": [],
@@ -11193,6 +11225,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new government ID verification",
           "errorStatusCode": [],
@@ -11240,6 +11273,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -11999,6 +12033,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new phone number verification",
           "errorStatusCode": [],
@@ -12046,6 +12081,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -12403,6 +12439,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -12559,6 +12596,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -12627,6 +12665,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a verification of a generic document.",
           "errorStatusCode": [],
@@ -12674,6 +12713,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -13124,6 +13164,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Submit a document verification for processing. Can only submit \`initiated\` verifications.",
           "errorStatusCode": [
@@ -13573,6 +13614,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve the details of a specific document verification",
           "errorStatusCode": [
@@ -13629,6 +13671,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Consolidates several source Accounts' information into one target Account. Any Inquiry, Verification, Report and Document associated with the source Account will be transferred over to the destination Account. However, the Account's attributes will not be transferred. After consolidation, you can update the destination Account's attributes using the Account update endpoint.
 
@@ -13699,6 +13742,7 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -13762,6 +13806,7 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "You can retrieve an importer by its ID.",
           "errorStatusCode": [
@@ -13983,6 +14028,7 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Importing accounts allows you to upload a CSV file with each row being a new Account.
 
@@ -14006,6 +14052,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -14285,6 +14332,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Importing list items allows you to upload a CSV file with each row being a new List Item.
 
@@ -14305,6 +14353,7 @@ A match_type of 'email_address' will need to match the entire email address of a
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -14621,6 +14670,7 @@ A match_type of 'email_address' will need to match the entire email address of a
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Importing list items allows you to upload a CSV file with each row being a new List Item.
 
@@ -14640,6 +14690,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -14956,6 +15007,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Importing list items allows you to upload a CSV file with each row being a new List Item.
 
@@ -14976,6 +15028,7 @@ Common values for id_class include 'pp' for passport and 'dl' for driver license
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -15292,6 +15345,7 @@ Common values for id_class include 'pp' for passport and 'dl' for driver license
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Importing list items allows you to upload a CSV file with each row being a new List Item.
 
@@ -15311,6 +15365,7 @@ Both IPv4 and IPv6 are supported.",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -15627,6 +15682,7 @@ Both IPv4 and IPv6 are supported.",
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Importing list items allows you to upload a CSV file with each row being a new List Item.
 
@@ -15645,6 +15701,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -15961,6 +16018,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Importing list items allows you to upload a CSV file with each row being a new List Item.
 
@@ -15978,6 +16036,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -16294,6 +16353,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new government ID document",
           "errorStatusCode": [
@@ -16343,6 +16403,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -16989,6 +17050,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Updates an existing government ID document. Can only update \`initiated\` documents.",
           "errorStatusCode": [
@@ -17053,6 +17115,7 @@ The columns we allow are
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -17671,6 +17734,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Submit a government ID document for processing. Can only submit \`initiated\` documents with photos of the ID attached.",
           "errorStatusCode": [
@@ -18152,6 +18216,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Submit a government ID verification for processing. Can only submit \`initiated\` verifications with photos of the ID attached.",
           "errorStatusCode": [
@@ -18752,6 +18817,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Updates an existing government ID verification. Can only update \`initiated\` verifications.",
           "errorStatusCode": [
@@ -18816,6 +18882,7 @@ The columns we allow are
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -19568,6 +19635,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Returns a list of your organization's <<glossary: list>>s.",
           "errorStatusCode": [
@@ -19690,6 +19758,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve the details of an existing <<glossary:list>>.",
           "errorStatusCode": [
@@ -19758,6 +19827,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Archive an existing <<glossary:list>>. Archived lists are still retrievable, but will no longer match on inquiries.",
           "errorStatusCode": [
@@ -19843,6 +19913,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new <<glossary:list>> for your organization.",
           "errorStatusCode": [
@@ -19892,6 +19963,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -19982,6 +20054,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new <<glossary:list>> for your organization.",
           "errorStatusCode": [
@@ -20031,6 +20104,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -20121,6 +20195,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new <<glossary:list>> for your organization.",
           "errorStatusCode": [
@@ -20170,6 +20245,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -20260,6 +20336,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new <<glossary:list>> for your organization.",
           "errorStatusCode": [
@@ -20309,6 +20386,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -20399,6 +20477,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new <<glossary:list>> for your organization.",
           "errorStatusCode": [
@@ -20448,6 +20527,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -20538,6 +20618,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new <<glossary:list>> for your organization.",
           "errorStatusCode": [
@@ -20587,6 +20668,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -20677,6 +20759,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new <<glossary:list>> for your organization.",
           "errorStatusCode": [
@@ -20726,6 +20809,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -20832,6 +20916,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new <<glossary:list>> for your organization.",
           "errorStatusCode": [
@@ -20881,6 +20966,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -20971,6 +21057,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new item in a <<glossary:list>>.",
           "errorStatusCode": [
@@ -21020,6 +21107,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -21353,6 +21441,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new item in a <<glossary:list>>.",
           "errorStatusCode": [
@@ -21402,6 +21491,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -21498,6 +21588,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new item in a <<glossary:list>>.",
           "errorStatusCode": [
@@ -21547,6 +21638,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -21916,6 +22008,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new item in a <<glossary:list>>.",
           "errorStatusCode": [
@@ -21965,6 +22058,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -22358,6 +22452,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new item in a <<glossary:list>>.",
           "errorStatusCode": [
@@ -22407,6 +22502,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -22503,6 +22599,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new item in a <<glossary:list>>.",
           "errorStatusCode": [
@@ -22552,6 +22649,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -22921,6 +23019,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new item in a <<glossary:list>>.",
           "errorStatusCode": [
@@ -22970,6 +23069,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -23339,6 +23439,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new item in a <<glossary:list>>.",
           "errorStatusCode": [
@@ -23388,6 +23489,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -23484,6 +23586,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Archived items are not matched against new inquiries.",
           "errorStatusCode": [
@@ -23800,6 +23903,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Archived items are not matched against new inquiries.",
           "errorStatusCode": [
@@ -23873,6 +23977,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Archived items are not matched against new inquiries.",
           "errorStatusCode": [
@@ -24207,6 +24312,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Archived items are not matched against new inquiries.",
           "errorStatusCode": [
@@ -24553,6 +24659,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Archived items are not matched against new inquiries.",
           "errorStatusCode": [
@@ -24887,6 +24994,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Archived items are not matched against new inquiries.",
           "errorStatusCode": [
@@ -24960,6 +25068,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Archived items are not matched against new inquiries.",
           "errorStatusCode": [
@@ -25294,6 +25403,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Archived items are not matched against new inquiries.",
           "errorStatusCode": [
@@ -25367,6 +25477,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "List all reports with pagination and filtering.",
           "errorStatusCode": [
@@ -25494,6 +25605,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create various types of Reports with appropriate body params.",
           "errorStatusCode": [
@@ -25526,6 +25638,7 @@ The columns we allow are
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -25960,6 +26073,7 @@ The columns we allow are
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Returns a list of your organization's cases.
 
@@ -26580,6 +26694,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -26594,6 +26709,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -28137,6 +28253,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieves the details of a <<glossary:case>> that has previously been created.",
           "errorStatusCode": [
@@ -28980,6 +29097,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Updates the fields on a <<glossary:case>> that has been previously created.",
           "errorStatusCode": [
@@ -29009,6 +29127,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -29797,6 +29916,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new selfie verification",
           "errorStatusCode": [
@@ -29846,6 +29966,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -30443,6 +30564,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -30861,6 +30983,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Add a new tag to the Inquiry",
           "errorStatusCode": [
@@ -30925,6 +31048,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -30984,6 +31108,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Remove an existing tag from an Inquiry",
           "errorStatusCode": [
@@ -31048,6 +31173,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -31107,6 +31233,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Set all tags on an Inquiry. Note that this removes any tags that are not provided.",
           "errorStatusCode": [
@@ -31171,6 +31298,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -31234,6 +31362,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Add a new tag to an Account",
           "errorStatusCode": [
@@ -31298,6 +31427,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -31357,6 +31487,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Removes an existing tag from an Account",
           "errorStatusCode": [
@@ -31421,6 +31552,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -31480,6 +31612,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Set all tags on an Account. Note that this removes any tags that are not provided.",
           "errorStatusCode": [
@@ -31544,6 +31677,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -31607,6 +31741,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Prints an inquiry as PDF.",
           "errorStatusCode": [],
@@ -31643,6 +31778,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Prints a verification in PDF format.",
           "errorStatusCode": [],
@@ -31679,6 +31815,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Prints a report in PDF format.",
           "errorStatusCode": [],
@@ -31715,6 +31852,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -31729,6 +31867,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -33259,6 +33398,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Add Persona objects (such as inquiries, accounts, or reports) to a <<glossary:case>>",
           "errorStatusCode": [
@@ -33288,6 +33428,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -33989,6 +34130,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -34018,6 +34160,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -34701,6 +34844,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new item in a <<glossary:list>>.",
           "errorStatusCode": [
@@ -34750,6 +34894,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -34883,6 +35028,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new <<glossary:list>> for your organization.",
           "errorStatusCode": [
@@ -34932,6 +35078,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -35022,6 +35169,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Archived items are not matched against new inquiries.",
           "errorStatusCode": [
@@ -35095,6 +35243,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Importing list items allows you to upload image files with each file being a new List Item. We recommend uploading max 50 images (with average image size of 500KB) at a time.",
           "errorStatusCode": [
@@ -35109,6 +35258,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -35429,6 +35579,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Add a new tag to the Report",
           "errorStatusCode": [
@@ -35493,6 +35644,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -35972,6 +36124,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Remove an existing tag from a Report",
           "errorStatusCode": [
@@ -36036,6 +36189,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -36515,6 +36669,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Set all tags on a Report. Note that this removes any tags that are not provided.",
           "errorStatusCode": [
@@ -36579,6 +36734,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -37062,6 +37218,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [],
@@ -37153,6 +37310,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve the details of an API Log that has previously been created.",
           "errorStatusCode": [
@@ -37368,6 +37526,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "",
           "errorStatusCode": [
@@ -37397,6 +37556,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -38088,6 +38248,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a government ID verification",
           "errorStatusCode": [
@@ -38907,6 +39068,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a selfie ID verification",
           "errorStatusCode": [
@@ -39409,6 +39571,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Submit a database verification for processing. Can only submit \`initiated\` verifications",
           "errorStatusCode": [],
@@ -39791,6 +39954,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a database verification",
           "errorStatusCode": [
@@ -40251,6 +40415,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Submit a phone carrier database verification for processing. Can only submit \`initiated\` verifications",
           "errorStatusCode": [
@@ -40623,6 +40788,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new phone carrier database verification",
           "errorStatusCode": [
@@ -41100,6 +41266,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a phone carrier database verification",
           "errorStatusCode": [
@@ -41577,6 +41744,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new Serpro database verification",
           "errorStatusCode": [
@@ -41954,6 +42122,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Submit a Serpro database verification for processing. Can only submit \`initiated\` verifications",
           "errorStatusCode": [
@@ -42357,6 +42526,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a Serpro database verification",
           "errorStatusCode": [
@@ -42830,6 +43000,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new TIN database verification",
           "errorStatusCode": [
@@ -42879,6 +43050,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -43310,6 +43482,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Submit a TIN database verification for processing. Can only submit \`initiated\` verifications",
           "errorStatusCode": [
@@ -43682,6 +43855,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Confirm the confirmation code sent to the phone number. Can only confirm \`initiated\` verifications.",
           "errorStatusCode": [
@@ -43711,6 +43885,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -44040,6 +44215,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a TIN database verification",
           "errorStatusCode": [
@@ -44482,6 +44658,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a phone number verification",
           "errorStatusCode": [
@@ -44857,6 +45034,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Send an SMS to the phone number.",
           "errorStatusCode": [
@@ -44886,6 +45064,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -45223,6 +45402,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new Workflow Run.
 
@@ -45272,6 +45452,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -45699,6 +45880,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a new email address verification",
           "errorStatusCode": [],
@@ -45746,6 +45928,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -46103,6 +46286,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Send an email to the email address.",
           "errorStatusCode": [
@@ -46132,6 +46316,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -46451,6 +46636,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Confirm the confirmation code sent to the email address. Can only confirm \`initiated\` verifications.",
           "errorStatusCode": [
@@ -46480,6 +46666,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -46791,6 +46978,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a email address verification",
           "errorStatusCode": [
@@ -47148,6 +47336,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Returns a list of your organization's API keys.",
           "errorStatusCode": [],
@@ -47564,6 +47753,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Make a new API key with response defaults and permissions.",
           "errorStatusCode": [
@@ -47578,6 +47768,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -48055,6 +48246,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Deactivate an API key within some time period",
           "errorStatusCode": [
@@ -48084,6 +48276,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -48418,6 +48611,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Get the information for a specific API key, including it's value.",
           "errorStatusCode": [
@@ -48735,6 +48929,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Make a new API key with response defaults and permissions.",
           "errorStatusCode": [
@@ -48764,6 +48959,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -49235,6 +49431,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Re-run a continuously monitored report immediately, outside of its existing recurrence schedule.",
           "errorStatusCode": [
@@ -49633,6 +49830,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Dismiss active matches for supported report types",
           "errorStatusCode": [
@@ -49697,6 +49895,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -50178,6 +50377,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Resume continuous monitoring on paused report. Requires additional permissions",
           "errorStatusCode": [
@@ -50576,6 +50776,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Pause continuous monitoring on a report. Requires additional permissions",
           "errorStatusCode": [
@@ -50974,6 +51175,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Retrieve a Graph Query",
           "errorStatusCode": [],
@@ -51010,6 +51212,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Create a Graph Query",
           "errorStatusCode": [
@@ -51024,6 +51227,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -51149,6 +51353,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Expires an inquiry and all sessions on the inquiry. Cancels any pending verifications on the inquiry.
 
@@ -51662,6 +51867,7 @@ The inquiry can still be resumed after expiry.",
           "tags": [],
         },
         {
+          "audiences": [],
           "authed": true,
           "description": "Creates a new inquiry session and returns \`meta.one-time-link\`.",
           "errorStatusCode": [
@@ -51726,6 +51932,7 @@ The inquiry can still be resumed after expiry.",
           ],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],

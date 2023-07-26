@@ -4513,14 +4513,13 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
-        "InvoiceAdjustmentToCreateContainer": {
+        "InvoiceAdjustmentToCreateWithFile": {
           "docs": undefined,
-          "properties": {
-            "data": {
-              "docs": undefined,
-              "type": "InvoiceAdjustmentToCreate",
-            },
-          },
+          "extends": [
+            "InvoiceAdjustmentToCreate",
+            "FileObject",
+          ],
+          "properties": {},
         },
         "InvoiceAdjustmentToUpdate": {
           "docs": "Details of invoice adjustment to update.",
@@ -5234,14 +5233,13 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "type": "MilestoneProperties",
         },
-        "MilestoneToCreateContainer": {
+        "MilestoneToCreateFormWithFile": {
           "docs": undefined,
-          "properties": {
-            "data": {
-              "docs": undefined,
-              "type": "MilestoneToCreate",
-            },
-          },
+          "extends": [
+            "MilestoneProperties",
+            "FileObject",
+          ],
+          "properties": {},
         },
         "MonthlyPayment": {
           "docs": "Monthly payment details for the user",
@@ -6976,15 +6974,6 @@ exports[`open api parser deel simple 1`] = `
         "TimesheetToCreate": {
           "docs": undefined,
           "type": "TimesheetSharedProperties",
-        },
-        "TimesheetToCreateContainer": {
-          "docs": undefined,
-          "properties": {
-            "data": {
-              "docs": undefined,
-              "type": "TimesheetToCreate",
-            },
-          },
         },
         "TimesheetToCreateContainerWithFile": {
           "docs": undefined,
@@ -8722,10 +8711,15 @@ exports[`open api parser deel simple 1`] = `
             "path": "/invoice-adjustments",
             "request": {
               "body": {
-                "properties": {},
+                "properties": {
+                  "data": {
+                    "docs": undefined,
+                    "type": "root.InvoiceAdjustmentToCreate",
+                  },
+                },
               },
               "headers": undefined,
-              "name": "InvoiceAdjustmentToCreateWithFile",
+              "name": "InvoiceAdjustmentToCreateContainer",
               "query-parameters": undefined,
             },
             "response": {
@@ -9229,10 +9223,15 @@ exports[`open api parser deel simple 1`] = `
             },
             "request": {
               "body": {
-                "properties": {},
+                "properties": {
+                  "data": {
+                    "docs": undefined,
+                    "type": "root.MilestoneToCreate",
+                  },
+                },
               },
               "headers": undefined,
-              "name": "MilestoneToCreateFormWithFile",
+              "name": "MilestoneToCreateContainer",
               "query-parameters": undefined,
             },
             "response": {
@@ -10115,10 +10114,15 @@ exports[`open api parser deel simple 1`] = `
             "path": "/timesheets",
             "request": {
               "body": {
-                "properties": {},
+                "properties": {
+                  "data": {
+                    "docs": undefined,
+                    "type": "root.TimesheetToCreate",
+                  },
+                },
               },
               "headers": undefined,
-              "name": "CreateTimesheetRequest",
+              "name": "TimesheetToCreateContainer",
               "query-parameters": undefined,
             },
             "response": {

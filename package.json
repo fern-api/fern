@@ -34,7 +34,8 @@
     "fern-script": "yarn workspace @fern-api/scripts dist:cli && node $(yarn workspace @fern-api/scripts bin fern-scripts)",
     "generate-json-schema": "yarn fern-script write-json-schema fern.schema.json",
     "generate-json-schema:dev": "yarn fern-script write-json-schema fern.schema.dev.json",
-    "check-release-blockers": "yarn fern-script check-release-blockers",
+    "check-cli-release-blockers": "yarn fern-script check-cli-release-blockers",
+    "check-docs-release-blockers": "yarn fern-script check-docs-release-blockers",
     "root-package:check": "yarn fern-script check-root-package",
     "root-package:fix": "yarn root-package:check --fix",
     "demo-setup": "yarn workspace @fern-api/demo-setup dist:cli && node $(yarn workspace @fern-api/demo-setup bin demo-setup)"
@@ -69,7 +70,7 @@
     "jsonc-parser": "~2.2.1",
     "lint-staged": "^13.0.3",
     "lodash-es": "^4.17.21",
-    "mrlint": "^0.0.122",
+    "mrlint": "^0.0.124",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
     "react": "^18.2.0",
@@ -80,7 +81,7 @@
     "ts-node": "^10.9.1",
     "typescript": "4.6.4"
   },
-  "packageManager": "yarn@3.5.1",
+  "packageManager": "yarn@3.6.1",
   "dependenciesMeta": {
     "jsonc-parser@2.2.1": {
       "unplugged": true

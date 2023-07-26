@@ -63,6 +63,7 @@ function convertService(
             ),
             request: irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
             response: irEndpoint.response != null ? convertResponse(irEndpoint.response) : undefined,
+            errors: convertResponseErrors(irEndpoint.errors, ir),
             examples: irEndpoint.examples.map((example) => convertExampleEndpointCall(example, ir)),
         })
     );
@@ -137,21 +138,29 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FernRegistry.ap
     return {
         type: Ir.http.HttpRequestBody._visit<FernRegistry.api.v1.register.HttpRequestBodyShape>(irRequest, {
             inlinedRequestBody: (inlinedRequestBody) => {
-                return FernRegistry.api.v1.register.HttpRequestBodyShape.object({
-                    extends: inlinedRequestBody.extends.map((extension) => convertTypeId(extension.typeId)),
-                    properties: inlinedRequestBody.properties.map(
-                        (property): FernRegistry.api.v1.register.ObjectProperty => ({
-                            description: property.docs ?? undefined,
-                            key: property.name.wireValue,
-                            valueType: convertTypeReference(property.valueType),
+                return FernRegistry.api.v1.register.HttpRequestBodyShape.json({
+                    contentType: inlinedRequestBody.contentType ?? "application/json",
+                    shape: FernRegistry.api.v1.register.JsonRequestBodyShape.object(
+                        FernRegistry.api.v1.register.HttpRequestBodyShape.object({
+                            extends: inlinedRequestBody.extends.map((extension) => convertTypeId(extension.typeId)),
+                            properties: inlinedRequestBody.properties.map(
+                                (property): FernRegistry.api.v1.register.ObjectProperty => ({
+                                    description: property.docs ?? undefined,
+                                    key: property.name.wireValue,
+                                    valueType: convertTypeReference(property.valueType),
+                                })
+                            ),
                         })
                     ),
                 });
             },
             reference: (reference) => {
-                return FernRegistry.api.v1.register.HttpRequestBodyShape.reference(
-                    convertTypeReference(reference.requestBodyType)
-                );
+                return FernRegistry.api.v1.register.HttpRequestBodyShape.json({
+                    contentType: reference.contentType ?? "application/json",
+                    shape: FernRegistry.api.v1.register.JsonRequestBodyShape.reference(
+                        convertTypeReference(reference.requestBodyType)
+                    ),
+                });
             },
             fileUpload: () => FernRegistry.api.v1.register.HttpRequestBodyShape.fileUpload(),
             _unknown: () => {
@@ -161,19 +170,49 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FernRegistry.ap
     };
 }
 
-function convertResponse(irResponse: Ir.http.HttpResponse): FernRegistry.api.v1.register.HttpResponse {
-    return {
-        type: Ir.http.HttpResponse._visit<FernRegistry.api.v1.register.HttpResponseBodyShape>(irResponse, {
+function convertResponse(irResponse: Ir.http.HttpResponse): FernRegistry.api.v1.register.HttpResponse | undefined {
+    const type = Ir.http.HttpResponse._visit<FernRegistry.api.v1.register.HttpResponseBodyShape | undefined>(
+        irResponse,
+        {
             fileDownload: () => FernRegistry.api.v1.register.HttpResponseBodyShape.fileDownload(),
             json: (jsonResponse) =>
                 FernRegistry.api.v1.register.HttpResponseBodyShape.reference(
                     convertTypeReference(jsonResponse.responseBodyType)
                 ),
+            streaming: (streamingResponse) => {
+                if (streamingResponse.dataEventType.type === "text") {
+                    return FernRegistry.api.v1.register.HttpResponseBodyShape.streamingText();
+                }
+                return undefined;
+            },
             _unknown: () => {
                 throw new Error("Unknown HttpResponse: " + irResponse.type);
             },
-        }),
-    };
+        }
+    );
+    if (type != null) {
+        return { type };
+    } else {
+        return undefined;
+    }
+}
+
+function convertResponseErrors(
+    irResponseErrors: Ir.http.ResponseErrors,
+    ir: Ir.ir.IntermediateRepresentation
+): FernRegistry.api.v1.register.ErrorDeclaration[] {
+    const errors: FernRegistry.api.v1.register.ErrorDeclaration[] = [];
+    for (const irResponseError of irResponseErrors) {
+        const errorDeclaration = ir.errors[irResponseError.error.errorId];
+        if (errorDeclaration) {
+            errors.push({
+                type: errorDeclaration.type == null ? undefined : convertTypeReference(errorDeclaration.type),
+                statusCode: errorDeclaration.statusCode,
+                description: errorDeclaration.docs ?? undefined,
+            });
+        }
+    }
+    return errors;
 }
 
 function convertExampleEndpointCall(

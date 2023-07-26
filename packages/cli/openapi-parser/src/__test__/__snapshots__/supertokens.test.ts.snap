@@ -8,6 +8,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "description": "This is the API exposed by the SuperTokens Core. To be consumed by your backend only.",
       "endpoints": [
         {
+          "audiences": [],
           "authed": false,
           "description": "Add a TOTP device for a user and enable TOTP if not already enabled.
 ",
@@ -78,6 +79,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -206,6 +208,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Update the name of a TOTP device for a user.
 ",
@@ -276,6 +279,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -393,6 +397,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrieve a list of TOTP devices for a user.
 ",
@@ -612,6 +617,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Remove a TOTP device for a user. If all devices are removed, TOTP is disabled for the user.
 ",
@@ -682,6 +688,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -784,6 +791,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Check if a TOTP code is valid against any of the TOTP devices for a user.
 ",
@@ -854,6 +862,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -986,6 +995,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Mark a TOTP device as verified if the given TOTP code is valid for that device.
 ",
@@ -1056,6 +1066,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -1216,6 +1227,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrieve a UserIdMapping
 ",
@@ -1425,6 +1437,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Create a mapping between a SuperTokens userId and an external userId.
 ",
@@ -1495,6 +1508,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -1656,6 +1670,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Delete a mapping between a SuperTokens userId and an external userId.
 ",
@@ -1726,6 +1741,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -1860,6 +1876,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Update or delete externalUserIdInfo
 ",
@@ -1930,6 +1947,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -2054,6 +2072,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Tries to consume the passed userInputCode+deviceId combo or the linkCode to sign the user in
 ",
@@ -2124,6 +2143,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "oneOf": {
@@ -2403,6 +2423,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Starts a sign in process by requesting a linkCode and a deviceId + userInputCode combination the user can use to sign in.
 Passing the optional deviceId signifies a resend code flow.
@@ -2474,6 +2495,7 @@ Passing the optional deviceId signifies a resend code flow.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "oneOf": {
@@ -2818,6 +2840,7 @@ Passing the optional deviceId signifies a resend code flow.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Revokes a code by id
 ",
@@ -2888,6 +2911,7 @@ Passing the optional deviceId signifies a resend code flow.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -2955,6 +2979,7 @@ Passing the optional deviceId signifies a resend code flow.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Lists all active passwordless codes of the user
 ",
@@ -3296,6 +3321,7 @@ Passing the optional deviceId signifies a resend code flow.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Revokes all codes issued for the user
 ",
@@ -3366,6 +3392,7 @@ Passing the optional deviceId signifies a resend code flow.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "oneOf": {
@@ -3467,6 +3494,7 @@ Passing the optional deviceId signifies a resend code flow.
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Get a user's information.
 Note that there is an invisible character at the end of the path, this was to avoid a conflict with the OpenAPI spec.
@@ -3702,6 +3730,7 @@ Note that there is an invisible character at the end of the path, this was to av
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Update a user's information. 
 If the email or phoneNumber is set to null the previous value will be deleted. If they are not set (i.e., undefined/missing from the request), they are left as-is.
@@ -3773,6 +3802,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -3918,6 +3948,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Signin a user with email ID and password
 ",
@@ -3988,6 +4019,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -4112,6 +4144,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Signup a user with email ID and password
 ",
@@ -4182,6 +4215,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -4292,6 +4326,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Get a user's information
 ",
@@ -4503,6 +4538,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Update a user's information
 ",
@@ -4573,6 +4609,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -4696,6 +4733,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Generate a new reset password token for this user
 ",
@@ -4766,6 +4804,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -4873,6 +4912,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "User Pagination API
 ",
@@ -5083,6 +5123,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Reset a password using password reset token
 ",
@@ -5153,6 +5194,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -5278,6 +5320,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Get number of users
 ",
@@ -5405,6 +5448,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Import a user with email ID and password hash
 ",
@@ -5475,6 +5519,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -5632,6 +5677,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Signin/up a user
 ",
@@ -5702,6 +5748,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -5840,6 +5887,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Get a user's information.
 Note that there is an invisible character at the end of the path, this was to avoid a conflict with the OpenAPI spec.
@@ -6069,6 +6117,7 @@ Note that there is an invisible character at the end of the path, this was to av
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Get all users accounts associated with given email
 ",
@@ -6214,6 +6263,7 @@ Note that there is an invisible character at the end of the path, this was to av
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Get User Pagination data.
 Note that there is an invisible character at the end of the path, this was to avoid a conflict with the OpenAPI spec.
@@ -6425,6 +6475,7 @@ Note that there is an invisible character at the end of the path, this was to av
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Get number of users.
 Note that there is an invisible character at the end of the path, this was to avoid a conflict with the OpenAPI spec
@@ -6553,6 +6604,7 @@ Note that there is an invisible character at the end of the path, this was to av
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Generate a new email verification token for this user
 ",
@@ -6623,6 +6675,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -6697,6 +6750,7 @@ Note that there is an invisible character at the end of the path, this was to av
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Remove all unused email verification tokens for this user
 ",
@@ -6767,6 +6821,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -6816,6 +6871,7 @@ Note that there is an invisible character at the end of the path, this was to av
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Check if an email is verified
 ",
@@ -6979,6 +7035,7 @@ Note that there is an invisible character at the end of the path, this was to av
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Verify an email
 ",
@@ -7049,6 +7106,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -7173,6 +7231,7 @@ Note that there is an invisible character at the end of the path, this was to av
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Unverify an email
 ",
@@ -7243,6 +7302,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "description": undefined,
@@ -7292,6 +7352,7 @@ Note that there is an invisible character at the end of the path, this was to av
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Gets the stored metadata object of the user
 ",
@@ -7434,6 +7495,7 @@ Note that there is an invisible character at the end of the path, this was to av
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Updates the metadata object stored about the user by doing a shallow merge of the stored and the update JSONs
 and removing properties set to null on the root level of the update object. The merged object is then reserialized and stored.
@@ -7512,6 +7574,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -7617,6 +7680,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Removes the entire metadata JSON stored about the user.
 ",
@@ -7687,6 +7751,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -7758,6 +7823,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Creates a User Role mapping
 ",
@@ -7828,6 +7894,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -7943,6 +8010,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Removes a User Role mapping
 ",
@@ -8013,6 +8081,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -8128,6 +8197,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrive the roles associated with the user.
 ",
@@ -8274,6 +8344,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrive the users associated with the role.
 ",
@@ -8439,6 +8510,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Creates a role with permissions, can also be used to add permissions to a role
 ",
@@ -8509,6 +8581,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -8614,6 +8687,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrive the permissions associated with a role
 ",
@@ -8780,6 +8854,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Removes permissions mapped to a role, if no permissions are passed all permissions mapped to the role are removed
 ",
@@ -8850,6 +8925,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -8958,6 +9034,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrive the roles associated with the permission
 ",
@@ -9105,6 +9182,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Deletes a role
 ",
@@ -9175,6 +9253,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -9258,6 +9337,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrive all created roles
 ",
@@ -9391,6 +9471,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Get user and session information for a given session handle
 ",
@@ -9640,6 +9721,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Create a new Session
 ",
@@ -9710,6 +9792,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -9916,6 +9999,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Delete a sesion
 ",
@@ -9986,6 +10070,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "oneOf": {
@@ -10112,6 +10197,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Verify a Session
 ",
@@ -10182,6 +10268,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -10416,6 +10503,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Refresh a Session
 ",
@@ -10486,6 +10574,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -10750,6 +10839,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Get session handles for a user
 ",
@@ -10896,6 +10986,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Regenerate a session
 ",
@@ -10966,6 +11057,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -11107,6 +11199,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Get session data
 ",
@@ -11271,6 +11364,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Change session data
 ",
@@ -11341,6 +11435,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -11429,6 +11524,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Create a signed JWT
 ",
@@ -11498,6 +11594,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -11659,6 +11756,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrieve JWKs for JWT verification, containing both static and dynamic keys.
 ",
@@ -11721,6 +11819,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Get JWT data for a session
 ",
@@ -11885,6 +11984,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Change JWT data for a session
 ",
@@ -11955,6 +12055,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -12043,6 +12144,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Create a dashboard user
 ",
@@ -12114,6 +12216,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -12317,6 +12420,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Update a user's email or password
 ",
@@ -12387,6 +12491,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "oneOf": {
@@ -12692,6 +12797,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Delete a dashboard user with their userId or email
 ",
@@ -12854,6 +12960,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Get a list of call the dashboard users
 ",
@@ -13053,6 +13160,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Verify a Dashboard user's sessionId
 ",
@@ -13123,6 +13231,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -13227,6 +13336,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Revoke a Dashboard user's session
 ",
@@ -13356,6 +13466,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Signin a Dashboard user
 ",
@@ -13426,6 +13537,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -13567,6 +13679,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Get a list of the sessions for the dashboard user
 ",
@@ -13769,6 +13882,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Get a list of compatible CDI versions
 ",
@@ -13851,6 +13965,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Get path to the loaded config file
 ",
@@ -13986,6 +14101,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Return a simple hello message
 ",
@@ -14023,6 +14139,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Return a simple hello message
 ",
@@ -14060,6 +14177,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Return a simple hello message
 ",
@@ -14097,6 +14215,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Return a simple hello message
 ",
@@ -14134,6 +14253,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Return a simple hello message
 ",
@@ -14171,6 +14291,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Returns the telemetryID if it exists
 ",
@@ -14321,6 +14442,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Get number of users.
 ",
@@ -14449,6 +14571,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Get number of active users.
 ",
@@ -14571,6 +14694,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "User Pagination
 ",
@@ -14920,6 +15044,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Delete user
 ",
@@ -14972,6 +15097,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -15043,6 +15169,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrieve available tags for search
 ",
@@ -15159,6 +15286,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Get a list of the enabled enterprise features
 ",
@@ -15296,6 +15424,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Retrieve license key
 ",
@@ -15412,6 +15541,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Set or sync license key
 ",
@@ -15464,6 +15594,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
+            "contentType": undefined,
             "description": undefined,
             "schema": {
               "allOf": [],
@@ -15549,6 +15680,7 @@ e.g.:
           ],
         },
         {
+          "audiences": [],
           "authed": false,
           "description": "Delete license key
 ",

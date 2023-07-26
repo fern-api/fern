@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useInView } from "react-intersection-observer";
 import { useDocsContext } from "../docs-context/useDocsContext";
 import { useIsSlugSelected } from "../docs-context/useIsSlugSelected";
@@ -10,7 +10,6 @@ export declare namespace useApiPageCenterElement {
 
     export interface Return {
         setTargetRef: (element: HTMLElement | null) => void;
-        isInVerticalCenter: boolean;
     }
 }
 
@@ -18,11 +17,9 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
     const { registerNavigateToPathListener, onScrollToPath } = useDocsContext();
 
     const targetRef = useRef<HTMLElement | null>(null);
-    const [localIsInVerticalCenter, setLocalIsInVerticalCenter] = useState(false);
 
     const onChangeIsInVerticalCenter = useCallback(
         (newIsInVerticalCenter: boolean) => {
-            setLocalIsInVerticalCenter(newIsInVerticalCenter);
             if (newIsInVerticalCenter) {
                 onScrollToPath(slug);
             }
@@ -64,7 +61,6 @@ export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args):
     );
 
     return {
-        isInVerticalCenter: localIsInVerticalCenter,
         setTargetRef,
     };
 }

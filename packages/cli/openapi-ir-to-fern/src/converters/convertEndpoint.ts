@@ -1,7 +1,7 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { Endpoint, HttpError, Request, Schema, SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/ir";
+import { Endpoint, HttpError, Request, Response, Schema, SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/ir";
 import { ROOT_PREFIX } from "../convertPackage";
-import { Environment } from "../getEnvironment";
+import { Environments } from "../getEnvironments";
 import { convertHeader } from "./convertHeader";
 import { convertPathParameter } from "./convertPathParameter";
 import { convertQueryParameter } from "./convertQueryParameter";
@@ -19,7 +19,7 @@ export function convertEndpoint({
     endpoint,
     isPackageYml,
     schemas,
-    environment,
+    environments,
     nonRequestReferencedSchemas,
     globalHeaderNames,
     errors,
@@ -27,7 +27,7 @@ export function convertEndpoint({
     endpoint: Endpoint;
     isPackageYml: boolean;
     schemas: Record<SchemaId, Schema>;
-    environment: Environment | undefined;
+    environments: Environments | undefined;
     nonRequestReferencedSchemas: SchemaId[];
     globalHeaderNames: Set<string>;
     errors: Record<StatusCode, HttpError>;
@@ -64,7 +64,7 @@ export function convertEndpoint({
     }
 
     const convertedEndpoint: RawSchemas.HttpEndpointSchema = {
-        path: endpoint.path,
+        path: environments?.type === "single" ? `${environments.endpointPathPrefix}${endpoint.path}` : endpoint.path,
         method: convertToHttpMethod(endpoint.method),
         auth: endpoint.authed,
         docs: endpoint.description ?? undefined,
@@ -132,39 +132,51 @@ export function convertEndpoint({
     }
 
     if (endpoint.response != null) {
-        if (endpoint.response.type === "json") {
-            const responseTypeReference = convertToTypeReference({
-                schema: endpoint.response.schema,
-                prefix: isPackageYml ? undefined : ROOT_PREFIX,
-                schemas,
-            });
-            additionalTypeDeclarations = {
-                ...additionalTypeDeclarations,
-                ...responseTypeReference.additionalTypeDeclarations,
-            };
-            if (endpoint.responseIsStreaming) {
-                convertedEndpoint["response-stream"] = {
-                    type: getTypeFromTypeReference(responseTypeReference.typeReference),
+        Response._visit(endpoint.response, {
+            json: (jsonResponse) => {
+                const responseTypeReference = convertToTypeReference({
+                    schema: jsonResponse.schema,
+                    prefix: isPackageYml ? undefined : ROOT_PREFIX,
+                    schemas,
+                });
+                additionalTypeDeclarations = {
+                    ...additionalTypeDeclarations,
+                    ...responseTypeReference.additionalTypeDeclarations,
                 };
-            } else {
+                if (endpoint.responseIsStreaming) {
+                    convertedEndpoint["response-stream"] = {
+                        docs: jsonResponse.description ?? undefined,
+                        type: getTypeFromTypeReference(responseTypeReference.typeReference),
+                    };
+                } else {
+                    convertedEndpoint.response = {
+                        docs: jsonResponse.description ?? undefined,
+                        type: getTypeFromTypeReference(responseTypeReference.typeReference),
+                    };
+                }
+            },
+            file: (fileResponse) => {
                 convertedEndpoint.response = {
-                    docs: endpoint.response.description ?? undefined,
-                    type: getTypeFromTypeReference(responseTypeReference.typeReference),
+                    docs: fileResponse.description ?? undefined,
+                    type: "file",
                 };
-            }
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        } else if (endpoint.response.type === "file") {
-            convertedEndpoint.response = {
-                docs: endpoint.response.description ?? undefined,
-                type: "file",
-            };
-        }
+            },
+            text: (textResponse) => {
+                convertedEndpoint["response-stream"] = {
+                    docs: textResponse.description ?? undefined,
+                    type: "text",
+                };
+            },
+            _unknown: () => {
+                throw new Error("Unrecognized Response type: " + endpoint.response?.type);
+            },
+        });
     }
 
-    if (environment?.type === "multi") {
+    if (environments?.type === "multi") {
         const serverOverride = endpoint.server[0];
         if (endpoint.server.length === 0) {
-            convertedEndpoint.url = environment.defaultUrl;
+            convertedEndpoint.url = environments.defaultUrl;
         } else if (serverOverride != null) {
             convertedEndpoint.url = serverOverride.name ?? undefined;
         } else {
@@ -263,6 +275,10 @@ function getRequest({
                 convertedRequest.value.name = requestNameOverride ?? generatedRequestName;
             }
 
+            if (request.contentType != null) {
+                convertedRequest.value["content-type"] = request.contentType;
+            }
+
             return convertedRequest;
         }
         const properties = Object.fromEntries(
@@ -306,14 +322,19 @@ function getRequest({
         if (extendedSchemas.length > 0) {
             requestBodySchema.extends = extendedSchemas;
         }
+
+        const convertedRequestValue: RawSchemas.HttpRequestSchema = {
+            name: requestNameOverride ?? resolvedSchema.nameOverride ?? resolvedSchema.generatedName,
+            "query-parameters": queryParameters,
+            headers,
+            body: requestBodySchema,
+        };
+        if (request.contentType != null) {
+            convertedRequestValue["content-type"] = request.contentType;
+        }
         return {
             schemaIdsToExclude: maybeSchemaId != null ? [maybeSchemaId] : [],
-            value: {
-                name: requestNameOverride ?? resolvedSchema.nameOverride ?? resolvedSchema.generatedName,
-                "query-parameters": queryParameters,
-                headers,
-                body: requestBodySchema,
-            },
+            value: convertedRequestValue,
             additionalTypeDeclarations,
         };
     } else {

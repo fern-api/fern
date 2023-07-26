@@ -3,7 +3,7 @@ import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenAPIFile } from "@fern-fern/openapi-ir-model/ir";
 import { EXTERNAL_AUDIENCE } from "../convertPackage";
-import { Environment } from "../getEnvironment";
+import { Environments } from "../getEnvironments";
 import { convertEndpoint } from "./convertEndpoint";
 import { getEndpointLocation } from "./utils/getEndpointLocation";
 
@@ -20,11 +20,11 @@ export interface ConvertedService {
 
 export function convertToServices({
     openApiFile,
-    environment,
+    environments,
     globalHeaderNames,
 }: {
     openApiFile: OpenAPIFile;
-    environment: Environment | undefined;
+    environments: Environments | undefined;
     globalHeaderNames: Set<string>;
 }): ConvertedServices {
     const { endpoints, schemas, nonRequestReferencedSchemas } = openApiFile;
@@ -57,7 +57,7 @@ export function convertToServices({
                 endpoint,
                 isPackageYml: file === FERN_PACKAGE_MARKER_FILENAME,
                 schemas,
-                environment,
+                environments,
                 nonRequestReferencedSchemas,
                 globalHeaderNames,
                 errors: openApiFile.errors,
@@ -68,7 +68,12 @@ export function convertToServices({
             };
             schemaIdsToExclude = [...schemaIdsToExclude, ...convertedEndpoint.schemaIdsToExclude];
             let endpointDefinition = convertedEndpoint.value;
-            if (openApiFile.hasEndpointsMarkedInternal && (endpoint.internal == null || !endpoint.internal)) {
+            if (endpoint.audiences.length > 0) {
+                endpointDefinition = {
+                    ...endpointDefinition,
+                    audiences: endpoint.audiences,
+                };
+            } else if (openApiFile.hasEndpointsMarkedInternal && (endpoint.internal == null || !endpoint.internal)) {
                 endpointDefinition = {
                     ...endpointDefinition,
                     audiences: [EXTERNAL_AUDIENCE],

@@ -1,8 +1,7 @@
-import { assertNever, assertNeverNoThrow, noop } from "@fern-api/core-utils";
+import { assertNever, assertNeverNoThrow, noop, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import React, { useCallback, useMemo } from "react";
 import { useApiDefinitionContext } from "../../../api-context/useApiDefinitionContext";
-import { visitDiscriminatedUnion } from "../../../utils/visitDiscriminatedUnion";
 import { getEndpointEnvironmentUrl } from "../../endpoints/getEndpointEnvironmentUrl";
 import { JsonExampleContext, JsonExampleContextValue } from "../json-example/contexts/JsonExampleContext";
 import { JsonPropertyPath } from "../json-example/contexts/JsonPropertyPath";
@@ -63,15 +62,7 @@ export const CurlExample: React.FC<CurlExample.Props> = ({ endpoint, example, se
             }
         }
 
-        const requestContentType =
-            endpoint.request != null
-                ? visitDiscriminatedUnion(endpoint.request.type, "type")._visit({
-                      object: () => "application/json",
-                      reference: () => "application/json",
-                      fileUpload: () => "multipart/form-data",
-                      _other: () => undefined,
-                  })
-                : undefined;
+        const requestContentType = endpoint.request != null ? endpoint.request.contentType : undefined;
         if (requestContentType != null) {
             parts.push({
                 type: "line",

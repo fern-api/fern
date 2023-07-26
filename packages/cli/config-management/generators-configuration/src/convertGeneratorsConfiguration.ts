@@ -92,6 +92,7 @@ function convertOutputMode(generator: GeneratorInvocationSchema): FernFiddle.Out
         return FernFiddle.OutputMode.github({
             owner: generator.github.repository.slice(0, indexOfFirstSlash),
             repo: generator.github.repository.slice(indexOfFirstSlash + 1),
+            makePr: generator.github.mode === "pull-request",
             publishInfo: generator.output != null ? getGithubPublishInfo(generator.output) : undefined,
         });
     }
@@ -129,8 +130,8 @@ function convertOutputMode(generator: GeneratorInvocationSchema): FernFiddle.Out
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.pypiOverride({
                     registryUrl: generator.output.url ?? "https://upload.pypi.org/legacy/",
-                    username: generator.output.username ?? "",
-                    password: generator.output.password ?? "",
+                    username: generator.output.token != null ? "__token__" : generator.output.password ?? "",
+                    password: generator.output.token ?? generator.output.password ?? "",
                     coordinate: generator.output["package-name"],
                 })
             );

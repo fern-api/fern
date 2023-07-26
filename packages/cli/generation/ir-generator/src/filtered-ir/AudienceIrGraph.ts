@@ -8,6 +8,7 @@ import {
     HttpRequestBody,
     HttpResponse,
     HttpService,
+    StreamingResponseChunkType,
 } from "@fern-fern/ir-model/http";
 import { ContainerType, DeclaredTypeName, TypeReference } from "@fern-fern/ir-model/types";
 import { IdGenerator } from "../IdGenerator";
@@ -129,17 +130,22 @@ export class AudienceIrGraph {
                         referencedSubpackages
                     );
                 },
+                streaming: (streamingResponse) => {
+                    StreamingResponseChunkType._visit(streamingResponse.dataEventType, {
+                        json: (typeReference) =>
+                            populateReferencesFromTypeReference(typeReference, referencedTypes, referencedSubpackages),
+                        text: noop,
+                        _unknown: () => {
+                            throw new Error(
+                                "Unknown StreamingResponseChunkType: " + streamingResponse.dataEventType.type
+                            );
+                        },
+                    });
+                },
                 _unknown: () => {
                     throw new Error("Unknown HttpResponse: " + httpEndpoint.response?.type);
                 },
             });
-        }
-        if (httpEndpoint.streamingResponse != null) {
-            populateReferencesFromTypeReference(
-                httpEndpoint.streamingResponse.dataEventType,
-                referencedTypes,
-                referencedSubpackages
-            );
         }
         httpEndpoint.errors.forEach((responseError) => {
             referencedErrors.add(IdGenerator.generateErrorId(responseError.error));
