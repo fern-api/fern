@@ -350,6 +350,7 @@ async function convertNavigationItem({
             return FernRegistry.docs.v1.write.NavigationItem.page({
                 title: item.title,
                 id: constructPageId(relative(docsDefinition.absoluteFilepath, item.absolutePath)),
+                urlSlugOverride: item.slug,
             });
         case "section":
             return FernRegistry.docs.v1.write.NavigationItem.section({
@@ -368,6 +369,7 @@ async function convertNavigationItem({
                         })
                     )
                 ),
+                urlSlugOverride: item.slug,
             });
         case "apiSection": {
             const apiDefinitionId = await registerApi({

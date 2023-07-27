@@ -56,12 +56,14 @@ export declare namespace DocsNavigationItem {
         type: "page";
         title: string;
         absolutePath: AbsoluteFilePath;
+        slug: string | undefined;
     }
 
     export interface Section {
         type: "section";
         title: string;
         contents: DocsNavigationItem[];
+        slug: string | undefined;
     }
 
     export interface ApiSection {
