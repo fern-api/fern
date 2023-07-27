@@ -40,7 +40,7 @@ export function useSlugListeners(label: string, { selectedSlug }: useSlugListene
                 const listenersForSlug = listeners.current[slug];
                 if (listenersForSlug != null) {
                     const indexOfListenerToDelete = listenersForSlug.indexOf(listener);
-                    if (indexOfListenerToDelete !== -1) {
+                    if (indexOfListenerToDelete === -1) {
                         // eslint-disable-next-line no-console
                         console.warn(`Failed to deregister listener for ${label}.`);
                     } else {
