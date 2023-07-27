@@ -14,22 +14,28 @@ FERN_CONFIG_KEY = "__fern"
 class RouteArgs(typing_extensions.TypedDict):
     openapi_extra: typing.Optional[typing.Dict[str, typing.Any]]
     tags: typing.Optional[typing.List[typing.Union[str, enum.Enum]]]
+    include_in_schema: bool
 
 
-DEFAULT_ROUTE_ARGS = RouteArgs(openapi_extra=None, tags=None)
+DEFAULT_ROUTE_ARGS = RouteArgs(openapi_extra=None, tags=None, include_in_schema=True)
 
 
 def get_route_args(endpoint_function: typing.Callable[..., typing.Any], *, default_tag: str) -> RouteArgs:
     unwrapped = inspect.unwrap(endpoint_function, stop=(lambda f: hasattr(f, FERN_CONFIG_KEY)))
     route_args = typing.cast(RouteArgs, getattr(unwrapped, FERN_CONFIG_KEY, DEFAULT_ROUTE_ARGS))
     if route_args["tags"] is None:
-        return RouteArgs(openapi_extra=route_args["openapi_extra"], tags=[default_tag])
+        return RouteArgs(
+            openapi_extra=route_args["openapi_extra"],
+            tags=[default_tag],
+            include_in_schema=route_args["include_in_schema"],
+        )
     return route_args
 
 
 def route_args(
     openapi_extra: typing.Optional[typing.Dict[str, typing.Any]] = None,
     tags: typing.Optional[typing.List[typing.Union[str, enum.Enum]]] = None,
+    include_in_schema: bool = True,
 ) -> typing.Callable[[T], T]:
     """
     this decorator allows you to forward certain args to the FastAPI route decorator.
@@ -47,7 +53,11 @@ def route_args(
     """
 
     def decorator(endpoint_function: T) -> T:
-        setattr(endpoint_function, FERN_CONFIG_KEY, RouteArgs(openapi_extra=openapi_extra, tags=tags))
+        setattr(
+            endpoint_function,
+            FERN_CONFIG_KEY,
+            RouteArgs(openapi_extra=openapi_extra, tags=tags, include_in_schema=include_in_schema),
+        )
         return endpoint_function
 
     return decorator
