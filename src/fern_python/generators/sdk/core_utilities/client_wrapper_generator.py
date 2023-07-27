@@ -38,9 +38,6 @@ class ClientWrapperGenerator:
 
     HTTPX_CLIENT_MEMBER_NAME = "httpx_client"
 
-    TOKEN_CONSTRUCTOR_PARAMETER_NAME = "token"
-    TOKEN_MEMBER_NAME = "_token"
-
     STRING_OR_SUPPLIER_TYPE_HINT = AST.TypeHint.union(
         AST.TypeHint.str_(), AST.TypeHint.callable(parameters=[], return_type=AST.TypeHint.str_())
     )
@@ -325,16 +322,17 @@ class ClientWrapperGenerator:
                 )
             )
 
-        if self._has_bearer_auth():
+        bearer_auth_scheme = self._get_bearer_auth_scheme()
+        if bearer_auth_scheme is not None:
             parameters.append(
                 ConstructorParameter(
-                    constructor_parameter_name=ClientWrapperGenerator.TOKEN_CONSTRUCTOR_PARAMETER_NAME,
-                    private_member_name=ClientWrapperGenerator.TOKEN_MEMBER_NAME,
+                    constructor_parameter_name=self._get_token_constructor_parameter_name(bearer_auth_scheme),
+                    private_member_name=self._get_token_member_name(bearer_auth_scheme),
                     type_hint=ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
                     if self._context.ir.sdk_config.is_auth_mandatory
                     else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT),
                     getter_method=AST.FunctionDeclaration(
-                        name=f"_get_{ClientWrapperGenerator.TOKEN_CONSTRUCTOR_PARAMETER_NAME}",
+                        name=self._get_token_getter_name(bearer_auth_scheme),
                         signature=AST.FunctionSignature(
                             parameters=[],
                             return_type=AST.TypeHint.str_()
@@ -342,10 +340,12 @@ class ClientWrapperGenerator:
                             else AST.TypeHint.optional(AST.TypeHint.str_()),
                         ),
                         body=AST.CodeWriter(
-                            self._get_required_getter_body_writer(member_name=ClientWrapperGenerator.TOKEN_MEMBER_NAME)
+                            self._get_required_getter_body_writer(
+                                member_name=self._get_token_member_name(bearer_auth_scheme)
+                            )
                             if self._context.ir.sdk_config.is_auth_mandatory
                             else self._get_optional_getter_body_writer(
-                                member_name=ClientWrapperGenerator.TOKEN_MEMBER_NAME
+                                member_name=self._get_token_member_name(bearer_auth_scheme)
                             )
                         ),
                     ),
@@ -439,11 +439,12 @@ class ClientWrapperGenerator:
 
         return _write_required_getter_body
 
-    def _has_bearer_auth(self) -> bool:
+    def _get_bearer_auth_scheme(self) -> Optional[ir_types.BearerAuthScheme]:
         for scheme in self._context.ir.auth.schemes:
-            if scheme.get_as_union().type == "bearer":
-                return True
-        return False
+            scheme_as_union = scheme.get_as_union()
+            if scheme_as_union.type == "bearer":
+                return scheme_as_union
+        return None
 
     def _has_basic_auth(self) -> bool:
         return self._get_basic_auth_scheme() is not None
@@ -466,6 +467,15 @@ class ClientWrapperGenerator:
 
     def _get_password_constructor_parameter_name(self, basic_auth_scheme: ir_types.BasicAuthScheme) -> str:
         return basic_auth_scheme.password.snake_case.safe_name
+
+    def _get_token_constructor_parameter_name(self, bearer_auth_scheme: ir_types.BearerAuthScheme) -> str:
+        return bearer_auth_scheme.token.snake_case.safe_name
+
+    def _get_token_member_name(self, bearer_auth_scheme: ir_types.BearerAuthScheme) -> str:
+        return f"_{bearer_auth_scheme.token.snake_case.safe_name}"
+
+    def _get_token_getter_name(self, bearer_auth_scheme: ir_types.BearerAuthScheme) -> str:
+        return f"_get_{bearer_auth_scheme.token.snake_case.safe_name}"
 
     def _get_password_getter_name(self, basic_auth_scheme: ir_types.BasicAuthScheme) -> str:
         return f"_get_{basic_auth_scheme.password.snake_case.unsafe_name}"

@@ -38,9 +38,6 @@ class RootClientGenerator:
     RESPONSE_VARIABLE = EndpointResponseCodeWriter.RESPONSE_VARIABLE
     RESPONSE_JSON_VARIABLE = EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE
 
-    TOKEN_CONSTRUCTOR_PARAMETER_NAME = "token"
-    TOKEN_MEMBER_NAME = "_token"
-
     def __init__(
         self,
         *,
