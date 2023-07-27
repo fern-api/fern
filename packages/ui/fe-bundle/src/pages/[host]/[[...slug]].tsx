@@ -9,6 +9,7 @@ import { REGISTRY_SERVICE } from "../../service";
 import { getSlugFromUrl } from "../../url-path-resolver/getSlugFromUrl";
 import { UrlPathResolver } from "../../url-path-resolver/UrlPathResolver";
 import { isVersionedNavigationConfig } from "../../utils/docs";
+import { loadDocsBackgroundImage } from "../../utils/theme/loadDocsBackgroundImage";
 import { generateFontFaces, loadDocTypography } from "../../utils/theme/loadDocsTypography";
 
 function classNames(...classes: (string | undefined)[]): string {
@@ -26,40 +27,40 @@ export declare namespace Docs {
         inferredVersion: string | null;
         resolvedUrlPath: ResolvedUrlPath;
         typographyStyleSheet?: string;
+        backgroundImageStyleSheet: string | null;
         nextPath: ResolvedUrlPath | null;
         previousPath: ResolvedUrlPath | null;
     }
 }
 
-function Typography({ stylesheet }: { stylesheet: string }) {
-    return (
-        // eslint-disable-next-line react/no-unknown-property
-        <style id="fern-font-stylesheet" jsx global>
-            {stylesheet}
-        </style>
-    );
-}
-
 export default function Docs({
     docs,
     inferredVersion,
-    typographyStyleSheet,
+    typographyStyleSheet = "",
+    backgroundImageStyleSheet = "",
     resolvedUrlPath,
     nextPath,
     previousPath,
 }: Docs.Props): JSX.Element {
     return (
         <>
-            {typographyStyleSheet != null && <Typography stylesheet={typographyStyleSheet} />}
             <main className={classNames(inter.className, "typography-font-body")}>
+                {/* 
+                    We concatenate all global styles into a single instance,
+                    as styled JSX will only create one instance of global styles
+                    for each component.
+                */}
+                {/* eslint-disable-next-line react/no-unknown-property */}
+                <style jsx global>
+                    {`
+                        ${typographyStyleSheet}
+                        ${backgroundImageStyleSheet}
+                    `}
+                </style>
                 <Head>
                     {docs.definition.config.title != null && <title>{docs.definition.config.title}</title>}
                     {docs.definition.config.favicon != null && (
-                        <link
-                            rel="icon"
-                            id="favicon"
-                            href={docs.definition.files[docs.definition.config.favicon]}
-                        ></link>
+                        <link rel="icon" id="favicon" href={docs.definition.files[docs.definition.config.favicon]} />
                     )}
                 </Head>
                 <App
@@ -134,6 +135,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
 
                 const typographyConfig = loadDocTypography(docs.body.definition);
                 const typographyStyleSheet = generateFontFaces(typographyConfig);
+                const backgroundImageStyleSheet = loadDocsBackgroundImage(docs.body.definition);
                 const [nextPath, previousPath] = await Promise.all([
                     urlPathResolver.getNextNavigatableItem(resolvedUrlPath),
                     urlPathResolver.getPreviousNavigatableItem(resolvedUrlPath),
@@ -144,6 +146,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                         docs: docs.body,
                         inferredVersion: latestVersion.version,
                         typographyStyleSheet,
+                        backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
                         resolvedUrlPath,
                         nextPath: nextPath ?? null,
                         previousPath: previousPath ?? null,
@@ -199,6 +202,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
 
             const typographyConfig = loadDocTypography(docs.body.definition);
             const typographyStyleSheet = generateFontFaces(typographyConfig);
+            const backgroundImageStyleSheet = loadDocsBackgroundImage(docs.body.definition);
             const [nextPath, previousPath] = await Promise.all([
                 urlPathResolver.getNextNavigatableItem(resolvedUrlPath),
                 urlPathResolver.getPreviousNavigatableItem(resolvedUrlPath),
@@ -209,6 +213,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                     docs: docs.body,
                     inferredVersion: version,
                     typographyStyleSheet,
+                    backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
                     resolvedUrlPath,
                     nextPath: nextPath ?? null,
                     previousPath: previousPath ?? null,
@@ -247,6 +252,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
 
         const typographyConfig = loadDocTypography(docs.body.definition);
         const typographyStyleSheet = generateFontFaces(typographyConfig);
+        const backgroundImageStyleSheet = loadDocsBackgroundImage(docs.body.definition);
         const [nextPath, previousPath] = await Promise.all([
             urlPathResolver.getNextNavigatableItem(resolvedUrlPath),
             urlPathResolver.getPreviousNavigatableItem(resolvedUrlPath),
@@ -257,6 +263,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                 docs: docs.body,
                 inferredVersion: null,
                 typographyStyleSheet,
+                backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
                 resolvedUrlPath,
                 nextPath: nextPath ?? null,
                 previousPath: previousPath ?? null,

@@ -14,7 +14,7 @@ export declare namespace BottomNavigationButton {
 }
 
 export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({ path, direction }) => {
-    const { navigateToPath } = useDocsContext();
+    const { navigateToPath, getFullSlug } = useDocsContext();
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
     const visitDirection = <T extends unknown>({ previous, next }: { previous: T; next: T }): T => {
@@ -60,7 +60,7 @@ export const BottomNavigationButton: React.FC<BottomNavigationButton.Props> = ({
         <Link
             className="!text-accentPrimary/80 hover:!text-accentPrimary flex cursor-pointer items-center gap-2 rounded !no-underline transition"
             onClick={onClick}
-            href={`/${path.slug}`}
+            href={`/${getFullSlug(path.slug)}`}
         >
             {visitDirection({
                 previous: iconElement,

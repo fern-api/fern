@@ -11,6 +11,8 @@ navigation:
         path: foo.md
   - api: API Reference
 
+background-image: ./bg-gradient.png
+
 colors:
   accentPrimary: "#ffffFF"
 

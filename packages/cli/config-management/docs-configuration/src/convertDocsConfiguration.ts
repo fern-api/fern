@@ -21,7 +21,7 @@ export async function convertDocsConfiguration({
     absolutePathOfConfiguration: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<DocsConfiguration> {
-    const { navigation, colors, favicon, logo, navbarLinks, title, typography } = rawDocsConfiguration;
+    const { navigation, colors, favicon, backgroundImage, logo, navbarLinks, title, typography } = rawDocsConfiguration;
     return {
         navigation: await convertNavigationConfiguration({
             rawConfig: navigation,
@@ -44,6 +44,14 @@ export async function convertDocsConfiguration({
         favicon:
             favicon != null
                 ? await convertImageReference({ rawImageReference: favicon, absolutePathOfConfiguration, context })
+                : undefined,
+        backgroundImage:
+            backgroundImage != null
+                ? await convertImageReference({
+                      rawImageReference: backgroundImage,
+                      absolutePathOfConfiguration,
+                      context,
+                  })
                 : undefined,
         colors: convertColorsConfiguration(colors ?? {}, context),
         navbarLinks: navbarLinks != null ? convertNavbarLinks(navbarLinks) : undefined,
