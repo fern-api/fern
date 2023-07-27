@@ -10,7 +10,11 @@ class BaseClientWrapper:
         self._api_key = api_key
 
     def get_headers(self) -> typing.Dict[str, str]:
-        headers: typing.Dict[str, str] = {}
+        headers: typing.Dict[str, str] = {
+            "X-Fern-Language": "Python",
+            "X-Fern-SDK-Name": "my-package-name",
+            "X-Fern-SDK-Version": "1.0.0",
+        }
         api_key = self._get_api_key()
         if api_key is not None:
             headers["Authorization"] = f"Bearer {api_key}"

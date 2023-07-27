@@ -169,7 +169,7 @@ class SdkGenerator(AbstractGenerator):
             filepath=filepath,
             generator_exec_wrapper=generator_exec_wrapper,
         ) as source_file:
-            ClientWrapperGenerator(context=context).generate(source_file=source_file)
+            ClientWrapperGenerator(context=context).generate(source_file=source_file, project=project)
 
     def _generate_root_client(
         self,

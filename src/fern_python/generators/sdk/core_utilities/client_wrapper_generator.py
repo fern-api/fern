@@ -4,7 +4,7 @@ from typing import List, Optional
 
 import fern.ir.resources as ir_types
 
-from fern_python.codegen import AST, SourceFile
+from fern_python.codegen import AST, Project, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies import httpx
 from fern_python.generators.sdk.core_utilities.core_utilities import CoreUtilities
@@ -49,10 +49,12 @@ class ClientWrapperGenerator:
     ):
         self._context = context
 
-    def generate(self, source_file: SourceFile) -> None:
+    def generate(self, source_file: SourceFile, project: Project) -> None:
         constructor_info = self._get_constructor_info()
         source_file.add_class_declaration(
-            declaration=self._create_base_client_wrapper_class_declaration(constructor_info=constructor_info),
+            declaration=self._create_base_client_wrapper_class_declaration(
+                constructor_info=constructor_info, project=project
+            ),
             should_export=True,
         )
         source_file.add_class_declaration(
@@ -65,7 +67,7 @@ class ClientWrapperGenerator:
         )
 
     def _create_base_client_wrapper_class_declaration(
-        self, *, constructor_info: ConstructorInfo
+        self, *, constructor_info: ConstructorInfo, project: Project
     ) -> AST.ClassDeclaration:
         named_parameters = self._get_named_parameters(constructor_parameters=constructor_info.constructor_parameters)
 
@@ -88,7 +90,10 @@ class ClientWrapperGenerator:
                     return_type=AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_())
                 ),
                 body=AST.CodeWriter(
-                    self._get_write_get_headers_body(constructor_parameters=constructor_info.constructor_parameters)
+                    self._get_write_get_headers_body(
+                        constructor_parameters=constructor_info.constructor_parameters,
+                        project=project,
+                    )
                 ),
             )
         )
@@ -188,11 +193,22 @@ class ClientWrapperGenerator:
             for param in constructor_parameters
         ]
 
-    def _get_write_get_headers_body(self, *, constructor_parameters: List[ConstructorParameter]) -> CodeWriterFunction:
+    def _get_write_get_headers_body(
+        self, *, constructor_parameters: List[ConstructorParameter], project: Project
+    ) -> CodeWriterFunction:
         def _write_get_headers_body(writer: AST.NodeWriter) -> None:
             writer.write("headers: ")
             writer.write_node(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.str_()))
-            writer.write("= {}")
+            writer.write_line("= {")
+            writer.write_line(f'"{self._context.ir.sdk_config.platform_headers.language}": "Python",')
+            if project._project_config is not None:
+                writer.write_line(
+                    f'"{self._context.ir.sdk_config.platform_headers.sdk_name}": "{project._project_config.package_name}",'
+                )
+                writer.write_line(
+                    f'"{self._context.ir.sdk_config.platform_headers.sdk_version}": "{project._project_config.package_version}",'
+                )
+            writer.write_line("}")
             writer.write_newline_if_last_line_not()
             basic_auth_scheme = self._get_basic_auth_scheme()
             if basic_auth_scheme is not None:

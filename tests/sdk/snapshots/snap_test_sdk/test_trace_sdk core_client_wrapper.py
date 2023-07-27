@@ -16,7 +16,7 @@ class BaseClientWrapper:
         self._token = token
 
     def get_headers(self) -> typing.Dict[str, str]:
-        headers: typing.Dict[str, str] = {}
+        headers: typing.Dict[str, str] = {"X-Fern-Language": "Python"}
         if self._x_random_header is not None:
             headers["X-Random-Header"] = self._x_random_header
         token = self._get_token()
