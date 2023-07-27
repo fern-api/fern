@@ -92,6 +92,7 @@ class EndpointResponseCodeWriter:
         with writer.indent():
             writer.write(f"yield {EndpointResponseCodeWriter.FILE_CHUNK_VARIABLE}")
         writer.write_newline_if_last_line_not()
+        writer.write_line("return")
 
     def _get_iter_bytes_method(self, *, is_async: bool) -> str:
         if is_async:
@@ -224,7 +225,10 @@ class EndpointResponseCodeWriter:
     def _deserialize_json_response(self, *, writer: AST.NodeWriter) -> None:
         # in streaming responses, we need to call read() or aread()
         # before deserializing or httpx will raise ResponseNotRead
-        if self._endpoint.sdk_response is not None and self._endpoint.sdk_response.get_as_union().type == "streaming":
+        if self._endpoint.sdk_response is not None and (
+            self._endpoint.sdk_response.get_as_union().type == "streaming"
+            or self._endpoint.sdk_response.get_as_union().type == "fileDownload"
+        ):
             writer.write_line(
                 f"await {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.aread()"
                 if self._is_async

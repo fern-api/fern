@@ -57,7 +57,9 @@ class MovieClient:
             if 200 <= _response.status_code < 300:
                 for _chunk in _response.iter_bytes():
                     yield _chunk
+                return
             try:
+                _response.read()
                 _response_json = _response.json()
             except JSONDecodeError:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -108,7 +110,9 @@ class AsyncMovieClient:
             if 200 <= _response.status_code < 300:
                 async for _chunk in _response.aiter_bytes():
                     yield _chunk
+                return
             try:
+                await _response.aread()
                 _response_json = _response.json()
             except JSONDecodeError:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
