@@ -1,15 +1,25 @@
 import { assertNever } from "@fern-api/core-utils";
 import { ResolvedUrlPath } from "@fern-api/ui";
+import type * as FernRegistryApiRead from "@fern-fern/registry-browser/api/resources/api/resources/v1/resources/read";
 import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources/docs/resources/v1/resources/read";
 import { serialize } from "next-mdx-remote/serialize";
 import path from "path";
 import { UrlSlugTree, UrlSlugTreeNode } from "./UrlSlugTree";
 
-export class UrlPathResolver {
-    private urlSlugTree: UrlSlugTree;
+export interface UrlPathResolverConfig {
+    navigation: FernRegistryDocsRead.UnversionedNavigationConfig;
+    loadApiPage: (id: FernRegistryDocsRead.PageId) => FernRegistryDocsRead.PageContent | undefined;
+    loadApiDefinition: (id: FernRegistryApiRead.ApiDefinition["id"]) => FernRegistryApiRead.ApiDefinition | undefined;
+}
 
-    constructor(private readonly docsDefinition: FernRegistryDocsRead.DocsDefinition) {
-        this.urlSlugTree = new UrlSlugTree(docsDefinition);
+export class UrlPathResolver {
+    private readonly urlSlugTree: UrlSlugTree;
+
+    constructor(private readonly config: UrlPathResolverConfig) {
+        this.urlSlugTree = new UrlSlugTree({
+            navigation: config.navigation,
+            loadApiDefinition: config.loadApiDefinition,
+        });
     }
 
     public async resolveSlug(slug: string): Promise<ResolvedUrlPath | undefined> {
@@ -93,7 +103,7 @@ export class UrlPathResolver {
     }
 
     private getPage(pageId: FernRegistryDocsRead.PageId): FernRegistryDocsRead.PageContent {
-        const page = this.docsDefinition.pages[pageId];
+        const page = this.config.loadApiPage(pageId);
         if (page == null) {
             throw new Error("Page does not exist: " + pageId);
         }

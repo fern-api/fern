@@ -19,7 +19,7 @@ export declare namespace ApiSubpackageSidebarSection {
 }
 
 export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.Props> = ({ subpackage, slug }) => {
-    const { selectedSlug } = useDocsContext();
+    const { selectedSlug, getFullSlug } = useDocsContext();
     const { resolveSubpackageById } = useApiDefinitionContext();
 
     const hasEndpoints = useMemo(
@@ -27,8 +27,8 @@ export const ApiSubpackageSidebarSection: React.FC<ApiSubpackageSidebarSection.P
         [resolveSubpackageById, subpackage.subpackageId]
     );
 
-    const isSelected = selectedSlug != null && selectedSlug === slug;
-    const isChildSelected = selectedSlug != null && selectedSlug.startsWith(`${slug}/`);
+    const isSelected = selectedSlug != null && selectedSlug === getFullSlug(slug);
+    const isChildSelected = selectedSlug != null && selectedSlug.startsWith(`${getFullSlug(slug)}/`);
     const { expandAllSections } = useContext(SidebarContext)();
     const isOpen = isSelected || isChildSelected || expandAllSections;
 

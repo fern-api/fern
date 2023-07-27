@@ -16,7 +16,7 @@ export declare namespace Sidebar {
 }
 
 export const Sidebar: React.FC<Sidebar.Props> = ({ expandAllSections = false }) => {
-    const { docsDefinition } = useDocsContext();
+    const { docsInfo } = useDocsContext();
     const { openSearchDialog } = useSearchContext();
     const searchService = useSearchService();
 
@@ -29,7 +29,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ expandAllSections = false }) 
                     {searchService.isAvailable && <SidebarSearchBar onClick={openSearchDialog} />}
                 </div>
                 <div className={classNames("flex flex-1 flex-col overflow-y-auto pb-6", styles.scrollingContainer)}>
-                    <SidebarItems navigationItems={docsDefinition.config.navigation.items} slug="" />
+                    <SidebarItems navigationItems={docsInfo.activeNavigationConfig.items} slug="" />
                 </div>
                 <BuiltWithFern />
             </div>

@@ -8,6 +8,7 @@ import Head from "next/head";
 import { REGISTRY_SERVICE } from "../../service";
 import { getSlugFromUrl } from "../../url-path-resolver/getSlugFromUrl";
 import { UrlPathResolver } from "../../url-path-resolver/UrlPathResolver";
+import { isVersionedNavigationConfig } from "../../utils/docs";
 import { loadDocsBackgroundImage } from "../../utils/theme/loadDocsBackgroundImage";
 import { generateFontFaces, loadDocTypography } from "../../utils/theme/loadDocsTypography";
 
@@ -20,9 +21,13 @@ const inter = Inter({ subsets: ["latin"] });
 export declare namespace Docs {
     export interface Props {
         docs: FernRegistryDocsReadV2.LoadDocsForUrlResponse;
+        /**
+         * If `null`, then docs are not versioned.
+         */
+        inferredVersion: string | null;
         resolvedUrlPath: ResolvedUrlPath;
-        typographyStyleSheet: string | undefined;
-        backgroundImageStyleSheet: string | undefined;
+        typographyStyleSheet?: string;
+        backgroundImageStyleSheet: string | null;
         nextPath: ResolvedUrlPath | null;
         previousPath: ResolvedUrlPath | null;
     }
@@ -30,6 +35,7 @@ export declare namespace Docs {
 
 export default function Docs({
     docs,
+    inferredVersion,
     typographyStyleSheet = "",
     backgroundImageStyleSheet = "",
     resolvedUrlPath,
@@ -59,6 +65,7 @@ export default function Docs({
                 </Head>
                 <App
                     docs={docs}
+                    inferredVersion={inferredVersion}
                     resolvedUrlPath={resolvedUrlPath}
                     nextPath={nextPath ?? undefined}
                     previousPath={previousPath ?? undefined}
@@ -91,46 +98,179 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
     }
 
     let slug = getSlugFromUrl({ pathname, basePath: docs.body.baseUrl.basePath });
-    if (slug === "") {
-        const firstNavigationItem = docs.body.definition.config.navigation.items[0];
-        if (firstNavigationItem != null) {
-            slug = firstNavigationItem.urlSlug;
+
+    const { navigation: navigationConfig } = docs.body.definition.config;
+
+    if (isVersionedNavigationConfig(navigationConfig)) {
+        if (slug === "") {
+            // TODO: The first element of the array is not necessarily the latest api version
+            const [latestVersion] = navigationConfig.versions;
+            if (latestVersion == null) {
+                throw new Error("No versions found. This indicates a registration issue.");
+            }
+
+            const [firstNavigationItem] = latestVersion.config.items;
+            if (firstNavigationItem != null) {
+                slug = firstNavigationItem.urlSlug;
+
+                const urlPathResolver = new UrlPathResolver({
+                    navigation: latestVersion.config,
+                    loadApiDefinition: (id) => docs.body.definition.apis[id],
+                    loadApiPage: (id) => docs.body.definition.pages[id],
+                });
+
+                let resolvedUrlPath = await urlPathResolver.resolveSlug(slug);
+                if (resolvedUrlPath?.type === "section") {
+                    const firstNavigatableItem = getFirstNavigatableItem(resolvedUrlPath.section);
+                    if (firstNavigatableItem == null) {
+                        resolvedUrlPath = undefined;
+                    } else {
+                        resolvedUrlPath = await urlPathResolver.resolveSlug(firstNavigatableItem);
+                    }
+                }
+
+                if (resolvedUrlPath == null) {
+                    return { notFound: true, revalidate: true };
+                }
+
+                const typographyConfig = loadDocTypography(docs.body.definition);
+                const typographyStyleSheet = generateFontFaces(typographyConfig);
+                const backgroundImageStyleSheet = loadDocsBackgroundImage(docs.body.definition);
+                const [nextPath, previousPath] = await Promise.all([
+                    urlPathResolver.getNextNavigatableItem(resolvedUrlPath),
+                    urlPathResolver.getPreviousNavigatableItem(resolvedUrlPath),
+                ]);
+
+                return {
+                    props: {
+                        docs: docs.body,
+                        inferredVersion: latestVersion.version,
+                        typographyStyleSheet,
+                        backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
+                        resolvedUrlPath,
+                        nextPath: nextPath ?? null,
+                        previousPath: previousPath ?? null,
+                    },
+                    revalidate: true,
+                };
+            } else {
+                return { notFound: true, revalidate: true };
+            }
         } else {
+            // The slug must contain the version. If not, return not found
+
+            const { version, rest } = extractVersionFromSlug(slug);
+            if (version == null || version.length === 0) {
+                return { notFound: true, revalidate: true };
+            }
+            slug = rest;
+
+            // Find the version in docs definition
+            const configData = navigationConfig.versions.find((c) => c.version === version);
+            if (configData == null) {
+                return { notFound: true, revalidate: true };
+            }
+
+            if (slug === "") {
+                const [firstNavigationItem] = configData.config.items;
+                if (firstNavigationItem != null) {
+                    slug = firstNavigationItem.urlSlug;
+                } else {
+                    return { notFound: true, revalidate: true };
+                }
+            }
+
+            const urlPathResolver = new UrlPathResolver({
+                navigation: configData.config,
+                loadApiDefinition: (id) => docs.body.definition.apis[id],
+                loadApiPage: (id) => docs.body.definition.pages[id],
+            });
+
+            let resolvedUrlPath = await urlPathResolver.resolveSlug(slug);
+            if (resolvedUrlPath?.type === "section") {
+                const firstNavigatableItem = getFirstNavigatableItem(resolvedUrlPath.section);
+                if (firstNavigatableItem == null) {
+                    resolvedUrlPath = undefined;
+                } else {
+                    resolvedUrlPath = await urlPathResolver.resolveSlug(firstNavigatableItem);
+                }
+            }
+
+            if (resolvedUrlPath == null) {
+                return { notFound: true, revalidate: true };
+            }
+
+            const typographyConfig = loadDocTypography(docs.body.definition);
+            const typographyStyleSheet = generateFontFaces(typographyConfig);
+            const backgroundImageStyleSheet = loadDocsBackgroundImage(docs.body.definition);
+            const [nextPath, previousPath] = await Promise.all([
+                urlPathResolver.getNextNavigatableItem(resolvedUrlPath),
+                urlPathResolver.getPreviousNavigatableItem(resolvedUrlPath),
+            ]);
+
+            return {
+                props: {
+                    docs: docs.body,
+                    inferredVersion: version,
+                    typographyStyleSheet,
+                    backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
+                    resolvedUrlPath,
+                    nextPath: nextPath ?? null,
+                    previousPath: previousPath ?? null,
+                },
+                revalidate: true,
+            };
+        }
+    } else {
+        if (slug === "") {
+            const [firstNavigationItem] = navigationConfig.items;
+            if (firstNavigationItem != null) {
+                slug = firstNavigationItem.urlSlug;
+            } else {
+                return { notFound: true, revalidate: true };
+            }
+        }
+
+        const urlPathResolver = new UrlPathResolver({
+            navigation: navigationConfig,
+            loadApiDefinition: (id) => docs.body.definition.apis[id],
+            loadApiPage: (id) => docs.body.definition.pages[id],
+        });
+        let resolvedUrlPath = await urlPathResolver.resolveSlug(slug);
+        if (resolvedUrlPath?.type === "section") {
+            const firstNavigatableItem = getFirstNavigatableItem(resolvedUrlPath.section);
+            if (firstNavigatableItem == null) {
+                resolvedUrlPath = undefined;
+            } else {
+                resolvedUrlPath = await urlPathResolver.resolveSlug(firstNavigatableItem);
+            }
+        }
+
+        if (resolvedUrlPath == null) {
             return { notFound: true, revalidate: true };
         }
+
+        const typographyConfig = loadDocTypography(docs.body.definition);
+        const typographyStyleSheet = generateFontFaces(typographyConfig);
+        const backgroundImageStyleSheet = loadDocsBackgroundImage(docs.body.definition);
+        const [nextPath, previousPath] = await Promise.all([
+            urlPathResolver.getNextNavigatableItem(resolvedUrlPath),
+            urlPathResolver.getPreviousNavigatableItem(resolvedUrlPath),
+        ]);
+
+        return {
+            props: {
+                docs: docs.body,
+                inferredVersion: null,
+                typographyStyleSheet,
+                backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
+                resolvedUrlPath,
+                nextPath: nextPath ?? null,
+                previousPath: previousPath ?? null,
+            },
+            revalidate: true,
+        };
     }
-
-    const urlPathResolver = new UrlPathResolver(docs.body.definition);
-    let resolvedUrlPath = await urlPathResolver.resolveSlug(slug);
-    if (resolvedUrlPath?.type === "section") {
-        const firstNavigatableItem = getFirstNavigatableItem(resolvedUrlPath.section);
-        if (firstNavigatableItem == null) {
-            resolvedUrlPath = undefined;
-        } else {
-            resolvedUrlPath = await urlPathResolver.resolveSlug(firstNavigatableItem);
-        }
-    }
-
-    if (resolvedUrlPath == null) {
-        return { notFound: true, revalidate: true };
-    }
-
-    const typographyConfig = loadDocTypography(docs.body.definition);
-    const typographyStyleSheet = generateFontFaces(typographyConfig);
-
-    const backgroundImageStyleSheet = loadDocsBackgroundImage(docs.body.definition);
-
-    return {
-        props: {
-            docs: docs.body,
-            typographyStyleSheet,
-            backgroundImageStyleSheet,
-            resolvedUrlPath,
-            nextPath: (await urlPathResolver.getNextNavigatableItem(resolvedUrlPath)) ?? null,
-            previousPath: (await urlPathResolver.getPreviousNavigatableItem(resolvedUrlPath)) ?? null,
-        },
-        revalidate: true,
-    };
 };
 
 export const getStaticPaths: GetStaticPaths = () => {
@@ -164,4 +304,10 @@ function buildUrl({ host, pathname }: { host: string; pathname: string }): strin
         return hostWithoutTrailingSlash;
     }
     return `${hostWithoutTrailingSlash}/${pathname}`;
+}
+
+function extractVersionFromSlug(slug: string) {
+    // TODO: Test this
+    const [version, ...rest] = slug.split("/");
+    return { version, rest: rest.join("/") };
 }
