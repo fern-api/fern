@@ -13,11 +13,8 @@ export declare namespace useApiPageCenterElement {
     }
 }
 
-export function useApiPageCenterElement({
-    slug: slugWithoutVersion,
-}: useApiPageCenterElement.Args): useApiPageCenterElement.Return {
-    const { registerNavigateToPathListener, onScrollToPath, docsInfo } = useDocsContext();
-    const slug = `${docsInfo.rootSlug}/${slugWithoutVersion}`;
+export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args): useApiPageCenterElement.Return {
+    const { registerNavigateToPathListener, onScrollToPath, getFullSlug } = useDocsContext();
 
     const targetRef = useRef<HTMLElement | null>(null);
 
@@ -35,11 +32,11 @@ export function useApiPageCenterElement({
     }, []);
 
     useEffect(() => {
-        const unsubscribe = registerNavigateToPathListener(slug, handleIsSelected);
+        const unsubscribe = registerNavigateToPathListener(getFullSlug(slug), handleIsSelected);
         return unsubscribe;
-    }, [handleIsSelected, slug, registerNavigateToPathListener]);
+    }, [handleIsSelected, slug, registerNavigateToPathListener, getFullSlug]);
 
-    const isSelected = useIsSlugSelected(slug);
+    const isSelected = useIsSlugSelected(getFullSlug(slug));
     useEffect(() => {
         if (isSelected) {
             handleIsSelected();

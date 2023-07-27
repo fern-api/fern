@@ -39,7 +39,7 @@ export const Header: React.FC = () => {
                         selectedId={docsInfo.activeVersion}
                         onClickVersion={(v) => {
                             setActiveVersion(v);
-                            navigateToPath(`/${v}`);
+                            navigateToPath(`/${v}`, { omitVersionPrefix: true });
                         }}
                     />
                 </div>

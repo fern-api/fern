@@ -23,12 +23,13 @@ export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({
     leftElement,
     rightElement,
 }) => {
-    const { navigateToPath, registerScrolledToPathListener } = useDocsContext();
+    const { navigateToPath, registerScrolledToPathListener, getFullSlug } = useDocsContext();
     const handleClick = useCallback(() => {
         navigateToPath(slug);
     }, [navigateToPath, slug]);
 
-    const isSelected = useIsSlugSelected(slug);
+    const fullSlug = getFullSlug(slug);
+    const isSelected = useIsSlugSelected(fullSlug);
 
     const [wasRecentlySelected, setWasRecentlySelected] = useState(isSelected);
     useEffect(() => {
@@ -68,17 +69,17 @@ export const NavigatingSidebarItem: React.FC<NavigatingSidebarItem.Props> = ({
         if (ref == null) {
             return;
         }
-        const unsubscribe = registerScrolledToPathListener(slug, () => {
+        const unsubscribe = registerScrolledToPathListener(fullSlug, () => {
             ref.scrollIntoView({
                 block: "center",
             });
         });
         return unsubscribe;
-    }, [ref, registerScrolledToPathListener, slug]);
+    }, [ref, registerScrolledToPathListener, fullSlug]);
 
     return (
         <div className={className} ref={setRef}>
-            <Link href={`/${slug}`} onClick={handleClick} className="!no-underline">
+            <Link href={`/${fullSlug}`} onClick={handleClick} className="!no-underline">
                 <SidebarItemLayout title={renderTitle} isSelected={isSelected} />
             </Link>
         </div>

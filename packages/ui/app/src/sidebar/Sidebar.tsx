@@ -29,10 +29,7 @@ export const Sidebar: React.FC<Sidebar.Props> = ({ expandAllSections = false }) 
                     {searchService.isAvailable && <SidebarSearchBar onClick={openSearchDialog} />}
                 </div>
                 <div className={classNames("flex flex-1 flex-col overflow-y-auto pb-6", styles.scrollingContainer)}>
-                    <SidebarItems
-                        navigationItems={docsInfo.activeNavigationConfig.items}
-                        slug={docsInfo.type === "versioned" ? docsInfo.activeVersion : ""}
-                    />
+                    <SidebarItems navigationItems={docsInfo.activeNavigationConfig.items} slug="" />
                 </div>
                 <BuiltWithFern />
             </div>
