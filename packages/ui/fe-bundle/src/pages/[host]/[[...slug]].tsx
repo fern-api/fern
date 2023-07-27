@@ -27,7 +27,7 @@ export declare namespace Docs {
         inferredVersion: string | null;
         resolvedUrlPath: ResolvedUrlPath;
         typographyStyleSheet?: string;
-        backgroundImageStyleSheet: string | undefined;
+        backgroundImageStyleSheet: string | null;
         nextPath: ResolvedUrlPath | null;
         previousPath: ResolvedUrlPath | null;
     }
@@ -146,7 +146,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                         docs: docs.body,
                         inferredVersion: latestVersion.version,
                         typographyStyleSheet,
-                        backgroundImageStyleSheet,
+                        backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
                         resolvedUrlPath,
                         nextPath: nextPath ?? null,
                         previousPath: previousPath ?? null,
@@ -213,7 +213,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                     docs: docs.body,
                     inferredVersion: version,
                     typographyStyleSheet,
-                    backgroundImageStyleSheet,
+                    backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
                     resolvedUrlPath,
                     nextPath: nextPath ?? null,
                     previousPath: previousPath ?? null,
@@ -263,7 +263,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
                 docs: docs.body,
                 inferredVersion: null,
                 typographyStyleSheet,
-                backgroundImageStyleSheet,
+                backgroundImageStyleSheet: backgroundImageStyleSheet ?? null,
                 resolvedUrlPath,
                 nextPath: nextPath ?? null,
                 previousPath: previousPath ?? null,
