@@ -13,8 +13,11 @@ export declare namespace useApiPageCenterElement {
     }
 }
 
-export function useApiPageCenterElement({ slug }: useApiPageCenterElement.Args): useApiPageCenterElement.Return {
-    const { registerNavigateToPathListener, onScrollToPath } = useDocsContext();
+export function useApiPageCenterElement({
+    slug: slugWithoutVersion,
+}: useApiPageCenterElement.Args): useApiPageCenterElement.Return {
+    const { registerNavigateToPathListener, onScrollToPath, docsInfo } = useDocsContext();
+    const slug = `${docsInfo.rootSlug}/${slugWithoutVersion}`;
 
     const targetRef = useRef<HTMLElement | null>(null);
 
