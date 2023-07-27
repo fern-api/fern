@@ -28,20 +28,31 @@ export const EndpointUrl = React.forwardRef<HTMLDivElement, PropsWithChildren<En
             if (apiDefinition.hasMultipleBaseUrls === true) {
                 const url = getEndpointEnvironmentUrl(endpoint);
                 if (url != null) {
-                    elements.push(<div className="text-text-default whitespace-nowrap font-light">{url}</div>);
+                    elements.push(
+                        <div key="base-url" className="text-text-default whitespace-nowrap font-light">
+                            {url}
+                        </div>
+                    );
                 }
             }
-            parts.forEach((p) => {
+            parts.forEach((p, i) => {
                 elements.push(
-                    <div className="text-text-default">/</div>,
+                    <div key={`separator-${i}`} className="text-text-default">
+                        /
+                    </div>,
                     visitDiscriminatedUnion(p, "type")._visit({
                         literal: (literal) => {
                             return (
-                                <div className="text-text-default whitespace-nowrap font-light">{literal.value}</div>
+                                <div key={`part-${i}`} className="text-text-default whitespace-nowrap font-light">
+                                    {literal.value}
+                                </div>
                             );
                         },
                         pathParameter: (pathParameter) => (
-                            <div className="bg-accentHighlight text-accentPrimary flex items-center justify-center whitespace-nowrap rounded px-1 py-0.5 font-mono text-xs">
+                            <div
+                                key={`part-${i}`}
+                                className="bg-accentHighlight text-accentPrimary flex items-center justify-center whitespace-nowrap rounded px-1 py-0.5 font-mono text-xs"
+                            >
                                 :{pathParameter.name}
                             </div>
                         ),
