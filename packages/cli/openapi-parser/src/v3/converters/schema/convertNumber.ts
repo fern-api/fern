@@ -34,6 +34,16 @@ export function convertNumber({
             wrapAsNullable,
             description,
         });
+    } else if (format === "time-delta") {
+        return wrapPrimitive({
+            primitive: PrimitiveSchemaValue.float(),
+            wrapAsNullable,
+            description,
+        });
     }
-    throw new Error(`Cannot convert number with format= ${format}`);
+    return wrapPrimitive({
+        primitive: PrimitiveSchemaValue.float(),
+        wrapAsNullable,
+        description,
+    });
 }
