@@ -47,28 +47,28 @@
     },
     "headers": [],
     "types": {
-        "type_types:ClientWithAuthBearer": {
+        "type_types:ClientWithAuthToken": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
                 "name": {
-                    "originalName": "ClientWithAuthBearer",
+                    "originalName": "ClientWithAuthToken",
                     "camelCase": {
-                        "unsafeName": "clientWithAuthBearer",
-                        "safeName": "clientWithAuthBearer"
+                        "unsafeName": "clientWithAuthToken",
+                        "safeName": "clientWithAuthToken"
                     },
                     "snakeCase": {
-                        "unsafeName": "client_with_auth_bearer",
-                        "safeName": "client_with_auth_bearer"
+                        "unsafeName": "client_with_auth_token",
+                        "safeName": "client_with_auth_token"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "CLIENT_WITH_AUTH_BEARER",
-                        "safeName": "CLIENT_WITH_AUTH_BEARER"
+                        "unsafeName": "CLIENT_WITH_AUTH_TOKEN",
+                        "safeName": "CLIENT_WITH_AUTH_TOKEN"
                     },
                     "pascalCase": {
-                        "unsafeName": "ClientWithAuthBearer",
-                        "safeName": "ClientWithAuthBearer"
+                        "unsafeName": "ClientWithAuthToken",
+                        "safeName": "ClientWithAuthToken"
                     }
                 },
                 "fernFilepath": {
@@ -114,7 +114,7 @@
                         }
                     }
                 },
-                "typeId": "type_types:ClientWithAuthBearer"
+                "typeId": "type_types:ClientWithAuthToken"
             },
             "shape": {
                 "extends": [],
@@ -253,7 +253,7 @@
                 }
             },
             "types": [
-                "type_types:ClientWithAuthBearer"
+                "type_types:ClientWithAuthToken"
             ],
             "errors": [],
             "subpackages": [],

@@ -42,7 +42,7 @@ func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth, headers []*i
 	// Generate the exported ClientOptions type that all clients can act upon.
 	for _, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
-			f.P("Bearer string")
+			f.P(authScheme.Bearer.Token.PascalCase.UnsafeName, " string")
 		}
 		if authScheme.Basic != nil {
 			f.P("Username string")
@@ -101,8 +101,8 @@ func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth, headers []*i
 	f.P("header := c.HTTPHeader.Clone()")
 	for _, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
-			f.P(`if c.Bearer != "" { `)
-			f.P(`header.Set("Authorization", `, `"Bearer " + c.Bearer)`)
+			f.P("if c.", authScheme.Bearer.Token.PascalCase.UnsafeName, ` != "" { `)
+			f.P(`header.Set("Authorization", `, `"Bearer " + c.`, authScheme.Bearer.Token.PascalCase.UnsafeName, ")")
 			f.P("}")
 		}
 		if authScheme.Basic != nil {
@@ -169,7 +169,7 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 	}
 	for _, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
-			clientOptionNames["ClientWithAuthBearer"] = struct{}{}
+			clientOptionNames[fmt.Sprintf("ClientWithAuth%s", authScheme.Bearer.Token.PascalCase.UnsafeName)] = struct{}{}
 		}
 		if authScheme.Basic != nil {
 			clientOptionNames["ClientWithAuthBasic"] = struct{}{}
@@ -235,14 +235,18 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 	includeCustomAuthDocs := auth.Docs != nil && len(*auth.Docs) > 0
 	for _, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
-			f.P("// ClientWithAuthBearer sets the 'Authorization: Bearer <token>' header on every request.")
+			var (
+				pascalCase = authScheme.Bearer.Token.PascalCase.UnsafeName
+				camelCase  = authScheme.Bearer.Token.CamelCase.SafeName
+			)
+			f.P("// ClientWithAuth", pascalCase, " sets the 'Authorization: Bearer <", camelCase, ">' header on every request.")
 			if includeCustomAuthDocs {
 				f.P("//")
 				f.WriteDocs(auth.Docs)
 			}
-			f.P("func ClientWithAuthBearer(bearer string) ", clientOptionType, " {")
+			f.P("func ClientWithAuth", pascalCase, "(", camelCase, " string) ", clientOptionType, " {")
 			f.P("return func(opts ", clientOptionsType, ") {")
-			f.P("opts.Bearer = bearer")
+			f.P("opts.", pascalCase, " = ", camelCase)
 			f.P("}")
 			f.P("}")
 			f.P()

@@ -3,7 +3,7 @@
 package api
 
 import (
-	core "github.com/fern-api/fern-go/internal/testdata/sdk/mergent/fixtures/core"
+	core "github.com/fern-api/fern-go/internal/testdata/sdk/bearer-token-name/fixtures/core"
 	http "net/http"
 )
 
@@ -33,9 +33,9 @@ func ClientWithHTTPHeader(httpHeader http.Header) core.ClientOption {
 	}
 }
 
-// ClientWithAuthToken sets the 'Authorization: Bearer <token>' header on every request.
-func ClientWithAuthToken(token string) core.ClientOption {
+// ClientWithAuthApiKey sets the 'Authorization: Bearer <apiKey>' header on every request.
+func ClientWithAuthApiKey(apiKey string) core.ClientOption {
 	return func(opts *core.ClientOptions) {
-		opts.Token = token
+		opts.ApiKey = apiKey
 	}
 }

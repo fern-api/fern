@@ -16,7 +16,7 @@ type ClientOptions struct {
 	BaseURL    string
 	HTTPClient HTTPClient
 	HTTPHeader http.Header
-	Bearer     string
+	Token      string
 }
 
 // NewClientOptions returns a new *ClientOptions value.
@@ -33,8 +33,8 @@ func NewClientOptions() *ClientOptions {
 // on every request.
 func (c *ClientOptions) ToHeader() http.Header {
 	header := c.HTTPHeader.Clone()
-	if c.Bearer != "" {
-		header.Set("Authorization", "Bearer "+c.Bearer)
+	if c.Token != "" {
+		header.Set("Authorization", "Bearer "+c.Token)
 	}
 	return header
 }
