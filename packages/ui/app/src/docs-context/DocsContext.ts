@@ -8,18 +8,42 @@ export const DocsContext = React.createContext<() => DocsContextValue>(() => {
     throw new Error("DocsContextValueProvider is not present in this tree.");
 });
 
+interface DocsInfoVersioned {
+    type: "versioned";
+    versions: string[];
+    activeVersion: string;
+    activeNavigationConfig: FernRegistryDocsRead.UnversionedNavigationConfig;
+    rootSlug: string;
+}
+
+interface DocsInfoUnversioned {
+    type: "unversioned";
+    activeNavigationConfig: FernRegistryDocsRead.UnversionedNavigationConfig;
+    rootSlug: string;
+}
+
+export type DocsInfo = DocsInfoVersioned | DocsInfoUnversioned;
+
+export interface NavigateToPathOpts {
+    omitVersionPrefix: boolean;
+}
+
 export interface DocsContextValue {
     resolveApi: (apiId: FernRegistry.ApiDefinitionId) => FernRegistryApiRead.ApiDefinition;
     resolvePage: (pageId: FernRegistryDocsRead.PageId) => FernRegistryDocsRead.PageContent;
     resolveFile: (fileId: FernRegistryDocsRead.FileId) => FernRegistryDocsRead.Url;
 
-    navigateToPath: (slug: string) => void;
-    registerNavigateToPathListener: (slug: string, listener: () => void) => () => void;
+    navigateToPath: (slugWithoutVersion: string, opts?: NavigateToPathOpts) => void;
+    registerNavigateToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
 
     onScrollToPath: (slug: string) => void;
-    registerScrolledToPathListener: (slug: string, listener: () => void) => () => void;
+    registerScrolledToPathListener: (slugWithVersion: string, listener: () => void) => () => void;
 
     docsDefinition: FernRegistryDocsRead.DocsDefinition;
+    docsInfo: DocsInfo;
+    setActiveVersion: (version: string) => void;
+    /** Returns the version-prefixed slug. */
+    getFullSlug: (slug: string) => string;
 
     // controlled
     selectedSlug: string | undefined;

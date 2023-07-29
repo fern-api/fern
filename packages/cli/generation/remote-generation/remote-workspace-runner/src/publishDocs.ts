@@ -201,6 +201,15 @@ async function convertDocsConfiguration({
                       context,
                   })
                 : undefined,
+        backgroundImage:
+            docsDefinition.config.backgroundImage != null
+                ? await convertImageReference({
+                      imageReference: docsDefinition.config.backgroundImage,
+                      docsDefinition,
+                      uploadUrls,
+                      context,
+                  })
+                : undefined,
         navigation: {
             items: await Promise.all(
                 docsDefinition.config.navigation.items.map((item) =>
@@ -394,6 +403,10 @@ function getFilepathsToUpload(docsDefinition: DocsDefinition): AbsoluteFilePath[
 
     if (docsDefinition.config.favicon != null) {
         filepaths.push(docsDefinition.config.favicon.filepath);
+    }
+
+    if (docsDefinition.config.backgroundImage != null) {
+        filepaths.push(docsDefinition.config.backgroundImage.filepath);
     }
 
     const typographyConfiguration = docsDefinition.config.typography;

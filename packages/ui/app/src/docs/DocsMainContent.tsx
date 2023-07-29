@@ -11,7 +11,7 @@ export const DocsMainContent: React.FC = () => {
     switch (resolvedPathFromUrl.type) {
         case "markdown-page":
         case "mdx-page":
-            return <CustomDocsPage path={resolvedPathFromUrl} key={resolvedPathFromUrl.slug} />;
+            return <CustomDocsPage path={resolvedPathFromUrl} />;
         case "api":
             return (
                 <ApiDefinitionContextProvider
@@ -30,7 +30,7 @@ export const DocsMainContent: React.FC = () => {
                     apiSection={resolvedPathFromUrl.apiSection}
                     apiSlug={resolvedPathFromUrl.apiSlug}
                 >
-                    <ApiPage key={resolvedPathFromUrl.slug} />
+                    <ApiPage />
                 </ApiDefinitionContextProvider>
             );
         case "section":

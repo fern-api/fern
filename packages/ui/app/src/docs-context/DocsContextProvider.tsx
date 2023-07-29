@@ -5,12 +5,14 @@ import * as FernRegistryDocsRead from "@fern-fern/registry-browser/api/resources
 import { useRouter } from "next/router";
 import { PropsWithChildren, useCallback, useEffect, useMemo, useState } from "react";
 import { ResolvedUrlPath } from "../ResolvedUrlPath";
-import { DocsContext, DocsContextValue } from "./DocsContext";
+import { assertIsUnversionedNavigationConfig, assertIsVersionedNavigationConfig } from "../util/docs";
+import { DocsContext, DocsContextValue, type DocsInfo, type NavigateToPathOpts } from "./DocsContext";
 import { useSlugListeners } from "./useSlugListeners";
 
 export declare namespace DocsContextProvider {
     export type Props = PropsWithChildren<{
         docsDefinition: FernRegistryDocsRead.DocsDefinition;
+        inferredVersion: string | null;
         resolvedUrlPath: ResolvedUrlPath;
         nextPath: ResolvedUrlPath | undefined;
         previousPath: ResolvedUrlPath | undefined;
@@ -19,12 +21,17 @@ export declare namespace DocsContextProvider {
 
 export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     docsDefinition,
+    inferredVersion,
     resolvedUrlPath,
     nextPath,
     previousPath,
     children,
 }) => {
     const router = useRouter();
+
+    const [activeVersion, _setActiveVersion] = useState(inferredVersion);
+
+    const rootSlug = activeVersion ?? "";
 
     const selectedSlugFromUrl = useMemo(() => {
         switch (resolvedUrlPath.type) {
@@ -34,15 +41,51 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             case "mdx-page":
             case "topLevelEndpoint":
             case "apiSubpackage":
-                return resolvedUrlPath.slug;
+                return `${rootSlug}/${resolvedUrlPath.slug}`;
             case "api":
             case "section":
                 return undefined;
             default:
                 assertNever(resolvedUrlPath);
         }
-    }, [resolvedUrlPath]);
+    }, [rootSlug, resolvedUrlPath]);
+
     const [selectedSlug, setSelectedSlug] = useState(selectedSlugFromUrl);
+
+    const docsInfo = useMemo<DocsInfo>(() => {
+        if (inferredVersion != null && activeVersion != null) {
+            assertIsVersionedNavigationConfig(docsDefinition.config.navigation);
+            const configData = docsDefinition.config.navigation.versions.find(
+                ({ version }) => activeVersion === version
+            );
+            if (configData == null) {
+                throw new Error(
+                    "Could not find the active navigation config. This is likely due to a bug in the application flow."
+                );
+            }
+            return {
+                type: "versioned",
+                rootSlug,
+                activeNavigationConfig: configData.config,
+                activeVersion,
+                versions: docsDefinition.config.navigation.versions.map(({ version }) => version),
+            };
+        } else {
+            assertIsUnversionedNavigationConfig(docsDefinition.config.navigation);
+            return {
+                type: "unversioned",
+                rootSlug,
+                activeNavigationConfig: docsDefinition.config.navigation,
+            };
+        }
+    }, [inferredVersion, activeVersion, docsDefinition.config.navigation, rootSlug]);
+
+    const setActiveVersion = useCallback((version: string) => {
+        _setActiveVersion(version);
+    }, []);
+
+    const getFullSlug = useCallback((slug: string) => `${rootSlug ? `${rootSlug}/` : ""}${slug}`, [rootSlug]);
+
     useEffect(() => {
         if (selectedSlug == null) {
             setSelectedSlug(selectedSlugFromUrl);
@@ -85,9 +128,11 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
     const navigateToPathListeners = useSlugListeners("navigateToPath", { selectedSlug });
 
     const [justNavigated, setJustNavigated] = useState(false);
+
     const navigateToPath = useCallback(
-        (slug: string) => {
+        (slugWithoutVersion: string, opts: NavigateToPathOpts = { omitVersionPrefix: false }) => {
             setJustNavigated(true);
+            const slug = opts.omitVersionPrefix ? slugWithoutVersion : getFullSlug(slugWithoutVersion);
             setSelectedSlug(slug);
             navigateToPathListeners.invokeListeners(slug);
 
@@ -98,13 +143,14 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
                 clearTimeout(timeout);
             };
         },
-        [navigateToPathListeners]
+        [navigateToPathListeners, getFullSlug]
     );
 
     const scrollToPathListeners = useSlugListeners("scrollToPath", { selectedSlug });
 
     const onScrollToPath = useCallback(
-        (slug: string) => {
+        (slugWithoutVersion: string) => {
+            const slug = getFullSlug(slugWithoutVersion);
             if (justNavigated || slug === selectedSlug) {
                 return;
             }
@@ -112,7 +158,7 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             void router.push(`/${slug}`, undefined, { shallow: true });
             scrollToPathListeners.invokeListeners(slug);
         },
-        [justNavigated, router, scrollToPathListeners, selectedSlug]
+        [justNavigated, router, scrollToPathListeners, selectedSlug, getFullSlug]
     );
 
     const contextValue = useCallback(
@@ -121,6 +167,9 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
             resolvePage,
             resolveFile,
             docsDefinition,
+            docsInfo,
+            setActiveVersion,
+            getFullSlug,
             registerNavigateToPathListener: navigateToPathListeners.registerListener,
             navigateToPath,
             onScrollToPath,
@@ -132,6 +181,9 @@ export const DocsContextProvider: React.FC<DocsContextProvider.Props> = ({
         }),
         [
             docsDefinition,
+            docsInfo,
+            setActiveVersion,
+            getFullSlug,
             navigateToPath,
             navigateToPathListeners.registerListener,
             nextPath,
