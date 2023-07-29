@@ -112,6 +112,11 @@ function convertSyncAndAsyncEndpoints({
     document: OpenAPIV3.Document;
     context: AbstractOpenAPIV3ParserContext;
 }): Endpoint[] {
+    const shouldIgnore = getExtension<boolean>(operation, FernOpenAPIExtension.IGNORE);
+    if (shouldIgnore != null && shouldIgnore) {
+        return [];
+    }
+
     const endpoints: Endpoint[] = [];
     const sdkName = getSdkName({ operation });
     const parameters = [...(operation.parameters ?? []), ...(pathItemParameters ?? [])];
