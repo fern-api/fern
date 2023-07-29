@@ -2,8 +2,8 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { convertGeneratorsConfiguration } from "../convertGeneratorsConfiguration";
 
 describe("convertGeneratorsConfiguration", () => {
-    it("local-file-system allows absolute download path", () => {
-        const converted = convertGeneratorsConfiguration({
+    it("local-file-system allows absolute download path", async () => {
+        const converted = await convertGeneratorsConfiguration({
             absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
             rawGeneratorsConfiguration: {
                 groups: {
@@ -26,8 +26,8 @@ describe("convertGeneratorsConfiguration", () => {
         expect(converted.groups[0]?.generators[0]?.absolutePathToLocalOutput).toEqual("/path/to/output");
     });
 
-    it("local-file-system resolves relative download path", () => {
-        const converted = convertGeneratorsConfiguration({
+    it("local-file-system resolves relative download path", async () => {
+        const converted = await convertGeneratorsConfiguration({
             absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
             rawGeneratorsConfiguration: {
                 groups: {
@@ -50,8 +50,8 @@ describe("convertGeneratorsConfiguration", () => {
         expect(converted.groups[0]?.generators[0]?.absolutePathToLocalOutput).toEqual("/path/to/repo/output");
     });
 
-    it("MIT license", () => {
-        const converted = convertGeneratorsConfiguration({
+    it("MIT license", async () => {
+        const converted = await convertGeneratorsConfiguration({
             absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
             rawGeneratorsConfiguration: {
                 groups: {
@@ -74,8 +74,8 @@ describe("convertGeneratorsConfiguration", () => {
         expect(converted.groups[0]?.generators[0]?.outputMode?.type).toEqual("github");
     });
 
-    it("Apache-2.0 license", () => {
-        const converted = convertGeneratorsConfiguration({
+    it("Apache-2.0 license", async () => {
+        const converted = await convertGeneratorsConfiguration({
             absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
             rawGeneratorsConfiguration: {
                 groups: {
@@ -98,8 +98,8 @@ describe("convertGeneratorsConfiguration", () => {
         expect(converted.groups[0]?.generators[0]?.outputMode?.type).toEqual("github");
     });
 
-    it("Custom license", () => {
-        const converted = convertGeneratorsConfiguration({
+    it("Custom license", async () => {
+        const converted = await convertGeneratorsConfiguration({
             absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
             rawGeneratorsConfiguration: {
                 groups: {
@@ -122,55 +122,5 @@ describe("convertGeneratorsConfiguration", () => {
         });
 
         expect(converted.groups[0]?.generators[0]?.outputMode?.type).toEqual("github");
-    });
-
-    it("Unsupported license", () => {
-        expect(() =>
-            convertGeneratorsConfiguration({
-                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
-                rawGeneratorsConfiguration: {
-                    groups: {
-                        group1: {
-                            generators: [
-                                {
-                                    name: "generator-name",
-                                    version: "0.0.1",
-                                    github: {
-                                        repository: "fern-api/fern",
-                                        license: "Unknown",
-                                    },
-                                },
-                            ],
-                        },
-                    },
-                },
-            })
-        ).toThrow("Unsupported license: Unknown");
-    });
-
-    it("Unknown custom license", () => {
-        expect(() =>
-            convertGeneratorsConfiguration({
-                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
-                rawGeneratorsConfiguration: {
-                    groups: {
-                        group1: {
-                            generators: [
-                                {
-                                    name: "generator-name",
-                                    version: "0.0.1",
-                                    github: {
-                                        repository: "fern-api/fern",
-                                        license: {
-                                            custom: "path/to/LICENSE",
-                                        },
-                                    },
-                                },
-                            ],
-                        },
-                    },
-                },
-            })
-        ).toThrow("Failed to read custom license path/to/LICENSE");
     });
 });

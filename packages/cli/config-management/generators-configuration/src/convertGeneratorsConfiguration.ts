@@ -1,7 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { readFileSync } from "fs";
+import { readFile } from "fs/promises";
+import path from "path";
 import {
     GenerationLanguage,
     GeneratorGroup,
@@ -14,31 +15,33 @@ import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
 import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
 import { GithubLicenseSchema } from "./schemas/GithubLicenseSchema";
 
-export function convertGeneratorsConfiguration({
+export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
     rawGeneratorsConfiguration,
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     rawGeneratorsConfiguration: GeneratorsConfigurationSchema;
-}): GeneratorsConfiguration {
+}): Promise<GeneratorsConfiguration> {
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         rawConfiguration: rawGeneratorsConfiguration,
         defaultGroup: rawGeneratorsConfiguration["default-group"],
         groups:
             rawGeneratorsConfiguration.groups != null
-                ? Object.entries(rawGeneratorsConfiguration.groups).map(([groupName, group]) =>
-                      convertGroup({
-                          absolutePathToGeneratorsConfiguration,
-                          groupName,
-                          group,
-                      })
+                ? await Promise.all(
+                      Object.entries(rawGeneratorsConfiguration.groups).map(([groupName, group]) =>
+                          convertGroup({
+                              absolutePathToGeneratorsConfiguration,
+                              groupName,
+                              group,
+                          })
+                      )
                   )
                 : [],
     };
 }
 
-function convertGroup({
+async function convertGroup({
     absolutePathToGeneratorsConfiguration,
     groupName,
     group,
@@ -46,12 +49,12 @@ function convertGroup({
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     groupName: string;
     group: GeneratorGroupSchema;
-}): GeneratorGroup {
+}): Promise<GeneratorGroup> {
     return {
         groupName,
         audiences: group.audiences == null ? { type: "all" } : { type: "select", audiences: group.audiences },
-        generators: group.generators.map((generator) =>
-            convertGenerator({ absolutePathToGeneratorsConfiguration, generator })
+        generators: await Promise.all(
+            group.generators.map((generator) => convertGenerator({ absolutePathToGeneratorsConfiguration, generator }))
         ),
         docs:
             group.docs != null
@@ -68,18 +71,18 @@ function convertGroup({
     };
 }
 
-function convertGenerator({
+async function convertGenerator({
     absolutePathToGeneratorsConfiguration,
     generator,
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: GeneratorInvocationSchema;
-}): GeneratorInvocation {
+}): Promise<GeneratorInvocation> {
     return {
         name: generator.name,
         version: generator.version,
         config: generator.config,
-        outputMode: convertOutputMode({ absolutePathToGeneratorsConfiguration, generator }),
+        outputMode: await convertOutputMode({ absolutePathToGeneratorsConfiguration, generator }),
         absolutePathToLocalOutput:
             generator.output?.location === "local-file-system"
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.output.path)
@@ -88,13 +91,13 @@ function convertGenerator({
     };
 }
 
-function convertOutputMode({
+async function convertOutputMode({
     absolutePathToGeneratorsConfiguration,
     generator,
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: GeneratorInvocationSchema;
-}): FernFiddle.OutputMode {
+}): Promise<FernFiddle.OutputMode> {
     if (generator.github != null) {
         const indexOfFirstSlash = generator.github.repository.indexOf("/");
         return FernFiddle.OutputMode.github({
@@ -103,9 +106,9 @@ function convertOutputMode({
             makePr: generator.github.mode === "pull-request",
             license:
                 generator.github.license != null
-                    ? getGithubLicense({
+                    ? await getGithubLicense({
                           absolutePathToGeneratorsConfiguration,
-                          githubLicenseSchema: generator.github.license,
+                          githubLicense: generator.github.license,
                       })
                     : undefined,
             publishInfo: generator.output != null ? getGithubPublishInfo(generator.output) : undefined,
@@ -155,23 +158,29 @@ function convertOutputMode({
     }
 }
 
-function getGithubLicense({
+async function getGithubLicense({
     absolutePathToGeneratorsConfiguration,
-    githubLicenseSchema,
+    githubLicense,
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
-    githubLicenseSchema: GithubLicenseSchema;
-}): FernFiddle.GithubLicense {
-    if (typeof githubLicenseSchema === "string") {
-        return FernFiddle.GithubLicense.id(getFiddleLicenseIdFromGithubLicense(githubLicenseSchema));
+    githubLicense: GithubLicenseSchema;
+}): Promise<FernFiddle.GithubLicense> {
+    if (typeof githubLicense === "string") {
+        switch (githubLicense) {
+            case "MIT":
+                return FernFiddle.GithubLicense.id(FernFiddle.GithubLicenseId.Mit);
+            case "Apache-2.0":
+                return FernFiddle.GithubLicense.id(FernFiddle.GithubLicenseId.Apache2);
+            default:
+                assertNever(githubLicense);
+        }
     }
-    try {
-        const licenseFile = resolve(dirname(absolutePathToGeneratorsConfiguration), githubLicenseSchema.custom);
-        const licenseContent = readFileSync(licenseFile);
-        return FernFiddle.GithubLicense.file(licenseContent.toString());
-    } catch (err) {
-        throw new Error("Failed to read custom license " + githubLicenseSchema.custom);
-    }
+    const absolutePathToLicense = join(
+        AbsoluteFilePath.of(path.dirname(absolutePathToGeneratorsConfiguration)),
+        RelativeFilePath.of(githubLicense.custom)
+    );
+    const licenseContent = await readFile(absolutePathToLicense);
+    return FernFiddle.GithubLicense.file(licenseContent.toString());
 }
 
 function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubPublishInfo {
@@ -219,15 +228,6 @@ function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubP
         default:
             assertNever(output);
     }
-}
-
-function getFiddleLicenseIdFromGithubLicense(githubLicense: string): FernFiddle.GithubLicenseId {
-    for (const [_, value] of Object.entries(FernFiddle.GithubLicenseId)) {
-        if (githubLicense === value) {
-            return value;
-        }
-    }
-    throw new Error("Unsupported license: " + String(githubLicense));
 }
 
 function getLanguageFromGeneratorName(generatorName: string) {
