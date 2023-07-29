@@ -5606,7 +5606,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/yaml-formatter", "workspace:packages/cli/yaml/formatter"],\
             ["@fern-api/yaml-migrations", "workspace:packages/cli/yaml/yaml-migrations"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
-            ["@fern-fern/fiddle-sdk", "npm:0.0.285"],\
+            ["@fern-fern/fiddle-sdk", "npm:0.0.290"],\
             ["@fern-fern/ir-model", "npm:0.0.2653"],\
             ["@types/axios", "npm:0.14.0"],\
             ["@types/boxen", "npm:3.0.1"],\
@@ -6039,7 +6039,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
-            ["@fern-fern/fiddle-sdk", "npm:0.0.285"],\
+            ["@fern-fern/fiddle-sdk", "npm:0.0.290"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/node", "npm:18.7.18"],\
@@ -6597,7 +6597,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-            ["@fern-fern/fiddle-sdk", "npm:0.0.285"],\
+            ["@fern-fern/fiddle-sdk", "npm:0.0.290"],\
             ["@fern-fern/ir-model", "npm:0.0.2653"],\
             ["@fern-fern/registry-node", "npm:0.11.1-4-gcbb472a"],\
             ["@types/decompress", "npm:4.2.4"],\
@@ -6702,7 +6702,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/venus-api-sdk", "npm:0.0.20-7-g6ea8dc4"],\
-            ["@fern-fern/fiddle-sdk", "npm:0.0.285"],\
+            ["@fern-fern/fiddle-sdk", "npm:0.0.290"],\
             ["@fern-fern/registry-node", "npm:0.11.1-4-gcbb472a"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
@@ -6923,7 +6923,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
-            ["@fern-fern/fiddle-sdk", "npm:0.0.285"],\
+            ["@fern-fern/fiddle-sdk", "npm:0.0.290"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/lodash-es", "npm:4.17.7"],\
@@ -7048,10 +7048,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/fiddle-sdk", [\
-        ["npm:0.0.285", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-sdk-npm-0.0.285-b6b0903937-02e96b2803.zip/node_modules/@fern-fern/fiddle-sdk/",\
+        ["npm:0.0.290", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-fiddle-sdk-npm-0.0.290-f1cfdf81d7-b4418c12e6.zip/node_modules/@fern-fern/fiddle-sdk/",\
           "packageDependencies": [\
-            ["@fern-fern/fiddle-sdk", "npm:0.0.285"],\
+            ["@fern-fern/fiddle-sdk", "npm:0.0.290"],\
             ["@types/basic-auth", "npm:1.1.3"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["axios", "npm:0.27.2"],\
