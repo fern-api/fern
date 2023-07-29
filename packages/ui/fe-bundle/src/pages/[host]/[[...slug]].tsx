@@ -8,6 +8,7 @@ import Head from "next/head";
 import { REGISTRY_SERVICE } from "../../service";
 import { getSlugFromUrl } from "../../url-path-resolver/getSlugFromUrl";
 import { UrlPathResolver } from "../../url-path-resolver/UrlPathResolver";
+import { UrlSlugTree } from "../../url-path-resolver/UrlSlugTree";
 import { isVersionedNavigationConfig } from "../../utils/docs";
 import { loadDocsBackgroundImage } from "../../utils/theme/loadDocsBackgroundImage";
 import { generateFontFaces, loadDocTypography } from "../../utils/theme/loadDocsTypography";
@@ -121,7 +122,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
 
                 let resolvedUrlPath = await urlPathResolver.resolveSlug(slug);
                 if (resolvedUrlPath?.type === "section") {
-                    const firstNavigatableItem = getFirstNavigatableItem(resolvedUrlPath.section);
+                    const firstNavigatableItem = getFirstNavigableItem(resolvedUrlPath.section);
                     if (firstNavigatableItem == null) {
                         resolvedUrlPath = undefined;
                     } else {
@@ -188,7 +189,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
 
             let resolvedUrlPath = await urlPathResolver.resolveSlug(slug);
             if (resolvedUrlPath?.type === "section") {
-                const firstNavigatableItem = getFirstNavigatableItem(resolvedUrlPath.section);
+                const firstNavigatableItem = getFirstNavigableItem(resolvedUrlPath.section);
                 if (firstNavigatableItem == null) {
                     resolvedUrlPath = undefined;
                 } else {
@@ -238,7 +239,7 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
         });
         let resolvedUrlPath = await urlPathResolver.resolveSlug(slug);
         if (resolvedUrlPath?.type === "section") {
-            const firstNavigatableItem = getFirstNavigatableItem(resolvedUrlPath.section);
+            const firstNavigatableItem = getFirstNavigableItem(resolvedUrlPath.section);
             if (firstNavigatableItem == null) {
                 resolvedUrlPath = undefined;
             } else {
@@ -273,11 +274,29 @@ export const getStaticProps: GetStaticProps<Docs.Props> = async ({ params = {} }
     }
 };
 
-export const getStaticPaths: GetStaticPaths = () => {
-    return { paths: [], fallback: "blocking" };
+const TODO_REPLACE_WITH_FALLBACK = "";
+
+export const getStaticPaths: GetStaticPaths = async () => {
+    const docs = await REGISTRY_SERVICE.docs.v2.read.getDocsForUrl({
+        url: process.env.NEXT_PUBLIC_DOCS_DOMAIN ?? TODO_REPLACE_WITH_FALLBACK,
+    });
+
+    if (!docs.ok) {
+        // eslint-disable-next-line no-console
+        const error = new Error("Failed to fetch docs", {
+            // cause: docs.error
+        });
+        throw error;
+    }
+
+    const paths = crawlNavigationConfig({
+        docsDefinition: docs.body.definition,
+    });
+
+    return { paths, fallback: "blocking" };
 };
 
-function getFirstNavigatableItem(section: FernRegistryDocsReadV1.DocsSection, slugPrefix?: string): string | undefined {
+function getFirstNavigableItem(section: FernRegistryDocsReadV1.DocsSection, slugPrefix?: string): string | undefined {
     for (const item of section.items) {
         switch (item.type) {
             case "api":
@@ -290,7 +309,7 @@ function getFirstNavigatableItem(section: FernRegistryDocsReadV1.DocsSection, sl
                 return parts.join("/");
             }
             case "section":
-                return getFirstNavigatableItem(item, section.urlSlug);
+                return getFirstNavigableItem(item, section.urlSlug);
             default:
                 assertNeverNoThrow(item);
         }
@@ -310,4 +329,31 @@ function extractVersionFromSlug(slug: string) {
     // TODO: Test this
     const [version, ...rest] = slug.split("/");
     return { version, rest: rest.join("/") };
+}
+
+function crawlNavigationConfig({
+    docsDefinition,
+}: {
+    docsDefinition: FernRegistryDocsReadV1.DocsDefinition;
+}): string[] {
+    let routes: string[] = [];
+    const { navigation: navigationConfig } = docsDefinition.config;
+
+    if (isVersionedNavigationConfig(navigationConfig)) {
+        navigationConfig.versions.forEach(({ version, config }) => {
+            const urlSlugTree = new UrlSlugTree({
+                navigation: config,
+                loadApiDefinition: (id) => docsDefinition.apis[id],
+            });
+            const pathsForVersion = [`/${version}`, ...urlSlugTree.getAllSlugs().map((slug) => `/${version}/${slug}`)];
+            routes.push(...pathsForVersion);
+        });
+    } else {
+        const urlSlugTree = new UrlSlugTree({
+            navigation: navigationConfig,
+            loadApiDefinition: (id) => docsDefinition.apis[id],
+        });
+        routes = [...urlSlugTree.getAllSlugs().map((slug) => `/${slug}`)];
+    }
+    return routes;
 }
