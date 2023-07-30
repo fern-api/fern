@@ -1,7 +1,5 @@
 # Fern Exhaustive Testing Philosophy
 
-https://www.sisense.com/blog/rest-api-testing-strategy-what-exactly-should-you-test/
-
 Check/validate REST semantics/conventions:
 * Verify protocol/status code for requests
 * Verify response:
