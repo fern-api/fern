@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports: 
+  errors: ./errors.yml
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    getWithBearerAuth:
+      auth: true
+      docs: GET request with bearer auth
+      path: /bearer-auth
+      method: GET
+      response: boolean
+      errors: 
+        - errors.UnauthorizedRequest
+
+    postWithBearerAuth: 
+      auth: true
+      docs: POST request with bearer auth
+      path: /bearer-auth
+      method: POST
+      request: 
+        name: PostWithBearerAuth
+        body: unknown
+      response: boolean
+      errors: 
+        - errors.UnauthorizedRequest
+        - errors.BadRequest
