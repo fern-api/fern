@@ -7,6 +7,8 @@ from typing import List, Optional, Set
 
 from fern_python.codegen.ast.dependency.dependency import Dependency
 from fern_python.codegen.dependency_manager import DependencyManager
+from fern_python.codegen.ast.dependency.dependency import DependencyCompatibility
+from typing_extensions import assert_never
 
 
 @dataclass(frozen=True)
@@ -80,7 +82,12 @@ packages = [
         def to_string(self) -> str:
             deps = ""
             for dep in self.dependencies:
-                deps += f'{dep.name.replace(".", "-")} = "{dep.version}"\n'
+                compatiblity = dep.compatibility
+                # TODO(dsinghvi): assert all enum cases are visited
+                if compatiblity is DependencyCompatibility.EXACT:
+                    deps += f'{dep.name.replace(".", "-")} = "{dep.version}"\n'
+                elif compatiblity is DependencyCompatibility.GREATER_THAN_OR_EQUAL:
+                    deps += f'{dep.name.replace(".", "-")} >= "{dep.version}"\n'
             self.dependencies
             return f"""
 [tool.poetry.dependencies]
