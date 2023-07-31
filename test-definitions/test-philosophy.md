@@ -16,3 +16,6 @@ api.yml has auth: basic and it tests this with one endpoint, don't need to test 
 
 ### Smaller Test 3: 
 api.yml specifies a custom auth scheme and we test one endpoint w auth: true for that, but again don't need to test everything else bc Test 1 alr does that.
+
+### Smaller Test 4: 
+error discrimination strategy => error name -> one endpoint that throws an error on purpose 
