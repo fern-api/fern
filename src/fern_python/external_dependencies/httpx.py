@@ -6,7 +6,7 @@ HTTPX_MODULE = AST.Module.external(
     module_path=("httpx",),
     dependency=AST.Dependency(
         name="httpx",
-        version="0.23.3",
+        version="0.24.1",
     ),
 )
 
