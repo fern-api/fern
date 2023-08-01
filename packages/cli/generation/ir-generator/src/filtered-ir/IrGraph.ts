@@ -1,5 +1,5 @@
 import { Audiences } from "@fern-api/config-management-commons";
-import { noop } from "@fern-api/core-utils";
+import { assertNever, noop } from "@fern-api/core-utils";
 import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import {
@@ -30,7 +30,7 @@ export class IrGraph {
     private types: Record<TypeId, TypeNode> = {};
     private errors: Record<TypeId, ErrorNode> = {};
     private endpoints: Record<EndpointId, EndpointNode> = {};
-    private audiences: Set<AudienceId> = new Set();
+    private audiences: Audiences;
     private servicesReferencedByType: Record<TypeId, Set<ServiceId>> = {};
     private typesNeededForAudience: Set<TypeId> = new Set();
     private servicesNeededForAudience: Set<ServiceId> = new Set();
@@ -38,9 +38,7 @@ export class IrGraph {
     private subpackagesNeededForAudience: Set<SubpackageId> = new Set();
 
     public constructor(audiences: Audiences) {
-        if (audiences.type !== "all") {
-            this.audiences = new Set(audiences.audiences);
-        }
+        this.audiences = audiences;
     }
 
     public addType(declaredTypeName: DeclaredTypeName, descendants: DeclaredTypeName[]): void {
@@ -264,14 +262,19 @@ export class IrGraph {
     }
 
     public hasAllAudiences(): boolean {
-        return this.audiences.size === 0;
+        return this.audiences.type === "all";
     }
 
     private hasAudience(audiences: AudienceId[]): boolean {
-        if (this.hasAllAudiences()) {
-            return true;
+        const configuredAudiences = this.audiences;
+        switch (configuredAudiences.type) {
+            case "all":
+                return true;
+            case "select":
+                return audiences.some((audienceId) => configuredAudiences.audiences.includes(audienceId));
+            default:
+                assertNever(configuredAudiences);
         }
-        return audiences.some((audienceId) => this.audiences.has(audienceId));
     }
 
     private addSubpackages(fernFilePath: FernFilepath): void {
