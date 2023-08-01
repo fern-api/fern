@@ -218,10 +218,12 @@ export class IrGraph {
     }
 
     private markTypeForService(typeId: TypeId, serviceId: ServiceId): void {
-        if (this.typesReferencedByService[typeId] == null) {
-            this.typesReferencedByService[typeId] = new Set();
+        const services = this.typesReferencedByService[typeId];
+        if (services == null) {
+            this.typesReferencedByService[typeId] = new Set(serviceId);
+        } else {
+            services.add(serviceId);
         }
-        this.typesReferencedByService[typeId]?.add(serviceId);
     }
 
     private addReferencedTypes(types: Set<TypeId>, typesToAdd: Set<TypeId>): void {
