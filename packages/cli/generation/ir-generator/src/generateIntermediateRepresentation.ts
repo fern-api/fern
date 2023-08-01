@@ -268,7 +268,7 @@ export async function generateIntermediateRepresentation({
         }
     });
 
-    intermediateRepresentation.serviceTypeReferenceInfo = extractServiceTypeReferenceInfo(irGraph);
+    intermediateRepresentation.serviceTypeReferenceInfo = computeServiceTypeReferenceInfo(irGraph);
 
     const filteredIr = !irGraph.hasAllAudiences() ? irGraph.build() : undefined;
     const intermediateRepresentationForAudiences = filterIntermediateRepresentationForAudiences(
@@ -306,7 +306,7 @@ export async function generateIntermediateRepresentation({
     };
 }
 
-function extractServiceTypeReferenceInfo(irGraph: IrGraph): ServiceTypeReferenceInfo {
+function computeServiceTypeReferenceInfo(irGraph: IrGraph): ServiceTypeReferenceInfo {
     const typesReferencedOnlyByService: Record<ServiceId, TypeId[]> = {};
     const sharedTypes: TypeId[] = [];
     const typesReferencedByService = irGraph.getTypesReferencedByService();
