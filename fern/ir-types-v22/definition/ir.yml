@@ -38,7 +38,7 @@ types:
       errorDiscriminationStrategy: ErrorDiscriminationStrategy
       sdkConfig: SdkConfig
       variables: list<variables.VariableDeclaration>
-      typeGraph: TypeGraph
+      serviceTypeReferenceInfo: optional<ServiceTypeReferenceInfo>
   SdkConfig:
     properties:
       isAuthMandatory: boolean
@@ -75,7 +75,7 @@ types:
   PackageNavigationConfig:
     properties:
       pointsTo: commons.SubpackageId
-  TypeGraph:
+  ServiceTypeReferenceInfo:
     properties:
       typesReferencedOnlyByService: map<commons.ServiceId, list<commons.TypeId>>
       sharedTypes: list<commons.TypeId>

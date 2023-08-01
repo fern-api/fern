@@ -89,7 +89,7 @@ exports[`ir {"name":"auth-header-prefix"} 1`] = `
     },
     "pathParameters": [],
     "variables": [],
-    "typeGraph": {
+    "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
     },
@@ -1124,7 +1124,7 @@ exports[`ir {"name":"extended-examples"} 1`] = `
     },
     "pathParameters": [],
     "variables": [],
-    "typeGraph": {
+    "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
             "type_app:GetAppResponse",
@@ -1654,7 +1654,7 @@ exports[`ir {"name":"file-upload"} 1`] = `
     },
     "pathParameters": [],
     "variables": [],
-    "typeGraph": {
+    "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
     },
@@ -8225,7 +8225,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
     },
     "pathParameters": [],
     "variables": [],
-    "typeGraph": {
+    "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
     },
@@ -8453,7 +8453,7 @@ exports[`ir {"name":"navigation-points-to"} 1`] = `
     },
     "pathParameters": [],
     "variables": [],
-    "typeGraph": {
+    "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
     },
@@ -9820,7 +9820,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
     },
     "pathParameters": [],
     "variables": [],
-    "typeGraph": {
+    "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_nested": [
                 "type_nested:Response"
@@ -10677,7 +10677,7 @@ exports[`ir {"name":"packages"} 1`] = `
     },
     "pathParameters": [],
     "variables": [],
-    "typeGraph": {
+    "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
             "type_:RootString",
@@ -13052,7 +13052,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
         }
     ],
     "variables": [],
-    "typeGraph": {
+    "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_imdb": [
                 "type_imdb:MovieId",
@@ -21927,7 +21927,7 @@ exports[`ir {"name":"simple"} 1`] = `
         }
     ],
     "variables": [],
-    "typeGraph": {
+    "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_imdb": [
                 "type_imdb:MovieId",
@@ -22533,7 +22533,7 @@ exports[`ir {"name":"streaming"} 1`] = `
     },
     "pathParameters": [],
     "variables": [],
-    "typeGraph": {
+    "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
     },
@@ -23358,7 +23358,7 @@ exports[`ir {"name":"variables"} 1`] = `
             }
         }
     ],
-    "typeGraph": {
+    "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {
             "service_service": [
                 "type_commons:StringAlias"

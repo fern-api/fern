@@ -6,7 +6,7 @@ import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/workspace-loader";
 import { ServiceId, TypeId } from "@fern-fern/ir-model/commons";
 import { HttpEndpoint, PathParameterLocation, ResponseErrors } from "@fern-fern/ir-model/http";
-import { IntermediateRepresentation, TypeGraph } from "@fern-fern/ir-model/ir";
+import { IntermediateRepresentation, ServiceTypeReferenceInfo } from "@fern-fern/ir-model/ir";
 import { mapValues, pickBy } from "lodash-es";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
 import { generateFernConstants } from "./converters/constants";
@@ -107,7 +107,7 @@ export async function generateIntermediateRepresentation({
                       type: rootApiFileContext.parseTypeReference(variable),
                   }))
                 : [],
-        typeGraph: {
+        serviceTypeReferenceInfo: {
             typesReferencedOnlyByService: {},
             sharedTypes: [],
         },
@@ -268,7 +268,7 @@ export async function generateIntermediateRepresentation({
         }
     });
 
-    intermediateRepresentation.typeGraph = extractTypeGraph(irGraph);
+    intermediateRepresentation.serviceTypeReferenceInfo = extractServiceTypeReferenceInfo(irGraph);
 
     const filteredIr = !irGraph.hasAllAudiences() ? irGraph.build() : undefined;
     const intermediateRepresentationForAudiences = filterIntermediateRepresentationForAudiences(
@@ -306,7 +306,7 @@ export async function generateIntermediateRepresentation({
     };
 }
 
-function extractTypeGraph(irGraph: IrGraph): TypeGraph {
+function extractServiceTypeReferenceInfo(irGraph: IrGraph): ServiceTypeReferenceInfo {
     const typesReferencedOnlyByService: Record<ServiceId, TypeId[]> = {};
     const sharedTypes: TypeId[] = [];
     const servicesReferencedByType = irGraph.getServicesReferencedByType();
