@@ -1,6 +1,6 @@
 imports: 
-  objects: ../types/object.yml
-  errors: ../general-errors.yml
+  objects: ./types/object.yml
+  errors: ./general-errors.yml
 
 # test req bodies, path params, query params, multiple query params, etc.
 # test union and enum as well 

@@ -7,13 +7,7 @@ service:
   auth: false
   base-path: /no-auth
   endpoints:
-    getWithNoAuth:
-      auth: false
-      docs: GET request with no auth
-      path: ""
-      method: GET
-      response: boolean
-
+  
     postWithNoAuth: 
       auth: false
       docs: POST request with no auth

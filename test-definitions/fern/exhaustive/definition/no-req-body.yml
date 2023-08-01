@@ -1,5 +1,5 @@
 imports: 
-  objects: ../types/object.yml
+  objects: ./types/object.yml
 
 service: 
   auth: true
