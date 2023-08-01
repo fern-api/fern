@@ -4,8 +4,9 @@ import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/workspace-loader";
+import { ServiceId, TypeId } from "@fern-fern/ir-model/commons";
 import { HttpEndpoint, PathParameterLocation, ResponseErrors } from "@fern-fern/ir-model/http";
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { IntermediateRepresentation, TypeGraph } from "@fern-fern/ir-model/ir";
 import { mapValues, pickBy } from "lodash-es";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
 import { generateFernConstants } from "./converters/constants";
@@ -18,8 +19,8 @@ import { constructHttpPath } from "./converters/services/constructHttpPath";
 import { convertHttpHeader, convertHttpService, convertPathParameters } from "./converters/services/convertHttpService";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
 import { constructFernFileContext, constructRootApiFileContext, FernFileContext } from "./FernFileContext";
-import { AudienceIrGraph } from "./filtered-ir/AudienceIrGraph";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
+import { IrGraph } from "./filtered-ir/IrGraph";
 import { IdGenerator } from "./IdGenerator";
 import { PackageTreeGenerator } from "./PackageTreeGenerator";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
@@ -40,7 +41,7 @@ export async function generateIntermediateRepresentation({
 }): Promise<IntermediateRepresentation> {
     const casingsGenerator = constructCasingsGenerator(generationLanguage);
 
-    const audienceIrGraph = audiences.type !== "all" ? new AudienceIrGraph(audiences.audiences) : undefined;
+    const irGraph = new IrGraph(audiences);
 
     const rootApiFileContext = constructRootApiFileContext({
         casingsGenerator,
@@ -106,6 +107,10 @@ export async function generateIntermediateRepresentation({
                       type: rootApiFileContext.parseTypeReference(variable),
                   }))
                 : [],
+        typeGraph: {
+            typesReferencedOnlyByService: {},
+            sharedTypes: [],
+        },
     };
 
     const packageTreeGenerator = new PackageTreeGenerator();
@@ -139,8 +144,8 @@ export async function generateIntermediateRepresentation({
                     intermediateRepresentation.types[typeId] = convertedTypeDeclaration;
                     packageTreeGenerator.addType(typeId, convertedTypeDeclaration);
 
-                    audienceIrGraph?.addType(convertedTypeDeclaration.name, convertedTypeDeclaration.referencedTypes);
-                    audienceIrGraph?.markTypeForAudiences(convertedTypeDeclaration.name, getAudiences(typeDeclaration));
+                    irGraph.addType(convertedTypeDeclaration.name, convertedTypeDeclaration.referencedTypes);
+                    irGraph.markTypeForAudiences(convertedTypeDeclaration.name, getAudiences(typeDeclaration));
                 }
             },
 
@@ -163,7 +168,7 @@ export async function generateIntermediateRepresentation({
                     intermediateRepresentation.errors[errorId] = convertedErrorDeclaration;
                     packageTreeGenerator.addError(errorId, convertedErrorDeclaration);
 
-                    audienceIrGraph?.addError(convertedErrorDeclaration);
+                    irGraph.addError(convertedErrorDeclaration);
                 }
             },
 
@@ -189,11 +194,11 @@ export async function generateIntermediateRepresentation({
 
                 const convertedEndpoints: Record<string, HttpEndpoint> = {};
                 convertedHttpService.endpoints.forEach((httpEndpoint) => {
-                    audienceIrGraph?.addEndpoint(convertedHttpService, httpEndpoint);
+                    irGraph.addEndpoint(convertedHttpService, httpEndpoint);
                     convertedEndpoints[httpEndpoint.name.originalName] = httpEndpoint;
                 });
                 if (service.audiences != null) {
-                    audienceIrGraph?.markEndpointForAudience(
+                    irGraph.markEndpointForAudience(
                         convertedHttpService.name,
                         convertedHttpService.endpoints,
                         service.audiences
@@ -202,7 +207,7 @@ export async function generateIntermediateRepresentation({
                 Object.entries(service.endpoints).map(([endpointId, endpoint]) => {
                     const convertedEndpoint = convertedEndpoints[endpointId];
                     if (convertedEndpoint != null && endpoint.audiences != null) {
-                        audienceIrGraph?.markEndpointForAudience(
+                        irGraph.markEndpointForAudience(
                             convertedHttpService.name,
                             [convertedEndpoint],
                             endpoint.audiences
@@ -263,7 +268,9 @@ export async function generateIntermediateRepresentation({
         }
     });
 
-    const filteredIr = audienceIrGraph != null ? audienceIrGraph.build() : undefined;
+    intermediateRepresentation.typeGraph = extractTypeGraph(irGraph);
+
+    const filteredIr = !irGraph.hasAllAudiences() ? irGraph.build() : undefined;
     const intermediateRepresentationForAudiences = filterIntermediateRepresentationForAudiences(
         intermediateRepresentation,
         filteredIr
@@ -296,6 +303,27 @@ export async function generateIntermediateRepresentation({
                 sdkVersion: "X-Fern-SDK-Version",
             },
         },
+    };
+}
+
+function extractTypeGraph(irGraph: IrGraph): TypeGraph {
+    const typesReferencedOnlyByService: Record<ServiceId, TypeId[]> = {};
+    const sharedTypes: TypeId[] = [];
+    const servicesReferencedByType = irGraph.getServicesReferencedByType();
+    for (const [typeId, serviceIds] of Object.entries(servicesReferencedByType)) {
+        if (serviceIds.size === 1) {
+            const serviceId = serviceIds.values().next().value;
+            if (typesReferencedOnlyByService[serviceId] === undefined) {
+                typesReferencedOnlyByService[serviceId] = [];
+            }
+            typesReferencedOnlyByService[serviceId]?.push(typeId);
+            continue;
+        }
+        sharedTypes.push(typeId);
+    }
+    return {
+        typesReferencedOnlyByService,
+        sharedTypes,
     };
 }
 
