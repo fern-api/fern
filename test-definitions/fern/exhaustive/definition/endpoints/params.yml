@@ -3,7 +3,7 @@ imports:
   errors: ./errors.yml
 
 service: 
-  auth: false
+  auth: true
   base-path: /params
   endpoints: 
 

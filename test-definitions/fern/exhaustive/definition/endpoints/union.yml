@@ -1,0 +1,6 @@
+service: 
+  auth: true
+  base-path: /union
+  endpoints: 
+    getAndReturnUnion: 
+      method: POST 

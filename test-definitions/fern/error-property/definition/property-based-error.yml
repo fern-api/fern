@@ -8,12 +8,12 @@ imports:
 
 service:
   auth: false
-  base-path: /
+  base-path: ""
   endpoints: 
     ThrowError: 
       docs: GET request that always throws an error 
-      path: /error-name-discrim
+      path: /property-based-error
       method: GET 
       response: string
       errors: 
-       - errors.ErrorNameTestError
+       - errors.PropertyBasedErrorTest

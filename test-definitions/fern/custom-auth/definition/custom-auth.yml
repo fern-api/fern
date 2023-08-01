@@ -5,7 +5,7 @@ imports:
 
 service:
   auth: false
-  base-path: /
+  base-path: ""
   endpoints:
     getWithCustomAuth:
       auth: true
