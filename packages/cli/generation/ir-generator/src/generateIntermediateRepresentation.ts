@@ -309,8 +309,8 @@ export async function generateIntermediateRepresentation({
 function extractServiceTypeReferenceInfo(irGraph: IrGraph): ServiceTypeReferenceInfo {
     const typesReferencedOnlyByService: Record<ServiceId, TypeId[]> = {};
     const sharedTypes: TypeId[] = [];
-    const servicesReferencedByType = irGraph.getServicesReferencedByType();
-    for (const [typeId, serviceIds] of Object.entries(servicesReferencedByType)) {
+    const typesReferencedByService = irGraph.getTypesReferencedByService();
+    for (const [typeId, serviceIds] of Object.entries(typesReferencedByService)) {
         if (serviceIds.size === 1) {
             const serviceId = serviceIds.values().next().value;
             if (typesReferencedOnlyByService[serviceId] === undefined) {

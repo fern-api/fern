@@ -31,7 +31,7 @@ export class IrGraph {
     private errors: Record<TypeId, ErrorNode> = {};
     private endpoints: Record<EndpointId, EndpointNode> = {};
     private audiences: Audiences;
-    private servicesReferencedByType: Record<TypeId, Set<ServiceId>> = {};
+    private typesReferencedByService: Record<TypeId, Set<ServiceId>> = {};
     private typesNeededForAudience: Set<TypeId> = new Set();
     private servicesNeededForAudience: Set<ServiceId> = new Set();
     private endpointsNeededForAudience: Set<EndpointId> = new Set();
@@ -49,8 +49,8 @@ export class IrGraph {
             referencedSubpackages: new Set(descendants.map((declaredTypeName) => declaredTypeName.fernFilepath)),
         };
         this.types[typeId] = typeNode;
-        if (this.servicesReferencedByType[typeId] == null) {
-            this.servicesReferencedByType[typeId] = new Set();
+        if (this.typesReferencedByService[typeId] == null) {
+            this.typesReferencedByService[typeId] = new Set();
         }
     }
 
@@ -65,8 +65,8 @@ export class IrGraph {
         }
     }
 
-    public getServicesReferencedByType(): Record<TypeId, Set<ServiceId>> {
-        return this.servicesReferencedByType;
+    public getTypesReferencedByService(): Record<TypeId, Set<ServiceId>> {
+        return this.typesReferencedByService;
     }
 
     public addError(errorDeclaration: ErrorDeclaration): void {
@@ -218,10 +218,10 @@ export class IrGraph {
     }
 
     private markTypeForService(typeId: TypeId, serviceId: ServiceId): void {
-        if (this.servicesReferencedByType[typeId] == null) {
-            this.servicesReferencedByType[typeId] = new Set();
+        if (this.typesReferencedByService[typeId] == null) {
+            this.typesReferencedByService[typeId] = new Set();
         }
-        this.servicesReferencedByType[typeId]?.add(serviceId);
+        this.typesReferencedByService[typeId]?.add(serviceId);
     }
 
     private addReferencedTypes(types: Set<TypeId>, typesToAdd: Set<TypeId>): void {
