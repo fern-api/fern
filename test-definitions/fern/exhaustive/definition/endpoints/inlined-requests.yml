@@ -1,6 +1,6 @@
 imports: 
-  types: ./types.yml
-  errors: ./errors.yml
+  objects: ../types/object.yml
+  errors: ../general-errors.yml
 
 # test req bodies, path params, query params, multiple query params, etc.
 # test union and enum as well 
@@ -10,12 +10,6 @@ service:
   base-path: /req-bodies
   endpoints: 
 
-    getObjectResponse: 
-      docs: GET that retrieves an object
-      path: /object
-      method: GET
-      response: types.CustomObject
-
     postWithObjectBodyandResponse:
       docs: POST with custom object in request body, response is an object
       path: /object
@@ -24,8 +18,10 @@ service:
         name: PostWithObjectBody
         body: 
           properties: 
-            data: types.CustomObject
-      response: types.CustomObject
+            string: string
+            integer: integer
+            NestedObject: objects.ObjectWithOptionalField
+      response: objects.ObjectWithOptionalField
       errors: 
         - errors.BadRequestBody
 

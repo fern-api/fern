@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 imports: 
-  errors: ./errors.yml
+  general-errors: ./general-errors.yml
 
 service:
   auth: false
@@ -24,4 +24,4 @@ service:
         body: unknown
       response: boolean
       errors:
-        - errors.BadRequest
+        - general-errors.BadRequestBody

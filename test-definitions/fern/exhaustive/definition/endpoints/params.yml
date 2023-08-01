@@ -1,7 +1,3 @@
-imports: 
-  types: ./types.yml
-  errors: ./errors.yml
-
 service: 
   auth: true
   base-path: /params
@@ -17,22 +13,26 @@ service:
     
     getWithQuery: 
       docs: GET with query param
-      path: /
+      path: ""
       method: GET
       request: 
         name: GetWithQuery
         query-parameters: 
           query: string #mandatory for test 
+          number: integer
 
     getWithAllowMultipleQuery: 
       docs: GET with multiple of same query param 
-      path: /
+      path: ""
       method: GET
       request: 
         name: GetWithMultipleQuery
         query-parameters: 
           query: 
             type: string
+            allow-multiple: true
+          numer: 
+            type: integer
             allow-multiple: true
 
     getWithPathAndQuery: 
