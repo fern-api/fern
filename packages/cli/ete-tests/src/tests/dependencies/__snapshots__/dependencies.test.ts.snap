@@ -448,6 +448,14 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
     },
     "pathParameters": [],
     "variables": [],
+    "typeGraph": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": [
+            "type_imported:RootString",
+            "type_y:IntegerAlias",
+            "type_imported/x:StringAlias"
+        ]
+    },
     "subpackages": {
         "subpackage_imported": {
             "fernFilepath": {
@@ -729,4 +737,4 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `802883`;
+exports[`dependencies file dependencies 1`] = `805728`;
