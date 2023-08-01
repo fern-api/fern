@@ -89,6 +89,10 @@ exports[`ir {"name":"auth-header-prefix"} 1`] = `
     },
     "pathParameters": [],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": []
+    },
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {
@@ -1120,6 +1124,14 @@ exports[`ir {"name":"extended-examples"} 1`] = `
     },
     "pathParameters": [],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": [
+            "type_app:GetAppResponse",
+            "type_commons:AppId",
+            "type_commons:Deployment"
+        ]
+    },
     "subpackages": {
         "subpackage_app": {
             "fernFilepath": {
@@ -1642,6 +1654,10 @@ exports[`ir {"name":"file-upload"} 1`] = `
     },
     "pathParameters": [],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": []
+    },
     "subpackages": {
         "subpackage_file-upload": {
             "fernFilepath": {
@@ -8209,6 +8225,10 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
     },
     "pathParameters": [],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": []
+    },
     "subpackages": {
         "subpackage_endpoint-urls": {
             "fernFilepath": {
@@ -8433,6 +8453,10 @@ exports[`ir {"name":"navigation-points-to"} 1`] = `
     },
     "pathParameters": [],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": []
+    },
     "subpackages": {
         "subpackage_subpackage": {
             "fernFilepath": {
@@ -9796,6 +9820,17 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
     },
     "pathParameters": [],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {
+            "service_nested": [
+                "type_nested:Response"
+            ]
+        },
+        "sharedTypes": [
+            "type_nested:Product",
+            "type_nested:StringAlias"
+        ]
+    },
     "subpackages": {
         "subpackage_nested": {
             "fernFilepath": {
@@ -10642,6 +10677,15 @@ exports[`ir {"name":"packages"} 1`] = `
     },
     "pathParameters": [],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": [
+            "type_:RootString",
+            "type_package:PackageString",
+            "type_importer:Foo",
+            "type_package/a:A"
+        ]
+    },
     "subpackages": {
         "subpackage_package": {
             "fernFilepath": {
@@ -13008,6 +13052,26 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
         }
     ],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {
+            "service_imdb": [
+                "type_imdb:MovieId",
+                "type_imdb:Movie",
+                "type_imdb:CreateMovieRequest"
+            ]
+        },
+        "sharedTypes": [
+            "type_commons:UndiscriminatedUnion",
+            "type_director:Director",
+            "type_director:Age",
+            "type_director:LiteralString",
+            "type_imdb:CurrencyAmount",
+            "type_imdb:ActorId",
+            "type_imdb:DirectorWrapper",
+            "type_imdb:Person",
+            "type_imdb:RecursiveType"
+        ]
+    },
     "subpackages": {
         "subpackage_commons": {
             "fernFilepath": {
@@ -21863,6 +21927,26 @@ exports[`ir {"name":"simple"} 1`] = `
         }
     ],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {
+            "service_imdb": [
+                "type_imdb:MovieId",
+                "type_imdb:Movie",
+                "type_imdb:CreateMovieRequest"
+            ]
+        },
+        "sharedTypes": [
+            "type_commons:UndiscriminatedUnion",
+            "type_director:Director",
+            "type_director:Age",
+            "type_director:LiteralString",
+            "type_imdb:CurrencyAmount",
+            "type_imdb:ActorId",
+            "type_imdb:DirectorWrapper",
+            "type_imdb:Person",
+            "type_imdb:RecursiveType"
+        ]
+    },
     "subpackages": {
         "subpackage_commons": {
             "fernFilepath": {
@@ -22449,6 +22533,10 @@ exports[`ir {"name":"streaming"} 1`] = `
     },
     "pathParameters": [],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": []
+    },
     "subpackages": {
         "subpackage_streaming": {
             "fernFilepath": {
@@ -23270,6 +23358,14 @@ exports[`ir {"name":"variables"} 1`] = `
             }
         }
     ],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {
+            "service_service": [
+                "type_commons:StringAlias"
+            ]
+        },
+        "sharedTypes": []
+    },
     "subpackages": {
         "subpackage_commons": {
             "fernFilepath": {
