@@ -270,7 +270,7 @@ export async function generateIntermediateRepresentation({
 
     intermediateRepresentation.serviceTypeReferenceInfo = computeServiceTypeReferenceInfo(irGraph);
 
-    const filteredIr = !irGraph.hasAllAudiences() ? irGraph.build() : undefined;
+    const filteredIr = !irGraph.hasNoAudiences() ? irGraph.build() : undefined;
     const intermediateRepresentationForAudiences = filterIntermediateRepresentationForAudiences(
         intermediateRepresentation,
         filteredIr

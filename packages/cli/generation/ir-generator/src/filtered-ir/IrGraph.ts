@@ -1,4 +1,4 @@
-import { Audiences } from "@fern-api/config-management-commons";
+import { Audiences as ConfigAudiences } from "@fern-api/config-management-commons";
 import { assertNever, noop } from "@fern-api/core-utils";
 import { FernFilepath } from "@fern-fern/ir-model/commons";
 import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
@@ -37,8 +37,8 @@ export class IrGraph {
     private endpointsNeededForAudience: Set<EndpointId> = new Set();
     private subpackagesNeededForAudience: Set<SubpackageId> = new Set();
 
-    public constructor(audiences: Audiences) {
-        this.audiences = audiences;
+    public constructor(audiences: ConfigAudiences) {
+        this.audiences = audiencesFromConfig(audiences);
     }
 
     public addType(declaredTypeName: DeclaredTypeName, descendants: DeclaredTypeName[]): void {
@@ -263,17 +263,17 @@ export class IrGraph {
         return endpointNode;
     }
 
-    public hasAllAudiences(): boolean {
-        return this.audiences.type === "all";
+    public hasNoAudiences(): boolean {
+        return this.audiences.type === "none";
     }
 
     private hasAudience(audiences: AudienceId[]): boolean {
         const configuredAudiences = this.audiences;
         switch (configuredAudiences.type) {
-            case "all":
+            case "none":
                 return true;
-            case "select":
-                return audiences.some((audienceId) => configuredAudiences.audiences.includes(audienceId));
+            case "filtered":
+                return audiences.some((audienceId) => configuredAudiences.audiences.has(audienceId));
             default:
                 assertNever(configuredAudiences);
         }
@@ -287,6 +287,28 @@ export class IrGraph {
             };
             this.subpackagesNeededForAudience.add(IdGenerator.generateSubpackageId(packageFilePath));
         }
+    }
+}
+
+type Audiences = NoAudience | FilteredAudiences;
+
+interface NoAudience {
+    type: "none";
+}
+
+interface FilteredAudiences {
+    type: "filtered";
+    audiences: Set<string>;
+}
+
+function audiencesFromConfig(configAudiences: ConfigAudiences): Audiences {
+    switch (configAudiences.type) {
+        case "all":
+            return { type: "none" };
+        case "select":
+            return { type: "filtered", audiences: new Set(configAudiences.audiences) };
+        default:
+            assertNever(configAudiences);
     }
 }
 
