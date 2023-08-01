@@ -1,43 +1,43 @@
-imports: 
+imports:
   objects: ../types/object.yml
 
-service: 
+service:
   auth: true
   base-path: /http-methods
 
-  endpoints: 
+  endpoints:
     testGet:
       method: GET
       path: /{id}
-      path-parameters: 
+      path-parameters:
         id: string
       response: string
-    
-    testPost: 
+
+    testPost:
       method: POST
       path: ""
       request: objects.ObjectWithRequiredField
       response: objects.ObjectWithOptionalField
-    
-    testPut: 
+
+    testPut:
       method: PUT
       path: /{id}
-      path-parameters: 
+      path-parameters:
         id: string
       request: objects.ObjectWithRequiredField
       response: objects.ObjectWithOptionalField
-    
-    testPatch: 
+
+    testPatch:
       method: PATCH
       path: /{id}
-      path-parameters: 
+      path-parameters:
         id: string
       request: objects.ObjectWithOptionalField
       response: objects.ObjectWithOptionalField
-    
-    testDelete: 
+
+    testDelete:
       method: DELETE
       path: /{id}
-      path-parameters: 
+      path-parameters:
         id: string
       response: boolean

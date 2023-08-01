@@ -1,7 +1,7 @@
 name: api
 auth: CustomAuthScheme
-auth-schemes: 
-  CustomAuthScheme: 
+auth-schemes:
+  CustomAuthScheme:
     header: X-API-KEY
     type: string
 error-discrimination:

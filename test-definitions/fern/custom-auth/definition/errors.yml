@@ -4,8 +4,8 @@ errors:
     type: UnauthorizedRequestErrorBody
   BadRequest:
     status-code: 400
-  
-types: 
-  UnauthorizedRequestErrorBody: 
+
+types:
+  UnauthorizedRequestErrorBody:
     properties:
       message: string

@@ -1,12 +1,11 @@
-imports: 
+imports:
   objects: ../types/object.yml
 
-service: 
+service:
   auth: true
   base-path: /container
-  endpoints: 
-  
-    getAndReturnListOfPrimitives: 
+  endpoints:
+    getAndReturnListOfPrimitives:
       path: /list-of-primitives
       method: POST
       request: list<string>

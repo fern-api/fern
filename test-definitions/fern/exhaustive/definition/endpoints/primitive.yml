@@ -1,28 +1,27 @@
-imports: 
+imports:
   objects: ../types/object.yml
 
-service: 
+service:
   auth: true
   base-path: /primitive
-  endpoints: 
-    getAndReturnString: 
+  endpoints:
+    getAndReturnString:
       path: /string
       method: POST
       request: string
       response: string
 
-    getAndReturnInt: 
+    getAndReturnInt:
       path: /integer
       method: POST
       request: integer
       response: integer
 
-    getAndReturnLong: 
+    getAndReturnLong:
       path: /long
       method: POST
       request: long
       response: long
-
 
     getAndReturnDouble:
       path: /double
@@ -30,7 +29,7 @@ service:
       request: double
       response: double
 
-    getAndReturnBool: 
+    getAndReturnBool:
       path: /boolean
       method: POST
       request: boolean

@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
-imports: 
+imports:
   errors: ./errors.yml
 
 service:
@@ -9,22 +9,22 @@ service:
   endpoints:
     getWithCustomAuth:
       auth: true
-      docs: GET request with custom auth scheme 
+      docs: GET request with custom auth scheme
       path: /custom-auth
       method: GET
       response: boolean
-      errors: 
-        - errors.UnauthorizedRequest 
+      errors:
+        - errors.UnauthorizedRequest
 
-    postWithCustomAuth: 
+    postWithCustomAuth:
       auth: true
       docs: POST request with custom auth scheme
       path: /custom-auth
       method: POST
-      request: 
+      request:
         name: PostWithCustomAuth
         body: unknown
       response: boolean
-      errors: 
+      errors:
         - errors.UnauthorizedRequest
         - errors.BadRequest

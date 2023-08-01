@@ -1,11 +1,10 @@
-imports: 
+imports:
   objects: ./types/object.yml
 
-service: 
+service:
   auth: true
-  base-path: /no-req-body    
+  base-path: /no-req-body
   endpoints:
-
     getWithNoRequestBody:
       path: ""
       method: GET

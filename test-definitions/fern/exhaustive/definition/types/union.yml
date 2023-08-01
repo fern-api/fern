@@ -1,21 +1,21 @@
-types: 
-  Animal: 
+types:
+  Animal:
     discriminant: animal
-    union: 
+    union:
       dog: Dog
       cat: Cat
-  
-  Dog: 
-    properties: 
+
+  Dog:
+    properties:
       name: string
       likesToWoof: boolean
-  
-  Cat: 
-    properties: 
+
+  Cat:
+    properties:
       name: string
       likesToMeow: boolean
 
-errors: 
+errors:
   ErrorWithUnionBody:
     status-code: 400
-    type: Animal #has to send either dog or cat object in error body 
+    type: Animal #has to send either dog or cat object in error body

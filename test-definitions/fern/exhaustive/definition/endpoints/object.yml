@@ -1,29 +1,29 @@
-imports: 
+imports:
   objects: ../types/object.yml
 
-service: 
+service:
   auth: true
   base-path: /object
-  endpoints: 
+  endpoints:
     getAndReturnWithOptionalField:
       path: /get-and-return-with-optional-field
       method: POST
       request: objects.ObjectWithOptionalField
       response: objects.ObjectWithOptionalField
-    
-    getAndReturnWithRequiredField: 
+
+    getAndReturnWithRequiredField:
       path: /get-and-return-with-required-field
       method: POST
       request: objects.ObjectWithRequiredField
       response: objects.ObjectWithRequiredField
-    
-    getAndReturnNestedWithOptionalField: 
+
+    getAndReturnNestedWithOptionalField:
       path: /get-and-return-nested-with-optional-field
       method: POST
       request: objects.NestedObjectWithOptionalField
       response: objects.NestedObjectWithOptionalField
 
-    getAndReturnNestedWithRequiredField: 
+    getAndReturnNestedWithRequiredField:
       path: /get-and-return-nested-with-required-field
       method: POST
       request: objects.NestedObjectWithRequiredField

@@ -1,12 +1,12 @@
-imports: 
+imports:
   unions: ../types/union.yml
 
-service: 
+service:
   auth: true
   base-path: /union
-  endpoints: 
-    getAndReturnUnion: 
-      method: POST 
+  endpoints:
+    getAndReturnUnion:
+      method: POST
       path: ""
       request: unions.Animal
       response: unions.Animal

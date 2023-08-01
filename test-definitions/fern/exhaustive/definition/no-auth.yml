@@ -1,19 +1,18 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
-imports: 
+imports:
   general-errors: ./general-errors.yml
 
 service:
   auth: false
   base-path: /no-auth
   endpoints:
-  
-    postWithNoAuth: 
+    postWithNoAuth:
       auth: false
       docs: POST request with no auth
       path: ""
       method: POST
-      request: 
+      request:
         name: PostWithNoAuth
         body: unknown
       response: boolean

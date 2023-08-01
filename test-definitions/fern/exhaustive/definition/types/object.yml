@@ -1,12 +1,12 @@
-types: 
-  ObjectWithOptionalField: #generic object that supports any type, makes it easier to use when testing 
-    properties: 
+types:
+  ObjectWithOptionalField: #generic object that supports any type, makes it easier to use when testing
+    properties:
       string: optional<string>
       integer: optional<integer>
       long: optional<long>
       double: optional<double>
       bool: optional<boolean>
-      datetime: optional<datetime> 
+      datetime: optional<datetime>
       date: optional<date>
       uuid: optional<uuid>
       base64: optional<base64>
@@ -14,33 +14,33 @@ types:
       set: optional<set<string>>
       map: optional<map<integer, string>>
 
-  ObjectWithRequiredField: 
-    properties: 
+  ObjectWithRequiredField:
+    properties:
       string: string
 
   NestedObjectWithOptionalField:
-    properties: 
+    properties:
       string: optional<string>
       NestedObject: optional<ObjectWithOptionalField>
-  
-  NestedObjectWithRequiredField: 
-    properties: 
+
+  NestedObjectWithRequiredField:
+    properties:
       string: string
       NestedObject: ObjectWithOptionalField
 
-errors: 
-  ObjectWithOptionalFieldError: 
+errors:
+  ObjectWithOptionalFieldError:
     status-code: 400
     type: ObjectWithOptionalField
 
-  ObjectWithRequiredFieldError: 
+  ObjectWithRequiredFieldError:
     status-code: 400
     type: ObjectWithRequiredField
-  
+
   NestedObjectWithOptionalFieldError:
     status-code: 400
     type: NestedObjectWithOptionalField
-  
-  NestedObjectWithRequiredFieldError: 
+
+  NestedObjectWithRequiredFieldError:
     status-code: 400
     type: NestedObjectWithRequiredField

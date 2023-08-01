@@ -1,19 +1,18 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
+#return an error no matter what for this endpoint so that the errorName can be confirmed
 
-#return an error no matter what for this endpoint so that the errorName can be confirmed 
-
-imports: 
+imports:
   errors: ./errors.yml
 
 service:
   auth: false
   base-path: ""
-  endpoints: 
-    ThrowError: 
-      docs: GET request that always throws an error 
+  endpoints:
+    ThrowError:
+      docs: GET request that always throws an error
       path: /property-based-error
-      method: GET 
+      method: GET
       response: string
-      errors: 
-       - errors.PropertyBasedErrorTest
+      errors:
+        - errors.PropertyBasedErrorTest

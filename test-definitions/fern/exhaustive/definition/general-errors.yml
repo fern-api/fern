@@ -2,8 +2,8 @@ errors:
   BadRequestBody:
     status-code: 400
     type: BadObjectRequestInfo
-  
-types: 
-  BadObjectRequestInfo:  
+
+types:
+  BadObjectRequestInfo:
     properties:
       message: string

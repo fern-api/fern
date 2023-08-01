@@ -1,59 +1,57 @@
-service: 
+service:
   auth: true
   base-path: /params
-  endpoints: 
-
-    getWithPath: 
+  endpoints:
+    getWithPath:
       docs: GET with path param
       path: /path/{param}
-      path-parameters: 
+      path-parameters:
         param: string
       method: GET
       response: string
-    
-    getWithQuery: 
+
+    getWithQuery:
       docs: GET with query param
       path: ""
       method: GET
-      request: 
+      request:
         name: GetWithQuery
-        query-parameters: 
-          query: string #mandatory for test 
+        query-parameters:
+          query: string #mandatory for test
           number: integer
 
-    getWithAllowMultipleQuery: 
-      docs: GET with multiple of same query param 
+    getWithAllowMultipleQuery:
+      docs: GET with multiple of same query param
       path: ""
       method: GET
-      request: 
+      request:
         name: GetWithMultipleQuery
-        query-parameters: 
-          query: 
+        query-parameters:
+          query:
             type: string
             allow-multiple: true
-          numer: 
+          numer:
             type: integer
             allow-multiple: true
 
-    getWithPathAndQuery: 
+    getWithPathAndQuery:
       docs: GET with path and query params
       path: /path/{param}
-      path-parameters: 
+      path-parameters:
         param: string
       method: GET
-      request: 
+      request:
         name: GetWithPathAndQuery
-        query-parameters: 
+        query-parameters:
           query: string #mandatory for test
 
-
-    modifyWithPath: 
-      docs: PUT to update with path param 
+    modifyWithPath:
+      docs: PUT to update with path param
       path: /path/{param}
-      path-parameters: 
+      path-parameters:
         param: string
       method: PUT
-      request: 
+      request:
         name: ModifyResourceAtPath
         body: string
       response: string
