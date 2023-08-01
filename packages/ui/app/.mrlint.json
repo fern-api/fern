@@ -1,9 +1,0 @@
-{
-  "type": "react-library",
-  "private": true,
-  "rules": {
-    "depcheck": {
-      "ignores": ["@types/react"]
-    }
-  }
-}
