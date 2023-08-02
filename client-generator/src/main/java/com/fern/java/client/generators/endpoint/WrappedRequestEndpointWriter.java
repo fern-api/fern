@@ -122,11 +122,23 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 InlinedRequestBodyGetters inlinedRequestBodyGetter = ((InlinedRequestBodyGetters)
                         generatedWrappedRequest.requestBodyGetter().get());
                 for (EnrichedObjectProperty bodyProperty : inlinedRequestBodyGetter.properties()) {
-                    requestInitializerBuilder.addStatement(
-                            "$L.put($S, $L)",
-                            REQUEST_BODY_PROPERTIES_NAME,
-                            bodyProperty.wireKey().get(),
-                            requestParameterName + "." + bodyProperty.getterProperty().name + "()");
+                    if (typeNameIsOptional(bodyProperty.poetTypeName())) {
+                        requestInitializerBuilder
+                                .beginControlFlow(
+                                        "if ($L.$N().isPresent())", requestParameterName, bodyProperty.getterProperty())
+                                .addStatement(
+                                        "$L.put($S, $L)",
+                                        REQUEST_BODY_PROPERTIES_NAME,
+                                        bodyProperty.wireKey().get(),
+                                        requestParameterName + "." + bodyProperty.getterProperty().name + "()")
+                                .endControlFlow();
+                    } else {
+                        requestInitializerBuilder.addStatement(
+                                "$L.put($S, $L)",
+                                REQUEST_BODY_PROPERTIES_NAME,
+                                bodyProperty.wireKey().get(),
+                                requestParameterName + "." + bodyProperty.getterProperty().name + "()");
+                    }
                 }
                 requestBodyArgument = REQUEST_BODY_PROPERTIES_NAME;
             }

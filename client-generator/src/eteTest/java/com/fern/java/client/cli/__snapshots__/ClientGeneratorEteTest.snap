@@ -2611,9 +2611,15 @@ public class EventClient {
         Map<String, Object> _requestBodyProperties = new HashMap<>();
         _requestBodyProperties.put("event", request.getEvent());
         _requestBodyProperties.put("data", request.getData());
-        _requestBodyProperties.put("user", request.getUser());
-        _requestBodyProperties.put("scheduleAt", request.getScheduleAt());
-        _requestBodyProperties.put("override", request.getOverride());
+        if (request.getUser().isPresent()) {
+            _requestBodyProperties.put("user", request.getUser());
+        }
+        if (request.getScheduleAt().isPresent()) {
+            _requestBodyProperties.put("scheduleAt", request.getScheduleAt());
+        }
+        if (request.getOverride().isPresent()) {
+            _requestBodyProperties.put("override", request.getOverride());
+        }
         RequestBody _requestBody;
         try {
             _requestBody = RequestBody.create(
@@ -6164,9 +6170,15 @@ public class UserClient {
                 .build();
         Map<String, Object> _requestBodyProperties = new HashMap<>();
         _requestBodyProperties.put("user_id", request.getUserId());
-        _requestBodyProperties.put("mobile", request.getMobile());
-        _requestBodyProperties.put("email", request.getEmail());
-        _requestBodyProperties.put("whats_app", request.getWhatsApp());
+        if (request.getMobile().isPresent()) {
+            _requestBodyProperties.put("mobile", request.getMobile());
+        }
+        if (request.getEmail().isPresent()) {
+            _requestBodyProperties.put("email", request.getEmail());
+        }
+        if (request.getWhatsApp().isPresent()) {
+            _requestBodyProperties.put("whats_app", request.getWhatsApp());
+        }
         RequestBody _requestBody;
         try {
             _requestBody = RequestBody.create(
