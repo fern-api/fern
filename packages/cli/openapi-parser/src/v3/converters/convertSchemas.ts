@@ -222,6 +222,19 @@ export function convertSchemaObject(
             const convertedSchema = convertSchema(schema.oneOf[0], wrapAsNullable, context, breadcrumbs);
             return maybeInjectDescription(convertedSchema, description);
         } else if (schema.oneOf.length > 1) {
+            const maybeAllEnumValues = getMaybeAllEnumValues({ schemas: schema.oneOf });
+            if (maybeAllEnumValues != null) {
+                return convertEnum({
+                    nameOverride,
+                    generatedName,
+                    fernEnum: undefined,
+                    enumVarNames: undefined,
+                    enumValues: maybeAllEnumValues,
+                    description,
+                    wrapAsNullable,
+                });
+            }
+
             const maybeDiscriminant = getDiscriminant({ schemas: schema.oneOf, context });
             if (maybeDiscriminant != null) {
                 return convertDiscriminatedOneOfWithVariants({
@@ -441,6 +454,25 @@ export function wrapPrimitive({
 interface DiscriminantProperty {
     discriminant: string;
     schemas: Record<string, OpenAPIV3.SchemaObject>;
+}
+
+function getMaybeAllEnumValues({
+    schemas,
+}: {
+    schemas: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[];
+}): undefined | string[] {
+    const enumValues = new Set<string>();
+    for (const schema of schemas) {
+        if (isReferenceObject(schema)) {
+            return undefined;
+        }
+        if (schema.enum != null && isListOfStrings(schema.enum)) {
+            schema.enum.forEach((val) => enumValues.add(val));
+        } else {
+            return undefined;
+        }
+    }
+    return Array.from(enumValues);
 }
 
 function getDiscriminant({
