@@ -237,7 +237,10 @@ function convertToEndpoint({
     const baseBreadcrumbs: string[] = [];
     if (sdkName != null) {
         if (sdkName.groupName.length > 0) {
-            baseBreadcrumbs.push(...sdkName.groupName);
+            const lastGroupName = sdkName.groupName[sdkName.groupName.length - 1];
+            if (lastGroupName != null) {
+                baseBreadcrumbs.push(lastGroupName);
+            }
         }
         baseBreadcrumbs.push(sdkName.methodName);
     } else if (operation.operationId != null) {
