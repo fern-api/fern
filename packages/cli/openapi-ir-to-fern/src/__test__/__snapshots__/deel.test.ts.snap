@@ -6761,8 +6761,18 @@ exports[`open api parser deel simple 1`] = `
           "type": "list<TimesheetIdItemsItem>",
         },
         "TimesheetIdItemsItem": {
+          "discriminated": false,
           "docs": "ID of an existing timesheet record",
-          "enum": [],
+          "union": [
+            {
+              "docs": undefined,
+              "type": "double",
+            },
+            {
+              "docs": undefined,
+              "type": "string",
+            },
+          ],
         },
         "TimesheetList": {
           "docs": undefined,
@@ -6996,8 +7006,18 @@ exports[`open api parser deel simple 1`] = `
           "type": "list<TimesheetTypeEnum>",
         },
         "UniqueObjectIdentifier": {
+          "discriminated": false,
           "docs": "Unique identifier of this resource.",
-          "enum": [],
+          "union": [
+            {
+              "docs": undefined,
+              "type": "string",
+            },
+            {
+              "docs": undefined,
+              "type": "double",
+            },
+          ],
         },
         "UrlType": {
           "docs": undefined,

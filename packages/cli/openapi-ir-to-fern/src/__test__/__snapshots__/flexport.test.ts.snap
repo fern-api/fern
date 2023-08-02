@@ -4366,8 +4366,18 @@ exports[`open api parser flexport simple 1`] = `
           },
         },
         "GenericObjectRefId": {
+          "discriminated": false,
           "docs": undefined,
-          "enum": [],
+          "union": [
+            {
+              "docs": undefined,
+              "type": "string",
+            },
+            {
+              "docs": undefined,
+              "type": "integer",
+            },
+          ],
         },
         "HsCode": {
           "docs": undefined,
@@ -5004,8 +5014,40 @@ exports[`open api parser flexport simple 1`] = `
           "type": "map<string, unknown>",
         },
         "MetadataCreate": {
+          "discriminated": false,
           "docs": "Metadata has two allowed formats. Either array format or object format. Refer to the metadata section in this documentation for more information.",
-          "enum": [],
+          "union": [
+            {
+              "docs": "Object format.",
+              "type": "MetadataCreateMetadataCreate",
+            },
+            {
+              "docs": "Array format.",
+              "type": "list<MetadataCreateMetadataCreateItem>",
+            },
+          ],
+        },
+        "MetadataCreateMetadataCreate": {
+          "docs": "Object format.",
+          "properties": {
+            "example_key": {
+              "docs": undefined,
+              "type": "optional<list<string>>",
+            },
+          },
+        },
+        "MetadataCreateMetadataCreateItem": {
+          "docs": undefined,
+          "properties": {
+            "name": {
+              "docs": undefined,
+              "type": "optional<string>",
+            },
+            "value": {
+              "docs": undefined,
+              "type": "optional<list<string>>",
+            },
+          },
         },
         "Money": {
           "docs": undefined,

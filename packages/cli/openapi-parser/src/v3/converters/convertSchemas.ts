@@ -468,6 +468,8 @@ function getMaybeAllEnumValues({
         }
         if (schema.enum != null && isListOfStrings(schema.enum)) {
             schema.enum.forEach((val) => enumValues.add(val));
+        } else {
+            return undefined;
         }
     }
     return Array.from(enumValues);
