@@ -1587,21 +1587,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
         },
         "CreatePaymentIntentPseAmount": {
-          "discriminated": false,
           "docs": "Amount to be paid by your customer. For PSE, you can only send whole numbers. For example: \`350000\`.
 
 **Note:** You can send through this value either as a string or an integer. Regardless of the type you choose to send the \`amount\` as, Belvo returns a string with two decimal points, separated by a period ( \`.\`). For example, \`350000.00\`.
 ",
-          "union": [
-            {
-              "docs": undefined,
-              "type": "string",
-            },
-            {
-              "docs": undefined,
-              "type": "integer",
-            },
-          ],
+          "enum": [],
         },
         "CreatePaymentLinkOfpi": {
           "docs": undefined,
@@ -1652,21 +1642,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
         },
         "CreatePaymentLinkOfpiAmount": {
-          "discriminated": false,
           "docs": "Amount to be paid by your customer. For OFPI, you can send through numbers with up to two decimal points, separated by a \`.\` period. For example: \`1234.12\`
 
 **Note:** You can send through this value either as a string or an float. Regardless of the type you choose to send the \`amount\` as, Belvo returns a string with two decimal points, separated by a period ( \`.\`). For example, \`1234.12\`.
 ",
-          "union": [
-            {
-              "docs": undefined,
-              "type": "string",
-            },
-            {
-              "docs": undefined,
-              "type": "double",
-            },
-          ],
+          "enum": [],
         },
         "CreatePaymentLinkPse": {
           "docs": undefined,
@@ -1717,21 +1697,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
         },
         "CreatePaymentLinkPseAmount": {
-          "discriminated": false,
           "docs": "Amount to be paid by your customer. For PSE, you can only send whole numbers. For example: \`350000\`.
 
 **Note:** You can send this value either as a string or an integer. Regardless of the type you choose to send the \`amount\` as, Belvo returns a string with two decimal points, separated by a period ( \`.\`). For example, \`350000.00\`.
 ",
-          "union": [
-            {
-              "docs": undefined,
-              "type": "string",
-            },
-            {
-              "docs": undefined,
-              "type": "integer",
-            },
-          ],
+          "enum": [],
         },
         "CreatePaymentlinkRequest": {
           "discriminated": false,

@@ -22940,31 +22940,11 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "oneOf": {
-                    "description": undefined,
-                    "generatedName": "GenericObjectRefId",
-                    "nameOverride": undefined,
-                    "schemas": [
-                      {
-                        "description": undefined,
-                        "schema": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      {
-                        "description": undefined,
-                        "schema": {
-                          "type": "int",
-                        },
-                        "type": "primitive",
-                      },
-                    ],
-                    "type": "undisciminated",
-                  },
-                  "type": "oneOf",
+                  "description": undefined,
+                  "generatedName": "GenericObjectRefId",
+                  "nameOverride": undefined,
+                  "type": "enum",
+                  "values": [],
                 },
               },
             },
@@ -24345,101 +24325,11 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           },
         },
         "MetadataCreate": {
-          "oneOf": {
-            "description": "Metadata has two allowed formats. Either array format or object format. Refer to the metadata section in this documentation for more information.",
-            "generatedName": "MetadataCreate",
-            "nameOverride": undefined,
-            "schemas": [
-              {
-                "allOf": [],
-                "allOfPropertyConflicts": [],
-                "description": "Object format.",
-                "generatedName": "MetadataCreateMetadataCreate",
-                "nameOverride": undefined,
-                "properties": [
-                  {
-                    "conflict": {},
-                    "generatedName": "metadataCreateMetadataCreateExampleKey",
-                    "key": "example_key",
-                    "schema": {
-                      "description": undefined,
-                      "type": "optional",
-                      "value": {
-                        "description": undefined,
-                        "type": "array",
-                        "value": {
-                          "description": undefined,
-                          "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
-                          },
-                          "type": "primitive",
-                        },
-                      },
-                    },
-                  },
-                ],
-                "type": "object",
-              },
-              {
-                "description": "Array format.",
-                "type": "array",
-                "value": {
-                  "allOf": [],
-                  "allOfPropertyConflicts": [],
-                  "description": undefined,
-                  "generatedName": "MetadataCreateMetadataCreateItem",
-                  "nameOverride": undefined,
-                  "properties": [
-                    {
-                      "conflict": {},
-                      "generatedName": "metadataCreateMetadataCreateItemName",
-                      "key": "name",
-                      "schema": {
-                        "description": undefined,
-                        "type": "optional",
-                        "value": {
-                          "description": undefined,
-                          "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
-                          },
-                          "type": "primitive",
-                        },
-                      },
-                    },
-                    {
-                      "conflict": {},
-                      "generatedName": "metadataCreateMetadataCreateItemValue",
-                      "key": "value",
-                      "schema": {
-                        "description": undefined,
-                        "type": "optional",
-                        "value": {
-                          "description": undefined,
-                          "type": "array",
-                          "value": {
-                            "description": undefined,
-                            "schema": {
-                              "maxLength": undefined,
-                              "minLength": undefined,
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                      },
-                    },
-                  ],
-                  "type": "object",
-                },
-              },
-            ],
-            "type": "undisciminated",
-          },
-          "type": "oneOf",
+          "description": "Metadata has two allowed formats. Either array format or object format. Refer to the metadata section in this documentation for more information.",
+          "generatedName": "MetadataCreate",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [],
         },
         "Money": {
           "allOf": [

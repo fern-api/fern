@@ -26501,31 +26501,11 @@ exports[`open api parser deel parse open api 1`] = `
           "description": undefined,
           "type": "array",
           "value": {
-            "oneOf": {
-              "description": "ID of an existing timesheet record",
-              "generatedName": "TimesheetIdItemsItem",
-              "nameOverride": undefined,
-              "schemas": [
-                {
-                  "description": undefined,
-                  "schema": {
-                    "type": "double",
-                  },
-                  "type": "primitive",
-                },
-                {
-                  "description": undefined,
-                  "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
-                  },
-                  "type": "primitive",
-                },
-              ],
-              "type": "undisciminated",
-            },
-            "type": "oneOf",
+            "description": "ID of an existing timesheet record",
+            "generatedName": "TimesheetIdItemsItem",
+            "nameOverride": undefined,
+            "type": "enum",
+            "values": [],
           },
         },
         "TimesheetList": {
@@ -27238,31 +27218,11 @@ exports[`open api parser deel parse open api 1`] = `
           },
         },
         "UniqueObjectIdentifier": {
-          "oneOf": {
-            "description": "Unique identifier of this resource.",
-            "generatedName": "UniqueObjectIdentifier",
-            "nameOverride": undefined,
-            "schemas": [
-              {
-                "description": undefined,
-                "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              {
-                "description": undefined,
-                "schema": {
-                  "type": "double",
-                },
-                "type": "primitive",
-              },
-            ],
-            "type": "undisciminated",
-          },
-          "type": "oneOf",
+          "description": "Unique identifier of this resource.",
+          "generatedName": "UniqueObjectIdentifier",
+          "nameOverride": undefined,
+          "type": "enum",
+          "values": [],
         },
         "UrlType": {
           "description": undefined,
