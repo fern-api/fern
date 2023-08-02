@@ -282,12 +282,12 @@ exports[`open api parser dopt parse open api 1`] = `
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": undefined,
-                            "generatedName": "FindBlocksResponseFieldsItemFindBlocksResponseFieldsItem",
+                            "generatedName": "FindBlocksResponseFieldsItem0",
                             "nameOverride": undefined,
                             "properties": [
                               {
                                 "conflict": {},
-                                "generatedName": "findBlocksResponseFieldsItemFindBlocksResponseFieldsItemSid",
+                                "generatedName": "findBlocksResponseFieldsItem0Sid",
                                 "key": "sid",
                                 "schema": {
                                   "description": undefined,
@@ -301,7 +301,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               },
                               {
                                 "conflict": {},
-                                "generatedName": "findBlocksResponseFieldsItemFindBlocksResponseFieldsItemType",
+                                "generatedName": "findBlocksResponseFieldsItem0Type",
                                 "key": "type",
                                 "schema": {
                                   "description": undefined,
@@ -311,7 +311,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               },
                               {
                                 "conflict": {},
-                                "generatedName": "findBlocksResponseFieldsItemFindBlocksResponseFieldsItemValue",
+                                "generatedName": "findBlocksResponseFieldsItem0Value",
                                 "key": "value",
                                 "schema": {
                                   "description": undefined,
@@ -334,12 +334,12 @@ exports[`open api parser dopt parse open api 1`] = `
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": undefined,
-                            "generatedName": "FindBlocksResponseFieldsItemFindBlocksResponseFieldsItem",
+                            "generatedName": "FindBlocksResponseFieldsItem1",
                             "nameOverride": undefined,
                             "properties": [
                               {
                                 "conflict": {},
-                                "generatedName": "findBlocksResponseFieldsItemFindBlocksResponseFieldsItemSid",
+                                "generatedName": "findBlocksResponseFieldsItem1Sid",
                                 "key": "sid",
                                 "schema": {
                                   "description": undefined,
@@ -353,7 +353,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               },
                               {
                                 "conflict": {},
-                                "generatedName": "findBlocksResponseFieldsItemFindBlocksResponseFieldsItemType",
+                                "generatedName": "findBlocksResponseFieldsItem1Type",
                                 "key": "type",
                                 "schema": {
                                   "description": undefined,
@@ -363,7 +363,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               },
                               {
                                 "conflict": {},
-                                "generatedName": "findBlocksResponseFieldsItemFindBlocksResponseFieldsItemValue",
+                                "generatedName": "findBlocksResponseFieldsItem1Value",
                                 "key": "value",
                                 "schema": {
                                   "description": undefined,
@@ -384,12 +384,12 @@ exports[`open api parser dopt parse open api 1`] = `
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": undefined,
-                            "generatedName": "FindBlocksResponseFieldsItemFindBlocksResponseFieldsItem",
+                            "generatedName": "FindBlocksResponseFieldsItemSid",
                             "nameOverride": undefined,
                             "properties": [
                               {
                                 "conflict": {},
-                                "generatedName": "findBlocksResponseFieldsItemFindBlocksResponseFieldsItemSid",
+                                "generatedName": "findBlocksResponseFieldsItemSidSid",
                                 "key": "sid",
                                 "schema": {
                                   "description": undefined,
@@ -403,7 +403,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               },
                               {
                                 "conflict": {},
-                                "generatedName": "findBlocksResponseFieldsItemFindBlocksResponseFieldsItemType",
+                                "generatedName": "findBlocksResponseFieldsItemSidType",
                                 "key": "type",
                                 "schema": {
                                   "description": undefined,
@@ -413,7 +413,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               },
                               {
                                 "conflict": {},
-                                "generatedName": "findBlocksResponseFieldsItemFindBlocksResponseFieldsItemValue",
+                                "generatedName": "findBlocksResponseFieldsItemSidValue",
                                 "key": "value",
                                 "schema": {
                                   "description": undefined,
@@ -986,12 +986,12 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "allOf": [],
                                       "allOfPropertyConflicts": [],
                                       "description": undefined,
-                                      "generatedName": "GetFlowResponseBlocksItemFieldsItemGetFlowResponseBlocksItemFieldsItem",
+                                      "generatedName": "GetFlowResponseBlocksItemFieldsItem0",
                                       "nameOverride": undefined,
                                       "properties": [
                                         {
                                           "conflict": {},
-                                          "generatedName": "getFlowResponseBlocksItemFieldsItemGetFlowResponseBlocksItemFieldsItemSid",
+                                          "generatedName": "getFlowResponseBlocksItemFieldsItem0Sid",
                                           "key": "sid",
                                           "schema": {
                                             "description": undefined,
@@ -1005,7 +1005,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                         },
                                         {
                                           "conflict": {},
-                                          "generatedName": "getFlowResponseBlocksItemFieldsItemGetFlowResponseBlocksItemFieldsItemType",
+                                          "generatedName": "getFlowResponseBlocksItemFieldsItem0Type",
                                           "key": "type",
                                           "schema": {
                                             "description": undefined,
@@ -1015,7 +1015,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                         },
                                         {
                                           "conflict": {},
-                                          "generatedName": "getFlowResponseBlocksItemFieldsItemGetFlowResponseBlocksItemFieldsItemValue",
+                                          "generatedName": "getFlowResponseBlocksItemFieldsItem0Value",
                                           "key": "value",
                                           "schema": {
                                             "description": undefined,
@@ -1038,12 +1038,12 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "allOf": [],
                                       "allOfPropertyConflicts": [],
                                       "description": undefined,
-                                      "generatedName": "GetFlowResponseBlocksItemFieldsItemGetFlowResponseBlocksItemFieldsItem",
+                                      "generatedName": "GetFlowResponseBlocksItemFieldsItem1",
                                       "nameOverride": undefined,
                                       "properties": [
                                         {
                                           "conflict": {},
-                                          "generatedName": "getFlowResponseBlocksItemFieldsItemGetFlowResponseBlocksItemFieldsItemSid",
+                                          "generatedName": "getFlowResponseBlocksItemFieldsItem1Sid",
                                           "key": "sid",
                                           "schema": {
                                             "description": undefined,
@@ -1057,7 +1057,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                         },
                                         {
                                           "conflict": {},
-                                          "generatedName": "getFlowResponseBlocksItemFieldsItemGetFlowResponseBlocksItemFieldsItemType",
+                                          "generatedName": "getFlowResponseBlocksItemFieldsItem1Type",
                                           "key": "type",
                                           "schema": {
                                             "description": undefined,
@@ -1067,7 +1067,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                         },
                                         {
                                           "conflict": {},
-                                          "generatedName": "getFlowResponseBlocksItemFieldsItemGetFlowResponseBlocksItemFieldsItemValue",
+                                          "generatedName": "getFlowResponseBlocksItemFieldsItem1Value",
                                           "key": "value",
                                           "schema": {
                                             "description": undefined,
@@ -1088,12 +1088,12 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "allOf": [],
                                       "allOfPropertyConflicts": [],
                                       "description": undefined,
-                                      "generatedName": "GetFlowResponseBlocksItemFieldsItemGetFlowResponseBlocksItemFieldsItem",
+                                      "generatedName": "GetFlowResponseBlocksItemFieldsItemSid",
                                       "nameOverride": undefined,
                                       "properties": [
                                         {
                                           "conflict": {},
-                                          "generatedName": "getFlowResponseBlocksItemFieldsItemGetFlowResponseBlocksItemFieldsItemSid",
+                                          "generatedName": "getFlowResponseBlocksItemFieldsItemSidSid",
                                           "key": "sid",
                                           "schema": {
                                             "description": undefined,
@@ -1107,7 +1107,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                         },
                                         {
                                           "conflict": {},
-                                          "generatedName": "getFlowResponseBlocksItemFieldsItemGetFlowResponseBlocksItemFieldsItemType",
+                                          "generatedName": "getFlowResponseBlocksItemFieldsItemSidType",
                                           "key": "type",
                                           "schema": {
                                             "description": undefined,
@@ -1117,7 +1117,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                         },
                                         {
                                           "conflict": {},
-                                          "generatedName": "getFlowResponseBlocksItemFieldsItemGetFlowResponseBlocksItemFieldsItemValue",
+                                          "generatedName": "getFlowResponseBlocksItemFieldsItemSidValue",
                                           "key": "value",
                                           "schema": {
                                             "description": undefined,

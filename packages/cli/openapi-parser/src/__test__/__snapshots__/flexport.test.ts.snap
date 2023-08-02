@@ -24324,12 +24324,12 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "allOf": [],
                 "allOfPropertyConflicts": [],
                 "description": "Object format.",
-                "generatedName": "MetadataCreateMetadataCreate",
+                "generatedName": "MetadataCreateExampleKey",
                 "nameOverride": undefined,
                 "properties": [
                   {
                     "conflict": {},
-                    "generatedName": "metadataCreateMetadataCreateExampleKey",
+                    "generatedName": "metadataCreateExampleKeyExampleKey",
                     "key": "example_key",
                     "schema": {
                       "description": undefined,
@@ -24359,12 +24359,12 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "allOf": [],
                   "allOfPropertyConflicts": [],
                   "description": undefined,
-                  "generatedName": "MetadataCreateMetadataCreateItem",
+                  "generatedName": "MetadataCreate1Item",
                   "nameOverride": undefined,
                   "properties": [
                     {
                       "conflict": {},
-                      "generatedName": "metadataCreateMetadataCreateItemName",
+                      "generatedName": "metadataCreate1ItemName",
                       "key": "name",
                       "schema": {
                         "description": undefined,
@@ -24382,7 +24382,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     },
                     {
                       "conflict": {},
-                      "generatedName": "metadataCreateMetadataCreateItemValue",
+                      "generatedName": "metadataCreate1ItemValue",
                       "key": "value",
                       "schema": {
                         "description": undefined,
@@ -25402,7 +25402,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "PlaceDetailsItemPlaceDetailsItem",
+                            "generatedName": "PlaceDetailsItem0",
                             "nameOverride": undefined,
                             "schema": "Airport",
                             "type": "reference",
@@ -25410,7 +25410,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "PlaceDetailsItemPlaceDetailsItem",
+                            "generatedName": "PlaceDetailsItem1",
                             "nameOverride": undefined,
                             "schema": "Placeport",
                             "type": "reference",
@@ -25418,7 +25418,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "PlaceDetailsItemPlaceDetailsItem",
+                            "generatedName": "PlaceDetailsItem2",
                             "nameOverride": undefined,
                             "schema": "Manufacturer",
                             "type": "reference",
@@ -29627,7 +29627,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "ShipmentEventDataResourceShipmentEventDataResource",
+                        "generatedName": "ShipmentEventDataResource0",
                         "nameOverride": undefined,
                         "schema": "Shipment",
                         "type": "reference",
@@ -29635,7 +29635,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "ShipmentEventDataResourceShipmentEventDataResource",
+                        "generatedName": "ShipmentEventDataResource1",
                         "nameOverride": undefined,
                         "schema": "ShipmentLeg",
                         "type": "reference",
@@ -29643,7 +29643,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "ShipmentEventDataResourceShipmentEventDataResource",
+                        "generatedName": "ShipmentEventDataResource2",
                         "nameOverride": undefined,
                         "schema": "OceanShipmentContainerLeg",
                         "type": "reference",
