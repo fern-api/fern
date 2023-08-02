@@ -16,7 +16,6 @@ def _export(*name: str) -> AST.ClassReference:
 
 
 class JSONResponse:
-
     REFERENCE = _export("responses", "JSONResponse")
 
     @staticmethod
@@ -33,7 +32,6 @@ class JSONResponse:
 
 
 class APIRouter:
-
     REFERENCE = _export("APIRouter")
 
     @staticmethod
@@ -78,6 +76,13 @@ class FastAPI:
     APIRouter = APIRouter
 
     JSONResponse = JSONResponse
+
+    DependsType = AST.TypeHint(
+        type=AST.ClassReference(
+            qualified_name_excluding_import=("Depends",),
+            import_=AST.ReferenceImport(module=FAST_API_MODULE, named_import="params"),
+        )
+    )
 
     @staticmethod
     def Depends(dependency: AST.Expression) -> AST.Expression:
@@ -129,11 +134,14 @@ class FastAPI:
         )
 
     @staticmethod
-    def include_router(*, app_variable: str, router: AST.Expression) -> AST.Expression:
+    def include_router(
+        *, app_variable: str, router: AST.Expression, kwargs: List[Tuple[str, AST.Expression]]
+    ) -> AST.Expression:
         return AST.Expression(
             AST.FunctionInvocation(
                 function_definition=AST.Reference(qualified_name_excluding_import=(app_variable, "include_router")),
                 args=[router],
+                kwargs=kwargs,
             )
         )
 

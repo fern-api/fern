@@ -102,6 +102,13 @@ class TypeHint(AstNode):
         )
 
     @staticmethod
+    def sequence(wrapped_type: TypeHint) -> TypeHint:
+        return TypeHint(
+            type=get_reference_to_typing_import("Sequence"),
+            type_parameters=[TypeParameter(wrapped_type)],
+        )
+
+    @staticmethod
     def set(wrapped_type: TypeHint) -> TypeHint:
         return TypeHint(
             type=get_reference_to_typing_import("Set"),

@@ -4,9 +4,11 @@ import glob
 import importlib
 import os
 import types
+import typing
 
 import fastapi
 import starlette
+from fastapi import params
 
 from .core.abstract_fern_service import AbstractFernService
 from .core.exceptions import default_exception_handler, fern_http_exception_handler, http_exception_handler
@@ -35,18 +37,19 @@ def register(
     submission: AbstractSubmissionService,
     sysprop: AbstractSyspropService,
     v_2_problem: AbstractV2ProblemService,
-    v_2_v_3_problem: AbstractV2V3ProblemService
+    v_2_v_3_problem: AbstractV2V3ProblemService,
+    dependencies: typing.Optional[typing.Sequence[params.Depends]] = None
 ) -> None:
-    _app.include_router(__register_service(v_2))
-    _app.include_router(__register_service(admin))
-    _app.include_router(__register_service(homepage))
-    _app.include_router(__register_service(migration))
-    _app.include_router(__register_service(playlist))
-    _app.include_router(__register_service(problem))
-    _app.include_router(__register_service(submission))
-    _app.include_router(__register_service(sysprop))
-    _app.include_router(__register_service(v_2_problem))
-    _app.include_router(__register_service(v_2_v_3_problem))
+    _app.include_router(__register_service(v_2), dependencies=dependencies)
+    _app.include_router(__register_service(admin), dependencies=dependencies)
+    _app.include_router(__register_service(homepage), dependencies=dependencies)
+    _app.include_router(__register_service(migration), dependencies=dependencies)
+    _app.include_router(__register_service(playlist), dependencies=dependencies)
+    _app.include_router(__register_service(problem), dependencies=dependencies)
+    _app.include_router(__register_service(submission), dependencies=dependencies)
+    _app.include_router(__register_service(sysprop), dependencies=dependencies)
+    _app.include_router(__register_service(v_2_problem), dependencies=dependencies)
+    _app.include_router(__register_service(v_2_v_3_problem), dependencies=dependencies)
 
     _app.add_exception_handler(FernHTTPException, fern_http_exception_handler)
     _app.add_exception_handler(starlette.exceptions.HTTPException, http_exception_handler)
