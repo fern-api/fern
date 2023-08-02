@@ -2376,7 +2376,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetAttemptsRequestDir0": {
+        "GetAttemptsRequestDir": {
           "docs": undefined,
           "enum": [
             {
@@ -2391,7 +2391,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetBookmarksRequestDir0": {
+        "GetBookmarksRequestDir": {
           "docs": undefined,
           "enum": [
             {
@@ -2406,7 +2406,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetConnectionsRequestDir0": {
+        "GetConnectionsRequestDir": {
           "docs": undefined,
           "enum": [
             {
@@ -2421,7 +2421,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetDestinationsRequestDir0": {
+        "GetDestinationsRequestDir": {
           "docs": undefined,
           "enum": [
             {
@@ -2436,7 +2436,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetEventBulkRetriesRequestDir0": {
+        "GetEventBulkRetriesRequestDir": {
           "docs": undefined,
           "enum": [
             {
@@ -2451,7 +2451,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetEventsRequestDir0": {
+        "GetEventsRequestDir": {
           "docs": undefined,
           "enum": [
             {
@@ -2466,7 +2466,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetEventsRequestOrderBy0": {
+        "GetEventsRequestOrderBy": {
           "docs": undefined,
           "enum": [
             {
@@ -2486,7 +2486,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetIgnoredEventBulkRetriesRequestDir0": {
+        "GetIgnoredEventBulkRetriesRequestDir": {
           "docs": undefined,
           "enum": [
             {
@@ -2501,7 +2501,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetIssueCountRequestDir0": {
+        "GetIssueCountRequestDir": {
           "docs": undefined,
           "enum": [
             {
@@ -2516,7 +2516,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetIssueCountRequestOrderBy0": {
+        "GetIssueCountRequestOrderBy": {
           "docs": undefined,
           "enum": [
             {
@@ -2546,7 +2546,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetIssueCountRequestStatus0": {
+        "GetIssueCountRequestStatus": {
           "docs": "Issue status",
           "enum": [
             {
@@ -2571,7 +2571,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetIssueCountRequestType0": {
+        "GetIssueCountRequestType": {
           "docs": "Issue type",
           "enum": [
             {
@@ -2591,7 +2591,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetIssueTriggersRequestDir0": {
+        "GetIssueTriggersRequestDir": {
           "docs": undefined,
           "enum": [
             {
@@ -2606,7 +2606,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetIssueTriggersRequestOrderBy0": {
+        "GetIssueTriggersRequestOrderBy": {
           "docs": undefined,
           "enum": [
             {
@@ -2621,7 +2621,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetIssuesRequestDir0": {
+        "GetIssuesRequestDir": {
           "docs": undefined,
           "enum": [
             {
@@ -2636,7 +2636,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetIssuesRequestOrderBy0": {
+        "GetIssuesRequestOrderBy": {
           "docs": undefined,
           "enum": [
             {
@@ -2666,7 +2666,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetIssuesRequestStatus0": {
+        "GetIssuesRequestStatus": {
           "docs": "Issue status",
           "enum": [
             {
@@ -2691,7 +2691,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetIssuesRequestType0": {
+        "GetIssuesRequestType": {
           "docs": "Issue type",
           "enum": [
             {
@@ -2711,7 +2711,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetRequestBulkRetriesRequestDir0": {
+        "GetRequestBulkRetriesRequestDir": {
           "docs": undefined,
           "enum": [
             {
@@ -2726,7 +2726,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetRequestEventsRequestDir0": {
+        "GetRequestEventsRequestDir": {
           "docs": undefined,
           "enum": [
             {
@@ -2741,7 +2741,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetRequestEventsRequestOrderBy0": {
+        "GetRequestEventsRequestOrderBy": {
           "docs": undefined,
           "enum": [
             {
@@ -2761,7 +2761,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetRequestIgnoredEventsRequestDir0": {
+        "GetRequestIgnoredEventsRequestDir": {
           "docs": undefined,
           "enum": [
             {
@@ -2776,7 +2776,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetRequestsRequestDir0": {
+        "GetRequestsRequestDir": {
           "docs": undefined,
           "enum": [
             {
@@ -2791,7 +2791,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetRequestsRequestOrderBy0": {
+        "GetRequestsRequestOrderBy": {
           "docs": undefined,
           "enum": [
             {
@@ -2821,7 +2821,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetRulesetsRequestDir0": {
+        "GetRulesetsRequestDir": {
           "docs": undefined,
           "enum": [
             {
@@ -2836,7 +2836,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetSourcesRequestDir0": {
+        "GetSourcesRequestDir": {
           "docs": undefined,
           "enum": [
             {
@@ -2851,7 +2851,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetTransformationExecutionsRequestDir0": {
+        "GetTransformationExecutionsRequestDir": {
           "docs": undefined,
           "enum": [
             {
@@ -2866,7 +2866,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetTransformationExecutionsRequestLogLevel0": {
+        "GetTransformationExecutionsRequestLogLevel": {
           "docs": undefined,
           "enum": [
             {
@@ -2896,7 +2896,7 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "GetTransformationsRequestDir0": {
+        "GetTransformationsRequestDir": {
           "docs": undefined,
           "enum": [
             {
@@ -5199,7 +5199,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "dir": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetAttemptsRequestDir0>",
+                  "type": "optional<root.GetAttemptsRequestDir>",
                 },
                 "event_id": {
                   "allow-multiple": undefined,
@@ -5342,7 +5342,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "dir": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetBookmarksRequestDir0>",
+                  "type": "optional<root.GetBookmarksRequestDir>",
                 },
                 "event_data_id": {
                   "allow-multiple": undefined,
@@ -5590,7 +5590,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "dir": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetEventBulkRetriesRequestDir0>",
+                  "type": "optional<root.GetEventBulkRetriesRequestDir>",
                 },
                 "id": {
                   "allow-multiple": undefined,
@@ -5761,7 +5761,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "dir": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetIgnoredEventBulkRetriesRequestDir0>",
+                  "type": "optional<root.GetIgnoredEventBulkRetriesRequestDir>",
                 },
                 "id": {
                   "allow-multiple": undefined,
@@ -5932,7 +5932,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "dir": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetRequestBulkRetriesRequestDir0>",
+                  "type": "optional<root.GetRequestBulkRetriesRequestDir>",
                 },
                 "id": {
                   "allow-multiple": undefined,
@@ -6136,7 +6136,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "dir": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetConnectionsRequestDir0>",
+                  "type": "optional<root.GetConnectionsRequestDir>",
                 },
                 "full_name": {
                   "allow-multiple": undefined,
@@ -6485,7 +6485,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "dir": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetDestinationsRequestDir0>",
+                  "type": "optional<root.GetDestinationsRequestDir>",
                 },
                 "id": {
                   "allow-multiple": undefined,
@@ -6740,7 +6740,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "dir": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetEventsRequestDir0>",
+                  "type": "optional<root.GetEventsRequestDir>",
                 },
                 "error_code": {
                   "allow-multiple": undefined,
@@ -6790,7 +6790,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "order_by": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetEventsRequestOrderBy0>",
+                  "type": "optional<root.GetEventsRequestOrderBy>",
                 },
                 "parsed_query": {
                   "allow-multiple": undefined,
@@ -7268,7 +7268,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "dir": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetIssueTriggersRequestDir0>",
+                  "type": "optional<root.GetIssueTriggersRequestDir>",
                 },
                 "disabled_at": {
                   "allow-multiple": undefined,
@@ -7293,7 +7293,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "order_by": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetIssueTriggersRequestOrderBy0>",
+                  "type": "optional<root.GetIssueTriggersRequestOrderBy>",
                 },
                 "prev": {
                   "allow-multiple": undefined,
@@ -7471,7 +7471,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "dir": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetIssueCountRequestDir0>",
+                  "type": "optional<root.GetIssueCountRequestDir>",
                 },
                 "dismissed_at": {
                   "allow-multiple": undefined,
@@ -7516,7 +7516,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "order_by": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetIssueCountRequestOrderBy0>",
+                  "type": "optional<root.GetIssueCountRequestOrderBy>",
                 },
                 "prev": {
                   "allow-multiple": undefined,
@@ -7526,12 +7526,12 @@ exports[`open api parser hookdeck simple 1`] = `
                 "status": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetIssueCountRequestStatus0>",
+                  "type": "optional<root.GetIssueCountRequestStatus>",
                 },
                 "type": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetIssueCountRequestType0>",
+                  "type": "optional<root.GetIssueCountRequestType>",
                 },
               },
             },
@@ -7561,7 +7561,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "dir": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetIssuesRequestDir0>",
+                  "type": "optional<root.GetIssuesRequestDir>",
                 },
                 "dismissed_at": {
                   "allow-multiple": undefined,
@@ -7606,7 +7606,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "order_by": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetIssuesRequestOrderBy0>",
+                  "type": "optional<root.GetIssuesRequestOrderBy>",
                 },
                 "prev": {
                   "allow-multiple": undefined,
@@ -7616,12 +7616,12 @@ exports[`open api parser hookdeck simple 1`] = `
                 "status": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetIssuesRequestStatus0>",
+                  "type": "optional<root.GetIssuesRequestStatus>",
                 },
                 "type": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetIssuesRequestType0>",
+                  "type": "optional<root.GetIssuesRequestType>",
                 },
               },
             },
@@ -7801,7 +7801,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "dir": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetRequestEventsRequestDir0>",
+                  "type": "optional<root.GetRequestEventsRequestDir>",
                 },
                 "error_code": {
                   "allow-multiple": undefined,
@@ -7851,7 +7851,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "order_by": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetRequestEventsRequestOrderBy0>",
+                  "type": "optional<root.GetRequestEventsRequestOrderBy>",
                 },
                 "parsed_query": {
                   "allow-multiple": undefined,
@@ -7923,7 +7923,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "dir": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetRequestIgnoredEventsRequestDir0>",
+                  "type": "optional<root.GetRequestIgnoredEventsRequestDir>",
                 },
                 "id": {
                   "allow-multiple": undefined,
@@ -8008,7 +8008,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "dir": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetRequestsRequestDir0>",
+                  "type": "optional<root.GetRequestsRequestDir>",
                 },
                 "events_count": {
                   "allow-multiple": undefined,
@@ -8053,7 +8053,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "order_by": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetRequestsRequestOrderBy0>",
+                  "type": "optional<root.GetRequestsRequestOrderBy>",
                 },
                 "parsed_query": {
                   "allow-multiple": undefined,
@@ -8247,7 +8247,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "dir": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetRulesetsRequestDir0>",
+                  "type": "optional<root.GetRulesetsRequestDir>",
                 },
                 "id": {
                   "allow-multiple": undefined,
@@ -8496,7 +8496,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "dir": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetSourcesRequestDir0>",
+                  "type": "optional<root.GetSourcesRequestDir>",
                 },
                 "id": {
                   "allow-multiple": undefined,
@@ -8747,7 +8747,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "dir": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetTransformationExecutionsRequestDir0>",
+                  "type": "optional<root.GetTransformationExecutionsRequestDir>",
                 },
                 "issue_id": {
                   "allow-multiple": undefined,
@@ -8762,7 +8762,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "log_level": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetTransformationExecutionsRequestLogLevel0>",
+                  "type": "optional<root.GetTransformationExecutionsRequestLogLevel>",
                 },
                 "next": {
                   "allow-multiple": undefined,
@@ -8807,7 +8807,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "dir": {
                   "allow-multiple": undefined,
                   "docs": undefined,
-                  "type": "optional<root.GetTransformationsRequestDir0>",
+                  "type": "optional<root.GetTransformationsRequestDir>",
                 },
                 "id": {
                   "allow-multiple": undefined,

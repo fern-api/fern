@@ -206,7 +206,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetIssueTriggersRequestOrderBy0",
+                        "generatedName": "GetIssueTriggersRequestOrderBy",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -229,7 +229,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetIssueTriggersRequestOrderBy1Item",
+                          "generatedName": "GetIssueTriggersRequestOrderByItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -269,7 +269,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetIssueTriggersRequestDir0",
+                        "generatedName": "GetIssueTriggersRequestDir",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -292,7 +292,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetIssueTriggersRequestDir1Item",
+                          "generatedName": "GetIssueTriggersRequestDirItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -1144,7 +1144,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetAttemptsRequestDir0",
+                        "generatedName": "GetAttemptsRequestDir",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -1167,7 +1167,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetAttemptsRequestDir1Item",
+                          "generatedName": "GetAttemptsRequestDirItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -1721,7 +1721,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetBookmarksRequestDir0",
+                        "generatedName": "GetBookmarksRequestDir",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -1744,7 +1744,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetBookmarksRequestDir1Item",
+                          "generatedName": "GetBookmarksRequestDirItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -2802,7 +2802,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetDestinationsRequestDir0",
+                        "generatedName": "GetDestinationsRequestDir",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -2825,7 +2825,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetDestinationsRequestDir1Item",
+                          "generatedName": "GetDestinationsRequestDirItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -3741,7 +3741,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "GetEventsRequestStatus1Item",
+                          "generatedName": "GetEventsRequestStatusItem",
                           "nameOverride": undefined,
                           "schema": "EventStatus",
                           "type": "reference",
@@ -4927,7 +4927,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetEventsRequestOrderBy0",
+                        "generatedName": "GetEventsRequestOrderBy",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -4956,7 +4956,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetEventsRequestOrderBy1Item",
+                          "generatedName": "GetEventsRequestOrderByItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -5002,7 +5002,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetEventsRequestDir0",
+                        "generatedName": "GetEventsRequestDir",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -5025,7 +5025,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetEventsRequestDir1Item",
+                          "generatedName": "GetEventsRequestDirItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -5878,7 +5878,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "file": undefined,
-                                  "generatedName": "GetEventBulkRetriesRequestQueryStatus1Item",
+                                  "generatedName": "GetEventBulkRetriesRequestQueryStatusItem",
                                   "nameOverride": undefined,
                                   "schema": "EventStatus",
                                   "type": "reference",
@@ -7104,7 +7104,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "schemas": [
                               {
                                 "description": undefined,
-                                "generatedName": "GetEventBulkRetriesRequestQueryOrderBy0",
+                                "generatedName": "GetEventBulkRetriesRequestQueryOrderBy",
                                 "nameOverride": undefined,
                                 "type": "enum",
                                 "values": [
@@ -7133,7 +7133,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "type": "array",
                                 "value": {
                                   "description": undefined,
-                                  "generatedName": "GetEventBulkRetriesRequestQueryOrderBy1Item",
+                                  "generatedName": "GetEventBulkRetriesRequestQueryOrderByItem",
                                   "nameOverride": undefined,
                                   "type": "enum",
                                   "values": [
@@ -7180,7 +7180,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "schemas": [
                               {
                                 "description": undefined,
-                                "generatedName": "GetEventBulkRetriesRequestQueryDir0",
+                                "generatedName": "GetEventBulkRetriesRequestQueryDir",
                                 "nameOverride": undefined,
                                 "type": "enum",
                                 "values": [
@@ -7203,7 +7203,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "type": "array",
                                 "value": {
                                   "description": undefined,
-                                  "generatedName": "GetEventBulkRetriesRequestQueryDir1Item",
+                                  "generatedName": "GetEventBulkRetriesRequestQueryDirItem",
                                   "nameOverride": undefined,
                                   "type": "enum",
                                   "values": [
@@ -7363,7 +7363,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetEventBulkRetriesRequestDir0",
+                        "generatedName": "GetEventBulkRetriesRequestDir",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -7386,7 +7386,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetEventBulkRetriesRequestDir1Item",
+                          "generatedName": "GetEventBulkRetriesRequestDirItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -7593,7 +7593,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                     "value": {
                                       "description": undefined,
                                       "file": undefined,
-                                      "generatedName": "CreateEventBulkRetryRequestQueryStatus1Item",
+                                      "generatedName": "CreateEventBulkRetryRequestQueryStatusItem",
                                       "nameOverride": undefined,
                                       "schema": "EventStatus",
                                       "type": "reference",
@@ -8919,7 +8919,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "file": undefined,
-                                  "generatedName": "GenerateEventBulkRetryPlanRequestQueryStatus1Item",
+                                  "generatedName": "GenerateEventBulkRetryPlanRequestQueryStatusItem",
                                   "nameOverride": undefined,
                                   "schema": "EventStatus",
                                   "type": "reference",
@@ -10910,7 +10910,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetIgnoredEventBulkRetriesRequestDir0",
+                        "generatedName": "GetIgnoredEventBulkRetriesRequestDir",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -10933,7 +10933,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetIgnoredEventBulkRetriesRequestDir1Item",
+                          "generatedName": "GetIgnoredEventBulkRetriesRequestDirItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -12225,7 +12225,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": "Issue type",
-                        "generatedName": "GetIssuesRequestType0",
+                        "generatedName": "GetIssuesRequestType",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -12254,7 +12254,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": "Issue type",
-                          "generatedName": "GetIssuesRequestType1Item",
+                          "generatedName": "GetIssuesRequestTypeItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -12300,7 +12300,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": "Issue status",
-                        "generatedName": "GetIssuesRequestStatus0",
+                        "generatedName": "GetIssuesRequestStatus",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -12335,7 +12335,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": "Issue status",
-                          "generatedName": "GetIssuesRequestStatus1Item",
+                          "generatedName": "GetIssuesRequestStatusItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -12534,7 +12534,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "file": undefined,
-                                  "generatedName": "GetIssuesRequestAggregationKeysErrorCode1Item",
+                                  "generatedName": "GetIssuesRequestAggregationKeysErrorCodeItem",
                                   "nameOverride": undefined,
                                   "schema": "AttemptErrorCodes",
                                   "type": "reference",
@@ -13110,7 +13110,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetIssuesRequestOrderBy0",
+                        "generatedName": "GetIssuesRequestOrderBy",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -13151,7 +13151,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetIssuesRequestOrderBy1Item",
+                          "generatedName": "GetIssuesRequestOrderByItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -13209,7 +13209,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetIssuesRequestDir0",
+                        "generatedName": "GetIssuesRequestDir",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -13232,7 +13232,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetIssuesRequestDir1Item",
+                          "generatedName": "GetIssuesRequestDirItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -13441,7 +13441,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": "Issue type",
-                        "generatedName": "GetIssueCountRequestType0",
+                        "generatedName": "GetIssueCountRequestType",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -13470,7 +13470,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": "Issue type",
-                          "generatedName": "GetIssueCountRequestType1Item",
+                          "generatedName": "GetIssueCountRequestTypeItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -13516,7 +13516,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": "Issue status",
-                        "generatedName": "GetIssueCountRequestStatus0",
+                        "generatedName": "GetIssueCountRequestStatus",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -13551,7 +13551,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": "Issue status",
-                          "generatedName": "GetIssueCountRequestStatus1Item",
+                          "generatedName": "GetIssueCountRequestStatusItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -13750,7 +13750,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "file": undefined,
-                                  "generatedName": "GetIssueCountRequestAggregationKeysErrorCode1Item",
+                                  "generatedName": "GetIssueCountRequestAggregationKeysErrorCodeItem",
                                   "nameOverride": undefined,
                                   "schema": "AttemptErrorCodes",
                                   "type": "reference",
@@ -14326,7 +14326,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetIssueCountRequestOrderBy0",
+                        "generatedName": "GetIssueCountRequestOrderBy",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -14367,7 +14367,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetIssueCountRequestOrderBy1Item",
+                          "generatedName": "GetIssueCountRequestOrderByItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -14425,7 +14425,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetIssueCountRequestDir0",
+                        "generatedName": "GetIssueCountRequestDir",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -14448,7 +14448,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetIssueCountRequestDir1Item",
+                          "generatedName": "GetIssueCountRequestDirItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -14976,7 +14976,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "GetRequestsRequestRejectionCause2Item",
+                          "generatedName": "GetRequestsRequestRejectionCauseItem",
                           "nameOverride": undefined,
                           "schema": "RequestRejectionCause",
                           "type": "reference",
@@ -15759,7 +15759,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetRequestsRequestOrderBy0",
+                        "generatedName": "GetRequestsRequestOrderBy",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -15782,7 +15782,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetRequestsRequestOrderBy1Item",
+                          "generatedName": "GetRequestsRequestOrderByItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -15822,7 +15822,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetRequestsRequestDir0",
+                        "generatedName": "GetRequestsRequestDir",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -15845,7 +15845,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetRequestsRequestDir1Item",
+                          "generatedName": "GetRequestsRequestDirItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -16232,7 +16232,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "GetRequestEventsRequestStatus1Item",
+                          "generatedName": "GetRequestEventsRequestStatusItem",
                           "nameOverride": undefined,
                           "schema": "EventStatus",
                           "type": "reference",
@@ -17418,7 +17418,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetRequestEventsRequestOrderBy0",
+                        "generatedName": "GetRequestEventsRequestOrderBy",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -17447,7 +17447,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetRequestEventsRequestOrderBy1Item",
+                          "generatedName": "GetRequestEventsRequestOrderByItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -17493,7 +17493,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetRequestEventsRequestDir0",
+                        "generatedName": "GetRequestEventsRequestDir",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -17516,7 +17516,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetRequestEventsRequestDir1Item",
+                          "generatedName": "GetRequestEventsRequestDirItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -17734,7 +17734,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetRequestIgnoredEventsRequestDir0",
+                        "generatedName": "GetRequestIgnoredEventsRequestDir",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -17757,7 +17757,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetRequestIgnoredEventsRequestDir1Item",
+                          "generatedName": "GetRequestIgnoredEventsRequestDirItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -18560,7 +18560,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   "value": {
                                     "description": undefined,
                                     "file": undefined,
-                                    "generatedName": "GetRequestBulkRetriesRequestQueryRejectionCause2Item",
+                                    "generatedName": "GetRequestBulkRetriesRequestQueryRejectionCauseItem",
                                     "nameOverride": undefined,
                                     "schema": "RequestRejectionCause",
                                     "type": "reference",
@@ -19357,7 +19357,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "schemas": [
                               {
                                 "description": undefined,
-                                "generatedName": "GetRequestBulkRetriesRequestQueryOrderBy0",
+                                "generatedName": "GetRequestBulkRetriesRequestQueryOrderBy",
                                 "nameOverride": undefined,
                                 "type": "enum",
                                 "values": [
@@ -19380,7 +19380,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "type": "array",
                                 "value": {
                                   "description": undefined,
-                                  "generatedName": "GetRequestBulkRetriesRequestQueryOrderBy1Item",
+                                  "generatedName": "GetRequestBulkRetriesRequestQueryOrderByItem",
                                   "nameOverride": undefined,
                                   "type": "enum",
                                   "values": [
@@ -19421,7 +19421,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "schemas": [
                               {
                                 "description": undefined,
-                                "generatedName": "GetRequestBulkRetriesRequestQueryDir0",
+                                "generatedName": "GetRequestBulkRetriesRequestQueryDir",
                                 "nameOverride": undefined,
                                 "type": "enum",
                                 "values": [
@@ -19444,7 +19444,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "type": "array",
                                 "value": {
                                   "description": undefined,
-                                  "generatedName": "GetRequestBulkRetriesRequestQueryDir1Item",
+                                  "generatedName": "GetRequestBulkRetriesRequestQueryDirItem",
                                   "nameOverride": undefined,
                                   "type": "enum",
                                   "values": [
@@ -19589,7 +19589,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetRequestBulkRetriesRequestDir0",
+                        "generatedName": "GetRequestBulkRetriesRequestDir",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -19612,7 +19612,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetRequestBulkRetriesRequestDir1Item",
+                          "generatedName": "GetRequestBulkRetriesRequestDirItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -19962,7 +19962,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "file": undefined,
-                                        "generatedName": "CreateRequestBulkRetryRequestQueryRejectionCause2Item",
+                                        "generatedName": "CreateRequestBulkRetryRequestQueryRejectionCauseItem",
                                         "nameOverride": undefined,
                                         "schema": "RequestRejectionCause",
                                         "type": "reference",
@@ -21002,7 +21002,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   "value": {
                                     "description": undefined,
                                     "file": undefined,
-                                    "generatedName": "GenerateRequestBulkRetryPlanRequestQueryRejectionCause2Item",
+                                    "generatedName": "GenerateRequestBulkRetryPlanRequestQueryRejectionCauseItem",
                                     "nameOverride": undefined,
                                     "schema": "RequestRejectionCause",
                                     "type": "reference",
@@ -22493,7 +22493,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetRulesetsRequestDir0",
+                        "generatedName": "GetRulesetsRequestDir",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -22516,7 +22516,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetRulesetsRequestDir1Item",
+                          "generatedName": "GetRulesetsRequestDirItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -23576,7 +23576,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetSourcesRequestDir0",
+                        "generatedName": "GetSourcesRequestDir",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -23599,7 +23599,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetSourcesRequestDir1Item",
+                          "generatedName": "GetSourcesRequestDirItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -24348,7 +24348,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetTransformationsRequestDir0",
+                        "generatedName": "GetTransformationsRequestDir",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -24371,7 +24371,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetTransformationsRequestDir1Item",
+                          "generatedName": "GetTransformationsRequestDirItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -25252,7 +25252,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "nullable",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetTransformationExecutionsRequestLogLevel0",
+                          "generatedName": "GetTransformationExecutionsRequestLogLevel",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -25297,7 +25297,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                           "type": "nullable",
                           "value": {
                             "description": undefined,
-                            "generatedName": "GetTransformationExecutionsRequestLogLevel1Item",
+                            "generatedName": "GetTransformationExecutionsRequestLogLevelItem",
                             "nameOverride": undefined,
                             "type": "enum",
                             "values": [
@@ -25587,7 +25587,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetTransformationExecutionsRequestDir0",
+                        "generatedName": "GetTransformationExecutionsRequestDir",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -25610,7 +25610,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetTransformationExecutionsRequestDir1Item",
+                          "generatedName": "GetTransformationExecutionsRequestDirItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -26408,7 +26408,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "schemas": [
                       {
                         "description": undefined,
-                        "generatedName": "GetConnectionsRequestDir0",
+                        "generatedName": "GetConnectionsRequestDir",
                         "nameOverride": undefined,
                         "type": "enum",
                         "values": [
@@ -26431,7 +26431,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "array",
                         "value": {
                           "description": undefined,
-                          "generatedName": "GetConnectionsRequestDir1Item",
+                          "generatedName": "GetConnectionsRequestDirItem",
                           "nameOverride": undefined,
                           "type": "enum",
                           "values": [
@@ -34506,7 +34506,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "SeekPaginationDir1Item",
+                          "generatedName": "SeekPaginationDirItem",
                           "nameOverride": undefined,
                           "schema": "OrderByDirection",
                           "type": "reference",

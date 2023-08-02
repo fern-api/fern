@@ -24359,12 +24359,12 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "allOf": [],
                   "allOfPropertyConflicts": [],
                   "description": undefined,
-                  "generatedName": "MetadataCreate1Item",
+                  "generatedName": "MetadataCreateItem",
                   "nameOverride": undefined,
                   "properties": [
                     {
                       "conflict": {},
-                      "generatedName": "metadataCreate1ItemName",
+                      "generatedName": "metadataCreateItemName",
                       "key": "name",
                       "schema": {
                         "description": undefined,
@@ -24382,7 +24382,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     },
                     {
                       "conflict": {},
-                      "generatedName": "metadataCreate1ItemValue",
+                      "generatedName": "metadataCreateItemValue",
                       "key": "value",
                       "schema": {
                         "description": undefined,

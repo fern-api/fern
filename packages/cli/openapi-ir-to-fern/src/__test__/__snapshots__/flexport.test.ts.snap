@@ -5023,11 +5023,20 @@ exports[`open api parser flexport simple 1`] = `
             },
             {
               "docs": "Array format.",
-              "type": "list<MetadataCreate1Item>",
+              "type": "list<MetadataCreateItem>",
             },
           ],
         },
-        "MetadataCreate1Item": {
+        "MetadataCreateExampleKey": {
+          "docs": "Object format.",
+          "properties": {
+            "example_key": {
+              "docs": undefined,
+              "type": "optional<list<string>>",
+            },
+          },
+        },
+        "MetadataCreateItem": {
           "docs": undefined,
           "properties": {
             "name": {
@@ -5035,15 +5044,6 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<string>",
             },
             "value": {
-              "docs": undefined,
-              "type": "optional<list<string>>",
-            },
-          },
-        },
-        "MetadataCreateExampleKey": {
-          "docs": "Object format.",
-          "properties": {
-            "example_key": {
               "docs": undefined,
               "type": "optional<list<string>>",
             },

@@ -65,14 +65,12 @@ export function convertUndiscriminatedOneOf({
     });
 }
 
-// for each obj put properties into a set, you get a [set<string>, ...]
-// every time you append a set, you only keep the diff
-
 function getUniqueSubTypeNames({
     schemas,
 }: {
     schemas: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[];
 }): string[] {
+    // computes the unique properties for each object sub type
     let uniquePropertySets: Record<string, string[]> = {};
     let index = 0;
     for (const schema of schemas) {
@@ -93,17 +91,34 @@ function getUniqueSubTypeNames({
         index++;
     }
 
+    // generates prefix for subtype
     const prefixes = [];
-    for (let i = 0; i < schemas.length; ++i) {
+    let i = 0;
+    for (const schema of schemas) {
         const propertySet = uniquePropertySets[i];
         if (propertySet != null && propertySet.length > 0) {
             const sortedProperties = propertySet.sort();
             if (sortedProperties[0] != null) {
                 prefixes.push(sortedProperties[0]);
+                ++i;
                 continue;
             }
         }
-        prefixes.push(`${i}`);
+
+        if (isReferenceObject(schema)) {
+            prefixes.push(`${i}`);
+        } else if (
+            schema.type === "array" ||
+            schema.type === "boolean" ||
+            schema.type === "integer" ||
+            schema.type === "number" ||
+            schema.type === "string"
+        ) {
+            prefixes.push("");
+        } else {
+            prefixes.push(`${i}`);
+        }
+        ++i;
     }
     return prefixes;
 }
