@@ -16,6 +16,7 @@
 
 package com.fern.java.generators.object;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.java.ObjectMethodFactory;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
@@ -81,6 +82,9 @@ public final class ObjectTypeSpecGenerator {
                     .map(PoetTypeWithClassName::typeSpec)
                     .collect(Collectors.toList()));
             if (isSerialized) {
+                typeSpecBuilder.addAnnotation(AnnotationSpec.builder(JsonInclude.class)
+                        .addMember("value", "$T.Include.NON_EMPTY", JsonInclude.class)
+                        .build());
                 typeSpecBuilder.addAnnotation(AnnotationSpec.builder(JsonDeserialize.class)
                         .addMember("builder", "$T.class", objectBuilder.getBuilderImplClassName())
                         .build());

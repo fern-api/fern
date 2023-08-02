@@ -854,6 +854,7 @@ basic[src/main/java/com/fern/basic/resources/blog/requests/CreatePostRequest.jav
 package com.fern.basic.resources.blog.requests;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
@@ -866,6 +867,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = CreatePostRequest.Builder.class)
 public final class CreatePostRequest {
     private final String title;
@@ -1125,11 +1127,13 @@ basic[src/main/java/com/fern/basic/resources/blog/requests/GetPostRequest.java]=
 package com.fern.basic.resources.blog.requests;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = GetPostRequest.Builder.class)
 public final class GetPostRequest {
     private final String dummy;
@@ -1393,11 +1397,13 @@ basic[src/main/java/com/fern/basic/resources/blog/types/BlogPost.java]=[
 package com.fern.basic.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = BlogPost.Builder.class)
 public final class BlogPost {
     private final String id;
@@ -1584,11 +1590,13 @@ basic[src/main/java/com/fern/basic/resources/blog/types/GeneratorIdAndVersion.ja
 package com.fern.basic.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = GeneratorIdAndVersion.Builder.class)
 public final class GeneratorIdAndVersion {
     private final String id;
@@ -1691,11 +1699,13 @@ basic[src/main/java/com/fern/basic/resources/blog/types/PostNotFoundErrorBody.ja
 package com.fern.basic.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = PostNotFoundErrorBody.Builder.class)
 public final class PostNotFoundErrorBody {
     private final String id;
@@ -1804,11 +1814,13 @@ basic[src/main/java/com/fern/basic/resources/blog/types/UnauthorizedErrorBody.ja
 package com.fern.basic.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = UnauthorizedErrorBody.Builder.class)
 public final class UnauthorizedErrorBody {
     private final String reason;
@@ -2149,6 +2161,7 @@ basic[src/main/java/com/fern/basic/resources/raven/device/types/Device.java]=[
 package com.fern.basic.resources.raven.device.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
@@ -2156,6 +2169,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 import java.util.Optional;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = Device.Builder.class)
 public final class Device {
     private final Optional<String> id;
@@ -2696,6 +2710,7 @@ basic[src/main/java/com/fern/basic/resources/raven/event/requests/BulkSendEventR
 package com.fern.basic.resources.raven.event.requests;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
@@ -2706,6 +2721,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = BulkSendEventRequest.Builder.class)
 public final class BulkSendEventRequest {
     private final Optional<String> idempotencyKey;
@@ -2880,6 +2896,7 @@ basic[src/main/java/com/fern/basic/resources/raven/event/requests/SendEventReque
 package com.fern.basic.resources.raven.event.requests;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
@@ -2891,6 +2908,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = SendEventRequest.Builder.class)
 public final class SendEventRequest {
     private final Optional<String> idempotencyKey;
@@ -3188,11 +3206,13 @@ basic[src/main/java/com/fern/basic/resources/raven/event/types/Attachment.java]=
 package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = Attachment.Builder.class)
 public final class Attachment {
     private final String fileName;
@@ -3317,6 +3337,7 @@ basic[src/main/java/com/fern/basic/resources/raven/event/types/BatchEvent.java]=
 package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
@@ -3326,6 +3347,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = BatchEvent.Builder.class)
 public final class BatchEvent {
     private final Map<String, Object> data;
@@ -3455,11 +3477,13 @@ basic[src/main/java/com/fern/basic/resources/raven/event/types/ChannelOverride.j
 package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ChannelOverride.Builder.class)
 public final class ChannelOverride implements IChannelOverride {
     private final long scheduleAt;
@@ -3541,11 +3565,13 @@ basic[src/main/java/com/fern/basic/resources/raven/event/types/EmailMessage.java
 package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = EmailMessage.Builder.class)
 public final class EmailMessage {
     private final String text;
@@ -3670,6 +3696,7 @@ basic[src/main/java/com/fern/basic/resources/raven/event/types/EmailOverride.jav
 package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
@@ -3678,6 +3705,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = EmailOverride.Builder.class)
 public final class EmailOverride implements IChannelOverride {
     private final long scheduleAt;
@@ -3926,11 +3954,13 @@ basic[src/main/java/com/fern/basic/resources/raven/event/types/EmailRecipient.ja
 package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = EmailRecipient.Builder.class)
 public final class EmailRecipient {
     private final String name;
@@ -4033,6 +4063,7 @@ basic[src/main/java/com/fern/basic/resources/raven/event/types/EventOverride.jav
 package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
@@ -4042,6 +4073,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = EventOverride.Builder.class)
 public final class EventOverride {
     private final Optional<EmailOverride> email;
@@ -4359,11 +4391,13 @@ basic[src/main/java/com/fern/basic/resources/raven/event/types/InAppOverride.jav
 package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = InAppOverride.Builder.class)
 public final class InAppOverride implements IChannelOverride {
     private final long scheduleAt;
@@ -4445,11 +4479,13 @@ basic[src/main/java/com/fern/basic/resources/raven/event/types/Param.java]=[
 package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = Param.Builder.class)
 public final class Param {
     private final String name;
@@ -4552,6 +4588,7 @@ basic[src/main/java/com/fern/basic/resources/raven/event/types/ProviderOverride.
 package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
@@ -4562,6 +4599,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ProviderOverride.Builder.class)
 public final class ProviderOverride {
     private final Map<String, Object> payload;
@@ -4762,11 +4800,13 @@ basic[src/main/java/com/fern/basic/resources/raven/event/types/PushOverride.java
 package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = PushOverride.Builder.class)
 public final class PushOverride implements IChannelOverride {
     private final long scheduleAt;
@@ -4848,11 +4888,13 @@ basic[src/main/java/com/fern/basic/resources/raven/event/types/SendEventResponse
 package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = SendEventResponse.Builder.class)
 public final class SendEventResponse {
     private final String id;
@@ -4955,11 +4997,13 @@ basic[src/main/java/com/fern/basic/resources/raven/event/types/SlackMessage.java
 package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = SlackMessage.Builder.class)
 public final class SlackMessage {
     private final String text;
@@ -5062,11 +5106,13 @@ basic[src/main/java/com/fern/basic/resources/raven/event/types/SlackOverride.jav
 package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = SlackOverride.Builder.class)
 public final class SlackOverride implements IChannelOverride {
     private final long scheduleAt;
@@ -5170,11 +5216,13 @@ basic[src/main/java/com/fern/basic/resources/raven/event/types/SmsMessage.java]=
 package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = SmsMessage.Builder.class)
 public final class SmsMessage {
     private final String text;
@@ -5255,11 +5303,13 @@ basic[src/main/java/com/fern/basic/resources/raven/event/types/SmsOverride.java]
 package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = SmsOverride.Builder.class)
 public final class SmsOverride implements IChannelOverride {
     private final long scheduleAt;
@@ -5385,11 +5435,13 @@ basic[src/main/java/com/fern/basic/resources/raven/event/types/TelegramOverride.
 package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = TelegramOverride.Builder.class)
 public final class TelegramOverride implements IChannelOverride {
     private final long scheduleAt;
@@ -5471,6 +5523,7 @@ basic[src/main/java/com/fern/basic/resources/raven/event/types/User.java]=[
 package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
@@ -5481,6 +5534,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = User.Builder.class)
 public final class User {
     private final Optional<String> userId;
@@ -5862,11 +5916,13 @@ basic[src/main/java/com/fern/basic/resources/raven/event/types/VoiceOverride.jav
 package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = VoiceOverride.Builder.class)
 public final class VoiceOverride implements IChannelOverride {
     private final long scheduleAt;
@@ -5948,11 +6004,13 @@ basic[src/main/java/com/fern/basic/resources/raven/event/types/WebhookOverride.j
 package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = WebhookOverride.Builder.class)
 public final class WebhookOverride implements IChannelOverride {
     private final long scheduleAt;
@@ -6034,11 +6092,13 @@ basic[src/main/java/com/fern/basic/resources/raven/event/types/WhatsappOverride.
 package com.fern.basic.resources.raven.event.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = WhatsappOverride.Builder.class)
 public final class WhatsappOverride implements IChannelOverride {
     private final long scheduleAt;
@@ -6237,6 +6297,7 @@ basic[src/main/java/com/fern/basic/resources/raven/user/requests/CreateUserReque
 package com.fern.basic.resources.raven.user.requests;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
@@ -6244,6 +6305,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 import java.util.Optional;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = CreateUserRequest.Builder.class)
 public final class CreateUserRequest {
     private final String userId;
@@ -6469,11 +6531,13 @@ basic[src/main/java/com/fern/basic/resources/raven/user/types/ChannelPreference.
 package com.fern.basic.resources.raven.user.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ChannelPreference.Builder.class)
 public final class ChannelPreference {
     private final boolean disabled;
@@ -6554,6 +6618,7 @@ basic[src/main/java/com/fern/basic/resources/raven/user/types/ChannelPreferences
 package com.fern.basic.resources.raven.user.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
@@ -6561,6 +6626,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 import java.util.Optional;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = ChannelPreferences.Builder.class)
 public final class ChannelPreferences {
     private final Optional<ChannelPreference> sms;
@@ -6779,6 +6845,7 @@ basic[src/main/java/com/fern/basic/resources/raven/user/types/RavenUser.java]=[
 package com.fern.basic.resources.raven.user.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
@@ -6787,6 +6854,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = RavenUser.Builder.class)
 public final class RavenUser {
     private final String userId;
@@ -7274,6 +7342,7 @@ basic[src/main/java/com/fern/basic/resources/raven/user/types/SlackProfile.java]
 package com.fern.basic.resources.raven.user.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
@@ -7281,6 +7350,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 import java.util.Optional;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = SlackProfile.Builder.class)
 public final class SlackProfile {
     private final String accessToken;
@@ -7418,11 +7488,13 @@ basic[src/main/java/com/fern/basic/resources/raven/user/types/TelegramProfile.ja
 package com.fern.basic.resources.raven.user.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = TelegramProfile.Builder.class)
 public final class TelegramProfile {
     private final String chatId;
@@ -7503,6 +7575,7 @@ basic[src/main/java/com/fern/basic/resources/raven/user/types/UserPreferences.ja
 package com.fern.basic.resources.raven.user.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
@@ -7510,6 +7583,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Objects;
 import java.util.Optional;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(builder = UserPreferences.Builder.class)
 public final class UserPreferences {
     private final Optional<Channel> preferredChannel;

@@ -314,6 +314,7 @@ basic[resources/blog/requests/CreatePostRequest.java]=[
 package com.fern.resources.blog.requests;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -324,6 +325,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(
     builder = CreatePostRequest.Builder.class
 )
@@ -749,6 +751,7 @@ basic[resources/blog/types/BlogPost.java]=[
 package com.fern.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -757,6 +760,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(
     builder = BlogPost.Builder.class
 )
@@ -930,6 +934,7 @@ basic[resources/blog/types/GeneratorIdAndVersion.java]=[
 package com.fern.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -938,6 +943,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(
     builder = GeneratorIdAndVersion.Builder.class
 )
@@ -1096,6 +1102,7 @@ basic[resources/blog/types/PostNotFoundErrorBody.java]=[
 package com.fern.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -1104,6 +1111,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(
     builder = PostNotFoundErrorBody.Builder.class
 )
@@ -1219,6 +1227,7 @@ basic[resources/blog/types/UnauthorizedErrorBody.java]=[
 package com.fern.resources.blog.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -1227,6 +1236,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonDeserialize(
     builder = UnauthorizedErrorBody.Builder.class
 )
