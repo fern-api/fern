@@ -182,6 +182,12 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
                         .group("com.fasterxml.jackson.datatype")
                         .artifact("jackson-datatype-jdk8")
                         .version(GradleDependency.JACKSON_JDK8_VERSION)
+                        .build(),
+                GradleDependency.builder()
+                        .type(DependencyType.API)
+                        .group("com.fasterxml.jackson.datatype")
+                        .artifact("jackson-datatype-jsr310")
+                        .version(GradleDependency.JACKSON_JDK8_VERSION)
                         .build());
     }
 

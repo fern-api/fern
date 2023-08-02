@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.CodeBlock;
@@ -48,6 +49,7 @@ public final class ObjectMappersGenerator extends AbstractFileGenerator {
                         .add("$T.builder()\n", JsonMapper.class)
                         .indent()
                         .add(".addModule(new $T())\n", Jdk8Module.class)
+                        .add(".addModule(new $T())\n", JavaTimeModule.class)
                         .add(".disable($T.FAIL_ON_UNKNOWN_PROPERTIES)\n", DeserializationFeature.class)
                         .add(".build()")
                         .build())
