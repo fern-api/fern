@@ -401,7 +401,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
             "created": {
               "docs": undefined,
-              "type": "string",
+              "type": "datetime",
             },
             "environment": {
               "docs": "The environment this deployment is used in
@@ -421,7 +421,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
             "last_deployed_on": {
               "docs": undefined,
-              "type": "string",
+              "type": "datetime",
             },
             "model_type": {
               "docs": "The type of model this deployment serves
@@ -511,7 +511,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "properties": {
             "created": {
               "docs": undefined,
-              "type": "string",
+              "type": "datetime",
             },
             "environment": {
               "docs": "The environment this document index is used in
@@ -950,7 +950,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
             "created": {
               "docs": "Timestamp of when this model version was created.",
-              "type": "string",
+              "type": "datetime",
             },
             "exec_config": {
               "docs": "Configuration used to execute this model version.",
@@ -1779,7 +1779,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
             "last_uploaded_at": {
               "docs": "A timestamp representing when this document was most recently uploaded.",
-              "type": "string",
+              "type": "datetime",
             },
             "processing_failure_reason": {
               "docs": "An enum value representing why the document could not be processed. Is null unless processing_state is FAILED.
@@ -1826,7 +1826,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
             "timestamp": {
               "docs": "Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -2077,7 +2077,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
             "ts": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -2188,7 +2188,7 @@ Used to submit feedback regarding the quality of previously generated completion
             },
             "ts": {
               "docs": undefined,
-              "type": "string",
+              "type": "datetime",
             },
           },
         },

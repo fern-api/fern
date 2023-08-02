@@ -74,9 +74,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -101,9 +99,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -123,9 +119,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -145,9 +139,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -167,9 +159,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -843,9 +833,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "value": {
                         "description": "Date when the issue trigger was disabled",
                         "schema": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "type": "string",
+                          "type": "datetime",
                         },
                         "type": "primitive",
                       },
@@ -1568,9 +1556,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": "Last used date",
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -1595,9 +1581,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": "Last used date",
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -1617,9 +1601,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": "Last used date",
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -1639,9 +1621,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": "Last used date",
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -1661,9 +1641,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": "Last used date",
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -2551,9 +2529,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -2578,9 +2554,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -2600,9 +2574,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -2622,9 +2594,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -2644,9 +2614,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -3537,9 +3505,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "value": {
                         "description": "Date the destination was archived",
                         "schema": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "type": "string",
+                          "type": "datetime",
                         },
                         "type": "primitive",
                       },
@@ -4242,9 +4208,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       {
                         "description": undefined,
                         "schema": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "type": "string",
+                          "type": "datetime",
                         },
                         "type": "primitive",
                       },
@@ -4265,9 +4229,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -4283,9 +4245,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -4301,9 +4261,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -4319,9 +4277,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -4368,9 +4324,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       {
                         "description": undefined,
                         "schema": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "type": "string",
+                          "type": "datetime",
                         },
                         "type": "primitive",
                       },
@@ -4391,9 +4345,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -4409,9 +4361,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -4427,9 +4377,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -4445,9 +4393,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -4643,9 +4589,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       {
                         "description": undefined,
                         "schema": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "type": "string",
+                          "type": "datetime",
                         },
                         "type": "primitive",
                       },
@@ -4666,9 +4610,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -4684,9 +4626,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -4702,9 +4642,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -4720,9 +4658,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -5429,9 +5365,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -5456,9 +5390,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -5478,9 +5410,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -5500,9 +5430,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -5522,9 +5450,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -5575,9 +5501,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -5602,9 +5526,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -5624,9 +5546,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -5646,9 +5566,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -5668,9 +5586,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -5721,9 +5637,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -5748,9 +5662,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -5770,9 +5682,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -5792,9 +5702,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -5814,9 +5722,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -6453,9 +6359,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -6476,9 +6380,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                         "value": {
                                           "description": undefined,
                                           "schema": {
-                                            "maxLength": undefined,
-                                            "minLength": undefined,
-                                            "type": "string",
+                                            "type": "datetime",
                                           },
                                           "type": "primitive",
                                         },
@@ -6494,9 +6396,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                         "value": {
                                           "description": undefined,
                                           "schema": {
-                                            "maxLength": undefined,
-                                            "minLength": undefined,
-                                            "type": "string",
+                                            "type": "datetime",
                                           },
                                           "type": "primitive",
                                         },
@@ -6512,9 +6412,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                         "value": {
                                           "description": undefined,
                                           "schema": {
-                                            "maxLength": undefined,
-                                            "minLength": undefined,
-                                            "type": "string",
+                                            "type": "datetime",
                                           },
                                           "type": "primitive",
                                         },
@@ -6530,9 +6428,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                         "value": {
                                           "description": undefined,
                                           "schema": {
-                                            "maxLength": undefined,
-                                            "minLength": undefined,
-                                            "type": "string",
+                                            "type": "datetime",
                                           },
                                           "type": "primitive",
                                         },
@@ -6581,9 +6477,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -6604,9 +6498,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -6622,9 +6514,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -6640,9 +6530,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -6658,9 +6546,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -6871,9 +6757,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -6894,9 +6778,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                         "value": {
                                           "description": undefined,
                                           "schema": {
-                                            "maxLength": undefined,
-                                            "minLength": undefined,
-                                            "type": "string",
+                                            "type": "datetime",
                                           },
                                           "type": "primitive",
                                         },
@@ -6912,9 +6794,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                         "value": {
                                           "description": undefined,
                                           "schema": {
-                                            "maxLength": undefined,
-                                            "minLength": undefined,
-                                            "type": "string",
+                                            "type": "datetime",
                                           },
                                           "type": "primitive",
                                         },
@@ -6930,9 +6810,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                         "value": {
                                           "description": undefined,
                                           "schema": {
-                                            "maxLength": undefined,
-                                            "minLength": undefined,
-                                            "type": "string",
+                                            "type": "datetime",
                                           },
                                           "type": "primitive",
                                         },
@@ -6948,9 +6826,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                         "value": {
                                           "description": undefined,
                                           "schema": {
-                                            "maxLength": undefined,
-                                            "minLength": undefined,
-                                            "type": "string",
+                                            "type": "datetime",
                                           },
                                           "type": "primitive",
                                         },
@@ -8198,9 +8074,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                     {
                                       "description": undefined,
                                       "schema": {
-                                        "maxLength": undefined,
-                                        "minLength": undefined,
-                                        "type": "string",
+                                        "type": "datetime",
                                       },
                                       "type": "primitive",
                                     },
@@ -8221,9 +8095,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                             "value": {
                                               "description": undefined,
                                               "schema": {
-                                                "maxLength": undefined,
-                                                "minLength": undefined,
-                                                "type": "string",
+                                                "type": "datetime",
                                               },
                                               "type": "primitive",
                                             },
@@ -8239,9 +8111,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                             "value": {
                                               "description": undefined,
                                               "schema": {
-                                                "maxLength": undefined,
-                                                "minLength": undefined,
-                                                "type": "string",
+                                                "type": "datetime",
                                               },
                                               "type": "primitive",
                                             },
@@ -8257,9 +8127,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                             "value": {
                                               "description": undefined,
                                               "schema": {
-                                                "maxLength": undefined,
-                                                "minLength": undefined,
-                                                "type": "string",
+                                                "type": "datetime",
                                               },
                                               "type": "primitive",
                                             },
@@ -8275,9 +8143,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                             "value": {
                                               "description": undefined,
                                               "schema": {
-                                                "maxLength": undefined,
-                                                "minLength": undefined,
-                                                "type": "string",
+                                                "type": "datetime",
                                               },
                                               "type": "primitive",
                                             },
@@ -8326,9 +8192,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   {
                                     "description": undefined,
                                     "schema": {
-                                      "maxLength": undefined,
-                                      "minLength": undefined,
-                                      "type": "string",
+                                      "type": "datetime",
                                     },
                                     "type": "primitive",
                                   },
@@ -8349,9 +8213,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                           "value": {
                                             "description": undefined,
                                             "schema": {
-                                              "maxLength": undefined,
-                                              "minLength": undefined,
-                                              "type": "string",
+                                              "type": "datetime",
                                             },
                                             "type": "primitive",
                                           },
@@ -8367,9 +8229,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                           "value": {
                                             "description": undefined,
                                             "schema": {
-                                              "maxLength": undefined,
-                                              "minLength": undefined,
-                                              "type": "string",
+                                              "type": "datetime",
                                             },
                                             "type": "primitive",
                                           },
@@ -8385,9 +8245,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                           "value": {
                                             "description": undefined,
                                             "schema": {
-                                              "maxLength": undefined,
-                                              "minLength": undefined,
-                                              "type": "string",
+                                              "type": "datetime",
                                             },
                                             "type": "primitive",
                                           },
@@ -8403,9 +8261,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                           "value": {
                                             "description": undefined,
                                             "schema": {
-                                              "maxLength": undefined,
-                                              "minLength": undefined,
-                                              "type": "string",
+                                              "type": "datetime",
                                             },
                                             "type": "primitive",
                                           },
@@ -8616,9 +8472,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                     {
                                       "description": undefined,
                                       "schema": {
-                                        "maxLength": undefined,
-                                        "minLength": undefined,
-                                        "type": "string",
+                                        "type": "datetime",
                                       },
                                       "type": "primitive",
                                     },
@@ -8639,9 +8493,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                             "value": {
                                               "description": undefined,
                                               "schema": {
-                                                "maxLength": undefined,
-                                                "minLength": undefined,
-                                                "type": "string",
+                                                "type": "datetime",
                                               },
                                               "type": "primitive",
                                             },
@@ -8657,9 +8509,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                             "value": {
                                               "description": undefined,
                                               "schema": {
-                                                "maxLength": undefined,
-                                                "minLength": undefined,
-                                                "type": "string",
+                                                "type": "datetime",
                                               },
                                               "type": "primitive",
                                             },
@@ -8675,9 +8525,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                             "value": {
                                               "description": undefined,
                                               "schema": {
-                                                "maxLength": undefined,
-                                                "minLength": undefined,
-                                                "type": "string",
+                                                "type": "datetime",
                                               },
                                               "type": "primitive",
                                             },
@@ -8693,9 +8541,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                             "value": {
                                               "description": undefined,
                                               "schema": {
-                                                "maxLength": undefined,
-                                                "minLength": undefined,
-                                                "type": "string",
+                                                "type": "datetime",
                                               },
                                               "type": "primitive",
                                             },
@@ -9554,9 +9400,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -9577,9 +9421,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                         "value": {
                                           "description": undefined,
                                           "schema": {
-                                            "maxLength": undefined,
-                                            "minLength": undefined,
-                                            "type": "string",
+                                            "type": "datetime",
                                           },
                                           "type": "primitive",
                                         },
@@ -9595,9 +9437,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                         "value": {
                                           "description": undefined,
                                           "schema": {
-                                            "maxLength": undefined,
-                                            "minLength": undefined,
-                                            "type": "string",
+                                            "type": "datetime",
                                           },
                                           "type": "primitive",
                                         },
@@ -9613,9 +9453,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                         "value": {
                                           "description": undefined,
                                           "schema": {
-                                            "maxLength": undefined,
-                                            "minLength": undefined,
-                                            "type": "string",
+                                            "type": "datetime",
                                           },
                                           "type": "primitive",
                                         },
@@ -9631,9 +9469,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                         "value": {
                                           "description": undefined,
                                           "schema": {
-                                            "maxLength": undefined,
-                                            "minLength": undefined,
-                                            "type": "string",
+                                            "type": "datetime",
                                           },
                                           "type": "primitive",
                                         },
@@ -9682,9 +9518,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -9705,9 +9539,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -9723,9 +9555,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -9741,9 +9571,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -9759,9 +9587,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -9972,9 +9798,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -9995,9 +9819,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                         "value": {
                                           "description": undefined,
                                           "schema": {
-                                            "maxLength": undefined,
-                                            "minLength": undefined,
-                                            "type": "string",
+                                            "type": "datetime",
                                           },
                                           "type": "primitive",
                                         },
@@ -10013,9 +9835,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                         "value": {
                                           "description": undefined,
                                           "schema": {
-                                            "maxLength": undefined,
-                                            "minLength": undefined,
-                                            "type": "string",
+                                            "type": "datetime",
                                           },
                                           "type": "primitive",
                                         },
@@ -10031,9 +9851,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                         "value": {
                                           "description": undefined,
                                           "schema": {
-                                            "maxLength": undefined,
-                                            "minLength": undefined,
-                                            "type": "string",
+                                            "type": "datetime",
                                           },
                                           "type": "primitive",
                                         },
@@ -10049,9 +9867,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                         "value": {
                                           "description": undefined,
                                           "schema": {
-                                            "maxLength": undefined,
-                                            "minLength": undefined,
-                                            "type": "string",
+                                            "type": "datetime",
                                           },
                                           "type": "primitive",
                                         },
@@ -10466,9 +10282,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -10493,9 +10307,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -10515,9 +10327,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -10537,9 +10347,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -10559,9 +10367,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -10612,9 +10418,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -10639,9 +10443,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -10661,9 +10463,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -10683,9 +10483,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -10705,9 +10503,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -10758,9 +10554,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -10785,9 +10579,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -10807,9 +10599,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -10829,9 +10619,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -10851,9 +10639,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -12784,9 +12570,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -12811,9 +12595,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -12833,9 +12615,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -12855,9 +12635,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -12877,9 +12655,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -12930,9 +12706,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -12957,9 +12731,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -12979,9 +12751,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -13001,9 +12771,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -13023,9 +12791,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -13076,9 +12842,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -13103,9 +12867,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -13125,9 +12887,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -13147,9 +12907,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -13169,9 +12927,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -13222,9 +12978,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -13249,9 +13003,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -13271,9 +13023,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -13293,9 +13043,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -13315,9 +13063,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -14040,9 +13786,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -14067,9 +13811,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -14089,9 +13831,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -14111,9 +13851,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -14133,9 +13871,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -14186,9 +13922,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -14213,9 +13947,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -14235,9 +13967,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -14257,9 +13987,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -14279,9 +14007,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -14332,9 +14058,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -14359,9 +14083,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -14381,9 +14103,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -14403,9 +14123,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -14425,9 +14143,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -14478,9 +14194,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -14505,9 +14219,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -14527,9 +14239,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -14549,9 +14259,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -14571,9 +14279,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -15768,9 +15474,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       {
                         "description": undefined,
                         "schema": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "type": "string",
+                          "type": "datetime",
                         },
                         "type": "primitive",
                       },
@@ -15791,9 +15495,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -15809,9 +15511,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -15827,9 +15527,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -15845,9 +15543,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -15894,9 +15590,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       {
                         "description": undefined,
                         "schema": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "type": "string",
+                          "type": "datetime",
                         },
                         "type": "primitive",
                       },
@@ -15917,9 +15611,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -15935,9 +15627,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -15953,9 +15643,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -15971,9 +15659,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -17013,9 +16699,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       {
                         "description": undefined,
                         "schema": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "type": "string",
+                          "type": "datetime",
                         },
                         "type": "primitive",
                       },
@@ -17036,9 +16720,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -17054,9 +16736,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -17072,9 +16752,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -17090,9 +16768,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -17139,9 +16815,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       {
                         "description": undefined,
                         "schema": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "type": "string",
+                          "type": "datetime",
                         },
                         "type": "primitive",
                       },
@@ -17162,9 +16836,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -17180,9 +16852,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -17198,9 +16868,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -17216,9 +16884,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -17414,9 +17080,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       {
                         "description": undefined,
                         "schema": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "type": "string",
+                          "type": "datetime",
                         },
                         "type": "primitive",
                       },
@@ -17437,9 +17101,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -17455,9 +17117,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -17473,9 +17133,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -17491,9 +17149,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -18233,9 +17889,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -18260,9 +17914,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -18282,9 +17934,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -18304,9 +17954,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -18326,9 +17974,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -18379,9 +18025,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -18406,9 +18050,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -18428,9 +18070,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -18450,9 +18090,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -18472,9 +18110,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -18525,9 +18161,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -18552,9 +18186,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -18574,9 +18206,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -18596,9 +18226,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -18618,9 +18246,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -19442,9 +19068,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -19465,9 +19089,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -19483,9 +19105,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -19501,9 +19121,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -19519,9 +19137,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -19569,9 +19185,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -19592,9 +19206,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -19610,9 +19222,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -19628,9 +19238,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -19646,9 +19254,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -20864,9 +20470,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   {
                                     "description": undefined,
                                     "schema": {
-                                      "maxLength": undefined,
-                                      "minLength": undefined,
-                                      "type": "string",
+                                      "type": "datetime",
                                     },
                                     "type": "primitive",
                                   },
@@ -20887,9 +20491,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                           "value": {
                                             "description": undefined,
                                             "schema": {
-                                              "maxLength": undefined,
-                                              "minLength": undefined,
-                                              "type": "string",
+                                              "type": "datetime",
                                             },
                                             "type": "primitive",
                                           },
@@ -20905,9 +20507,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                           "value": {
                                             "description": undefined,
                                             "schema": {
-                                              "maxLength": undefined,
-                                              "minLength": undefined,
-                                              "type": "string",
+                                              "type": "datetime",
                                             },
                                             "type": "primitive",
                                           },
@@ -20923,9 +20523,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                           "value": {
                                             "description": undefined,
                                             "schema": {
-                                              "maxLength": undefined,
-                                              "minLength": undefined,
-                                              "type": "string",
+                                              "type": "datetime",
                                             },
                                             "type": "primitive",
                                           },
@@ -20941,9 +20539,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                           "value": {
                                             "description": undefined,
                                             "schema": {
-                                              "maxLength": undefined,
-                                              "minLength": undefined,
-                                              "type": "string",
+                                              "type": "datetime",
                                             },
                                             "type": "primitive",
                                           },
@@ -20991,9 +20587,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                   {
                                     "description": undefined,
                                     "schema": {
-                                      "maxLength": undefined,
-                                      "minLength": undefined,
-                                      "type": "string",
+                                      "type": "datetime",
                                     },
                                     "type": "primitive",
                                   },
@@ -21014,9 +20608,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                           "value": {
                                             "description": undefined,
                                             "schema": {
-                                              "maxLength": undefined,
-                                              "minLength": undefined,
-                                              "type": "string",
+                                              "type": "datetime",
                                             },
                                             "type": "primitive",
                                           },
@@ -21032,9 +20624,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                           "value": {
                                             "description": undefined,
                                             "schema": {
-                                              "maxLength": undefined,
-                                              "minLength": undefined,
-                                              "type": "string",
+                                              "type": "datetime",
                                             },
                                             "type": "primitive",
                                           },
@@ -21050,9 +20640,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                           "value": {
                                             "description": undefined,
                                             "schema": {
-                                              "maxLength": undefined,
-                                              "minLength": undefined,
-                                              "type": "string",
+                                              "type": "datetime",
                                             },
                                             "type": "primitive",
                                           },
@@ -21068,9 +20656,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                           "value": {
                                             "description": undefined,
                                             "schema": {
-                                              "maxLength": undefined,
-                                              "minLength": undefined,
-                                              "type": "string",
+                                              "type": "datetime",
                                             },
                                             "type": "primitive",
                                           },
@@ -21924,9 +21510,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -21947,9 +21531,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -21965,9 +21547,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -21983,9 +21563,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -22001,9 +21579,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -22051,9 +21627,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -22074,9 +21648,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -22092,9 +21664,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -22110,9 +21680,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -22128,9 +21696,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                       "value": {
                                         "description": undefined,
                                         "schema": {
-                                          "maxLength": undefined,
-                                          "minLength": undefined,
-                                          "type": "string",
+                                          "type": "datetime",
                                         },
                                         "type": "primitive",
                                       },
@@ -22762,9 +22328,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -22789,9 +22353,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -22811,9 +22373,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -22833,9 +22393,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -22855,9 +22413,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -23389,9 +22945,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "value": {
                         "description": "Date the ruleset was archived",
                         "schema": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "type": "string",
+                          "type": "datetime",
                         },
                         "type": "primitive",
                       },
@@ -23799,9 +23353,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -23826,9 +23378,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -23848,9 +23398,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -23870,9 +23418,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -23892,9 +23438,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -24410,9 +23954,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "value": {
                         "description": "Date the source was archived",
                         "schema": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "type": "string",
+                          "type": "datetime",
                         },
                         "type": "primitive",
                       },
@@ -25897,9 +25439,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       {
                         "description": undefined,
                         "schema": {
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "type": "string",
+                          "type": "datetime",
                         },
                         "type": "primitive",
                       },
@@ -25920,9 +25460,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -25938,9 +25476,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -25956,9 +25492,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -25974,9 +25508,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                               "value": {
                                 "description": undefined,
                                 "schema": {
-                                  "maxLength": undefined,
-                                  "minLength": undefined,
-                                  "type": "string",
+                                  "type": "datetime",
                                 },
                                 "type": "primitive",
                               },
@@ -26558,9 +26090,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -26585,9 +26115,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -26607,9 +26135,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -26629,9 +26155,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -26651,9 +26175,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -26721,9 +26243,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "value": {
                           "description": undefined,
                           "schema": {
-                            "maxLength": undefined,
-                            "minLength": undefined,
-                            "type": "string",
+                            "type": "datetime",
                           },
                           "type": "primitive",
                         },
@@ -26748,9 +26268,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -26770,9 +26288,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -26792,9 +26308,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -26814,9 +26328,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                                 "value": {
                                   "description": undefined,
                                   "schema": {
-                                    "maxLength": undefined,
-                                    "minLength": undefined,
-                                    "type": "string",
+                                    "type": "datetime",
                                   },
                                   "type": "primitive",
                                 },
@@ -28984,9 +28496,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "Date the bulk retry was created",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -28998,9 +28508,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "Last time the bulk retry was updated",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -29018,9 +28526,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": {
                     "description": "Date the bulk retry was cancelled",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -29040,9 +28546,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": {
                     "description": "Date the bulk retry was completed",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -29467,9 +28971,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": {
                     "description": "Date the bookmark was last manually triggered",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -29483,9 +28985,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "Date the bookmark was last updated",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -29497,9 +28997,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "Date the bookmark was created",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -29726,9 +29224,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": {
                     "description": "Date the connection was archived",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -29748,9 +29244,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": {
                     "description": "Date the connection was paused",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -29764,9 +29258,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "Date the connection was last updated",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -29778,9 +29270,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "Date the connection was created",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -30129,9 +29619,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "ISO timestamp for when the issue was last opened",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -30143,9 +29631,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "ISO timestamp for when the issue was first opened",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -30157,9 +29643,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "ISO timestamp for when the issue last occured",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -30199,9 +29683,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": {
                     "description": "ISO timestamp for when the issue was dismissed",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -30221,9 +29703,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -30521,9 +30001,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "ISO timestamp for when the issue was last opened",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -30535,9 +30013,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "ISO timestamp for when the issue was first opened",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -30549,9 +30025,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "ISO timestamp for when the issue last occured",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -30591,9 +30065,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": {
                     "description": "ISO timestamp for when the issue was dismissed",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -30613,9 +30085,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -30891,9 +30361,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": {
                     "description": "Date the destination was archived",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -30907,9 +30375,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "Date the destination was last updated",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -30921,9 +30387,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "Date the destination was created",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -31393,9 +30857,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": {
                     "description": "Date of the most recently attempted retry",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -31415,9 +30877,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": {
                     "description": "Date of the next scheduled retry",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -31470,9 +30930,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": {
                     "description": "Date of the latest successful attempt",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -31508,9 +30966,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "Date the event was last updated",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -31522,9 +30978,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "Date the event was created",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -31798,9 +31252,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": "Date the attempt was successful",
                       "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
+                        "type": "datetime",
                       },
                       "type": "primitive",
                     },
@@ -31820,9 +31272,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": "Date the attempt was delivered",
                       "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
+                        "type": "datetime",
                       },
                       "type": "primitive",
                     },
@@ -31842,9 +31292,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": "Date the destination responded to this attempt",
                       "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
+                        "type": "datetime",
                       },
                       "type": "primitive",
                     },
@@ -31898,9 +31346,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "schema": {
                   "description": "Date the attempt was last updated",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -31912,9 +31358,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "schema": {
                   "description": "Date the attempt was created",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -32525,9 +31969,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -32539,9 +31981,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -32805,9 +32245,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "Date the integration was last updated",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -32819,9 +32257,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "Date the integration was created",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -33267,9 +32703,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": {
                     "description": "ISO timestamp for when the issue trigger was disabled",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -33283,9 +32717,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "ISO timestamp for when the issue trigger was last updated",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -33297,9 +32729,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "ISO timestamp for when the issue trigger was created",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -33317,9 +32747,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": {
                     "description": "ISO timestamp for when the issue trigger was deleted",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -34100,9 +33528,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": {
                     "description": "The time the request was originally received",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -34437,9 +33863,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "Date the event was last updated",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -34451,9 +33875,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "	Date the event was created",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -34909,9 +34331,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "value": {
                       "description": "Date the ruleset was archived",
                       "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
+                        "type": "datetime",
                       },
                       "type": "primitive",
                     },
@@ -34925,9 +34345,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "schema": {
                   "description": "Date the ruleset was last updated",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -34939,9 +34357,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "schema": {
                   "description": "Date the ruleset was created",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -35700,9 +35116,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": {
                     "description": "Date the source was archived",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -35716,9 +35130,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "Date the source was last updated",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -35730,9 +35142,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "Date the source was created",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -36231,9 +35641,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "Date the transformation was last updated",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -36245,9 +35653,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "Date the transformation was created",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -36383,9 +35789,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -36397,9 +35801,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -36978,9 +36380,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "ISO timestamp for when the issue was last opened",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -36992,9 +36392,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "ISO timestamp for when the issue was first opened",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -37006,9 +36404,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "ISO timestamp for when the issue last occured",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -37048,9 +36444,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": {
                     "description": "ISO timestamp for when the issue was dismissed",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -37070,9 +36464,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -37354,9 +36746,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "ISO timestamp for when the issue was last opened",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -37368,9 +36758,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "ISO timestamp for when the issue was first opened",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -37382,9 +36770,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "schema": {
                 "description": "ISO timestamp for when the issue last occured",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -37424,9 +36810,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": {
                     "description": "ISO timestamp for when the issue was dismissed",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -37446,9 +36830,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },

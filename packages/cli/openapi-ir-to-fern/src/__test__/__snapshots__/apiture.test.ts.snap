@@ -1256,11 +1256,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "properties": {
             "createdAt": {
               "docs": "The date-time when this resource was created, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC. This is derived and immutable.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "updatedAt": {
               "docs": "The date-time when the resource was last updated, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC. This is derived and immutable.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -1838,7 +1838,7 @@ The response may include dates prior to requested the start date, as that is use
             },
             "processedAt": {
               "docs": "The date/time the transfer was processed.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "schedule": {
               "docs": undefined,
@@ -2235,8 +2235,8 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "type": "string",
         },
         "readOnlyTimestamp": {
-          "docs": "A readonly or derived timestamp (an instant in time) formatted in [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date-time\` UTC format: \`YYYY-MM-DDThh:mm:ss.sssZ\`.<br>The schema \`readOnlyTimestamp\` was added on version \`0.4.0\` of the API. <span style="white-space: nowrap">\`<= 30 characters\`</span> ",
-          "type": "string",
+          "docs": "A readonly or derived timestamp (an instant in time) formatted in [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date-time\` UTC format: \`YYYY-MM-DDThh:mm:ss.sssZ\`.<br>The schema \`readOnlyTimestamp\` was added on version \`0.4.0\` of the API.",
+          "type": "datetime",
         },
         "resourceId": {
           "docs": "The unique, opaque system identifier for a resource. This case-sensitive ID is also used as path parameters in URLs or in other properties or parameters that reference a resource by ID rather than URL. <span style="white-space: nowrap">\`<= 48 characters\`</span> ",

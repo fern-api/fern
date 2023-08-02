@@ -16527,9 +16527,7 @@ exports[`open api parser aries parse open api 1`] = `
               "schema": {
                 "description": "Expiry Date",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },

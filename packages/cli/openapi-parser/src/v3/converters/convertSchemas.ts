@@ -159,6 +159,14 @@ export function convertSchemaObject(
         });
     }
     if (schema === "string" || schema.type === "string") {
+        if (schema.format === "date-time") {
+            return wrapPrimitive({
+                primitive: PrimitiveSchemaValue.datetime(),
+                wrapAsNullable,
+                description,
+            });
+        }
+
         return wrapPrimitive({
             primitive: PrimitiveSchemaValue.string({
                 maxLength: schema.maxLength,

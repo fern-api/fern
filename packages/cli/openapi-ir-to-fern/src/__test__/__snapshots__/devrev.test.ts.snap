@@ -45,7 +45,7 @@ exports[`open api parser devrev simple 1`] = `
           "properties": {
             "expires_at": {
               "docs": "The expiration timestamp of the URL.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "url": {
               "docs": "The artifact's download URL.",
@@ -92,7 +92,7 @@ exports[`open api parser devrev simple 1`] = `
             },
             "created_date": {
               "docs": "Timestamp when the object was created.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "display_id": {
               "docs": "Human-readable object ID unique to the Dev organization.",
@@ -108,7 +108,7 @@ exports[`open api parser devrev simple 1`] = `
             },
             "modified_date": {
               "docs": "Timestamp when the object was last modified.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -310,11 +310,11 @@ token. Only applicable for application access tokens.
             },
             "expires_at": {
               "docs": "The time at which the token expires.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "issued_at": {
               "docs": "The time at which the token was issued.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "requested_token_type": {
               "docs": undefined,
@@ -832,7 +832,7 @@ sort order. If not set, then no prior elements exist.
           "properties": {
             "target_close_date": {
               "docs": "Timestamp when the enhancement is expected to be closed.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -1467,7 +1467,7 @@ always be returned in the specified sort-by order.
             "target_close_date": {
               "docs": "Target close date by which enhancement is expected to be closed.
 ",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -1568,7 +1568,7 @@ sort order. If not set, then no prior elements exist.
           "properties": {
             "target_close_date": {
               "docs": "Updates the target close date of the enhancement.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -2324,7 +2324,7 @@ should be used to protect against replay attacks, where the event
 should only be processed if the timestamp isn't stale by several
 seconds.
 ",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "type": {
               "docs": undefined,
@@ -2632,7 +2632,7 @@ event types. Note this is mutually exclusive with 'add' and
             },
             "target_close_date": {
               "docs": "Timestamp when the work is expected to be complete.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "title": {
               "docs": "Title of the work object.",
@@ -2691,7 +2691,7 @@ issues.
             },
             "target_close_date": {
               "docs": "Timestamp for when the work is expected to be complete.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "title": {
               "docs": "Title of the work object.",
@@ -2827,7 +2827,7 @@ sort order. If not set, then no prior elements exist.
             "target_close_date": {
               "docs": "Updates the timestamp for when the work is expected to be complete.
 ",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "title": {
               "docs": "Updated title of the work object, or unchanged if not provided.
@@ -3998,14 +3998,14 @@ to access.
                   "allow-multiple": undefined,
                   "docs": "Filters for objects created after the provided timestamp (inclusive).
 ",
-                  "type": "optional<string>",
+                  "type": "optional<datetime>",
                 },
                 "created_date.before": {
                   "allow-multiple": undefined,
                   "docs": "Filters for objects created before the provided timestamp
 (inclusive).
 ",
-                  "type": "optional<string>",
+                  "type": "optional<datetime>",
                 },
                 "cursor": {
                   "allow-multiple": undefined,
@@ -4036,14 +4036,14 @@ used.
                   "allow-multiple": undefined,
                   "docs": "Filters for objects created after the provided timestamp (inclusive).
 ",
-                  "type": "optional<string>",
+                  "type": "optional<datetime>",
                 },
                 "modified_date.before": {
                   "allow-multiple": undefined,
                   "docs": "Filters for objects created before the provided timestamp
 (inclusive).
 ",
-                  "type": "optional<string>",
+                  "type": "optional<datetime>",
                 },
                 "sort_by": {
                   "allow-multiple": true,
