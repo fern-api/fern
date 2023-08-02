@@ -119,7 +119,7 @@ function stripCommonPrefix(names: string[]): string[] {
     return names.map((name) => name.substring(i));
 }
 
-function convertNumberToSnakeCase(number: number): string | undefined {
+export function convertNumberToSnakeCase(number: number): string | undefined {
     const singleDigits = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"];
 
     const teenNumbers = [
