@@ -222,7 +222,7 @@ public final class AliasGenerator extends AbstractFileGenerator {
 
         @Override
         public CodeBlock visitDateTime() {
-            return CodeBlock.of("return $L", VALUE_FIELD_NAME);
+            return CodeBlock.of("return $L.$L()", VALUE_FIELD_NAME, "toString");
         }
 
         @Override

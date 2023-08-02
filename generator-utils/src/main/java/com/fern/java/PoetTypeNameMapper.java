@@ -31,6 +31,7 @@ import com.fern.irV16.model.types.TypeReference;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -153,7 +154,7 @@ public final class PoetTypeNameMapper {
 
         @Override
         public TypeName visitDateTime() {
-            return ClassName.get(String.class);
+            return ClassName.get(OffsetDateTime.class);
         }
 
         @Override
