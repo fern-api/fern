@@ -12159,7 +12159,7 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "BankInfoAccountType0",
+                          "generatedName": "BankInfoAccountTypeZero",
                           "nameOverride": undefined,
                           "schema": "AccountTypeEnum",
                           "type": "reference",
@@ -13063,7 +13063,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "ConditionSchemaConditionType0",
+                      "generatedName": "ConditionSchemaConditionTypeZero",
                       "nameOverride": undefined,
                       "schema": "ConditionTypeEnum",
                       "type": "reference",
@@ -15527,7 +15527,7 @@ Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earni
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "EarningType0",
+                          "generatedName": "EarningTypeZero",
                           "nameOverride": undefined,
                           "schema": "EarningTypeEnum",
                           "type": "reference",
@@ -16134,7 +16134,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "EmployeeGender0",
+                          "generatedName": "EmployeeGenderZero",
                           "nameOverride": undefined,
                           "schema": "GenderEnum",
                           "type": "reference",
@@ -16193,7 +16193,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "EmployeeEthnicity0",
+                          "generatedName": "EmployeeEthnicityZero",
                           "nameOverride": undefined,
                           "schema": "EthnicityEnum",
                           "type": "reference",
@@ -16246,7 +16246,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "EmployeeMaritalStatus0",
+                          "generatedName": "EmployeeMaritalStatusZero",
                           "nameOverride": undefined,
                           "schema": "MaritalStatusEnum",
                           "type": "reference",
@@ -16375,7 +16375,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "EmployeeEmploymentStatus0",
+                          "generatedName": "EmployeeEmploymentStatusZero",
                           "nameOverride": undefined,
                           "schema": "EmploymentStatusEnum",
                           "type": "reference",
@@ -17341,7 +17341,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "EmployeeRequestGender0",
+                          "generatedName": "EmployeeRequestGenderZero",
                           "nameOverride": undefined,
                           "schema": "GenderEnum",
                           "type": "reference",
@@ -17400,7 +17400,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "EmployeeRequestEthnicity0",
+                          "generatedName": "EmployeeRequestEthnicityZero",
                           "nameOverride": undefined,
                           "schema": "EthnicityEnum",
                           "type": "reference",
@@ -17453,7 +17453,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "EmployeeRequestMaritalStatus0",
+                          "generatedName": "EmployeeRequestMaritalStatusZero",
                           "nameOverride": undefined,
                           "schema": "MaritalStatusEnum",
                           "type": "reference",
@@ -17562,7 +17562,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "EmployeeRequestEmploymentStatus0",
+                          "generatedName": "EmployeeRequestEmploymentStatusZero",
                           "nameOverride": undefined,
                           "schema": "EmploymentStatusEnum",
                           "type": "reference",
@@ -17914,7 +17914,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "EmploymentPayPeriod0",
+                          "generatedName": "EmploymentPayPeriodZero",
                           "nameOverride": undefined,
                           "schema": "PayPeriodEnum",
                           "type": "reference",
@@ -17975,7 +17975,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "EmploymentPayFrequency0",
+                          "generatedName": "EmploymentPayFrequencyZero",
                           "nameOverride": undefined,
                           "schema": "PayFrequencyEnum",
                           "type": "reference",
@@ -18630,7 +18630,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "EmploymentPayCurrency0",
+                          "generatedName": "EmploymentPayCurrencyZero",
                           "nameOverride": undefined,
                           "schema": "PayCurrencyEnum",
                           "type": "reference",
@@ -18703,7 +18703,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "EmploymentFlsaStatus0",
+                          "generatedName": "EmploymentFlsaStatusZero",
                           "nameOverride": undefined,
                           "schema": "FlsaStatusEnum",
                           "type": "reference",
@@ -18776,7 +18776,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "EmploymentEmploymentType0",
+                          "generatedName": "EmploymentEmploymentTypeZero",
                           "nameOverride": undefined,
                           "schema": "EmploymentTypeEnum",
                           "type": "reference",
@@ -19519,7 +19519,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "GroupType0",
+                          "generatedName": "GroupTypeZero",
                           "nameOverride": undefined,
                           "schema": "GroupTypeEnum",
                           "type": "reference",
@@ -19688,7 +19688,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "IgnoreCommonModelRequestReason0",
+                      "generatedName": "IgnoreCommonModelRequestReasonZero",
                       "nameOverride": undefined,
                       "schema": "ReasonEnum",
                       "type": "reference",
@@ -19773,7 +19773,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "IssueStatus0",
+                        "generatedName": "IssueStatusZero",
                         "nameOverride": undefined,
                         "schema": "IssueStatusEnum",
                         "type": "reference",
@@ -20987,7 +20987,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "LocationCountry0",
+                          "generatedName": "LocationCountryZero",
                           "nameOverride": undefined,
                           "schema": "CountryEnum",
                           "type": "reference",
@@ -21034,7 +21034,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "LocationLocationType0",
+                          "generatedName": "LocationLocationTypeZero",
                           "nameOverride": undefined,
                           "schema": "LocationTypeEnum",
                           "type": "reference",
@@ -21499,7 +21499,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "MultipartFormFieldRequestEncoding0",
+                          "generatedName": "MultipartFormFieldRequestEncodingZero",
                           "nameOverride": undefined,
                           "schema": "EncodingEnum",
                           "type": "reference",
@@ -25418,7 +25418,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "PayrollRunRunState0",
+                          "generatedName": "PayrollRunRunStateZero",
                           "nameOverride": undefined,
                           "schema": "RunStateEnum",
                           "type": "reference",
@@ -25471,7 +25471,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "PayrollRunRunType0",
+                          "generatedName": "PayrollRunRunTypeZero",
                           "nameOverride": undefined,
                           "schema": "RunTypeEnum",
                           "type": "reference",
@@ -25929,7 +25929,7 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "RemoteResponseResponseType0",
+                        "generatedName": "RemoteResponseResponseTypeZero",
                         "nameOverride": undefined,
                         "schema": "ResponseTypeEnum",
                         "type": "reference",
@@ -26872,7 +26872,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "TimeOffStatus0",
+                          "generatedName": "TimeOffStatusZero",
                           "nameOverride": undefined,
                           "schema": "TimeOffStatusEnum",
                           "type": "reference",
@@ -26941,7 +26941,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "TimeOffUnits0",
+                          "generatedName": "TimeOffUnitsZero",
                           "nameOverride": undefined,
                           "schema": "UnitsEnum",
                           "type": "reference",
@@ -27016,7 +27016,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "TimeOffRequestType0",
+                          "generatedName": "TimeOffRequestTypeZero",
                           "nameOverride": undefined,
                           "schema": "RequestTypeEnum",
                           "type": "reference",
@@ -27310,7 +27310,7 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "TimeOffBalancePolicyType0",
+                          "generatedName": "TimeOffBalancePolicyTypeZero",
                           "nameOverride": undefined,
                           "schema": "PolicyTypeEnum",
                           "type": "reference",
@@ -27527,7 +27527,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "TimeOffRequestStatus0",
+                          "generatedName": "TimeOffRequestStatusZero",
                           "nameOverride": undefined,
                           "schema": "TimeOffStatusEnum",
                           "type": "reference",
@@ -27596,7 +27596,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "TimeOffRequestUnits0",
+                          "generatedName": "TimeOffRequestUnitsZero",
                           "nameOverride": undefined,
                           "schema": "UnitsEnum",
                           "type": "reference",
@@ -27671,7 +27671,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "TimeOffRequestRequestType0",
+                          "generatedName": "TimeOffRequestRequestTypeZero",
                           "nameOverride": undefined,
                           "schema": "RequestTypeEnum",
                           "type": "reference",

@@ -2789,19 +2789,19 @@ Passing the optional deviceId signifies a resend code flow.
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": undefined,
-                    "generatedName": "PasswordlessStartSignInResponse1",
+                    "generatedName": "PasswordlessStartSignInResponseOne",
                     "nameOverride": undefined,
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "passwordlessStartSignInResponse1Status",
+                        "generatedName": "passwordlessStartSignInResponseOneStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
                           "type": "optional",
                           "value": {
                             "description": undefined,
-                            "generatedName": "PasswordlessStartSignInResponse1Status",
+                            "generatedName": "PasswordlessStartSignInResponseOneStatus",
                             "nameOverride": undefined,
                             "type": "enum",
                             "values": [
@@ -3673,19 +3673,19 @@ Note that there is an invisible character at the end of the path, this was to av
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": undefined,
-                    "generatedName": "PasswordlessGetUserResponse1",
+                    "generatedName": "PasswordlessGetUserResponseOne",
                     "nameOverride": undefined,
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "passwordlessGetUserResponse1Status",
+                        "generatedName": "passwordlessGetUserResponseOneStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
                           "type": "optional",
                           "value": {
                             "description": undefined,
-                            "generatedName": "PasswordlessGetUserResponse1Status",
+                            "generatedName": "PasswordlessGetUserResponseOneStatus",
                             "nameOverride": undefined,
                             "type": "enum",
                             "values": [
@@ -4123,7 +4123,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "EmailPasswordSigninResponse1",
+                    "generatedName": "EmailPasswordSigninResponseOne",
                     "nameOverride": undefined,
                     "schema": "wrongCredentialsResponse",
                     "type": "reference",
@@ -4487,19 +4487,19 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": undefined,
-                    "generatedName": "EmailPasswordGetUserResponse1",
+                    "generatedName": "EmailPasswordGetUserResponseOne",
                     "nameOverride": undefined,
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "emailPasswordGetUserResponse1Status",
+                        "generatedName": "emailPasswordGetUserResponseOneStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
                           "type": "optional",
                           "value": {
                             "description": undefined,
-                            "generatedName": "EmailPasswordGetUserResponse1Status",
+                            "generatedName": "EmailPasswordGetUserResponseOneStatus",
                             "nameOverride": undefined,
                             "type": "enum",
                             "values": [
@@ -4891,7 +4891,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "EmailPasswordGetPasswordResetTokenResponse1",
+                    "generatedName": "EmailPasswordGetPasswordResetTokenResponseOne",
                     "nameOverride": undefined,
                     "schema": "unknownUserIdResponse",
                     "type": "reference",
@@ -6066,19 +6066,19 @@ Note that there is an invisible character at the end of the path, this was to av
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": undefined,
-                    "generatedName": "ThirdPartyGetUserResponse1",
+                    "generatedName": "ThirdPartyGetUserResponseOne",
                     "nameOverride": undefined,
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "thirdPartyGetUserResponse1Status",
+                        "generatedName": "thirdPartyGetUserResponseOneStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
                           "type": "optional",
                           "value": {
                             "description": undefined,
-                            "generatedName": "ThirdPartyGetUserResponse1Status",
+                            "generatedName": "ThirdPartyGetUserResponseOneStatus",
                             "nameOverride": undefined,
                             "type": "enum",
                             "values": [
@@ -7989,7 +7989,7 @@ e.g.:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "AddUserRoleResponse1",
+                    "generatedName": "AddUserRoleResponseOne",
                     "nameOverride": undefined,
                     "schema": "unknownRoleResponse",
                     "type": "reference",
@@ -8176,7 +8176,7 @@ e.g.:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "RemoveUserRoleResponse1",
+                    "generatedName": "RemoveUserRoleResponseOne",
                     "nameOverride": undefined,
                     "schema": "unknownRoleResponse",
                     "type": "reference",
@@ -8489,7 +8489,7 @@ e.g.:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "GetRoleUsersResponse1",
+                    "generatedName": "GetRoleUsersResponseOne",
                     "nameOverride": undefined,
                     "schema": "unknownRoleResponse",
                     "type": "reference",
@@ -8833,7 +8833,7 @@ e.g.:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "GetRolePermissionsResponse1",
+                    "generatedName": "GetRolePermissionsResponseOne",
                     "nameOverride": undefined,
                     "schema": "unknownRoleResponse",
                     "type": "reference",
@@ -9013,7 +9013,7 @@ e.g.:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "RemoveRolePermissionsResponse1",
+                    "generatedName": "RemoveRolePermissionsResponseOne",
                     "nameOverride": undefined,
                     "schema": "unknownRoleResponse",
                     "type": "reference",
@@ -9700,7 +9700,7 @@ e.g.:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "GetSessionInfoResponse1",
+                    "generatedName": "GetSessionInfoResponseOne",
                     "nameOverride": undefined,
                     "schema": "unauthorisedMessageResponse",
                     "type": "reference",
@@ -10438,7 +10438,7 @@ e.g.:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "VerifySessionResponse1",
+                    "generatedName": "VerifySessionResponseOne",
                     "nameOverride": undefined,
                     "schema": "unauthorisedMessageResponse",
                     "type": "reference",
@@ -10739,12 +10739,12 @@ e.g.:
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": undefined,
-                    "generatedName": "RefreshSessionResponse1",
+                    "generatedName": "RefreshSessionResponseOne",
                     "nameOverride": undefined,
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "refreshSessionResponse1Status",
+                        "generatedName": "refreshSessionResponseOneStatus",
                         "key": "status",
                         "schema": {
                           "description": undefined,
@@ -10752,7 +10752,7 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "RefreshSessionResponse1Status",
+                            "generatedName": "RefreshSessionResponseOneStatus",
                             "nameOverride": undefined,
                             "schema": "tokenTheftResponse",
                             "type": "reference",
@@ -10761,7 +10761,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
-                        "generatedName": "refreshSessionResponse1Session",
+                        "generatedName": "refreshSessionResponseOneSession",
                         "key": "session",
                         "schema": {
                           "description": undefined,
@@ -10770,12 +10770,12 @@ e.g.:
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": undefined,
-                            "generatedName": "RefreshSessionResponse1Session",
+                            "generatedName": "RefreshSessionResponseOneSession",
                             "nameOverride": undefined,
                             "properties": [
                               {
                                 "conflict": {},
-                                "generatedName": "refreshSessionResponse1SessionHandle",
+                                "generatedName": "refreshSessionResponseOneSessionHandle",
                                 "key": "handle",
                                 "schema": {
                                   "description": undefined,
@@ -10783,7 +10783,7 @@ e.g.:
                                   "value": {
                                     "description": undefined,
                                     "file": undefined,
-                                    "generatedName": "RefreshSessionResponse1SessionHandle",
+                                    "generatedName": "RefreshSessionResponseOneSessionHandle",
                                     "nameOverride": undefined,
                                     "schema": "handle",
                                     "type": "reference",
@@ -10792,7 +10792,7 @@ e.g.:
                               },
                               {
                                 "conflict": {},
-                                "generatedName": "refreshSessionResponse1SessionUserId",
+                                "generatedName": "refreshSessionResponseOneSessionUserId",
                                 "key": "userId",
                                 "schema": {
                                   "description": undefined,
@@ -10800,7 +10800,7 @@ e.g.:
                                   "value": {
                                     "description": undefined,
                                     "file": undefined,
-                                    "generatedName": "RefreshSessionResponse1SessionUserId",
+                                    "generatedName": "RefreshSessionResponseOneSessionUserId",
                                     "nameOverride": undefined,
                                     "schema": "userId",
                                     "type": "reference",
@@ -10818,7 +10818,7 @@ e.g.:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "RefreshSessionResponse2",
+                    "generatedName": "RefreshSessionResponseTwo",
                     "nameOverride": undefined,
                     "schema": "unauthorisedMessageResponse",
                     "type": "reference",
@@ -11178,7 +11178,7 @@ e.g.:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "RegenerateSessionResponse1",
+                    "generatedName": "RegenerateSessionResponseOne",
                     "nameOverride": undefined,
                     "schema": "unauthorisedMessageResponse",
                     "type": "reference",
@@ -11343,7 +11343,7 @@ e.g.:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "GetSessionDataResponse1",
+                    "generatedName": "GetSessionDataResponseOne",
                     "nameOverride": undefined,
                     "schema": "unauthorisedMessageResponse",
                     "type": "reference",
@@ -11495,7 +11495,7 @@ e.g.:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "PutSessionDataResponse0",
+                    "generatedName": "PutSessionDataResponseZero",
                     "nameOverride": undefined,
                     "schema": "statusOKResponse",
                     "type": "reference",
@@ -11503,7 +11503,7 @@ e.g.:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "PutSessionDataResponse1",
+                    "generatedName": "PutSessionDataResponseOne",
                     "nameOverride": undefined,
                     "schema": "unauthorisedMessageResponse",
                     "type": "reference",
@@ -11963,7 +11963,7 @@ e.g.:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "GetJwtDataResponse1",
+                    "generatedName": "GetJwtDataResponseOne",
                     "nameOverride": undefined,
                     "schema": "unauthorisedMessageResponse",
                     "type": "reference",
@@ -12115,7 +12115,7 @@ e.g.:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "PutJwtDataResponse0",
+                    "generatedName": "PutJwtDataResponseZero",
                     "nameOverride": undefined,
                     "schema": "statusOKResponse",
                     "type": "reference",
@@ -12123,7 +12123,7 @@ e.g.:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "PutJwtDataResponse1",
+                    "generatedName": "PutJwtDataResponseOne",
                     "nameOverride": undefined,
                     "schema": "unauthorisedMessageResponse",
                     "type": "reference",
@@ -14404,12 +14404,12 @@ e.g.:
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": undefined,
-                    "generatedName": "GetTelemetryResponse1",
+                    "generatedName": "GetTelemetryResponseOne",
                     "nameOverride": undefined,
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "getTelemetryResponse1Exists",
+                        "generatedName": "getTelemetryResponseOneExists",
                         "key": "exists",
                         "schema": {
                           "description": undefined,
@@ -14980,7 +14980,7 @@ e.g.:
                                   {
                                     "description": undefined,
                                     "file": undefined,
-                                    "generatedName": "GetUsersResponseUsersItemUser0",
+                                    "generatedName": "GetUsersResponseUsersItemUserZero",
                                     "nameOverride": undefined,
                                     "schema": "user",
                                     "type": "reference",
@@ -14988,7 +14988,7 @@ e.g.:
                                   {
                                     "description": undefined,
                                     "file": undefined,
-                                    "generatedName": "GetUsersResponseUsersItemUser1",
+                                    "generatedName": "GetUsersResponseUsersItemUserOne",
                                     "nameOverride": undefined,
                                     "schema": "thirdPartyUser",
                                     "type": "reference",
@@ -14996,7 +14996,7 @@ e.g.:
                                   {
                                     "description": undefined,
                                     "file": undefined,
-                                    "generatedName": "GetUsersResponseUsersItemUser2",
+                                    "generatedName": "GetUsersResponseUsersItemUserTwo",
                                     "nameOverride": undefined,
                                     "schema": "passwordlessUser",
                                     "type": "reference",

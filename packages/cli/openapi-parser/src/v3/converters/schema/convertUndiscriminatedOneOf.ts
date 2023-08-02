@@ -4,7 +4,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema } from "../convertSchemas";
-import { convertEnum } from "./convertEnum";
+import { convertEnum, convertNumberToSnakeCase } from "./convertEnum";
 
 export function convertUndiscriminatedOneOf({
     nameOverride,
@@ -106,7 +106,7 @@ function getUniqueSubTypeNames({
         }
 
         if (isReferenceObject(schema)) {
-            prefixes.push(`${i}`);
+            prefixes.push(convertNumberToSnakeCase(i) ?? `${i}`);
         } else if (
             schema.type === "array" ||
             schema.type === "boolean" ||
@@ -116,7 +116,7 @@ function getUniqueSubTypeNames({
         ) {
             prefixes.push("");
         } else {
-            prefixes.push(`${i}`);
+            prefixes.push(convertNumberToSnakeCase(i) ?? `${i}`);
         }
         ++i;
     }

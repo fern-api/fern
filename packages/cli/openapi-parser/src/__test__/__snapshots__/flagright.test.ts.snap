@@ -1702,7 +1702,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "BusinessOptionalSavedPaymentDetailsItem0",
+                          "generatedName": "BusinessOptionalSavedPaymentDetailsItemZero",
                           "nameOverride": undefined,
                           "schema": "CardDetails",
                           "type": "reference",
@@ -1710,7 +1710,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "BusinessOptionalSavedPaymentDetailsItem1",
+                          "generatedName": "BusinessOptionalSavedPaymentDetailsItemOne",
                           "nameOverride": undefined,
                           "schema": "GenericBankAccountDetails",
                           "type": "reference",
@@ -1718,7 +1718,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "BusinessOptionalSavedPaymentDetailsItem2",
+                          "generatedName": "BusinessOptionalSavedPaymentDetailsItemTwo",
                           "nameOverride": undefined,
                           "schema": "IBANDetails",
                           "type": "reference",
@@ -1726,7 +1726,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "BusinessOptionalSavedPaymentDetailsItem3",
+                          "generatedName": "BusinessOptionalSavedPaymentDetailsItemThree",
                           "nameOverride": undefined,
                           "schema": "ACHDetails",
                           "type": "reference",
@@ -1734,7 +1734,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "BusinessOptionalSavedPaymentDetailsItem4",
+                          "generatedName": "BusinessOptionalSavedPaymentDetailsItemFour",
                           "nameOverride": undefined,
                           "schema": "SWIFTDetails",
                           "type": "reference",
@@ -1742,7 +1742,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "BusinessOptionalSavedPaymentDetailsItem5",
+                          "generatedName": "BusinessOptionalSavedPaymentDetailsItemFive",
                           "nameOverride": undefined,
                           "schema": "MpesaDetails",
                           "type": "reference",
@@ -1750,7 +1750,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "BusinessOptionalSavedPaymentDetailsItem6",
+                          "generatedName": "BusinessOptionalSavedPaymentDetailsItemSix",
                           "nameOverride": undefined,
                           "schema": "UPIDetails",
                           "type": "reference",
@@ -1758,7 +1758,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "BusinessOptionalSavedPaymentDetailsItem7",
+                          "generatedName": "BusinessOptionalSavedPaymentDetailsItemSeven",
                           "nameOverride": undefined,
                           "schema": "WalletDetails",
                           "type": "reference",
@@ -1766,7 +1766,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "BusinessOptionalSavedPaymentDetailsItem8",
+                          "generatedName": "BusinessOptionalSavedPaymentDetailsItemEight",
                           "nameOverride": undefined,
                           "schema": "CheckDetails",
                           "type": "reference",
@@ -10581,7 +10581,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TransactionUpdatableOriginPaymentDetails0",
+                        "generatedName": "TransactionUpdatableOriginPaymentDetailsZero",
                         "nameOverride": undefined,
                         "schema": "CardDetails",
                         "type": "reference",
@@ -10589,7 +10589,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TransactionUpdatableOriginPaymentDetails1",
+                        "generatedName": "TransactionUpdatableOriginPaymentDetailsOne",
                         "nameOverride": undefined,
                         "schema": "GenericBankAccountDetails",
                         "type": "reference",
@@ -10597,7 +10597,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TransactionUpdatableOriginPaymentDetails2",
+                        "generatedName": "TransactionUpdatableOriginPaymentDetailsTwo",
                         "nameOverride": undefined,
                         "schema": "IBANDetails",
                         "type": "reference",
@@ -10605,7 +10605,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TransactionUpdatableOriginPaymentDetails3",
+                        "generatedName": "TransactionUpdatableOriginPaymentDetailsThree",
                         "nameOverride": undefined,
                         "schema": "ACHDetails",
                         "type": "reference",
@@ -10613,7 +10613,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TransactionUpdatableOriginPaymentDetails4",
+                        "generatedName": "TransactionUpdatableOriginPaymentDetailsFour",
                         "nameOverride": undefined,
                         "schema": "SWIFTDetails",
                         "type": "reference",
@@ -10621,7 +10621,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TransactionUpdatableOriginPaymentDetails5",
+                        "generatedName": "TransactionUpdatableOriginPaymentDetailsFive",
                         "nameOverride": undefined,
                         "schema": "MpesaDetails",
                         "type": "reference",
@@ -10629,7 +10629,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TransactionUpdatableOriginPaymentDetails6",
+                        "generatedName": "TransactionUpdatableOriginPaymentDetailsSix",
                         "nameOverride": undefined,
                         "schema": "UPIDetails",
                         "type": "reference",
@@ -10637,7 +10637,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TransactionUpdatableOriginPaymentDetails7",
+                        "generatedName": "TransactionUpdatableOriginPaymentDetailsSeven",
                         "nameOverride": undefined,
                         "schema": "WalletDetails",
                         "type": "reference",
@@ -10645,7 +10645,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TransactionUpdatableOriginPaymentDetails8",
+                        "generatedName": "TransactionUpdatableOriginPaymentDetailsEight",
                         "nameOverride": undefined,
                         "schema": "CheckDetails",
                         "type": "reference",
@@ -10673,7 +10673,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TransactionUpdatableDestinationPaymentDetails0",
+                        "generatedName": "TransactionUpdatableDestinationPaymentDetailsZero",
                         "nameOverride": undefined,
                         "schema": "CardDetails",
                         "type": "reference",
@@ -10681,7 +10681,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TransactionUpdatableDestinationPaymentDetails1",
+                        "generatedName": "TransactionUpdatableDestinationPaymentDetailsOne",
                         "nameOverride": undefined,
                         "schema": "GenericBankAccountDetails",
                         "type": "reference",
@@ -10689,7 +10689,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TransactionUpdatableDestinationPaymentDetails2",
+                        "generatedName": "TransactionUpdatableDestinationPaymentDetailsTwo",
                         "nameOverride": undefined,
                         "schema": "IBANDetails",
                         "type": "reference",
@@ -10697,7 +10697,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TransactionUpdatableDestinationPaymentDetails3",
+                        "generatedName": "TransactionUpdatableDestinationPaymentDetailsThree",
                         "nameOverride": undefined,
                         "schema": "ACHDetails",
                         "type": "reference",
@@ -10705,7 +10705,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TransactionUpdatableDestinationPaymentDetails4",
+                        "generatedName": "TransactionUpdatableDestinationPaymentDetailsFour",
                         "nameOverride": undefined,
                         "schema": "UPIDetails",
                         "type": "reference",
@@ -10713,7 +10713,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TransactionUpdatableDestinationPaymentDetails5",
+                        "generatedName": "TransactionUpdatableDestinationPaymentDetailsFive",
                         "nameOverride": undefined,
                         "schema": "WalletDetails",
                         "type": "reference",
@@ -10721,7 +10721,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TransactionUpdatableDestinationPaymentDetails6",
+                        "generatedName": "TransactionUpdatableDestinationPaymentDetailsSix",
                         "nameOverride": undefined,
                         "schema": "SWIFTDetails",
                         "type": "reference",
@@ -10729,7 +10729,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TransactionUpdatableDestinationPaymentDetails7",
+                        "generatedName": "TransactionUpdatableDestinationPaymentDetailsSeven",
                         "nameOverride": undefined,
                         "schema": "MpesaDetails",
                         "type": "reference",
@@ -10737,7 +10737,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TransactionUpdatableDestinationPaymentDetails8",
+                        "generatedName": "TransactionUpdatableDestinationPaymentDetailsEight",
                         "nameOverride": undefined,
                         "schema": "CheckDetails",
                         "type": "reference",

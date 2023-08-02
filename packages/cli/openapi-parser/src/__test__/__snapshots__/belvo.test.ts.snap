@@ -6060,7 +6060,7 @@ If you try to access older information than what we can access, we will return a
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "RetrieveInvoicesResponseItem0",
+                      "generatedName": "RetrieveInvoicesResponseItemZero",
                       "nameOverride": undefined,
                       "schema": "InvoiceWithIdSat",
                       "type": "reference",
@@ -6068,7 +6068,7 @@ If you try to access older information than what we can access, we will return a
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "RetrieveInvoicesResponseItem1",
+                      "generatedName": "RetrieveInvoicesResponseItemOne",
                       "nameOverride": undefined,
                       "schema": "InvoiceDian",
                       "type": "reference",
@@ -6171,7 +6171,7 @@ If you try to access older information than what we can access, we will return a
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PatchInvoicesResponseItem0",
+                      "generatedName": "PatchInvoicesResponseItemZero",
                       "nameOverride": undefined,
                       "schema": "InvoiceWithIdSat",
                       "type": "reference",
@@ -6179,7 +6179,7 @@ If you try to access older information than what we can access, we will return a
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PatchInvoicesResponseItem1",
+                      "generatedName": "PatchInvoicesResponseItemOne",
                       "nameOverride": undefined,
                       "schema": "InvoiceDian",
                       "type": "reference",
@@ -6279,7 +6279,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailInvoiceResponse0",
+                    "generatedName": "DetailInvoiceResponseZero",
                     "nameOverride": undefined,
                     "schema": "InvoiceWithIdSat",
                     "type": "reference",
@@ -6287,7 +6287,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailInvoiceResponse1",
+                    "generatedName": "DetailInvoiceResponseOne",
                     "nameOverride": undefined,
                     "schema": "InvoiceDian",
                     "type": "reference",
@@ -6737,7 +6737,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "ListTaxReturnsResponse0",
+                    "generatedName": "ListTaxReturnsResponseZero",
                     "nameOverride": undefined,
                     "schema": "TaxReturnsPersonalPaginated",
                     "type": "reference",
@@ -6745,7 +6745,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "ListTaxReturnsResponse1",
+                    "generatedName": "ListTaxReturnsResponseOne",
                     "nameOverride": undefined,
                     "schema": "TaxReturnsPersonalMonthlyPaginated",
                     "type": "reference",
@@ -6753,7 +6753,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "ListTaxReturnsResponse2",
+                    "generatedName": "ListTaxReturnsResponseTwo",
                     "nameOverride": undefined,
                     "schema": "TaxReturnsBusinessPaginated",
                     "type": "reference",
@@ -6761,7 +6761,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "ListTaxReturnsResponse3",
+                    "generatedName": "ListTaxReturnsResponseThree",
                     "nameOverride": undefined,
                     "schema": "TaxReturnsBusinessMonthlyPaginated",
                     "type": "reference",
@@ -6846,7 +6846,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "RetrieveTaxReturnsRequestBody0",
+                    "generatedName": "RetrieveTaxReturnsRequestBodyZero",
                     "nameOverride": undefined,
                     "schema": "TaxReturnsMonthlyRequest",
                     "type": "reference",
@@ -6854,7 +6854,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "RetrieveTaxReturnsRequestBody1",
+                    "generatedName": "RetrieveTaxReturnsRequestBodyOne",
                     "nameOverride": undefined,
                     "schema": "TaxReturnsYearlyRequest",
                     "type": "reference",
@@ -6881,7 +6881,7 @@ If you try to access older information than what we can access, we will return a
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "RetrieveTaxReturnsResponseItem0",
+                      "generatedName": "RetrieveTaxReturnsResponseItemZero",
                       "nameOverride": undefined,
                       "schema": "TaxReturnPersonal",
                       "type": "reference",
@@ -6889,7 +6889,7 @@ If you try to access older information than what we can access, we will return a
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "RetrieveTaxReturnsResponseItem1",
+                      "generatedName": "RetrieveTaxReturnsResponseItemOne",
                       "nameOverride": undefined,
                       "schema": "TaxReturnPersonalMonthly",
                       "type": "reference",
@@ -6897,7 +6897,7 @@ If you try to access older information than what we can access, we will return a
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "RetrieveTaxReturnsResponseItem2",
+                      "generatedName": "RetrieveTaxReturnsResponseItemTwo",
                       "nameOverride": undefined,
                       "schema": "TaxReturnBusiness",
                       "type": "reference",
@@ -6905,7 +6905,7 @@ If you try to access older information than what we can access, we will return a
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "RetrieveTaxReturnsResponseItem3",
+                      "generatedName": "RetrieveTaxReturnsResponseItemThree",
                       "nameOverride": undefined,
                       "schema": "TaxReturnBusinessMonthly",
                       "type": "reference",
@@ -7005,7 +7005,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailTaxReturnResponse0",
+                    "generatedName": "DetailTaxReturnResponseZero",
                     "nameOverride": undefined,
                     "schema": "TaxReturnPersonal",
                     "type": "reference",
@@ -7013,7 +7013,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailTaxReturnResponse1",
+                    "generatedName": "DetailTaxReturnResponseOne",
                     "nameOverride": undefined,
                     "schema": "TaxReturnPersonalMonthly",
                     "type": "reference",
@@ -7021,7 +7021,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailTaxReturnResponse2",
+                    "generatedName": "DetailTaxReturnResponseTwo",
                     "nameOverride": undefined,
                     "schema": "TaxReturnBusiness",
                     "type": "reference",
@@ -7029,7 +7029,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailTaxReturnResponse3",
+                    "generatedName": "DetailTaxReturnResponseThree",
                     "nameOverride": undefined,
                     "schema": "TaxReturnBusinessMonthly",
                     "type": "reference",
@@ -7430,7 +7430,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "RetrieveTaxStatusResponse0",
+                    "generatedName": "RetrieveTaxStatusResponseZero",
                     "nameOverride": undefined,
                     "schema": "TaxStatusSat",
                     "type": "reference",
@@ -7438,7 +7438,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "RetrieveTaxStatusResponse1",
+                    "generatedName": "RetrieveTaxStatusResponseOne",
                     "nameOverride": undefined,
                     "schema": "TaxStatusDian",
                     "type": "reference",
@@ -7537,7 +7537,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailTaxStatusResponse0",
+                    "generatedName": "DetailTaxStatusResponseZero",
                     "nameOverride": undefined,
                     "schema": "TaxStatusSat",
                     "type": "reference",
@@ -7545,7 +7545,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailTaxStatusResponse1",
+                    "generatedName": "DetailTaxStatusResponseOne",
                     "nameOverride": undefined,
                     "schema": "TaxStatusDian",
                     "type": "reference",
@@ -11521,7 +11521,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "ListTaxDeclarationsResponse0",
+                    "generatedName": "ListTaxDeclarationsResponseZero",
                     "nameOverride": undefined,
                     "schema": "TaxDeclarationIndividualPaginated",
                     "type": "reference",
@@ -11529,7 +11529,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "ListTaxDeclarationsResponse1",
+                    "generatedName": "ListTaxDeclarationsResponseOne",
                     "nameOverride": undefined,
                     "schema": "TaxDeclarationBusinessPaginated",
                     "type": "reference",
@@ -11630,7 +11630,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "RetrieveTaxDeclarationsResponseItem0",
+                      "generatedName": "RetrieveTaxDeclarationsResponseItemZero",
                       "nameOverride": undefined,
                       "schema": "TaxDeclarationBusiness",
                       "type": "reference",
@@ -11638,7 +11638,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "RetrieveTaxDeclarationsResponseItem1",
+                      "generatedName": "RetrieveTaxDeclarationsResponseItemOne",
                       "nameOverride": undefined,
                       "schema": "TaxDeclarationIndividual",
                       "type": "reference",
@@ -11738,7 +11738,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailTaxDeclarationResponse0",
+                    "generatedName": "DetailTaxDeclarationResponseZero",
                     "nameOverride": undefined,
                     "schema": "TaxDeclarationIndividual",
                     "type": "reference",
@@ -11746,7 +11746,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailTaxDeclarationResponse1",
+                    "generatedName": "DetailTaxDeclarationResponseOne",
                     "nameOverride": undefined,
                     "schema": "TaxDeclarationBusiness",
                     "type": "reference",
@@ -13016,7 +13016,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreateCustomerRequest0",
+                    "generatedName": "CreateCustomerRequestZero",
                     "nameOverride": undefined,
                     "schema": "CreateCustomerOfpi",
                     "type": "reference",
@@ -13024,7 +13024,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreateCustomerRequest1",
+                    "generatedName": "CreateCustomerRequestOne",
                     "nameOverride": undefined,
                     "schema": "CreateCustomerPse",
                     "type": "reference",
@@ -13048,7 +13048,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreateCustomerResponse0",
+                    "generatedName": "CreateCustomerResponseZero",
                     "nameOverride": undefined,
                     "schema": "CustomerOfpi",
                     "type": "reference",
@@ -13056,7 +13056,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreateCustomerResponse1",
+                    "generatedName": "CreateCustomerResponseOne",
                     "nameOverride": undefined,
                     "schema": "CustomerPse",
                     "type": "reference",
@@ -13120,7 +13120,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailCustomerResponse0",
+                    "generatedName": "DetailCustomerResponseZero",
                     "nameOverride": undefined,
                     "schema": "CustomerOfpi",
                     "type": "reference",
@@ -13128,7 +13128,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailCustomerResponse1",
+                    "generatedName": "DetailCustomerResponseOne",
                     "nameOverride": undefined,
                     "schema": "CustomerPse",
                     "type": "reference",
@@ -13469,7 +13469,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreateBankAccountRequest0",
+                    "generatedName": "CreateBankAccountRequestZero",
                     "nameOverride": undefined,
                     "schema": "CreateBankAccountOfpi",
                     "type": "reference",
@@ -13477,7 +13477,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreateBankAccountRequest1",
+                    "generatedName": "CreateBankAccountRequestOne",
                     "nameOverride": undefined,
                     "schema": "CreateBankAccountPse",
                     "type": "reference",
@@ -13501,7 +13501,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreateBankAccountResponse0",
+                    "generatedName": "CreateBankAccountResponseZero",
                     "nameOverride": undefined,
                     "schema": "BankAccountOfpiResponse",
                     "type": "reference",
@@ -13509,7 +13509,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreateBankAccountResponse1",
+                    "generatedName": "CreateBankAccountResponseOne",
                     "nameOverride": undefined,
                     "schema": "BankAccountPseResponse",
                     "type": "reference",
@@ -13573,7 +13573,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailBankAccountResponse0",
+                    "generatedName": "DetailBankAccountResponseZero",
                     "nameOverride": undefined,
                     "schema": "BankAccountOfpiResponse",
                     "type": "reference",
@@ -13581,7 +13581,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailBankAccountResponse1",
+                    "generatedName": "DetailBankAccountResponseOne",
                     "nameOverride": undefined,
                     "schema": "BankAccountPseResponse",
                     "type": "reference",
@@ -13885,7 +13885,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreatePaymentlinkRequest0",
+                    "generatedName": "CreatePaymentlinkRequestZero",
                     "nameOverride": undefined,
                     "schema": "CreatePaymentLinkOfpi",
                     "type": "reference",
@@ -13893,7 +13893,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreatePaymentlinkRequest1",
+                    "generatedName": "CreatePaymentlinkRequestOne",
                     "nameOverride": undefined,
                     "schema": "CreatePaymentLinkPse",
                     "type": "reference",
@@ -13917,7 +13917,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreatePaymentlinkResponse0",
+                    "generatedName": "CreatePaymentlinkResponseZero",
                     "nameOverride": undefined,
                     "schema": "PaymentLinkOfpi",
                     "type": "reference",
@@ -13925,7 +13925,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreatePaymentlinkResponse1",
+                    "generatedName": "CreatePaymentlinkResponseOne",
                     "nameOverride": undefined,
                     "schema": "PaymentLinkPse",
                     "type": "reference",
@@ -13991,7 +13991,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailCreatePaymentlinkResponse0",
+                    "generatedName": "DetailCreatePaymentlinkResponseZero",
                     "nameOverride": undefined,
                     "schema": "PaymentLinkOfpi",
                     "type": "reference",
@@ -13999,7 +13999,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailCreatePaymentlinkResponse1",
+                    "generatedName": "DetailCreatePaymentlinkResponseOne",
                     "nameOverride": undefined,
                     "schema": "PaymentLinkPse",
                     "type": "reference",
@@ -15048,7 +15048,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "BadRequestErrorBodyItem0",
+                    "generatedName": "BadRequestErrorBodyItemZero",
                     "nameOverride": undefined,
                     "schema": "InvalidAccessMode",
                     "type": "reference",
@@ -15056,7 +15056,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "BadRequestErrorBodyItem1",
+                    "generatedName": "BadRequestErrorBodyItemOne",
                     "nameOverride": undefined,
                     "schema": "TooManySessionsError",
                     "type": "reference",
@@ -15064,7 +15064,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "BadRequestErrorBodyItem2",
+                    "generatedName": "BadRequestErrorBodyItemTwo",
                     "nameOverride": undefined,
                     "schema": "LoginError",
                     "type": "reference",
@@ -15072,7 +15072,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "BadRequestErrorBodyItem3",
+                    "generatedName": "BadRequestErrorBodyItemThree",
                     "nameOverride": undefined,
                     "schema": "SessionExpiredError",
                     "type": "reference",
@@ -15080,7 +15080,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "BadRequestErrorBodyItem4",
+                    "generatedName": "BadRequestErrorBodyItemFour",
                     "nameOverride": undefined,
                     "schema": "ValidationError",
                     "type": "reference",
@@ -15088,7 +15088,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "BadRequestErrorBodyItem5",
+                    "generatedName": "BadRequestErrorBodyItemFive",
                     "nameOverride": undefined,
                     "schema": "InstitutionDownError",
                     "type": "reference",
@@ -15096,7 +15096,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "BadRequestErrorBodyItem6",
+                    "generatedName": "BadRequestErrorBodyItemSix",
                     "nameOverride": undefined,
                     "schema": "InstitutionUnavailableError",
                     "type": "reference",
@@ -15104,7 +15104,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "BadRequestErrorBodyItem7",
+                    "generatedName": "BadRequestErrorBodyItemSeven",
                     "nameOverride": undefined,
                     "schema": "InstitutionInactiveError",
                     "type": "reference",
@@ -15112,7 +15112,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "BadRequestErrorBodyItem8",
+                    "generatedName": "BadRequestErrorBodyItemEight",
                     "nameOverride": undefined,
                     "schema": "UnsupportedOperationError",
                     "type": "reference",
@@ -15120,7 +15120,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "BadRequestErrorBodyItem9",
+                    "generatedName": "BadRequestErrorBodyItemNine",
                     "nameOverride": undefined,
                     "schema": "InvalidLinkError",
                     "type": "reference",
@@ -15128,7 +15128,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "BadRequestErrorBodyItem10",
+                    "generatedName": "BadRequestErrorBodyItemTen",
                     "nameOverride": undefined,
                     "schema": "UnconfirmedLinkError",
                     "type": "reference",
@@ -18399,7 +18399,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "BankAccountHolderRequestOfpiInformation0",
+                      "generatedName": "BankAccountHolderRequestOfpiInformationZero",
                       "nameOverride": undefined,
                       "schema": "HolderInformationBusinessOfpi",
                       "type": "reference",
@@ -18407,7 +18407,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "BankAccountHolderRequestOfpiInformation1",
+                      "generatedName": "BankAccountHolderRequestOfpiInformationOne",
                       "nameOverride": undefined,
                       "schema": "HolderInformationIndividualOfpi",
                       "type": "reference",
@@ -18576,7 +18576,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "BankAccountOfpiResponseDetails0",
+                      "generatedName": "BankAccountOfpiResponseDetailsZero",
                       "nameOverride": undefined,
                       "schema": "BankAccountDetailsOfpi",
                       "type": "reference",
@@ -18584,7 +18584,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "BankAccountOfpiResponseDetails1",
+                      "generatedName": "BankAccountOfpiResponseDetailsOne",
                       "nameOverride": undefined,
                       "schema": "BankAccountDetailsOfpiPix",
                       "type": "reference",
@@ -18703,7 +18703,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "BankAccountPaginatedResponseResultsItem0",
+                          "generatedName": "BankAccountPaginatedResponseResultsItemZero",
                           "nameOverride": undefined,
                           "schema": "BankAccountOfpiResponse",
                           "type": "reference",
@@ -18711,7 +18711,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "BankAccountPaginatedResponseResultsItem1",
+                          "generatedName": "BankAccountPaginatedResponseResultsItemOne",
                           "nameOverride": undefined,
                           "schema": "BankAccountPseResponse",
                           "type": "reference",
@@ -18811,7 +18811,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "BeneficiaryBankAccountOfpiDetails0",
+                        "generatedName": "BeneficiaryBankAccountOfpiDetailsZero",
                         "nameOverride": undefined,
                         "schema": "BankAccountDetailsOpenFinance",
                         "type": "reference",
@@ -18819,7 +18819,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "BeneficiaryBankAccountOfpiDetails1",
+                        "generatedName": "BeneficiaryBankAccountOfpiDetailsOne",
                         "nameOverride": undefined,
                         "schema": "BankAccountDetailsOpenFinancePix",
                         "type": "reference",
@@ -19792,7 +19792,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "ChargePaymentMethodDetails0",
+                      "generatedName": "ChargePaymentMethodDetailsZero",
                       "nameOverride": undefined,
                       "schema": "ChargePaymentMethodDetailsPse",
                       "type": "reference",
@@ -19800,7 +19800,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "ChargePaymentMethodDetails1",
+                      "generatedName": "ChargePaymentMethodDetailsOne",
                       "nameOverride": undefined,
                       "schema": "ChargePaymentMethodDetailsOfpi",
                       "type": "reference",
@@ -20077,7 +20077,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "CreateBankAccountOfpiDetails0",
+                      "generatedName": "CreateBankAccountOfpiDetailsZero",
                       "nameOverride": undefined,
                       "schema": "BankAccountDetailsOfpi",
                       "type": "reference",
@@ -20085,7 +20085,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "CreateBankAccountOfpiDetails1",
+                      "generatedName": "CreateBankAccountOfpiDetailsOne",
                       "nameOverride": undefined,
                       "schema": "BankAccountDetailsOfpiPix",
                       "type": "reference",
@@ -21194,7 +21194,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "CustomerPaginatedResponseResultsItem0",
+                          "generatedName": "CustomerPaginatedResponseResultsItemZero",
                           "nameOverride": undefined,
                           "schema": "CustomerOfpi",
                           "type": "reference",
@@ -21202,7 +21202,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "CustomerPaginatedResponseResultsItem1",
+                          "generatedName": "CustomerPaginatedResponseResultsItemOne",
                           "nameOverride": undefined,
                           "schema": "CustomerPse",
                           "type": "reference",
@@ -26295,7 +26295,7 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "HolderResponseOfpiInformation0",
+                      "generatedName": "HolderResponseOfpiInformationZero",
                       "nameOverride": undefined,
                       "schema": "HolderInformationBusinessOfpiResponse",
                       "type": "reference",
@@ -26303,7 +26303,7 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "HolderResponseOfpiInformation1",
+                      "generatedName": "HolderResponseOfpiInformationOne",
                       "nameOverride": undefined,
                       "schema": "HolderInformationIndividualOfpiResponse",
                       "type": "reference",
@@ -33332,7 +33332,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "InvoicesResponsePaginatedResponseResultsItem0",
+                          "generatedName": "InvoicesResponsePaginatedResponseResultsItemZero",
                           "nameOverride": undefined,
                           "schema": "InvoiceWithIdSat",
                           "type": "reference",
@@ -33340,7 +33340,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "InvoicesResponsePaginatedResponseResultsItem1",
+                          "generatedName": "InvoicesResponsePaginatedResponseResultsItemOne",
                           "nameOverride": undefined,
                           "schema": "InvoiceDian",
                           "type": "reference",
@@ -36931,7 +36931,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentOfpiNextStep0",
+                      "generatedName": "PaymentIntentOfpiNextStepZero",
                       "nameOverride": undefined,
                       "schema": "NextStepDisplayPaymentMethodInformation",
                       "type": "reference",
@@ -36939,7 +36939,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentOfpiNextStep1",
+                      "generatedName": "PaymentIntentOfpiNextStepOne",
                       "nameOverride": undefined,
                       "schema": "NextStepNeedsRedirect",
                       "type": "reference",
@@ -36947,7 +36947,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentOfpiNextStep2",
+                      "generatedName": "PaymentIntentOfpiNextStepTwo",
                       "nameOverride": undefined,
                       "schema": "NextStepDisplayConfirmationRequiredOfpi",
                       "type": "reference",
@@ -36955,7 +36955,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentOfpiNextStep3",
+                      "generatedName": "PaymentIntentOfpiNextStepThree",
                       "nameOverride": undefined,
                       "schema": "NextStepDisplayPaymentProcessing",
                       "type": "reference",
@@ -36963,7 +36963,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentOfpiNextStep4",
+                      "generatedName": "PaymentIntentOfpiNextStepFour",
                       "nameOverride": undefined,
                       "schema": "NextStepDisplayPaymentSucceeded",
                       "type": "reference",
@@ -36971,7 +36971,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentOfpiNextStep5",
+                      "generatedName": "PaymentIntentOfpiNextStepFive",
                       "nameOverride": undefined,
                       "schema": "NextStepDisplayPaymentFailed",
                       "type": "reference",
@@ -37008,7 +37008,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentOfpiPaymentMethodDetails0",
+                      "generatedName": "PaymentIntentOfpiPaymentMethodDetailsZero",
                       "nameOverride": undefined,
                       "schema": "PaymentIntentPaymentMethodDetailsIndividualOfpi",
                       "type": "reference",
@@ -37016,7 +37016,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentOfpiPaymentMethodDetails1",
+                      "generatedName": "PaymentIntentOfpiPaymentMethodDetailsOne",
                       "nameOverride": undefined,
                       "schema": "PaymentIntentPaymentMethodDetailsBusinessOfpi",
                       "type": "reference",
@@ -37764,7 +37764,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseNextStep0",
+                      "generatedName": "PaymentIntentPseNextStepZero",
                       "nameOverride": undefined,
                       "schema": "NextStepDisplayPaymentMethodInformationPse",
                       "type": "reference",
@@ -37772,7 +37772,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseNextStep1",
+                      "generatedName": "PaymentIntentPseNextStepOne",
                       "nameOverride": undefined,
                       "schema": "NextStepDisplayCredentialsRequiredPse",
                       "type": "reference",
@@ -37780,7 +37780,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseNextStep2",
+                      "generatedName": "PaymentIntentPseNextStepTwo",
                       "nameOverride": undefined,
                       "schema": "NextStepDisplayNeedsRedirectPse",
                       "type": "reference",
@@ -37788,7 +37788,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseNextStep3",
+                      "generatedName": "PaymentIntentPseNextStepThree",
                       "nameOverride": undefined,
                       "schema": "NextStepDisplayTokenRequiredPse",
                       "type": "reference",
@@ -37796,7 +37796,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseNextStep4",
+                      "generatedName": "PaymentIntentPseNextStepFour",
                       "nameOverride": undefined,
                       "schema": "NextStepDisplayCustomerBankAccountsPse",
                       "type": "reference",
@@ -37804,7 +37804,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseNextStep5",
+                      "generatedName": "PaymentIntentPseNextStepFive",
                       "nameOverride": undefined,
                       "schema": "NextStepDisplayConfirmationRequiredPse",
                       "type": "reference",
@@ -37828,7 +37828,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseLastError0",
+                      "generatedName": "PaymentIntentPseLastErrorZero",
                       "nameOverride": undefined,
                       "schema": "LastErrorInvalidCredentials",
                       "type": "reference",
@@ -37836,7 +37836,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseLastError1",
+                      "generatedName": "PaymentIntentPseLastErrorOne",
                       "nameOverride": undefined,
                       "schema": "LastErrorInvalidToken",
                       "type": "reference",
@@ -37844,7 +37844,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseLastError2",
+                      "generatedName": "PaymentIntentPseLastErrorTwo",
                       "nameOverride": undefined,
                       "schema": "LastErrorLoginError",
                       "type": "reference",
@@ -37852,7 +37852,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseLastError3",
+                      "generatedName": "PaymentIntentPseLastErrorThree",
                       "nameOverride": undefined,
                       "schema": "LastErrorTwoFactor",
                       "type": "reference",
@@ -37860,7 +37860,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseLastError4",
+                      "generatedName": "PaymentIntentPseLastErrorFour",
                       "nameOverride": undefined,
                       "schema": "LastErrorPaymentError",
                       "type": "reference",
@@ -37868,7 +37868,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseLastError5",
+                      "generatedName": "PaymentIntentPseLastErrorFive",
                       "nameOverride": undefined,
                       "schema": "LastErrorSessionExpired",
                       "type": "reference",
@@ -38785,7 +38785,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "PaymentLinkPaginatedResponseResultsItem0",
+                          "generatedName": "PaymentLinkPaginatedResponseResultsItemZero",
                           "nameOverride": undefined,
                           "schema": "PaymentLinkListOfpi",
                           "type": "reference",
@@ -38793,7 +38793,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "PaymentLinkPaginatedResponseResultsItem1",
+                          "generatedName": "PaymentLinkPaginatedResponseResultsItemOne",
                           "nameOverride": undefined,
                           "schema": "PaymentLinkListPse",
                           "type": "reference",
@@ -47759,7 +47759,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "TaxStatusPaginatedResponseResultsItem0",
+                          "generatedName": "TaxStatusPaginatedResponseResultsItemZero",
                           "nameOverride": undefined,
                           "schema": "TaxStatusSat",
                           "type": "reference",
@@ -47767,7 +47767,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "TaxStatusPaginatedResponseResultsItem1",
+                          "generatedName": "TaxStatusPaginatedResponseResultsItemOne",
                           "nameOverride": undefined,
                           "schema": "TaxStatusDian",
                           "type": "reference",
@@ -49480,7 +49480,7 @@ For \`too_many_sessions\` errors, the description is:
               {
                 "description": undefined,
                 "file": undefined,
-                "generatedName": "TransactionBankAccountPse0",
+                "generatedName": "TransactionBankAccountPseZero",
                 "nameOverride": undefined,
                 "schema": "TransactionBankAccountBodyPse",
                 "type": "reference",
@@ -49488,7 +49488,7 @@ For \`too_many_sessions\` errors, the description is:
               {
                 "description": undefined,
                 "file": undefined,
-                "generatedName": "TransactionBankAccountPse1",
+                "generatedName": "TransactionBankAccountPseOne",
                 "nameOverride": undefined,
                 "schema": "BankAccountInformationPse",
                 "type": "reference",
@@ -50656,7 +50656,7 @@ For \`session_expired\` errors, the description can be (among others):
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentTransactionPayer0",
+                      "generatedName": "PaymentTransactionPayerZero",
                       "nameOverride": undefined,
                       "schema": "TransactionBankAccountOfpi",
                       "type": "reference",
@@ -50664,7 +50664,7 @@ For \`session_expired\` errors, the description can be (among others):
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentTransactionPayer1",
+                      "generatedName": "PaymentTransactionPayerOne",
                       "nameOverride": undefined,
                       "schema": "TransactionBankAccountPse",
                       "type": "reference",

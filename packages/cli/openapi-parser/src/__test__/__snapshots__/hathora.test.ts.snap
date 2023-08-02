@@ -4019,7 +4019,7 @@ exports[`open api parser hathora parse open api 1`] = `
               {
                 "description": undefined,
                 "file": undefined,
-                "generatedName": "ConnectionInfo0",
+                "generatedName": "ConnectionInfoZero",
                 "nameOverride": undefined,
                 "schema": "StartingConnectionInfo",
                 "type": "reference",
@@ -4027,7 +4027,7 @@ exports[`open api parser hathora parse open api 1`] = `
               {
                 "description": undefined,
                 "file": undefined,
-                "generatedName": "ConnectionInfo1",
+                "generatedName": "ConnectionInfoOne",
                 "nameOverride": undefined,
                 "schema": "ActiveConnectionInfo",
                 "type": "reference",
