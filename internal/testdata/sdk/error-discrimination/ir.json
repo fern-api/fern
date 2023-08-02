@@ -912,13 +912,6 @@
                         },
                         "type": "json"
                     },
-                    "sdkResponse": {
-                        "responseBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
-                    },
                     "errors": [
                         {
                             "error": {
@@ -1267,6 +1260,13 @@
     },
     "pathParameters": [],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": [
+            "type_user:UserNotFoundErrorBody",
+            "type_user:OrganizationNotFoundErrorBody"
+        ]
+    },
     "subpackages": {
         "subpackage_user": {
             "fernFilepath": {

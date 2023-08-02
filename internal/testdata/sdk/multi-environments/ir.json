@@ -127,13 +127,6 @@
                         },
                         "type": "json"
                     },
-                    "sdkResponse": {
-                        "responseBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
-                    },
                     "errors": [],
                     "examples": []
                 },
@@ -188,19 +181,6 @@
                         },
                         "type": "json"
                     },
-                    "sdkResponse": {
-                        "responseBodyType": {
-                            "container": {
-                                "list": {
-                                    "primitive": "STRING",
-                                    "_type": "primitive"
-                                },
-                                "_type": "list"
-                            },
-                            "_type": "container"
-                        },
-                        "type": "json"
-                    },
                     "errors": [],
                     "examples": []
                 },
@@ -243,19 +223,6 @@
                     "queryParameters": [],
                     "headers": [],
                     "response": {
-                        "responseBodyType": {
-                            "container": {
-                                "list": {
-                                    "primitive": "STRING",
-                                    "_type": "primitive"
-                                },
-                                "_type": "list"
-                            },
-                            "_type": "container"
-                        },
-                        "type": "json"
-                    },
-                    "sdkResponse": {
                         "responseBodyType": {
                             "container": {
                                 "list": {
@@ -368,13 +335,6 @@
                     "queryParameters": [],
                     "headers": [],
                     "response": {
-                        "responseBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
-                    },
-                    "sdkResponse": {
                         "responseBodyType": {
                             "primitive": "STRING",
                             "_type": "primitive"
@@ -522,6 +482,10 @@
     },
     "pathParameters": [],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": []
+    },
     "subpackages": {
         "subpackage_auth": {
             "fernFilepath": {

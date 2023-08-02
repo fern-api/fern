@@ -192,9 +192,6 @@
                     "response": {
                         "type": "fileDownload"
                     },
-                    "sdkResponse": {
-                        "type": "fileDownload"
-                    },
                     "errors": [],
                     "examples": []
                 }
@@ -230,6 +227,10 @@
     },
     "pathParameters": [],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": []
+    },
     "subpackages": {
         "subpackage_file": {
             "fernFilepath": {

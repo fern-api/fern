@@ -93,6 +93,7 @@ var _keywords = map[string]struct{}{
 	"break":       struct{}{},
 	"case":        struct{}{},
 	"chan":        struct{}{},
+	"client":      struct{}{}, // TODO: Temporarily added to prevent conflicts.
 	"const":       struct{}{},
 	"continue":    struct{}{},
 	"default":     struct{}{},

@@ -2463,6 +2463,19 @@
     },
     "pathParameters": [],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": [
+            "type_:Base",
+            "type_bar/bar:Bar",
+            "type_baz/v1/baz:Baz",
+            "type_baz/v2/baz:Baz",
+            "type_extra:Value",
+            "type_foo:Foo",
+            "type_foo/foo:Foo",
+            "type_union:Union"
+        ]
+    },
     "subpackages": {
         "subpackage_baz": {
             "fernFilepath": {
@@ -3573,6 +3586,7 @@
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

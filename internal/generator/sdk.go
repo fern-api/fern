@@ -153,42 +153,8 @@ func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth, headers []*i
 }
 
 // WriteClientOptions writes the client options available to the generated
-// client code. By default, the options are deposited at the root of the SDK
-// so that users can access the helpers alongside the rest of the top-level
-// definitions. However, if any naming conflict exists between the generated
-// types, this file is deposited in the core package.
-//
-// This function returns true if the client options should be written in the core
-// package.
-func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHeader, generatedNames map[string]struct{}) bool {
-	// First determine if there are any conflicts with the generated names.
-	clientOptionNames := map[string]struct{}{
-		"ClientWithBaseURL":    struct{}{},
-		"ClientWithHTTPClient": struct{}{},
-		"ClientWithHTTPHeader": struct{}{},
-	}
-	for _, authScheme := range auth.Schemes {
-		if authScheme.Bearer != nil {
-			clientOptionNames[fmt.Sprintf("ClientWithAuth%s", authScheme.Bearer.Token.PascalCase.UnsafeName)] = struct{}{}
-		}
-		if authScheme.Basic != nil {
-			clientOptionNames["ClientWithAuthBasic"] = struct{}{}
-		}
-		if authScheme.Header != nil {
-			clientOptionNames[fmt.Sprintf("ClientWithAuth%s", authScheme.Header.Name.Name.PascalCase.UnsafeName)] = struct{}{}
-		}
-	}
-	for _, header := range headers {
-		clientOptionNames[fmt.Sprintf("ClientWithHeader%s", header.Name.Name.PascalCase.UnsafeName)] = struct{}{}
-	}
-	var useCore bool
-	for clientOptionName := range clientOptionNames {
-		if _, ok := generatedNames[clientOptionName]; ok {
-			useCore = true
-			break
-		}
-	}
-
+// client code.
+func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHeader) error {
 	// Now that we know where the types will be generated, format the generated type names as needed.
 	var (
 		importPath        = f.baseImportPath
@@ -196,13 +162,6 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 		clientOptionType  = "core.ClientOption"
 		clientOptionsType = "*core.ClientOptions"
 	)
-	if useCore {
-		importPath = path.Join(f.baseImportPath, "core")
-		httpClientType = "HTTPClient"
-		clientOptionType = "ClientOption"
-		clientOptionsType = "*ClientOptions"
-	}
-
 	// Generate the options for setting the base URL and HTTP client.
 	f.P("// ClientWithBaseURL sets the client's base URL, overriding the")
 	f.P("// default environment, if any.")
@@ -316,7 +275,7 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 		f.P()
 	}
 
-	return useCore
+	return nil
 }
 
 // WriteClient writes a client for interacting with the given service.
@@ -326,19 +285,12 @@ func (f *fileWriter) WriteClient(
 	environmentsConfig *ir.EnvironmentsConfig,
 	errorDiscriminationStrategy *ir.ErrorDiscriminationStrategy,
 	fernFilepath *ir.FernFilepath,
-	namePrefix *ir.Name,
-	enableClientSubpackages bool,
 ) error {
 	var (
 		clientName     = "Client"
 		clientImplName = "client"
 		receiver       = "c"
 	)
-	if namePrefix != nil {
-		clientImplName = namePrefix.CamelCase.UnsafeName + clientName
-		clientName = namePrefix.PascalCase.UnsafeName + clientName
-		receiver = typeNameToReceiver(clientImplName)
-	}
 	var errorDiscriminationByPropertyStrategy *ir.ErrorDiscriminationByPropertyStrategy
 	if errorDiscriminationStrategy != nil && errorDiscriminationStrategy.Property != nil {
 		errorDiscriminationByPropertyStrategy = errorDiscriminationStrategy.Property
@@ -346,7 +298,7 @@ func (f *fileWriter) WriteClient(
 	// Reformat the endpoint data into a structure that's suitable for code generation.
 	var endpoints []*endpoint
 	for _, irEndpoint := range irEndpoints {
-		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, receiver, enableClientSubpackages)
+		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, receiver)
 		if err != nil {
 			return err
 		}
@@ -362,25 +314,8 @@ func (f *fileWriter) WriteClient(
 		f.P(fmt.Sprintf("%s(%s) %s", endpoint.Name.PascalCase.UnsafeName, endpoint.SignatureParameters, endpoint.ReturnValues))
 	}
 	for _, subpackage := range subpackages {
-		// Define a getter method for the subpackage client.
-		//
-		// If this is a top-level client (i.e. defined by a __package__.yml),
-		// it will have getters for each of the files in the same package.
-		//
-		//  type Client interface {
-		//    User() UserClient
-		//    Notification() NotificationClient
-		//  }
-		if subpackage.FernFilepath.File != nil {
-			clientTypeName := subpackage.FernFilepath.File.PascalCase.UnsafeName + "Client"
-			f.P(subpackage.Name.PascalCase.UnsafeName, "()", clientTypeName)
-			continue
-		}
 		var (
-			importPath = fernFilepathToImportPath(
-				f.baseImportPath,
-				fernFilepathForServiceWithClientSubpackage(subpackage.FernFilepath, enableClientSubpackages),
-			)
+			importPath     = packagePathToImportPath(f.baseImportPath, packagePathForClient(subpackage.FernFilepath))
 			clientTypeName = f.imports.Add(importPath) + ".Client"
 		)
 		f.P(subpackage.Name.PascalCase.UnsafeName, "()", clientTypeName)
@@ -401,14 +336,8 @@ func (f *fileWriter) WriteClient(
 	f.P("httpClient: options.HTTPClient,")
 	f.P("header: options.ToHeader(),")
 	for _, subpackage := range subpackages {
-		if subpackage.FernFilepath.File != nil {
-			clientTypeName := subpackage.FernFilepath.File.PascalCase.UnsafeName + "Client"
-			clientConstructor := "New" + clientTypeName + "(opts...),"
-			f.P(subpackage.Name.CamelCase.UnsafeName, "Client: ", clientConstructor)
-			continue
-		}
 		var (
-			importPath        = fernFilepathToImportPath(f.baseImportPath, subpackage.FernFilepath)
+			importPath        = packagePathToImportPath(f.baseImportPath, packagePathForClient(subpackage.FernFilepath))
 			clientConstructor = f.imports.Add(importPath) + ".NewClient(opts...),"
 		)
 		f.P(subpackage.Name.CamelCase.UnsafeName, "Client: ", clientConstructor)
@@ -424,12 +353,9 @@ func (f *fileWriter) WriteClient(
 	f.P("header http.Header")
 	for _, subpackage := range subpackages {
 		var (
-			importPath     = fernFilepathToImportPath(f.baseImportPath, subpackage.FernFilepath)
+			importPath     = packagePathToImportPath(f.baseImportPath, packagePathForClient(subpackage.FernFilepath))
 			clientTypeName = f.imports.Add(importPath) + "." + clientName
 		)
-		if subpackage.FernFilepath.File != nil {
-			clientTypeName = subpackage.FernFilepath.File.PascalCase.UnsafeName + "Client"
-		}
 		f.P(subpackage.Name.CamelCase.UnsafeName, "Client ", clientTypeName)
 	}
 	f.P("}")
@@ -543,14 +469,11 @@ func (f *fileWriter) WriteClient(
 			}
 			f.P("switch ", switchValue, " {")
 			for _, responseError := range endpoint.Errors {
-				errorDeclaration := f.errors[responseError.Error.ErrorId]
-				errorType := errorDeclaration.Name.Name.PascalCase.UnsafeName
-				if enableClientSubpackages {
-					// If client subpackages are enabled, we need to import
-					// the error types from another package.
-					errorImportPath := fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
-					errorType = f.imports.Add(errorImportPath) + "." + errorType
-				}
+				var (
+					errorDeclaration = f.errors[responseError.Error.ErrorId]
+					errorImportPath  = fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
+					errorType        = f.imports.Add(errorImportPath) + "." + errorDeclaration.Name.Name.PascalCase.UnsafeName
+				)
 				if errorDiscriminationByPropertyStrategy != nil {
 					f.P(`case "`, errorDeclaration.DiscriminantValue.WireValue, `":`)
 				} else {
@@ -658,12 +581,9 @@ func (f *fileWriter) WriteClient(
 	// Implement the getter methods to nested clients, if any.
 	for _, subpackage := range subpackages {
 		var (
-			importPath     = fernFilepathToImportPath(f.baseImportPath, subpackage.FernFilepath)
+			importPath     = packagePathToImportPath(f.baseImportPath, packagePathForClient(subpackage.FernFilepath))
 			clientTypeName = f.imports.Add(importPath) + ".Client"
 		)
-		if subpackage.FernFilepath.File != nil {
-			clientTypeName = subpackage.FernFilepath.File.PascalCase.UnsafeName + "Client"
-		}
 		f.P("func (", receiver, " *", clientImplName, ") ", subpackage.Name.PascalCase.UnsafeName, "() ", clientTypeName, " {")
 		f.P("return ", receiver, ".", subpackage.Name.CamelCase.UnsafeName, "Client")
 		f.P("}")
@@ -710,7 +630,6 @@ func (f *fileWriter) endpointFromIR(
 	irEndpoint *ir.HttpEndpoint,
 	irEnvironmentsConfig *ir.EnvironmentsConfig,
 	receiver string,
-	enableClientSubpackages bool,
 ) (*endpoint, error) {
 	importPath := fernFilepathToImportPath(f.baseImportPath, fernFilepath)
 
@@ -719,7 +638,7 @@ func (f *fileWriter) endpointFromIR(
 	var pathParameterNames []string
 	for _, pathParameter := range irEndpoint.AllPathParameters {
 		pathParameterName := pathParameter.Name.CamelCase.SafeName
-		parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, f.imports, f.baseImportPath, importPath)
+		parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, f.imports, f.baseImportPath, "" /* The type is always imported */)
 		signatureParameters += fmt.Sprintf(", %s %s", pathParameterName, parameterType)
 		pathParameterNames = append(pathParameterNames, pathParameterName)
 	}
@@ -752,17 +671,11 @@ func (f *fileWriter) endpointFromIR(
 		if needsRequestParameter(irEndpoint) {
 			var requestType string
 			if requestBody := irEndpoint.SdkRequest.Shape.JustRequestBody; requestBody != nil {
-				requestType = typeReferenceToGoType(requestBody.RequestBodyType, f.types, f.imports, f.baseImportPath, importPath)
+				requestType = typeReferenceToGoType(requestBody.RequestBodyType, f.types, f.imports, f.baseImportPath, "" /* The type is always imported */)
 			}
 			if irEndpoint.SdkRequest.Shape.Wrapper != nil {
-				requestType = irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName
-				if enableClientSubpackages {
-					// If client subpackages are enabled, we need to import
-					// the request types from another package.
-					requestImportPath := fernFilepathToImportPathForClientSubpackage(f.baseImportPath, fernFilepath)
-					requestType = f.imports.Add(requestImportPath) + "." + requestType
-				}
-				requestType = fmt.Sprintf("*%s", requestType)
+				requestImportPath := fernFilepathToImportPath(f.baseImportPath, fernFilepath)
+				requestType = fmt.Sprintf("*%s.%s", f.imports.Add(requestImportPath), irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
 			}
 			requestParameterName = irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
 			requestValueName = requestParameterName
@@ -787,7 +700,7 @@ func (f *fileWriter) endpointFromIR(
 	var responseIsOptionalParameter bool
 	if irEndpoint.Response != nil {
 		if irEndpoint.Response.Json != nil {
-			responseType = typeReferenceToGoType(irEndpoint.Response.Json.ResponseBodyType, f.types, f.imports, f.baseImportPath, importPath)
+			responseType = typeReferenceToGoType(irEndpoint.Response.Json.ResponseBodyType, f.types, f.imports, f.baseImportPath, "" /* The type is always imported */)
 			responseInitializerFormat = "var response %s"
 			responseIsOptionalParameter = irEndpoint.Response.Json.ResponseBodyType.Container != nil && irEndpoint.Response.Json.ResponseBodyType.Container.Optional != nil
 			responseParameterName = "&response"
@@ -979,7 +892,6 @@ func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *i
 	)
 
 	var literals []*literal
-	f.P("// ", typeName, " is an in-lined request used by the ", endpoint.Name.PascalCase.UnsafeName, " endpoint.")
 	f.P("type ", typeName, " struct {")
 	for _, header := range endpoint.Headers {
 		f.WriteDocs(header.Docs)

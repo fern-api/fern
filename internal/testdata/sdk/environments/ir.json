@@ -109,6 +109,10 @@
     },
     "pathParameters": [],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": []
+    },
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {

@@ -113,6 +113,10 @@
     },
     "pathParameters": [],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": []
+    },
     "subpackages": {
         "subpackage_user": {
             "fernFilepath": {

@@ -302,13 +302,6 @@
                         },
                         "type": "json"
                     },
-                    "sdkResponse": {
-                        "responseBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
-                    },
                     "errors": [],
                     "examples": []
                 },
@@ -462,13 +455,6 @@
                         }
                     },
                     "response": {
-                        "responseBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
-                    },
-                    "sdkResponse": {
                         "responseBodyType": {
                             "primitive": "STRING",
                             "_type": "primitive"
@@ -689,13 +675,6 @@
                         },
                         "type": "json"
                     },
-                    "sdkResponse": {
-                        "responseBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
-                    },
                     "errors": [],
                     "examples": []
                 }
@@ -731,6 +710,10 @@
     },
     "pathParameters": [],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": []
+    },
     "subpackages": {
         "subpackage_file": {
             "fernFilepath": {

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 
 	"github.com/fern-api/fern-go/internal/coordinator"
@@ -96,7 +97,10 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	}
 	// First determine what types will be generated so that we can determine whether or not there will
 	// be any conflicts.
-	generatedNames := generatedNamesFromIR(ir)
+	var (
+		generatedNames    = generatedNamesFromIR(ir)
+		generatedPackages = generatedPackagesFromIR(ir)
+	)
 	var files []*File
 	// First write all of the package-level documentation, if any (i.e. in a doc.go file).
 	if ir.RootPackage != nil && ir.RootPackage.Docs != nil && len(*ir.RootPackage.Docs) > 0 {
@@ -114,8 +118,13 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		writer.WriteDocs(subpackage.Docs)
 		files = append(files, writer.DocsFile())
 	}
-	for _, irType := range ir.Types {
-		fileInfo := fileInfoForType(ir.ApiName, irType.Name.FernFilepath, irType.Name.Name)
+	// Then split up all the types based on the Fern directory they belong to (i.e. the root package,
+	// or some other subpackage).
+	fileInfoToTypes, err := fileInfoToTypes(ir.ApiName, ir.Types, ir.Services, ir.ServiceTypeReferenceInfo)
+	if err != nil {
+		return nil, err
+	}
+	for fileInfo, typesToGenerate := range fileInfoToTypes {
 		writer := newFileWriter(
 			fileInfo.filename,
 			fileInfo.packageName,
@@ -124,8 +133,17 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			ir.Errors,
 			g.coordinator,
 		)
-		if err := writer.WriteType(irType); err != nil {
-			return nil, err
+		for _, typeToGenerate := range typesToGenerate {
+			switch {
+			case typeToGenerate.TypeDeclaration != nil:
+				if err := writer.WriteType(typeToGenerate.TypeDeclaration); err != nil {
+					return nil, err
+				}
+			case typeToGenerate.Endpoint != nil:
+				if err := writer.WriteRequestType(typeToGenerate.FernFilepath, typeToGenerate.Endpoint); err != nil {
+					return nil, err
+				}
+			}
 		}
 		file, err := writer.File()
 		if err != nil {
@@ -155,7 +173,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		files = append(files, file)
 		if ir.Environments != nil {
 			// Generate the core environments file.
-			fileInfo = fileInfoForEnvironments(ir.ApiName, generatedNames)
+			fileInfo = fileInfoForEnvironments(ir.ApiName, generatedNames, generatedPackages)
 			writer = newFileWriter(
 				fileInfo.filename,
 				fileInfo.packageName,
@@ -183,11 +201,8 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			ir.Errors,
 			g.coordinator,
 		)
-		if generatedInCore := writer.WriteClientOptions(ir.Auth, ir.Headers, generatedNames); generatedInCore {
-			// Rewrite the client options file destination.
-			fileInfo = fileInfoForCoreClientOptions()
-			writer.SetFilename(fileInfo.filename)
-			writer.SetPackage(fileInfo.packageName)
+		if err := writer.WriteClientOptions(ir.Auth, ir.Headers); err != nil {
+			return nil, err
 		}
 		file, err = writer.File()
 		if err != nil {
@@ -199,8 +214,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		files = append(files, newPointerFile(g.coordinator, ir.ApiName, generatedNames))
 
 		// Generate the error types, if any.
-		for _, irError := range ir.Errors {
-			fileInfo := fileInfoForType(ir.ApiName, irError.Name.FernFilepath, irError.Name.Name)
+		for fileInfo, irErrors := range fileInfoToErrors(ir.ApiName, ir.Errors) {
 			writer := newFileWriter(
 				fileInfo.filename,
 				fileInfo.packageName,
@@ -209,8 +223,12 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				ir.Errors,
 				g.coordinator,
 			)
-			if err := writer.WriteError(irError); err != nil {
-				return nil, err
+			// TODO: We need to sort these for deterministic results.
+			// Do this based on the ErrorId.
+			for _, irError := range irErrors {
+				if err := writer.WriteError(irError); err != nil {
+					return nil, err
+				}
 			}
 			file, err := writer.File()
 			if err != nil {
@@ -306,37 +324,7 @@ func (g *Generator) generateService(
 	irSubpackages []*fernir.Subpackage,
 ) ([]*File, error) {
 	var files []*File
-	// Generate the in-lined request types.
-	for _, irEndpoint := range irService.Endpoints {
-		if shouldSkipRequestType(irEndpoint) {
-			// This endpoint doesn't have any in-lined request types that need to be generated.
-			continue
-		}
-		fileInfo := fileInfoForType(ir.ApiName, irService.Name.FernFilepath, irEndpoint.SdkRequest.Shape.Wrapper.WrapperName)
-		writer := newFileWriter(
-			fileInfo.filename,
-			fileInfo.packageName,
-			g.config.ImportPath,
-			ir.Types,
-			ir.Errors,
-			g.coordinator,
-		)
-		if err := writer.WriteRequestType(irService.Name.FernFilepath, irEndpoint); err != nil {
-			return nil, err
-		}
-		file, err := writer.File()
-		if err != nil {
-			return nil, err
-		}
-		files = append(files, file)
-	}
-	// Generate the client interface.
-	var namePrefix *fernir.Name
-	if irService.Name.FernFilepath.File != nil {
-		namePrefix = irService.Name.FernFilepath.File
-	}
-	clientFernFilepath := fernFilepathForServiceWithClientSubpackage(irService.Name.FernFilepath, g.config.EnableClientSubpackages)
-	fileInfo := fileInfoForService(ir.ApiName, clientFernFilepath, namePrefix)
+	fileInfo := fileInfoForService(irService.Name.FernFilepath)
 	writer := newFileWriter(
 		fileInfo.filename,
 		fileInfo.packageName,
@@ -350,9 +338,7 @@ func (g *Generator) generateService(
 		irSubpackages,
 		ir.Environments,
 		ir.ErrorDiscriminationStrategy,
-		clientFernFilepath,
-		namePrefix,
-		g.config.EnableClientSubpackages,
+		irService.Name.FernFilepath,
 	); err != nil {
 		return nil, err
 	}
@@ -372,12 +358,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 	irSubpackage *fernir.Subpackage,
 	irSubpackages []*fernir.Subpackage,
 ) (*File, error) {
-	var namePrefix *fernir.Name
-	if len(irSubpackages) > 0 && irSubpackage.FernFilepath.File != nil {
-		namePrefix = irSubpackage.FernFilepath.File
-	}
-	clientFernFilepath := fernFilepathForServiceWithClientSubpackage(irSubpackage.FernFilepath, g.config.EnableClientSubpackages)
-	fileInfo := fileInfoForService(ir.ApiName, clientFernFilepath, namePrefix)
+	fileInfo := fileInfoForService(irSubpackage.FernFilepath)
 	writer := newFileWriter(
 		fileInfo.filename,
 		fileInfo.packageName,
@@ -391,9 +372,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		irSubpackages,
 		nil,
 		ir.ErrorDiscriminationStrategy,
-		clientFernFilepath,
-		namePrefix,
-		g.config.EnableClientSubpackages,
+		irSubpackage.FernFilepath,
 	); err != nil {
 		return nil, err
 	}
@@ -408,8 +387,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 	fernFilepath *fernir.FernFilepath,
 	irSubpackages []*fernir.Subpackage,
 ) (*File, error) {
-	clientFernFilepath := fernFilepathForServiceWithClientSubpackage(fernFilepath, g.config.EnableClientSubpackages)
-	fileInfo := fileInfoForService(ir.ApiName, clientFernFilepath, nil /* namePrefix */)
+	fileInfo := fileInfoForService(fernFilepath)
 	writer := newFileWriter(
 		fileInfo.filename,
 		fileInfo.packageName,
@@ -423,9 +401,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		irSubpackages,
 		nil,
 		ir.ErrorDiscriminationStrategy,
-		clientFernFilepath,
-		nil,
-		g.config.EnableClientSubpackages,
+		fernFilepath,
 	); err != nil {
 		return nil, err
 	}
@@ -532,17 +508,11 @@ func fileInfoForClientOptionsDefinition() *fileInfo {
 	}
 }
 
+// TODO: We need to guard against the case when the user defines a client.yml file.
 func fileInfoForClientOptions(apiName *ir.Name, generatedNames map[string]struct{}) *fileInfo {
-	// By default, we generate the client options at the root of the repository,
-	// so now we need to determine whether or not we can use the standard
-	// filename, or if it needs a prefix.
-	filename := "client_options.go"
-	if _, ok := generatedNames["ClientOptions"]; ok {
-		filename = "_client_options.go"
-	}
 	return &fileInfo{
-		filename:    filename,
-		packageName: strings.ToLower(apiName.CamelCase.SafeName),
+		filename:    "client/options.go",
+		packageName: "client",
 	}
 }
 
@@ -555,11 +525,17 @@ func fileInfoForCoreClientOptions() *fileInfo {
 	}
 }
 
-func fileInfoForEnvironments(apiName *ir.Name, generatedNames map[string]struct{}) *fileInfo {
+func fileInfoForEnvironments(apiName *ir.Name, generatedNames map[string]struct{}, generatedPackages map[string]struct{}) *fileInfo {
 	if _, ok := generatedNames["Environments"]; ok {
 		return &fileInfo{
 			filename:    "core/environments.go",
 			packageName: "core",
+		}
+	}
+	if _, ok := generatedPackages["environments"]; ok {
+		return &fileInfo{
+			filename:    "_environments.go",
+			packageName: strings.ToLower(apiName.CamelCase.SafeName),
 		}
 	}
 	return &fileInfo{
@@ -568,68 +544,32 @@ func fileInfoForEnvironments(apiName *ir.Name, generatedNames map[string]struct{
 	}
 }
 
-func fileInfoForType(apiName *ir.Name, fernFilepath *ir.FernFilepath, name *ir.Name) *fileInfo {
+func fileInfoForType(apiName *ir.Name, fernFilepath *ir.FernFilepath) fileInfo {
 	var packages []string
 	for _, packageName := range fernFilepath.PackagePath {
 		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
 	}
-	typeName := name.SnakeCase.UnsafeName
+	basename := "types"
+	if fernFilepath.File != nil {
+		basename = fernFilepath.File.SnakeCase.UnsafeName
+	}
 	if len(packages) == 0 {
-		// This type didn't declare a package, so it belongs at the top-level.
-		// The top-level package uses the API's name as its package declaration.
-		return &fileInfo{
-			filename:    fmt.Sprintf("%s.go", typeName),
+		return fileInfo{
+			filename:    fmt.Sprintf("%s.go", basename),
 			packageName: strings.ToLower(apiName.CamelCase.SafeName),
 		}
 	}
-	return &fileInfo{
-		filename:    fmt.Sprintf("%s.go", filepath.Join(append(packages, typeName)...)),
+	return fileInfo{
+		filename:    fmt.Sprintf("%s.go", filepath.Join(append(packages, basename)...)),
 		packageName: packages[len(packages)-1],
 	}
 }
 
-func fileInfoForEndpoint(apiName *ir.Name, fernFilepath *ir.FernFilepath, name *ir.Name) *fileInfo {
-	var packages []string
-	for _, packageName := range fernFilepath.PackagePath {
-		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
-	}
-	typeName := name.SnakeCase.UnsafeName
-	if len(packages) == 0 {
-		// This type didn't declare a package, so it belongs at the top-level.
-		// The top-level package uses the API's name as its package declaration.
-		return &fileInfo{
-			filename:    fmt.Sprintf("%s_endpoint.go", typeName),
-			packageName: strings.ToLower(apiName.CamelCase.SafeName),
-		}
-	}
+func fileInfoForService(fernFilepath *ir.FernFilepath) *fileInfo {
+	packagePath := packagePathForClient(fernFilepath)
 	return &fileInfo{
-		filename:    fmt.Sprintf("%s_endpoint.go", filepath.Join(append(packages, typeName)...)),
-		packageName: packages[len(packages)-1],
-	}
-}
-
-func fileInfoForService(apiName *ir.Name, fernFilepath *ir.FernFilepath, name *ir.Name) *fileInfo {
-	var packages []string
-	for _, packageName := range fernFilepath.PackagePath {
-		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
-	}
-	basename := "client.go"
-	if name != nil {
-		// Prepend the name, if any. This lets us create a prefixed client in
-		// the same package to maintain the package hierarchy (e.g. user_service.go).
-		basename = name.SnakeCase.UnsafeName + "_" + basename
-	}
-	if len(packages) == 0 {
-		// This type didn't declare a package, so it belongs at the top-level.
-		// The top-level package uses the API's name as its package declaration.
-		return &fileInfo{
-			filename:    basename,
-			packageName: strings.ToLower(apiName.CamelCase.SafeName),
-		}
-	}
-	return &fileInfo{
-		filename:    filepath.Join(append(packages, basename)...),
-		packageName: packages[len(packages)-1],
+		filename:    filepath.Join(append(packagePath, "client.go")...),
+		packageName: packagePath[len(packagePath)-1],
 	}
 }
 
@@ -666,6 +606,20 @@ func generatedNamesFromIR(ir *ir.IntermediateRepresentation) map[string]struct{}
 	return generatedNames
 }
 
+// TODO: Consolidate these functions into a single collision detection type.
+// The collision detection needs to be far more robust (i.e. clients generated
+// in nested packages that define client types).
+func generatedPackagesFromIR(ir *ir.IntermediateRepresentation) map[string]struct{} {
+	generatedPackages := make(map[string]struct{})
+	for _, irService := range ir.Services {
+		fernFilepath := irService.Name.FernFilepath
+		if fernFilepath.File != nil {
+			generatedPackages[strings.ToLower(fernFilepath.File.CamelCase.SafeName)] = struct{}{}
+		}
+	}
+	return generatedPackages
+}
+
 // shouldSkipRequestType returns true if the request type should not be generated.
 func shouldSkipRequestType(irEndpoint *ir.HttpEndpoint) bool {
 	if irEndpoint.SdkRequest == nil || irEndpoint.SdkRequest.Shape == nil || irEndpoint.SdkRequest.Shape.Wrapper == nil {
@@ -694,79 +648,152 @@ func fileUploadHasBodyProperties(fileUpload *ir.FileUploadRequest) bool {
 	return false
 }
 
-// fernFilepathForServiceWithClientSubpackage updates the given fern fileapth so that the
-// generated client is deposited into a package with a client suffix.
-func fernFilepathForServiceWithClientSubpackage(fernFilepath *ir.FernFilepath, enableClientSubpackages bool) *ir.FernFilepath {
-	if !enableClientSubpackages {
-		return fernFilepath
+func packagePathForClient(fernFilepath *fernir.FernFilepath) []string {
+	var packages []string
+	for _, packageName := range fernFilepath.PackagePath {
+		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
 	}
-	clientElement := &ir.Name{
-		OriginalName: "client",
-		CamelCase: &ir.SafeAndUnsafeString{
-			UnsafeName: "client",
-			SafeName:   "client",
-		},
-		PascalCase: &ir.SafeAndUnsafeString{
-			UnsafeName: "Client",
-			SafeName:   "Client",
-		},
-		SnakeCase: &ir.SafeAndUnsafeString{
-			UnsafeName: "client",
-			SafeName:   "client",
-		},
-		ScreamingSnakeCase: &ir.SafeAndUnsafeString{
-			UnsafeName: "CLIENT",
-			SafeName:   "CLIENT",
-		},
+	directory := "client"
+	if fernFilepath.File != nil {
+		directory = strings.ToLower(fernFilepath.File.CamelCase.SafeName)
 	}
-	if len(fernFilepath.PackagePath) > 0 {
-		// If there is a final package element, we need to merge the client suffix
-		// with the last element.
-		clientPrefix := fernFilepath.PackagePath[len(fernFilepath.PackagePath)-1]
-		clientSuffix := &ir.Name{
-			OriginalName: "client",
-			CamelCase: &ir.SafeAndUnsafeString{
-				UnsafeName: "Client",
-				SafeName:   "Client",
-			},
-			PascalCase: &ir.SafeAndUnsafeString{
-				UnsafeName: "Client",
-				SafeName:   "Client",
-			},
-			SnakeCase: &ir.SafeAndUnsafeString{
-				UnsafeName: "_client",
-				SafeName:   "_client",
-			},
-			ScreamingSnakeCase: &ir.SafeAndUnsafeString{
-				UnsafeName: "_CLIENT",
-				SafeName:   "_CLIENT",
-			},
-		}
-		// Note that we exclusively use the unsafeName representation when forming
-		// the safe name because all values are guarnateed to be safe, and we want
-		// to preserve the true casing convention.
-		clientElement = &ir.Name{
-			OriginalName: clientPrefix.OriginalName + clientSuffix.OriginalName,
-			CamelCase: &ir.SafeAndUnsafeString{
-				UnsafeName: clientPrefix.CamelCase.UnsafeName + clientSuffix.CamelCase.UnsafeName,
-				SafeName:   clientPrefix.CamelCase.UnsafeName + clientSuffix.CamelCase.UnsafeName,
-			},
-			PascalCase: &ir.SafeAndUnsafeString{
-				UnsafeName: clientPrefix.PascalCase.UnsafeName + clientSuffix.PascalCase.UnsafeName,
-				SafeName:   clientPrefix.PascalCase.UnsafeName + clientSuffix.PascalCase.UnsafeName,
-			},
-			SnakeCase: &ir.SafeAndUnsafeString{
-				UnsafeName: clientPrefix.SnakeCase.UnsafeName + clientSuffix.SnakeCase.UnsafeName,
-				SafeName:   clientPrefix.SnakeCase.UnsafeName + clientSuffix.SnakeCase.UnsafeName,
-			},
-			ScreamingSnakeCase: &ir.SafeAndUnsafeString{
-				UnsafeName: clientPrefix.ScreamingSnakeCase.UnsafeName + clientSuffix.ScreamingSnakeCase.UnsafeName,
-				SafeName:   clientPrefix.ScreamingSnakeCase.UnsafeName + clientSuffix.ScreamingSnakeCase.UnsafeName,
-			},
+	return append(packages, directory)
+}
+
+type typeToGenerate struct {
+	ID           string
+	FernFilepath *fernir.FernFilepath
+
+	// Exactly one of these will be non-nil.
+	TypeDeclaration *fernir.TypeDeclaration
+	Endpoint        *fernir.HttpEndpoint
+}
+
+// fileInfoToTypes consolidates all of the given types based on the file they will be generated into.
+func fileInfoToTypes(
+	apiName *fernir.Name,
+	irTypes map[fernir.TypeId]*fernir.TypeDeclaration,
+	irServices map[fernir.ServiceId]*fernir.HttpService,
+	irServiceTypeReferenceInfo *fernir.ServiceTypeReferenceInfo,
+) (map[fileInfo][]*typeToGenerate, error) {
+	result := make(map[fileInfo][]*typeToGenerate)
+	for _, irService := range irServices {
+		for _, irEndpoint := range irService.Endpoints {
+			if shouldSkipRequestType(irEndpoint) {
+				continue
+			}
+			fileInfo := fileInfoForType(apiName, irService.Name.FernFilepath)
+			result[fileInfo] = append(result[fileInfo], &typeToGenerate{ID: irEndpoint.Name.OriginalName, FernFilepath: irService.Name.FernFilepath, Endpoint: irEndpoint})
 		}
 	}
-	fernFilepath.PackagePath = append(fernFilepath.PackagePath, clientElement)
-	return fernFilepath
+	if irServiceTypeReferenceInfo == nil {
+		// If the service type reference info isn't provided, default
+		// to the file-per-type naming convention.
+		for _, irType := range irTypes {
+			fileInfo := fileInfoForType(apiName, irType.Name.FernFilepath)
+			result[fileInfo] = append(result[fileInfo], &typeToGenerate{ID: irType.Name.TypeId, FernFilepath: irType.Name.FernFilepath, TypeDeclaration: irType})
+		}
+	} else {
+		directories := make(map[fernir.TypeId][]string)
+		for irTypeId, irType := range irTypes {
+			var elements []string
+			for _, packageName := range irType.Name.FernFilepath.PackagePath {
+				elements = append(elements, strings.ToLower(packageName.CamelCase.SafeName))
+			}
+			directories[irTypeId] = elements
+		}
+		sharedTypes := irServiceTypeReferenceInfo.SharedTypes
+		if typeIds, ok := irServiceTypeReferenceInfo.TypesReferencedOnlyByService["service_"]; ok {
+			// The root service types should be included alongside the other shared types.
+			sharedTypes = append(sharedTypes, typeIds...)
+		}
+		for _, sharedTypeId := range sharedTypes {
+			typeDeclaration, ok := irTypes[sharedTypeId]
+			if !ok {
+				// Should be unreachable.
+				return nil, fmt.Errorf("IR ServiceTypeReferenceInfo referenced type %q which doesn't exist", sharedTypeId)
+			}
+			fileInfo := fileInfo{
+				filename:    "types.go",
+				packageName: strings.ToLower(apiName.CamelCase.SafeName),
+			}
+			if directory := directories[sharedTypeId]; len(directory) > 0 {
+				fileInfo.filename = filepath.Join(append(directory, fileInfo.filename)...)
+				fileInfo.packageName = directory[len(directory)-1]
+			}
+			result[fileInfo] = append(result[fileInfo], &typeToGenerate{ID: typeDeclaration.Name.TypeId, FernFilepath: typeDeclaration.Name.FernFilepath, TypeDeclaration: typeDeclaration})
+		}
+		for serviceId, typeIds := range irServiceTypeReferenceInfo.TypesReferencedOnlyByService {
+			if serviceId == "service_" {
+				// The root service requires special handling.
+				continue
+			}
+			service, ok := irServices[serviceId]
+			if !ok {
+				// Should be unreachable.
+				return nil, fmt.Errorf("IR ServiceTypeReferenceInfo referenced service %q which doesn't exist", serviceId)
+			}
+			fernFilepath := service.Name.FernFilepath
+			var basename string
+			if service.Name.FernFilepath.File != nil {
+				basename = fernFilepath.File.SnakeCase.UnsafeName
+			} else {
+				basename = fernFilepath.PackagePath[len(fernFilepath.PackagePath)-1].SnakeCase.UnsafeName
+			}
+			var packages []string
+			for _, packageName := range fernFilepath.PackagePath {
+				packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
+			}
+			packageName := strings.ToLower(apiName.CamelCase.SafeName)
+			if len(packages) > 0 {
+				packageName = packages[len(packages)-1]
+			}
+			fileInfo := fileInfo{
+				filename:    filepath.Join(append(packages, fmt.Sprintf("%s.go", basename))...),
+				packageName: packageName,
+			}
+			for _, typeId := range typeIds {
+				typeDeclaration, ok := irTypes[typeId]
+				if !ok {
+					// Should be unreachable.
+					return nil, fmt.Errorf("IR ServiceTypeReferenceInfo referenced type %q which doesn't exist", typeId)
+				}
+				result[fileInfo] = append(result[fileInfo], &typeToGenerate{ID: typeDeclaration.Name.TypeId, FernFilepath: typeDeclaration.Name.FernFilepath, TypeDeclaration: typeDeclaration})
+			}
+		}
+	}
+	// Sort the results so that we have deterministic behavior.
+	for fileInfo := range result {
+		sort.Slice(result[fileInfo], func(i, j int) bool { return result[fileInfo][i].ID < result[fileInfo][j].ID })
+	}
+	return result, nil
+}
+
+func fileInfoToErrors(
+	apiName *fernir.Name,
+	irErrorDeclarations map[fernir.ErrorId]*fernir.ErrorDeclaration,
+) map[fileInfo][]*fernir.ErrorDeclaration {
+	result := make(map[fileInfo][]*fernir.ErrorDeclaration)
+	for _, irErrorDeclaration := range irErrorDeclarations {
+		var elements []string
+		for _, packageName := range irErrorDeclaration.Name.FernFilepath.PackagePath {
+			elements = append(elements, strings.ToLower(packageName.CamelCase.SafeName))
+		}
+		fileInfo := fileInfo{
+			filename:    "errors.go",
+			packageName: strings.ToLower(apiName.CamelCase.SafeName),
+		}
+		if len(elements) > 0 {
+			fileInfo.filename = filepath.Join(append(elements, fileInfo.filename)...)
+			fileInfo.packageName = elements[len(elements)-1]
+		}
+		result[fileInfo] = append(result[fileInfo], irErrorDeclaration)
+	}
+	// Sort the results so that we have deterministic behavior.
+	for fileInfo := range result {
+		sort.Slice(result[fileInfo], func(i, j int) bool { return result[fileInfo][i].Name.ErrorId < result[fileInfo][j].Name.ErrorId })
+	}
+	return result
 }
 
 // pointerFunctionNames enumerates all of the pointer function names.

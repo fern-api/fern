@@ -2,7 +2,9 @@
 
 package api
 
-// A user.
-type User struct {
-	Name string `json:"name"`
+type GetNameRequest struct {
+	// Specifies the endpoint key.
+	XEndpointHeader string `json:"-"`
+	// Filters the username.
+	Filter string `json:"-"`
 }

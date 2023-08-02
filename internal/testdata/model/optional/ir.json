@@ -445,6 +445,13 @@
     },
     "pathParameters": [],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": [
+            "type_imdb:Type",
+            "type_imdb:AnotherType"
+        ]
+    },
     "subpackages": {
         "subpackage_imdb": {
             "fernFilepath": {
@@ -533,6 +540,7 @@
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

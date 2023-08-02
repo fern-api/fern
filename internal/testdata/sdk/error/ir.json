@@ -947,13 +947,6 @@
                         },
                         "type": "json"
                     },
-                    "sdkResponse": {
-                        "responseBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
-                    },
                     "errors": [
                         {
                             "error": {
@@ -1442,13 +1435,6 @@
                         },
                         "type": "json"
                     },
-                    "sdkResponse": {
-                        "responseBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
-                    },
                     "errors": [
                         {
                             "error": {
@@ -1619,6 +1605,12 @@
     },
     "pathParameters": [],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": [
+            "type_user:UserNotFoundErrorBody"
+        ]
+    },
     "subpackages": {
         "subpackage_user": {
             "fernFilepath": {

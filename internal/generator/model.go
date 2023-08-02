@@ -1015,20 +1015,12 @@ func fernFilepathToImportPath(baseImportPath string, fernFilepath *ir.FernFilepa
 	for _, packageName := range fernFilepath.PackagePath {
 		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
 	}
-	return path.Join(append([]string{baseImportPath}, packages...)...)
+	return packagePathToImportPath(baseImportPath, packages)
 }
 
-// fernFilepathToImportPathForClientSubpackage maps the given Fern filepath to its
-// Go import path, assuming that this is being called from the client subpackage.
-//
-// This is behaviorally equivalent to fernFilepathToImportPath, but it explicitly
-// omits the last client element added to the Fern filepath.
-func fernFilepathToImportPathForClientSubpackage(baseImportPath string, fernFilepath *ir.FernFilepath) string {
-	var packages []string
-	for _, packageName := range fernFilepath.PackagePath[:len(fernFilepath.PackagePath)-1] {
-		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
-	}
-	return path.Join(append([]string{baseImportPath}, packages...)...)
+// packagePathToImportPath maps the given packagePath to its Go import path.
+func packagePathToImportPath(baseImportPath string, packagePath []string) string {
+	return path.Join(append([]string{baseImportPath}, packagePath...)...)
 }
 
 // isPointer returns true if the given type is a pointer type (e.g. objects and

@@ -13,6 +13,6 @@ for dir in */ ; do
     fi
 
     pushd $dir
-    fern generate --local
+    fern-go-model config.json
     popd
 done

@@ -312,19 +312,6 @@
                         },
                         "type": "json"
                     },
-                    "sdkResponse": {
-                        "responseBodyType": {
-                            "container": {
-                                "optional": {
-                                    "primitive": "STRING",
-                                    "_type": "primitive"
-                                },
-                                "_type": "optional"
-                            },
-                            "_type": "container"
-                        },
-                        "type": "json"
-                    },
                     "errors": [],
                     "examples": []
                 },
@@ -510,81 +497,6 @@
                         },
                         "type": "json"
                     },
-                    "sdkResponse": {
-                        "responseBodyType": {
-                            "container": {
-                                "optional": {
-                                    "name": {
-                                        "originalName": "User",
-                                        "camelCase": {
-                                            "unsafeName": "user",
-                                            "safeName": "user"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "user",
-                                            "safeName": "user"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "USER",
-                                            "safeName": "USER"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "User",
-                                            "safeName": "User"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [
-                                            {
-                                                "originalName": "user",
-                                                "camelCase": {
-                                                    "unsafeName": "user",
-                                                    "safeName": "user"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "user",
-                                                    "safeName": "user"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "USER",
-                                                    "safeName": "USER"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "User",
-                                                    "safeName": "User"
-                                                }
-                                            }
-                                        ],
-                                        "packagePath": [],
-                                        "file": {
-                                            "originalName": "user",
-                                            "camelCase": {
-                                                "unsafeName": "user",
-                                                "safeName": "user"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "user",
-                                                "safeName": "user"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "USER",
-                                                "safeName": "USER"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "User",
-                                                "safeName": "User"
-                                            }
-                                        }
-                                    },
-                                    "typeId": "type_user:User",
-                                    "_type": "named"
-                                },
-                                "_type": "optional"
-                            },
-                            "_type": "container"
-                        },
-                        "type": "json"
-                    },
                     "errors": [],
                     "examples": []
                 }
@@ -620,6 +532,14 @@
     },
     "pathParameters": [],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {
+            "service_user": [
+                "type_user:User"
+            ]
+        },
+        "sharedTypes": []
+    },
     "subpackages": {
         "subpackage_user": {
             "fernFilepath": {

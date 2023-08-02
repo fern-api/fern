@@ -7,7 +7,7 @@
         "path": "temp"
     },
     "customConfig": {
-      "importPath": "github.com/fern-api/fern-go/internal/testdata/sdk/error/fixtures"
+      "importPath": "github.com/fern-api/fern-go/internal/testdata/sdk/error-discrimination/fixtures"
     },
     "workspaceName": "test",
     "organization": "fernbot",

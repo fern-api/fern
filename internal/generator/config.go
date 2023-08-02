@@ -2,10 +2,9 @@ package generator
 
 // Config represents the Fern generator configuration.
 type Config struct {
-	DryRun                  bool
-	EnableClientSubpackages bool
-	IRFilepath              string
-	ImportPath              string
+	DryRun     bool
+	IRFilepath string
+	ImportPath string
 
 	// If not specified, a go.mod and go.sum will not be generated.
 	ModuleConfig *ModuleConfig
@@ -26,18 +25,11 @@ type ModuleConfig struct {
 }
 
 // NewConfig returns a new *Config for the given values.
-func NewConfig(
-	dryRun bool,
-	enableClientSubpackages bool,
-	irFilepath string,
-	importPath string,
-	moduleConfig *ModuleConfig,
-) (*Config, error) {
+func NewConfig(dryRun bool, irFilepath string, importPath string, moduleConfig *ModuleConfig) (*Config, error) {
 	return &Config{
-		DryRun:                  dryRun,
-		EnableClientSubpackages: enableClientSubpackages,
-		IRFilepath:              irFilepath,
-		ImportPath:              importPath,
-		ModuleConfig:            moduleConfig,
+		DryRun:       dryRun,
+		IRFilepath:   irFilepath,
+		ImportPath:   importPath,
+		ModuleConfig: moduleConfig,
 	}, nil
 }

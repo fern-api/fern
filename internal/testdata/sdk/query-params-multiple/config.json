@@ -7,7 +7,7 @@
         "path": "temp"
     },
     "customConfig": {
-      "importPath": "github.com/fern-api/fern-go/internal/testdata/sdk/query-params/fixtures"
+      "importPath": "github.com/fern-api/fern-go/internal/testdata/sdk/query-params-multiple/fixtures"
     },
     "workspaceName": "test",
     "organization": "fernbot",

@@ -2,6 +2,22 @@
 
 package api
 
+import (
+	uuid "github.com/gofrs/uuid/v5"
+	time "time"
+)
+
+type GetUsersRequest struct {
+	Id               uuid.UUID  `json:"-"`
+	Date             time.Time  `json:"-"`
+	Deadline         time.Time  `json:"-"`
+	Bytes            []byte     `json:"-"`
+	OptionalId       *uuid.UUID `json:"-"`
+	OptionalDate     *time.Time `json:"-"`
+	OptionalDeadline *time.Time `json:"-"`
+	OptionalBytes    *[]byte    `json:"-"`
+}
+
 type User struct {
 	Name string   `json:"name"`
 	Tags []string `json:"tags,omitempty"`

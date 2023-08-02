@@ -2355,43 +2355,6 @@
                         },
                         "type": "json"
                     },
-                    "sdkResponse": {
-                        "docs": "OK",
-                        "responseBodyType": {
-                            "container": {
-                                "list": {
-                                    "name": {
-                                        "originalName": "Task",
-                                        "camelCase": {
-                                            "unsafeName": "task",
-                                            "safeName": "task"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "task",
-                                            "safeName": "task"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "TASK",
-                                            "safeName": "TASK"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Task",
-                                            "safeName": "Task"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": []
-                                    },
-                                    "typeId": "type_:Task",
-                                    "_type": "named"
-                                },
-                                "_type": "list"
-                            },
-                            "_type": "container"
-                        },
-                        "type": "json"
-                    },
                     "errors": [],
                     "examples": []
                 },
@@ -2515,37 +2478,6 @@
                         }
                     },
                     "response": {
-                        "docs": "Created",
-                        "responseBodyType": {
-                            "name": {
-                                "originalName": "Task",
-                                "camelCase": {
-                                    "unsafeName": "task",
-                                    "safeName": "task"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "task",
-                                    "safeName": "task"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TASK",
-                                    "safeName": "TASK"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Task",
-                                    "safeName": "Task"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": []
-                            },
-                            "typeId": "type_:Task",
-                            "_type": "named"
-                        },
-                        "type": "json"
-                    },
-                    "sdkResponse": {
                         "docs": "Created",
                         "responseBodyType": {
                             "name": {
@@ -2793,37 +2725,6 @@
                     "queryParameters": [],
                     "headers": [],
                     "response": {
-                        "docs": "OK",
-                        "responseBodyType": {
-                            "name": {
-                                "originalName": "Task",
-                                "camelCase": {
-                                    "unsafeName": "task",
-                                    "safeName": "task"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "task",
-                                    "safeName": "task"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TASK",
-                                    "safeName": "TASK"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Task",
-                                    "safeName": "Task"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": []
-                            },
-                            "typeId": "type_:Task",
-                            "_type": "named"
-                        },
-                        "type": "json"
-                    },
-                    "sdkResponse": {
                         "docs": "OK",
                         "responseBodyType": {
                             "name": {
@@ -3124,37 +3025,6 @@
                         }
                     },
                     "response": {
-                        "docs": "OK",
-                        "responseBodyType": {
-                            "name": {
-                                "originalName": "Task",
-                                "camelCase": {
-                                    "unsafeName": "task",
-                                    "safeName": "task"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "task",
-                                    "safeName": "task"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TASK",
-                                    "safeName": "TASK"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Task",
-                                    "safeName": "Task"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": []
-                            },
-                            "typeId": "type_:Task",
-                            "_type": "named"
-                        },
-                        "type": "json"
-                    },
-                    "sdkResponse": {
                         "docs": "OK",
                         "responseBodyType": {
                             "name": {
@@ -3649,37 +3519,6 @@
                         },
                         "type": "json"
                     },
-                    "sdkResponse": {
-                        "docs": "OK",
-                        "responseBodyType": {
-                            "name": {
-                                "originalName": "Task",
-                                "camelCase": {
-                                    "unsafeName": "task",
-                                    "safeName": "task"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "task",
-                                    "safeName": "task"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "TASK",
-                                    "safeName": "TASK"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Task",
-                                    "safeName": "Task"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": []
-                            },
-                            "typeId": "type_:Task",
-                            "_type": "named"
-                        },
-                        "type": "json"
-                    },
                     "errors": [
                         {
                             "error": {
@@ -3873,43 +3712,6 @@
                         }
                     },
                     "response": {
-                        "docs": "Created",
-                        "responseBodyType": {
-                            "container": {
-                                "list": {
-                                    "name": {
-                                        "originalName": "Task",
-                                        "camelCase": {
-                                            "unsafeName": "task",
-                                            "safeName": "task"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "task",
-                                            "safeName": "task"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "TASK",
-                                            "safeName": "TASK"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Task",
-                                            "safeName": "Task"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": []
-                                    },
-                                    "typeId": "type_:Task",
-                                    "_type": "named"
-                                },
-                                "_type": "list"
-                            },
-                            "_type": "container"
-                        },
-                        "type": "json"
-                    },
-                    "sdkResponse": {
                         "docs": "Created",
                         "responseBodyType": {
                             "container": {
@@ -4329,43 +4131,6 @@
                         },
                         "type": "json"
                     },
-                    "sdkResponse": {
-                        "docs": "OK",
-                        "responseBodyType": {
-                            "container": {
-                                "list": {
-                                    "name": {
-                                        "originalName": "Schedule",
-                                        "camelCase": {
-                                            "unsafeName": "schedule",
-                                            "safeName": "schedule"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "schedule",
-                                            "safeName": "schedule"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "SCHEDULE",
-                                            "safeName": "SCHEDULE"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Schedule",
-                                            "safeName": "Schedule"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": []
-                                    },
-                                    "typeId": "type_:Schedule",
-                                    "_type": "named"
-                                },
-                                "_type": "list"
-                            },
-                            "_type": "container"
-                        },
-                        "type": "json"
-                    },
                     "errors": [],
                     "examples": []
                 },
@@ -4521,37 +4286,6 @@
                         }
                     },
                     "response": {
-                        "docs": "OK",
-                        "responseBodyType": {
-                            "name": {
-                                "originalName": "Schedule",
-                                "camelCase": {
-                                    "unsafeName": "schedule",
-                                    "safeName": "schedule"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "schedule",
-                                    "safeName": "schedule"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "SCHEDULE",
-                                    "safeName": "SCHEDULE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Schedule",
-                                    "safeName": "Schedule"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": []
-                            },
-                            "typeId": "type_:Schedule",
-                            "_type": "named"
-                        },
-                        "type": "json"
-                    },
-                    "sdkResponse": {
                         "docs": "OK",
                         "responseBodyType": {
                             "name": {
@@ -4771,37 +4505,6 @@
                     "queryParameters": [],
                     "headers": [],
                     "response": {
-                        "docs": "OK",
-                        "responseBodyType": {
-                            "name": {
-                                "originalName": "Schedule",
-                                "camelCase": {
-                                    "unsafeName": "schedule",
-                                    "safeName": "schedule"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "schedule",
-                                    "safeName": "schedule"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "SCHEDULE",
-                                    "safeName": "SCHEDULE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Schedule",
-                                    "safeName": "Schedule"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": []
-                            },
-                            "typeId": "type_:Schedule",
-                            "_type": "named"
-                        },
-                        "type": "json"
-                    },
-                    "sdkResponse": {
                         "docs": "OK",
                         "responseBodyType": {
                             "name": {
@@ -5102,37 +4805,6 @@
                         }
                     },
                     "response": {
-                        "docs": "OK",
-                        "responseBodyType": {
-                            "name": {
-                                "originalName": "Schedule",
-                                "camelCase": {
-                                    "unsafeName": "schedule",
-                                    "safeName": "schedule"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "schedule",
-                                    "safeName": "schedule"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "SCHEDULE",
-                                    "safeName": "SCHEDULE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Schedule",
-                                    "safeName": "Schedule"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": []
-                            },
-                            "typeId": "type_:Schedule",
-                            "_type": "named"
-                        },
-                        "type": "json"
-                    },
-                    "sdkResponse": {
                         "docs": "OK",
                         "responseBodyType": {
                             "name": {
@@ -5604,43 +5276,6 @@
                         },
                         "type": "json"
                     },
-                    "sdkResponse": {
-                        "docs": "OK",
-                        "responseBodyType": {
-                            "container": {
-                                "list": {
-                                    "name": {
-                                        "originalName": "Task",
-                                        "camelCase": {
-                                            "unsafeName": "task",
-                                            "safeName": "task"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "task",
-                                            "safeName": "task"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "TASK",
-                                            "safeName": "TASK"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Task",
-                                            "safeName": "Task"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": []
-                                    },
-                                    "typeId": "type_:Task",
-                                    "_type": "named"
-                                },
-                                "_type": "list"
-                            },
-                            "_type": "container"
-                        },
-                        "type": "json"
-                    },
                     "errors": [
                         {
                             "error": {
@@ -5736,6 +5371,22 @@
     },
     "pathParameters": [],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {
+            "service_": [
+                "type_:TaskNew",
+                "type_:Task",
+                "type_:Schedule",
+                "type_:id"
+            ]
+        },
+        "sharedTypes": [
+            "type_:TaskStatus",
+            "type_:Request",
+            "type_:created_at",
+            "type_:Error"
+        ]
+    },
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {

@@ -3763,6 +3763,33 @@
     },
     "pathParameters": [],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": [
+            "type_imdb:Integer",
+            "type_imdb:Double",
+            "type_imdb:String",
+            "type_imdb:Boolean",
+            "type_imdb:Long",
+            "type_imdb:DateTime",
+            "type_imdb:Date",
+            "type_imdb:Uuid",
+            "type_imdb:Base64",
+            "type_imdb:IntegerList",
+            "type_imdb:DoubleSet",
+            "type_imdb:StringBooleanMap",
+            "type_imdb:OptionalLong",
+            "type_imdb:Unknown",
+            "type_imdb:ListListInteger",
+            "type_imdb:ListStringIntegerMap",
+            "type_imdb:ListOptionalUUID",
+            "type_imdb:FooAlias",
+            "type_imdb:BarAlias",
+            "type_imdb:Foo",
+            "type_imdb:Bar",
+            "type_imdb:Union"
+        ]
+    },
     "subpackages": {
         "subpackage_imdb": {
             "fernFilepath": {
@@ -3871,6 +3898,7 @@
     "sdkConfig": {
         "isAuthMandatory": false,
         "hasStreamingEndpoints": false,
+        "hasFileDownloadEndpoints": false,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

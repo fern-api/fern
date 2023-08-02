@@ -1819,42 +1819,6 @@
                         },
                         "type": "json"
                     },
-                    "sdkResponse": {
-                        "responseBodyType": {
-                            "container": {
-                                "list": {
-                                    "name": {
-                                        "originalName": "Foo",
-                                        "camelCase": {
-                                            "unsafeName": "foo",
-                                            "safeName": "foo"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "foo",
-                                            "safeName": "foo"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "FOO",
-                                            "safeName": "FOO"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Foo",
-                                            "safeName": "Foo"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": []
-                                    },
-                                    "typeId": "type_:Foo",
-                                    "_type": "named"
-                                },
-                                "_type": "list"
-                            },
-                            "_type": "container"
-                        },
-                        "type": "json"
-                    },
                     "errors": [],
                     "examples": []
                 },
@@ -1977,36 +1941,6 @@
                         }
                     },
                     "response": {
-                        "responseBodyType": {
-                            "name": {
-                                "originalName": "Foo",
-                                "camelCase": {
-                                    "unsafeName": "foo",
-                                    "safeName": "foo"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "foo",
-                                    "safeName": "foo"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "FOO",
-                                    "safeName": "FOO"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Foo",
-                                    "safeName": "Foo"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": []
-                            },
-                            "typeId": "type_:Foo",
-                            "_type": "named"
-                        },
-                        "type": "json"
-                    },
-                    "sdkResponse": {
                         "responseBodyType": {
                             "name": {
                                 "originalName": "Foo",
@@ -2250,36 +2184,6 @@
                     "queryParameters": [],
                     "headers": [],
                     "response": {
-                        "responseBodyType": {
-                            "name": {
-                                "originalName": "Foo",
-                                "camelCase": {
-                                    "unsafeName": "foo",
-                                    "safeName": "foo"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "foo",
-                                    "safeName": "foo"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "FOO",
-                                    "safeName": "FOO"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Foo",
-                                    "safeName": "Foo"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": []
-                            },
-                            "typeId": "type_:Foo",
-                            "_type": "named"
-                        },
-                        "type": "json"
-                    },
-                    "sdkResponse": {
                         "responseBodyType": {
                             "name": {
                                 "originalName": "Foo",
@@ -2576,36 +2480,6 @@
                         }
                     },
                     "response": {
-                        "responseBodyType": {
-                            "name": {
-                                "originalName": "Foo",
-                                "camelCase": {
-                                    "unsafeName": "foo",
-                                    "safeName": "foo"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "foo",
-                                    "safeName": "foo"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "FOO",
-                                    "safeName": "FOO"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Foo",
-                                    "safeName": "Foo"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": []
-                            },
-                            "typeId": "type_:Foo",
-                            "_type": "named"
-                        },
-                        "type": "json"
-                    },
-                    "sdkResponse": {
                         "responseBodyType": {
                             "name": {
                                 "originalName": "Foo",
@@ -3091,36 +2965,6 @@
                         },
                         "type": "json"
                     },
-                    "sdkResponse": {
-                        "responseBodyType": {
-                            "name": {
-                                "originalName": "Foo",
-                                "camelCase": {
-                                    "unsafeName": "foo",
-                                    "safeName": "foo"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "foo",
-                                    "safeName": "foo"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "FOO",
-                                    "safeName": "FOO"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Foo",
-                                    "safeName": "Foo"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": []
-                            },
-                            "typeId": "type_:Foo",
-                            "_type": "named"
-                        },
-                        "type": "json"
-                    },
                     "errors": [
                         {
                             "error": {
@@ -3312,42 +3156,6 @@
                         }
                     },
                     "response": {
-                        "responseBodyType": {
-                            "container": {
-                                "list": {
-                                    "name": {
-                                        "originalName": "Foo",
-                                        "camelCase": {
-                                            "unsafeName": "foo",
-                                            "safeName": "foo"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "foo",
-                                            "safeName": "foo"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "FOO",
-                                            "safeName": "FOO"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Foo",
-                                            "safeName": "Foo"
-                                        }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": []
-                                    },
-                                    "typeId": "type_:Foo",
-                                    "_type": "named"
-                                },
-                                "_type": "list"
-                            },
-                            "_type": "container"
-                        },
-                        "type": "json"
-                    },
-                    "sdkResponse": {
                         "responseBodyType": {
                             "container": {
                                 "list": {
@@ -3752,6 +3560,21 @@
     },
     "pathParameters": [],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {
+            "service_": [
+                "type_:Bar",
+                "type_:Foo",
+                "type_:id"
+            ]
+        },
+        "sharedTypes": [
+            "type_:FooType",
+            "type_:Baz",
+            "type_:Request",
+            "type_:Error"
+        ]
+    },
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {

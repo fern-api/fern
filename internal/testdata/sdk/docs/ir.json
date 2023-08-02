@@ -597,13 +597,6 @@
                         },
                         "type": "json"
                     },
-                    "sdkResponse": {
-                        "responseBodyType": {
-                            "primitive": "STRING",
-                            "_type": "primitive"
-                        },
-                        "type": "json"
-                    },
                     "errors": [],
                     "examples": []
                 }
@@ -639,6 +632,12 @@
     },
     "pathParameters": [],
     "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": [
+            "type_user:User"
+        ]
+    },
     "subpackages": {
         "subpackage_user": {
             "fernFilepath": {
