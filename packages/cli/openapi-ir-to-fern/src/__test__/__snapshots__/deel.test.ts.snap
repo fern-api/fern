@@ -2106,11 +2106,11 @@ exports[`open api parser deel simple 1`] = `
         },
         "DateTimeString": {
           "docs": "Long date-time format following ISO-8601",
-          "type": "string",
+          "type": "datetime",
         },
         "DateTimeStringRequired": {
           "docs": "Long date-time format following ISO-8601",
-          "type": "string",
+          "type": "datetime",
         },
         "EmailType": {
           "docs": "User's email address.",
@@ -4828,7 +4828,7 @@ exports[`open api parser deel simple 1`] = `
           "properties": {
             "expires_at": {
               "docs": "Expiration date time of download URL.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "id": {
               "docs": "Requested invoice id to download.",

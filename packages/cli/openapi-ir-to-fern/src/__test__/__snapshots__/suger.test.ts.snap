@@ -259,7 +259,7 @@ exports[`open api parser suger simple 1`] = `
             },
             "acceptBy": {
               "docs": "in format YYYY-MM-DD",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "acceptanceLinks": {
               "docs": undefined,
@@ -275,7 +275,7 @@ exports[`open api parser suger simple 1`] = `
             },
             "end": {
               "docs": "in format YYYY-MM-DD",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "id": {
               "docs": "in format of "private-offer/private-offer-durable-id"",
@@ -283,7 +283,7 @@ exports[`open api parser suger simple 1`] = `
             },
             "lastModified": {
               "docs": "in format YYYY-MM-DD",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "name": {
               "docs": undefined,
@@ -311,7 +311,7 @@ exports[`open api parser suger simple 1`] = `
             },
             "start": {
               "docs": "in format YYYY-MM-DD, if VariableStartDate = true, this field should be empty.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "state": {
               "docs": undefined,
@@ -1496,7 +1496,7 @@ exports[`open api parser suger simple 1`] = `
             },
             "publishedTimeInUtc": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "releaseNumber": {
               "docs": undefined,
@@ -2703,7 +2703,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             },
             "marketplaceStartDate": {
               "docs": "AWS Marketplace start date which comes from MDFS Full-Sync.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "mcasFullSyncDone": {
               "docs": "Is AWS Marketplace Commerce Analytics Service (MCAS) full-sync done.",
@@ -3097,7 +3097,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             },
             "created": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "fulfillmentId": {
               "docs": undefined,
@@ -3258,11 +3258,11 @@ in the google.rpc.Status.details field, or localized by the client.",
             },
             "endDate": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "startDate": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "termUnit": {
               "docs": undefined,
@@ -3595,7 +3595,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             },
             "date": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "keys": {
               "docs": undefined,
@@ -4024,7 +4024,7 @@ in the google.rpc.Status.details field, or localized by the client.",
             },
             "reportStartDate": {
               "docs": "The UTC date when GCP Marketplace reprots start to generate.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "serviceAccountEmail": {
               "docs": undefined,
@@ -4161,7 +4161,7 @@ For Private offer, "projects/project-id/services/product-id.endpoints.partner-id
             },
             "updateTime": {
               "docs": "The last update timestamp. It is the endTime for the cancelled entitlement.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "usageReportingId": {
               "docs": "The consumerId to use when reporting usage through the Service Control API. See the consumerId field at
@@ -4225,7 +4225,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "createTime": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "id": {
               "docs": "GCP Marketplace User Account ID.",
@@ -4249,7 +4249,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "updateTime": {
               "docs": "RFC3339 UTC timestamp",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "userInfo": {
               "docs": undefined,
@@ -4323,7 +4323,7 @@ This field is present only if the product has usage-based billing configured.",
           "properties": {
             "createTime": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "id": {
               "docs": "Nullable, GCP Marketplace Product UUID",
@@ -4448,7 +4448,7 @@ This field is present only if the product has usage-based billing configured.",
           "properties": {
             "creationTime": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "description": {
               "docs": undefined,
@@ -4468,7 +4468,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "lastUpdateTime": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "name": {
               "docs": undefined,
@@ -4513,7 +4513,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "creationTime": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "info": {
               "docs": undefined,
@@ -4521,7 +4521,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "lastUpdateTime": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "lastUpdatedBy": {
               "docs": undefined,
@@ -4716,7 +4716,7 @@ This field is present only if the product has usage-based billing configured.",
           "properties": {
             "creationTime": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "entitlementID": {
               "docs": undefined,
@@ -4728,7 +4728,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "lastUpdateTime": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "metaInfo": {
               "docs": undefined,
@@ -4770,7 +4770,7 @@ This field is present only if the product has usage-based billing configured.",
           "properties": {
             "creationTime": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "entitlementID": {
               "docs": undefined,
@@ -4827,7 +4827,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "endTime": {
               "docs": "time in UTC when the UsageRecordReport ends",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "gcpMeteringResponse": {
               "docs": "The raw response from GCP metering service.",
@@ -4843,7 +4843,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "startTime": {
               "docs": "time in UTC when the UsageRecordReport starts",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "usageRecordGroupIds": {
               "docs": "The IDs of UsageRecordGroups aggregated in this UsageRecordReport.",
@@ -4896,7 +4896,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "lastUpdateTime": {
               "docs": "timestamp of the event when it is updated.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "message": {
               "docs": undefined,
@@ -4908,7 +4908,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "timestamp": {
               "docs": "timestamp of the event when it is scheduled or created.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -5124,7 +5124,7 @@ This field is present only if the product has usage-based billing configured.",
           "properties": {
             "endTime": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "id": {
               "docs": "Operation ID.",
@@ -5140,7 +5140,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "startTime": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "status": {
               "docs": undefined,
@@ -5161,7 +5161,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "chargeOn": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -5235,7 +5235,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "date": {
               "docs": "The date for the revenue report",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "disburseAmount": {
               "docs": undefined,
@@ -5243,7 +5243,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "disburseDate": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "entitlementID": {
               "docs": undefined,
@@ -5263,7 +5263,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "invoiceDate": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "organizationID": {
               "docs": undefined,
@@ -5275,7 +5275,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "paymentDueDate": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "productID": {
               "docs": undefined,
@@ -5287,7 +5287,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "refundDisburseDate": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "refundInvoiceAmount": {
               "docs": undefined,
@@ -5295,7 +5295,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "refundInvoiceDate": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "taxAmount": {
               "docs": undefined,
@@ -5362,7 +5362,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "reportDate": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "reportType": {
               "docs": undefined,
@@ -5568,7 +5568,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "reportDate": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "usageRecords": {
               "docs": undefined,
@@ -5625,11 +5625,11 @@ This field is present only if the product has usage-based billing configured.",
             },
             "creationTime": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "endTime": {
               "docs": "nullable",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "entitlementTermID": {
               "docs": undefined,
@@ -5657,7 +5657,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "lastUpdateTime": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "name": {
               "docs": undefined,
@@ -5685,7 +5685,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "startTime": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "status": {
               "docs": undefined,
@@ -5764,7 +5764,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "endTime": {
               "docs": "nullable",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "entitlementID": {
               "docs": undefined,
@@ -5808,7 +5808,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "startTime": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "usedCommitAmount": {
               "docs": undefined,
@@ -5849,15 +5849,15 @@ This field is present only if the product has usage-based billing configured.",
             },
             "creationTime": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "endTime": {
               "docs": "nullable",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "expireTime": {
               "docs": "nullable",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "externalID": {
               "docs": undefined,
@@ -5873,7 +5873,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "lastUpdateTime": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "lastUpdatedBy": {
               "docs": undefined,
@@ -6042,7 +6042,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "creationTime": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "externalID": {
               "docs": undefined,
@@ -6062,7 +6062,7 @@ This field is present only if the product has usage-based billing configured.",
             },
             "lastUpdateTime": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "lastUpdatedBy": {
               "docs": undefined,

@@ -5066,9 +5066,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "readOnlyTimestamp": {
           "description": "A readonly or derived timestamp (an instant in time) formatted in [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date-time\` UTC format: \`YYYY-MM-DDThh:mm:ss.sssZ\`.<br>The schema \`readOnlyTimestamp\` was added on version \`0.4.0\` of the API.",
           "schema": {
-            "maxLength": 30,
-            "minLength": 20,
-            "type": "string",
+            "type": "datetime",
           },
           "type": "primitive",
         },
@@ -5224,9 +5222,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The date-time when this resource was created, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC. This is derived and immutable.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -5242,9 +5238,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "value": {
                   "description": "The date-time when the resource was last updated, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC. This is derived and immutable.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -6544,9 +6538,7 @@ The response may include dates prior to requested the start date, as that is use
                 "value": {
                   "description": "The date/time the transfer was processed.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },

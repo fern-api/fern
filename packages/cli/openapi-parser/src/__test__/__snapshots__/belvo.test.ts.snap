@@ -15734,9 +15734,7 @@ For \`access_to_resource_denied\` errors, the description is:
                 "schema": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -15751,9 +15749,7 @@ For \`access_to_resource_denied\` errors, the description is:
                   "value": {
                     "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -15947,9 +15943,7 @@ For example: \`0444/45722-0\`.
                   "value": {
                     "description": "The ISO-8601 timestamp of Belvo's most recent successful access to the institution for the given link.",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -16208,9 +16202,7 @@ The present value required to pay off the loan, as provided by the institution.
                   "value": {
                     "description": "The ISO-8601 timestamp when the data point was collected.",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -16401,9 +16393,7 @@ The present value required to pay off the loan, as provided by the institution.
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -16580,9 +16570,7 @@ The present value required to pay off the loan, as provided by the institution.
                 "schema": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -17348,9 +17336,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "schema": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -17804,9 +17790,7 @@ The ISO-8601 timestamp when the data point was collected.
 The ISO-8601 timestamp when the data point was collected.
 ",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -18050,9 +18034,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was first created in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -18522,9 +18504,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -18783,9 +18763,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -19569,9 +19547,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -19899,9 +19875,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                   "description": "The ISO-8601 timestamp of when the status of the charge was last updated.
 ",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -20974,9 +20948,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -21274,9 +21246,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -22086,9 +22056,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "value": {
                   "description": "The ISO-8601 timestamp of when the data point was initially created in Belvo's database.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -22104,9 +22072,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -22244,9 +22210,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -26395,9 +26359,7 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was created in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -29485,9 +29447,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                   "value": {
                     "description": "The ISO-8601 timestamp when the data point was collected.",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -29517,9 +29477,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                   "value": {
                     "description": "The ISO-8601 timestamp when the data point was collected.",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -29848,9 +29806,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                   "value": {
                     "description": "The ISO-8601 timestamp when the data point was collected.",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -29913,9 +29869,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -29931,9 +29885,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "value": {
                   "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -30702,9 +30654,7 @@ For detailed information regarding DIAN's payment types, please see their [offic
                     "value": {
                       "description": "The ISO-8601 timestamp when the data point was collected.",
                       "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
+                        "type": "datetime",
                       },
                       "type": "primitive",
                     },
@@ -31062,9 +31012,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -31080,9 +31028,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
                 "value": {
                   "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -31845,9 +31791,7 @@ Possible statuses are:
                   "description": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -32394,9 +32338,7 @@ Possible statuses are:
                   "description": "ISO-8601 timestamp when the payment was made.
 ",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -32782,9 +32724,7 @@ Please note that other currencies other than in the list above may be returned.
                     "value": {
                       "description": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.",
                       "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
+                        "type": "datetime",
                       },
                       "type": "primitive",
                     },
@@ -32950,9 +32890,7 @@ Please note that other currencies other than in the list above may be returned.
                     "value": {
                       "description": "The ISO-8601 timestamp when the data point was collected.",
                       "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
+                        "type": "datetime",
                       },
                       "type": "primitive",
                     },
@@ -33003,9 +32941,7 @@ Please note that other currencies other than in the list above may be returned.
                     "value": {
                       "description": "The ISO-8601 timestamp when the data point was collected.",
                       "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
+                        "type": "datetime",
                       },
                       "type": "primitive",
                     },
@@ -33722,9 +33658,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                   "value": {
                     "description": "The ISO-8601 timestamp of Belvo's most recent successful access to the institution for the given link.",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -33741,9 +33675,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "value": {
                   "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -36026,9 +35958,7 @@ For \`not_found\` errors, the description is:
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -36044,9 +35974,7 @@ For \`not_found\` errors, the description is:
                 "value": {
                   "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -36833,9 +36761,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -37188,9 +37114,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "description": "The ISO-8601 timestamp of when the payment intent was last updated.
 ",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -37671,9 +37595,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -38057,9 +37979,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                   "description": "The ISO-8601 timestamp of when the payment intent was last updated.
 ",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -38271,9 +38191,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -38372,9 +38290,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     "description": "The ISO-8601 timestamp of when the payment link was last updated.
 ",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -38416,9 +38332,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "description": "The ISO-8601 timestamp of when the payment link is set to expire.
 ",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -38454,9 +38368,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -38555,9 +38467,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     "description": "The ISO-8601 timestamp of when the payment link was last updated.
 ",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -38599,9 +38509,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "description": "The ISO-8601 timestamp of when the payment link is set to expire.
 ",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -38637,9 +38545,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -38737,9 +38643,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     "description": "The ISO-8601 timestamp of when the payment link was last updated.
 ",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -38781,9 +38685,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "description": "The ISO-8601 timestamp of when the payment link is set to expire.
 ",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -38935,9 +38837,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -39035,9 +38935,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     "description": "The ISO-8601 timestamp of when the payment link was last updated.
 ",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -39079,9 +38977,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "description": "The ISO-8601 timestamp of when the payment link is set to expire.
 ",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -40221,9 +40117,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "schema": {
                 "description": "The ISO timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -40235,9 +40129,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "schema": {
                 "description": "The ISO timestamp when the data point was collected.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -41283,9 +41175,7 @@ For \`request_timeout\` errors, the description is:
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -42580,9 +42470,7 @@ If the account has not been open long enough to have the transaction data for a 
                 "description": "The ISO-8601 timestamp of when the secret key was created.
 ",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -42595,9 +42483,7 @@ If the account has not been open long enough to have the transaction data for a 
                 "description": "The ISO-8601 timestamp of when the secret key was last used.
 ",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -43106,9 +42992,7 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -43124,9 +43008,7 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
                 "value": {
                   "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -43410,9 +43292,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "schema": {
                 "description": "The ISO-8601 timestamp when the data point was collected.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -43424,9 +43304,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -43683,9 +43561,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "schema": {
                 "description": "The ISO-8601 timestamp when the data point was collected.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -43697,9 +43573,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -44298,9 +44172,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "description": "The ISO-8601 timestamp of when the data point was collected.
 ",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -44317,9 +44189,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.
 ",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -44395,9 +44265,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "description": "The ISO-8601 timestamp of when the tax retention was issued.
 ",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -44415,9 +44283,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "description": "The ISO-8601 timestamp of when the tax retention was certified.
 ",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -44435,9 +44301,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "description": "The ISO-8601 timestamp of when the tax retention was canceled (if applicable).
 ",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -44889,9 +44753,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -44907,9 +44769,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "value": {
                   "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -45211,9 +45071,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -45229,9 +45087,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "value": {
                   "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -45456,9 +45312,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -45474,9 +45328,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "value": {
                   "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -45728,9 +45580,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -45746,9 +45596,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "value": {
                   "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -47109,9 +46957,7 @@ By default, Belvo returns the yearly (annual) tax returns.
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -47124,9 +46970,7 @@ By default, Belvo returns the yearly (annual) tax returns.
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -48177,9 +48021,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -48192,9 +48034,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -49336,9 +49176,7 @@ For \`too_many_sessions\` errors, the description is:
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -49354,9 +49192,7 @@ For \`too_many_sessions\` errors, the description is:
                 "value": {
                   "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -49390,9 +49226,7 @@ For \`too_many_sessions\` errors, the description is:
                 "value": {
                   "description": "The ISO timestamp when the transaction was processed and accounted for by the institution.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -49687,9 +49521,7 @@ For \`too_many_sessions\` errors, the description is:
                     "value": {
                       "description": "The ISO-8601 timestamp when the data point was collected.",
                       "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
+                        "type": "datetime",
                       },
                       "type": "primitive",
                     },
@@ -50719,9 +50551,7 @@ For \`session_expired\` errors, the description can be (among others):
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -50971,9 +50801,7 @@ For \`session_expired\` errors, the description can be (among others):
                 "description": "The ISO-8601 timestamp of when the webhook was created in our database.
 ",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },

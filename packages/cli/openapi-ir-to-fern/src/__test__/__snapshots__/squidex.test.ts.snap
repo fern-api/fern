@@ -123,11 +123,11 @@ exports[`open api parser squidex simple 1`] = `
             },
             "scheduledFrom": {
               "docs": "The start of the schedule.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "scheduledTo": {
               "docs": "The end of the schedule.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -147,7 +147,7 @@ exports[`open api parser squidex simple 1`] = `
             },
             "created": {
               "docs": "The timestamp when the app has been created.",
-              "type": "string",
+              "type": "datetime",
             },
             "description": {
               "docs": "The optional description of the app.",
@@ -163,7 +163,7 @@ exports[`open api parser squidex simple 1`] = `
             },
             "lastModified": {
               "docs": "The timestamp when the app has been modified last.",
-              "type": "string",
+              "type": "datetime",
             },
             "name": {
               "docs": "The name of the app.",
@@ -297,7 +297,7 @@ exports[`open api parser squidex simple 1`] = `
             },
             "created": {
               "docs": "The date and time when the asset has been created.",
-              "type": "string",
+              "type": "datetime",
             },
             "createdBy": {
               "docs": "The user that has created the schema.",
@@ -341,7 +341,7 @@ exports[`open api parser squidex simple 1`] = `
             },
             "lastModified": {
               "docs": "The date and time when the asset has been modified last.",
-              "type": "string",
+              "type": "datetime",
             },
             "lastModifiedBy": {
               "docs": "The user that has updated the asset.",
@@ -706,7 +706,7 @@ exports[`open api parser squidex simple 1`] = `
             },
             "started": {
               "docs": "The time when the job has been started.",
-              "type": "string",
+              "type": "datetime",
             },
             "status": {
               "docs": undefined,
@@ -714,7 +714,7 @@ exports[`open api parser squidex simple 1`] = `
             },
             "stopped": {
               "docs": "The time when the job has been stopped.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -901,7 +901,7 @@ exports[`open api parser squidex simple 1`] = `
             },
             "dueTime": {
               "docs": "The due time.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "expectedCount": {
               "docs": "The number of expected items. Set it to a higher number to update multiple items when a query is defined.",
@@ -1073,7 +1073,7 @@ exports[`open api parser squidex simple 1`] = `
             },
             "time": {
               "docs": "The time when the comment was created or updated last.",
-              "type": "string",
+              "type": "datetime",
             },
             "url": {
               "docs": "The url where the comment is created.",
@@ -1191,7 +1191,7 @@ exports[`open api parser squidex simple 1`] = `
           "properties": {
             "created": {
               "docs": "The date and time when the content item has been created.",
-              "type": "string",
+              "type": "datetime",
             },
             "createdBy": {
               "docs": "The user that has created the content item.",
@@ -1212,7 +1212,7 @@ exports[`open api parser squidex simple 1`] = `
             },
             "lastModified": {
               "docs": "The date and time when the content item has been modified last.",
-              "type": "string",
+              "type": "datetime",
             },
             "lastModifiedBy": {
               "docs": "The user that has updated the content item.",
@@ -1427,7 +1427,7 @@ exports[`open api parser squidex simple 1`] = `
             },
             "defaultValue": {
               "docs": "The default value for the field value.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "defaultValues": {
               "docs": undefined,
@@ -1443,11 +1443,11 @@ exports[`open api parser squidex simple 1`] = `
             },
             "maxValue": {
               "docs": "The maximum allowed value for the field value.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "minValue": {
               "docs": "The minimum allowed value for the field value.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -1867,7 +1867,7 @@ exports[`open api parser squidex simple 1`] = `
             },
             "created": {
               "docs": "The time when the event happened.",
-              "type": "string",
+              "type": "datetime",
             },
             "eventId": {
               "docs": "Gets a unique id for the event.",
@@ -1993,7 +1993,7 @@ exports[`open api parser squidex simple 1`] = `
         },
         "LocalizedValueOfNullableInstant": {
           "docs": undefined,
-          "type": "map<string, optional<string>>",
+          "type": "map<string, optional<datetime>>",
         },
         "LocalizedValueOfReadonlyListOfString": {
           "docs": undefined,
@@ -2572,7 +2572,7 @@ exports[`open api parser squidex simple 1`] = `
             },
             "started": {
               "docs": "The time when the job has been started.",
-              "type": "string",
+              "type": "datetime",
             },
             "status": {
               "docs": undefined,
@@ -2580,7 +2580,7 @@ exports[`open api parser squidex simple 1`] = `
             },
             "stopped": {
               "docs": "The time when the job has been stopped.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "url": {
               "docs": "The uri to load from.",
@@ -2723,7 +2723,7 @@ exports[`open api parser squidex simple 1`] = `
             },
             "created": {
               "docs": "The date and time when the rule has been created.",
-              "type": "string",
+              "type": "datetime",
             },
             "createdBy": {
               "docs": "The user that has created the rule.",
@@ -2739,11 +2739,11 @@ exports[`open api parser squidex simple 1`] = `
             },
             "lastExecuted": {
               "docs": "The date and time when the rule was executed the last time.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "lastModified": {
               "docs": "The date and time when the rule has been modified last.",
-              "type": "string",
+              "type": "datetime",
             },
             "lastModifiedBy": {
               "docs": "The user that has updated the rule.",
@@ -2845,7 +2845,7 @@ exports[`open api parser squidex simple 1`] = `
           "properties": {
             "created": {
               "docs": "The time when the event has been created.",
-              "type": "string",
+              "type": "datetime",
             },
             "description": {
               "docs": "The description.",
@@ -2869,7 +2869,7 @@ exports[`open api parser squidex simple 1`] = `
             },
             "nextAttempt": {
               "docs": "The next attempt.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "numCalls": {
               "docs": "The number of calls.",
@@ -3058,7 +3058,7 @@ exports[`open api parser squidex simple 1`] = `
             },
             "dueTime": {
               "docs": "The target date and time when the content should be scheduled.",
-              "type": "string",
+              "type": "datetime",
             },
             "id": {
               "docs": "The ID of the schedule job.",
@@ -3108,7 +3108,7 @@ exports[`open api parser squidex simple 1`] = `
             },
             "created": {
               "docs": "The date and time when the schema has been created.",
-              "type": "string",
+              "type": "datetime",
             },
             "createdBy": {
               "docs": "The user that has created the schema. <span style="white-space: nowrap">\`non-empty\`</span> ",
@@ -3144,7 +3144,7 @@ exports[`open api parser squidex simple 1`] = `
             },
             "lastModified": {
               "docs": "The date and time when the schema has been modified last.",
-              "type": "string",
+              "type": "datetime",
             },
             "lastModifiedBy": {
               "docs": "The user that has updated the schema. <span style="white-space: nowrap">\`non-empty\`</span> ",
@@ -3765,7 +3765,7 @@ exports[`open api parser squidex simple 1`] = `
           "properties": {
             "created": {
               "docs": "The timestamp when the team has been created.",
-              "type": "string",
+              "type": "datetime",
             },
             "id": {
               "docs": "The ID of the team.",
@@ -3773,7 +3773,7 @@ exports[`open api parser squidex simple 1`] = `
             },
             "lastModified": {
               "docs": "The timestamp when the team has been modified last.",
-              "type": "string",
+              "type": "datetime",
             },
             "name": {
               "docs": "The name of the team.",
@@ -7255,7 +7255,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                   "dueTime": {
                     "docs": "The due time.",
-                    "type": "optional<string>",
+                    "type": "optional<datetime>",
                   },
                   "status": {
                     "docs": "The new status. <span style="white-space: nowrap">\`non-empty\`</span> ",

@@ -11814,9 +11814,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "Date at which the appointment was first requested",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -11832,9 +11830,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "Date of the actual appointment date that was requested in that initial request",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -11850,9 +11846,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "Date at which the appointment was confirmed by the DC",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -11868,9 +11862,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "Date of the actual confirmed appointment",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -11886,9 +11878,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "Date when the cargo has been transloaded from an ocean container to a truck",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -11904,9 +11894,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "Date when the cargo for this leg was unloaded and fully received at the final destination",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -13259,9 +13247,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -15078,9 +15064,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -15097,9 +15081,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -15115,9 +15097,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -21814,9 +21794,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -22352,9 +22330,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "value": {
                     "description": "Date-time string when this document was archived. Null if not archived.",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -23128,9 +23104,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "When the invoice was issued",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -23274,9 +23248,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "When the invoice was voided (if applicable)",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -23292,9 +23264,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "Time of the last adjustment to in invoice",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -24960,9 +24930,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "value": {
                     "description": "the date-time at which the carrier confirms space release related to the shipping order",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -25638,9 +25606,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "value": {
                     "description": "If the product has been archived, the time it was archived. If the product is still active this will be null.",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -28165,9 +28131,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "Date the user confirmed the Flexport quote for this Shipment",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -28229,9 +28193,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "Date when the shipment object was last updated",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -28247,9 +28209,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "Estimated departure date from the first port of the main voyage",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -28265,9 +28225,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "Actual departure date from the first port of the main voyage",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -28283,9 +28241,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "Estimated arrival date to the last port of the main voyage",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -28301,9 +28257,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "Actual arrival date to the last port of the main voyage",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -28519,9 +28473,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "Estimated pickup date from the origin location. For ocean shipments with multiple containers, this is the date of last picked up container",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -28537,9 +28489,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "Actual pickup date from the origin location. For ocean shipments with multiple containers, this is the date of last picked up container",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -28573,9 +28523,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "Estimated delivery date to the destination location. For ocean shipments with multiple containers, this is the date of last delivered container",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -28591,9 +28539,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "Actual delivery date to the destination location. For ocean shipments with multiple containers, this is the date of last delivered container",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -28886,9 +28832,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "DEPRECATED date field",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -28904,9 +28848,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "DEPRECATED date field",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -28922,9 +28864,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "DEPRECATED date field",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -28940,9 +28880,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": "DEPRECATED date field",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -29214,9 +29152,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -29236,9 +29172,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -29258,9 +29192,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -29280,9 +29212,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -29302,9 +29232,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -29324,9 +29252,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -29346,9 +29272,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -29368,9 +29292,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -29390,9 +29312,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -29478,9 +29398,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -29500,9 +29418,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -30011,9 +29927,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -30029,9 +29943,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -30047,9 +29959,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -30065,9 +29975,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -30086,9 +29994,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "value": {
                     "description": "Date-time string when this leg was deleted. Null if not deleted.",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },

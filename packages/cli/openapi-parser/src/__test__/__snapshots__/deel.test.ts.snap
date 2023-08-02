@@ -12312,9 +12312,7 @@ exports[`open api parser deel parse open api 1`] = `
           "value": {
             "description": "Long date-time format following ISO-8601",
             "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "type": "datetime",
             },
             "type": "primitive",
           },
@@ -12325,9 +12323,7 @@ exports[`open api parser deel parse open api 1`] = `
           "value": {
             "description": "Long date-time format following ISO-8601",
             "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "type": "datetime",
             },
             "type": "primitive",
           },
@@ -20670,9 +20666,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "value": {
                   "description": "Expiration date time of download URL.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },

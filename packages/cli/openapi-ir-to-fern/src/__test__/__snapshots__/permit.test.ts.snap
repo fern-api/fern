@@ -191,7 +191,7 @@ exports[`open api parser permit simple 1`] = `
             },
             "created_at": {
               "docs": "Date and time when the condition set was created (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
             "description": {
               "docs": "an optional longer description of the set",
@@ -239,7 +239,7 @@ exports[`open api parser permit simple 1`] = `
             },
             "updated_at": {
               "docs": "Date and time when the condition set was last updated/modified (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
           },
         },
@@ -276,7 +276,7 @@ exports[`open api parser permit simple 1`] = `
           "properties": {
             "created_at": {
               "docs": "Date and time when the condition set rule was created (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
             "environment_id": {
               "docs": "Unique id of the environment that the condition set rule belongs to.",
@@ -308,7 +308,7 @@ exports[`open api parser permit simple 1`] = `
             },
             "updated_at": {
               "docs": "Date and time when the condition set rule was last updated/modified (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
             "user_set": {
               "docs": "the userset that is currently granted permissions, i.e: all the users matching this rule are granted the permission on the resourceset",
@@ -441,7 +441,7 @@ exports[`open api parser permit simple 1`] = `
           "properties": {
             "created_at": {
               "docs": "Date and time when the environment was created (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
             "custom_branch_name": {
               "docs": "when using gitops feature, an optional branch name for the environment",
@@ -481,7 +481,7 @@ exports[`open api parser permit simple 1`] = `
             },
             "updated_at": {
               "docs": "Date and time when the environment was last updated/modified (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
           },
         },
@@ -490,7 +490,7 @@ exports[`open api parser permit simple 1`] = `
           "properties": {
             "created_at": {
               "docs": "Date and time when the environment was created (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
             "custom_branch_name": {
               "docs": "when using gitops feature, an optional branch name for the environment",
@@ -538,7 +538,7 @@ exports[`open api parser permit simple 1`] = `
             },
             "updated_at": {
               "docs": "Date and time when the environment was last updated/modified (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
           },
         },
@@ -585,7 +585,7 @@ exports[`open api parser permit simple 1`] = `
           "properties": {
             "created_at": {
               "docs": "Date and time when the invite was created (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
             "email": {
               "docs": "The invited member's email address",
@@ -806,7 +806,7 @@ exports[`open api parser permit simple 1`] = `
           "properties": {
             "created_at": {
               "docs": "Date and time when the account member was created (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
             "email": {
               "docs": "Email of the user controlling this account",
@@ -854,7 +854,7 @@ exports[`open api parser permit simple 1`] = `
             },
             "last_login": {
               "docs": "Last date and time this user logged in (ISO_8601 format).",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "logins_count": {
               "docs": "Total number of logins this user has performed.",
@@ -883,7 +883,7 @@ exports[`open api parser permit simple 1`] = `
           "properties": {
             "created_at": {
               "docs": "Date and time when the organization was created (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
             "id": {
               "docs": "Unique id of the organization",
@@ -907,7 +907,7 @@ exports[`open api parser permit simple 1`] = `
             },
             "updated_at": {
               "docs": "Date and time when the organization was last updated/modified (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
           },
         },
@@ -924,7 +924,7 @@ exports[`open api parser permit simple 1`] = `
             },
             "created_at": {
               "docs": "Date and time when the organization was created (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
             "id": {
               "docs": "Unique id of the organization",
@@ -948,7 +948,7 @@ exports[`open api parser permit simple 1`] = `
             },
             "updated_at": {
               "docs": "Date and time when the organization was last updated/modified (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
           },
         },
@@ -1141,7 +1141,7 @@ exports[`open api parser permit simple 1`] = `
             },
             "created_at": {
               "docs": "Date and time when the project was created (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
             "description": {
               "docs": "a longer description outlining the project objectives",
@@ -1169,7 +1169,7 @@ exports[`open api parser permit simple 1`] = `
             },
             "updated_at": {
               "docs": "Date and time when the project was last updated/modified (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
             "urn_namespace": {
               "docs": "Optional namespace for URNs. If empty, URNs will be generated from project key.",
@@ -1204,7 +1204,7 @@ The actions represents the ways you can interact with a protected resource.",
             },
             "created_at": {
               "docs": "Date and time when the action group was created (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
             "description": {
               "docs": "An optional longer description of what this action group represents in your system",
@@ -1240,7 +1240,7 @@ The actions represents the ways you can interact with a protected resource.",
             },
             "updated_at": {
               "docs": "Date and time when the action group was last updated/modified (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
           },
         },
@@ -1253,7 +1253,7 @@ The actions represents the ways you can interact with a protected resource.",
             },
             "created_at": {
               "docs": "Date and time when the action was created (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
             "description": {
               "docs": "An optional longer description of what this action respresents in your system",
@@ -1293,7 +1293,7 @@ The actions represents the ways you can interact with a protected resource.",
             },
             "updated_at": {
               "docs": "Date and time when the action was last updated/modified (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
           },
         },
@@ -1323,7 +1323,7 @@ The actions represents the ways you can interact with a protected resource.",
             },
             "created_at": {
               "docs": "Date and time when the attribute was created (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
             "description": {
               "docs": "An optional longer description of what this attribute respresents in your system",
@@ -1363,7 +1363,7 @@ The actions represents the ways you can interact with a protected resource.",
             },
             "updated_at": {
               "docs": "Date and time when the attribute was last updated/modified (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
           },
         },
@@ -1389,7 +1389,7 @@ The actions represents the ways you can interact with a protected resource.",
             },
             "created_at": {
               "docs": "Date and time when the resource instance was created (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
             "environment_id": {
               "docs": "Unique id of the environment that the resource instance belongs to.",
@@ -1429,7 +1429,7 @@ The actions represents the ways you can interact with a protected resource.",
             },
             "updated_at": {
               "docs": "Date and time when the resource instance was last updated/modified (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
           },
         },
@@ -1453,7 +1453,7 @@ The actions represents the ways you can interact with a protected resource.",
             },
             "created_at": {
               "docs": "Date and time when the resource was created (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
             "description": {
               "docs": "An optional longer description of what this resource respresents in your system",
@@ -1485,7 +1485,7 @@ The actions represents the ways you can interact with a protected resource.",
             },
             "updated_at": {
               "docs": "Date and time when the resource was last updated/modified (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
             "urn": {
               "docs": "The [URN](https://en.wikipedia.org/wiki/Uniform_Resource_Name) (Uniform Resource Name) of the resource",
@@ -1525,7 +1525,7 @@ The actions represents the ways you can interact with a protected resource.",
             },
             "created_at": {
               "docs": "Date and time when the role was created (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
             "description": {
               "docs": "optional description string explaining what this role represents, or what permissions are granted to it.",
@@ -1569,7 +1569,7 @@ The actions represents the ways you can interact with a protected resource.",
             },
             "updated_at": {
               "docs": "Date and time when the role was last updated/modified (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
           },
         },
@@ -1595,7 +1595,7 @@ The actions represents the ways you can interact with a protected resource.",
           "properties": {
             "created_at": {
               "docs": "Date and time when the role assignment was created (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
             "environment_id": {
               "docs": "Unique id of the environment that the role assignment belongs to.",
@@ -1701,7 +1701,7 @@ The actions represents the ways you can interact with a protected resource.",
             },
             "created_at": {
               "docs": "Date and time when the role was created (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
             "description": {
               "docs": "optional description string explaining what this role represents, or what permissions are granted to it.",
@@ -1741,7 +1741,7 @@ The actions represents the ways you can interact with a protected resource.",
             },
             "updated_at": {
               "docs": "Date and time when the role was last updated/modified (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
           },
         },
@@ -1820,7 +1820,7 @@ The actions represents the ways you can interact with a protected resource.",
             },
             "created_at": {
               "docs": "Date and time when the tenant was created (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
             "description": {
               "docs": "an optional longer description of the tenant",
@@ -1840,7 +1840,7 @@ The actions represents the ways you can interact with a protected resource.",
             },
             "last_action_at": {
               "docs": "Date and time when the tenant was last active (ISO_8601 format). In other words, this is the last time a permission check was done on a resource belonging to this tenant.",
-              "type": "string",
+              "type": "datetime",
             },
             "name": {
               "docs": "A descriptive name for the tenant",
@@ -1856,7 +1856,7 @@ The actions represents the ways you can interact with a protected resource.",
             },
             "updated_at": {
               "docs": "Date and time when the tenant was last updated/modified (ISO_8601 format).",
-              "type": "string",
+              "type": "datetime",
             },
           },
         },
