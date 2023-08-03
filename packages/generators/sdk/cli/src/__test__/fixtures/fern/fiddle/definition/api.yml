@@ -2,4 +2,9 @@ name: fiddle
 error-discrimination:
   strategy: property
   property-name: error
-auth: bearer
+auth: BearerAuthScheme
+auth-schemes:
+  BearerAuthScheme:
+    scheme: bearer
+    token:
+      name: api_key

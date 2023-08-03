@@ -54,7 +54,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private static OPTIONS_INTERFACE_NAME = "Options";
     private static OPTIONS_PRIVATE_MEMBER = "_options";
     private static ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
-    private static BEARER_OPTION_PROPERTY_NAME = "token";
     private static CUSTOM_FETCHER_PROPERTY_NAME = "fetcher";
     private static CUSTOM_STREAMING_FETCHER_PROPERTY_NAME = "streamingFetcher";
     private static AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getAuthorizationHeader";
@@ -507,7 +506,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         if (this.bearerAuthScheme != null) {
             properties.push({
-                name: GeneratedSdkClientClassImpl.BEARER_OPTION_PROPERTY_NAME,
+                name: this.getBearerAuthOptionKey(this.bearerAuthScheme),
                 type: getTextOfTsNode(
                     context.coreUtilities.fetcher.Supplier._getReferenceToType(
                         this.intermediateRepresentation.sdkConfig.isAuthMandatory
@@ -619,12 +618,16 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         });
     }
 
+    private getBearerAuthOptionKey(bearerAuthScheme: BearerAuthScheme): string {
+        return bearerAuthScheme.token.camelCase.safeName;
+    }
+
     private getBasicAuthUsernameOptionKey(basicAuthScheme: BasicAuthScheme): string {
-        return basicAuthScheme.username.camelCase.unsafeName;
+        return basicAuthScheme.username.camelCase.safeName;
     }
 
     private getBasicAuthPasswordOptionKey(basicAuthScheme: BasicAuthScheme): string {
-        return basicAuthScheme.password.camelCase.unsafeName;
+        return basicAuthScheme.password.camelCase.safeName;
     }
 
     private getReferenceToEnvironment(context: SdkContext): ts.Expression {
@@ -718,7 +721,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Bearer "), [
                             ts.factory.createTemplateSpan(
                                 context.coreUtilities.fetcher.Supplier.get(
-                                    this.getReferenceToOption(GeneratedSdkClientClassImpl.BEARER_OPTION_PROPERTY_NAME)
+                                    this.getReferenceToOption(this.getBearerAuthOptionKey(this.bearerAuthScheme))
                                 ),
                                 ts.factory.createTemplateTail("", "")
                             ),
@@ -737,9 +740,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                     undefined,
                                     undefined,
                                     context.coreUtilities.fetcher.Supplier.get(
-                                        this.getReferenceToOption(
-                                            GeneratedSdkClientClassImpl.BEARER_OPTION_PROPERTY_NAME
-                                        )
+                                        this.getReferenceToOption(this.getBearerAuthOptionKey(this.bearerAuthScheme))
                                     )
                                 ),
                             ],

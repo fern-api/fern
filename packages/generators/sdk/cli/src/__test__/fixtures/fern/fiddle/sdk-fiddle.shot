@@ -8457,7 +8457,7 @@ var FiddleService = class {
   }
   _getAuthorizationHeader() {
     return __async(this, null, function* () {
-      return \`Bearer \${yield Supplier.get(this._options.token)}\`;
+      return \`Bearer \${yield Supplier.get(this._options.apiKey)}\`;
     });
   }
 };
@@ -8498,7 +8498,7 @@ var Health = class {
   }
   _getAuthorizationHeader() {
     return __async(this, null, function* () {
-      return \`Bearer \${yield Supplier.get(this._options.token)}\`;
+      return \`Bearer \${yield Supplier.get(this._options.apiKey)}\`;
     });
   }
 };
@@ -8656,7 +8656,7 @@ var RemoteGen = class {
   }
   _getAuthorizationHeader() {
     return __async(this, null, function* () {
-      return \`Bearer \${yield Supplier.get(this._options.token)}\`;
+      return \`Bearer \${yield Supplier.get(this._options.apiKey)}\`;
     });
   }
 };
@@ -22272,7 +22272,7 @@ var FiddleService = class {
   }
   _getAuthorizationHeader() {
     return __async(this, null, function* () {
-      return \`Bearer \${yield Supplier.get(this._options.token)}\`;
+      return \`Bearer \${yield Supplier.get(this._options.apiKey)}\`;
     });
   }
 };
@@ -22313,7 +22313,7 @@ var Health = class {
   }
   _getAuthorizationHeader() {
     return __async(this, null, function* () {
-      return \`Bearer \${yield Supplier.get(this._options.token)}\`;
+      return \`Bearer \${yield Supplier.get(this._options.apiKey)}\`;
     });
   }
 };
@@ -22471,7 +22471,7 @@ var RemoteGen = class {
   }
   _getAuthorizationHeader() {
     return __async(this, null, function* () {
-      return \`Bearer \${yield Supplier.get(this._options.token)}\`;
+      return \`Bearer \${yield Supplier.get(this._options.apiKey)}\`;
     });
   }
 };
@@ -56422,7 +56422,7 @@ var FiddleService = class {
     };
   }
   async _getAuthorizationHeader() {
-    return \`Bearer \${await Supplier.get(this._options.token)}\`;
+    return \`Bearer \${await Supplier.get(this._options.apiKey)}\`;
   }
 };
 
@@ -56459,7 +56459,7 @@ var Health = class {
     };
   }
   async _getAuthorizationHeader() {
-    return \`Bearer \${await Supplier.get(this._options.token)}\`;
+    return \`Bearer \${await Supplier.get(this._options.apiKey)}\`;
   }
 };
 
@@ -56609,7 +56609,7 @@ var RemoteGen = class {
     };
   }
   async _getAuthorizationHeader() {
-    return \`Bearer \${await Supplier.get(this._options.token)}\`;
+    return \`Bearer \${await Supplier.get(this._options.apiKey)}\`;
   }
 };
 
@@ -71989,7 +71989,7 @@ import { RemoteGen } from \\"./api/resources/remoteGen/client/Client\\";
 export declare namespace FiddleClient {
     interface Options {
         environment: core.Supplier<string>;
-        token: core.Supplier<core.BearerToken>;
+        apiKey: core.Supplier<core.BearerToken>;
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
@@ -72032,7 +72032,7 @@ import * as Fiddle from \\"../../..\\";
 export declare namespace FiddleService {
     interface Options {
         environment: core.Supplier<string>;
-        token: core.Supplier<core.BearerToken>;
+        apiKey: core.Supplier<core.BearerToken>;
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
@@ -72108,7 +72108,7 @@ import * as Fiddle from \\"../../..\\";
 export declare namespace Health {
     interface Options {
         environment: core.Supplier<string>;
-        token: core.Supplier<core.BearerToken>;
+        apiKey: core.Supplier<core.BearerToken>;
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
@@ -72194,7 +72194,7 @@ import * as Fiddle from \\"../../..\\";
 export declare namespace RemoteGen {
     interface Options {
         environment: core.Supplier<string>;
-        token: core.Supplier<core.BearerToken>;
+        apiKey: core.Supplier<core.BearerToken>;
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
