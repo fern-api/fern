@@ -288,6 +288,7 @@ import com.fern.basic.core.Suppliers;
 import com.fern.basic.resources.auth.AuthClient;
 import com.fern.basic.resources.blog.BlogClient;
 import com.fern.basic.resources.dummyservice.DummyServiceClient;
+import com.fern.basic.resources.filedownload.FileDownloadClient;
 import com.fern.basic.resources.raven.RavenClient;
 import java.util.function.Supplier;
 
@@ -300,6 +301,8 @@ public class FernFernClient {
 
     protected final Supplier<DummyServiceClient> dummyServiceClient;
 
+    protected final Supplier<FileDownloadClient> fileDownloadClient;
+
     protected final Supplier<RavenClient> ravenClient;
 
     public FernFernClient(ClientOptions clientOptions) {
@@ -307,6 +310,7 @@ public class FernFernClient {
         this.authClient = Suppliers.memoize(() -> new AuthClient(clientOptions));
         this.blogClient = Suppliers.memoize(() -> new BlogClient(clientOptions));
         this.dummyServiceClient = Suppliers.memoize(() -> new DummyServiceClient(clientOptions));
+        this.fileDownloadClient = Suppliers.memoize(() -> new FileDownloadClient(clientOptions));
         this.ravenClient = Suppliers.memoize(() -> new RavenClient(clientOptions));
     }
 
@@ -320,6 +324,10 @@ public class FernFernClient {
 
     public DummyServiceClient dummyService() {
         return this.dummyServiceClient.get();
+    }
+
+    public FileDownloadClient fileDownload() {
+        return this.fileDownloadClient.get();
     }
 
     public RavenClient raven() {
@@ -1960,6 +1968,59 @@ public class DummyServiceClient {
             Response _response = clientOptions.httpClient().newCall(_request).execute();
             if (_response.isSuccessful()) {
                 return;
+            }
+            throw new RuntimeException();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+
+]
+
+
+basic[src/main/java/com/fern/basic/resources/filedownload/FileDownloadClient.java]=[
+package com.fern.basic.resources.filedownload;
+
+import com.fern.basic.core.ClientOptions;
+import com.fern.basic.core.ObjectMappers;
+import java.io.InputStream;
+import okhttp3.Headers;
+import okhttp3.HttpUrl;
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+public class FileDownloadClient {
+    protected final ClientOptions clientOptions;
+
+    public FileDownloadClient(ClientOptions clientOptions) {
+        this.clientOptions = clientOptions;
+    }
+
+    public InputStream getFileDownload(String request) {
+        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("file-dowonload")
+                .build();
+        RequestBody _requestBody;
+        try {
+            _requestBody = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request _request = new Request.Builder()
+                .url(_httpUrl)
+                .method("POST", _requestBody)
+                .headers(Headers.of(clientOptions.headers()))
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response _response = clientOptions.httpClient().newCall(_request).execute();
+            if (_response.isSuccessful()) {
+                return _response.body().byteStream();
             }
             throw new RuntimeException();
         } catch (Exception e) {

@@ -1,0 +1,12 @@
+service:
+  auth: false
+  base-path: /file-dowonload
+  endpoints:
+    getFileDownload:
+      method: POST
+      path: ""
+      request:
+        body:
+          type: string
+      response: file
+
