@@ -18,7 +18,7 @@ describe("fern generate", () => {
 
     // to prevent overloading algolia, we only
     // run the docs test on main or tags
-    (isOnMainOrTagOnCircle() || Math.random() > 0 ? it : it.skip)(
+    (isOnMainOrTagOnCircle() ? it : it.skip)(
         "docs",
         async () => {
             await runFernCli(["generate"], {
