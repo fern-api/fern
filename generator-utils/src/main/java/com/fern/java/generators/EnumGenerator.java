@@ -17,7 +17,7 @@
 package com.fern.java.generators;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.fern.irV16.model.types.EnumTypeDeclaration;
+import com.fern.irV20.model.types.EnumTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;

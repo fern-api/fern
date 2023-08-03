@@ -17,11 +17,14 @@
 package com.fern.java.client.generators.endpoint;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fern.irV16.model.environment.EnvironmentBaseUrlId;
-import com.fern.irV16.model.http.HttpEndpoint;
-import com.fern.irV16.model.http.HttpService;
-import com.fern.irV16.model.http.PathParameter;
-import com.fern.irV16.model.http.SdkRequest;
+import com.fern.irV20.model.environment.EnvironmentBaseUrlId;
+import com.fern.irV20.model.http.FileDownloadResponse;
+import com.fern.irV20.model.http.HttpEndpoint;
+import com.fern.irV20.model.http.HttpResponse;
+import com.fern.irV20.model.http.HttpService;
+import com.fern.irV20.model.http.JsonResponse;
+import com.fern.irV20.model.http.PathParameter;
+import com.fern.irV20.model.http.SdkRequest;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
@@ -37,6 +40,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -160,32 +164,15 @@ public abstract class AbstractEndpointWriter {
                         REQUEST_NAME)
                 .beginControlFlow("if ($L.isSuccessful())", RESPONSE_NAME);
         if (httpEndpoint.getResponse().isPresent()) {
-            TypeName returnType = clientGeneratorContext
-                    .getPoetTypeNameMapper()
-                    .convertToTypeName(true, httpEndpoint.getResponse().get().getResponseBodyType());
-            endpointMethodBuilder.returns(returnType);
-            if (httpEndpoint.getResponse().get().getResponseBodyType().isContainer()) {
-                httpResponseBuilder
-                        .addStatement(
-                                "return $T.$L.readValue($L.body().string(), new $T() {})",
-                                generatedObjectMapper.getClassName(),
-                                generatedObjectMapper.jsonMapperStaticField().name,
-                                RESPONSE_NAME,
-                                ParameterizedTypeName.get(ClassName.get(TypeReference.class), returnType))
-                        .endControlFlow();
-            } else {
-                httpResponseBuilder
-                        .addStatement(
-                                "return $T.$L.readValue($L.body().string(), $T.class)",
-                                generatedObjectMapper.getClassName(),
-                                generatedObjectMapper.jsonMapperStaticField().name,
-                                RESPONSE_NAME,
-                                returnType)
-                        .endControlFlow();
-            }
+            httpEndpoint
+                    .getResponse()
+                    .get()
+                    .visit(new SuccessResponseWriter(
+                            httpResponseBuilder, endpointMethodBuilder, clientGeneratorContext, generatedObjectMapper));
         } else {
-            httpResponseBuilder.addStatement("return").endControlFlow();
+            httpResponseBuilder.addStatement("return");
         }
+        httpResponseBuilder.endControlFlow();
         httpResponseBuilder.addStatement("throw new $T()", RuntimeException.class);
         httpResponseBuilder
                 .endControlFlow()
@@ -200,7 +187,8 @@ public abstract class AbstractEndpointWriter {
         if (generatedEnvironmentsClass.info() instanceof SingleUrlEnvironmentClass) {
             return ((SingleUrlEnvironmentClass) generatedEnvironmentsClass.info()).getUrlMethod();
         } else if (generatedEnvironmentsClass.info() instanceof MultiUrlEnvironmentsClass) {
-            EnvironmentBaseUrlId environmentBaseUrlId = httpService.getBaseUrl().get();
+            EnvironmentBaseUrlId environmentBaseUrlId =
+                    httpEndpoint.getBaseUrl().get();
             return ((MultiUrlEnvironmentsClass) generatedEnvironmentsClass.info())
                     .urlGetterMethods()
                     .get(environmentBaseUrlId);
@@ -256,6 +244,60 @@ public abstract class AbstractEndpointWriter {
             return CodeBlock.of("$T.toString($L)", Integer.class, reference);
         } else {
             return CodeBlock.of("$L.toString()", reference);
+        }
+    }
+
+    private static final class SuccessResponseWriter implements HttpResponse.Visitor<Void> {
+
+        private final CodeBlock.Builder httpResponseBuilder;
+        private final MethodSpec.Builder endpointMethodBuilder;
+        private final GeneratedObjectMapper generatedObjectMapper;
+        private final ClientGeneratorContext clientGeneratorContext;
+
+        SuccessResponseWriter(
+                CodeBlock.Builder httpResponseBuilder,
+                MethodSpec.Builder endpointMethodBuilder,
+                ClientGeneratorContext clientGeneratorContext,
+                GeneratedObjectMapper generatedObjectMapper) {
+            this.httpResponseBuilder = httpResponseBuilder;
+            this.endpointMethodBuilder = endpointMethodBuilder;
+            this.clientGeneratorContext = clientGeneratorContext;
+            this.generatedObjectMapper = generatedObjectMapper;
+        }
+
+        @Override
+        public Void visitJson(JsonResponse json) {
+            TypeName returnType =
+                    clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, json.getResponseBodyType());
+            endpointMethodBuilder.returns(returnType);
+            if (json.getResponseBodyType().isContainer()) {
+                httpResponseBuilder.addStatement(
+                        "return $T.$L.readValue($L.body().string(), new $T() {})",
+                        generatedObjectMapper.getClassName(),
+                        generatedObjectMapper.jsonMapperStaticField().name,
+                        RESPONSE_NAME,
+                        ParameterizedTypeName.get(ClassName.get(TypeReference.class), returnType));
+            } else {
+                httpResponseBuilder.addStatement(
+                        "return $T.$L.readValue($L.body().string(), $T.class)",
+                        generatedObjectMapper.getClassName(),
+                        generatedObjectMapper.jsonMapperStaticField().name,
+                        RESPONSE_NAME,
+                        returnType);
+            }
+            return null;
+        }
+
+        @Override
+        public Void visitFileDownload(FileDownloadResponse fileDownload) {
+            endpointMethodBuilder.returns(InputStream.class);
+            httpResponseBuilder.addStatement("return $L.body().byteStream()", RESPONSE_NAME);
+            return null;
+        }
+
+        @Override
+        public Void _visitUnknown(Object unknownType) {
+            return null;
         }
     }
 }

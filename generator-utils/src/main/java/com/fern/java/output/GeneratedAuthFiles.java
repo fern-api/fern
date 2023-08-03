@@ -16,7 +16,7 @@
 
 package com.fern.java.output;
 
-import com.fern.irV16.model.auth.AuthScheme;
+import com.fern.irV20.model.auth.AuthScheme;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import org.immutables.value.Value;
 

@@ -15,13 +15,13 @@
  */
 package com.fern.java.generators;
 
-import com.fern.irV16.model.commons.ErrorId;
-import com.fern.irV16.model.commons.TypeId;
-import com.fern.irV16.model.errors.ErrorDeclaration;
-import com.fern.irV16.model.types.DeclaredTypeName;
-import com.fern.irV16.model.types.ObjectTypeDeclaration;
-import com.fern.irV16.model.types.Type;
-import com.fern.irV16.model.types.TypeDeclaration;
+import com.fern.irV20.model.commons.ErrorId;
+import com.fern.irV20.model.commons.TypeId;
+import com.fern.irV20.model.errors.ErrorDeclaration;
+import com.fern.irV20.model.types.DeclaredTypeName;
+import com.fern.irV20.model.types.ObjectTypeDeclaration;
+import com.fern.irV20.model.types.Type;
+import com.fern.irV20.model.types.TypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;

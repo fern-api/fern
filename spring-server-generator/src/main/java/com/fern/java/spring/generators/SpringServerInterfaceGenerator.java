@@ -15,16 +15,18 @@
  */
 package com.fern.java.spring.generators;
 
-import com.fern.irV16.model.commons.ErrorId;
-import com.fern.irV16.model.commons.TypeId;
-import com.fern.irV16.model.http.EndpointName;
-import com.fern.irV16.model.http.FileUploadRequest;
-import com.fern.irV16.model.http.HttpEndpoint;
-import com.fern.irV16.model.http.HttpRequestBody;
-import com.fern.irV16.model.http.HttpRequestBodyReference;
-import com.fern.irV16.model.http.HttpService;
-import com.fern.irV16.model.http.InlinedRequestBody;
-import com.fern.irV16.model.http.NonStreamingResponse;
+import com.fern.irV20.model.commons.ErrorId;
+import com.fern.irV20.model.commons.TypeId;
+import com.fern.irV20.model.http.EndpointName;
+import com.fern.irV20.model.http.FileDownloadResponse;
+import com.fern.irV20.model.http.FileUploadRequest;
+import com.fern.irV20.model.http.HttpEndpoint;
+import com.fern.irV20.model.http.HttpRequestBody;
+import com.fern.irV20.model.http.HttpRequestBodyReference;
+import com.fern.irV20.model.http.HttpResponse;
+import com.fern.irV20.model.http.HttpService;
+import com.fern.irV20.model.http.InlinedRequestBody;
+import com.fern.irV20.model.http.JsonResponse;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.fern.java.output.GeneratedAuthFiles;
@@ -111,12 +113,28 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
                 .addAnnotation(httpEndpoint.getMethod().visit(new SpringHttpMethodToAnnotationSpec(httpEndpoint)))
                 .addParameters(endpointParameters);
 
-        Optional<NonStreamingResponse> httpResponse = httpEndpoint.getResponse();
+        Optional<HttpResponse> httpResponse = httpEndpoint.getResponse();
         if (httpResponse.isPresent()) {
-            TypeName responseTypeName = generatorContext
-                    .getPoetTypeNameMapper()
-                    .convertToTypeName(true, httpResponse.get().getResponseBodyType());
-            endpointMethodBuilder.returns(responseTypeName);
+            httpResponse.get().visit(new HttpResponse.Visitor<Void>() {
+                @Override
+                public Void visitJson(JsonResponse json) {
+                    TypeName responseTypeName = generatorContext
+                            .getPoetTypeNameMapper()
+                            .convertToTypeName(true, json.getResponseBodyType());
+                    endpointMethodBuilder.returns(responseTypeName);
+                    return null;
+                }
+
+                @Override
+                public Void visitFileDownload(FileDownloadResponse fileDownload) {
+                    throw new RuntimeException("File download is not supported in spring server generator");
+                }
+
+                @Override
+                public Void _visitUnknown(Object unknownType) {
+                    return null;
+                }
+            });
         }
 
         httpEndpoint.getErrors().get().stream()

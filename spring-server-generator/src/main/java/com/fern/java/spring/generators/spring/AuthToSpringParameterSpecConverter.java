@@ -16,11 +16,12 @@
 
 package com.fern.java.spring.generators.spring;
 
-import com.fern.irV16.model.auth.ApiAuth;
-import com.fern.irV16.model.auth.AuthScheme;
-import com.fern.irV16.model.auth.HeaderAuthScheme;
-import com.fern.irV16.model.commons.WithDocs;
-import com.fern.irV16.model.http.HttpEndpoint;
+import com.fern.irV20.model.auth.ApiAuth;
+import com.fern.irV20.model.auth.AuthScheme;
+import com.fern.irV20.model.auth.BasicAuthScheme;
+import com.fern.irV20.model.auth.BearerAuthScheme;
+import com.fern.irV20.model.auth.HeaderAuthScheme;
+import com.fern.irV20.model.http.HttpEndpoint;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.fern.java.output.GeneratedAuthFiles;
@@ -73,7 +74,7 @@ public final class AuthToSpringParameterSpecConverter {
         }
 
         @Override
-        public ParameterSpec visitBearer(WithDocs value) {
+        public ParameterSpec visitBearer(BearerAuthScheme value) {
             return ParameterSpec.builder(getTypeName(), parameterName)
                     .addAnnotation(AnnotationSpec.builder(RequestHeader.class)
                             .addMember("value", "$S", AUTHORIZATION_HEADER_NAME)
@@ -82,7 +83,7 @@ public final class AuthToSpringParameterSpecConverter {
         }
 
         @Override
-        public ParameterSpec visitBasic(WithDocs value) {
+        public ParameterSpec visitBasic(BasicAuthScheme value) {
             return ParameterSpec.builder(getTypeName(), parameterName)
                     .addAnnotation(AnnotationSpec.builder(RequestHeader.class)
                             .addMember("value", "$S", AUTHORIZATION_HEADER_NAME)

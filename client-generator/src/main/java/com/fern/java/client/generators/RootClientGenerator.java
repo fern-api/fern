@@ -16,10 +16,11 @@
 
 package com.fern.java.client.generators;
 
-import com.fern.irV16.model.auth.AuthScheme;
-import com.fern.irV16.model.auth.HeaderAuthScheme;
-import com.fern.irV16.model.commons.TypeId;
-import com.fern.irV16.model.commons.WithDocs;
+import com.fern.irV20.model.auth.AuthScheme;
+import com.fern.irV20.model.auth.BasicAuthScheme;
+import com.fern.irV20.model.auth.BearerAuthScheme;
+import com.fern.irV20.model.auth.HeaderAuthScheme;
+import com.fern.irV20.model.commons.TypeId;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
@@ -224,11 +225,6 @@ public final class RootClientGenerator extends AbstractFileGenerator {
 
     private class AuthSchemeHandler implements AuthScheme.Visitor<Void> {
 
-        private static final String BEARER_TOKEN_NAME = "token";
-
-        private static final String BASIC_USERNAME_NAME = "username";
-        private static final String BASIC_PASSWORD_NAME = "password";
-
         private final TypeSpec.Builder builder;
 
         private AuthSchemeHandler(TypeSpec.Builder builder) {
@@ -236,10 +232,11 @@ public final class RootClientGenerator extends AbstractFileGenerator {
         }
 
         @Override
-        public Void visitBearer(WithDocs bearer) {
-            MethodSpec tokenMethod = MethodSpec.methodBuilder(BEARER_TOKEN_NAME)
+        public Void visitBearer(BearerAuthScheme bearer) {
+            MethodSpec tokenMethod = MethodSpec.methodBuilder(
+                            bearer.getToken().getCamelCase().getSafeName())
                     .addModifiers(Modifier.PUBLIC)
-                    .addParameter(String.class, BEARER_TOKEN_NAME)
+                    .addParameter(String.class, bearer.getToken().getCamelCase().getSafeName())
                     .returns(builderName)
                     .build();
             builder.addMethod(tokenMethod.toBuilder()
@@ -248,22 +245,27 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                             CLIENT_OPTIONS_BUILDER_NAME,
                             "Authorization",
                             "Bearer ",
-                            BEARER_TOKEN_NAME)
+                            bearer.getToken().getCamelCase().getSafeName())
                     .addStatement("return this")
                     .build());
             return null;
         }
 
         @Override
-        public Void visitBasic(WithDocs basic) {
+        public Void visitBasic(BasicAuthScheme basic) {
             MethodSpec tokenMethod = MethodSpec.methodBuilder("credentials")
                     .addModifiers(Modifier.PUBLIC)
-                    .addParameter(String.class, BASIC_USERNAME_NAME)
-                    .addParameter(String.class, BASIC_PASSWORD_NAME)
+                    .addParameter(
+                            String.class, basic.getUsername().getCamelCase().getSafeName())
+                    .addParameter(
+                            String.class, basic.getPassword().getCamelCase().getSafeName())
                     .returns(builderName)
                     .build();
             builder.addMethod(tokenMethod.toBuilder()
-                    .addStatement("String unencodedToken = $L + \":\" + $L", BASIC_USERNAME_NAME, BASIC_PASSWORD_NAME)
+                    .addStatement(
+                            "String unencodedToken = $L + \":\" + $L",
+                            basic.getUsername().getCamelCase().getSafeName(),
+                            basic.getPassword().getCamelCase().getSafeName())
                     .addStatement(
                             "String encodedToken = $T.getEncoder().encodeToString(unencodedToken.getBytes())",
                             Base64.class)

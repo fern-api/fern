@@ -17,9 +17,9 @@
 package com.fern.java.generators;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.fern.irV16.model.types.AliasTypeDeclaration;
-import com.fern.irV16.model.types.PrimitiveType;
-import com.fern.irV16.model.types.TypeReference;
+import com.fern.irV20.model.types.AliasTypeDeclaration;
+import com.fern.irV20.model.types.PrimitiveType;
+import com.fern.irV20.model.types.TypeReference;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
 import com.fern.java.output.GeneratedJavaFile;

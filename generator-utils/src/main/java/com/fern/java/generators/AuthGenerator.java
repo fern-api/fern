@@ -16,9 +16,9 @@
 
 package com.fern.java.generators;
 
-import com.fern.irV16.model.auth.ApiAuth;
-import com.fern.irV16.model.auth.AuthScheme;
-import com.fern.irV16.model.auth.AuthSchemesRequirement;
+import com.fern.irV20.model.auth.ApiAuth;
+import com.fern.irV20.model.auth.AuthScheme;
+import com.fern.irV20.model.auth.AuthSchemesRequirement;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.generators.auth.AuthSchemeGenerator;
 import com.fern.java.output.GeneratedAuthFiles;
