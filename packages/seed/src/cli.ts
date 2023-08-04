@@ -1,42 +1,37 @@
-import yargs from "yargs";
-import { Argv } from "yargs";
-import { hideBin } from 'yargs/helpers';
+import yargs, { Argv } from "yargs";
+import { hideBin } from "yargs/helpers";
 
+void tryRunCli();
 
-void tryRunCli()
+export async function tryRunCli() {
+    const cli: Argv = yargs(hideBin(process.argv));
 
-export async function tryRunCli()
-{
-    const cli : Argv<{}> = yargs(hideBin(process.argv))
-    
-    addTestCommand(cli)
+    addTestCommand(cli);
 
     await cli.parse();
-    process.stdout.write("Finished")
+    process.stdout.write("Finished");
 }
 
-function addTestCommand(cli : Argv<{}>) : void
-{
+function addTestCommand(cli: Argv): void {
     cli.command(
         "test",
         "Snapshot test generator",
-        (yargs) => 
+        (yargs) =>
             yargs
                 .option("irVersion", {
                     type: "string",
-                    demandOption: false
+                    demandOption: false,
                 })
                 .option("irLanguage", {
                     type: "string",
-                    demandOption: false
+                    demandOption: false,
                 })
                 .option("docker", {
                     type: "string",
-                    demandOption: true
+                    demandOption: true,
                 }),
-        (argv) =>
-        {
-            process.stdout.write(argv.docker+"\n")
+        (argv) => {
+            process.stdout.write(argv.docker + "\n");
         }
-    )
+    );
 }
