@@ -46,7 +46,7 @@
     "@types/js-yaml": "^4.0.5",
     "@types/lodash-es": "^4.17.7",
     "@types/node": "^18.7.18",
-    "@types/yargs": "^17.0.12",
+    "@types/yargs": "^17.0.24",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.3",
     "esbuild": "^0.15.7",

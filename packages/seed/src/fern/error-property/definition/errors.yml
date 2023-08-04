@@ -1,0 +1,9 @@
+errors:
+  PropertyBasedErrorTest: #returns a JSON object with { ErrorName: PropertyBasedErrorTest, body: {PropertyBasedErrorTestBody}}
+    status-code: 400
+    type: PropertyBasedErrorTestBody
+
+types:
+  PropertyBasedErrorTestBody:
+    properties:
+      message: string
