@@ -3,7 +3,7 @@ import { hideBin } from "yargs/helpers";
 
 void tryRunCli();
 
-export async function tryRunCli() {
+export async function tryRunCli(): Promise<void> {
     const cli: Argv = yargs(hideBin(process.argv));
 
     addTestCommand(cli);
