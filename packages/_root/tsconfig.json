@@ -40,6 +40,7 @@
     { "path": "../commons/fs-utils" },
     { "path": "../commons/loadable" },
     { "path": "../commons/logging-execa" },
-    { "path": "../scripts" }
+    { "path": "../scripts" },
+    { "path": "../seed" }
   ]
 }

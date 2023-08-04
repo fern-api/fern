@@ -57,6 +57,7 @@
     "@fern-api/register": "workspace:*",
     "@fern-api/remote-workspace-runner": "workspace:*",
     "@fern-api/scripts": "workspace:*",
+    "@fern-api/seed": "workspace:*",
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/services": "workspace:*",
     "@fern-api/task-context": "workspace:*",

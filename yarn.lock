@@ -1607,6 +1607,7 @@ __metadata:
     "@fern-api/register": "workspace:*"
     "@fern-api/remote-workspace-runner": "workspace:*"
     "@fern-api/scripts": "workspace:*"
+    "@fern-api/seed": "workspace:*"
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/services": "workspace:*"
     "@fern-api/task-context": "workspace:*"
@@ -2305,7 +2306,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/seed@workspace:packages/seed":
+"@fern-api/seed@workspace:*, @fern-api/seed@workspace:packages/seed":
   version: 0.0.0-use.local
   resolution: "@fern-api/seed@workspace:packages/seed"
   dependencies:
