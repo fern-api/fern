@@ -529,6 +529,61 @@ public final class ObjectMappers {
 ]
 
 
+basic[src/main/java/com/fern/basic/core/RequestOptions.java]=[
+package com.fern.basic.core;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public final class RequestOptions {
+    private final String token;
+
+    private final String apiVersion;
+
+    private RequestOptions(String token, String apiVersion) {
+        this.token = token;
+        this.apiVersion = apiVersion;
+    }
+
+    public Map<String, String> getHeaders() {
+        Map<String, String> headers = new HashMap<>();
+        if (this.token != null) {
+            headers.put("Authorization", "Bearer " + this.token);
+        }
+        if (this.apiVersion != null) {
+            headers.put("API-VERSION", this.apiVersion);
+        }
+        return headers;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static final class Builder {
+        private String token = null;
+
+        private String apiVersion = null;
+
+        public Builder token(String token) {
+            this.token = token;
+            return this;
+        }
+
+        public Builder apiVersion(String apiVersion) {
+            this.apiVersion = apiVersion;
+            return this;
+        }
+
+        public RequestOptions build() {
+            return new RequestOptions(token, apiVersion);
+        }
+    }
+}
+
+]
+
+
 basic[src/main/java/com/fern/basic/core/Suppliers.java]=[
 package com.fern.basic.core;
 

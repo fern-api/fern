@@ -29,6 +29,7 @@ import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.DownloadFilesCustomConfig;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.EnvironmentGenerator;
+import com.fern.java.client.generators.RequestOptionsGenerator;
 import com.fern.java.client.generators.RootClientGenerator;
 import com.fern.java.client.generators.SampleAppGenerator;
 import com.fern.java.client.generators.SubpackageClientGenerator;
@@ -119,6 +120,10 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
         SuppliersGenerator suppliersGenerator = new SuppliersGenerator(context);
         GeneratedJavaFile generatedSuppliersFile = suppliersGenerator.generateFile();
         this.addGeneratedFile(generatedSuppliersFile);
+
+        RequestOptionsGenerator requestOptionsGenerator = new RequestOptionsGenerator(context);
+        GeneratedJavaFile generatedRequestOptions = requestOptionsGenerator.generateFile();
+        this.addGeneratedFile(generatedRequestOptions);
 
         // types
         TypesGenerator typesGenerator = new TypesGenerator(context, false);
