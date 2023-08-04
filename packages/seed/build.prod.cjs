@@ -12,7 +12,7 @@ async function main() {
         platform: "node",
         target: "node14",
         entryPoints: ["./src/cli.ts"],
-        outfile: "./dist/bundle.cjs",
+        outfile: "./dist/prod/bundle.cjs",
         bundle: true,
         external: ["cpu-features"],
         plugins: [pnpPlugin()],
@@ -25,7 +25,7 @@ async function main() {
 
     await build(options).catch(() => process.exit(1));
 
-    process.chdir(path.join(__dirname, "dist"));
+    process.chdir(path.join(__dirname, "dist/prod"));
 
     // write cli executable
     await writeFile(
