@@ -53,6 +53,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
     private final GeneratedJavaFile generatedSuppliersFile;
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
     private final ClassName builderName;
+    private final GeneratedJavaFile requestOptionsFile;
 
     public RootClientGenerator(
             AbstractGeneratorContext<?, ?> generatorContext,
@@ -61,6 +62,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             GeneratedClientOptions generatedClientOptions,
             GeneratedJavaFile generatedSuppliersFile,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
+            GeneratedJavaFile requestOptionsFile,
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces) {
         super(
                 generatorContext.getPoetClassNameFactory().getRootClassName(getRootClientName(generatorContext)),
@@ -72,6 +74,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
         this.generatedEnvironmentsClass = generatedEnvironmentsClass;
         this.allGeneratedInterfaces = allGeneratedInterfaces;
         this.builderName = ClassName.get(className.packageName(), className.simpleName() + "Builder");
+        this.requestOptionsFile = requestOptionsFile;
     }
 
     @Override
@@ -84,6 +87,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                 generatedEnvironmentsClass,
                 allGeneratedInterfaces,
                 generatedSuppliersFile,
+                requestOptionsFile,
                 generatorContext.getIr().getRootPackage());
         Result result = clientGeneratorUtils.buildClients();
 
@@ -223,7 +227,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                         generatorContext.getGeneratorConfig().getWorkspaceName());
     }
 
-    private class AuthSchemeHandler implements AuthScheme.Visitor<Void> {
+    private final class AuthSchemeHandler implements AuthScheme.Visitor<Void> {
 
         private final TypeSpec.Builder builder;
 

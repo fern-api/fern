@@ -32,6 +32,7 @@ import com.fern.java.client.GeneratedEnvironmentsClass.MultiUrlEnvironmentsClass
 import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass;
 import com.fern.java.client.generators.endpoint.HttpUrlBuilder.PathParamInfo;
 import com.fern.java.generators.object.EnrichedObjectProperty;
+import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
@@ -58,6 +59,7 @@ public abstract class AbstractEndpointWriter {
     public static final String REQUEST_BUILDER_NAME = "_requestBuilder";
     public static final String REQUEST_BODY_NAME = "_requestBody";
     public static final String RESPONSE_NAME = "_response";
+    public static final String REQUEST_OPTIONS_PARAMETER_NAME = "requestOptions";
     private final HttpService httpService;
     private final HttpEndpoint httpEndpoint;
     private final GeneratedClientOptions generatedClientOptions;
@@ -66,6 +68,7 @@ public abstract class AbstractEndpointWriter {
     private final MethodSpec.Builder endpointMethodBuilder;
     private final GeneratedObjectMapper generatedObjectMapper;
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
+    private final GeneratedJavaFile requestOptionsFile;
 
     public AbstractEndpointWriter(
             HttpService httpService,
@@ -74,7 +77,8 @@ public abstract class AbstractEndpointWriter {
             ClientGeneratorContext clientGeneratorContext,
             FieldSpec clientOptionsField,
             GeneratedClientOptions generatedClientOptions,
-            GeneratedEnvironmentsClass generatedEnvironmentsClass) {
+            GeneratedEnvironmentsClass generatedEnvironmentsClass,
+            GeneratedJavaFile requestOptionsFile) {
         this.httpService = httpService;
         this.httpEndpoint = httpEndpoint;
         this.clientOptionsField = clientOptionsField;
@@ -85,19 +89,23 @@ public abstract class AbstractEndpointWriter {
         this.endpointMethodBuilder = MethodSpec.methodBuilder(
                         httpEndpoint.getName().get().getCamelCase().getSafeName())
                 .addModifiers(Modifier.PUBLIC);
+        this.requestOptionsFile = requestOptionsFile;
     }
 
-    public final MethodSpec generate() {
+    public final HttpEndpointMethodSpecs generate() {
         // Step 1: Add Path Params as parameters
         List<ParameterSpec> pathParameters = getPathParameters();
-        for (ParameterSpec pathParameter : pathParameters) {
-            endpointMethodBuilder.addParameter(pathParameter);
-        }
 
         // Step 2: Add additional parameters
-        endpointMethodBuilder.addParameters(additionalParameters());
+        pathParameters.addAll(additionalParameters());
 
-        // Step 3: Get http client initializer
+        // Step 3: Add path parameters
+        endpointMethodBuilder.addParameters(pathParameters);
+        endpointMethodBuilder.addParameter(
+                ParameterSpec.builder(requestOptionsFile.getClassName(), REQUEST_OPTIONS_PARAMETER_NAME)
+                        .build());
+
+        // Step 4: Get http client initializer
         HttpUrlBuilder httpUrlBuilder = new HttpUrlBuilder(
                 HTTP_URL_NAME,
                 sdkRequest()
@@ -120,7 +128,7 @@ public abstract class AbstractEndpointWriter {
         HttpUrlBuilder.GeneratedHttpUrl generatedHttpUrl = httpUrlBuilder.generateBuilder(getQueryParams());
         endpointMethodBuilder.addCode(generatedHttpUrl.initialization());
 
-        // Step 4: Get request initializer
+        // Step 5: Get request initializer
         boolean sendContentType = httpEndpoint.getRequestBody().isPresent()
                 || httpEndpoint.getResponse().isPresent();
         CodeBlock requestInitializer = getInitializeRequestCodeBlock(
@@ -132,10 +140,28 @@ public abstract class AbstractEndpointWriter {
                 sendContentType);
         endpointMethodBuilder.addCode(requestInitializer);
 
-        // Step 5: Make http request and handle responses
+        // Step 6: Make http request and handle responses
         CodeBlock responseParser = getResponseParserCodeBlock();
         endpointMethodBuilder.addCode(responseParser);
-        return endpointMethodBuilder.build();
+
+        MethodSpec endpointWithRequestOptions = endpointMethodBuilder.build();
+
+        List<String> paramNames =
+                pathParameters.stream().map(parameterSpec -> parameterSpec.name).collect(Collectors.toList());
+        paramNames.add("null");
+        MethodSpec endpointWithoutRequestOptions = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
+                .addModifiers(Modifier.PUBLIC)
+                .addParameters(pathParameters)
+                .addStatement(
+                        endpointWithRequestOptions.returnType.equals(TypeName.VOID)
+                                ? endpointWithRequestOptions.name + "(" + String.join(",", paramNames) + ")"
+                                : "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNames)
+                                        + ")",
+                        endpointWithRequestOptions.name)
+                .returns(endpointWithRequestOptions.returnType)
+                .build();
+
+        return new HttpEndpointMethodSpecs(endpointWithRequestOptions, endpointWithoutRequestOptions);
     }
 
     public abstract Optional<SdkRequest> sdkRequest();

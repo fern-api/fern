@@ -26,6 +26,7 @@ import com.fern.java.client.GeneratedWrappedRequest;
 import com.fern.java.client.GeneratedWrappedRequest.InlinedRequestBodyGetters;
 import com.fern.java.client.GeneratedWrappedRequest.ReferencedRequestBodyGetter;
 import com.fern.java.generators.object.EnrichedObjectProperty;
+import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
@@ -61,7 +62,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             ClientGeneratorContext clientGeneratorContext,
             SdkRequest sdkRequest,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
-            GeneratedWrappedRequest generatedWrappedRequest) {
+            GeneratedWrappedRequest generatedWrappedRequest,
+            GeneratedJavaFile requestOptionsFile) {
         super(
                 httpService,
                 httpEndpoint,
@@ -69,7 +71,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 clientGeneratorContext,
                 clientOptionsField,
                 generatedClientOptions,
-                generatedEnvironmentsClass);
+                generatedEnvironmentsClass,
+                requestOptionsFile);
         this.clientGeneratorContext = clientGeneratorContext;
         this.generatedWrappedRequest = generatedWrappedRequest;
         this.sdkRequest = sdkRequest;
@@ -178,14 +181,23 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         AbstractEndpointWriter.REQUEST_BODY_NAME);
         if (sendContentType) {
             requestInitializerBuilder
-                    .add(".headers($T.of($L.$N()))\n", Headers.class, clientOptionsMember.name, clientOptions.headers())
+                    .add(
+                            ".headers($T.of($L.$N($L)))\n",
+                            Headers.class,
+                            clientOptionsMember.name,
+                            clientOptions.headers(),
+                            AbstractEndpointWriter.REQUEST_OPTIONS_PARAMETER_NAME)
                     .add(
                             ".addHeader($S, $S);\n",
                             AbstractEndpointWriter.CONTENT_TYPE_HEADER,
                             AbstractEndpointWriter.APPLICATION_JSON_HEADER);
         } else {
             requestInitializerBuilder.add(
-                    ".headers($T.of($L.$N()));\n", Headers.class, clientOptionsMember.name, clientOptions.headers());
+                    ".headers($T.of($L.$N($L)));\n",
+                    Headers.class,
+                    clientOptionsMember.name,
+                    clientOptions.headers(),
+                    AbstractEndpointWriter.REQUEST_OPTIONS_PARAMETER_NAME);
         }
         requestInitializerBuilder.unindent();
         for (EnrichedObjectProperty header : generatedWrappedRequest.headerParams()) {

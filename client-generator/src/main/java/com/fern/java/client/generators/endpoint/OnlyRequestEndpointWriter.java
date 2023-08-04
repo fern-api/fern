@@ -24,6 +24,7 @@ import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.generators.object.EnrichedObjectProperty;
+import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -50,7 +51,8 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             GeneratedClientOptions generatedClientOptions,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
             HttpRequestBodyReference httpRequestBodyReference,
-            SdkRequest sdkRequest) {
+            SdkRequest sdkRequest,
+            GeneratedJavaFile requestOptionsFile) {
         super(
                 httpService,
                 httpEndpoint,
@@ -58,7 +60,8 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                 clientGeneratorContext,
                 clientOptionsField,
                 generatedClientOptions,
-                generatedEnvironmentsClass);
+                generatedEnvironmentsClass,
+                requestOptionsFile);
         this.clientGeneratorContext = clientGeneratorContext;
         this.httpEndpoint = httpEndpoint;
         this.httpRequestBodyReference = httpRequestBodyReference;
@@ -115,7 +118,12 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                 .add(inlineableHttpUrl)
                 .add(")\n")
                 .add(".method($S, $L)\n", httpEndpoint.getMethod().toString(), AbstractEndpointWriter.REQUEST_BODY_NAME)
-                .add(".headers($T.of($L.$N()))\n", Headers.class, clientOptionsMember.name, clientOptions.headers());
+                .add(
+                        ".headers($T.of($L.$N($L)))\n",
+                        Headers.class,
+                        clientOptionsMember.name,
+                        clientOptions.headers(),
+                        REQUEST_OPTIONS_PARAMETER_NAME);
         if (sendContentType) {
             builder.add(
                     ".addHeader($S, $S)\n",

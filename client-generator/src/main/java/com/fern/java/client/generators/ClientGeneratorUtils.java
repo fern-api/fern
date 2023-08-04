@@ -27,6 +27,7 @@ import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.GeneratedWrappedRequest;
 import com.fern.java.client.generators.endpoint.HttpEndpointMethodSpecFactory;
+import com.fern.java.client.generators.endpoint.HttpEndpointMethodSpecs;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObjectMapper;
@@ -56,6 +57,7 @@ public final class ClientGeneratorUtils {
     private final GeneratedJavaFile generatedSuppliersFile;
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
     private final List<GeneratedWrappedRequest> generatedWrappedRequests = new ArrayList<>();
+    private final GeneratedJavaFile requestOptionsFile;
 
     public ClientGeneratorUtils(
             ClassName clientImplName,
@@ -65,6 +67,7 @@ public final class ClientGeneratorUtils {
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
             GeneratedJavaFile generatedSuppliersFile,
+            GeneratedJavaFile requestOptionsFile,
             IPackage fernPackage) {
         this.generatorContext = clientGeneratorContext;
         this.clientOptionsField = FieldSpec.builder(generatedClientOptions.getClassName(), "clientOptions")
@@ -79,6 +82,7 @@ public final class ClientGeneratorUtils {
         this.generatedObjectMapper = generatedObjectMapper;
         this.generatedClientOptions = generatedClientOptions;
         this.generatedEnvironmentsClass = generatedEnvironmentsClass;
+        this.requestOptionsFile = requestOptionsFile;
     }
 
     public Result buildClients() {
@@ -101,9 +105,11 @@ public final class ClientGeneratorUtils {
                         generatedClientOptions,
                         clientOptionsField,
                         generatedEnvironmentsClass,
+                        requestOptionsFile,
                         allGeneratedInterfaces);
-                MethodSpec endpointMethodSpec = httpEndpointMethodSpecFactory.create();
-                implBuilder.addMethod(endpointMethodSpec.toBuilder().build());
+                HttpEndpointMethodSpecs httpEndpointMethodSpecs = httpEndpointMethodSpecFactory.create();
+                implBuilder.addMethod(httpEndpointMethodSpecs.getRequestOptionsMethodSpec());
+                implBuilder.addMethod(httpEndpointMethodSpecs.getNonRequestOptionsMethodSpec());
                 generatedWrappedRequests.addAll(httpEndpointMethodSpecFactory.getGeneratedWrappedRequests());
             }
         }

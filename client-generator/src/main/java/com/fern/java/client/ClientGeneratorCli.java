@@ -113,17 +113,18 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
         GeneratedEnvironmentsClass generatedEnvironmentsClass = environmentGenerator.generateFile();
         this.addGeneratedFile(generatedEnvironmentsClass);
 
-        ClientOptionsGenerator clientOptionsGenerator = new ClientOptionsGenerator(context, generatedEnvironmentsClass);
+        RequestOptionsGenerator requestOptionsGenerator = new RequestOptionsGenerator(context);
+        GeneratedJavaFile generatedRequestOptions = requestOptionsGenerator.generateFile();
+        this.addGeneratedFile(generatedRequestOptions);
+
+        ClientOptionsGenerator clientOptionsGenerator =
+                new ClientOptionsGenerator(context, generatedEnvironmentsClass, generatedRequestOptions);
         GeneratedClientOptions generatedClientOptions = clientOptionsGenerator.generateFile();
         this.addGeneratedFile(generatedClientOptions);
 
         SuppliersGenerator suppliersGenerator = new SuppliersGenerator(context);
         GeneratedJavaFile generatedSuppliersFile = suppliersGenerator.generateFile();
         this.addGeneratedFile(generatedSuppliersFile);
-
-        RequestOptionsGenerator requestOptionsGenerator = new RequestOptionsGenerator(context);
-        GeneratedJavaFile generatedRequestOptions = requestOptionsGenerator.generateFile();
-        this.addGeneratedFile(generatedRequestOptions);
 
         // types
         TypesGenerator typesGenerator = new TypesGenerator(context, false);
@@ -144,6 +145,7 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
                     generatedClientOptions,
                     generatedSuppliersFile,
                     generatedEnvironmentsClass,
+                    generatedRequestOptions,
                     generatedTypes.getInterfaces());
             GeneratedClient generatedClient = httpServiceClientGenerator.generateFile();
             this.addGeneratedFile(generatedClient);
@@ -158,6 +160,7 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
                 generatedClientOptions,
                 generatedSuppliersFile,
                 generatedEnvironmentsClass,
+                generatedRequestOptions,
                 generatedTypes.getInterfaces());
         GeneratedRootClient generatedRootClient = rootClientGenerator.generateFile();
         this.addGeneratedFile(generatedRootClient);

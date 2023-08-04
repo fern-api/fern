@@ -39,6 +39,7 @@ public final class SubpackageClientGenerator extends AbstractFileGenerator {
     private final GeneratedJavaFile generatedSuppliersFile;
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
     private final Subpackage subpackage;
+    private final GeneratedJavaFile requestOptionsFile;
 
     public SubpackageClientGenerator(
             Subpackage subpackage,
@@ -48,6 +49,7 @@ public final class SubpackageClientGenerator extends AbstractFileGenerator {
             GeneratedClientOptions generatedClientOptions,
             GeneratedJavaFile generatedSuppliersFile,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
+            GeneratedJavaFile requestOptionsFile,
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces) {
         super(clientGeneratorContext.getPoetClassNameFactory().getClientClassName(subpackage), generatorContext);
         this.generatedObjectMapper = generatedObjectMapper;
@@ -56,6 +58,7 @@ public final class SubpackageClientGenerator extends AbstractFileGenerator {
         this.generatedSuppliersFile = generatedSuppliersFile;
         this.allGeneratedInterfaces = allGeneratedInterfaces;
         this.generatedEnvironmentsClass = generatedEnvironmentsClass;
+        this.requestOptionsFile = requestOptionsFile;
         this.subpackage = subpackage;
     }
 
@@ -69,6 +72,7 @@ public final class SubpackageClientGenerator extends AbstractFileGenerator {
                 generatedEnvironmentsClass,
                 allGeneratedInterfaces,
                 generatedSuppliersFile,
+                requestOptionsFile,
                 subpackage);
         Result result = clientGeneratorUtils.buildClients();
         return GeneratedClient.builder()

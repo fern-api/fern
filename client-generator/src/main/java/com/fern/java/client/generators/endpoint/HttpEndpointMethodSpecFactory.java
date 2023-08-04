@@ -27,10 +27,10 @@ import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.GeneratedWrappedRequest;
 import com.fern.java.client.generators.WrappedRequestGenerator;
+import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.MethodSpec;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +45,7 @@ public final class HttpEndpointMethodSpecFactory {
     private final FieldSpec clientOptionsField;
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
     private final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
+    private final GeneratedJavaFile requestOptionsFile;
 
     private final List<GeneratedWrappedRequest> generatedWrappedRequests = new ArrayList<>();
 
@@ -56,6 +57,7 @@ public final class HttpEndpointMethodSpecFactory {
             GeneratedClientOptions generatedClientOptions,
             FieldSpec clientOptionsField,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
+            GeneratedJavaFile requestOptionsFile,
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces) {
         this.httpService = httpService;
         this.httpEndpoint = httpEndpoint;
@@ -65,13 +67,14 @@ public final class HttpEndpointMethodSpecFactory {
         this.clientOptionsField = clientOptionsField;
         this.allGeneratedInterfaces = allGeneratedInterfaces;
         this.generatedEnvironmentsClass = generatedEnvironmentsClass;
+        this.requestOptionsFile = requestOptionsFile;
     }
 
-    public MethodSpec create() {
+    public HttpEndpointMethodSpecs create() {
         if (httpEndpoint.getSdkRequest().isPresent()) {
             return httpEndpoint.getSdkRequest().get().getShape().visit(new SdkRequestShape.Visitor<>() {
                 @Override
-                public MethodSpec visitJustRequestBody(HttpRequestBodyReference justRequestBody) {
+                public HttpEndpointMethodSpecs visitJustRequestBody(HttpRequestBodyReference justRequestBody) {
                     OnlyRequestEndpointWriter onlyRequestEndpointWriter = new OnlyRequestEndpointWriter(
                             httpService,
                             httpEndpoint,
@@ -81,12 +84,13 @@ public final class HttpEndpointMethodSpecFactory {
                             generatedClientOptions,
                             generatedEnvironmentsClass,
                             justRequestBody,
-                            httpEndpoint.getSdkRequest().get());
+                            httpEndpoint.getSdkRequest().get(),
+                            requestOptionsFile);
                     return onlyRequestEndpointWriter.generate();
                 }
 
                 @Override
-                public MethodSpec visitWrapper(SdkRequestWrapper wrapper) {
+                public HttpEndpointMethodSpecs visitWrapper(SdkRequestWrapper wrapper) {
                     WrappedRequestGenerator wrappedRequestGenerator = new WrappedRequestGenerator(
                             wrapper,
                             httpService,
@@ -107,12 +111,13 @@ public final class HttpEndpointMethodSpecFactory {
                             clientGeneratorContext,
                             httpEndpoint.getSdkRequest().get(),
                             generatedEnvironmentsClass,
-                            generatedWrappedRequest);
+                            generatedWrappedRequest,
+                            requestOptionsFile);
                     return wrappedRequestEndpointWriter.generate();
                 }
 
                 @Override
-                public MethodSpec _visitUnknown(Object unknownType) {
+                public HttpEndpointMethodSpecs _visitUnknown(Object unknownType) {
                     return null;
                 }
             });
@@ -124,7 +129,8 @@ public final class HttpEndpointMethodSpecFactory {
                     clientGeneratorContext,
                     clientOptionsField,
                     generatedEnvironmentsClass,
-                    generatedClientOptions);
+                    generatedClientOptions,
+                    requestOptionsFile);
             return noRequestEndpointWriter.generate();
         }
     }

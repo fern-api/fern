@@ -22,6 +22,7 @@ import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.generators.AbstractFileGenerator;
+import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -42,6 +43,8 @@ import okhttp3.OkHttpClient;
 public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
     private static final String CLIENT_OPTIONS_CLASS_NAME = "ClientOptions";
+
+    private static final String REQUEST_OPTIONS_PARAMETER_NAME = "requestOptions";
 
     private static final FieldSpec HEADERS_FIELD = FieldSpec.builder(
                     ParameterizedTypeName.get(Map.class, String.class, String.class),
@@ -65,15 +68,19 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
 
     private final ClassName builderClassName;
     private final FieldSpec environmentField;
+    private final GeneratedJavaFile requestOptionsFile;
 
     public ClientOptionsGenerator(
-            AbstractGeneratorContext<?, ?> generatorContext, GeneratedEnvironmentsClass generatedEnvironmentsClass) {
+            AbstractGeneratorContext<?, ?> generatorContext,
+            GeneratedEnvironmentsClass generatedEnvironmentsClass,
+            GeneratedJavaFile requestOptionsFile) {
         super(generatorContext.getPoetClassNameFactory().getCoreClassName(CLIENT_OPTIONS_CLASS_NAME), generatorContext);
         this.builderClassName = className.nestedClass("Builder");
         this.environmentField = FieldSpec.builder(
                         generatedEnvironmentsClass.getClassName(), "environment", Modifier.PRIVATE, Modifier.FINAL)
                 .addModifiers()
                 .build();
+        this.requestOptionsFile = requestOptionsFile;
     }
 
     @Override
@@ -142,10 +149,14 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         return MethodSpec.methodBuilder(HEADERS_FIELD.name)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(HEADERS_FIELD.type)
+                .addParameter(requestOptionsFile.getClassName(), REQUEST_OPTIONS_PARAMETER_NAME)
                 .addStatement("$T values = new $T<>(this.$L)", HEADERS_FIELD.type, HashMap.class, HEADERS_FIELD.name)
                 .beginControlFlow("$L.forEach((key, supplier) -> ", HEADER_SUPPLIERS_FIELD.name)
                 .addStatement("values.put(key, supplier.get())")
                 .endControlFlow(")")
+                .beginControlFlow("if ($L != null)", REQUEST_OPTIONS_PARAMETER_NAME)
+                .addStatement("values.putAll($L.getHeaders())", REQUEST_OPTIONS_PARAMETER_NAME)
+                .endControlFlow()
                 .addStatement("return values")
                 .build();
     }
