@@ -9,7 +9,7 @@ const fsp = fs.promises;
 
 void tryRunCli();
 
-export async function tryRunCli() {
+export async function tryRunCli(): Promise<void> {
     const cli: Argv<{}> = yargs(hideBin(process.argv));
 
     addTestCommand(cli);
@@ -24,7 +24,7 @@ export async function tryRunCli() {
         const config = yaml.load(configFile);
         process.stdout.write(JSON.stringify(config));
     } catch (error) {
-        process.stderr.write("Error reading or parsing config file:", error);
+        process.stderr.write(JSON.stringify(error));
     }
 }
 
