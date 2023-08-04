@@ -169,6 +169,9 @@ jobs:
           name: Publish all packages
           command: yarn run publish --tag next
       - run:
+          name: Publish seed CLI
+          command: yarn workspace @fern-api/seed publish:cli --access restricted
+      - run:
           name: Publish fern-api-dev CLI
           command: yarn workspace @fern-api/cli publish:cli:dev --access restricted
 
@@ -202,6 +205,9 @@ jobs:
       - run:
           name: Publish fern-api-dev CLI
           command: yarn workspace @fern-api/cli publish:cli:dev --access restricted
+      - run:
+          name: Publish seed CLI
+          command: yarn workspace @fern-api/seed publish:cli --access restricted
       - run:
           name: Publish fern-api CLI
           command: |
@@ -237,6 +243,9 @@ jobs:
       - run:
           name: Publish fern-api-dev CLI
           command: yarn workspace @fern-api/cli publish:cli:dev --access restricted
+      - run:
+          name: Publish seed CLI
+          command: yarn workspace @fern-api/seed publish:cli --access restricted
       - run:
           name: Publish fern-api CLI
           command: |

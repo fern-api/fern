@@ -1,19 +1,6 @@
-#!/usr/bin/env node 
-
 import yargs from "yargs";
 import { Argv } from "yargs";
 import { hideBin } from 'yargs/helpers';
-
-// interface Options {
-//     docker : string,
-//     config : string, //specify output filepath here? 
-//     fixture : string,
-//     recurse : boolean | undefined,
-//     local : boolean | undefined,
-//     "ir-filepath" : string | undefined,
-//     "ir-version" : string | undefined,
-//     update: boolean | undefined
-// }
 
 
 void tryRunCli()

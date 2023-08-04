@@ -1,4 +1,14 @@
 {
   "type": "cli",
-  "cliName": "seed"
+  "cliName": "seed",
+  "environment": {
+    "environments": {
+      "prod": {
+        "cliName": "seed",
+        "cliPackageName": "@fern-api/seed"
+      }
+    },
+    "variables": []
+  },
+  "private": true
 }
