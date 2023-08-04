@@ -245,7 +245,9 @@ jobs:
           command: yarn workspace @fern-api/cli publish:cli:dev --access restricted
       - run:
           name: Publish seed CLI
-          command: yarn workspace @fern-api/seed publish:cli --access restricted
+          command: |
+            yarn copy-seed-fern-definitions
+            yarn workspace @fern-api/seed publish:cli --access restricted
       - run:
           name: Publish fern-api CLI
           command: |
