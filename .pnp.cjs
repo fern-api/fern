@@ -3819,6 +3819,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.7.18"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:3.0.0-rc.14"],\
             ["depcheck", "npm:1.4.3"],\
+            ["env-cmd", "https://github.com/toddbluhm/env-cmd.git#commit=8f35b71651f6a78710308ff38ab30896ea72ee8b"],\
             ["esbuild", "npm:0.15.7"],\
             ["eslint", "npm:8.26.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.5.0"],\
