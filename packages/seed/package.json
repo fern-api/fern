@@ -1,0 +1,44 @@
+{
+  "name": "@fern-api/seed",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sahil485/fern.git",
+    "directory": "packages/seed"
+  },
+  "private": true,
+  "files": [
+    "lib"
+  ],
+  "type": "module",
+  "source": "src/index.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "sideEffects": false,
+  "bin": "./dist/bundle.cjs",
+  "scripts": {
+    "clean": "rm -rf ./lib && tsc --build --clean",
+    "compile": "tsc --build",
+    "test": "yarn compile && jest --passWithNoTests",
+    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore --report-unused-disable-directives",
+    "lint:eslint:fix": "yarn lint:eslint --fix",
+    "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
+    "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
+    "organize-imports": "organize-imports-cli tsconfig.json",
+    "depcheck": "depcheck",
+    "dist:cli": "yarn compile && node build.cjs",
+    "publish:cli": "yarn dist:cli && cd dist && yarn npm publish"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.0.3",
+    "@types/node": "^20.4.6",
+    "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
+    "depcheck": "^1.4.3",
+    "esbuild": "^0.15.7",
+    "eslint": "^8.26.0",
+    "jest": "^29.4.0",
+    "organize-imports-cli": "^0.10.0",
+    "prettier": "^2.7.1",
+    "typescript": "^5.1.6"
+  }
+}
