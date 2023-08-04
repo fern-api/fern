@@ -1,4 +1,5 @@
 {
   "type": "cli",
-  "cliName": "seed"
+  "cliName": "seed",
+  "private": false
 }
