@@ -2312,25 +2312,17 @@ __metadata:
   dependencies:
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
-<<<<<<< HEAD
     "@types/yargs": ^17.0.24
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     depcheck: ^1.4.3
-=======
-    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
-    depcheck: ^1.4.3
     env-cmd: toddbluhm/env-cmd
->>>>>>> 29959d28a8d6d69b448f02f0b52de51e45a52da3
     esbuild: ^0.15.7
     eslint: ^8.26.0
     jest: ^29.4.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
-<<<<<<< HEAD
-    yargs: ^17.7.2
-=======
->>>>>>> 29959d28a8d6d69b448f02f0b52de51e45a52da3
+    yargs: ^17.4.1
   bin:
     seed: ./dist/bundle.cjs
   languageName: unknown
@@ -13181,7 +13173,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"yargs@npm:^17.0.1, yargs@npm:^17.3.1, yargs@npm:^17.4.1, yargs@npm:^17.7.2":
+"yargs@npm:^17.0.1, yargs@npm:^17.3.1, yargs@npm:^17.4.1":
   version: 17.7.2
   resolution: "yargs@npm:17.7.2"
   dependencies:
