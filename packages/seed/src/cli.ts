@@ -1,5 +1,5 @@
 runCli();
 
 export function runCli(): void {
-    console.log("I am seed");
+    process.stdout.write("Hello World");
 }
