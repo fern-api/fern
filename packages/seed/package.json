@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fern-api/fern.git",
+    "url": "https://github.com/sahil485/fern.git",
     "directory": "packages/seed"
   },
   "private": true,
@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
-    "@types/node": "^20.4.6",
+    "@types/node": "^18.7.18",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.3",
     "esbuild": "^0.15.7",
