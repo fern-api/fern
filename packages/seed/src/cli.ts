@@ -1,4 +1,3 @@
-
 runCli();
 
 export function runCli(): void {
