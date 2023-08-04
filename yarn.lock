@@ -2312,6 +2312,7 @@ __metadata:
   dependencies:
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
+    "@types/yargs": ^17.0.12
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     depcheck: ^1.4.3
     env-cmd: toddbluhm/env-cmd
@@ -2321,6 +2322,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
+    yargs: ^17.4.1
   bin:
     seed: ./dist/bundle.cjs
   languageName: unknown

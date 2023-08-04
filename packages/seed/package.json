@@ -30,9 +30,13 @@
     "dist:cli": "yarn compile && node build.cjs",
     "publish:cli": "yarn dist:cli && cd dist && yarn npm publish"
   },
+  "dependencies": {
+    "yargs": "^17.4.1"
+  },
   "devDependencies": {
     "@types/jest": "^29.0.3",
     "@types/node": "^18.7.18",
+    "@types/yargs": "^17.0.12",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.3",
     "env-cmd": "toddbluhm/env-cmd",
