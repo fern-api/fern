@@ -3,6 +3,7 @@ import * as yaml from "js-yaml";
 import path from "path";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
+import { generateIR } from "./functions/generate-ir";
 
 const fsp = fs.promises;
 
@@ -26,7 +27,8 @@ export async function tryRunCli(): Promise<void> {
         process.stderr.write(JSON.stringify(error));
     }
 
-    process.stdout.write("Finished running CLI");
+    process.stdout.write("\nFinished running CLI\n");
+    generateIR();
 }
 
 function addTestCommand(cli: Argv): void {

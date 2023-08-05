@@ -33,6 +33,9 @@
     "publish:cli": "yarn dist:cli && cd dist && yarn npm publish --access public"
   },
   "dependencies": {
+    "@fern-api/ir-generator": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
+    "@fern-api/workspace-loader": "workspace:*",
     "js-yaml": "^4.1.0",
     "yargs": "^17.4.1"
   },
