@@ -210,6 +210,7 @@ export function convertSchemaObject(
 
     // handle oneOf
     if (schema.oneOf != null && schema.oneOf.length > 0) {
+        // TODO(dsinghvi): handle type: 'null'
         if (
             schema.discriminator != null &&
             schema.discriminator.mapping != null &&
