@@ -231,6 +231,16 @@ export function convertSchemaObject(
             const convertedSchema = convertSchema(schema.oneOf[0], wrapAsNullable, context, breadcrumbs);
             return maybeInjectDescription(convertedSchema, description);
         } else if (schema.oneOf.length > 1) {
+            if (schema.oneOf.length === 2 && schema.oneOf[0] != null && schema.oneOf[1] != null) {
+                const firstSchema = schema.oneOf[0];
+                const secondSchema = schema.oneOf[1];
+                if (!isReferenceObject(firstSchema) && (firstSchema.type as string) === "null") {
+                    return convertSchema(secondSchema, true, context, breadcrumbs);
+                } else if (!isReferenceObject(secondSchema) && (secondSchema.type as string) === "null") {
+                    return convertSchema(firstSchema, true, context, breadcrumbs);
+                }
+            }
+
             const maybeAllEnumValues = getMaybeAllEnumValues({ schemas: schema.oneOf });
             if (maybeAllEnumValues != null) {
                 return convertEnum({
