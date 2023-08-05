@@ -2310,6 +2310,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/seed-cli@workspace:packages/seed"
   dependencies:
+    "@fern-api/ir-generator": "workspace:*"
+    "@fern-api/task-context": "workspace:*"
+    "@fern-api/workspace-loader": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.5
     "@types/node": ^18.7.18
