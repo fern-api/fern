@@ -6,6 +6,7 @@
     "url": "https://github.com/fern-api/fern.git",
     "directory": "packages/seed"
   },
+  "private": true,
   "files": [
     "lib"
   ],
