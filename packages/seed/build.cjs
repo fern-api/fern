@@ -19,7 +19,7 @@ async function main() {
         define: {
             "process.env.CLI_NAME": JSON.stringify("seed"),
             "process.env.CLI_VERSION": JSON.stringify(packageJson.version),
-            "process.env.CLI_PACKAGE_NAME": JSON.stringify("@fern-api/seed"),
+            "process.env.CLI_PACKAGE_NAME": JSON.stringify("@fern-api/seed-cli"),
         },
     };
 
@@ -41,10 +41,10 @@ require("./bundle.cjs");`
         "package.json",
         JSON.stringify(
             {
-                name: "@fern-api/seed",
+                name: "@fern-api/seed-cli",
                 version: packageJson.version,
                 repository: packageJson.repository,
-                files: ["bundle.cjs", "cli.cjs"],
+                files: ["bundle.cjs", "cli.cjs", "fern/"],
                 bin: { seed: "cli.cjs" },
             },
             undefined,

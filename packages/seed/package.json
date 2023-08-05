@@ -1,12 +1,11 @@
 {
-  "name": "@fern-api/seed",
+  "name": "@fern-api/seed-cli",
   "version": "0.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
     "directory": "packages/seed"
   },
-  "private": true,
   "files": [
     "lib"
   ],
@@ -15,7 +14,9 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "sideEffects": false,
-  "bin": "./dist/bundle.cjs",
+  "bin": {
+    "seed": "./dist/bundle.cjs"
+  },
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
@@ -27,8 +28,8 @@
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
     "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
-    "dist:cli": "yarn compile && node build.cjs",
-    "publish:cli": "yarn dist:cli && cd dist && yarn npm publish"
+    "dist:cli": "yarn compile && node build.cjs && cp -R src/fern dist",
+    "publish:cli": "yarn dist:cli && cd dist && yarn npm publish --access public"
   },
   "dependencies": {
     "js-yaml": "^4.1.0",

@@ -38,8 +38,7 @@
     "check-docs-release-blockers": "yarn fern-script check-docs-release-blockers",
     "root-package:check": "yarn fern-script check-root-package",
     "root-package:fix": "yarn root-package:check --fix",
-    "demo-setup": "yarn workspace @fern-api/demo-setup dist:cli && node $(yarn workspace @fern-api/demo-setup bin demo-setup)",
-    "copy-seed-fern-definitions": "mkdir -p packages/seed/dist && cp -R packages/seed/src/fern packages/seed/dist"
+    "demo-setup": "yarn workspace @fern-api/demo-setup dist:cli && node $(yarn workspace @fern-api/demo-setup bin demo-setup)"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
@@ -71,7 +70,7 @@
     "jsonc-parser": "~2.2.1",
     "lint-staged": "^13.0.3",
     "lodash-es": "^4.17.21",
-    "mrlint": "^0.0.124",
+    "mrlint": "^0.0.125",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
     "react": "^18.2.0",

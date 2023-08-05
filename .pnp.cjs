@@ -172,7 +172,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/scripts"\
       },\
       {\
-        "name": "@fern-api/seed",\
+        "name": "@fern-api/seed-cli",\
         "reference": "workspace:packages/seed"\
       }\
     ],\
@@ -210,7 +210,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/register", ["workspace:packages/cli/register"]],\
       ["@fern-api/remote-workspace-runner", ["workspace:packages/cli/generation/remote-generation/remote-workspace-runner"]],\
       ["@fern-api/scripts", ["workspace:packages/scripts"]],\
-      ["@fern-api/seed", ["workspace:packages/seed"]],\
+      ["@fern-api/seed-cli", ["workspace:packages/seed"]],\
       ["@fern-api/semver-utils", ["workspace:packages/cli/semver-utils"]],\
       ["@fern-api/services", ["workspace:packages/cli/services"]],\
       ["@fern-api/task-context", ["workspace:packages/cli/task-context"]],\
@@ -257,7 +257,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jsonc-parser", "npm:2.2.1"],\
             ["lint-staged", "npm:13.0.3"],\
             ["lodash-es", "npm:4.17.21"],\
-            ["mrlint", "npm:0.0.124"],\
+            ["mrlint", "npm:0.0.125"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
@@ -3056,7 +3056,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/register", "workspace:packages/cli/register"],\
             ["@fern-api/remote-workspace-runner", "workspace:packages/cli/generation/remote-generation/remote-workspace-runner"],\
             ["@fern-api/scripts", "workspace:packages/scripts"],\
-            ["@fern-api/seed", "workspace:packages/seed"],\
+            ["@fern-api/seed-cli", "workspace:packages/seed"],\
             ["@fern-api/semver-utils", "workspace:packages/cli/semver-utils"],\
             ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
@@ -3810,11 +3810,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["@fern-api/seed", [\
+      ["@fern-api/seed-cli", [\
         ["workspace:packages/seed", {\
           "packageLocation": "./packages/seed/",\
           "packageDependencies": [\
-            ["@fern-api/seed", "workspace:packages/seed"],\
+            ["@fern-api/seed-cli", "workspace:packages/seed"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/node", "npm:18.7.18"],\
@@ -9263,7 +9263,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jsonc-parser", "npm:2.2.1"],\
             ["lint-staged", "npm:13.0.3"],\
             ["lodash-es", "npm:4.17.21"],\
-            ["mrlint", "npm:0.0.124"],\
+            ["mrlint", "npm:0.0.125"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["react", "npm:18.2.0"],\
@@ -12366,10 +12366,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["mrlint", [\
-        ["npm:0.0.124", {\
-          "packageLocation": "./.yarn/cache/mrlint-npm-0.0.124-7d17a89d44-05d1179360.zip/node_modules/mrlint/",\
+        ["npm:0.0.125", {\
+          "packageLocation": "./.yarn/cache/mrlint-npm-0.0.125-55d643b35d-bde995c273.zip/node_modules/mrlint/",\
           "packageDependencies": [\
-            ["mrlint", "npm:0.0.124"]\
+            ["mrlint", "npm:0.0.125"]\
           ],\
           "linkType": "HARD"\
         }]\

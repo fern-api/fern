@@ -1607,7 +1607,7 @@ __metadata:
     "@fern-api/register": "workspace:*"
     "@fern-api/remote-workspace-runner": "workspace:*"
     "@fern-api/scripts": "workspace:*"
-    "@fern-api/seed": "workspace:*"
+    "@fern-api/seed-cli": "workspace:*"
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/services": "workspace:*"
     "@fern-api/task-context": "workspace:*"
@@ -2306,9 +2306,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/seed@workspace:*, @fern-api/seed@workspace:packages/seed":
+"@fern-api/seed-cli@workspace:*, @fern-api/seed-cli@workspace:packages/seed":
   version: 0.0.0-use.local
-  resolution: "@fern-api/seed@workspace:packages/seed"
+  resolution: "@fern-api/seed-cli@workspace:packages/seed"
   dependencies:
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.5
@@ -6864,7 +6864,7 @@ env-cmd@toddbluhm/env-cmd:
     jsonc-parser: ~2.2.1
     lint-staged: ^13.0.3
     lodash-es: ^4.17.21
-    mrlint: ^0.0.124
+    mrlint: ^0.0.125
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     react: ^18.2.0
@@ -9622,12 +9622,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"mrlint@npm:^0.0.124":
-  version: 0.0.124
-  resolution: "mrlint@npm:0.0.124"
+"mrlint@npm:^0.0.125":
+  version: 0.0.125
+  resolution: "mrlint@npm:0.0.125"
   bin:
     mrlint: cli.cjs
-  checksum: 05d11793604bb37f51822a785a9558fa66d9b81517a7c9ede9b5f7091a806ded267f4fe9ecb273e58abe1ba17e2265f1305b5b686adced912c127e065285a30d
+  checksum: bde995c273ce695299768439b6ec01d1adce2ba59c2cbc1608359d66c1b8f8ff1157436ad49d401197a1051743a9498ac24ac2a94f2e4f49705409ccdb857d78
   languageName: node
   linkType: hard
 
