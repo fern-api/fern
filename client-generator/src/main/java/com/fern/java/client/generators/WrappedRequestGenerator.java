@@ -22,6 +22,7 @@ import com.fern.irV20.model.commons.Name;
 import com.fern.irV20.model.commons.NameAndWireValue;
 import com.fern.irV20.model.commons.TypeId;
 import com.fern.irV20.model.http.FileUploadRequest;
+import com.fern.irV20.model.http.FileUploadRequestProperty;
 import com.fern.irV20.model.http.HttpEndpoint;
 import com.fern.irV20.model.http.HttpRequestBody;
 import com.fern.irV20.model.http.HttpRequestBodyReference;
@@ -31,17 +32,23 @@ import com.fern.irV20.model.http.SdkRequestWrapper;
 import com.fern.irV20.model.types.DeclaredTypeName;
 import com.fern.irV20.model.types.ObjectProperty;
 import com.fern.irV20.model.types.ObjectTypeDeclaration;
-import com.fern.java.InlinedRequestBodyUtils;
+import com.fern.java.RequestBodyUtils;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedWrappedRequest;
+import com.fern.java.client.GeneratedWrappedRequest.FilePropertyContainer;
+import com.fern.java.client.GeneratedWrappedRequest.FileUploadProperty;
+import com.fern.java.client.GeneratedWrappedRequest.FileUploadRequestBodyGetters;
 import com.fern.java.client.GeneratedWrappedRequest.InlinedRequestBodyGetters;
+import com.fern.java.client.GeneratedWrappedRequest.JsonFileUploadProperty;
 import com.fern.java.client.GeneratedWrappedRequest.ReferencedRequestBodyGetter;
+import com.fern.java.client.GeneratedWrappedRequest.RequestBodyGetter;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.generators.ObjectGenerator;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObject;
 import com.squareup.javapoet.ClassName;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -71,8 +78,6 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
     public GeneratedWrappedRequest generateFile() {
         List<ObjectProperty> headerObjectProperties = new ArrayList<>();
         List<ObjectProperty> queryParameterObjectProperties = new ArrayList<>();
-        List<ObjectProperty> inlinedObjectProperties = new ArrayList<>();
-        List<ObjectProperty> referencedObjectProperties = new ArrayList<>();
         List<DeclaredTypeName> extendedInterfaces = new ArrayList<>();
         httpService.getHeaders().forEach(httpHeader -> {
             headerObjectProperties.add(ObjectProperty.builder()
@@ -104,66 +109,18 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                     .docs(queryParameter.getDocs())
                     .build());
         });
-        Optional<Boolean> isInline = httpEndpoint
+
+        RequestBodyPropertiesComputer requestBodyPropertiesComputer =
+                new RequestBodyPropertiesComputer(extendedInterfaces);
+        List<ObjectProperty> objectProperties = httpEndpoint
                 .getRequestBody()
-                .map(httpRequestBody -> httpRequestBody.visit(new HttpRequestBody.Visitor<Boolean>() {
-                    @Override
-                    public Boolean visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
-                        extendedInterfaces.addAll(inlinedRequestBody.getExtends());
-                        inlinedObjectProperties.addAll(
-                                InlinedRequestBodyUtils.convertToObjectProperties(inlinedRequestBody));
-                        return true;
-                    }
-
-                    @Override
-                    public Boolean visitReference(HttpRequestBodyReference reference) {
-                        referencedObjectProperties.add(ObjectProperty.builder()
-                                .availability(Availability.builder()
-                                        .status(AvailabilityStatus.GENERAL_AVAILABILITY)
-                                        .build())
-                                .name(NameAndWireValue.builder()
-                                        .wireValue(
-                                                sdkRequestWrapper.getBodyKey().getOriginalName())
-                                        .name(Name.builder()
-                                                .originalName(sdkRequestWrapper
-                                                        .getBodyKey()
-                                                        .getOriginalName())
-                                                .camelCase(sdkRequestWrapper
-                                                        .getBodyKey()
-                                                        .getCamelCase())
-                                                .pascalCase(sdkRequestWrapper
-                                                        .getBodyKey()
-                                                        .getPascalCase())
-                                                .snakeCase(sdkRequestWrapper
-                                                        .getBodyKey()
-                                                        .getSnakeCase())
-                                                .screamingSnakeCase(sdkRequestWrapper
-                                                        .getBodyKey()
-                                                        .getScreamingSnakeCase())
-                                                .build())
-                                        .build())
-                                .valueType(reference.getRequestBodyType())
-                                .docs(reference.getDocs())
-                                .build());
-                        return false;
-                    }
-
-                    @Override
-                    public Boolean visitFileUpload(FileUploadRequest fileUpload) {
-                        throw new UnsupportedOperationException("File upload is not supported!");
-                    }
-
-                    @Override
-                    public Boolean _visitUnknown(Object unknownType) {
-                        throw new RuntimeException("Encountered unknown request body type" + unknownType);
-                    }
-                }));
+                .map(httpRequestBody -> httpRequestBody.visit(requestBodyPropertiesComputer))
+                .orElseGet(Collections::emptyList);
         ObjectTypeDeclaration objectTypeDeclaration = ObjectTypeDeclaration.builder()
                 .addAllExtends(extendedInterfaces)
                 .addAllProperties(headerObjectProperties)
                 .addAllProperties(queryParameterObjectProperties)
-                .addAllProperties(inlinedObjectProperties)
-                .addAllProperties(referencedObjectProperties)
+                .addAllProperties(objectProperties)
                 .build();
         ObjectGenerator objectGenerator = new ObjectGenerator(
                 objectTypeDeclaration,
@@ -177,23 +134,14 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                 className,
                 false);
         GeneratedObject generatedObject = objectGenerator.generateFile();
+        RequestBodyGetterFactory requestBodyGetterFactory =
+                new RequestBodyGetterFactory(objectProperties, generatedObject);
         return GeneratedWrappedRequest.builder()
                 .className(generatedObject.getClassName())
                 .javaFile(generatedObject.javaFile())
-                .requestBodyGetter(isInline.map(isInlineValue -> isInlineValue
-                        ? InlinedRequestBodyGetters.builder()
-                                .addAllProperties(inlinedObjectProperties.stream()
-                                        .map(objectProperty -> generatedObject
-                                                .objectPropertyGetters()
-                                                .get(objectProperty))
-                                        .collect(Collectors.toList()))
-                                .build()
-                        : ReferencedRequestBodyGetter.builder()
-                                .requestBodyGetter(generatedObject
-                                        .objectPropertyGetters()
-                                        .get(referencedObjectProperties.get(0))
-                                        .getterProperty())
-                                .build()))
+                .requestBodyGetter(httpEndpoint
+                        .getRequestBody()
+                        .map(httpRequestBody -> httpRequestBody.visit(requestBodyGetterFactory)))
                 .addAllHeaderParams(headerObjectProperties.stream()
                         .map(objectProperty ->
                                 generatedObject.objectPropertyGetters().get(objectProperty))
@@ -203,5 +151,119 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                                 generatedObject.objectPropertyGetters().get(objectProperty))
                         .collect(Collectors.toList()))
                 .build();
+    }
+
+    private static final class RequestBodyGetterFactory implements HttpRequestBody.Visitor<RequestBodyGetter> {
+
+        private final List<ObjectProperty> requestBodyProperties;
+        private final GeneratedObject generatedObject;
+
+        RequestBodyGetterFactory(List<ObjectProperty> requestBodyProperties, GeneratedObject generatedObject) {
+            this.requestBodyProperties = requestBodyProperties;
+            this.generatedObject = generatedObject;
+        }
+
+        @Override
+        public RequestBodyGetter visitInlinedRequestBody(InlinedRequestBody _inlinedRequestBody) {
+            return InlinedRequestBodyGetters.builder()
+                    .addAllProperties(requestBodyProperties.stream()
+                            .map(objectProperty ->
+                                    generatedObject.objectPropertyGetters().get(objectProperty))
+                            .collect(Collectors.toList()))
+                    .build();
+        }
+
+        @Override
+        public RequestBodyGetter visitReference(HttpRequestBodyReference reference) {
+            return ReferencedRequestBodyGetter.builder()
+                    .requestBodyGetter(generatedObject
+                            .objectPropertyGetters()
+                            .get(requestBodyProperties.get(0))
+                            .getterProperty())
+                    .build();
+        }
+
+        @Override
+        public RequestBodyGetter visitFileUpload(FileUploadRequest fileUpload) {
+            List<FileUploadProperty> fileUploadProperties = new ArrayList<>();
+            int jsonPropertyIndex = 0;
+            for (FileUploadRequestProperty irFileUploadProperty : fileUpload.getProperties()) {
+                if (irFileUploadProperty.isFile()) {
+                    fileUploadProperties.add(FilePropertyContainer.builder()
+                            .fileProperty(irFileUploadProperty.getFile().get())
+                            .build());
+                } else if (irFileUploadProperty.isBodyProperty()) {
+                    fileUploadProperties.add(JsonFileUploadProperty.builder()
+                            .objectProperty(generatedObject
+                                    .objectPropertyGetters()
+                                    .get(requestBodyProperties.get(jsonPropertyIndex)))
+                            .build());
+                    ++jsonPropertyIndex;
+                }
+            }
+            return FileUploadRequestBodyGetters.builder()
+                    .addAllProperties(fileUploadProperties)
+                    .addAllFileProperties(fileUpload.getProperties().stream()
+                            .map(FileUploadRequestProperty::getFile)
+                            .flatMap(Optional::stream)
+                            .collect(Collectors.toList()))
+                    .build();
+        }
+
+        @Override
+        public RequestBodyGetter _visitUnknown(Object unknownType) {
+            throw new RuntimeException("Encountered unknown http requeset body: " + unknownType);
+        }
+    }
+
+    private final class RequestBodyPropertiesComputer implements HttpRequestBody.Visitor<List<ObjectProperty>> {
+
+        private final List<DeclaredTypeName> extendedInterfaces;
+
+        private RequestBodyPropertiesComputer(List<DeclaredTypeName> extendedInterfaces) {
+            this.extendedInterfaces = extendedInterfaces;
+        }
+
+        @Override
+        public List<ObjectProperty> visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
+            List<ObjectProperty> inlinedObjectProperties = new ArrayList<>();
+            extendedInterfaces.addAll(inlinedRequestBody.getExtends());
+            inlinedObjectProperties.addAll(RequestBodyUtils.convertToObjectProperties(inlinedRequestBody));
+            return inlinedObjectProperties;
+        }
+
+        @Override
+        public List<ObjectProperty> visitReference(HttpRequestBodyReference reference) {
+            return List.of(ObjectProperty.builder()
+                    .availability(Availability.builder()
+                            .status(AvailabilityStatus.GENERAL_AVAILABILITY)
+                            .build())
+                    .name(NameAndWireValue.builder()
+                            .wireValue(sdkRequestWrapper.getBodyKey().getOriginalName())
+                            .name(Name.builder()
+                                    .originalName(sdkRequestWrapper.getBodyKey().getOriginalName())
+                                    .camelCase(sdkRequestWrapper.getBodyKey().getCamelCase())
+                                    .pascalCase(sdkRequestWrapper.getBodyKey().getPascalCase())
+                                    .snakeCase(sdkRequestWrapper.getBodyKey().getSnakeCase())
+                                    .screamingSnakeCase(
+                                            sdkRequestWrapper.getBodyKey().getScreamingSnakeCase())
+                                    .build())
+                            .build())
+                    .valueType(reference.getRequestBodyType())
+                    .docs(reference.getDocs())
+                    .build());
+        }
+
+        @Override
+        public List<ObjectProperty> visitFileUpload(FileUploadRequest fileUpload) {
+            List<ObjectProperty> inlinedObjectProperties = new ArrayList<>();
+            inlinedObjectProperties.addAll(RequestBodyUtils.convertToObjectProperties(fileUpload));
+            return inlinedObjectProperties;
+        }
+
+        @Override
+        public List<ObjectProperty> _visitUnknown(Object unknownType) {
+            throw new RuntimeException("Encountered unknown http requeset body: " + unknownType);
+        }
     }
 }

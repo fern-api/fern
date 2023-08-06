@@ -20,14 +20,17 @@ import com.fern.irV20.model.commons.Availability;
 import com.fern.irV20.model.commons.AvailabilityStatus;
 import com.fern.irV20.model.commons.Name;
 import com.fern.irV20.model.commons.NameAndWireValue;
+import com.fern.irV20.model.http.FileUploadRequest;
+import com.fern.irV20.model.http.FileUploadRequestProperty;
 import com.fern.irV20.model.http.InlinedRequestBody;
 import com.fern.irV20.model.types.ObjectProperty;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-public final class InlinedRequestBodyUtils {
+public final class RequestBodyUtils {
 
-    private InlinedRequestBodyUtils() {}
+    private RequestBodyUtils() {}
 
     public static List<ObjectProperty> convertToObjectProperties(InlinedRequestBody inlinedRequestBody) {
         return inlinedRequestBody.getProperties().stream()
@@ -61,6 +64,43 @@ public final class InlinedRequestBodyUtils {
                                 .build())
                         .valueType(inlinedRequestBodyProperty.getValueType())
                         .docs(inlinedRequestBodyProperty.getDocs())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    public static List<ObjectProperty> convertToObjectProperties(FileUploadRequest uploadRequest) {
+        return uploadRequest.getProperties().stream()
+                .map(FileUploadRequestProperty::getBodyProperty)
+                .flatMap(Optional::stream)
+                .map(fileUploadProperty -> ObjectProperty.builder()
+                        .availability(Availability.builder()
+                                .status(AvailabilityStatus.GENERAL_AVAILABILITY)
+                                .build())
+                        .name(NameAndWireValue.builder()
+                                .wireValue(fileUploadProperty.getName().getWireValue())
+                                .name(Name.builder()
+                                        .originalName(
+                                                fileUploadProperty.getName().getWireValue())
+                                        .camelCase(fileUploadProperty
+                                                .getName()
+                                                .getName()
+                                                .getCamelCase())
+                                        .pascalCase(fileUploadProperty
+                                                .getName()
+                                                .getName()
+                                                .getPascalCase())
+                                        .snakeCase(fileUploadProperty
+                                                .getName()
+                                                .getName()
+                                                .getSnakeCase())
+                                        .screamingSnakeCase(fileUploadProperty
+                                                .getName()
+                                                .getName()
+                                                .getScreamingSnakeCase())
+                                        .build())
+                                .build())
+                        .valueType(fileUploadProperty.getValueType())
+                        .docs(fileUploadProperty.getDocs())
                         .build())
                 .collect(Collectors.toList());
     }

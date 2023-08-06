@@ -16,6 +16,7 @@
 
 package com.fern.java.client.generators.endpoint;
 
+import com.fern.irV20.model.http.FileProperty;
 import com.fern.irV20.model.http.HttpEndpoint;
 import com.fern.irV20.model.http.HttpService;
 import com.fern.irV20.model.http.SdkRequest;
@@ -23,7 +24,11 @@ import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.GeneratedWrappedRequest;
+import com.fern.java.client.GeneratedWrappedRequest.FilePropertyContainer;
+import com.fern.java.client.GeneratedWrappedRequest.FileUploadProperty;
+import com.fern.java.client.GeneratedWrappedRequest.FileUploadRequestBodyGetters;
 import com.fern.java.client.GeneratedWrappedRequest.InlinedRequestBodyGetters;
+import com.fern.java.client.GeneratedWrappedRequest.JsonFileUploadProperty;
 import com.fern.java.client.GeneratedWrappedRequest.ReferencedRequestBodyGetter;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedJavaFile;
@@ -34,18 +39,22 @@ import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
-import java.util.Collections;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import okhttp3.Headers;
+import okhttp3.MultipartBody;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
 public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
 
     public static final String REQUEST_BODY_PROPERTIES_NAME = "_requestBodyProperties";
+
+    public static final String MULTIPART_BODY_PROPERTIES_NAME = "_multipartBody";
 
     private final GeneratedWrappedRequest generatedWrappedRequest;
     private final ClientGeneratorContext clientGeneratorContext;
@@ -92,9 +101,24 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
 
     @Override
     public List<ParameterSpec> additionalParameters() {
-        return Collections.singletonList(
-                ParameterSpec.builder(generatedWrappedRequest.getClassName(), requestParameterName)
-                        .build());
+        List<ParameterSpec> parameterSpecs = new ArrayList<>();
+        if (generatedWrappedRequest.requestBodyGetter().isPresent()
+                && generatedWrappedRequest.requestBodyGetter().get() instanceof FileUploadRequestBodyGetters) {
+            FileUploadRequestBodyGetters fileUploadRequest = (FileUploadRequestBodyGetters)
+                    (generatedWrappedRequest.requestBodyGetter().get());
+            fileUploadRequest.fileProperties().forEach(fileProperty -> {
+                ParameterSpec fileParameter = ParameterSpec.builder(
+                                fileProperty.getIsOptional()
+                                        ? ParameterizedTypeName.get(Optional.class, File.class)
+                                        : ClassName.get(File.class),
+                                getFilePropertyParameterName(fileProperty))
+                        .build();
+                parameterSpecs.add(fileParameter);
+            });
+        }
+        parameterSpecs.add(ParameterSpec.builder(generatedWrappedRequest.getClassName(), requestParameterName)
+                .build());
+        return parameterSpecs;
     }
 
     @Override
@@ -105,67 +129,37 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             GeneratedObjectMapper generatedObjectMapper,
             CodeBlock inlineableHttpUrl,
             boolean sendContentType) {
-        CodeBlock.Builder requestInitializerBuilder = CodeBlock.builder();
+        CodeBlock.Builder requestBodyCodeBlock = CodeBlock.builder();
         if (generatedWrappedRequest.requestBodyGetter().isPresent()) {
-            String requestBodyArgument = "";
             if (generatedWrappedRequest.requestBodyGetter().get() instanceof ReferencedRequestBodyGetter) {
-                requestBodyArgument = requestParameterName + "."
+                String jsonRequestBodyArgument = requestParameterName + "."
                         + ((ReferencedRequestBodyGetter) generatedWrappedRequest
                                         .requestBodyGetter()
                                         .get())
                                 .requestBodyGetter()
                                 .name
                         + "()";
+                initializeRequestBody(generatedObjectMapper, jsonRequestBodyArgument, requestBodyCodeBlock);
             } else if (generatedWrappedRequest.requestBodyGetter().get() instanceof InlinedRequestBodyGetters) {
-                requestInitializerBuilder.addStatement(
-                        "$T $L = new $T<>()",
-                        ParameterizedTypeName.get(Map.class, String.class, Object.class),
-                        REQUEST_BODY_PROPERTIES_NAME,
-                        HashMap.class);
                 InlinedRequestBodyGetters inlinedRequestBodyGetter = ((InlinedRequestBodyGetters)
                         generatedWrappedRequest.requestBodyGetter().get());
-                for (EnrichedObjectProperty bodyProperty : inlinedRequestBodyGetter.properties()) {
-                    if (typeNameIsOptional(bodyProperty.poetTypeName())) {
-                        requestInitializerBuilder
-                                .beginControlFlow(
-                                        "if ($L.$N().isPresent())", requestParameterName, bodyProperty.getterProperty())
-                                .addStatement(
-                                        "$L.put($S, $L)",
-                                        REQUEST_BODY_PROPERTIES_NAME,
-                                        bodyProperty.wireKey().get(),
-                                        requestParameterName + "." + bodyProperty.getterProperty().name + "()")
-                                .endControlFlow();
-                    } else {
-                        requestInitializerBuilder.addStatement(
-                                "$L.put($S, $L)",
-                                REQUEST_BODY_PROPERTIES_NAME,
-                                bodyProperty.wireKey().get(),
-                                requestParameterName + "." + bodyProperty.getterProperty().name + "()");
-                    }
-                }
-                requestBodyArgument = REQUEST_BODY_PROPERTIES_NAME;
+                initializeRequestBodyProperties(inlinedRequestBodyGetter, requestBodyCodeBlock);
+                initializeRequestBody(generatedObjectMapper, REQUEST_BODY_PROPERTIES_NAME, requestBodyCodeBlock);
+            } else if (generatedWrappedRequest.requestBodyGetter().get() instanceof FileUploadRequestBodyGetters) {
+                FileUploadRequestBodyGetters fileUploadRequestBodyGetter = ((FileUploadRequestBodyGetters)
+                        generatedWrappedRequest.requestBodyGetter().get());
+                initializeMultipartBody(fileUploadRequestBodyGetter, requestBodyCodeBlock);
+                requestBodyCodeBlock.addStatement(
+                        "$T $L = $L.build()",
+                        RequestBody.class,
+                        AbstractEndpointWriter.REQUEST_BODY_NAME,
+                        MULTIPART_BODY_PROPERTIES_NAME);
             }
-            requestInitializerBuilder
-                    .addStatement("$T $L", RequestBody.class, AbstractEndpointWriter.REQUEST_BODY_NAME)
-                    .beginControlFlow("try")
-                    .addStatement(
-                            "$L = $T.create($T.$L.writeValueAsBytes($L), $T.parse($S))",
-                            AbstractEndpointWriter.REQUEST_BODY_NAME,
-                            RequestBody.class,
-                            generatedObjectMapper.getClassName(),
-                            generatedObjectMapper.jsonMapperStaticField().name,
-                            requestBodyArgument,
-                            okhttp3.MediaType.class,
-                            "application/json")
-                    .endControlFlow()
-                    .beginControlFlow("catch($T e)", Exception.class)
-                    .addStatement("throw new $T(e)", RuntimeException.class)
-                    .endControlFlow();
         } else {
-            requestInitializerBuilder.addStatement(
+            requestBodyCodeBlock.addStatement(
                     "$T $L = null", RequestBody.class, AbstractEndpointWriter.REQUEST_BODY_NAME);
         }
-        requestInitializerBuilder
+        requestBodyCodeBlock
                 .add(
                         "$T.Builder $L = new $T.Builder()\n",
                         Request.class,
@@ -180,7 +174,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         httpEndpoint.getMethod().toString(),
                         AbstractEndpointWriter.REQUEST_BODY_NAME);
         if (sendContentType) {
-            requestInitializerBuilder
+            requestBodyCodeBlock
                     .add(
                             ".headers($T.of($L.$N($L)))\n",
                             Headers.class,
@@ -192,17 +186,17 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                             AbstractEndpointWriter.CONTENT_TYPE_HEADER,
                             AbstractEndpointWriter.APPLICATION_JSON_HEADER);
         } else {
-            requestInitializerBuilder.add(
+            requestBodyCodeBlock.add(
                     ".headers($T.of($L.$N($L)));\n",
                     Headers.class,
                     clientOptionsMember.name,
                     clientOptions.headers(),
                     AbstractEndpointWriter.REQUEST_OPTIONS_PARAMETER_NAME);
         }
-        requestInitializerBuilder.unindent();
+        requestBodyCodeBlock.unindent();
         for (EnrichedObjectProperty header : generatedWrappedRequest.headerParams()) {
             if (typeNameIsOptional(header.poetTypeName())) {
-                requestInitializerBuilder
+                requestBodyCodeBlock
                         .beginControlFlow("if ($L.$N().isPresent())", requestParameterName, header.getterProperty())
                         .addStatement(
                                 "$L.addHeader($S, $L.$N().get())",
@@ -212,7 +206,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                                 header.getterProperty())
                         .endControlFlow();
             } else {
-                requestInitializerBuilder.addStatement(
+                requestBodyCodeBlock.addStatement(
                         "$L.addHeader($S, $L.$N())",
                         AbstractEndpointWriter.REQUEST_BUILDER_NAME,
                         header.wireKey().get(),
@@ -220,12 +214,121 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         header.getterProperty());
             }
         }
-        requestInitializerBuilder.addStatement("$T $L = $L.build()", Request.class, REQUEST_NAME, REQUEST_BUILDER_NAME);
-        return requestInitializerBuilder.build();
+        requestBodyCodeBlock.addStatement("$T $L = $L.build()", Request.class, REQUEST_NAME, REQUEST_BUILDER_NAME);
+        return requestBodyCodeBlock.build();
+    }
+
+    private void initializeRequestBodyProperties(
+            InlinedRequestBodyGetters inlinedRequestBody, CodeBlock.Builder requestBodyCodeBlock) {
+        requestBodyCodeBlock.addStatement(
+                "$T $L = new $T<>()",
+                ParameterizedTypeName.get(Map.class, String.class, Object.class),
+                REQUEST_BODY_PROPERTIES_NAME,
+                HashMap.class);
+        for (EnrichedObjectProperty bodyProperty : inlinedRequestBody.properties()) {
+            if (typeNameIsOptional(bodyProperty.poetTypeName())) {
+                requestBodyCodeBlock
+                        .beginControlFlow(
+                                "if ($L.$N().isPresent())", requestParameterName, bodyProperty.getterProperty())
+                        .addStatement(
+                                "$L.put($S, $L)",
+                                REQUEST_BODY_PROPERTIES_NAME,
+                                bodyProperty.wireKey().get(),
+                                requestParameterName + "." + bodyProperty.getterProperty().name + "()")
+                        .endControlFlow();
+            } else {
+                requestBodyCodeBlock.addStatement(
+                        "$L.put($S, $L)",
+                        REQUEST_BODY_PROPERTIES_NAME,
+                        bodyProperty.wireKey().get(),
+                        requestParameterName + "." + bodyProperty.getterProperty().name + "()");
+            }
+        }
+    }
+
+    private void initializeRequestBody(
+            GeneratedObjectMapper generatedObjectMapper,
+            String variableToJsonify,
+            CodeBlock.Builder requestBodyCodeBlock) {
+        requestBodyCodeBlock
+                .addStatement("$T $L", RequestBody.class, AbstractEndpointWriter.REQUEST_BODY_NAME)
+                .beginControlFlow("try")
+                .addStatement(
+                        "$L = $T.create($T.$L.writeValueAsBytes($L), $T.parse($S))",
+                        AbstractEndpointWriter.REQUEST_BODY_NAME,
+                        RequestBody.class,
+                        generatedObjectMapper.getClassName(),
+                        generatedObjectMapper.jsonMapperStaticField().name,
+                        variableToJsonify,
+                        okhttp3.MediaType.class,
+                        "application/json")
+                .endControlFlow()
+                .beginControlFlow("catch($T e)", Exception.class)
+                .addStatement("throw new $T(e)", RuntimeException.class)
+                .endControlFlow();
+    }
+
+    private void initializeMultipartBody(
+            FileUploadRequestBodyGetters fileUploadRequest, CodeBlock.Builder requestBodyCodeBlock) {
+        requestBodyCodeBlock.addStatement(
+                "$T.Builder $L = new $T.Builder().setType($T.FORM)",
+                MultipartBody.class,
+                MULTIPART_BODY_PROPERTIES_NAME,
+                MultipartBody.class,
+                MultipartBody.class);
+        for (FileUploadProperty fileUploadProperty : fileUploadRequest.properties()) {
+            if (fileUploadProperty instanceof JsonFileUploadProperty) {
+                EnrichedObjectProperty jsonProperty = ((JsonFileUploadProperty) fileUploadProperty).objectProperty();
+                if (typeNameIsOptional(jsonProperty.poetTypeName())) {
+                    requestBodyCodeBlock
+                            .beginControlFlow(
+                                    "if ($L.$N().isPresent())", requestParameterName, jsonProperty.getterProperty())
+                            .addStatement(
+                                    "$L.addFormDataPart($S, $L)",
+                                    MULTIPART_BODY_PROPERTIES_NAME,
+                                    jsonProperty.wireKey().get(),
+                                    requestParameterName + "." + jsonProperty.getterProperty().name + "()")
+                            .endControlFlow();
+                } else {
+                    requestBodyCodeBlock.addStatement(
+                            "$L.addFormDataPart($S, $L)",
+                            MULTIPART_BODY_PROPERTIES_NAME,
+                            jsonProperty.wireKey().get(),
+                            requestParameterName + "." + jsonProperty.getterProperty().name + "()");
+                }
+            } else if (fileUploadProperty instanceof FilePropertyContainer) {
+                FileProperty fileProperty = ((FilePropertyContainer) fileUploadProperty).fileProperty();
+                if (fileProperty.getIsOptional()) {
+                    requestBodyCodeBlock
+                            .beginControlFlow(
+                                    "if ($L.$N().isPresent())",
+                                    requestParameterName,
+                                    getFilePropertyParameterName(fileProperty))
+                            .addStatement(
+                                    "$L.addFormDataPart($S, null, $T.create(null, $L))",
+                                    MULTIPART_BODY_PROPERTIES_NAME,
+                                    fileProperty.getKey().getWireValue(),
+                                    RequestBody.class,
+                                    getFilePropertyParameterName(fileProperty))
+                            .endControlFlow();
+                } else {
+                    requestBodyCodeBlock.addStatement(
+                            "$L.addFormDataPart($S, null, $T.create(null, $L))",
+                            MULTIPART_BODY_PROPERTIES_NAME,
+                            fileProperty.getKey().getWireValue(),
+                            RequestBody.class,
+                            getFilePropertyParameterName(fileProperty));
+                }
+            }
+        }
     }
 
     private static boolean typeNameIsOptional(TypeName typeName) {
         return typeName instanceof ParameterizedTypeName
                 && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class));
+    }
+
+    private static String getFilePropertyParameterName(FileProperty fileProperty) {
+        return fileProperty.getKey().getName().getCamelCase().getSafeName();
     }
 }

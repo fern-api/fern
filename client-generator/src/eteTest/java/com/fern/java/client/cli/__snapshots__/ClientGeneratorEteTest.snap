@@ -289,6 +289,7 @@ import com.fern.basic.resources.auth.AuthClient;
 import com.fern.basic.resources.blog.BlogClient;
 import com.fern.basic.resources.dummyservice.DummyServiceClient;
 import com.fern.basic.resources.filedownload.FileDownloadClient;
+import com.fern.basic.resources.fileupload.FileUploadClient;
 import com.fern.basic.resources.raven.RavenClient;
 import java.util.function.Supplier;
 
@@ -303,6 +304,8 @@ public class FernFernClient {
 
     protected final Supplier<FileDownloadClient> fileDownloadClient;
 
+    protected final Supplier<FileUploadClient> fileUploadClient;
+
     protected final Supplier<RavenClient> ravenClient;
 
     public FernFernClient(ClientOptions clientOptions) {
@@ -311,6 +314,7 @@ public class FernFernClient {
         this.blogClient = Suppliers.memoize(() -> new BlogClient(clientOptions));
         this.dummyServiceClient = Suppliers.memoize(() -> new DummyServiceClient(clientOptions));
         this.fileDownloadClient = Suppliers.memoize(() -> new FileDownloadClient(clientOptions));
+        this.fileUploadClient = Suppliers.memoize(() -> new FileUploadClient(clientOptions));
         this.ravenClient = Suppliers.memoize(() -> new RavenClient(clientOptions));
     }
 
@@ -328,6 +332,10 @@ public class FernFernClient {
 
     public FileDownloadClient fileDownload() {
         return this.fileDownloadClient.get();
+    }
+
+    public FileUploadClient fileUpload() {
+        return this.fileUploadClient.get();
     }
 
     public RavenClient raven() {
@@ -2119,6 +2127,148 @@ public class FileDownloadClient {
             throw new RuntimeException();
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+}
+
+]
+
+
+basic[src/main/java/com/fern/basic/resources/fileupload/FileUploadClient.java]=[
+package com.fern.basic.resources.fileupload;
+
+import com.fern.basic.core.ClientOptions;
+import com.fern.basic.core.RequestOptions;
+import com.fern.basic.resources.fileupload.requests.UploadFileRequest;
+import java.io.File;
+import okhttp3.Headers;
+import okhttp3.HttpUrl;
+import okhttp3.MultipartBody;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+public class FileUploadClient {
+    protected final ClientOptions clientOptions;
+
+    public FileUploadClient(ClientOptions clientOptions) {
+        this.clientOptions = clientOptions;
+    }
+
+    public void uploadFile(File file, UploadFileRequest request) {
+        uploadFile(file, request, null);
+    }
+
+    public void uploadFile(File file, UploadFileRequest request, RequestOptions requestOptions) {
+        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("file-dowonload")
+                .build();
+        MultipartBody.Builder _multipartBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        _multipartBody.addFormDataPart("file", null, RequestBody.create(null, file));
+        _multipartBody.addFormDataPart("id", request.getId());
+        RequestBody _requestBody = _multipartBody.build();
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(_httpUrl)
+                .method("POST", _requestBody)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request _request = _requestBuilder.build();
+        try {
+            Response _response = clientOptions.httpClient().newCall(_request).execute();
+            if (_response.isSuccessful()) {
+                return;
+            }
+            throw new RuntimeException();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
+
+]
+
+
+basic[src/main/java/com/fern/basic/resources/fileupload/requests/UploadFileRequest.java]=[
+package com.fern.basic.resources.fileupload.requests;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.util.Objects;
+
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonDeserialize(builder = UploadFileRequest.Builder.class)
+public final class UploadFileRequest {
+    private final String id;
+
+    private UploadFileRequest(String id) {
+        this.id = id;
+    }
+
+    @JsonProperty("id")
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other) return true;
+        return other instanceof UploadFileRequest && equalTo((UploadFileRequest) other);
+    }
+
+    private boolean equalTo(UploadFileRequest other) {
+        return id.equals(other.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.id);
+    }
+
+    @Override
+    public String toString() {
+        return "UploadFileRequest{" + "id: " + id + "}";
+    }
+
+    public static IdStage builder() {
+        return new Builder();
+    }
+
+    public interface IdStage {
+        _FinalStage id(String id);
+
+        Builder from(UploadFileRequest other);
+    }
+
+    public interface _FinalStage {
+        UploadFileRequest build();
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static final class Builder implements IdStage, _FinalStage {
+        private String id;
+
+        private Builder() {}
+
+        @Override
+        public Builder from(UploadFileRequest other) {
+            id(other.getId());
+            return this;
+        }
+
+        @Override
+        @JsonSetter("id")
+        public _FinalStage id(String id) {
+            this.id = id;
+            return this;
+        }
+
+        @Override
+        public UploadFileRequest build() {
+            return new UploadFileRequest(id);
         }
     }
 }

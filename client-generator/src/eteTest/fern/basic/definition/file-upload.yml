@@ -1,0 +1,14 @@
+service:
+  auth: false
+  base-path: /file-dowonload
+  endpoints:
+    uploadFile:
+      method: POST
+      path: ""
+      request:
+        name: UploadFileRequest
+        body:
+          properties:
+            file: file
+            id: string
+

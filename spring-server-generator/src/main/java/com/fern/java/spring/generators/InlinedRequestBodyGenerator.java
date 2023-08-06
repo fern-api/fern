@@ -21,7 +21,7 @@ import com.fern.irV20.model.http.HttpService;
 import com.fern.irV20.model.http.InlinedRequestBody;
 import com.fern.irV20.model.types.DeclaredTypeName;
 import com.fern.irV20.model.types.ObjectTypeDeclaration;
-import com.fern.java.InlinedRequestBodyUtils;
+import com.fern.java.RequestBodyUtils;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.generators.ObjectGenerator;
 import com.fern.java.output.AbstractGeneratedJavaFile;
@@ -60,7 +60,7 @@ public final class InlinedRequestBodyGenerator extends AbstractFileGenerator {
     public AbstractGeneratedJavaFile generateFile() {
         ObjectTypeDeclaration objectTypeDeclaration = ObjectTypeDeclaration.builder()
                 .addAllExtends(inlinedRequestBody.getExtends())
-                .addAllProperties(InlinedRequestBodyUtils.convertToObjectProperties(inlinedRequestBody))
+                .addAllProperties(RequestBodyUtils.convertToObjectProperties(inlinedRequestBody))
                 .build();
         ObjectGenerator objectGenerator = new ObjectGenerator(
                 objectTypeDeclaration,
