@@ -4,7 +4,9 @@
   "include": ["./src"],
   "references": [
     { "path": "../cli/generation/ir-generator" },
+    { "path": "../cli/generation/ir-migrations" },
     { "path": "../cli/task-context" },
-    { "path": "../cli/workspace-loader" }
+    { "path": "../cli/workspace-loader" },
+    { "path": "../commons/fs-utils" }
   ]
 }
