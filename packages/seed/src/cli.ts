@@ -1,54 +1,54 @@
-import * as fs from "fs";
-import * as yaml from "js-yaml";
-import path from "path";
+import { GenerationLanguage } from "@fern-api/generators-configuration";
+import { createMockTaskContext, TaskContext } from "@fern-api/task-context";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
-
-const fsp = fs.promises;
+import { FIXTURE, runTests } from "./commands/test";
 
 void tryRunCli();
 
 export async function tryRunCli(): Promise<void> {
     const cli: Argv = yargs(hideBin(process.argv));
+    const taskContext = createMockTaskContext();
 
-    addTestCommand(cli);
+    addTestCommand(cli, taskContext);
 
     await cli.parse();
 
-    try {
-        const configFile = await fsp.readFile(
-            path.join(__dirname, "fern", "exhaustive", "definition", "api.yml"),
-            "utf8"
-        );
-        const config = yaml.load(configFile);
-        process.stdout.write(JSON.stringify(config));
-    } catch (error) {
-        process.stderr.write(JSON.stringify(error));
-    }
-
-    process.stdout.write("Finished running CLI");
+    taskContext.logger.info("Seed has finished...");
 }
 
-function addTestCommand(cli: Argv): void {
+function addTestCommand(cli: Argv, taskContext: TaskContext) {
     cli.command(
         "test",
-        "Snapshot test generator",
+        "Run all snapshot tests",
         (yargs) =>
             yargs
                 .option("irVersion", {
                     type: "string",
                     demandOption: false,
                 })
-                .option("irLanguage", {
+                .option("language", {
                     type: "string",
-                    demandOption: false,
+                    choices: Object.values(GenerationLanguage),
+                    demandOption: true,
                 })
                 .option("docker", {
                     type: "string",
                     demandOption: true,
+                })
+                .option("fixture", {
+                    type: "string",
+                    choices: Object.values(FIXTURE),
+                    demandOption: false,
+                    description: "Runs on all fixtures if not provided",
                 }),
-        (argv) => {
-            process.stdout.write(argv.docker + "\n");
+        async (argv) => {
+            await runTests({
+                fixture: argv.fixture,
+                irVersion: argv.irVersion,
+                language: argv.language,
+                taskContext,
+            });
         }
     );
 }
