@@ -35,7 +35,7 @@ export async function runTests({
             context: taskContext,
             cliVersion: "DUMMY",
         });
-        if (workspace.didSucceed === false) {
+        if (!workspace.didSucceed) {
             taskContext.logger.error(`Failed to load workspace for fixture ${testCase}`);
             continue;
         }
