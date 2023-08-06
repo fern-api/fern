@@ -18,16 +18,13 @@ package com.fern.java.generators;
 import com.fern.irV20.model.commons.ErrorId;
 import com.fern.irV20.model.commons.TypeId;
 import com.fern.irV20.model.errors.ErrorDeclaration;
-import com.fern.irV20.model.types.DeclaredTypeName;
 import com.fern.irV20.model.types.ObjectTypeDeclaration;
-import com.fern.irV20.model.types.Type;
 import com.fern.irV20.model.types.TypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.palantir.common.streams.KeyedStream;
 import com.squareup.javapoet.ClassName;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -71,14 +68,7 @@ public final class TypesGenerator {
     }
 
     private Map<TypeId, GeneratedJavaInterface> getGeneratedInterfaces() {
-        Set<TypeId> interfaceCandidates = typeDeclarations.values().stream()
-                .map(TypeDeclaration::getShape)
-                .map(Type::getObject)
-                .flatMap(Optional::stream)
-                .map(ObjectTypeDeclaration::getExtends)
-                .flatMap(List::stream)
-                .map(DeclaredTypeName::getTypeId)
-                .collect(Collectors.toSet());
+        Set<TypeId> interfaceCandidates = generatorContext.getInterfaceIds();
         return interfaceCandidates.stream().collect(Collectors.toMap(Function.identity(), typeId -> {
             TypeDeclaration typeDeclaration = typeDeclarations.get(typeId);
             ObjectTypeDeclaration objectTypeDeclaration = typeDeclaration

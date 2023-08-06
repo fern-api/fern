@@ -199,19 +199,24 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 requestBodyCodeBlock
                         .beginControlFlow("if ($L.$N().isPresent())", requestParameterName, header.getterProperty())
                         .addStatement(
-                                "$L.addHeader($S, $L.$N().get())",
+                                "$L.addHeader($S, $L)",
                                 AbstractEndpointWriter.REQUEST_BUILDER_NAME,
                                 header.wireKey().get(),
-                                "request",
-                                header.getterProperty())
+                                PoetTypeNameStringifier.stringify(
+                                        CodeBlock.of("$L.$N().get()", "request", header.getterProperty())
+                                                .toString(),
+                                        header.poetTypeName()))
                         .endControlFlow();
             } else {
                 requestBodyCodeBlock.addStatement(
-                        "$L.addHeader($S, $L.$N())",
+                        "$L.addHeader($S, $L)",
                         AbstractEndpointWriter.REQUEST_BUILDER_NAME,
                         header.wireKey().get(),
                         sdkRequest.getRequestParameterName().getCamelCase().getSafeName(),
-                        header.getterProperty());
+                        PoetTypeNameStringifier.stringify(
+                                CodeBlock.of("$L.$N()", "request", header.getterProperty())
+                                        .toString(),
+                                header.poetTypeName()));
             }
         }
         requestBodyCodeBlock.addStatement("$T $L = $L.build()", Request.class, REQUEST_NAME, REQUEST_BUILDER_NAME);

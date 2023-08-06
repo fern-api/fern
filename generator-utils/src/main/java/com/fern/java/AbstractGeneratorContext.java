@@ -20,9 +20,20 @@ import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.irV20.model.commons.ErrorId;
 import com.fern.irV20.model.commons.TypeId;
 import com.fern.irV20.model.errors.ErrorDeclaration;
+import com.fern.irV20.model.http.HttpEndpoint;
+import com.fern.irV20.model.http.HttpRequestBody;
+import com.fern.irV20.model.http.InlinedRequestBody;
 import com.fern.irV20.model.ir.IntermediateRepresentation;
+import com.fern.irV20.model.types.DeclaredTypeName;
+import com.fern.irV20.model.types.ObjectTypeDeclaration;
+import com.fern.irV20.model.types.Type;
 import com.fern.irV20.model.types.TypeDeclaration;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFactory, U extends ICustomConfig> {
 
@@ -33,6 +44,7 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
     private final Map<TypeId, TypeDeclaration> typeDefinitionsByName;
     private final Map<ErrorId, ErrorDeclaration> errorDefinitionsByName;
     private final GlobalHeaders globalHeaders;
+    private final Set<TypeId> interfaces;
     private final U customConfig;
 
     public AbstractGeneratorContext(
@@ -45,6 +57,7 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
         this.poetTypeNameMapper = new PoetTypeNameMapper(poetClassNameFactory, customConfig, typeDefinitionsByName);
         this.errorDefinitionsByName = ir.getErrors();
         this.globalHeaders = new GlobalHeaders(ir, poetTypeNameMapper);
+        this.interfaces = getInterfaceTypeIds(ir);
     }
 
     public final IntermediateRepresentation getIr() {
@@ -75,7 +88,36 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
         return errorDefinitionsByName;
     }
 
+    public final Set<TypeId> getInterfaceIds() {
+        return this.interfaces;
+    }
+
     public final GlobalHeaders getGlobalHeaders() {
         return globalHeaders;
+    }
+
+    private static Set<TypeId> getInterfaceTypeIds(IntermediateRepresentation ir) {
+        Set<TypeId> extendedTypeIdsFromTypes = ir.getTypes().values().stream()
+                .map(TypeDeclaration::getShape)
+                .map(Type::getObject)
+                .flatMap(Optional::stream)
+                .map(ObjectTypeDeclaration::getExtends)
+                .flatMap(List::stream)
+                .map(DeclaredTypeName::getTypeId)
+                .collect(Collectors.toSet());
+        Set<TypeId> extendedTypeIdsFromInlinedRequests = ir.getServices().values().stream()
+                .flatMap(httpService -> httpService.getEndpoints().stream())
+                .map(HttpEndpoint::getRequestBody)
+                .flatMap(Optional::stream)
+                .map(HttpRequestBody::getInlinedRequestBody)
+                .flatMap(Optional::stream)
+                .map(InlinedRequestBody::getExtends)
+                .flatMap(List::stream)
+                .map(DeclaredTypeName::getTypeId)
+                .collect(Collectors.toSet());
+        Set<TypeId> result = new HashSet<>();
+        result.addAll(extendedTypeIdsFromTypes);
+        result.addAll(extendedTypeIdsFromInlinedRequests);
+        return result;
     }
 }

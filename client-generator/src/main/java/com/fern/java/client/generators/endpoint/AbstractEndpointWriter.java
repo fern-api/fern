@@ -17,6 +17,7 @@
 package com.fern.java.client.generators.endpoint;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fern.irV20.model.commons.TypeId;
 import com.fern.irV20.model.environment.EnvironmentBaseUrlId;
 import com.fern.irV20.model.http.FileDownloadResponse;
 import com.fern.irV20.model.http.HttpEndpoint;
@@ -25,6 +26,7 @@ import com.fern.irV20.model.http.HttpService;
 import com.fern.irV20.model.http.JsonResponse;
 import com.fern.irV20.model.http.PathParameter;
 import com.fern.irV20.model.http.SdkRequest;
+import com.fern.irV20.model.types.TypeDeclaration;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
@@ -296,7 +298,7 @@ public abstract class AbstractEndpointWriter {
             TypeName returnType =
                     clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, json.getResponseBodyType());
             endpointMethodBuilder.returns(returnType);
-            if (json.getResponseBodyType().isContainer()) {
+            if (json.getResponseBodyType().isContainer() || isAliasContainer(json.getResponseBodyType())) {
                 httpResponseBuilder.addStatement(
                         "return $T.$L.readValue($L.body().string(), new $T() {})",
                         generatedObjectMapper.getClassName(),
@@ -324,6 +326,22 @@ public abstract class AbstractEndpointWriter {
         @Override
         public Void _visitUnknown(Object unknownType) {
             return null;
+        }
+
+        private boolean isAliasContainer(com.fern.irV20.model.types.TypeReference responseBodyType) {
+            if (responseBodyType.getNamed().isPresent()) {
+                TypeId typeId = responseBodyType.getNamed().get().getTypeId();
+                TypeDeclaration typeDeclaration =
+                        clientGeneratorContext.getIr().getTypes().get(typeId);
+                return typeDeclaration.getShape().getAlias().isPresent()
+                        && typeDeclaration
+                                .getShape()
+                                .getAlias()
+                                .get()
+                                .getResolvedType()
+                                .isContainer();
+            }
+            return false;
         }
     }
 }

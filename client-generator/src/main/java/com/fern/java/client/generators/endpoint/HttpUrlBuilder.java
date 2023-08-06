@@ -35,6 +35,7 @@ import com.squareup.javapoet.TypeName;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 import okhttp3.HttpUrl;
 import org.immutables.value.Value;
 
@@ -49,6 +50,7 @@ public final class HttpUrlBuilder {
     private final GeneratedClientOptions generatedClientOptions;
     private final Map<String, PathParamInfo> servicePathParameters;
     private final Map<String, PathParamInfo> endpointPathParameters;
+    private final boolean hasOptionalPathParms;
 
     public HttpUrlBuilder(
             String httpUrlname,
@@ -69,10 +71,21 @@ public final class HttpUrlBuilder {
         this.httpService = httpService;
         this.servicePathParameters = servicePathParameters;
         this.endpointPathParameters = endpointPathParameters;
+        this.hasOptionalPathParms = Stream.concat(
+                        servicePathParameters.values().stream(), endpointPathParameters.values().stream())
+                .anyMatch(pathParamInfo ->
+                        pathParamInfo.irParam().getValueType().getContainer().isPresent()
+                                && pathParamInfo
+                                        .irParam()
+                                        .getValueType()
+                                        .getContainer()
+                                        .get()
+                                        .isOptional());
     }
 
     public GeneratedHttpUrl generateBuilder(List<EnrichedObjectProperty> queryParamProperties) {
-        if (queryParamProperties.isEmpty()) {
+        boolean shouldInline = queryParamProperties.isEmpty() && !hasOptionalPathParms;
+        if (shouldInline) {
             return generateInlineableCodeBlock();
         } else {
             return generateUnInlineableCodeBlock(queryParamProperties);
@@ -101,8 +114,11 @@ public final class HttpUrlBuilder {
                 .add(").newBuilder()\n")
                 .indent();
         addHttpPathToCodeBlock(codeBlock, httpService.getBasePath(), servicePathParameters, true);
-        addHttpPathToCodeBlock(codeBlock, httpEndpoint.getPath(), endpointPathParameters, false);
-        codeBlock.add(CodeBlock.of(";"));
+        boolean endedWithStatement =
+                addHttpPathToCodeBlock(codeBlock, httpEndpoint.getPath(), endpointPathParameters, false);
+        if (!endedWithStatement) {
+            codeBlock.add(CodeBlock.of(";"));
+        }
         queryParamProperties.forEach(queryParamProperty -> {
             boolean isOptional = isTypeNameOptional(queryParamProperty.poetTypeName());
             if (isOptional) {
@@ -130,11 +146,12 @@ public final class HttpUrlBuilder {
                 .build();
     }
 
-    private void addHttpPathToCodeBlock(
+    private boolean addHttpPathToCodeBlock(
             CodeBlock.Builder codeBlock,
             HttpPath httpPath,
             Map<String, PathParamInfo> pathParameters,
             boolean addNewLine) {
+        boolean endedWithStatement = false;
         String strippedHead = stripLeadingAndTrailingSlash(httpPath.getHead());
         if (!strippedHead.isEmpty()) {
             codeBlock.add(".addPathSegments($S)", strippedHead);
@@ -151,6 +168,18 @@ public final class HttpUrlBuilder {
                         PoetTypeNameStringifier.stringify(
                                 clientOptionsField.name + "." + variableGetter.name + "()",
                                 poetPathParameter.poetParam().type));
+            } else if (typeNameIsOptional(poetPathParameter.poetParam().type)) {
+                codeBlock.add(";\n");
+                codeBlock
+                        .beginControlFlow("if ($L.isPresent())", poetPathParameter.poetParam().name)
+                        .addStatement(
+                                "$L.addPathSegment($L)",
+                                httpUrlname,
+                                PoetTypeNameStringifier.stringify(
+                                        poetPathParameter.poetParam().name + ".get()",
+                                        poetPathParameter.poetParam().type))
+                        .endControlFlow();
+                endedWithStatement = true;
             } else {
                 codeBlock.add(
                         "\n.addPathSegment($L)",
@@ -165,6 +194,12 @@ public final class HttpUrlBuilder {
         if (addNewLine) {
             codeBlock.add("\n");
         }
+        return endedWithStatement;
+    }
+
+    private static boolean typeNameIsOptional(TypeName typeName) {
+        return typeName instanceof ParameterizedTypeName
+                && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class));
     }
 
     private static String stripLeadingAndTrailingSlash(String value) {
