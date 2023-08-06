@@ -3,6 +3,9 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "references": [
+    { "path": "../cli/config-management/commons" },
+    { "path": "../cli/config-management/generators-configuration" },
+    { "path": "../cli/config-management/project-configuration" },
     { "path": "../cli/generation/ir-generator" },
     { "path": "../cli/generation/ir-migrations" },
     { "path": "../cli/task-context" },

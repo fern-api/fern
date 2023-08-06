@@ -2310,9 +2310,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/seed-cli@workspace:packages/seed"
   dependencies:
+    "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
+    "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-migrations": "workspace:*"
+    "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/ir-model": 0.0.2740
