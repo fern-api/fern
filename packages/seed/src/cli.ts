@@ -1,12 +1,6 @@
-// import * as fs from "fs";
-// import * as yaml from "js-yaml";
-// import path from "path";
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import { generateIR } from "./functions/generate-ir";
-
-export type IntermediateRepOrNull = IntermediateRepresentation | null; //created type to more easily handle loading/handling or IRs logic
 
 void tryRunCli();
 
@@ -25,9 +19,11 @@ export async function tryRunCli(): Promise<void> {
     const argv = await cli.parse();
     process.stdout.write(JSON.stringify(argv) + "\n");
     const { irVersion, language, fixture } = argv;
-    const ir : IntermediateRepOrNull | IntermediateRepOrNull[] = await generateIR(String(irVersion), String(language), String(fixture));
-    // process.stdout.write(JSON.stringify(ir));
-    process.stdout.write(typeof(ir));
+    const ir : unknown | unknown[] = await generateIR(String(irVersion), String(language), String(fixture));
+    if(ir != null) 
+    {
+        process.stdout.write("\nIR generated\n");
+    }
     process.stdout.write("\nFinished running CLI\n");
 }
 
