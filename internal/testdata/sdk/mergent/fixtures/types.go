@@ -112,7 +112,7 @@ type TaskNew struct {
 }
 
 // The status of this Task.
-type TaskStatus uint8
+type TaskStatus uint
 
 const (
 	TaskStatusQueued TaskStatus = iota + 1

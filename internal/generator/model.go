@@ -40,7 +40,7 @@ func (t *typeVisitor) VisitAlias(alias *ir.AliasTypeDeclaration) error {
 
 func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 	// Write the enum type definition.
-	t.writer.P("type ", t.typeName, " uint8")
+	t.writer.P("type ", t.typeName, " uint")
 	t.writer.P()
 
 	// We first need to determine whether or not this enum requires us to

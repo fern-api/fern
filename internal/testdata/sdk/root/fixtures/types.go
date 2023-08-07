@@ -42,7 +42,7 @@ type Foo struct {
 	Delay   *string  `json:"delay,omitempty"`
 }
 
-type FooType uint8
+type FooType uint
 
 const (
 	FooTypeOne FooType = iota + 1

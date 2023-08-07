@@ -8,7 +8,7 @@ import (
 	strconv "strconv"
 )
 
-type Environments uint8
+type Environments uint
 
 const (
 	EnvironmentsInside Environments = iota + 1

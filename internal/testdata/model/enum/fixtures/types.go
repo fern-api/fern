@@ -8,7 +8,7 @@ import (
 	strconv "strconv"
 )
 
-type Enum uint8
+type Enum uint
 
 const (
 	// The first enum value.
@@ -53,7 +53,7 @@ func (e *Enum) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-type Something uint8
+type Something uint
 
 const (
 	Somethingone Something = iota + 1

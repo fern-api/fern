@@ -119,7 +119,7 @@ func (a *AuthScheme) Accept(v AuthSchemeVisitor) error {
 	}
 }
 
-type AuthSchemesRequirement uint8
+type AuthSchemesRequirement uint
 
 const (
 	AuthSchemesRequirementAll AuthSchemesRequirement = iota + 1
@@ -180,7 +180,7 @@ type Availability struct {
 	Message *string            `json:"message,omitempty"`
 }
 
-type AvailabilityStatus uint8
+type AvailabilityStatus uint
 
 const (
 	AvailabilityStatusInDevelopment AvailabilityStatus = iota + 1
@@ -835,7 +835,7 @@ type HttpHeader struct {
 	ValueType    *TypeReference    `json:"valueType,omitempty"`
 }
 
-type HttpMethod uint8
+type HttpMethod uint
 
 const (
 	HttpMethodGet HttpMethod = iota + 1
@@ -1130,7 +1130,7 @@ type PathParameter struct {
 	Variable  *VariableId           `json:"variable,omitempty"`
 }
 
-type PathParameterLocation uint8
+type PathParameterLocation uint
 
 const (
 	PathParameterLocationRoot PathParameterLocation = iota + 1
@@ -2672,7 +2672,7 @@ type ObjectTypeDeclaration struct {
 	Properties []*ObjectProperty   `json:"properties,omitempty"`
 }
 
-type PrimitiveType uint8
+type PrimitiveType uint
 
 const (
 	PrimitiveTypeInteger PrimitiveType = iota + 1
@@ -2888,7 +2888,7 @@ func (r *ResolvedTypeReference) Accept(v ResolvedTypeReferenceVisitor) error {
 	}
 }
 
-type ShapeType uint8
+type ShapeType uint
 
 const (
 	ShapeTypeEnum ShapeType = iota + 1
