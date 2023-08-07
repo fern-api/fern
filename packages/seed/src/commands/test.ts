@@ -1,12 +1,15 @@
 import { Audiences } from "@fern-api/config-management-commons";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { GenerationLanguage } from "@fern-api/generators-configuration";
+import { AbsoluteFilePath, cwd, resolve } from "@fern-api/fs-utils";
+import { GenerationLanguage, GeneratorGroup } from "@fern-api/generators-configuration";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-migrations";
+import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, loadWorkspace } from "@fern-api/workspace-loader";
+import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import path from "path";
+import { ParsedDockerName } from "../cli";
 
 export const FIXTURE = {
     EXHAUSTIVE: "exhaustive",
@@ -19,11 +22,13 @@ export async function runTests({
     irVersion,
     language,
     fixture,
+    docker,
     taskContext,
 }: {
     irVersion: string | undefined;
     language: GenerationLanguage;
     fixture: string | undefined;
+    docker: ParsedDockerName;
     taskContext: TaskContext;
 }): Promise<void> {
     const testCases = fixture != null ? [fixture] : Object.values(FIXTURE);
@@ -49,8 +54,14 @@ export async function runTests({
             generationLanguage: language,
             irVersion,
         });
-        taskContext.logger.info(`Generated IR for fixture ${testCase}`);
-        taskContext.logger.info(JSON.stringify(ir, null, 4));
+        taskContext.logger.info(`Generated IR for fixture ${testCase} ${typeof ir}`);
+        await runDockerForWorkspace({
+            docker,
+            workspace: workspace.workspace,
+            language,
+            taskContext,
+            fixture: testCase,
+        });
     }
 }
 
@@ -80,4 +91,44 @@ async function getIntermediateRepresentation({
         });
     }
     return ir;
+}
+
+const DUMMY_ORGANIZATION = "seed";
+
+async function runDockerForWorkspace({
+    fixture,
+    docker,
+    language,
+    workspace,
+    taskContext,
+}: {
+    fixture: string;
+    docker: ParsedDockerName;
+    language: GenerationLanguage;
+    workspace: FernWorkspace;
+    taskContext: TaskContext;
+}): Promise<void> {
+    const absolutePathToOutput = AbsoluteFilePath.of(resolve(cwd(), "seed", fixture));
+    const generatorGroup: GeneratorGroup = {
+        groupName: "DUMMY",
+        audiences: ALL_AUDIENCES,
+        generators: [
+            {
+                name: docker.name,
+                version: docker.version,
+                config: undefined,
+                outputMode: FernFiddle.remoteGen.OutputMode.downloadFiles(),
+                absolutePathToLocalOutput: absolutePathToOutput,
+                language,
+            },
+        ],
+        docs: undefined,
+    };
+    await runLocalGenerationForWorkspace({
+        organization: DUMMY_ORGANIZATION,
+        workspace,
+        generatorGroup,
+        keepDocker: true,
+        context: taskContext,
+    });
 }
