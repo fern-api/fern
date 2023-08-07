@@ -776,7 +776,15 @@ func (c *containerTypeVisitor) VisitMap(mapType *ir.MapType) error {
 func (c *containerTypeVisitor) VisitOptional(optional *ir.TypeReference) error {
 	// Trim all of the preceding pointers from the underlying type so that we don't
 	// unnecessarily generate double pointers for objects and unions (e.g. '**Foo)').
-	c.value = fmt.Sprintf("*%s", strings.TrimLeft(typeReferenceToGoType(optional, c.types, c.imports, c.baseImportPath, c.importPath), "*"))
+	//
+	// We also don't want to specify pointers for any container types because those
+	// values are already nil-able.
+	value := strings.TrimLeft(typeReferenceToGoType(optional, c.types, c.imports, c.baseImportPath, c.importPath), "*")
+	if optional.Container != nil && optional.Container.Literal == nil {
+		c.value = value
+		return nil
+	}
+	c.value = fmt.Sprintf("*%s", value)
 	return nil
 }
 

@@ -38,7 +38,7 @@ type Error struct {
 	// If the error is parameter-specific, the parameter related to the error.
 	Param *string `json:"param,omitempty"`
 	// If multiple errors occured (e.g., with param validation), the list of errors that occured.
-	Errors *[]*Error `json:"errors,omitempty"`
+	Errors []*Error `json:"errors,omitempty"`
 }
 
 type Request struct {
@@ -50,7 +50,7 @@ type Request struct {
 	// The headers that will accompany any Task's HTTP request. For
 	// example, you can use this to set Content-Type to "application/json"
 	// or "application/octet-stream".
-	Headers *map[string]any `json:"headers,omitempty"`
+	Headers map[string]any `json:"headers,omitempty"`
 	// The HTTP request body as a string.
 	Body *string `json:"body,omitempty"`
 }

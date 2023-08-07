@@ -1237,6 +1237,49 @@
                             },
                             "_type": "container"
                         }
+                    },
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "platform",
+                                "camelCase": {
+                                    "unsafeName": "platform",
+                                    "safeName": "platform"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "platform",
+                                    "safeName": "platform"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PLATFORM",
+                                    "safeName": "PLATFORM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Platform",
+                                    "safeName": "Platform"
+                                }
+                            },
+                            "wireValue": "platform"
+                        },
+                        "valueType": {
+                            "container": {
+                                "optional": {
+                                    "container": {
+                                        "literal": {
+                                            "string": "platform",
+                                            "type": "string"
+                                        },
+                                        "_type": "literal"
+                                    },
+                                    "_type": "container"
+                                },
+                                "_type": "optional"
+                            },
+                            "_type": "container"
+                        }
                     }
                 ],
                 "_type": "object"

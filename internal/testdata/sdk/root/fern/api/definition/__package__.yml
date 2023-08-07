@@ -58,6 +58,8 @@ types:
         type: optional<map<string, unknown>>
       body:
         type: optional<string>
+      platform:
+        type: optional<literal<"platform">>
 
   Error:
     properties:

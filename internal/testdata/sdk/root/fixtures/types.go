@@ -29,8 +29,8 @@ type Baz struct {
 }
 
 type Error struct {
-	Message   *string   `json:"message,omitempty"`
-	Recursive *[]*Error `json:"recursive,omitempty"`
+	Message   *string  `json:"message,omitempty"`
+	Recursive []*Error `json:"recursive,omitempty"`
 }
 
 type Foo struct {
@@ -93,9 +93,10 @@ func (f *FooType) UnmarshalJSON(data []byte) error {
 }
 
 type Request struct {
-	Url     string          `json:"url"`
-	Headers *map[string]any `json:"headers,omitempty"`
-	Body    *string         `json:"body,omitempty"`
+	Url      string         `json:"url"`
+	Headers  map[string]any `json:"headers,omitempty"`
+	Body     *string        `json:"body,omitempty"`
+	Platform *string        `json:"platform,omitempty"`
 }
 
 type Id = string
