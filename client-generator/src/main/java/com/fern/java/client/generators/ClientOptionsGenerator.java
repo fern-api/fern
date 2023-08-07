@@ -16,6 +16,8 @@
 
 package com.fern.java.client.generators;
 
+import com.fern.generator.exec.model.config.GeneratorConfig;
+import com.fern.irV20.model.ir.PlatformHeaders;
 import com.fern.irV20.model.variables.VariableDeclaration;
 import com.fern.irV20.model.variables.VariableId;
 import com.fern.java.AbstractGeneratorContext;
@@ -32,6 +34,7 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,6 +93,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         MethodSpec httpClientGetter = createGetter(OKHTTP_CLIENT_FIELD);
         Map<VariableId, FieldSpec> variableFields = getVariableFields();
         Map<VariableId, MethodSpec> variableGetters = getVariableGetters(variableFields);
+        String commaDelimitedPatformHeaders = getPlatformHeadersEntries(
+                        generatorContext.getIr().getSdkConfig().getPlatformHeaders(),
+                        generatorContext.getGeneratorConfig())
+                .stream()
+                .map(val -> CodeBlock.of("$S", val).toString())
+                .collect(Collectors.joining(", "));
         TypeSpec clientOptionsTypeSpec = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addField(environmentField)
@@ -112,7 +121,13 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                         .build())
                                 .collect(Collectors.toList()))
                         .addStatement("this.$L = $L", environmentField.name, environmentField.name)
-                        .addStatement("this.$L = $L", HEADERS_FIELD.name, HEADERS_FIELD.name)
+                        .addStatement("this.$L = new $T<>()", HEADERS_FIELD.name, HashMap.class)
+                        .addStatement("this.$L.putAll($L)", HEADERS_FIELD.name, HEADERS_FIELD.name)
+                        .addStatement(
+                                "this.$L.putAll($T.of($L))",
+                                HEADERS_FIELD.name,
+                                Map.class,
+                                commaDelimitedPatformHeaders)
                         .addStatement("this.$L = $L", HEADER_SUPPLIERS_FIELD.name, HEADER_SUPPLIERS_FIELD.name)
                         .addStatement("this.$L = $L", OKHTTP_CLIENT_FIELD.name, OKHTTP_CLIENT_FIELD.name)
                         .addStatement(CodeBlock.join(
@@ -300,5 +315,25 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .returns(fieldSpec.type)
                 .addStatement("return this.$L", fieldSpec.name)
                 .build();
+    }
+
+    private static List<String> getPlatformHeadersEntries(
+            PlatformHeaders platformHeaders, GeneratorConfig generatorConfig) {
+        List<String> entries = new ArrayList<>();
+        if (generatorConfig.getPublish().isPresent()) {
+            entries.add(platformHeaders.getSdkName());
+            entries.add(generatorConfig
+                    .getPublish()
+                    .get()
+                    .getRegistriesV2()
+                    .getMaven()
+                    .getCoordinate());
+
+            entries.add(platformHeaders.getSdkVersion());
+            entries.add(generatorConfig.getPublish().get().getVersion());
+        }
+        entries.add(platformHeaders.getLanguage());
+        entries.add("JAVA");
+        return entries;
     }
 }
