@@ -8,12 +8,6 @@
   "typescript.tsdk": ".yarn/sdks/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": [
-    "source.fixAll",
-    "source.organizeImports",
-    "source.sortMembers"
-  ],
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  "editor.codeActionsOnSave": ["source.fixAll", "source.organizeImports", "source.sortMembers"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }
