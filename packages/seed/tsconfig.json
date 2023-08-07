@@ -8,6 +8,7 @@
     { "path": "../cli/config-management/project-configuration" },
     { "path": "../cli/generation/ir-generator" },
     { "path": "../cli/generation/ir-migrations" },
+    { "path": "../cli/generation/local-generation/local-workspace-runner" },
     { "path": "../cli/task-context" },
     { "path": "../cli/workspace-loader" },
     { "path": "../commons/fs-utils" }

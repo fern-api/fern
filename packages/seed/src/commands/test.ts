@@ -1,8 +1,9 @@
 import { Audiences } from "@fern-api/config-management-commons";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { GenerationLanguage } from "@fern-api/generators-configuration";
+import { GenerationLanguage, GeneratorGroup, GeneratorInvocation } from "@fern-api/generators-configuration";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-migrations";
+import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, loadWorkspace } from "@fern-api/workspace-loader";
@@ -19,11 +20,13 @@ export async function runTests({
     irVersion,
     language,
     fixture,
+    docker,
     taskContext,
 }: {
     irVersion: string | undefined;
     language: GenerationLanguage;
     fixture: string | undefined;
+    docker: string;
     taskContext: TaskContext;
 }): Promise<void> {
     const testCases = fixture != null ? [fixture] : Object.values(FIXTURE);
@@ -51,6 +54,7 @@ export async function runTests({
         });
         taskContext.logger.info(`Generated IR for fixture ${testCase}`);
         taskContext.logger.info(JSON.stringify(ir, null, 4));
+        await runDockerForWorkspace({ dockerName: docker, workspace: workspace.workspace, language: language, taskContext });
     }
 }
 
@@ -80,4 +84,68 @@ async function getIntermediateRepresentation({
         });
     }
     return ir;
+}
+
+
+
+async function runDockerForWorkspace({
+    dockerName,
+    language,
+    workspace,
+    taskContext
+}: {
+    dockerName: string,
+    language: GenerationLanguage,
+    workspace: FernWorkspace,
+    taskContext: TaskContext
+}): Promise<void> {
+    const ORGANIZATION = "Fern";
+    const absolutePathToOutput = AbsoluteFilePath.of(path.join(__dirname, FERN_DIRECTORY));
+    const generatorGroup: GeneratorGroup = createGeneratorGroup({ dockerName, absolutePathToOutput, language });
+    await runLocalGenerationForWorkspace({ organization: ORGANIZATION, workspace: workspace, generatorGroup, keepDocker: true, context: taskContext });
+}
+
+function createGeneratorGroup({
+    dockerName,
+    absolutePathToOutput,
+    language
+}: {
+    dockerName: string,
+    language: GenerationLanguage,
+    absolutePathToOutput: AbsoluteFilePath,
+}): GeneratorGroup {
+    const generatorInvocationArray = [createGeneratorInvocation({ dockerName, absolutePathToOutput, language })];
+    const generatorGroup: GeneratorGroup = {
+        groupName: "DUMMY",
+        audiences: ALL_AUDIENCES,
+        generators: generatorInvocationArray,
+        docs: undefined
+    }
+    return generatorGroup;
+}
+
+function parseDockerName(dockerName: string): string[] {
+    return dockerName.split(":");
+}
+
+function createGeneratorInvocation({
+    dockerName,
+    absolutePathToOutput,
+    language
+}: {
+    dockerName: string,
+    absolutePathToOutput: AbsoluteFilePath,
+    language: GenerationLanguage
+}): GeneratorInvocation {
+
+    const dockerNameArray = parseDockerName(dockerName);
+    const generatorInvocation: GeneratorInvocation = {
+        name: "DUMMY",
+        version: "DUMMY",
+        config: "DUMMY",
+        outputMode: ,
+        absolutePathToLocalOutput: absolutePathToOutput,
+        language
+    }
+    return generatorInvocation;
 }

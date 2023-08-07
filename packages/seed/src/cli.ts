@@ -47,6 +47,7 @@ function addTestCommand(cli: Argv, taskContext: TaskContext) {
                 fixture: argv.fixture,
                 irVersion: argv.irVersion,
                 language: argv.language,
+                docker: argv.docker,
                 taskContext,
             });
         }
