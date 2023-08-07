@@ -18,13 +18,7 @@ import (
 const (
 	// packageDocsFilename represents the standard package documentation filename.
 	packageDocsFilename = "doc.go"
-
-	// licenseFilename is the generated license filename.
-	licenseFilename = "LICENSE"
 )
-
-//go:embed license/MIT.md
-var licenseMIT string
 
 // Mode is an enum for different generator modes (i.e. types, client, etc).
 type Mode uint8
@@ -306,14 +300,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			return nil, err
 		}
 		files = append(files, file)
-
-		// If a go.mod was generated, we treat the result
-		// as a packaged SDK, so we also write a license
-		// file.
-		//
-		// Note that the license file is required to support
-		// Go's package docs (re: https://pkg.go.dev/license-policy).
-		files = append(files, newLicenseFile(g.coordinator))
 	}
 	return files, nil
 }
@@ -406,19 +392,6 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		return nil, err
 	}
 	return writer.File()
-}
-
-// newLicenseFile returns a *File for the generated LICENSE file.
-// For now, this is always the MIT license.
-//
-// Note that this is a temporary solution - ideally this integration
-// exists outside of the generator and is handled at the layer above.
-func newLicenseFile(coordinator *coordinator.Client) *File {
-	return NewFile(
-		coordinator,
-		licenseFilename,
-		[]byte(licenseMIT),
-	)
 }
 
 // readIR reads the *InermediateRepresentation from the given filename.
