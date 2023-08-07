@@ -2311,18 +2311,22 @@ __metadata:
   resolution: "@fern-api/seed-cli@workspace:packages/seed"
   dependencies:
     "@fern-api/config-management-commons": "workspace:*"
+    "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-migrations": "workspace:*"
     "@fern-api/local-workspace-runner": "workspace:*"
+    "@fern-api/logger": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
+    "@fern-fern/fiddle-sdk": ^0.0.290
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/yargs": ^17.0.24
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
+    chalk: ^5.0.1
     depcheck: ^1.4.3
     env-cmd: toddbluhm/env-cmd
     esbuild: ^0.15.7
