@@ -124,8 +124,9 @@ function createGeneratorGroup({
     return generatorGroup;
 }
 
-function parseDockerName(dockerName: string): string[] {
-    return dockerName.split(":");
+function parseDockerName(dockerName: string) {
+    const dockerArray: string[] = dockerName.split(":");
+    return { dockerName: dockerArray[0], dockerVersion: dockerArray[1] };
 }
 
 function createGeneratorInvocation({
