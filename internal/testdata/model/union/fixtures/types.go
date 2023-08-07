@@ -120,14 +120,14 @@ type UnionVisitor interface {
 	VisitBar(*Bar) error
 }
 
-func (u *Union) Accept(v UnionVisitor) error {
+func (u *Union) Accept(visitor UnionVisitor) error {
 	switch u.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "foo":
-		return v.VisitFoo(u.Foo)
+		return visitor.VisitFoo(u.Foo)
 	case "bar":
-		return v.VisitBar(u.Bar)
+		return visitor.VisitBar(u.Bar)
 	}
 }
 
@@ -205,14 +205,14 @@ type UnionWithDiscriminantVisitor interface {
 	VisitBar(*Bar) error
 }
 
-func (u *UnionWithDiscriminant) Accept(v UnionWithDiscriminantVisitor) error {
+func (u *UnionWithDiscriminant) Accept(visitor UnionWithDiscriminantVisitor) error {
 	switch u.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "foo":
-		return v.VisitFoo(u.Foo)
+		return visitor.VisitFoo(u.Foo)
 	case "bar":
-		return v.VisitBar(u.Bar)
+		return visitor.VisitBar(u.Bar)
 	}
 }
 
@@ -280,12 +280,12 @@ type UnionWithLiteralVisitor interface {
 	VisitFern(string) error
 }
 
-func (u *UnionWithLiteral) Accept(v UnionWithLiteralVisitor) error {
+func (u *UnionWithLiteral) Accept(visitor UnionWithLiteralVisitor) error {
 	switch u.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "fern":
-		return v.VisitFern(u.fern)
+		return visitor.VisitFern(u.fern)
 	}
 }
 
@@ -362,14 +362,14 @@ type UnionWithPrimitiveVisitor interface {
 	VisitString(string) error
 }
 
-func (u *UnionWithPrimitive) Accept(v UnionWithPrimitiveVisitor) error {
+func (u *UnionWithPrimitive) Accept(visitor UnionWithPrimitiveVisitor) error {
 	switch u.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "boolean":
-		return v.VisitBoolean(u.Boolean)
+		return visitor.VisitBoolean(u.Boolean)
 	case "string":
-		return v.VisitString(u.String)
+		return visitor.VisitString(u.String)
 	}
 }
 
@@ -442,14 +442,14 @@ type UnionWithUnknownVisitor interface {
 	VisitUnknown(any) error
 }
 
-func (u *UnionWithUnknown) Accept(v UnionWithUnknownVisitor) error {
+func (u *UnionWithUnknown) Accept(visitor UnionWithUnknownVisitor) error {
 	switch u.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "foo":
-		return v.VisitFoo(u.Foo)
+		return visitor.VisitFoo(u.Foo)
 	case "unknown":
-		return v.VisitUnknown(u.Unknown)
+		return visitor.VisitUnknown(u.Unknown)
 	}
 }
 
@@ -523,13 +523,13 @@ type UnionWithoutKeyVisitor interface {
 	VisitBar(*Bar) error
 }
 
-func (u *UnionWithoutKey) Accept(v UnionWithoutKeyVisitor) error {
+func (u *UnionWithoutKey) Accept(visitor UnionWithoutKeyVisitor) error {
 	switch u.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "foo":
-		return v.VisitFoo(u.Foo)
+		return visitor.VisitFoo(u.Foo)
 	case "bar":
-		return v.VisitBar(u.Bar)
+		return visitor.VisitBar(u.Bar)
 	}
 }

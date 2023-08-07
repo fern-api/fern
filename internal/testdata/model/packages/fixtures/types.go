@@ -137,17 +137,17 @@ type UnionVisitor interface {
 	VisitAnotherBar(*bar.Bar) error
 }
 
-func (u *Union) Accept(v UnionVisitor) error {
+func (u *Union) Accept(visitor UnionVisitor) error {
 	switch u.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "value":
-		return v.VisitValue(u.Value)
+		return visitor.VisitValue(u.Value)
 	case "anotherValue":
-		return v.VisitAnotherValue(u.AnotherValue)
+		return visitor.VisitAnotherValue(u.AnotherValue)
 	case "bar":
-		return v.VisitBar(u.Bar)
+		return visitor.VisitBar(u.Bar)
 	case "anotherBar":
-		return v.VisitAnotherBar(u.AnotherBar)
+		return visitor.VisitAnotherBar(u.AnotherBar)
 	}
 }

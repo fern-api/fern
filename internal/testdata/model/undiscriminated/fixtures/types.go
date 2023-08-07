@@ -73,16 +73,16 @@ type AnotherUnionVisitor interface {
 	VisitFoo(*Foo) error
 }
 
-func (a *AnotherUnion) Accept(v AnotherUnionVisitor) error {
+func (a *AnotherUnion) Accept(visitor AnotherUnionVisitor) error {
 	switch a.typeName {
 	default:
 		return fmt.Errorf("invalid type %s in %T", a.typeName, a)
 	case "string":
-		return v.VisitString(a.String)
+		return visitor.VisitString(a.String)
 	case "stringLiteral":
-		return v.VisitStringLiteral(a.stringLiteral)
+		return visitor.VisitStringLiteral(a.stringLiteral)
 	case "foo":
-		return v.VisitFoo(a.Foo)
+		return visitor.VisitFoo(a.Foo)
 	}
 }
 
@@ -262,30 +262,30 @@ type UnionVisitor interface {
 	VisitStringLiteral(string) error
 }
 
-func (u *Union) Accept(v UnionVisitor) error {
+func (u *Union) Accept(visitor UnionVisitor) error {
 	switch u.typeName {
 	default:
 		return fmt.Errorf("invalid type %s in %T", u.typeName, u)
 	case "foo":
-		return v.VisitFoo(u.Foo)
+		return visitor.VisitFoo(u.Foo)
 	case "bar":
-		return v.VisitBar(u.Bar)
+		return visitor.VisitBar(u.Bar)
 	case "baz":
-		return v.VisitBaz(u.Baz)
+		return visitor.VisitBaz(u.Baz)
 	case "string":
-		return v.VisitString(u.String)
+		return visitor.VisitString(u.String)
 	case "integerOptional":
-		return v.VisitIntegerOptional(u.IntegerOptional)
+		return visitor.VisitIntegerOptional(u.IntegerOptional)
 	case "stringBooleanMap":
-		return v.VisitStringBooleanMap(u.StringBooleanMap)
+		return visitor.VisitStringBooleanMap(u.StringBooleanMap)
 	case "stringList":
-		return v.VisitStringList(u.StringList)
+		return visitor.VisitStringList(u.StringList)
 	case "stringListList":
-		return v.VisitStringListList(u.StringListList)
+		return visitor.VisitStringListList(u.StringListList)
 	case "doubleSet":
-		return v.VisitDoubleSet(u.DoubleSet)
+		return visitor.VisitDoubleSet(u.DoubleSet)
 	case "stringLiteral":
-		return v.VisitStringLiteral(u.stringLiteral)
+		return visitor.VisitStringLiteral(u.stringLiteral)
 	}
 }
 
@@ -341,13 +341,13 @@ type UnionWithLiteralVisitor interface {
 	VisitString(string) error
 }
 
-func (u *UnionWithLiteral) Accept(v UnionWithLiteralVisitor) error {
+func (u *UnionWithLiteral) Accept(visitor UnionWithLiteralVisitor) error {
 	switch u.typeName {
 	default:
 		return fmt.Errorf("invalid type %s in %T", u.typeName, u)
 	case "stringLiteral":
-		return v.VisitStringLiteral(u.stringLiteral)
+		return visitor.VisitStringLiteral(u.stringLiteral)
 	case "string":
-		return v.VisitString(u.String)
+		return visitor.VisitString(u.String)
 	}
 }

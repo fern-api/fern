@@ -85,12 +85,12 @@ type NestedUnionVisitor interface {
 	VisitOne(*ExampleType) error
 }
 
-func (n *NestedUnion) Accept(v NestedUnionVisitor) error {
+func (n *NestedUnion) Accept(visitor NestedUnionVisitor) error {
 	switch n.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", n.Type, n)
 	case "one":
-		return v.VisitOne(n.One)
+		return visitor.VisitOne(n.One)
 	}
 }
 
@@ -147,11 +147,11 @@ type UnionVisitor interface {
 	VisitOne(*ExampleType) error
 }
 
-func (u *Union) Accept(v UnionVisitor) error {
+func (u *Union) Accept(visitor UnionVisitor) error {
 	switch u.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "one":
-		return v.VisitOne(u.One)
+		return visitor.VisitOne(u.One)
 	}
 }

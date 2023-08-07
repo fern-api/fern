@@ -106,16 +106,16 @@ type AuthSchemeVisitor interface {
 	VisitHeader(*HeaderAuthScheme) error
 }
 
-func (a *AuthScheme) Accept(v AuthSchemeVisitor) error {
+func (a *AuthScheme) Accept(visitor AuthSchemeVisitor) error {
 	switch a.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", a.Type, a)
 	case "bearer":
-		return v.VisitBearer(a.Bearer)
+		return visitor.VisitBearer(a.Bearer)
 	case "basic":
-		return v.VisitBasic(a.Basic)
+		return visitor.VisitBasic(a.Basic)
 	case "header":
-		return v.VisitHeader(a.Header)
+		return visitor.VisitHeader(a.Header)
 	}
 }
 
@@ -361,14 +361,14 @@ type EnvironmentsVisitor interface {
 	VisitMultipleBaseUrls(*MultipleBaseUrlsEnvironments) error
 }
 
-func (e *Environments) Accept(v EnvironmentsVisitor) error {
+func (e *Environments) Accept(visitor EnvironmentsVisitor) error {
 	switch e.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "singleBaseUrl":
-		return v.VisitSingleBaseUrl(e.SingleBaseUrl)
+		return visitor.VisitSingleBaseUrl(e.SingleBaseUrl)
 	case "multipleBaseUrls":
-		return v.VisitMultipleBaseUrls(e.MultipleBaseUrls)
+		return visitor.VisitMultipleBaseUrls(e.MultipleBaseUrls)
 	}
 }
 
@@ -483,14 +483,14 @@ type ErrorDeclarationDiscriminantValueVisitor interface {
 	VisitStatusCode(any) error
 }
 
-func (e *ErrorDeclarationDiscriminantValue) Accept(v ErrorDeclarationDiscriminantValueVisitor) error {
+func (e *ErrorDeclarationDiscriminantValue) Accept(visitor ErrorDeclarationDiscriminantValueVisitor) error {
 	switch e.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "property":
-		return v.VisitProperty(e.Property)
+		return visitor.VisitProperty(e.Property)
 	case "statusCode":
-		return v.VisitStatusCode(e.StatusCode)
+		return visitor.VisitStatusCode(e.StatusCode)
 	}
 }
 
@@ -620,14 +620,14 @@ type ExampleRequestBodyVisitor interface {
 	VisitReference(*ExampleTypeReference) error
 }
 
-func (e *ExampleRequestBody) Accept(v ExampleRequestBodyVisitor) error {
+func (e *ExampleRequestBody) Accept(visitor ExampleRequestBodyVisitor) error {
 	switch e.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "inlinedRequestBody":
-		return v.VisitInlinedRequestBody(e.InlinedRequestBody)
+		return visitor.VisitInlinedRequestBody(e.InlinedRequestBody)
 	case "reference":
-		return v.VisitReference(e.Reference)
+		return visitor.VisitReference(e.Reference)
 	}
 }
 
@@ -700,14 +700,14 @@ type ExampleResponseVisitor interface {
 	VisitError(*ExampleEndpointErrorResponse) error
 }
 
-func (e *ExampleResponse) Accept(v ExampleResponseVisitor) error {
+func (e *ExampleResponse) Accept(visitor ExampleResponseVisitor) error {
 	switch e.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "ok":
-		return v.VisitOk(e.Ok)
+		return visitor.VisitOk(e.Ok)
 	case "error":
-		return v.VisitError(e.Error)
+		return visitor.VisitError(e.Error)
 	}
 }
 
@@ -794,14 +794,14 @@ type FileUploadRequestPropertyVisitor interface {
 	VisitBodyProperty(*InlinedRequestBodyProperty) error
 }
 
-func (f *FileUploadRequestProperty) Accept(v FileUploadRequestPropertyVisitor) error {
+func (f *FileUploadRequestProperty) Accept(visitor FileUploadRequestPropertyVisitor) error {
 	switch f.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", f.Type, f)
 	case "file":
-		return v.VisitFile(f.File)
+		return visitor.VisitFile(f.File)
 	case "bodyProperty":
-		return v.VisitBodyProperty(f.BodyProperty)
+		return visitor.VisitBodyProperty(f.BodyProperty)
 	}
 }
 
@@ -991,16 +991,16 @@ type HttpRequestBodyVisitor interface {
 	VisitFileUpload(*FileUploadRequest) error
 }
 
-func (h *HttpRequestBody) Accept(v HttpRequestBodyVisitor) error {
+func (h *HttpRequestBody) Accept(visitor HttpRequestBodyVisitor) error {
 	switch h.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", h.Type, h)
 	case "inlinedRequestBody":
-		return v.VisitInlinedRequestBody(h.InlinedRequestBody)
+		return visitor.VisitInlinedRequestBody(h.InlinedRequestBody)
 	case "reference":
-		return v.VisitReference(h.Reference)
+		return visitor.VisitReference(h.Reference)
 	case "fileUpload":
-		return v.VisitFileUpload(h.FileUpload)
+		return visitor.VisitFileUpload(h.FileUpload)
 	}
 }
 
@@ -1078,14 +1078,14 @@ type HttpResponseVisitor interface {
 	VisitFileDownload(*FileDownloadResponse) error
 }
 
-func (h *HttpResponse) Accept(v HttpResponseVisitor) error {
+func (h *HttpResponse) Accept(visitor HttpResponseVisitor) error {
 	switch h.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", h.Type, h)
 	case "json":
-		return v.VisitJson(h.Json)
+		return visitor.VisitJson(h.Json)
 	case "fileDownload":
-		return v.VisitFileDownload(h.FileDownload)
+		return visitor.VisitFileDownload(h.FileDownload)
 	}
 }
 
@@ -1263,14 +1263,14 @@ type SdkRequestShapeVisitor interface {
 	VisitWrapper(*SdkRequestWrapper) error
 }
 
-func (s *SdkRequestShape) Accept(v SdkRequestShapeVisitor) error {
+func (s *SdkRequestShape) Accept(visitor SdkRequestShapeVisitor) error {
 	switch s.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", s.Type, s)
 	case "justRequestBody":
-		return v.VisitJustRequestBody(s.JustRequestBody)
+		return visitor.VisitJustRequestBody(s.JustRequestBody)
 	case "wrapper":
-		return v.VisitWrapper(s.Wrapper)
+		return visitor.VisitWrapper(s.Wrapper)
 	}
 }
 
@@ -1390,18 +1390,18 @@ type SdkResponseVisitor interface {
 	VisitFileDownload(*FileDownloadResponse) error
 }
 
-func (s *SdkResponse) Accept(v SdkResponseVisitor) error {
+func (s *SdkResponse) Accept(visitor SdkResponseVisitor) error {
 	switch s.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", s.Type, s)
 	case "json":
-		return v.VisitJson(s.Json)
+		return visitor.VisitJson(s.Json)
 	case "streaming":
-		return v.VisitStreaming(s.Streaming)
+		return visitor.VisitStreaming(s.Streaming)
 	case "maybeStreaming":
-		return v.VisitMaybeStreaming(s.MaybeStreaming)
+		return visitor.VisitMaybeStreaming(s.MaybeStreaming)
 	case "fileDownload":
-		return v.VisitFileDownload(s.FileDownload)
+		return visitor.VisitFileDownload(s.FileDownload)
 	}
 }
 
@@ -1482,14 +1482,14 @@ type StreamConditionVisitor interface {
 	VisitRequestPropertyKey(string) error
 }
 
-func (s *StreamCondition) Accept(v StreamConditionVisitor) error {
+func (s *StreamCondition) Accept(visitor StreamConditionVisitor) error {
 	switch s.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", s.Type, s)
 	case "queryParameterKey":
-		return v.VisitQueryParameterKey(s.QueryParameterKey)
+		return visitor.VisitQueryParameterKey(s.QueryParameterKey)
 	case "requestPropertyKey":
-		return v.VisitRequestPropertyKey(s.RequestPropertyKey)
+		return visitor.VisitRequestPropertyKey(s.RequestPropertyKey)
 	}
 }
 
@@ -1572,14 +1572,14 @@ type ErrorDiscriminationStrategyVisitor interface {
 	VisitProperty(*ErrorDiscriminationByPropertyStrategy) error
 }
 
-func (e *ErrorDiscriminationStrategy) Accept(v ErrorDiscriminationStrategyVisitor) error {
+func (e *ErrorDiscriminationStrategy) Accept(visitor ErrorDiscriminationStrategyVisitor) error {
 	switch e.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "statusCode":
-		return v.VisitStatusCode(e.StatusCode)
+		return visitor.VisitStatusCode(e.StatusCode)
 	case "property":
-		return v.VisitProperty(e.Property)
+		return visitor.VisitProperty(e.Property)
 	}
 }
 
@@ -1786,20 +1786,20 @@ type ContainerTypeVisitor interface {
 	VisitLiteral(*Literal) error
 }
 
-func (c *ContainerType) Accept(v ContainerTypeVisitor) error {
+func (c *ContainerType) Accept(visitor ContainerTypeVisitor) error {
 	switch c.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", c.Type, c)
 	case "list":
-		return v.VisitList(c.List)
+		return visitor.VisitList(c.List)
 	case "map":
-		return v.VisitMap(c.Map)
+		return visitor.VisitMap(c.Map)
 	case "optional":
-		return v.VisitOptional(c.Optional)
+		return visitor.VisitOptional(c.Optional)
 	case "set":
-		return v.VisitSet(c.Set)
+		return visitor.VisitSet(c.Set)
 	case "literal":
-		return v.VisitLiteral(c.Literal)
+		return visitor.VisitLiteral(c.Literal)
 	}
 }
 
@@ -1942,18 +1942,18 @@ type ExampleContainerVisitor interface {
 	VisitMap([]*ExampleKeyValuePair) error
 }
 
-func (e *ExampleContainer) Accept(v ExampleContainerVisitor) error {
+func (e *ExampleContainer) Accept(visitor ExampleContainerVisitor) error {
 	switch e.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "list":
-		return v.VisitList(e.List)
+		return visitor.VisitList(e.List)
 	case "set":
-		return v.VisitSet(e.Set)
+		return visitor.VisitSet(e.Set)
 	case "optional":
-		return v.VisitOptional(e.Optional)
+		return visitor.VisitOptional(e.Optional)
 	case "map":
-		return v.VisitMap(e.Map)
+		return visitor.VisitMap(e.Map)
 	}
 }
 
@@ -2194,26 +2194,26 @@ type ExamplePrimitiveVisitor interface {
 	VisitUuid(uuid.UUID) error
 }
 
-func (e *ExamplePrimitive) Accept(v ExamplePrimitiveVisitor) error {
+func (e *ExamplePrimitive) Accept(visitor ExamplePrimitiveVisitor) error {
 	switch e.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "integer":
-		return v.VisitInteger(e.Integer)
+		return visitor.VisitInteger(e.Integer)
 	case "double":
-		return v.VisitDouble(e.Double)
+		return visitor.VisitDouble(e.Double)
 	case "string":
-		return v.VisitString(e.String)
+		return visitor.VisitString(e.String)
 	case "boolean":
-		return v.VisitBoolean(e.Boolean)
+		return visitor.VisitBoolean(e.Boolean)
 	case "long":
-		return v.VisitLong(e.Long)
+		return visitor.VisitLong(e.Long)
 	case "datetime":
-		return v.VisitDatetime(e.Datetime)
+		return visitor.VisitDatetime(e.Datetime)
 	case "date":
-		return v.VisitDate(e.Date)
+		return visitor.VisitDate(e.Date)
 	case "uuid":
-		return v.VisitUuid(e.Uuid)
+		return visitor.VisitUuid(e.Uuid)
 	}
 }
 
@@ -2312,16 +2312,16 @@ type ExampleSingleUnionTypePropertiesVisitor interface {
 	VisitNoProperties(any) error
 }
 
-func (e *ExampleSingleUnionTypeProperties) Accept(v ExampleSingleUnionTypePropertiesVisitor) error {
+func (e *ExampleSingleUnionTypeProperties) Accept(visitor ExampleSingleUnionTypePropertiesVisitor) error {
 	switch e.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "samePropertiesAsObject":
-		return v.VisitSamePropertiesAsObject(e.SamePropertiesAsObject)
+		return visitor.VisitSamePropertiesAsObject(e.SamePropertiesAsObject)
 	case "singleProperty":
-		return v.VisitSingleProperty(e.SingleProperty)
+		return visitor.VisitSingleProperty(e.SingleProperty)
 	case "noProperties":
-		return v.VisitNoProperties(e.NoProperties)
+		return visitor.VisitNoProperties(e.NoProperties)
 	}
 }
 
@@ -2454,18 +2454,18 @@ type ExampleTypeReferenceShapeVisitor interface {
 	VisitNamed(*ExampleNamedType) error
 }
 
-func (e *ExampleTypeReferenceShape) Accept(v ExampleTypeReferenceShapeVisitor) error {
+func (e *ExampleTypeReferenceShape) Accept(visitor ExampleTypeReferenceShapeVisitor) error {
 	switch e.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "primitive":
-		return v.VisitPrimitive(e.Primitive)
+		return visitor.VisitPrimitive(e.Primitive)
 	case "container":
-		return v.VisitContainer(e.Container)
+		return visitor.VisitContainer(e.Container)
 	case "unknown":
-		return v.VisitUnknown(e.Unknown)
+		return visitor.VisitUnknown(e.Unknown)
 	case "named":
-		return v.VisitNamed(e.Named)
+		return visitor.VisitNamed(e.Named)
 	}
 }
 
@@ -2580,18 +2580,18 @@ type ExampleTypeShapeVisitor interface {
 	VisitUnion(*ExampleSingleUnionType) error
 }
 
-func (e *ExampleTypeShape) Accept(v ExampleTypeShapeVisitor) error {
+func (e *ExampleTypeShape) Accept(visitor ExampleTypeShapeVisitor) error {
 	switch e.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "alias":
-		return v.VisitAlias(e.Alias)
+		return visitor.VisitAlias(e.Alias)
 	case "enum":
-		return v.VisitEnum(e.Enum)
+		return visitor.VisitEnum(e.Enum)
 	case "object":
-		return v.VisitObject(e.Object)
+		return visitor.VisitObject(e.Object)
 	case "union":
-		return v.VisitUnion(e.Union)
+		return visitor.VisitUnion(e.Union)
 	}
 }
 
@@ -2645,12 +2645,12 @@ type LiteralVisitor interface {
 	VisitString(string) error
 }
 
-func (l *Literal) Accept(v LiteralVisitor) error {
+func (l *Literal) Accept(visitor LiteralVisitor) error {
 	switch l.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", l.Type, l)
 	case "string":
-		return v.VisitString(l.String)
+		return visitor.VisitString(l.String)
 	}
 }
 
@@ -2873,18 +2873,18 @@ type ResolvedTypeReferenceVisitor interface {
 	VisitUnknown(any) error
 }
 
-func (r *ResolvedTypeReference) Accept(v ResolvedTypeReferenceVisitor) error {
+func (r *ResolvedTypeReference) Accept(visitor ResolvedTypeReferenceVisitor) error {
 	switch r.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", r.Type, r)
 	case "container":
-		return v.VisitContainer(r.Container)
+		return visitor.VisitContainer(r.Container)
 	case "named":
-		return v.VisitNamed(r.Named)
+		return visitor.VisitNamed(r.Named)
 	case "primitive":
-		return v.VisitPrimitive(r.Primitive)
+		return visitor.VisitPrimitive(r.Primitive)
 	case "unknown":
-		return v.VisitUnknown(r.Unknown)
+		return visitor.VisitUnknown(r.Unknown)
 	}
 }
 
@@ -3034,16 +3034,16 @@ type SingleUnionTypePropertiesVisitor interface {
 	VisitNoProperties(any) error
 }
 
-func (s *SingleUnionTypeProperties) Accept(v SingleUnionTypePropertiesVisitor) error {
+func (s *SingleUnionTypeProperties) Accept(visitor SingleUnionTypePropertiesVisitor) error {
 	switch s.PropertiesType {
 	default:
 		return fmt.Errorf("invalid type %s in %T", s.PropertiesType, s)
 	case "samePropertiesAsObject":
-		return v.VisitSamePropertiesAsObject(s.SamePropertiesAsObject)
+		return visitor.VisitSamePropertiesAsObject(s.SamePropertiesAsObject)
 	case "singleProperty":
-		return v.VisitSingleProperty(s.SingleProperty)
+		return visitor.VisitSingleProperty(s.SingleProperty)
 	case "noProperties":
-		return v.VisitNoProperties(s.NoProperties)
+		return visitor.VisitNoProperties(s.NoProperties)
 	}
 }
 
@@ -3184,20 +3184,20 @@ type TypeVisitor interface {
 	VisitUndiscriminatedUnion(*UndiscriminatedUnionTypeDeclaration) error
 }
 
-func (t *Type) Accept(v TypeVisitor) error {
+func (t *Type) Accept(visitor TypeVisitor) error {
 	switch t.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", t.Type, t)
 	case "alias":
-		return v.VisitAlias(t.Alias)
+		return visitor.VisitAlias(t.Alias)
 	case "enum":
-		return v.VisitEnum(t.Enum)
+		return visitor.VisitEnum(t.Enum)
 	case "object":
-		return v.VisitObject(t.Object)
+		return visitor.VisitObject(t.Object)
 	case "union":
-		return v.VisitUnion(t.Union)
+		return visitor.VisitUnion(t.Union)
 	case "undiscriminatedUnion":
-		return v.VisitUndiscriminatedUnion(t.UndiscriminatedUnion)
+		return visitor.VisitUndiscriminatedUnion(t.UndiscriminatedUnion)
 	}
 }
 
@@ -3327,18 +3327,18 @@ type TypeReferenceVisitor interface {
 	VisitUnknown(any) error
 }
 
-func (t *TypeReference) Accept(v TypeReferenceVisitor) error {
+func (t *TypeReference) Accept(visitor TypeReferenceVisitor) error {
 	switch t.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", t.Type, t)
 	case "container":
-		return v.VisitContainer(t.Container)
+		return visitor.VisitContainer(t.Container)
 	case "named":
-		return v.VisitNamed(t.Named)
+		return visitor.VisitNamed(t.Named)
 	case "primitive":
-		return v.VisitPrimitive(t.Primitive)
+		return visitor.VisitPrimitive(t.Primitive)
 	case "unknown":
-		return v.VisitUnknown(t.Unknown)
+		return visitor.VisitUnknown(t.Unknown)
 	}
 }
 

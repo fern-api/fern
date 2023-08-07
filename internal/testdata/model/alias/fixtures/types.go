@@ -147,16 +147,16 @@ type UnionVisitor interface {
 	VisitDoubleAlias(Double) error
 }
 
-func (u *Union) Accept(v UnionVisitor) error {
+func (u *Union) Accept(visitor UnionVisitor) error {
 	switch u.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "fooAlias":
-		return v.VisitFooAlias(u.FooAlias)
+		return visitor.VisitFooAlias(u.FooAlias)
 	case "barAlias":
-		return v.VisitBarAlias(u.BarAlias)
+		return visitor.VisitBarAlias(u.BarAlias)
 	case "doubleAlias":
-		return v.VisitDoubleAlias(u.DoubleAlias)
+		return visitor.VisitDoubleAlias(u.DoubleAlias)
 	}
 }
 

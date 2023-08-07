@@ -422,7 +422,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	t.writer.P()
 
 	// Generate the Accept method.
-	t.writer.P("func (", receiver, " *", t.typeName, ") Accept(v ", t.typeName, "Visitor) error {")
+	t.writer.P("func (", receiver, " *", t.typeName, ") Accept(visitor ", t.typeName, "Visitor) error {")
 	t.writer.P("switch ", receiver, ".", discriminantName, "{")
 	for i, unionType := range union.Types {
 		if i == 0 {
@@ -435,7 +435,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		if unionType.Shape.SingleProperty != nil && unionType.Shape.SingleProperty.Type.Container != nil && unionType.Shape.SingleProperty.Type.Container.Literal != nil {
 			fieldName = unionType.DiscriminantValue.Name.CamelCase.SafeName
 		}
-		t.writer.P("return v.Visit", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, "(", receiver, ".", fieldName, ")")
+		t.writer.P("return visitor.Visit", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, "(", receiver, ".", fieldName, ")")
 	}
 	t.writer.P("}")
 	t.writer.P("}")
@@ -585,7 +585,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	t.writer.P()
 
 	// Generate the Accept method.
-	t.writer.P("func (", receiver, " *", t.typeName, ") Accept(v ", t.typeName, "Visitor) error {")
+	t.writer.P("func (", receiver, " *", t.typeName, ") Accept(visitor ", t.typeName, "Visitor) error {")
 	t.writer.P("switch ", receiver, ".typeName {")
 	for i, member := range members {
 		if i == 0 {
@@ -594,7 +594,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 			t.writer.P("return fmt.Errorf(\"invalid type %s in %T\", ", receiver, ".typeName, ", receiver, ")")
 		}
 		t.writer.P("case \"", member.caseName, "\":")
-		t.writer.P("return v.Visit", strings.Title(member.field), "(", receiver, ".", member.field, ")")
+		t.writer.P("return visitor.Visit", strings.Title(member.field), "(", receiver, ".", member.field, ")")
 	}
 	t.writer.P("}")
 	t.writer.P("}")
