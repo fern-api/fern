@@ -59,14 +59,6 @@ const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
                         path: "../../generated/typescript",
                     },
                 },
-                {
-                    name: "fernapi/fern-openapi",
-                    version: "0.0.28",
-                    output: {
-                        location: "local-file-system",
-                        path: "../../generated/openapi",
-                    },
-                },
             ],
         },
     },
