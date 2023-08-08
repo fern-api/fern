@@ -3201,7 +3201,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
-            ["execa", "npm:7.2.0"],\
+            ["execa", "npm:5.1.1"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.5.0"],\
             ["js-yaml", "npm:4.1.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
@@ -3473,7 +3473,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
-            ["execa", "npm:7.2.0"],\
+            ["execa", "npm:5.1.1"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.5.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
@@ -3798,7 +3798,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["depcheck", "npm:1.4.3"],\
             ["esbuild", "npm:0.15.7"],\
             ["eslint", "npm:8.26.0"],\
-            ["execa", "npm:7.2.0"],\
+            ["execa", "npm:5.1.1"],\
             ["immer", "npm:9.0.15"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.5.0"],\
             ["js-yaml", "npm:4.1.0"],\
@@ -9105,22 +9105,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["strip-final-newline", "npm:3.0.0"]\
           ],\
           "linkType": "HARD"\
-        }],\
-        ["npm:7.2.0", {\
-          "packageLocation": "./.yarn/cache/execa-npm-7.2.0-7797cafb24-14fd17ba0c.zip/node_modules/execa/",\
-          "packageDependencies": [\
-            ["execa", "npm:7.2.0"],\
-            ["cross-spawn", "npm:7.0.3"],\
-            ["get-stream", "npm:6.0.1"],\
-            ["human-signals", "npm:4.3.1"],\
-            ["is-stream", "npm:3.0.0"],\
-            ["merge-stream", "npm:2.0.0"],\
-            ["npm-run-path", "npm:5.1.0"],\
-            ["onetime", "npm:6.0.0"],\
-            ["signal-exit", "npm:3.0.7"],\
-            ["strip-final-newline", "npm:3.0.0"]\
-          ],\
-          "linkType": "HARD"\
         }]\
       ]],\
       ["exit", [\
@@ -10112,13 +10096,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/human-signals-npm-3.0.1-0c557ca74a-f252a7769c.zip/node_modules/human-signals/",\
           "packageDependencies": [\
             ["human-signals", "npm:3.0.1"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:4.3.1", {\
-          "packageLocation": "./.yarn/cache/human-signals-npm-4.3.1-d723001512-6f12958df3.zip/node_modules/human-signals/",\
-          "packageDependencies": [\
-            ["human-signals", "npm:4.3.1"]\
           ],\
           "linkType": "HARD"\
         }]\
