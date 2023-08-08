@@ -1,3 +1,4 @@
+import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_PATH_TO_IR } from "./constants";
 
@@ -6,6 +7,7 @@ export declare namespace getGeneratorConfig {
         workspaceName: string;
         organization: string;
         customConfig: unknown;
+        generatorInvocation: GeneratorInvocation;
     }
 
     export interface Return {
@@ -15,20 +17,43 @@ export declare namespace getGeneratorConfig {
 }
 
 export function getGeneratorConfig({
+    generatorInvocation,
     customConfig,
     workspaceName,
     organization,
 }: getGeneratorConfig.Args): getGeneratorConfig.Return {
     const binds: string[] = [];
-
+    const output = generatorInvocation.outputMode._visit<FernGeneratorExec.GeneratorOutputConfig>({
+        publish: () => {
+            return DUMMY_PUBLISH_OUTPUT_CONFIG;
+        },
+        publishV2: () => {
+            return DUMMY_PUBLISH_OUTPUT_CONFIG;
+        },
+        downloadFiles: () => {
+            return {
+                mode: FernGeneratorExec.OutputMode.downloadFiles(),
+                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+            };
+        },
+        github: (value) => {
+            return {
+                mode: FernGeneratorExec.OutputMode.github({
+                    repoUrl: `https://github.com/${value.owner}/${value.repo}`,
+                    version: "0.0.1",
+                }),
+                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+            };
+        },
+        _other: () => {
+            throw new Error("Output type did not match any of the types supported by Fern");
+        },
+    });
     return {
         binds,
         config: {
             irFilepath: DOCKER_PATH_TO_IR,
-            output: {
-                mode: FernGeneratorExec.OutputMode.downloadFiles(),
-                path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
-            },
+            output,
             publish: undefined,
             customConfig,
             workspaceName,
@@ -38,3 +63,43 @@ export function getGeneratorConfig({
         },
     };
 }
+
+const DUMMY_PUBLISH_OUTPUT_CONFIG = {
+    mode: FernGeneratorExec.OutputMode.publish({
+        registries: {
+            maven: {
+                group: "",
+                password: "",
+                registryUrl: "",
+                username: "",
+            },
+            npm: {
+                registryUrl: "",
+                scope: "",
+                token: "",
+            },
+        },
+        publishTarget: undefined,
+        registriesV2: {
+            maven: {
+                password: "",
+                registryUrl: "",
+                username: "",
+                coordinate: "",
+            },
+            npm: {
+                registryUrl: "",
+                token: "",
+                packageName: "",
+            },
+            pypi: {
+                packageName: "",
+                password: "",
+                registryUrl: "",
+                username: "",
+            },
+        },
+        version: "0.0.1",
+    }),
+    path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+};

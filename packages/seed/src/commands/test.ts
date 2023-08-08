@@ -3,11 +3,13 @@ import { AbsoluteFilePath, cwd, resolve } from "@fern-api/fs-utils";
 import { GenerationLanguage, GeneratorGroup } from "@fern-api/generators-configuration";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-migrations";
-import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
+import { runLocalGenerationForSeed } from "@fern-api/local-workspace-runner";
 import { FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, loadWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { GithubPublishInfo } from "@fern-fern/fiddle-sdk/types/api";
+import { ChildProcess, spawn } from "child_process";
 import path from "path";
 import { ParsedDockerName } from "../cli";
 
@@ -23,12 +25,14 @@ export async function runTests({
     language,
     fixture,
     docker,
+    compileCmd,
     taskContext,
 }: {
     irVersion: string | undefined;
     language: GenerationLanguage;
     fixture: string | undefined;
     docker: ParsedDockerName;
+    compileCmd: string;
     taskContext: TaskContext;
 }): Promise<void> {
     const testCases = fixture != null ? [fixture] : Object.values(FIXTURE);
@@ -55,13 +59,21 @@ export async function runTests({
             irVersion,
         });
         taskContext.logger.info(`Generated IR for fixture ${testCase} ${typeof ir}`);
+        const absolutePathToOutput = AbsoluteFilePath.of(resolve(cwd(), "seed", testCase));
         await runDockerForWorkspace({
+            absolutePathToOutput,
             docker,
             workspace: workspace.workspace,
             language,
             taskContext,
-            fixture: testCase,
             irVersion,
+        });
+        taskContext.logger.info(`Receinved compile command: ${compileCmd}`);
+        await compileGeneratedCode({
+            absolutePathToOutput,
+            command: compileCmd,
+            context: taskContext,
+            testCase,
         });
     }
 }
@@ -97,21 +109,22 @@ async function getIntermediateRepresentation({
 const DUMMY_ORGANIZATION = "seed";
 
 async function runDockerForWorkspace({
-    fixture,
+    absolutePathToOutput,
     docker,
     language,
     workspace,
     taskContext,
     irVersion,
 }: {
-    fixture: string;
+    absolutePathToOutput: AbsoluteFilePath;
     docker: ParsedDockerName;
     language: GenerationLanguage;
     workspace: FernWorkspace;
     taskContext: TaskContext;
     irVersion?: string;
 }): Promise<void> {
-    const absolutePathToOutput = AbsoluteFilePath.of(resolve(cwd(), "seed", fixture));
+    const publishInfo = getPublishInfo(language);
+
     const generatorGroup: GeneratorGroup = {
         groupName: "DUMMY",
         audiences: ALL_AUDIENCES,
@@ -120,14 +133,18 @@ async function runDockerForWorkspace({
                 name: docker.name,
                 version: docker.version,
                 config: undefined,
-                outputMode: FernFiddle.remoteGen.OutputMode.downloadFiles(),
+                outputMode: FernFiddle.remoteGen.OutputMode.github({
+                    repo: `seed-${language}`,
+                    owner: "fern-api",
+                    publishInfo,
+                }),
                 absolutePathToLocalOutput: absolutePathToOutput,
                 language,
             },
         ],
         docs: undefined,
     };
-    await runLocalGenerationForWorkspace({
+    await runLocalGenerationForSeed({
         organization: DUMMY_ORGANIZATION,
         workspace,
         generatorGroup,
@@ -135,4 +152,71 @@ async function runDockerForWorkspace({
         context: taskContext,
         irVersionOverride: irVersion,
     });
+}
+
+async function compileGeneratedCode({
+    absolutePathToOutput,
+    command,
+    context,
+    testCase,
+}: {
+    absolutePathToOutput: AbsoluteFilePath;
+    command: string;
+    context: TaskContext;
+    testCase: string;
+}): Promise<void> {
+    context.logger.info("CWD", absolutePathToOutput);
+    context.logger.info("fixture", testCase);
+    context.logger.info(command);
+
+    const commands = command.split("&& ");
+    if (commands[0] != null && commands[1] != null) {
+        await executeCommand(commands[0], [], context, absolutePathToOutput);
+        await executeCommand(commands[1], [], context, absolutePathToOutput);
+    }
+}
+
+function executeCommand(
+    command: string,
+    args: string[],
+    context: TaskContext,
+    absolutePathToOutput: AbsoluteFilePath
+): Promise<void> {
+    const childProcess: ChildProcess = spawn(command, args, { shell: true, cwd: absolutePathToOutput });
+
+    return new Promise((resolve, reject) => {
+        childProcess.on("close", (code) => {
+            if (code === 0) {
+                resolve();
+            } else {
+                reject(new Error(`Command '${command}' exited with code ${code}`));
+            }
+        });
+        childProcess.stdout?.on("data", (data) => {
+            context.logger.info(`Output for '${command}':\n${data}`);
+        });
+    });
+}
+
+function getPublishInfo(language: string): GithubPublishInfo | undefined {
+    switch (language) {
+        case "java":
+            return FernFiddle.GithubPublishInfo.maven({
+                coordinate: "",
+                registryUrl: "",
+            });
+
+        case "python":
+            return FernFiddle.GithubPublishInfo.pypi({
+                packageName: "",
+                registryUrl: "",
+            });
+        case "typescript":
+            return FernFiddle.GithubPublishInfo.npm({
+                packageName: "",
+                registryUrl: "",
+            });
+        default:
+            return undefined;
+    }
 }
