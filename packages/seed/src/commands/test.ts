@@ -133,6 +133,6 @@ async function runDockerForWorkspace({
         generatorGroup,
         keepDocker: true,
         context: taskContext,
-        irOverrideVersion: irVersion,
+        irVersionOverride: irVersion,
     });
 }

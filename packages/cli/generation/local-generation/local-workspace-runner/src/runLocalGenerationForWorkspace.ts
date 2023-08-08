@@ -21,14 +21,14 @@ export async function runLocalGenerationForWorkspace({
     generatorGroup,
     keepDocker,
     context,
-    irOverrideVersion,
+    irVersionOverride,
 }: {
     organization: string;
     workspace: FernWorkspace;
     generatorGroup: GeneratorGroup;
     keepDocker: boolean;
     context: TaskContext;
-    irOverrideVersion?: string;
+    irVersionOverride: string | undefined;
 }): Promise<void> {
     const workspaceTempDir = await tmp.dir({
         // use the /private prefix on osx so that docker can access the tmpdir
@@ -54,7 +54,7 @@ export async function runLocalGenerationForWorkspace({
                         workspaceTempDir,
                         keepDocker,
                         context: interactiveTaskContext,
-                        irOverrideVersion,
+                        irVersionOverride,
                     });
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
@@ -78,7 +78,7 @@ async function writeFilesToDiskAndRunGenerator({
     workspaceTempDir,
     keepDocker,
     context,
-    irOverrideVersion,
+    irVersionOverride,
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -88,7 +88,7 @@ async function writeFilesToDiskAndRunGenerator({
     workspaceTempDir: DirectoryResult;
     keepDocker: boolean;
     context: TaskContext;
-    irOverrideVersion?: string;
+    irVersionOverride: string | undefined;
 }): Promise<void> {
     const absolutePathToIr = await writeIrToFile({
         workspace,
@@ -96,7 +96,7 @@ async function writeFilesToDiskAndRunGenerator({
         generatorInvocation,
         workspaceTempDir,
         context,
-        irOverrideVersion,
+        irVersionOverride,
     });
     context.logger.debug("Wrote IR to: " + absolutePathToIr);
 
@@ -137,36 +137,34 @@ async function writeIrToFile({
     generatorInvocation,
     workspaceTempDir,
     context,
-    irOverrideVersion,
+    irVersionOverride,
 }: {
     workspace: FernWorkspace;
     audiences: Audiences;
     generatorInvocation: GeneratorInvocation;
     workspaceTempDir: DirectoryResult;
     context: TaskContext;
-    irOverrideVersion?: string;
+    irVersionOverride: string | undefined;
 }): Promise<AbsoluteFilePath> {
-    const irVersion = irOverrideVersion !== undefined ? irOverrideVersion : "";
-
     const intermediateRepresentation = await generateIntermediateRepresentation({
         workspace,
         audiences,
         generationLanguage: generatorInvocation.language,
     });
     const migratedIntermediateRepresentation =
-        irVersion === ""
-            ? migrateIntermediateRepresentationForGenerator({
+        irVersionOverride != null
+            ? migrateIntermediateRepresentationThroughVersion({
+                  intermediateRepresentation,
+                  context,
+                  version: irVersionOverride,
+              })
+            : migrateIntermediateRepresentationForGenerator({
                   intermediateRepresentation,
                   context,
                   targetGenerator: {
                       name: generatorInvocation.name,
                       version: generatorInvocation.version,
                   },
-              })
-            : migrateIntermediateRepresentationThroughVersion({
-                  intermediateRepresentation,
-                  context,
-                  version: irVersion,
               });
 
     const irFile = await tmp.file({
