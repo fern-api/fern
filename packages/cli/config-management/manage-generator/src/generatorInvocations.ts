@@ -59,10 +59,10 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.0.14",
         output: {
             location: "local-file-system",
-            path: "../../sdk/go",
+            path: "../../generated/go",
         },
         config: {
-            importPath: "go-mod-path/sdk/go",
+            importPath: "go-mod-path/generated/go",
         },
     },
     [GeneratorName.OPENAPI]: {
