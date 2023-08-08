@@ -12,6 +12,11 @@ groups:
         version: 0.3.4
         config:
           wrapped-aliases: true
+          enable-forward-compatible-enums: true
+        output:
+          location: maven
+          url: maven.buildwithfern.com
+          coordinate: com.fern.fern:irV23
 
       - name: fernapi/fern-pydantic-model
         version: 0.3.6-rc1-1-ga2f760f4

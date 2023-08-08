@@ -89,7 +89,9 @@ async function visitEndpoint({
             }
             const nodePathForRequest = [...nodePathForEndpoint, "request"];
             if (typeof request === "string") {
-                await visitTypeReference(request, nodePathForRequest);
+                await visitTypeReference(request, nodePathForRequest, {
+                    location: "requestReference",
+                });
                 return;
             }
             await visitObject(request, {
@@ -140,7 +142,9 @@ async function visitEndpoint({
                     const nodePathForRequestBody = [...nodePathForRequest, "body"];
 
                     if (typeof body === "string") {
-                        await visitTypeReference(body, nodePathForRequestBody);
+                        await visitTypeReference(body, nodePathForRequestBody, {
+                            location: "requestReference",
+                        });
                     } else if (isInlineRequestBody(body)) {
                         await visitor.typeDeclaration?.(
                             { typeName: { isInlined: true, location: "inlinedRequest" }, declaration: body },

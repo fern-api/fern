@@ -125,6 +125,9 @@ export class IrGraph {
                         });
                     }
                 },
+                bytes: () => {
+                    return;
+                },
                 _unknown: () => {
                     throw new Error("Unknown HttpRequestBody: " + httpEndpoint.requestBody?.type);
                 },

@@ -75,6 +75,7 @@ export interface DefinitionFileAstNodeTypes {
 export type TypeDeclarationName = { isInlined: false; name: string } | { isInlined: true; location: "inlinedRequest" };
 
 export const TypeReferenceLocation = {
+    RequestReference: "requestReference",
     InlinedRequestProperty: "inlinedRequestProperty",
     Response: "response",
     StreamingResponse: "streamingResponse",

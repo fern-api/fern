@@ -83,7 +83,7 @@ types:
       inlinedRequestBody: InlinedRequestBody
       reference: HttpRequestBodyReference
       fileUpload: FileUploadRequest
-      bytes: {}
+      bytes: BytesRequest
   InlinedRequestBody:
     properties:
       name: commons.Name
@@ -99,6 +99,9 @@ types:
     properties:
       name: commons.Name
       properties: list<FileUploadRequestProperty>
+  BytesRequest:
+    properties:
+      isOptional: boolean
   FileUploadRequestProperty:
     union:
       file: FileProperty

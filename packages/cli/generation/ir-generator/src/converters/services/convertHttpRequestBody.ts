@@ -1,4 +1,4 @@
-import { isInlineRequestBody, parseFileUploadRequest, RawSchemas } from "@fern-api/yaml-schema";
+import { isInlineRequestBody, parseBytesRequest, parseFileUploadRequest, RawSchemas } from "@fern-api/yaml-schema";
 import {
     FileUploadRequestProperty,
     HttpRequestBody,
@@ -53,6 +53,13 @@ export function convertHttpRequestBody({
                     );
                 }
             }),
+        });
+    }
+
+    const bytesRequest = parseBytesRequest(request);
+    if (bytesRequest != null) {
+        return HttpRequestBody.bytes({
+            isOptional: bytesRequest.isOptional,
         });
     }
 
