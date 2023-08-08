@@ -57,8 +57,6 @@ export async function generateWorkspace({
             generatorGroup: group,
             keepDocker,
             context,
-            irVersionOverride: undefined,
-            outputModeForSeedConfig: undefined,
         });
     } else {
         await runRemoteGenerationForWorkspace({

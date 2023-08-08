@@ -57,7 +57,7 @@ function addTestCommand(cli: Argv, taskContext: TaskContext) {
                     demandOption: false,
                     description: "Runs on all fixtures if not provided",
                 })
-                .options("compileCmd", {
+                .options("compile-command", {
                     type: "string",
                     demandOption: true,
                     description: "User inputted command to compile generated code with",
@@ -69,7 +69,7 @@ function addTestCommand(cli: Argv, taskContext: TaskContext) {
                 irVersion: argv.irVersion,
                 language: argv.language,
                 docker: parsedDockerImage,
-                compileCmd: argv.compileCmd,
+                compileCmd: argv["compile-command"],
                 taskContext,
             });
         }

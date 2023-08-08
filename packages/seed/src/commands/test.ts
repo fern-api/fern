@@ -3,12 +3,11 @@ import { AbsoluteFilePath, cwd, resolve } from "@fern-api/fs-utils";
 import { GenerationLanguage, GeneratorGroup } from "@fern-api/generators-configuration";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-migrations";
-import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
+import { runLocalGenerationForSeed } from "@fern-api/local-workspace-runner";
 import { FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, loadWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { ChildProcess, spawn } from "child_process";
 import path from "path";
 import { ParsedDockerName } from "../cli";
@@ -135,6 +134,7 @@ async function runDockerForWorkspace({
                     repo: `seed-${language}`,
                     owner: "fern-api",
                     publishInfo: FernFiddle.GithubPublishInfo.pypi({
+                        //based on language
                         packageName: "exhaustive",
                         registryUrl: "pypi.buildwithfern.com",
                     }),
@@ -145,17 +145,13 @@ async function runDockerForWorkspace({
         ],
         docs: undefined,
     };
-    await runLocalGenerationForWorkspace({
+    await runLocalGenerationForSeed({
         organization: DUMMY_ORGANIZATION,
         workspace,
         generatorGroup,
         keepDocker: true,
         context: taskContext,
         irVersionOverride: irVersion,
-        outputModeForSeedConfig: FernGeneratorExec.OutputMode.github({
-            version: "0.0.1",
-            repoUrl: "https://github.com/fern-api/seed-cli",
-        }),
     });
 }
 

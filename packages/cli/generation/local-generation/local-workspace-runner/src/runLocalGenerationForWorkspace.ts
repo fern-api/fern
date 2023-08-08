@@ -8,7 +8,6 @@ import {
 } from "@fern-api/ir-migrations";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import chalk from "chalk";
 import os from "os";
 import path from "path";
@@ -22,8 +21,54 @@ export async function runLocalGenerationForWorkspace({
     generatorGroup,
     keepDocker,
     context,
+}: {
+    organization: string;
+    workspace: FernWorkspace;
+    generatorGroup: GeneratorGroup;
+    keepDocker: boolean;
+    context: TaskContext;
+}): Promise<void> {
+    const workspaceTempDir = await getWorkspaceTempDir();
+
+    const results = await Promise.all(
+        generatorGroup.generators.map(async (generatorInvocation) => {
+            return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
+                if (generatorInvocation.absolutePathToLocalOutput == null) {
+                    interactiveTaskContext.failWithoutThrowing(
+                        "Cannot generate because output location is not local-file-system"
+                    );
+                } else {
+                    await writeFilesToDiskAndRunGenerator({
+                        organization,
+                        workspace,
+                        generatorInvocation,
+                        absolutePathToLocalOutput: generatorInvocation.absolutePathToLocalOutput,
+                        audiences: generatorGroup.audiences,
+                        workspaceTempDir,
+                        keepDocker,
+                        context: interactiveTaskContext,
+                        irVersionOverride: undefined,
+                    });
+                    interactiveTaskContext.logger.info(
+                        chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
+                    );
+                }
+            });
+        })
+    );
+
+    if (results.some((didSucceed) => !didSucceed)) {
+        context.failAndThrow();
+    }
+}
+
+export async function runLocalGenerationForSeed({
+    organization,
+    workspace,
+    generatorGroup,
+    keepDocker,
+    context,
     irVersionOverride,
-    outputModeForSeedConfig,
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -31,14 +76,8 @@ export async function runLocalGenerationForWorkspace({
     keepDocker: boolean;
     context: TaskContext;
     irVersionOverride: string | undefined;
-    outputModeForSeedConfig: FernGeneratorExec.OutputMode | undefined;
 }): Promise<void> {
-    const workspaceTempDir = await tmp.dir({
-        // use the /private prefix on osx so that docker can access the tmpdir
-        // see https://stackoverflow.com/a/45123074
-        tmpdir: os.platform() === "darwin" ? path.join("/private", os.tmpdir()) : undefined,
-        prefix: "fern",
-    });
+    const workspaceTempDir = await getWorkspaceTempDir();
 
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
@@ -58,7 +97,6 @@ export async function runLocalGenerationForWorkspace({
                         keepDocker,
                         context: interactiveTaskContext,
                         irVersionOverride,
-                        outputModeForSeedConfig,
                     });
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
@@ -73,6 +111,15 @@ export async function runLocalGenerationForWorkspace({
     }
 }
 
+async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {
+    return tmp.dir({
+        // use the /private prefix on osx so that docker can access the tmpdir
+        // see https://stackoverflow.com/a/45123074
+        tmpdir: os.platform() === "darwin" ? path.join("/private", os.tmpdir()) : undefined,
+        prefix: "fern",
+    });
+}
+
 async function writeFilesToDiskAndRunGenerator({
     organization,
     workspace,
@@ -83,7 +130,6 @@ async function writeFilesToDiskAndRunGenerator({
     keepDocker,
     context,
     irVersionOverride,
-    outputModeForSeedConfig,
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -94,7 +140,6 @@ async function writeFilesToDiskAndRunGenerator({
     keepDocker: boolean;
     context: TaskContext;
     irVersionOverride: string | undefined;
-    outputModeForSeedConfig: FernGeneratorExec.OutputMode | undefined;
 }): Promise<void> {
     const absolutePathToIr = await writeIrToFile({
         workspace,
@@ -119,15 +164,13 @@ async function writeFilesToDiskAndRunGenerator({
     context.logger.debug("Will write output to: " + absolutePathToTmpOutputDirectory);
 
     await runGenerator({
-        imageName: `${generatorInvocation.name}:${generatorInvocation.version}`,
         absolutePathToOutput: absolutePathToTmpOutputDirectory,
         absolutePathToIr,
         absolutePathToWriteConfigJson,
-        customConfig: generatorInvocation.config,
         workspaceName: workspace.name,
         organization,
         keepDocker,
-        outputModeForSeedConfig,
+        generatorInvocation,
     });
 
     const taskHandler = new LocalTaskHandler({
