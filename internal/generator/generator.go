@@ -203,6 +203,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			return nil, err
 		}
 		files = append(files, file)
+		files = append(files, newClientTestFile(g.coordinator))
 		files = append(files, newCoreFile(g.coordinator))
 		files = append(files, newCoreTestFile(g.coordinator))
 		files = append(files, newPointerFile(g.coordinator, ir.ApiName, generatedNames))
@@ -450,6 +451,14 @@ func newPointerFile(coordinator *coordinator.Client, apiName *ir.Name, generated
 		coordinator,
 		filename,
 		[]byte(content),
+	)
+}
+
+func newClientTestFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"client/client_test.go",
+		[]byte(clientTestFile),
 	)
 }
 

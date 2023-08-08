@@ -15,6 +15,9 @@ import (
 const goLanguageHeader = "Go"
 
 var (
+	//go:embed sdk/client/client_test.go
+	clientTestFile string
+
 	//go:embed sdk/core/core.go
 	coreFile string
 
