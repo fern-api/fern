@@ -34,7 +34,7 @@ export async function runRemoteGenerationForWorkspace({
         interactiveTasks.push(
             context.runInteractiveTask({ name: "Publish docs" }, async (interactiveTaskContext) => {
                 if (workspace.docsDefinition == null) {
-                    interactiveTaskContext.failAndThrow("Docs are not configured.");
+                    interactiveTaskContext.failAndThrow("The docs folder is missing. Try running `fern add docs`.");
                     return;
                 }
                 await publishDocs({
