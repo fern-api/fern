@@ -123,7 +123,6 @@ async function runDockerForWorkspace({
     taskContext: TaskContext;
     irVersion?: string;
 }): Promise<void> {
-
     const publishInfo = getPublishInfo(language);
 
     const generatorGroup: GeneratorGroup = {
@@ -137,7 +136,7 @@ async function runDockerForWorkspace({
                 outputMode: FernFiddle.remoteGen.OutputMode.github({
                     repo: `seed-${language}`,
                     owner: "fern-api",
-                    publishInfo
+                    publishInfo,
                 }),
                 absolutePathToLocalOutput: absolutePathToOutput,
                 language,
@@ -199,27 +198,25 @@ function executeCommand(
     });
 }
 
-function getPublishInfo(language: string) : GithubPublishInfo | undefined
-{
-    switch(language)
-    {
-        case "java": 
+function getPublishInfo(language: string): GithubPublishInfo | undefined {
+    switch (language) {
+        case "java":
             return FernFiddle.GithubPublishInfo.maven({
                 coordinate: "",
-                registryUrl: ""
+                registryUrl: "",
             });
-        
+
         case "python":
             return FernFiddle.GithubPublishInfo.pypi({
                 packageName: "",
-                registryUrl: ""
+                registryUrl: "",
             });
-        case "typescript": 
+        case "typescript":
             return FernFiddle.GithubPublishInfo.npm({
                 packageName: "",
-                registryUrl: ""
+                registryUrl: "",
             });
-        default: 
+        default:
             return undefined;
     }
 }
