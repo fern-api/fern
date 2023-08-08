@@ -16,6 +16,13 @@ export function convertHttpRequestBody({
     request: string | RawSchemas.HttpRequestSchema | null | undefined;
     file: FernFileContext;
 }): HttpRequestBody | undefined {
+    const bytesRequest = request != null ? parseBytesRequest(request) : undefined;
+    if (bytesRequest != null) {
+        return HttpRequestBody.bytes({
+            isOptional: bytesRequest.isOptional,
+        });
+    }
+
     if (typeof request === "string") {
         return HttpRequestBody.reference(
             convertReferenceHttpRequestBody({
@@ -53,13 +60,6 @@ export function convertHttpRequestBody({
                     );
                 }
             }),
-        });
-    }
-
-    const bytesRequest = parseBytesRequest(request);
-    if (bytesRequest != null) {
-        return HttpRequestBody.bytes({
-            isOptional: bytesRequest.isOptional,
         });
     }
 

@@ -13069,8 +13069,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
             "type_imdb:ActorId",
             "type_imdb:DirectorWrapper",
             "type_imdb:Person",
-            "type_imdb:RecursiveType",
-            "type_imdb:bytes"
+            "type_imdb:RecursiveType"
         ]
     },
     "subpackages": {
@@ -22078,73 +22077,8 @@ exports[`ir {"name":"simple"} 1`] = `
                     "queryParameters": [],
                     "headers": [],
                     "requestBody": {
-                        "requestBodyType": {
-                            "name": {
-                                "originalName": "bytes",
-                                "camelCase": {
-                                    "unsafeName": "bytes",
-                                    "safeName": "bytes"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "bytes",
-                                    "safeName": "bytes"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "BYTES",
-                                    "safeName": "BYTES"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Bytes",
-                                    "safeName": "Bytes"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [
-                                    {
-                                        "originalName": "imdb",
-                                        "camelCase": {
-                                            "unsafeName": "imdb",
-                                            "safeName": "imdb"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "imdb",
-                                            "safeName": "imdb"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "IMDB",
-                                            "safeName": "IMDB"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Imdb",
-                                            "safeName": "Imdb"
-                                        }
-                                    }
-                                ],
-                                "packagePath": [],
-                                "file": {
-                                    "originalName": "imdb",
-                                    "camelCase": {
-                                        "unsafeName": "imdb",
-                                        "safeName": "imdb"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "imdb",
-                                        "safeName": "imdb"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "IMDB",
-                                        "safeName": "IMDB"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Imdb",
-                                        "safeName": "Imdb"
-                                    }
-                                }
-                            },
-                            "typeId": "type_imdb:bytes",
-                            "_type": "named"
-                        },
-                        "type": "reference"
+                        "isOptional": false,
+                        "type": "bytes"
                     },
                     "sdkRequest": {
                         "shape": {
@@ -22439,8 +22373,7 @@ exports[`ir {"name":"simple"} 1`] = `
             "type_imdb:ActorId",
             "type_imdb:DirectorWrapper",
             "type_imdb:Person",
-            "type_imdb:RecursiveType",
-            "type_imdb:bytes"
+            "type_imdb:RecursiveType"
         ]
     },
     "subpackages": {
