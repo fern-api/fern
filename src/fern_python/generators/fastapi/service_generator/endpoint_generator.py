@@ -8,6 +8,7 @@ from fern_python.external_dependencies import FastAPI
 from fern_python.external_dependencies.starlette import Starlette
 
 from ..context import FastApiGeneratorContext
+from ..custom_config import FastAPICustomConfig
 from .endpoint_parameters import (
     AuthEndpointParameter,
     EndpointParameter,
@@ -32,6 +33,8 @@ class EndpointGenerator:
         self._service = service
         self._endpoint = endpoint
         self._context = context
+
+        self._custom_config = FastAPICustomConfig.parse_obj(self._context.generator_config.custom_config or {})
 
         self._parameters: List[EndpointParameter] = []
         if endpoint.request_body is not None:
@@ -69,6 +72,7 @@ class EndpointGenerator:
                 return_type=self._get_return_type(),
             ),
             docstring=AST.Docstring(self._endpoint.docs) if self._endpoint.docs is not None else None,
+            is_async=self._custom_config.async_handlers,
         )
 
     def _get_return_type(self) -> AST.TypeHint:
@@ -168,6 +172,7 @@ class EndpointGenerator:
                             args=[AST.Expression(method_on_cls)],
                         )
                     ],
+                    is_async=self._custom_config.async_handlers,
                 )
             )
             writer.write_line()
@@ -303,7 +308,9 @@ class EndpointGenerator:
 
         writer.write_line("try:")
         with writer.indent():
-            writer.write_line(f"return {self._get_reference_to_method_on_cls()}(*args, **kwargs)")
+            return_statement = "return await" if self._custom_config.async_handlers else "return"
+
+            writer.write_line(f"{return_statement} {self._get_reference_to_method_on_cls()}(*args, **kwargs)")
 
         errors = self._endpoint.errors.get_as_list()
         if len(errors) > 0:

@@ -18,6 +18,22 @@ def test_fastapi(snapshot: SnapshotTest, tmpdir: Path) -> None:
     )
 
 
+def test_fastapi_async(snapshot: SnapshotTest, tmpdir: Path) -> None:
+    run_snapshot_test(
+        snapshot=snapshot,
+        fixture_name="trace",
+        tmpdir=tmpdir,
+        cli=cli,
+        filename_of_test=__file__,
+        custom_config={
+            "include_validators": True,
+            "include_union_visitors": True,
+            # make all endpoint handlers async
+            "async_handlers": True,
+        },
+    )
+
+
 def test_fastapi_error_status_code(snapshot: SnapshotTest, tmpdir: Path) -> None:
     run_snapshot_test(
         snapshot=snapshot,

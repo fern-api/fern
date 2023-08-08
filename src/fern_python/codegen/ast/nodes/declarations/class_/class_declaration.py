@@ -91,6 +91,7 @@ class ClassDeclaration(AstNode):
         name: str,
         signature: FunctionSignature,
         docstring: Docstring = None,
+        is_async: bool = False,
     ) -> FunctionDeclaration:
         return self.add_method(
             declaration=FunctionDeclaration(
@@ -106,6 +107,7 @@ class ClassDeclaration(AstNode):
                     )
                 ],
                 docstring=docstring,
+                is_async=is_async,
             )
         )
 
