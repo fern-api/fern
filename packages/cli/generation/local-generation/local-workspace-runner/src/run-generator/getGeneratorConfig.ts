@@ -46,12 +46,7 @@ export function getGeneratorConfig({
             };
         },
         _other: () => {
-            return {
-                mode: FernGeneratorExec.OutputMode._unknown({
-                    type: "",
-                }),
-                path: "",
-            };
+            throw new Error("Output type did not match any of the types supported by Fern");
         },
     });
     return {

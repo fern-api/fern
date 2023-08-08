@@ -8,6 +8,7 @@ import { FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, loadWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { GithubPublishInfo } from "@fern-fern/fiddle-sdk/types/api";
 import { ChildProcess, spawn } from "child_process";
 import path from "path";
 import { ParsedDockerName } from "../cli";
@@ -122,6 +123,9 @@ async function runDockerForWorkspace({
     taskContext: TaskContext;
     irVersion?: string;
 }): Promise<void> {
+
+    const publishInfo = getPublishInfo(language);
+
     const generatorGroup: GeneratorGroup = {
         groupName: "DUMMY",
         audiences: ALL_AUDIENCES,
@@ -133,11 +137,7 @@ async function runDockerForWorkspace({
                 outputMode: FernFiddle.remoteGen.OutputMode.github({
                     repo: `seed-${language}`,
                     owner: "fern-api",
-                    publishInfo: FernFiddle.GithubPublishInfo.pypi({
-                        //based on language
-                        packageName: "exhaustive",
-                        registryUrl: "pypi.buildwithfern.com",
-                    }),
+                    publishInfo
                 }),
                 absolutePathToLocalOutput: absolutePathToOutput,
                 language,
@@ -197,4 +197,29 @@ function executeCommand(
             context.logger.info(`Output for '${command}':\n${data}`);
         });
     });
+}
+
+function getPublishInfo(language: string) : GithubPublishInfo | undefined
+{
+    switch(language)
+    {
+        case "java": 
+            return FernFiddle.GithubPublishInfo.maven({
+                coordinate: "",
+                registryUrl: ""
+            });
+        
+        case "python":
+            return FernFiddle.GithubPublishInfo.pypi({
+                packageName: "",
+                registryUrl: ""
+            });
+        case "typescript": 
+            return FernFiddle.GithubPublishInfo.npm({
+                packageName: "",
+                registryUrl: ""
+            });
+        default: 
+            return undefined;
+    }
 }
