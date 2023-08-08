@@ -20,7 +20,13 @@ func main() {
 }
 
 func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File, error) {
-	generatorConfig, err := generator.NewConfig(config.DryRun, config.IrFilepath, config.ImportPath, config.Module)
+	generatorConfig, err := generator.NewConfig(
+		config.DryRun,
+		config.Version,
+		config.IrFilepath,
+		config.ImportPath,
+		config.Module,
+	)
 	if err != nil {
 		return nil, err
 	}

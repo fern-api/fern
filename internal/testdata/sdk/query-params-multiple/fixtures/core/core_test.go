@@ -142,9 +142,7 @@ func newTestServer(t *testing.T, tc *TestCase) *httptest.Server {
 		http.HandlerFunc(
 			func(w http.ResponseWriter, r *http.Request) {
 				assert.Equal(t, tc.giveMethod, r.Method)
-				for header, value := range fernHeaders {
-					assert.Equal(t, value, r.Header.Get(header))
-				}
+				assert.Equal(t, contentType, r.Header.Get(contentTypeHeader))
 				for header, value := range tc.giveHeader {
 					assert.Equal(t, value, r.Header.Values(header))
 				}

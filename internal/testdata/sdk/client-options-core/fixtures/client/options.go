@@ -23,9 +23,7 @@ func ClientWithHTTPClient(httpClient core.HTTPClient) core.ClientOption {
 }
 
 // ClientWithHTTPHeader adds the given http.Header to all requests
-// issued by the client. The given headers are added to the final set
-// after the standard headers (e.g. Content-Type), but before the
-// endpoint-specific headers.
+// issued by the client.
 func ClientWithHTTPHeader(httpHeader http.Header) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		// Clone the headers so they can't be modified after the option call.

@@ -11,6 +11,9 @@ import (
 	"github.com/fern-api/fern-go/internal/fern/ir"
 )
 
+// goLanguageHeader is the identifier used for the X-Fern-Language platform header.
+const goLanguageHeader = "Go"
+
 var (
 	//go:embed sdk/core/core.go
 	coreFile string
@@ -25,7 +28,13 @@ var (
 // WriteClientOptionsDefinition writes the ClientOption interface and
 // *ClientOptions type. These types are always deposited in the core
 // package to prevent import cycles in the generated SDK.
-func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth, headers []*ir.HttpHeader) error {
+func (f *fileWriter) WriteClientOptionsDefinition(
+	auth *ir.ApiAuth,
+	headers []*ir.HttpHeader,
+	sdkConfig *ir.SdkConfig,
+	moduleConfig *ModuleConfig,
+	sdkVersion string,
+) error {
 	importPath := path.Join(f.baseImportPath, "core")
 	f.P("// ClientOption adapts the behavior of the generated client.")
 	f.P("type ClientOption func(*ClientOptions)")
@@ -89,16 +98,16 @@ func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth, headers []*i
 	if (auth == nil || len(auth.Schemes) == 0) && (headers == nil || len(headers) == 0) {
 		f.P("// ToHeader maps the configured client options into a http.Header issued")
 		f.P("// on every request.")
-		f.P("func (c *ClientOptions) ToHeader() http.Header { return c.HTTPHeader.Clone() }")
+		f.P("func (c *ClientOptions) ToHeader() http.Header { return c.cloneHeader() }")
 		f.P()
-		return nil
+		return f.writePlatformHeaders(sdkConfig, moduleConfig, sdkVersion)
 	}
 
 	// Generate the ToHeader method.
 	f.P("// ToHeader maps the configured client options into a http.Header issued")
 	f.P("// on every request.")
 	f.P("func (c *ClientOptions) ToHeader() http.Header {")
-	f.P("header := c.HTTPHeader.Clone()")
+	f.P("header := c.cloneHeader()")
 	for _, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
 			f.P("if c.", authScheme.Bearer.Token.PascalCase.UnsafeName, ` != "" { `)
@@ -149,6 +158,34 @@ func (f *fileWriter) WriteClientOptionsDefinition(auth *ir.ApiAuth, headers []*i
 	f.P("}")
 	f.P()
 
+	if err := f.writePlatformHeaders(sdkConfig, moduleConfig, sdkVersion); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// writePlatformHeaders generates the platform headers.
+func (f *fileWriter) writePlatformHeaders(
+	sdkConfig *ir.SdkConfig,
+	moduleConfig *ModuleConfig,
+	sdkVersion string,
+) error {
+	if sdkVersion == "" {
+		f.P("func (c *ClientOptions) cloneHeader() http.Header {")
+		f.P("return c.HTTPHeader.Clone()")
+		f.P("}")
+		return nil
+	}
+	if sdkConfig.PlatformHeaders != nil {
+		f.P("func (c *ClientOptions) cloneHeader() http.Header {")
+		f.P("headers := c.HTTPHeader.Clone()")
+		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.Language, goLanguageHeader))
+		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkName, moduleConfig.Path))
+		f.P(fmt.Sprintf("headers.Set(%q, %q)", sdkConfig.PlatformHeaders.SdkVersion, sdkVersion))
+		f.P("return headers")
+		f.P("}")
+	}
 	return nil
 }
 
@@ -179,9 +216,7 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 	f.P("}")
 	f.P()
 	f.P("// ClientWithHTTPHeader adds the given http.Header to all requests")
-	f.P("// issued by the client. The given headers are added to the final set")
-	f.P("// after the standard headers (e.g. Content-Type), but before the")
-	f.P("// endpoint-specific headers.")
+	f.P("// issued by the client.")
 	f.P("func ClientWithHTTPHeader(httpHeader http.Header) ", clientOptionType, " {")
 	f.P("return func(opts ", clientOptionsType, ") {")
 	f.P("// Clone the headers so they can't be modified after the option call.")

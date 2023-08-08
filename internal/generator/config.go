@@ -3,6 +3,7 @@ package generator
 // Config represents the Fern generator configuration.
 type Config struct {
 	DryRun     bool
+	Version    string
 	IRFilepath string
 	ImportPath string
 
@@ -25,9 +26,16 @@ type ModuleConfig struct {
 }
 
 // NewConfig returns a new *Config for the given values.
-func NewConfig(dryRun bool, irFilepath string, importPath string, moduleConfig *ModuleConfig) (*Config, error) {
+func NewConfig(
+	dryRun bool,
+	version string,
+	irFilepath string,
+	importPath string,
+	moduleConfig *ModuleConfig,
+) (*Config, error) {
 	return &Config{
 		DryRun:       dryRun,
+		Version:      version,
 		IRFilepath:   irFilepath,
 		ImportPath:   importPath,
 		ModuleConfig: moduleConfig,

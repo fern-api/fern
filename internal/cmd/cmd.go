@@ -51,6 +51,7 @@ type Config struct {
 	DryRun            bool
 	CoordinatorURL    string
 	CoordinatorTaskID string
+	Version           string
 	IrFilepath        string
 	ImportPath        string
 	Module            *generator.ModuleConfig
@@ -171,10 +172,15 @@ func newConfig(configFilename string) (*Config, error) {
 		coordinatorURL = config.Environment.Remote.CoordinatorUrlV2
 		coordinatorTaskID = config.Environment.Remote.Id
 	}
+	var version string
+	if config.Publish != nil {
+		version = config.Publish.Version
+	}
 	return &Config{
 		DryRun:            config.DryRun,
 		CoordinatorURL:    coordinatorURL,
 		CoordinatorTaskID: coordinatorTaskID,
+		Version:           version,
 		IrFilepath:        config.IrFilepath,
 		ImportPath:        customConfig.ImportPath,
 		Module:            moduleConfig,

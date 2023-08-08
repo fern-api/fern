@@ -14,28 +14,7 @@ const (
 	// contentType specifies the JSON Content-Type header value.
 	contentType       = "application/json"
 	contentTypeHeader = "Content-Type"
-
-	// fernLanguage specifies the value of the X-Fern-Language header.
-	fernLanguage       = "go"
-	fernLanguageHeader = "X-Fern-Language"
-
-	// fernSDKName specifies the name of this Fern SDK.
-	fernSDKName       = "fern-go-sdk"
-	fernSDKNameHeader = "X-Fern-SDK-Name"
-
-	// fernSDKVersion specifies the version of this Fern SDK.
-	fernSDKVersion       = "0.0.1"
-	fernSDKVersionHeader = "X-Fern-SDK-Version"
 )
-
-// fernHeaders specifies all of the standard Fern headers in
-// a set so that they're easier to access and reference.
-var fernHeaders = map[string]string{
-	contentTypeHeader:    contentType,
-	fernLanguageHeader:   fernLanguage,
-	fernSDKNameHeader:    fernSDKName,
-	fernSDKVersionHeader: fernSDKVersion,
-}
 
 // HTTPClient is an interface for a subset of the *http.Client.
 type HTTPClient interface {
@@ -192,9 +171,7 @@ func newRequest(
 		return nil, err
 	}
 	req = req.WithContext(ctx)
-	for name, value := range fernHeaders {
-		req.Header.Set(name, value)
-	}
+	req.Header.Set(contentTypeHeader, contentType)
 	for name, values := range endpointHeaders {
 		req.Header[name] = values
 	}

@@ -157,7 +157,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			ir.Errors,
 			g.coordinator,
 		)
-		if err := writer.WriteClientOptionsDefinition(ir.Auth, ir.Headers); err != nil {
+		if err := writer.WriteClientOptionsDefinition(ir.Auth, ir.Headers, ir.SdkConfig, g.config.ModuleConfig, g.config.Version); err != nil {
 			return nil, err
 		}
 		file, err := writer.File()
