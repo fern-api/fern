@@ -61,6 +61,7 @@ export async function runTests({
             language,
             taskContext,
             fixture: testCase,
+            irVersion,
         });
     }
 }
@@ -101,12 +102,14 @@ async function runDockerForWorkspace({
     language,
     workspace,
     taskContext,
+    irVersion,
 }: {
     fixture: string;
     docker: ParsedDockerName;
     language: GenerationLanguage;
     workspace: FernWorkspace;
     taskContext: TaskContext;
+    irVersion?: string;
 }): Promise<void> {
     const absolutePathToOutput = AbsoluteFilePath.of(resolve(cwd(), "seed", fixture));
     const generatorGroup: GeneratorGroup = {
@@ -130,5 +133,6 @@ async function runDockerForWorkspace({
         generatorGroup,
         keepDocker: true,
         context: taskContext,
+        irVersionOverride: irVersion,
     });
 }
