@@ -1,9 +1,10 @@
 import { runDocker } from "@fern-api/docker-utils";
 import { AbsoluteFilePath, waitUntilPathExists } from "@fern-api/fs-utils";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { writeFile } from "fs/promises";
 import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_GENERATOR_CONFIG_PATH, DOCKER_PATH_TO_IR } from "./constants";
-import { getGeneratorConfig } from "./getGeneratorConfig";
+import { getGeneratorConfigForCli, getGeneratorConfigForSeed } from "./getGeneratorConfig";
 
 export declare namespace runGenerator {
     export interface Args {
@@ -17,6 +18,8 @@ export declare namespace runGenerator {
         absolutePathToWriteConfigJson: AbsoluteFilePath;
 
         keepDocker: boolean;
+
+        outputModeForSeedConfig: FernGeneratorExec.OutputMode | undefined;
     }
 }
 
@@ -29,6 +32,7 @@ export async function runGenerator({
     absolutePathToWriteConfigJson,
     customConfig,
     keepDocker,
+    outputModeForSeedConfig,
 }: runGenerator.Args): Promise<void> {
     const binds = [
         `${absolutePathToWriteConfigJson}:${DOCKER_GENERATOR_CONFIG_PATH}:ro`,
@@ -36,11 +40,20 @@ export async function runGenerator({
         `${absolutePathToOutput}:${DOCKER_CODEGEN_OUTPUT_DIRECTORY}`,
     ];
 
-    const { config, binds: bindsForGenerators } = getGeneratorConfig({
-        customConfig,
-        workspaceName,
-        organization,
-    });
+    const { config, binds: bindsForGenerators } =
+        outputModeForSeedConfig != null
+            ? getGeneratorConfigForSeed({
+                  customConfig,
+                  workspaceName,
+                  organization,
+                  outputMode: outputModeForSeedConfig,
+              })
+            : getGeneratorConfigForCli({
+                  customConfig,
+                  workspaceName,
+                  organization,
+              });
+
     binds.push(...bindsForGenerators);
 
     await writeFile(

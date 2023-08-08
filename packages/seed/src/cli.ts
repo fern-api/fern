@@ -56,6 +56,11 @@ function addTestCommand(cli: Argv, taskContext: TaskContext) {
                     choices: Object.values(FIXTURE),
                     demandOption: false,
                     description: "Runs on all fixtures if not provided",
+                })
+                .options("compileCmd", {
+                    type: "string",
+                    demandOption: true,
+                    description: "User inputted command to compile generated code with",
                 }),
         async (argv) => {
             const parsedDockerImage = validateAndParseDockerImage(argv.docker);
@@ -64,6 +69,7 @@ function addTestCommand(cli: Argv, taskContext: TaskContext) {
                 irVersion: argv.irVersion,
                 language: argv.language,
                 docker: parsedDockerImage,
+                compileCmd: argv.compileCmd,
                 taskContext,
             });
         }

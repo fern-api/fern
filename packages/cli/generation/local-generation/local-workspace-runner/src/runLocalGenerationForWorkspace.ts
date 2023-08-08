@@ -8,6 +8,7 @@ import {
 } from "@fern-api/ir-migrations";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import chalk from "chalk";
 import os from "os";
 import path from "path";
@@ -22,6 +23,7 @@ export async function runLocalGenerationForWorkspace({
     keepDocker,
     context,
     irVersionOverride,
+    outputModeForSeedConfig,
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -29,6 +31,7 @@ export async function runLocalGenerationForWorkspace({
     keepDocker: boolean;
     context: TaskContext;
     irVersionOverride: string | undefined;
+    outputModeForSeedConfig: FernGeneratorExec.OutputMode | undefined;
 }): Promise<void> {
     const workspaceTempDir = await tmp.dir({
         // use the /private prefix on osx so that docker can access the tmpdir
@@ -55,6 +58,7 @@ export async function runLocalGenerationForWorkspace({
                         keepDocker,
                         context: interactiveTaskContext,
                         irVersionOverride,
+                        outputModeForSeedConfig,
                     });
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
@@ -79,6 +83,7 @@ async function writeFilesToDiskAndRunGenerator({
     keepDocker,
     context,
     irVersionOverride,
+    outputModeForSeedConfig,
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -89,6 +94,7 @@ async function writeFilesToDiskAndRunGenerator({
     keepDocker: boolean;
     context: TaskContext;
     irVersionOverride: string | undefined;
+    outputModeForSeedConfig: FernGeneratorExec.OutputMode | undefined;
 }): Promise<void> {
     const absolutePathToIr = await writeIrToFile({
         workspace,
@@ -121,6 +127,7 @@ async function writeFilesToDiskAndRunGenerator({
         workspaceName: workspace.name,
         organization,
         keepDocker,
+        outputModeForSeedConfig,
     });
 
     const taskHandler = new LocalTaskHandler({

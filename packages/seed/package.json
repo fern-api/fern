@@ -41,11 +41,14 @@
     "@fern-api/ir-migrations": "workspace:*",
     "@fern-api/local-workspace-runner": "workspace:*",
     "@fern-api/logger": "workspace:*",
+    "@fern-api/logging-execa": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-sdk": "^0.0.290",
+    "@fern-fern/generator-exec-sdk": "0.0.101",
     "chalk": "^5.0.1",
+    "execa": "^7.2.0",
     "yargs": "^17.4.1"
   },
   "devDependencies": {

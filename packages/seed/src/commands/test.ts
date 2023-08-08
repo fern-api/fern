@@ -8,6 +8,8 @@ import { FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, loadWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { ChildProcess, spawn } from "child_process";
 import path from "path";
 import { ParsedDockerName } from "../cli";
 
@@ -23,12 +25,14 @@ export async function runTests({
     language,
     fixture,
     docker,
+    compileCmd,
     taskContext,
 }: {
     irVersion: string | undefined;
     language: GenerationLanguage;
     fixture: string | undefined;
     docker: ParsedDockerName;
+    compileCmd: string;
     taskContext: TaskContext;
 }): Promise<void> {
     const testCases = fixture != null ? [fixture] : Object.values(FIXTURE);
@@ -55,13 +59,21 @@ export async function runTests({
             irVersion,
         });
         taskContext.logger.info(`Generated IR for fixture ${testCase} ${typeof ir}`);
+        const absolutePathToOutput = AbsoluteFilePath.of(resolve(cwd(), "seed", testCase));
         await runDockerForWorkspace({
+            absolutePathToOutput,
             docker,
             workspace: workspace.workspace,
             language,
             taskContext,
-            fixture: testCase,
             irVersion,
+        });
+        taskContext.logger.info(`Receinved compile command: ${compileCmd}`);
+        await compileGeneratedCode({
+            absolutePathToOutput,
+            command: compileCmd,
+            context: taskContext,
+            testCase,
         });
     }
 }
@@ -97,21 +109,20 @@ async function getIntermediateRepresentation({
 const DUMMY_ORGANIZATION = "seed";
 
 async function runDockerForWorkspace({
-    fixture,
+    absolutePathToOutput,
     docker,
     language,
     workspace,
     taskContext,
     irVersion,
 }: {
-    fixture: string;
+    absolutePathToOutput: AbsoluteFilePath;
     docker: ParsedDockerName;
     language: GenerationLanguage;
     workspace: FernWorkspace;
     taskContext: TaskContext;
     irVersion?: string;
 }): Promise<void> {
-    const absolutePathToOutput = AbsoluteFilePath.of(resolve(cwd(), "seed", fixture));
     const generatorGroup: GeneratorGroup = {
         groupName: "DUMMY",
         audiences: ALL_AUDIENCES,
@@ -120,13 +131,21 @@ async function runDockerForWorkspace({
                 name: docker.name,
                 version: docker.version,
                 config: undefined,
-                outputMode: FernFiddle.remoteGen.OutputMode.downloadFiles(),
+                outputMode: FernFiddle.remoteGen.OutputMode.github({
+                    repo: `seed-${language}`,
+                    owner: "fern-api",
+                    publishInfo: FernFiddle.GithubPublishInfo.pypi({
+                        packageName: "exhaustive",
+                        registryUrl: "pypi.buildwithfern.com",
+                    }),
+                }),
                 absolutePathToLocalOutput: absolutePathToOutput,
                 language,
             },
         ],
         docs: undefined,
     };
+    taskContext.logger.info(`Generator group is ${JSON.stringify(generatorGroup.generators)}`);
     await runLocalGenerationForWorkspace({
         organization: DUMMY_ORGANIZATION,
         workspace,
@@ -134,5 +153,53 @@ async function runDockerForWorkspace({
         keepDocker: true,
         context: taskContext,
         irVersionOverride: irVersion,
+        outputModeForSeedConfig: FernGeneratorExec.OutputMode.github({
+            version: "0.0.1",
+            repoUrl: "https://github.com/fern-api/seed-cli",
+        }),
+    });
+}
+
+async function compileGeneratedCode({
+    absolutePathToOutput,
+    command,
+    context,
+    testCase,
+}: {
+    absolutePathToOutput: AbsoluteFilePath;
+    command: string;
+    context: TaskContext;
+    testCase: string;
+}): Promise<void> {
+    context.logger.info("CWD", absolutePathToOutput);
+    context.logger.info("fixture", testCase);
+    context.logger.info(command);
+
+    const commands = command.split("&& ");
+    if (commands[0] != null && commands[1] != null) {
+        await executeCommand(commands[0], [], context, absolutePathToOutput);
+        await executeCommand(commands[1], [], context, absolutePathToOutput);
+    }
+}
+
+function executeCommand(
+    command: string,
+    args: string[],
+    context: TaskContext,
+    absolutePathToOutput: AbsoluteFilePath
+): Promise<void> {
+    const childProcess: ChildProcess = spawn(command, args, { shell: true, cwd: absolutePathToOutput });
+
+    return new Promise((resolve, reject) => {
+        childProcess.on("close", (code) => {
+            if (code === 0) {
+                resolve();
+            } else {
+                reject(new Error(`Command '${command}' exited with code ${code}`));
+            }
+        });
+        childProcess.stdout?.on("data", (data) => {
+            context.logger.info(`Output for '${command}':\n${data}`);
+        });
     });
 }

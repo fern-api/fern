@@ -1740,7 +1740,7 @@ __metadata:
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
     eslint: ^8.26.0
-    execa: ^5.1.1
+    execa: ^7.2.0
     jest: ^29.4.0
     js-yaml: ^4.1.0
     organize-imports-cli: ^0.10.0
@@ -1948,6 +1948,7 @@ __metadata:
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
+    "@fern-fern/fiddle-sdk": ^0.0.290
     "@fern-fern/generator-exec-sdk": 0.0.101
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
@@ -1991,7 +1992,7 @@ __metadata:
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
     eslint: ^8.26.0
-    execa: ^5.1.1
+    execa: ^7.2.0
     jest: ^29.4.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -2292,7 +2293,7 @@ __metadata:
     depcheck: ^1.4.3
     esbuild: ^0.15.7
     eslint: ^8.26.0
-    execa: ^5.1.1
+    execa: ^7.2.0
     immer: ^9.0.15
     jest: ^29.4.0
     js-yaml: ^4.1.0
@@ -2318,10 +2319,12 @@ __metadata:
     "@fern-api/ir-migrations": "workspace:*"
     "@fern-api/local-workspace-runner": "workspace:*"
     "@fern-api/logger": "workspace:*"
+    "@fern-api/logging-execa": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.290
+    "@fern-fern/generator-exec-sdk": 0.0.101
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/yargs": ^17.0.24
@@ -2331,6 +2334,7 @@ __metadata:
     env-cmd: toddbluhm/env-cmd
     esbuild: ^0.15.7
     eslint: ^8.26.0
+    execa: ^7.2.0
     jest: ^29.4.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -6723,6 +6727,23 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"execa@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "execa@npm:7.2.0"
+  dependencies:
+    cross-spawn: ^7.0.3
+    get-stream: ^6.0.1
+    human-signals: ^4.3.0
+    is-stream: ^3.0.0
+    merge-stream: ^2.0.0
+    npm-run-path: ^5.1.0
+    onetime: ^6.0.0
+    signal-exit: ^3.0.7
+    strip-final-newline: ^3.0.0
+  checksum: 14fd17ba0ca8c87b277584d93b1d9fc24f2a65e5152b31d5eb159a3b814854283eaae5f51efa9525e304447e2f757c691877f7adff8fde5746aae67eb1edd1cc
+  languageName: node
+  linkType: hard
+
 "exit@npm:^0.1.2":
   version: 0.1.2
   resolution: "exit@npm:0.1.2"
@@ -7604,6 +7625,13 @@ env-cmd@toddbluhm/env-cmd:
   version: 3.0.1
   resolution: "human-signals@npm:3.0.1"
   checksum: f252a7769c8094a5c9dc6772816bdb417b188820b04c8b42d0fc468e03a0ba905b1dd07afabe9385cc83504af1ccc2b985cd1e4aeeeb8e0029896c5af2e6f354
+  languageName: node
+  linkType: hard
+
+"human-signals@npm:^4.3.0":
+  version: 4.3.1
+  resolution: "human-signals@npm:4.3.1"
+  checksum: 6f12958df3f21b6fdaf02d90896c271df00636a31e2bbea05bddf817a35c66b38a6fdac5863e2df85bd52f34958997f1f50350ff97249e1dff8452865d5235d1
   languageName: node
   linkType: hard
 
