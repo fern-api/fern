@@ -1,0 +1,444 @@
+{
+  "apiName": {
+    "originalName": "my-api",
+    "camelCase": {
+      "unsafeName": "myApi",
+      "safeName": "myApi"
+    },
+    "snakeCase": {
+      "unsafeName": "my_api",
+      "safeName": "my_api"
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "MY_API",
+      "safeName": "MY_API"
+    },
+    "pascalCase": {
+      "unsafeName": "MyApi",
+      "safeName": "MyApi"
+    }
+  },
+  "auth": {
+    "requirement": "ALL",
+    "schemes": []
+  },
+  "headers": [],
+  "types": {},
+  "errors": {},
+  "services": {
+    "service_file-upload": {
+      "availability": {
+        "status": "GENERAL_AVAILABILITY"
+      },
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "originalName": "file-upload",
+              "camelCase": {
+                "unsafeName": "fileUpload",
+                "safeName": "fileUpload"
+              },
+              "snakeCase": {
+                "unsafeName": "file_upload",
+                "safeName": "file_upload"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "FILE_UPLOAD",
+                "safeName": "FILE_UPLOAD"
+              },
+              "pascalCase": {
+                "unsafeName": "FileUpload",
+                "safeName": "FileUpload"
+              }
+            }
+          ],
+          "packagePath": [],
+          "file": {
+            "originalName": "file-upload",
+            "camelCase": {
+              "unsafeName": "fileUpload",
+              "safeName": "fileUpload"
+            },
+            "snakeCase": {
+              "unsafeName": "file_upload",
+              "safeName": "file_upload"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "FILE_UPLOAD",
+              "safeName": "FILE_UPLOAD"
+            },
+            "pascalCase": {
+              "unsafeName": "FileUpload",
+              "safeName": "FileUpload"
+            }
+          }
+        }
+      },
+      "basePath": {
+        "head": "/movies",
+        "parts": []
+      },
+      "headers": [],
+      "pathParameters": [],
+      "endpoints": [
+        {
+          "availability": {
+            "status": "GENERAL_AVAILABILITY"
+          },
+          "name": {
+            "originalName": "fileUpload",
+            "camelCase": {
+              "unsafeName": "fileUpload",
+              "safeName": "fileUpload"
+            },
+            "snakeCase": {
+              "unsafeName": "file_upload",
+              "safeName": "file_upload"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "FILE_UPLOAD",
+              "safeName": "FILE_UPLOAD"
+            },
+            "pascalCase": {
+              "unsafeName": "FileUpload",
+              "safeName": "FileUpload"
+            }
+          },
+          "auth": false,
+          "method": "POST",
+          "path": {
+            "head": "",
+            "parts": []
+          },
+          "fullPath": {
+            "head": "/movies",
+            "parts": []
+          },
+          "pathParameters": [],
+          "allPathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "requestBody": {
+            "name": {
+              "originalName": "FileUploadRequest",
+              "camelCase": {
+                "unsafeName": "fileUploadRequest",
+                "safeName": "fileUploadRequest"
+              },
+              "snakeCase": {
+                "unsafeName": "file_upload_request",
+                "safeName": "file_upload_request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "FILE_UPLOAD_REQUEST",
+                "safeName": "FILE_UPLOAD_REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "FileUploadRequest",
+                "safeName": "FileUploadRequest"
+              }
+            },
+            "properties": [
+              {
+                "name": {
+                  "name": {
+                    "originalName": "foo",
+                    "camelCase": {
+                      "unsafeName": "foo",
+                      "safeName": "foo"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "foo",
+                      "safeName": "foo"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "FOO",
+                      "safeName": "FOO"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Foo",
+                      "safeName": "Foo"
+                    }
+                  },
+                  "wireValue": "foo"
+                },
+                "valueType": {
+                  "primitive": "STRING",
+                  "_type": "primitive"
+                },
+                "type": "bodyProperty"
+              },
+              {
+                "key": {
+                  "name": {
+                    "originalName": "file",
+                    "camelCase": {
+                      "unsafeName": "file",
+                      "safeName": "file"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "file",
+                      "safeName": "file"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "FILE",
+                      "safeName": "FILE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "File",
+                      "safeName": "File"
+                    }
+                  },
+                  "wireValue": "file"
+                },
+                "isOptional": false,
+                "type": "file"
+              },
+              {
+                "key": {
+                  "name": {
+                    "originalName": "optionalFile",
+                    "camelCase": {
+                      "unsafeName": "optionalFile",
+                      "safeName": "optionalFile"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "optional_file",
+                      "safeName": "optional_file"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "OPTIONAL_FILE",
+                      "safeName": "OPTIONAL_FILE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "OptionalFile",
+                      "safeName": "OptionalFile"
+                    }
+                  },
+                  "wireValue": "optionalFile"
+                },
+                "isOptional": true,
+                "type": "file"
+              },
+              {
+                "name": {
+                  "name": {
+                    "originalName": "bar",
+                    "camelCase": {
+                      "unsafeName": "bar",
+                      "safeName": "bar"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "bar",
+                      "safeName": "bar"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "BAR",
+                      "safeName": "BAR"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Bar",
+                      "safeName": "Bar"
+                    }
+                  },
+                  "wireValue": "bar"
+                },
+                "valueType": {
+                  "primitive": "INTEGER",
+                  "_type": "primitive"
+                },
+                "type": "bodyProperty"
+              }
+            ],
+            "type": "fileUpload"
+          },
+          "sdkRequest": {
+            "shape": {
+              "wrapperName": {
+                "originalName": "FileUploadRequest",
+                "camelCase": {
+                  "unsafeName": "fileUploadRequest",
+                  "safeName": "fileUploadRequest"
+                },
+                "snakeCase": {
+                  "unsafeName": "file_upload_request",
+                  "safeName": "file_upload_request"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "FILE_UPLOAD_REQUEST",
+                  "safeName": "FILE_UPLOAD_REQUEST"
+                },
+                "pascalCase": {
+                  "unsafeName": "FileUploadRequest",
+                  "safeName": "FileUploadRequest"
+                }
+              },
+              "bodyKey": {
+                "originalName": "body",
+                "camelCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "snakeCase": {
+                  "unsafeName": "body",
+                  "safeName": "body"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "BODY",
+                  "safeName": "BODY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Body",
+                  "safeName": "Body"
+                }
+              },
+              "type": "wrapper"
+            },
+            "requestParameterName": {
+              "originalName": "request",
+              "camelCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "snakeCase": {
+                "unsafeName": "request",
+                "safeName": "request"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "REQUEST",
+                "safeName": "REQUEST"
+              },
+              "pascalCase": {
+                "unsafeName": "Request",
+                "safeName": "Request"
+              }
+            }
+          },
+          "errors": [],
+          "examples": []
+        }
+      ]
+    }
+  },
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      },
+      "wireValue": "errorInstanceId"
+    }
+  },
+  "errorDiscriminationStrategy": {
+    "type": "statusCode"
+  },
+  "pathParameters": [],
+  "variables": [],
+  "subpackages": {
+    "subpackage_file-upload": {
+      "fernFilepath": {
+        "allParts": [
+          {
+            "originalName": "file-upload",
+            "camelCase": {
+              "unsafeName": "fileUpload",
+              "safeName": "fileUpload"
+            },
+            "snakeCase": {
+              "unsafeName": "file_upload",
+              "safeName": "file_upload"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "FILE_UPLOAD",
+              "safeName": "FILE_UPLOAD"
+            },
+            "pascalCase": {
+              "unsafeName": "FileUpload",
+              "safeName": "FileUpload"
+            }
+          }
+        ],
+        "packagePath": [],
+        "file": {
+          "originalName": "file-upload",
+          "camelCase": {
+            "unsafeName": "fileUpload",
+            "safeName": "fileUpload"
+          },
+          "snakeCase": {
+            "unsafeName": "file_upload",
+            "safeName": "file_upload"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "FILE_UPLOAD",
+            "safeName": "FILE_UPLOAD"
+          },
+          "pascalCase": {
+            "unsafeName": "FileUpload",
+            "safeName": "FileUpload"
+          }
+        }
+      },
+      "name": {
+        "originalName": "file-upload",
+        "camelCase": {
+          "unsafeName": "fileUpload",
+          "safeName": "fileUpload"
+        },
+        "snakeCase": {
+          "unsafeName": "file_upload",
+          "safeName": "file_upload"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "FILE_UPLOAD",
+          "safeName": "FILE_UPLOAD"
+        },
+        "pascalCase": {
+          "unsafeName": "FileUpload",
+          "safeName": "FileUpload"
+        }
+      },
+      "service": "service_file-upload",
+      "types": [],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": true
+    }
+  },
+  "rootPackage": {
+    "fernFilepath": {
+      "allParts": [],
+      "packagePath": []
+    },
+    "types": [],
+    "errors": [],
+    "subpackages": ["subpackage_file-upload"],
+    "hasEndpointsInTree": true
+  },
+  "sdkConfig": {
+    "isAuthMandatory": false,
+    "hasStreamingEndpoints": false,
+    "hasFileDownloadEndpoints": false,
+    "platformHeaders": {
+      "language": "X-Fern-Language",
+      "sdkName": "X-Fern-SDK-Name",
+      "sdkVersion": "X-Fern-SDK-Version"
+    }
+  }
+}

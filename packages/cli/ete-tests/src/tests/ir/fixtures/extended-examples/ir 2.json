@@ -1,0 +1,1165 @@
+{
+  "apiName": {
+    "originalName": "api",
+    "camelCase": {
+      "unsafeName": "api",
+      "safeName": "api"
+    },
+    "snakeCase": {
+      "unsafeName": "api",
+      "safeName": "api"
+    },
+    "screamingSnakeCase": {
+      "unsafeName": "API",
+      "safeName": "API"
+    },
+    "pascalCase": {
+      "unsafeName": "Api",
+      "safeName": "Api"
+    }
+  },
+  "apiDisplayName": "API",
+  "auth": {
+    "requirement": "ALL",
+    "schemes": [
+      {
+        "token": {
+          "originalName": "token",
+          "camelCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "snakeCase": {
+            "unsafeName": "token",
+            "safeName": "token"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "TOKEN",
+            "safeName": "TOKEN"
+          },
+          "pascalCase": {
+            "unsafeName": "Token",
+            "safeName": "Token"
+          }
+        },
+        "_type": "bearer"
+      }
+    ]
+  },
+  "headers": [],
+  "types": {
+    "type_app:GetAppResponse": {
+      "availability": {
+        "status": "GENERAL_AVAILABILITY"
+      },
+      "name": {
+        "name": {
+          "originalName": "GetAppResponse",
+          "camelCase": {
+            "unsafeName": "getAppResponse",
+            "safeName": "getAppResponse"
+          },
+          "snakeCase": {
+            "unsafeName": "get_app_response",
+            "safeName": "get_app_response"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "GET_APP_RESPONSE",
+            "safeName": "GET_APP_RESPONSE"
+          },
+          "pascalCase": {
+            "unsafeName": "GetAppResponse",
+            "safeName": "GetAppResponse"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [
+            {
+              "originalName": "app",
+              "camelCase": {
+                "unsafeName": "app",
+                "safeName": "app"
+              },
+              "snakeCase": {
+                "unsafeName": "app",
+                "safeName": "app"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "APP",
+                "safeName": "APP"
+              },
+              "pascalCase": {
+                "unsafeName": "App",
+                "safeName": "App"
+              }
+            }
+          ],
+          "packagePath": [],
+          "file": {
+            "originalName": "app",
+            "camelCase": {
+              "unsafeName": "app",
+              "safeName": "app"
+            },
+            "snakeCase": {
+              "unsafeName": "app",
+              "safeName": "app"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "APP",
+              "safeName": "APP"
+            },
+            "pascalCase": {
+              "unsafeName": "App",
+              "safeName": "App"
+            }
+          }
+        },
+        "typeId": "type_app:GetAppResponse"
+      },
+      "shape": {
+        "extends": [
+          {
+            "name": {
+              "originalName": "Deployment",
+              "camelCase": {
+                "unsafeName": "deployment",
+                "safeName": "deployment"
+              },
+              "snakeCase": {
+                "unsafeName": "deployment",
+                "safeName": "deployment"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "DEPLOYMENT",
+                "safeName": "DEPLOYMENT"
+              },
+              "pascalCase": {
+                "unsafeName": "Deployment",
+                "safeName": "Deployment"
+              }
+            },
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "originalName": "commons",
+                  "camelCase": {
+                    "unsafeName": "commons",
+                    "safeName": "commons"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "commons",
+                    "safeName": "commons"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "COMMONS",
+                    "safeName": "COMMONS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Commons",
+                    "safeName": "Commons"
+                  }
+                }
+              ],
+              "packagePath": [],
+              "file": {
+                "originalName": "commons",
+                "camelCase": {
+                  "unsafeName": "commons",
+                  "safeName": "commons"
+                },
+                "snakeCase": {
+                  "unsafeName": "commons",
+                  "safeName": "commons"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "COMMONS",
+                  "safeName": "COMMONS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Commons",
+                  "safeName": "Commons"
+                }
+              }
+            },
+            "typeId": "type_commons:Deployment"
+          }
+        ],
+        "properties": [
+          {
+            "availability": {
+              "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+              "name": {
+                "originalName": "property",
+                "camelCase": {
+                  "unsafeName": "property",
+                  "safeName": "property"
+                },
+                "snakeCase": {
+                  "unsafeName": "property",
+                  "safeName": "property"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "PROPERTY",
+                  "safeName": "PROPERTY"
+                },
+                "pascalCase": {
+                  "unsafeName": "Property",
+                  "safeName": "Property"
+                }
+              },
+              "wireValue": "property"
+            },
+            "valueType": {
+              "primitive": "STRING",
+              "_type": "primitive"
+            }
+          }
+        ],
+        "_type": "object"
+      },
+      "referencedTypes": [
+        {
+          "name": {
+            "originalName": "Deployment",
+            "camelCase": {
+              "unsafeName": "deployment",
+              "safeName": "deployment"
+            },
+            "snakeCase": {
+              "unsafeName": "deployment",
+              "safeName": "deployment"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "DEPLOYMENT",
+              "safeName": "DEPLOYMENT"
+            },
+            "pascalCase": {
+              "unsafeName": "Deployment",
+              "safeName": "Deployment"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [
+              {
+                "originalName": "commons",
+                "camelCase": {
+                  "unsafeName": "commons",
+                  "safeName": "commons"
+                },
+                "snakeCase": {
+                  "unsafeName": "commons",
+                  "safeName": "commons"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "COMMONS",
+                  "safeName": "COMMONS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Commons",
+                  "safeName": "Commons"
+                }
+              }
+            ],
+            "packagePath": [],
+            "file": {
+              "originalName": "commons",
+              "camelCase": {
+                "unsafeName": "commons",
+                "safeName": "commons"
+              },
+              "snakeCase": {
+                "unsafeName": "commons",
+                "safeName": "commons"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "COMMONS",
+                "safeName": "COMMONS"
+              },
+              "pascalCase": {
+                "unsafeName": "Commons",
+                "safeName": "Commons"
+              }
+            }
+          },
+          "typeId": "type_commons:Deployment"
+        },
+        {
+          "name": {
+            "originalName": "AppId",
+            "camelCase": {
+              "unsafeName": "appId",
+              "safeName": "appId"
+            },
+            "snakeCase": {
+              "unsafeName": "app_id",
+              "safeName": "app_id"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "APP_ID",
+              "safeName": "APP_ID"
+            },
+            "pascalCase": {
+              "unsafeName": "AppId",
+              "safeName": "AppId"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [
+              {
+                "originalName": "commons",
+                "camelCase": {
+                  "unsafeName": "commons",
+                  "safeName": "commons"
+                },
+                "snakeCase": {
+                  "unsafeName": "commons",
+                  "safeName": "commons"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "COMMONS",
+                  "safeName": "COMMONS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Commons",
+                  "safeName": "Commons"
+                }
+              }
+            ],
+            "packagePath": [],
+            "file": {
+              "originalName": "commons",
+              "camelCase": {
+                "unsafeName": "commons",
+                "safeName": "commons"
+              },
+              "snakeCase": {
+                "unsafeName": "commons",
+                "safeName": "commons"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "COMMONS",
+                "safeName": "COMMONS"
+              },
+              "pascalCase": {
+                "unsafeName": "Commons",
+                "safeName": "Commons"
+              }
+            }
+          },
+          "typeId": "type_commons:AppId"
+        }
+      ],
+      "examples": [
+        {
+          "name": {
+            "originalName": "Example",
+            "camelCase": {
+              "unsafeName": "example",
+              "safeName": "example"
+            },
+            "snakeCase": {
+              "unsafeName": "example",
+              "safeName": "example"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "EXAMPLE",
+              "safeName": "EXAMPLE"
+            },
+            "pascalCase": {
+              "unsafeName": "Example",
+              "safeName": "Example"
+            }
+          },
+          "jsonExample": {
+            "appId": "your-app-id",
+            "property": "app-secret"
+          },
+          "shape": {
+            "properties": [
+              {
+                "wireKey": "appId",
+                "value": {
+                  "shape": {
+                    "typeName": {
+                      "typeId": "type_commons:AppId",
+                      "fernFilepath": {
+                        "allParts": [
+                          {
+                            "originalName": "commons",
+                            "camelCase": {
+                              "unsafeName": "commons",
+                              "safeName": "commons"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "commons",
+                              "safeName": "commons"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "COMMONS",
+                              "safeName": "COMMONS"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "Commons",
+                              "safeName": "Commons"
+                            }
+                          }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                          "originalName": "commons",
+                          "camelCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                          },
+                          "snakeCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                          },
+                          "screamingSnakeCase": {
+                            "unsafeName": "COMMONS",
+                            "safeName": "COMMONS"
+                          },
+                          "pascalCase": {
+                            "unsafeName": "Commons",
+                            "safeName": "Commons"
+                          }
+                        }
+                      },
+                      "name": {
+                        "originalName": "AppId",
+                        "camelCase": {
+                          "unsafeName": "appId",
+                          "safeName": "appId"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "app_id",
+                          "safeName": "app_id"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "APP_ID",
+                          "safeName": "APP_ID"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "AppId",
+                          "safeName": "AppId"
+                        }
+                      }
+                    },
+                    "shape": {
+                      "value": {
+                        "shape": {
+                          "primitive": {
+                            "string": "your-app-id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "jsonExample": "your-app-id"
+                      },
+                      "type": "alias"
+                    },
+                    "type": "named"
+                  },
+                  "jsonExample": "your-app-id"
+                },
+                "originalTypeDeclaration": {
+                  "name": {
+                    "originalName": "Deployment",
+                    "camelCase": {
+                      "unsafeName": "deployment",
+                      "safeName": "deployment"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "deployment",
+                      "safeName": "deployment"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "DEPLOYMENT",
+                      "safeName": "DEPLOYMENT"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Deployment",
+                      "safeName": "Deployment"
+                    }
+                  },
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "originalName": "commons",
+                        "camelCase": {
+                          "unsafeName": "commons",
+                          "safeName": "commons"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "commons",
+                          "safeName": "commons"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "COMMONS",
+                          "safeName": "COMMONS"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "Commons",
+                          "safeName": "Commons"
+                        }
+                      }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                      "originalName": "commons",
+                      "camelCase": {
+                        "unsafeName": "commons",
+                        "safeName": "commons"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "commons",
+                        "safeName": "commons"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "COMMONS",
+                        "safeName": "COMMONS"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "Commons",
+                        "safeName": "Commons"
+                      }
+                    }
+                  },
+                  "typeId": "type_commons:Deployment",
+                  "_type": "named"
+                }
+              },
+              {
+                "wireKey": "property",
+                "value": {
+                  "shape": {
+                    "primitive": {
+                      "string": "app-secret",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "jsonExample": "app-secret"
+                },
+                "originalTypeDeclaration": {
+                  "name": {
+                    "originalName": "GetAppResponse",
+                    "camelCase": {
+                      "unsafeName": "getAppResponse",
+                      "safeName": "getAppResponse"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "get_app_response",
+                      "safeName": "get_app_response"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "GET_APP_RESPONSE",
+                      "safeName": "GET_APP_RESPONSE"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "GetAppResponse",
+                      "safeName": "GetAppResponse"
+                    }
+                  },
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "originalName": "app",
+                        "camelCase": {
+                          "unsafeName": "app",
+                          "safeName": "app"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "app",
+                          "safeName": "app"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "APP",
+                          "safeName": "APP"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "App",
+                          "safeName": "App"
+                        }
+                      }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                      "originalName": "app",
+                      "camelCase": {
+                        "unsafeName": "app",
+                        "safeName": "app"
+                      },
+                      "snakeCase": {
+                        "unsafeName": "app",
+                        "safeName": "app"
+                      },
+                      "screamingSnakeCase": {
+                        "unsafeName": "APP",
+                        "safeName": "APP"
+                      },
+                      "pascalCase": {
+                        "unsafeName": "App",
+                        "safeName": "App"
+                      }
+                    }
+                  },
+                  "typeId": "type_app:GetAppResponse"
+                }
+              }
+            ],
+            "type": "object"
+          }
+        }
+      ]
+    },
+    "type_commons:AppId": {
+      "availability": {
+        "status": "GENERAL_AVAILABILITY"
+      },
+      "name": {
+        "name": {
+          "originalName": "AppId",
+          "camelCase": {
+            "unsafeName": "appId",
+            "safeName": "appId"
+          },
+          "snakeCase": {
+            "unsafeName": "app_id",
+            "safeName": "app_id"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "APP_ID",
+            "safeName": "APP_ID"
+          },
+          "pascalCase": {
+            "unsafeName": "AppId",
+            "safeName": "AppId"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [
+            {
+              "originalName": "commons",
+              "camelCase": {
+                "unsafeName": "commons",
+                "safeName": "commons"
+              },
+              "snakeCase": {
+                "unsafeName": "commons",
+                "safeName": "commons"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "COMMONS",
+                "safeName": "COMMONS"
+              },
+              "pascalCase": {
+                "unsafeName": "Commons",
+                "safeName": "Commons"
+              }
+            }
+          ],
+          "packagePath": [],
+          "file": {
+            "originalName": "commons",
+            "camelCase": {
+              "unsafeName": "commons",
+              "safeName": "commons"
+            },
+            "snakeCase": {
+              "unsafeName": "commons",
+              "safeName": "commons"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "COMMONS",
+              "safeName": "COMMONS"
+            },
+            "pascalCase": {
+              "unsafeName": "Commons",
+              "safeName": "Commons"
+            }
+          }
+        },
+        "typeId": "type_commons:AppId"
+      },
+      "shape": {
+        "aliasOf": {
+          "primitive": "STRING",
+          "_type": "primitive"
+        },
+        "resolvedType": {
+          "primitive": "STRING",
+          "_type": "primitive"
+        },
+        "_type": "alias"
+      },
+      "referencedTypes": [],
+      "examples": [
+        {
+          "name": {
+            "originalName": "Example",
+            "camelCase": {
+              "unsafeName": "example",
+              "safeName": "example"
+            },
+            "snakeCase": {
+              "unsafeName": "example",
+              "safeName": "example"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "EXAMPLE",
+              "safeName": "EXAMPLE"
+            },
+            "pascalCase": {
+              "unsafeName": "Example",
+              "safeName": "Example"
+            }
+          },
+          "jsonExample": "your-app-id",
+          "shape": {
+            "value": {
+              "shape": {
+                "primitive": {
+                  "string": "your-app-id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "jsonExample": "your-app-id"
+            },
+            "type": "alias"
+          }
+        }
+      ]
+    },
+    "type_commons:Deployment": {
+      "availability": {
+        "status": "GENERAL_AVAILABILITY"
+      },
+      "name": {
+        "name": {
+          "originalName": "Deployment",
+          "camelCase": {
+            "unsafeName": "deployment",
+            "safeName": "deployment"
+          },
+          "snakeCase": {
+            "unsafeName": "deployment",
+            "safeName": "deployment"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "DEPLOYMENT",
+            "safeName": "DEPLOYMENT"
+          },
+          "pascalCase": {
+            "unsafeName": "Deployment",
+            "safeName": "Deployment"
+          }
+        },
+        "fernFilepath": {
+          "allParts": [
+            {
+              "originalName": "commons",
+              "camelCase": {
+                "unsafeName": "commons",
+                "safeName": "commons"
+              },
+              "snakeCase": {
+                "unsafeName": "commons",
+                "safeName": "commons"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "COMMONS",
+                "safeName": "COMMONS"
+              },
+              "pascalCase": {
+                "unsafeName": "Commons",
+                "safeName": "Commons"
+              }
+            }
+          ],
+          "packagePath": [],
+          "file": {
+            "originalName": "commons",
+            "camelCase": {
+              "unsafeName": "commons",
+              "safeName": "commons"
+            },
+            "snakeCase": {
+              "unsafeName": "commons",
+              "safeName": "commons"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "COMMONS",
+              "safeName": "COMMONS"
+            },
+            "pascalCase": {
+              "unsafeName": "Commons",
+              "safeName": "Commons"
+            }
+          }
+        },
+        "typeId": "type_commons:Deployment"
+      },
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": {
+              "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+              "name": {
+                "originalName": "appId",
+                "camelCase": {
+                  "unsafeName": "appId",
+                  "safeName": "appId"
+                },
+                "snakeCase": {
+                  "unsafeName": "app_id",
+                  "safeName": "app_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "APP_ID",
+                  "safeName": "APP_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "AppId",
+                  "safeName": "AppId"
+                }
+              },
+              "wireValue": "appId"
+            },
+            "valueType": {
+              "name": {
+                "originalName": "AppId",
+                "camelCase": {
+                  "unsafeName": "appId",
+                  "safeName": "appId"
+                },
+                "snakeCase": {
+                  "unsafeName": "app_id",
+                  "safeName": "app_id"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "APP_ID",
+                  "safeName": "APP_ID"
+                },
+                "pascalCase": {
+                  "unsafeName": "AppId",
+                  "safeName": "AppId"
+                }
+              },
+              "fernFilepath": {
+                "allParts": [
+                  {
+                    "originalName": "commons",
+                    "camelCase": {
+                      "unsafeName": "commons",
+                      "safeName": "commons"
+                    },
+                    "snakeCase": {
+                      "unsafeName": "commons",
+                      "safeName": "commons"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "COMMONS",
+                      "safeName": "COMMONS"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "Commons",
+                      "safeName": "Commons"
+                    }
+                  }
+                ],
+                "packagePath": [],
+                "file": {
+                  "originalName": "commons",
+                  "camelCase": {
+                    "unsafeName": "commons",
+                    "safeName": "commons"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "commons",
+                    "safeName": "commons"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "COMMONS",
+                    "safeName": "COMMONS"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Commons",
+                    "safeName": "Commons"
+                  }
+                }
+              },
+              "typeId": "type_commons:AppId",
+              "_type": "named"
+            }
+          }
+        ],
+        "_type": "object"
+      },
+      "referencedTypes": [
+        {
+          "name": {
+            "originalName": "AppId",
+            "camelCase": {
+              "unsafeName": "appId",
+              "safeName": "appId"
+            },
+            "snakeCase": {
+              "unsafeName": "app_id",
+              "safeName": "app_id"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "APP_ID",
+              "safeName": "APP_ID"
+            },
+            "pascalCase": {
+              "unsafeName": "AppId",
+              "safeName": "AppId"
+            }
+          },
+          "fernFilepath": {
+            "allParts": [
+              {
+                "originalName": "commons",
+                "camelCase": {
+                  "unsafeName": "commons",
+                  "safeName": "commons"
+                },
+                "snakeCase": {
+                  "unsafeName": "commons",
+                  "safeName": "commons"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "COMMONS",
+                  "safeName": "COMMONS"
+                },
+                "pascalCase": {
+                  "unsafeName": "Commons",
+                  "safeName": "Commons"
+                }
+              }
+            ],
+            "packagePath": [],
+            "file": {
+              "originalName": "commons",
+              "camelCase": {
+                "unsafeName": "commons",
+                "safeName": "commons"
+              },
+              "snakeCase": {
+                "unsafeName": "commons",
+                "safeName": "commons"
+              },
+              "screamingSnakeCase": {
+                "unsafeName": "COMMONS",
+                "safeName": "COMMONS"
+              },
+              "pascalCase": {
+                "unsafeName": "Commons",
+                "safeName": "Commons"
+              }
+            }
+          },
+          "typeId": "type_commons:AppId"
+        }
+      ],
+      "examples": []
+    }
+  },
+  "errors": {},
+  "services": {},
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "originalName": "errorInstanceId",
+        "camelCase": {
+          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceId"
+        },
+        "snakeCase": {
+          "unsafeName": "error_instance_id",
+          "safeName": "error_instance_id"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "ERROR_INSTANCE_ID",
+          "safeName": "ERROR_INSTANCE_ID"
+        },
+        "pascalCase": {
+          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceId"
+        }
+      },
+      "wireValue": "errorInstanceId"
+    }
+  },
+  "errorDiscriminationStrategy": {
+    "type": "statusCode"
+  },
+  "pathParameters": [],
+  "variables": [],
+  "subpackages": {
+    "subpackage_app": {
+      "fernFilepath": {
+        "allParts": [
+          {
+            "originalName": "app",
+            "camelCase": {
+              "unsafeName": "app",
+              "safeName": "app"
+            },
+            "snakeCase": {
+              "unsafeName": "app",
+              "safeName": "app"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "APP",
+              "safeName": "APP"
+            },
+            "pascalCase": {
+              "unsafeName": "App",
+              "safeName": "App"
+            }
+          }
+        ],
+        "packagePath": [],
+        "file": {
+          "originalName": "app",
+          "camelCase": {
+            "unsafeName": "app",
+            "safeName": "app"
+          },
+          "snakeCase": {
+            "unsafeName": "app",
+            "safeName": "app"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "APP",
+            "safeName": "APP"
+          },
+          "pascalCase": {
+            "unsafeName": "App",
+            "safeName": "App"
+          }
+        }
+      },
+      "name": {
+        "originalName": "app",
+        "camelCase": {
+          "unsafeName": "app",
+          "safeName": "app"
+        },
+        "snakeCase": {
+          "unsafeName": "app",
+          "safeName": "app"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "APP",
+          "safeName": "APP"
+        },
+        "pascalCase": {
+          "unsafeName": "App",
+          "safeName": "App"
+        }
+      },
+      "types": ["type_app:GetAppResponse"],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    },
+    "subpackage_commons": {
+      "fernFilepath": {
+        "allParts": [
+          {
+            "originalName": "commons",
+            "camelCase": {
+              "unsafeName": "commons",
+              "safeName": "commons"
+            },
+            "snakeCase": {
+              "unsafeName": "commons",
+              "safeName": "commons"
+            },
+            "screamingSnakeCase": {
+              "unsafeName": "COMMONS",
+              "safeName": "COMMONS"
+            },
+            "pascalCase": {
+              "unsafeName": "Commons",
+              "safeName": "Commons"
+            }
+          }
+        ],
+        "packagePath": [],
+        "file": {
+          "originalName": "commons",
+          "camelCase": {
+            "unsafeName": "commons",
+            "safeName": "commons"
+          },
+          "snakeCase": {
+            "unsafeName": "commons",
+            "safeName": "commons"
+          },
+          "screamingSnakeCase": {
+            "unsafeName": "COMMONS",
+            "safeName": "COMMONS"
+          },
+          "pascalCase": {
+            "unsafeName": "Commons",
+            "safeName": "Commons"
+          }
+        }
+      },
+      "name": {
+        "originalName": "commons",
+        "camelCase": {
+          "unsafeName": "commons",
+          "safeName": "commons"
+        },
+        "snakeCase": {
+          "unsafeName": "commons",
+          "safeName": "commons"
+        },
+        "screamingSnakeCase": {
+          "unsafeName": "COMMONS",
+          "safeName": "COMMONS"
+        },
+        "pascalCase": {
+          "unsafeName": "Commons",
+          "safeName": "Commons"
+        }
+      },
+      "types": ["type_commons:AppId", "type_commons:Deployment"],
+      "errors": [],
+      "subpackages": [],
+      "hasEndpointsInTree": false
+    }
+  },
+  "rootPackage": {
+    "fernFilepath": {
+      "allParts": [],
+      "packagePath": []
+    },
+    "types": [],
+    "errors": [],
+    "subpackages": ["subpackage_app", "subpackage_commons"],
+    "hasEndpointsInTree": false
+  },
+  "sdkConfig": {
+    "isAuthMandatory": true,
+    "hasStreamingEndpoints": false,
+    "hasFileDownloadEndpoints": false,
+    "platformHeaders": {
+      "language": "X-Fern-Language",
+      "sdkName": "X-Fern-SDK-Name",
+      "sdkVersion": "X-Fern-SDK-Version"
+    }
+  }
+}
