@@ -145,7 +145,6 @@ async function runDockerForWorkspace({
         ],
         docs: undefined,
     };
-    taskContext.logger.info(`Generator group is ${JSON.stringify(generatorGroup.generators)}`);
     await runLocalGenerationForWorkspace({
         organization: DUMMY_ORGANIZATION,
         workspace,
