@@ -142,3 +142,9 @@ service:
       path: /{movieId}
       path-parameters:
         movieId: MovieId
+    upload:
+      method: POST
+      path: /upload/{movieId}
+      path-parameters:
+        movieId: MovieId
+      request: bytes

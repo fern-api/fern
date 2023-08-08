@@ -3,6 +3,7 @@ import { parseReferenceToTypeName } from "@fern-api/ir-generator";
 import { FernWorkspace, visitAllDefinitionFiles } from "@fern-api/workspace-loader";
 import {
     isRawTextType,
+    parseRawBytesType,
     parseRawFileType,
     recursivelyVisitRawTypeReference,
     TypeReferenceLocation,
@@ -49,6 +50,20 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                             } else {
                                 return [];
                             }
+                        }
+                    }
+
+                    const parsedBytesType = parseRawBytesType(typeReference);
+                    if (parsedBytesType != null) {
+                        if (location === TypeReferenceLocation.RequestReference) {
+                            return [];
+                        } else {
+                            return [
+                                {
+                                    severity: "error",
+                                    message: "The bytes type can only be used as a request",
+                                },
+                            ];
                         }
                     }
 
