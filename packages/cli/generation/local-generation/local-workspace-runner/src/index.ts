@@ -1,1 +1,1 @@
-export { runLocalGenerationForWorkspace } from "./runLocalGenerationForWorkspace";
+export { runLocalGenerationForSeed, runLocalGenerationForWorkspace } from "./runLocalGenerationForWorkspace";

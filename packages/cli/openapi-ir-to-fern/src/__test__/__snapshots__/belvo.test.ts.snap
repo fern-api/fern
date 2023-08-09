@@ -87,11 +87,11 @@ For \`access_to_resource_denied\` errors, the description is:
             },
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "string",
+              "type": "datetime",
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "credit_data": {
               "docs": undefined,
@@ -127,7 +127,7 @@ For \`access_to_resource_denied\` errors, the description is:
             },
             "last_accessed_at": {
               "docs": "The ISO-8601 timestamp of Belvo's most recent successful access to the institution for the given link.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "link": {
               "docs": "The \`link.id\` the account belongs to.",
@@ -210,7 +210,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
           "properties": {
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "credit_limit": {
               "docs": "The maximum amount of credit the owner can receive.",
@@ -267,7 +267,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
             },
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "name": {
               "docs": "The pension fund name.",
@@ -305,7 +305,7 @@ The amount remaining to pay on the users's loan (same as \`loan_data.outstanding
           "properties": {
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "string",
+              "type": "datetime",
             },
             "contract_amount": {
               "docs": "The initial total loan amount, calculated by the institution, when the contract was signed. This amount includes the principal + interest + taxes + fees.",
@@ -490,7 +490,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "string",
+              "type": "datetime",
             },
             "current": {
               "docs": "The total sum of all receivables (\`available\` + \`anticipated\`)",
@@ -669,7 +669,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 
 The ISO-8601 timestamp when the data point was collected.
 ",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "current_balance": {
               "docs": "*This field has been deprecated. Please use the \`balance\` field instead.*
@@ -722,7 +722,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "properties": {
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was first created in Belvo's database.",
-              "type": "string",
+              "type": "datetime",
             },
             "created_by": {
               "docs": "Belvo's unique ID for the user that created the bank account.",
@@ -881,7 +881,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
           "properties": {
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "string",
+              "type": "datetime",
             },
             "created_by": {
               "docs": "Belvo's unique ID for the user that created the bank account.",
@@ -972,7 +972,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "properties": {
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "string",
+              "type": "datetime",
             },
             "created_by": {
               "docs": "Belvo's unique ID for the user that created the bank account.",
@@ -1197,7 +1197,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "string",
+              "type": "datetime",
             },
             "created_by": {
               "docs": "Belvo's unique ID for the user that created the charge.",
@@ -1268,7 +1268,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "updated_at": {
               "docs": "The ISO-8601 timestamp of when the status of the charge was last updated.
 ",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -1775,7 +1775,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "string",
+              "type": "datetime",
             },
             "created_by": {
               "docs": "Belvo's unique ID for the user that created the customer.",
@@ -1870,7 +1870,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "string",
+              "type": "datetime",
             },
             "created_by": {
               "docs": "Belvo's unique ID for the user that created the customer.",
@@ -2206,11 +2206,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "properties": {
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was initially created in Belvo's database.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "employment_records": {
               "docs": "Details regarding the individual's employment history.",
@@ -2251,7 +2251,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "properties": {
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "currency": {
               "docs": "The three-letter currency code in which the salary is paid.
@@ -4226,7 +4226,7 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
           "properties": {
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was created in Belvo's database.",
-              "type": "string",
+              "type": "datetime",
             },
             "first_transaction_date": {
               "docs": "The date when the first transaction occurred, in \`YYYY-MM-DD\` format.
@@ -5061,7 +5061,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "properties": {
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "description": {
               "docs": "The description of the invoice item (an invoice can have one or more items).",
@@ -5117,7 +5117,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "properties": {
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "retained_tax_amount": {
               "docs": "The amount of retained tax.",
@@ -5143,7 +5143,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "properties": {
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "description": {
               "docs": "The description of the invoice item (an invoice can have one or more items).",
@@ -5226,11 +5226,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "currency": {
               "docs": "The currency of the invoice. For example:
@@ -5415,7 +5415,7 @@ For detailed information regarding DIAN's payment types, please see their [offic
             },
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "country": {
               "docs": "The country where the sender pays their taxes.
@@ -5512,11 +5512,11 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
             },
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "currency": {
               "docs": "The currency of the invoice. For example:
@@ -5718,7 +5718,7 @@ Possible statuses are:
             "date": {
               "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "exchange_rate": {
               "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
@@ -5875,7 +5875,7 @@ Please note that other currencies other than in the list above may be returned.
             "date": {
               "docs": "ISO-8601 timestamp when the payment was made.
 ",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "exchange_rate": {
               "docs": "The \`currency\` to MXN currency exchange rate when the payment was made.
@@ -5927,7 +5927,7 @@ Please note that other currencies other than in the list above may be returned.
             },
             "collected_at": {
               "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "date_from": {
               "docs": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
@@ -5972,7 +5972,7 @@ Please note that other currencies other than in the list above may be returned.
             },
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "date_from": {
               "docs": "The start date of the payment period.
@@ -6019,7 +6019,7 @@ Please note that other currencies other than in the list above may be returned.
             },
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "country": {
               "docs": "The country where the receiver pays their taxes.
@@ -6185,7 +6185,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "created_by": {
               "docs": "The unique ID for the user that created this link.",
@@ -6214,7 +6214,7 @@ A unique 44-character string that can be used to identify a user at a given inst
             },
             "last_accessed_at": {
               "docs": "The ISO-8601 timestamp of Belvo's most recent successful access to the institution for the given link.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "refresh_rate": {
               "docs": undefined,
@@ -7182,11 +7182,11 @@ For \`not_found\` errors, the description is:
             },
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "display_name": {
               "docs": "The full name of the owner, as provided by the bank.",
@@ -7483,7 +7483,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "string",
+              "type": "datetime",
             },
             "created_by": {
               "docs": "Belvo's unique ID for the user that created this payment intent.",
@@ -7553,7 +7553,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "updated_at": {
               "docs": "The ISO-8601 timestamp of when the payment intent was last updated.
 ",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -7751,7 +7751,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "string",
+              "type": "datetime",
             },
             "created_by": {
               "docs": "Belvo's unique ID for the user that created this payment intent.",
@@ -7821,7 +7821,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "updated_at": {
               "docs": "The ISO-8601 timestamp of when the payment intent was last updated.
 ",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -7958,7 +7958,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "string",
+              "type": "datetime",
             },
             "created_by": {
               "docs": "Belvo's unique ID for the user that created the payment link.",
@@ -7967,7 +7967,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "expires_at": {
               "docs": "The ISO-8601 timestamp of when the payment link is set to expire.
 ",
-              "type": "string",
+              "type": "datetime",
             },
             "expires_in": {
               "docs": "The payment link expiration time.  ",
@@ -7992,7 +7992,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "updated_at": {
               "docs": "The ISO-8601 timestamp of when the payment link was last updated.
 ",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -8011,7 +8011,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "string",
+              "type": "datetime",
             },
             "created_by": {
               "docs": "Belvo's unique ID for the user that created the payment link.",
@@ -8020,7 +8020,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "expires_at": {
               "docs": "The ISO-8601 timestamp of when the payment link is set to expire.
 ",
-              "type": "string",
+              "type": "datetime",
             },
             "expires_in": {
               "docs": "The payment link expiration time.  ",
@@ -8045,7 +8045,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "updated_at": {
               "docs": "The ISO-8601 timestamp of when the payment link was last updated.
 ",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -8064,7 +8064,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "string",
+              "type": "datetime",
             },
             "created_by": {
               "docs": "Belvo's unique ID for the user that created the payment link.",
@@ -8073,7 +8073,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "expires_at": {
               "docs": "The ISO-8601 timestamp of when the payment link is set to expire.
 ",
-              "type": "string",
+              "type": "datetime",
             },
             "expires_in": {
               "docs": "The payment link expiration time.  ",
@@ -8098,7 +8098,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "updated_at": {
               "docs": "The ISO-8601 timestamp of when the payment link was last updated.
 ",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -8155,7 +8155,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "string",
+              "type": "datetime",
             },
             "created_by": {
               "docs": "Belvo's unique ID for the user that created the payment link.",
@@ -8164,7 +8164,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "expires_at": {
               "docs": "The ISO-8601 timestamp of when the payment link is set to expire.
 ",
-              "type": "string",
+              "type": "datetime",
             },
             "expires_in": {
               "docs": "The payment link expiration time. ",
@@ -8189,7 +8189,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "updated_at": {
               "docs": "The ISO-8601 timestamp of when the payment link was last updated.
 ",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -8358,7 +8358,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "string",
+              "type": "datetime",
             },
             "created_by": {
               "docs": "Belvo's unique ID for the user that created the payment.",
@@ -8423,7 +8423,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the webhook was created in our database.
 ",
-              "type": "string",
+              "type": "datetime",
             },
             "created_by": {
               "docs": "Belvo's unique ID of the user that created the webhook.",
@@ -8560,11 +8560,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "collected_at": {
               "docs": "The ISO timestamp when the data point was collected.",
-              "type": "string",
+              "type": "datetime",
             },
             "created_at": {
               "docs": "The ISO timestamp of when the data point was last updated in Belvo's database.",
-              "type": "string",
+              "type": "datetime",
             },
             "currency": {
               "docs": "The currency of the transaction. For example:
@@ -8932,7 +8932,7 @@ For \`request_timeout\` errors, the description is:
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "string",
+              "type": "datetime",
             },
             "credit_cards_metrics": {
               "docs": undefined,
@@ -9331,7 +9331,7 @@ If the account has not been open long enough to have the transaction data for a 
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the secret key was created.
 ",
-              "type": "string",
+              "type": "datetime",
             },
             "id": {
               "docs": "Belvo's unique ID for the Payments API \`secretId\`.",
@@ -9340,7 +9340,7 @@ If the account has not been open long enough to have the transaction data for a 
             "last_used": {
               "docs": "The ISO-8601 timestamp of when the secret key was last used.
 ",
-              "type": "string",
+              "type": "datetime",
             },
             "password": {
               "docs": "Your Payments API \`secretPassword\`. This value is obfuscated.",
@@ -9504,11 +9504,11 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
           "properties": {
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "id": {
               "docs": "Unique identifier created by Belvo used to reference the current Tax Compliance Status.",
@@ -9569,11 +9569,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "string",
+              "type": "datetime",
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "string",
+              "type": "datetime",
             },
             "date_issued": {
               "docs": "The date the tax declaration was issued by the fiscal institution.",
@@ -9642,11 +9642,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "string",
+              "type": "datetime",
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "string",
+              "type": "datetime",
             },
             "date_issued": {
               "docs": "The date the tax declaration was issued by the fiscal institution.",
@@ -9786,12 +9786,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "cancelled_at": {
               "docs": "The ISO-8601 timestamp of when the tax retention was canceled (if applicable).
 ",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "certified_at": {
               "docs": "The ISO-8601 timestamp of when the tax retention was certified.
 ",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "code": {
               "docs": "The tax retention code. For more information, see our [SAT Catalogs DevPortal article](https://developers.belvo.com/docs/sat-catalogs#retention-code).
@@ -9801,12 +9801,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "collected_at": {
               "docs": "The ISO-8601 timestamp of when the data point was collected.
 ",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.
 ",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "id": {
               "docs": "Belvo's unique identifier used to reference the current tax retention statement.",
@@ -9820,7 +9820,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "issued_at": {
               "docs": "The ISO-8601 timestamp of when the tax retention was issued.
 ",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "link": {
               "docs": "The \`link.id\` the tax retention belongs to.",
@@ -9919,7 +9919,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "conciliacion_entre_resultado_contable_fiscal": {
               "docs": "Details regarding the accounting reconciliation.",
@@ -9927,7 +9927,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "datos_adicionales": {
               "docs": "Additional data regarding the tax return.",
@@ -9980,11 +9980,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "properties": {
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "detalle_pago_isr": {
               "docs": "Information on the monthly provisional payments for the income tax.",
@@ -10029,11 +10029,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "properties": {
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "datos_informativos": {
               "docs": "Extra informative data on the tax return.",
@@ -10090,11 +10090,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "properties": {
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "id": {
               "docs": "Unique identifier created by Belvo used to reference the current Tax Return.",
@@ -10427,11 +10427,11 @@ By default, Belvo returns the yearly (annual) tax returns.
             },
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "string",
+              "type": "datetime",
             },
             "digital_stamp": {
               "docs": "The validation certificate of the document.",
@@ -10691,11 +10691,11 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "string",
+              "type": "datetime",
             },
             "digital_stamp": {
               "docs": "The validation certificate of the document.",
@@ -10974,7 +10974,7 @@ For \`too_many_sessions\` errors, the description is:
             },
             "accounting_date": {
               "docs": "The ISO timestamp when the transaction was processed and accounted for by the institution.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "amount": {
               "docs": "The transaction amount.
@@ -10992,11 +10992,11 @@ For \`too_many_sessions\` errors, the description is:
             },
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "created_at": {
               "docs": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "credit_card_data": {
               "docs": undefined,
@@ -11099,7 +11099,7 @@ For \`too_many_sessions\` errors, the description is:
             },
             "collected_at": {
               "docs": "The ISO-8601 timestamp when the data point was collected.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "previous_bill_total": {
               "docs": "The total amount of the previous month's bill, if available.",

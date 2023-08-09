@@ -7835,7 +7835,7 @@ exports[`open api parser aries simple 1`] = `
                 "properties": {
                   "expires_time": {
                     "docs": "Expiry Date",
-                    "type": "string",
+                    "type": "datetime",
                   },
                 },
               },

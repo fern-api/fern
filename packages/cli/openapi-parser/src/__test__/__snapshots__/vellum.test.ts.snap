@@ -1589,9 +1589,7 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -1707,9 +1705,7 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -2008,9 +2004,7 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -3512,9 +3506,7 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "Timestamp of when this model version was created.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -6320,9 +6312,7 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": "A timestamp representing when this document was most recently uploaded.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -6558,9 +6548,7 @@ Upload a document to be indexed and used for search.
                   "value": {
                     "description": "Optionally provide the timestamp representing when this feedback was collected. Used for reporting purposes.",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -7580,9 +7568,7 @@ Upload a document to be indexed and used for search.
                   "value": {
                     "description": undefined,
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -7863,9 +7849,7 @@ Upload a document to be indexed and used for search.
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },

@@ -1,9 +1,0 @@
-@import "~@blueprintjs/core/lib/scss/variables";
-
-:global(.#{$ns}-toast).toast {
-    &.hideCloseButton {
-        > :global(.#{$ns}-button-group) > button {
-            display: none;
-        }
-    }
-}

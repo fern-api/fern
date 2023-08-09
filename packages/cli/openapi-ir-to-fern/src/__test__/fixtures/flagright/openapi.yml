@@ -4670,6 +4670,19 @@ components:
               type: array
               items:
                 $ref: "#/components/schemas/HitRulesDetails"
+    Thing:
+      type: object
+      properties:
+        publishedAt:
+          format: date-time
+          readOnly: true
+          description: >
+            PublishedAt is the time at which the Thing was published.
+          oneOf:
+            - type: string
+            - type: "null"
+      required:
+        - publishedAt
   securitySchemes:
     x-api-key:
       name: x-api-key

@@ -1,8 +1,10 @@
 import { Schema } from "@fern-fern/openapi-ir-model/ir";
+import { difference } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema } from "../convertSchemas";
-import { convertEnum } from "./convertEnum";
+import { convertEnum, convertNumberToSnakeCase } from "./convertEnum";
 
 export function convertUndiscriminatedOneOf({
     nameOverride,
@@ -21,8 +23,10 @@ export function convertUndiscriminatedOneOf({
     context: AbstractOpenAPIV3ParserContext;
     subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[];
 }): Schema {
-    const convertedSubtypes = subtypes.map((schema) => {
-        return convertSchema(schema, false, context, [...breadcrumbs, nameOverride ?? generatedName]);
+    const subtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
+
+    const convertedSubtypes = subtypes.map((schema, index) => {
+        return convertSchema(schema, false, context, [...breadcrumbs, subtypePrefixes[index] ?? `${index}`]);
     });
 
     const everySubTypeIsLiteral = Object.entries(convertedSubtypes).every(([_, schema]) => {
@@ -59,6 +63,64 @@ export function convertUndiscriminatedOneOf({
         description,
         subtypes: convertedSubtypes,
     });
+}
+
+function getUniqueSubTypeNames({
+    schemas,
+}: {
+    schemas: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[];
+}): string[] {
+    // computes the unique properties for each object sub type
+    let uniquePropertySets: Record<string, string[]> = {};
+    let index = 0;
+    for (const schema of schemas) {
+        if (isReferenceObject(schema)) {
+            // pass
+        } else if (schema.properties != null && Object.entries(schema.properties).length > 0) {
+            const schemaProperties = Object.keys(schema.properties);
+            const updatedPropertySets: Record<string, string[]> = {};
+            let uniqueSchemaProperties = schemaProperties;
+            for (const [key, uniquePropertySet] of Object.entries(uniquePropertySets)) {
+                const updatedSet = difference(uniquePropertySet, schemaProperties);
+                uniqueSchemaProperties = difference(uniqueSchemaProperties, uniquePropertySet);
+                updatedPropertySets[key] = updatedSet;
+            }
+            updatedPropertySets[index] = uniqueSchemaProperties;
+            uniquePropertySets = updatedPropertySets;
+        }
+        index++;
+    }
+
+    // generates prefix for subtype
+    const prefixes = [];
+    let i = 0;
+    for (const schema of schemas) {
+        const propertySet = uniquePropertySets[i];
+        if (propertySet != null && propertySet.length > 0) {
+            const sortedProperties = propertySet.sort();
+            if (sortedProperties[0] != null) {
+                prefixes.push(sortedProperties[0]);
+                ++i;
+                continue;
+            }
+        }
+
+        if (isReferenceObject(schema)) {
+            prefixes.push(convertNumberToSnakeCase(i) ?? `${i}`);
+        } else if (
+            schema.type === "array" ||
+            schema.type === "boolean" ||
+            schema.type === "integer" ||
+            schema.type === "number" ||
+            schema.type === "string"
+        ) {
+            prefixes.push("");
+        } else {
+            prefixes.push(convertNumberToSnakeCase(i) ?? `${i}`);
+        }
+        ++i;
+    }
+    return prefixes;
 }
 
 export function wrapUndiscriminantedOneOf({

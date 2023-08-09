@@ -118,7 +118,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "createdAt": {
               "docs": undefined,
-              "type": "string",
+              "type": "datetime",
             },
             "createdBy": {
               "docs": undefined,
@@ -126,7 +126,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "deletedAt": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "deletedBy": {
               "docs": undefined,
@@ -189,7 +189,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "createdAt": {
               "docs": undefined,
-              "type": "string",
+              "type": "datetime",
             },
             "createdBy": {
               "docs": undefined,
@@ -197,11 +197,11 @@ exports[`open api parser hathora simple 1`] = `
             },
             "deletedAt": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "finishedAt": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "imageSize": {
               "docs": undefined,
@@ -213,7 +213,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "startedAt": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "status": {
               "docs": undefined,
@@ -313,7 +313,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "createdAt": {
               "docs": undefined,
-              "type": "string",
+              "type": "datetime",
             },
             "createdBy": {
               "docs": undefined,
@@ -405,7 +405,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "createdAt": {
               "docs": undefined,
-              "type": "string",
+              "type": "datetime",
             },
             "createdBy": {
               "docs": undefined,
@@ -609,7 +609,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "idleSince": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "port": {
               "docs": undefined,
@@ -633,19 +633,19 @@ exports[`open api parser hathora simple 1`] = `
             },
             "startedAt": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "startingAt": {
               "docs": undefined,
-              "type": "string",
+              "type": "datetime",
             },
             "stoppingAt": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "terminatedAt": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -787,11 +787,11 @@ exports[`open api parser hathora simple 1`] = `
             },
             "scheduledAt": {
               "docs": undefined,
-              "type": "string",
+              "type": "datetime",
             },
             "unscheduledAt": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },

@@ -38,6 +38,7 @@ types:
       errorDiscriminationStrategy: ErrorDiscriminationStrategy
       sdkConfig: SdkConfig
       variables: list<variables.VariableDeclaration>
+      serviceTypeReferenceInfo: optional<ServiceTypeReferenceInfo>
   SdkConfig:
     properties:
       isAuthMandatory: boolean
@@ -74,3 +75,11 @@ types:
   PackageNavigationConfig:
     properties:
       pointsTo: commons.SubpackageId
+  ServiceTypeReferenceInfo:
+    properties:
+      typesReferencedOnlyByService:
+        docs: "Types referenced by exactly one service."
+        type: map<commons.ServiceId, list<commons.TypeId>>
+      sharedTypes:
+        docs: "Types referenced by either zero or multiple services."
+        type: list<commons.TypeId>

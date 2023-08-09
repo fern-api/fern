@@ -86,6 +86,16 @@ export const FernOpenAPIExtension = {
      *       - external
      */
     AUDIENCES: "x-fern-audiences",
+
+    /**
+     * Used to tell fern to ignore endpoints.
+     *
+     * paths:
+     *   /path/to/my/endpoint/{id}:
+     *     get:
+     *       x-fern-ignore: true
+     */
+    IGNORE: "x-fern-ignore",
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

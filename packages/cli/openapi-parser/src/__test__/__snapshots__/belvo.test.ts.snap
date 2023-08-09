@@ -6060,7 +6060,7 @@ If you try to access older information than what we can access, we will return a
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "RetrieveInvoicesResponseItemRetrieveInvoicesResponseItem",
+                      "generatedName": "RetrieveInvoicesResponseItemZero",
                       "nameOverride": undefined,
                       "schema": "InvoiceWithIdSat",
                       "type": "reference",
@@ -6068,7 +6068,7 @@ If you try to access older information than what we can access, we will return a
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "RetrieveInvoicesResponseItemRetrieveInvoicesResponseItem",
+                      "generatedName": "RetrieveInvoicesResponseItemOne",
                       "nameOverride": undefined,
                       "schema": "InvoiceDian",
                       "type": "reference",
@@ -6171,7 +6171,7 @@ If you try to access older information than what we can access, we will return a
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PatchInvoicesResponseItemPatchInvoicesResponseItem",
+                      "generatedName": "PatchInvoicesResponseItemZero",
                       "nameOverride": undefined,
                       "schema": "InvoiceWithIdSat",
                       "type": "reference",
@@ -6179,7 +6179,7 @@ If you try to access older information than what we can access, we will return a
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PatchInvoicesResponseItemPatchInvoicesResponseItem",
+                      "generatedName": "PatchInvoicesResponseItemOne",
                       "nameOverride": undefined,
                       "schema": "InvoiceDian",
                       "type": "reference",
@@ -6279,7 +6279,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailInvoiceResponseDetailInvoiceResponse",
+                    "generatedName": "DetailInvoiceResponseZero",
                     "nameOverride": undefined,
                     "schema": "InvoiceWithIdSat",
                     "type": "reference",
@@ -6287,7 +6287,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailInvoiceResponseDetailInvoiceResponse",
+                    "generatedName": "DetailInvoiceResponseOne",
                     "nameOverride": undefined,
                     "schema": "InvoiceDian",
                     "type": "reference",
@@ -6737,7 +6737,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "ListTaxReturnsResponseListTaxReturnsResponse",
+                    "generatedName": "ListTaxReturnsResponseZero",
                     "nameOverride": undefined,
                     "schema": "TaxReturnsPersonalPaginated",
                     "type": "reference",
@@ -6745,7 +6745,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "ListTaxReturnsResponseListTaxReturnsResponse",
+                    "generatedName": "ListTaxReturnsResponseOne",
                     "nameOverride": undefined,
                     "schema": "TaxReturnsPersonalMonthlyPaginated",
                     "type": "reference",
@@ -6753,7 +6753,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "ListTaxReturnsResponseListTaxReturnsResponse",
+                    "generatedName": "ListTaxReturnsResponseTwo",
                     "nameOverride": undefined,
                     "schema": "TaxReturnsBusinessPaginated",
                     "type": "reference",
@@ -6761,7 +6761,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "ListTaxReturnsResponseListTaxReturnsResponse",
+                    "generatedName": "ListTaxReturnsResponseThree",
                     "nameOverride": undefined,
                     "schema": "TaxReturnsBusinessMonthlyPaginated",
                     "type": "reference",
@@ -6846,7 +6846,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "RetrieveTaxReturnsRequestBodyRetrieveTaxReturnsRequestBody",
+                    "generatedName": "RetrieveTaxReturnsRequestBodyZero",
                     "nameOverride": undefined,
                     "schema": "TaxReturnsMonthlyRequest",
                     "type": "reference",
@@ -6854,7 +6854,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "RetrieveTaxReturnsRequestBodyRetrieveTaxReturnsRequestBody",
+                    "generatedName": "RetrieveTaxReturnsRequestBodyOne",
                     "nameOverride": undefined,
                     "schema": "TaxReturnsYearlyRequest",
                     "type": "reference",
@@ -6881,7 +6881,7 @@ If you try to access older information than what we can access, we will return a
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "RetrieveTaxReturnsResponseItemRetrieveTaxReturnsResponseItem",
+                      "generatedName": "RetrieveTaxReturnsResponseItemZero",
                       "nameOverride": undefined,
                       "schema": "TaxReturnPersonal",
                       "type": "reference",
@@ -6889,7 +6889,7 @@ If you try to access older information than what we can access, we will return a
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "RetrieveTaxReturnsResponseItemRetrieveTaxReturnsResponseItem",
+                      "generatedName": "RetrieveTaxReturnsResponseItemOne",
                       "nameOverride": undefined,
                       "schema": "TaxReturnPersonalMonthly",
                       "type": "reference",
@@ -6897,7 +6897,7 @@ If you try to access older information than what we can access, we will return a
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "RetrieveTaxReturnsResponseItemRetrieveTaxReturnsResponseItem",
+                      "generatedName": "RetrieveTaxReturnsResponseItemTwo",
                       "nameOverride": undefined,
                       "schema": "TaxReturnBusiness",
                       "type": "reference",
@@ -6905,7 +6905,7 @@ If you try to access older information than what we can access, we will return a
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "RetrieveTaxReturnsResponseItemRetrieveTaxReturnsResponseItem",
+                      "generatedName": "RetrieveTaxReturnsResponseItemThree",
                       "nameOverride": undefined,
                       "schema": "TaxReturnBusinessMonthly",
                       "type": "reference",
@@ -7005,7 +7005,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailTaxReturnResponseDetailTaxReturnResponse",
+                    "generatedName": "DetailTaxReturnResponseZero",
                     "nameOverride": undefined,
                     "schema": "TaxReturnPersonal",
                     "type": "reference",
@@ -7013,7 +7013,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailTaxReturnResponseDetailTaxReturnResponse",
+                    "generatedName": "DetailTaxReturnResponseOne",
                     "nameOverride": undefined,
                     "schema": "TaxReturnPersonalMonthly",
                     "type": "reference",
@@ -7021,7 +7021,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailTaxReturnResponseDetailTaxReturnResponse",
+                    "generatedName": "DetailTaxReturnResponseTwo",
                     "nameOverride": undefined,
                     "schema": "TaxReturnBusiness",
                     "type": "reference",
@@ -7029,7 +7029,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailTaxReturnResponseDetailTaxReturnResponse",
+                    "generatedName": "DetailTaxReturnResponseThree",
                     "nameOverride": undefined,
                     "schema": "TaxReturnBusinessMonthly",
                     "type": "reference",
@@ -7430,7 +7430,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "RetrieveTaxStatusResponseRetrieveTaxStatusResponse",
+                    "generatedName": "RetrieveTaxStatusResponseZero",
                     "nameOverride": undefined,
                     "schema": "TaxStatusSat",
                     "type": "reference",
@@ -7438,7 +7438,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "RetrieveTaxStatusResponseRetrieveTaxStatusResponse",
+                    "generatedName": "RetrieveTaxStatusResponseOne",
                     "nameOverride": undefined,
                     "schema": "TaxStatusDian",
                     "type": "reference",
@@ -7537,7 +7537,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailTaxStatusResponseDetailTaxStatusResponse",
+                    "generatedName": "DetailTaxStatusResponseZero",
                     "nameOverride": undefined,
                     "schema": "TaxStatusSat",
                     "type": "reference",
@@ -7545,7 +7545,7 @@ If you try to access older information than what we can access, we will return a
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailTaxStatusResponseDetailTaxStatusResponse",
+                    "generatedName": "DetailTaxStatusResponseOne",
                     "nameOverride": undefined,
                     "schema": "TaxStatusDian",
                     "type": "reference",
@@ -11521,7 +11521,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "ListTaxDeclarationsResponseListTaxDeclarationsResponse",
+                    "generatedName": "ListTaxDeclarationsResponseZero",
                     "nameOverride": undefined,
                     "schema": "TaxDeclarationIndividualPaginated",
                     "type": "reference",
@@ -11529,7 +11529,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "ListTaxDeclarationsResponseListTaxDeclarationsResponse",
+                    "generatedName": "ListTaxDeclarationsResponseOne",
                     "nameOverride": undefined,
                     "schema": "TaxDeclarationBusinessPaginated",
                     "type": "reference",
@@ -11630,7 +11630,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "RetrieveTaxDeclarationsResponseItemRetrieveTaxDeclarationsResponseItem",
+                      "generatedName": "RetrieveTaxDeclarationsResponseItemZero",
                       "nameOverride": undefined,
                       "schema": "TaxDeclarationBusiness",
                       "type": "reference",
@@ -11638,7 +11638,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "RetrieveTaxDeclarationsResponseItemRetrieveTaxDeclarationsResponseItem",
+                      "generatedName": "RetrieveTaxDeclarationsResponseItemOne",
                       "nameOverride": undefined,
                       "schema": "TaxDeclarationIndividual",
                       "type": "reference",
@@ -11738,7 +11738,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailTaxDeclarationResponseDetailTaxDeclarationResponse",
+                    "generatedName": "DetailTaxDeclarationResponseZero",
                     "nameOverride": undefined,
                     "schema": "TaxDeclarationIndividual",
                     "type": "reference",
@@ -11746,7 +11746,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailTaxDeclarationResponseDetailTaxDeclarationResponse",
+                    "generatedName": "DetailTaxDeclarationResponseOne",
                     "nameOverride": undefined,
                     "schema": "TaxDeclarationBusiness",
                     "type": "reference",
@@ -13016,7 +13016,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreateCustomerRequestCreateCustomerRequest",
+                    "generatedName": "CreateCustomerRequestZero",
                     "nameOverride": undefined,
                     "schema": "CreateCustomerOfpi",
                     "type": "reference",
@@ -13024,7 +13024,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreateCustomerRequestCreateCustomerRequest",
+                    "generatedName": "CreateCustomerRequestOne",
                     "nameOverride": undefined,
                     "schema": "CreateCustomerPse",
                     "type": "reference",
@@ -13048,7 +13048,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreateCustomerResponseCreateCustomerResponse",
+                    "generatedName": "CreateCustomerResponseZero",
                     "nameOverride": undefined,
                     "schema": "CustomerOfpi",
                     "type": "reference",
@@ -13056,7 +13056,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreateCustomerResponseCreateCustomerResponse",
+                    "generatedName": "CreateCustomerResponseOne",
                     "nameOverride": undefined,
                     "schema": "CustomerPse",
                     "type": "reference",
@@ -13120,7 +13120,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailCustomerResponseDetailCustomerResponse",
+                    "generatedName": "DetailCustomerResponseZero",
                     "nameOverride": undefined,
                     "schema": "CustomerOfpi",
                     "type": "reference",
@@ -13128,7 +13128,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailCustomerResponseDetailCustomerResponse",
+                    "generatedName": "DetailCustomerResponseOne",
                     "nameOverride": undefined,
                     "schema": "CustomerPse",
                     "type": "reference",
@@ -13469,7 +13469,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreateBankAccountRequestCreateBankAccountRequest",
+                    "generatedName": "CreateBankAccountRequestZero",
                     "nameOverride": undefined,
                     "schema": "CreateBankAccountOfpi",
                     "type": "reference",
@@ -13477,7 +13477,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreateBankAccountRequestCreateBankAccountRequest",
+                    "generatedName": "CreateBankAccountRequestOne",
                     "nameOverride": undefined,
                     "schema": "CreateBankAccountPse",
                     "type": "reference",
@@ -13501,7 +13501,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreateBankAccountResponseCreateBankAccountResponse",
+                    "generatedName": "CreateBankAccountResponseZero",
                     "nameOverride": undefined,
                     "schema": "BankAccountOfpiResponse",
                     "type": "reference",
@@ -13509,7 +13509,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreateBankAccountResponseCreateBankAccountResponse",
+                    "generatedName": "CreateBankAccountResponseOne",
                     "nameOverride": undefined,
                     "schema": "BankAccountPseResponse",
                     "type": "reference",
@@ -13573,7 +13573,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailBankAccountResponseDetailBankAccountResponse",
+                    "generatedName": "DetailBankAccountResponseZero",
                     "nameOverride": undefined,
                     "schema": "BankAccountOfpiResponse",
                     "type": "reference",
@@ -13581,7 +13581,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailBankAccountResponseDetailBankAccountResponse",
+                    "generatedName": "DetailBankAccountResponseOne",
                     "nameOverride": undefined,
                     "schema": "BankAccountPseResponse",
                     "type": "reference",
@@ -13885,7 +13885,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreatePaymentlinkRequestCreatePaymentlinkRequest",
+                    "generatedName": "CreatePaymentlinkRequestZero",
                     "nameOverride": undefined,
                     "schema": "CreatePaymentLinkOfpi",
                     "type": "reference",
@@ -13893,7 +13893,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreatePaymentlinkRequestCreatePaymentlinkRequest",
+                    "generatedName": "CreatePaymentlinkRequestOne",
                     "nameOverride": undefined,
                     "schema": "CreatePaymentLinkPse",
                     "type": "reference",
@@ -13917,7 +13917,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreatePaymentlinkResponseCreatePaymentlinkResponse",
+                    "generatedName": "CreatePaymentlinkResponseZero",
                     "nameOverride": undefined,
                     "schema": "PaymentLinkOfpi",
                     "type": "reference",
@@ -13925,7 +13925,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "CreatePaymentlinkResponseCreatePaymentlinkResponse",
+                    "generatedName": "CreatePaymentlinkResponseOne",
                     "nameOverride": undefined,
                     "schema": "PaymentLinkPse",
                     "type": "reference",
@@ -13991,7 +13991,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailCreatePaymentlinkResponseDetailCreatePaymentlinkResponse",
+                    "generatedName": "DetailCreatePaymentlinkResponseZero",
                     "nameOverride": undefined,
                     "schema": "PaymentLinkOfpi",
                     "type": "reference",
@@ -13999,7 +13999,7 @@ For example:
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "DetailCreatePaymentlinkResponseDetailCreatePaymentlinkResponse",
+                    "generatedName": "DetailCreatePaymentlinkResponseOne",
                     "nameOverride": undefined,
                     "schema": "PaymentLinkPse",
                     "type": "reference",
@@ -15048,7 +15048,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "BadRequestErrorBodyItemBadRequestErrorBodyItem",
+                    "generatedName": "BadRequestErrorBodyItemZero",
                     "nameOverride": undefined,
                     "schema": "InvalidAccessMode",
                     "type": "reference",
@@ -15056,7 +15056,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "BadRequestErrorBodyItemBadRequestErrorBodyItem",
+                    "generatedName": "BadRequestErrorBodyItemOne",
                     "nameOverride": undefined,
                     "schema": "TooManySessionsError",
                     "type": "reference",
@@ -15064,7 +15064,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "BadRequestErrorBodyItemBadRequestErrorBodyItem",
+                    "generatedName": "BadRequestErrorBodyItemTwo",
                     "nameOverride": undefined,
                     "schema": "LoginError",
                     "type": "reference",
@@ -15072,7 +15072,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "BadRequestErrorBodyItemBadRequestErrorBodyItem",
+                    "generatedName": "BadRequestErrorBodyItemThree",
                     "nameOverride": undefined,
                     "schema": "SessionExpiredError",
                     "type": "reference",
@@ -15080,7 +15080,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "BadRequestErrorBodyItemBadRequestErrorBodyItem",
+                    "generatedName": "BadRequestErrorBodyItemFour",
                     "nameOverride": undefined,
                     "schema": "ValidationError",
                     "type": "reference",
@@ -15088,7 +15088,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "BadRequestErrorBodyItemBadRequestErrorBodyItem",
+                    "generatedName": "BadRequestErrorBodyItemFive",
                     "nameOverride": undefined,
                     "schema": "InstitutionDownError",
                     "type": "reference",
@@ -15096,7 +15096,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "BadRequestErrorBodyItemBadRequestErrorBodyItem",
+                    "generatedName": "BadRequestErrorBodyItemSix",
                     "nameOverride": undefined,
                     "schema": "InstitutionUnavailableError",
                     "type": "reference",
@@ -15104,7 +15104,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "BadRequestErrorBodyItemBadRequestErrorBodyItem",
+                    "generatedName": "BadRequestErrorBodyItemSeven",
                     "nameOverride": undefined,
                     "schema": "InstitutionInactiveError",
                     "type": "reference",
@@ -15112,7 +15112,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "BadRequestErrorBodyItemBadRequestErrorBodyItem",
+                    "generatedName": "BadRequestErrorBodyItemEight",
                     "nameOverride": undefined,
                     "schema": "UnsupportedOperationError",
                     "type": "reference",
@@ -15120,7 +15120,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "BadRequestErrorBodyItemBadRequestErrorBodyItem",
+                    "generatedName": "BadRequestErrorBodyItemNine",
                     "nameOverride": undefined,
                     "schema": "InvalidLinkError",
                     "type": "reference",
@@ -15128,7 +15128,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "BadRequestErrorBodyItemBadRequestErrorBodyItem",
+                    "generatedName": "BadRequestErrorBodyItemTen",
                     "nameOverride": undefined,
                     "schema": "UnconfirmedLinkError",
                     "type": "reference",
@@ -15734,9 +15734,7 @@ For \`access_to_resource_denied\` errors, the description is:
                 "schema": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -15751,9 +15749,7 @@ For \`access_to_resource_denied\` errors, the description is:
                   "value": {
                     "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -15947,9 +15943,7 @@ For example: \`0444/45722-0\`.
                   "value": {
                     "description": "The ISO-8601 timestamp of Belvo's most recent successful access to the institution for the given link.",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -16208,9 +16202,7 @@ The present value required to pay off the loan, as provided by the institution.
                   "value": {
                     "description": "The ISO-8601 timestamp when the data point was collected.",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -16401,9 +16393,7 @@ The present value required to pay off the loan, as provided by the institution.
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -16580,9 +16570,7 @@ The present value required to pay off the loan, as provided by the institution.
                 "schema": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -17348,9 +17336,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "schema": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -17804,9 +17790,7 @@ The ISO-8601 timestamp when the data point was collected.
 The ISO-8601 timestamp when the data point was collected.
 ",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -18050,9 +18034,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was first created in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -18417,7 +18399,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "BankAccountHolderRequestOfpiInformationBankAccountHolderRequestOfpiInformation",
+                      "generatedName": "BankAccountHolderRequestOfpiInformationZero",
                       "nameOverride": undefined,
                       "schema": "HolderInformationBusinessOfpi",
                       "type": "reference",
@@ -18425,7 +18407,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "BankAccountHolderRequestOfpiInformationBankAccountHolderRequestOfpiInformation",
+                      "generatedName": "BankAccountHolderRequestOfpiInformationOne",
                       "nameOverride": undefined,
                       "schema": "HolderInformationIndividualOfpi",
                       "type": "reference",
@@ -18522,9 +18504,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -18596,7 +18576,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "BankAccountOfpiResponseDetailsBankAccountOfpiResponseDetails",
+                      "generatedName": "BankAccountOfpiResponseDetailsZero",
                       "nameOverride": undefined,
                       "schema": "BankAccountDetailsOfpi",
                       "type": "reference",
@@ -18604,7 +18584,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "BankAccountOfpiResponseDetailsBankAccountOfpiResponseDetails",
+                      "generatedName": "BankAccountOfpiResponseDetailsOne",
                       "nameOverride": undefined,
                       "schema": "BankAccountDetailsOfpiPix",
                       "type": "reference",
@@ -18723,7 +18703,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "BankAccountPaginatedResponseResultsItemBankAccountPaginatedResponseResultsItem",
+                          "generatedName": "BankAccountPaginatedResponseResultsItemZero",
                           "nameOverride": undefined,
                           "schema": "BankAccountOfpiResponse",
                           "type": "reference",
@@ -18731,7 +18711,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "BankAccountPaginatedResponseResultsItemBankAccountPaginatedResponseResultsItem",
+                          "generatedName": "BankAccountPaginatedResponseResultsItemOne",
                           "nameOverride": undefined,
                           "schema": "BankAccountPseResponse",
                           "type": "reference",
@@ -18783,9 +18763,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -18833,7 +18811,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "BeneficiaryBankAccountOfpiDetailsBeneficiaryBankAccountOfpiDetails",
+                        "generatedName": "BeneficiaryBankAccountOfpiDetailsZero",
                         "nameOverride": undefined,
                         "schema": "BankAccountDetailsOpenFinance",
                         "type": "reference",
@@ -18841,7 +18819,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "BeneficiaryBankAccountOfpiDetailsBeneficiaryBankAccountOfpiDetails",
+                        "generatedName": "BeneficiaryBankAccountOfpiDetailsOne",
                         "nameOverride": undefined,
                         "schema": "BankAccountDetailsOpenFinancePix",
                         "type": "reference",
@@ -19569,9 +19547,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -19816,7 +19792,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "ChargePaymentMethodDetailsChargePaymentMethodDetails",
+                      "generatedName": "ChargePaymentMethodDetailsZero",
                       "nameOverride": undefined,
                       "schema": "ChargePaymentMethodDetailsPse",
                       "type": "reference",
@@ -19824,7 +19800,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "ChargePaymentMethodDetailsChargePaymentMethodDetails",
+                      "generatedName": "ChargePaymentMethodDetailsOne",
                       "nameOverride": undefined,
                       "schema": "ChargePaymentMethodDetailsOfpi",
                       "type": "reference",
@@ -19899,9 +19875,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                   "description": "The ISO-8601 timestamp of when the status of the charge was last updated.
 ",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -20103,7 +20077,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "CreateBankAccountOfpiDetailsCreateBankAccountOfpiDetails",
+                      "generatedName": "CreateBankAccountOfpiDetailsZero",
                       "nameOverride": undefined,
                       "schema": "BankAccountDetailsOfpi",
                       "type": "reference",
@@ -20111,7 +20085,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "CreateBankAccountOfpiDetailsCreateBankAccountOfpiDetails",
+                      "generatedName": "CreateBankAccountOfpiDetailsOne",
                       "nameOverride": undefined,
                       "schema": "BankAccountDetailsOfpiPix",
                       "type": "reference",
@@ -20974,9 +20948,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -21222,7 +21194,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "CustomerPaginatedResponseResultsItemCustomerPaginatedResponseResultsItem",
+                          "generatedName": "CustomerPaginatedResponseResultsItemZero",
                           "nameOverride": undefined,
                           "schema": "CustomerOfpi",
                           "type": "reference",
@@ -21230,7 +21202,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "CustomerPaginatedResponseResultsItemCustomerPaginatedResponseResultsItem",
+                          "generatedName": "CustomerPaginatedResponseResultsItemOne",
                           "nameOverride": undefined,
                           "schema": "CustomerPse",
                           "type": "reference",
@@ -21274,9 +21246,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -22086,9 +22056,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "value": {
                   "description": "The ISO-8601 timestamp of when the data point was initially created in Belvo's database.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -22104,9 +22072,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -22244,9 +22210,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -26331,7 +26295,7 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "HolderResponseOfpiInformationHolderResponseOfpiInformation",
+                      "generatedName": "HolderResponseOfpiInformationZero",
                       "nameOverride": undefined,
                       "schema": "HolderInformationBusinessOfpiResponse",
                       "type": "reference",
@@ -26339,7 +26303,7 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "HolderResponseOfpiInformationHolderResponseOfpiInformation",
+                      "generatedName": "HolderResponseOfpiInformationOne",
                       "nameOverride": undefined,
                       "schema": "HolderInformationIndividualOfpiResponse",
                       "type": "reference",
@@ -26395,9 +26359,7 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was created in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -29485,9 +29447,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                   "value": {
                     "description": "The ISO-8601 timestamp when the data point was collected.",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -29517,9 +29477,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                   "value": {
                     "description": "The ISO-8601 timestamp when the data point was collected.",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -29848,9 +29806,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                   "value": {
                     "description": "The ISO-8601 timestamp when the data point was collected.",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -29913,9 +29869,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -29931,9 +29885,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "value": {
                   "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -30702,9 +30654,7 @@ For detailed information regarding DIAN's payment types, please see their [offic
                     "value": {
                       "description": "The ISO-8601 timestamp when the data point was collected.",
                       "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
+                        "type": "datetime",
                       },
                       "type": "primitive",
                     },
@@ -31062,9 +31012,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -31080,9 +31028,7 @@ For detailed information regarding DIAN's tax schemes, please see their [officia
                 "value": {
                   "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -31845,9 +31791,7 @@ Possible statuses are:
                   "description": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.
 ",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -32394,9 +32338,7 @@ Possible statuses are:
                   "description": "ISO-8601 timestamp when the payment was made.
 ",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -32782,9 +32724,7 @@ Please note that other currencies other than in the list above may be returned.
                     "value": {
                       "description": "**Note**: This field is not applicable for DIAN Colombia and will return \`null\`.",
                       "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
+                        "type": "datetime",
                       },
                       "type": "primitive",
                     },
@@ -32950,9 +32890,7 @@ Please note that other currencies other than in the list above may be returned.
                     "value": {
                       "description": "The ISO-8601 timestamp when the data point was collected.",
                       "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
+                        "type": "datetime",
                       },
                       "type": "primitive",
                     },
@@ -33003,9 +32941,7 @@ Please note that other currencies other than in the list above may be returned.
                     "value": {
                       "description": "The ISO-8601 timestamp when the data point was collected.",
                       "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
+                        "type": "datetime",
                       },
                       "type": "primitive",
                     },
@@ -33396,7 +33332,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "InvoicesResponsePaginatedResponseResultsItemInvoicesResponsePaginatedResponseResultsItem",
+                          "generatedName": "InvoicesResponsePaginatedResponseResultsItemZero",
                           "nameOverride": undefined,
                           "schema": "InvoiceWithIdSat",
                           "type": "reference",
@@ -33404,7 +33340,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "InvoicesResponsePaginatedResponseResultsItemInvoicesResponsePaginatedResponseResultsItem",
+                          "generatedName": "InvoicesResponsePaginatedResponseResultsItemOne",
                           "nameOverride": undefined,
                           "schema": "InvoiceDian",
                           "type": "reference",
@@ -33722,9 +33658,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                   "value": {
                     "description": "The ISO-8601 timestamp of Belvo's most recent successful access to the institution for the given link.",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -33741,9 +33675,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "value": {
                   "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -36026,9 +35958,7 @@ For \`not_found\` errors, the description is:
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -36044,9 +35974,7 @@ For \`not_found\` errors, the description is:
                 "value": {
                   "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -36833,9 +36761,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -37005,7 +36931,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentOfpiNextStepPaymentIntentOfpiNextStep",
+                      "generatedName": "PaymentIntentOfpiNextStepZero",
                       "nameOverride": undefined,
                       "schema": "NextStepDisplayPaymentMethodInformation",
                       "type": "reference",
@@ -37013,7 +36939,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentOfpiNextStepPaymentIntentOfpiNextStep",
+                      "generatedName": "PaymentIntentOfpiNextStepOne",
                       "nameOverride": undefined,
                       "schema": "NextStepNeedsRedirect",
                       "type": "reference",
@@ -37021,7 +36947,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentOfpiNextStepPaymentIntentOfpiNextStep",
+                      "generatedName": "PaymentIntentOfpiNextStepTwo",
                       "nameOverride": undefined,
                       "schema": "NextStepDisplayConfirmationRequiredOfpi",
                       "type": "reference",
@@ -37029,7 +36955,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentOfpiNextStepPaymentIntentOfpiNextStep",
+                      "generatedName": "PaymentIntentOfpiNextStepThree",
                       "nameOverride": undefined,
                       "schema": "NextStepDisplayPaymentProcessing",
                       "type": "reference",
@@ -37037,7 +36963,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentOfpiNextStepPaymentIntentOfpiNextStep",
+                      "generatedName": "PaymentIntentOfpiNextStepFour",
                       "nameOverride": undefined,
                       "schema": "NextStepDisplayPaymentSucceeded",
                       "type": "reference",
@@ -37045,7 +36971,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentOfpiNextStepPaymentIntentOfpiNextStep",
+                      "generatedName": "PaymentIntentOfpiNextStepFive",
                       "nameOverride": undefined,
                       "schema": "NextStepDisplayPaymentFailed",
                       "type": "reference",
@@ -37082,7 +37008,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentOfpiPaymentMethodDetailsPaymentIntentOfpiPaymentMethodDetails",
+                      "generatedName": "PaymentIntentOfpiPaymentMethodDetailsZero",
                       "nameOverride": undefined,
                       "schema": "PaymentIntentPaymentMethodDetailsIndividualOfpi",
                       "type": "reference",
@@ -37090,7 +37016,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentOfpiPaymentMethodDetailsPaymentIntentOfpiPaymentMethodDetails",
+                      "generatedName": "PaymentIntentOfpiPaymentMethodDetailsOne",
                       "nameOverride": undefined,
                       "schema": "PaymentIntentPaymentMethodDetailsBusinessOfpi",
                       "type": "reference",
@@ -37188,9 +37114,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "description": "The ISO-8601 timestamp of when the payment intent was last updated.
 ",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -37671,9 +37595,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -37842,7 +37764,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseNextStepPaymentIntentPseNextStep",
+                      "generatedName": "PaymentIntentPseNextStepZero",
                       "nameOverride": undefined,
                       "schema": "NextStepDisplayPaymentMethodInformationPse",
                       "type": "reference",
@@ -37850,7 +37772,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseNextStepPaymentIntentPseNextStep",
+                      "generatedName": "PaymentIntentPseNextStepOne",
                       "nameOverride": undefined,
                       "schema": "NextStepDisplayCredentialsRequiredPse",
                       "type": "reference",
@@ -37858,7 +37780,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseNextStepPaymentIntentPseNextStep",
+                      "generatedName": "PaymentIntentPseNextStepTwo",
                       "nameOverride": undefined,
                       "schema": "NextStepDisplayNeedsRedirectPse",
                       "type": "reference",
@@ -37866,7 +37788,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseNextStepPaymentIntentPseNextStep",
+                      "generatedName": "PaymentIntentPseNextStepThree",
                       "nameOverride": undefined,
                       "schema": "NextStepDisplayTokenRequiredPse",
                       "type": "reference",
@@ -37874,7 +37796,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseNextStepPaymentIntentPseNextStep",
+                      "generatedName": "PaymentIntentPseNextStepFour",
                       "nameOverride": undefined,
                       "schema": "NextStepDisplayCustomerBankAccountsPse",
                       "type": "reference",
@@ -37882,7 +37804,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseNextStepPaymentIntentPseNextStep",
+                      "generatedName": "PaymentIntentPseNextStepFive",
                       "nameOverride": undefined,
                       "schema": "NextStepDisplayConfirmationRequiredPse",
                       "type": "reference",
@@ -37906,7 +37828,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseLastErrorPaymentIntentPseLastError",
+                      "generatedName": "PaymentIntentPseLastErrorZero",
                       "nameOverride": undefined,
                       "schema": "LastErrorInvalidCredentials",
                       "type": "reference",
@@ -37914,7 +37836,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseLastErrorPaymentIntentPseLastError",
+                      "generatedName": "PaymentIntentPseLastErrorOne",
                       "nameOverride": undefined,
                       "schema": "LastErrorInvalidToken",
                       "type": "reference",
@@ -37922,7 +37844,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseLastErrorPaymentIntentPseLastError",
+                      "generatedName": "PaymentIntentPseLastErrorTwo",
                       "nameOverride": undefined,
                       "schema": "LastErrorLoginError",
                       "type": "reference",
@@ -37930,7 +37852,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseLastErrorPaymentIntentPseLastError",
+                      "generatedName": "PaymentIntentPseLastErrorThree",
                       "nameOverride": undefined,
                       "schema": "LastErrorTwoFactor",
                       "type": "reference",
@@ -37938,7 +37860,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseLastErrorPaymentIntentPseLastError",
+                      "generatedName": "PaymentIntentPseLastErrorFour",
                       "nameOverride": undefined,
                       "schema": "LastErrorPaymentError",
                       "type": "reference",
@@ -37946,7 +37868,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentIntentPseLastErrorPaymentIntentPseLastError",
+                      "generatedName": "PaymentIntentPseLastErrorFive",
                       "nameOverride": undefined,
                       "schema": "LastErrorSessionExpired",
                       "type": "reference",
@@ -38057,9 +37979,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                   "description": "The ISO-8601 timestamp of when the payment intent was last updated.
 ",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -38271,9 +38191,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -38372,9 +38290,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     "description": "The ISO-8601 timestamp of when the payment link was last updated.
 ",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -38416,9 +38332,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "description": "The ISO-8601 timestamp of when the payment link is set to expire.
 ",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -38454,9 +38368,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -38555,9 +38467,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     "description": "The ISO-8601 timestamp of when the payment link was last updated.
 ",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -38599,9 +38509,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "description": "The ISO-8601 timestamp of when the payment link is set to expire.
 ",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -38637,9 +38545,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -38737,9 +38643,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     "description": "The ISO-8601 timestamp of when the payment link was last updated.
 ",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -38781,9 +38685,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "description": "The ISO-8601 timestamp of when the payment link is set to expire.
 ",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -38883,7 +38785,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "PaymentLinkPaginatedResponseResultsItemPaymentLinkPaginatedResponseResultsItem",
+                          "generatedName": "PaymentLinkPaginatedResponseResultsItemZero",
                           "nameOverride": undefined,
                           "schema": "PaymentLinkListOfpi",
                           "type": "reference",
@@ -38891,7 +38793,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "PaymentLinkPaginatedResponseResultsItemPaymentLinkPaginatedResponseResultsItem",
+                          "generatedName": "PaymentLinkPaginatedResponseResultsItemOne",
                           "nameOverride": undefined,
                           "schema": "PaymentLinkListPse",
                           "type": "reference",
@@ -38935,9 +38837,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -39035,9 +38935,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                     "description": "The ISO-8601 timestamp of when the payment link was last updated.
 ",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -39079,9 +38977,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                 "description": "The ISO-8601 timestamp of when the payment link is set to expire.
 ",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -40221,9 +40117,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "schema": {
                 "description": "The ISO timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -40235,9 +40129,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "schema": {
                 "description": "The ISO timestamp when the data point was collected.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -41283,9 +41175,7 @@ For \`request_timeout\` errors, the description is:
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -42580,9 +42470,7 @@ If the account has not been open long enough to have the transaction data for a 
                 "description": "The ISO-8601 timestamp of when the secret key was created.
 ",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -42595,9 +42483,7 @@ If the account has not been open long enough to have the transaction data for a 
                 "description": "The ISO-8601 timestamp of when the secret key was last used.
 ",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -43106,9 +42992,7 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -43124,9 +43008,7 @@ The amount the tax payer has as a "credit" fromt he previous year (this is equal
                 "value": {
                   "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -43410,9 +43292,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "schema": {
                 "description": "The ISO-8601 timestamp when the data point was collected.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -43424,9 +43304,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -43683,9 +43561,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "schema": {
                 "description": "The ISO-8601 timestamp when the data point was collected.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -43697,9 +43573,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -44298,9 +44172,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "description": "The ISO-8601 timestamp of when the data point was collected.
 ",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -44317,9 +44189,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.
 ",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -44395,9 +44265,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "description": "The ISO-8601 timestamp of when the tax retention was issued.
 ",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -44415,9 +44283,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "description": "The ISO-8601 timestamp of when the tax retention was certified.
 ",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -44435,9 +44301,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "description": "The ISO-8601 timestamp of when the tax retention was canceled (if applicable).
 ",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -44889,9 +44753,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -44907,9 +44769,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "value": {
                   "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -45211,9 +45071,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -45229,9 +45087,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "value": {
                   "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -45456,9 +45312,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -45474,9 +45328,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "value": {
                   "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -45728,9 +45580,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -45746,9 +45596,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "value": {
                   "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -47109,9 +46957,7 @@ By default, Belvo returns the yearly (annual) tax returns.
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -47124,9 +46970,7 @@ By default, Belvo returns the yearly (annual) tax returns.
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -47915,7 +47759,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "TaxStatusPaginatedResponseResultsItemTaxStatusPaginatedResponseResultsItem",
+                          "generatedName": "TaxStatusPaginatedResponseResultsItemZero",
                           "nameOverride": undefined,
                           "schema": "TaxStatusSat",
                           "type": "reference",
@@ -47923,7 +47767,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                         {
                           "description": undefined,
                           "file": undefined,
-                          "generatedName": "TaxStatusPaginatedResponseResultsItemTaxStatusPaginatedResponseResultsItem",
+                          "generatedName": "TaxStatusPaginatedResponseResultsItemOne",
                           "nameOverride": undefined,
                           "schema": "TaxStatusDian",
                           "type": "reference",
@@ -48177,9 +48021,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -48192,9 +48034,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -49336,9 +49176,7 @@ For \`too_many_sessions\` errors, the description is:
                 "value": {
                   "description": "The ISO-8601 timestamp when the data point was collected.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -49354,9 +49192,7 @@ For \`too_many_sessions\` errors, the description is:
                 "value": {
                   "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -49390,9 +49226,7 @@ For \`too_many_sessions\` errors, the description is:
                 "value": {
                   "description": "The ISO timestamp when the transaction was processed and accounted for by the institution.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -49646,7 +49480,7 @@ For \`too_many_sessions\` errors, the description is:
               {
                 "description": undefined,
                 "file": undefined,
-                "generatedName": "TransactionBankAccountPseTransactionBankAccountPse",
+                "generatedName": "TransactionBankAccountPseZero",
                 "nameOverride": undefined,
                 "schema": "TransactionBankAccountBodyPse",
                 "type": "reference",
@@ -49654,7 +49488,7 @@ For \`too_many_sessions\` errors, the description is:
               {
                 "description": undefined,
                 "file": undefined,
-                "generatedName": "TransactionBankAccountPseTransactionBankAccountPse",
+                "generatedName": "TransactionBankAccountPseOne",
                 "nameOverride": undefined,
                 "schema": "BankAccountInformationPse",
                 "type": "reference",
@@ -49687,9 +49521,7 @@ For \`too_many_sessions\` errors, the description is:
                     "value": {
                       "description": "The ISO-8601 timestamp when the data point was collected.",
                       "schema": {
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "type": "string",
+                        "type": "datetime",
                       },
                       "type": "primitive",
                     },
@@ -50719,9 +50551,7 @@ For \`session_expired\` errors, the description can be (among others):
               "schema": {
                 "description": "The ISO-8601 timestamp of when the data point was last updated in Belvo's database.",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -50826,7 +50656,7 @@ For \`session_expired\` errors, the description can be (among others):
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentTransactionPayerPaymentTransactionPayer",
+                      "generatedName": "PaymentTransactionPayerZero",
                       "nameOverride": undefined,
                       "schema": "TransactionBankAccountOfpi",
                       "type": "reference",
@@ -50834,7 +50664,7 @@ For \`session_expired\` errors, the description can be (among others):
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "PaymentTransactionPayerPaymentTransactionPayer",
+                      "generatedName": "PaymentTransactionPayerOne",
                       "nameOverride": undefined,
                       "schema": "TransactionBankAccountPse",
                       "type": "reference",
@@ -50971,9 +50801,7 @@ For \`session_expired\` errors, the description can be (among others):
                 "description": "The ISO-8601 timestamp of when the webhook was created in our database.
 ",
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },

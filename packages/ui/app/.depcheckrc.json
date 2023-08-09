@@ -1,1 +1,0 @@
-{ "ignores": ["@types/jest", "@types/node", "vite", "@types/react", "@types/react"], "ignore-patterns": ["lib"] }

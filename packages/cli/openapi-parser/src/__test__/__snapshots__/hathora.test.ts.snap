@@ -3594,9 +3594,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -3609,9 +3607,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -3914,9 +3910,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -3932,9 +3926,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -3950,9 +3942,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -3965,9 +3955,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -4031,7 +4019,7 @@ exports[`open api parser hathora parse open api 1`] = `
               {
                 "description": undefined,
                 "file": undefined,
-                "generatedName": "ConnectionInfoConnectionInfo",
+                "generatedName": "ConnectionInfoZero",
                 "nameOverride": undefined,
                 "schema": "StartingConnectionInfo",
                 "type": "reference",
@@ -4039,7 +4027,7 @@ exports[`open api parser hathora parse open api 1`] = `
               {
                 "description": undefined,
                 "file": undefined,
-                "generatedName": "ConnectionInfoConnectionInfo",
+                "generatedName": "ConnectionInfoOne",
                 "nameOverride": undefined,
                 "schema": "ActiveConnectionInfo",
                 "type": "reference",
@@ -4072,9 +4060,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -4378,9 +4364,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -4702,9 +4686,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -4756,9 +4738,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -4774,9 +4754,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -4792,9 +4770,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -4807,9 +4783,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },
@@ -5235,9 +5209,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -5250,9 +5222,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "description": undefined,
                 "schema": {
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "type": "string",
+                  "type": "datetime",
                 },
                 "type": "primitive",
               },

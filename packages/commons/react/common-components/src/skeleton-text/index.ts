@@ -1,1 +1,0 @@
-export { SkeletonText } from "./SkeletonText";

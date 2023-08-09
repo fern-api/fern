@@ -9911,7 +9911,7 @@ exports[`open api parser deel parse open api 1`] = `
               {
                 "description": undefined,
                 "file": undefined,
-                "generatedName": "ContractSearchFormContractSearchForm",
+                "generatedName": "ContractSearchFormZero",
                 "nameOverride": undefined,
                 "schema": "ContractSearchFormWithCursor",
                 "type": "reference",
@@ -9919,7 +9919,7 @@ exports[`open api parser deel parse open api 1`] = `
               {
                 "description": undefined,
                 "file": undefined,
-                "generatedName": "ContractSearchFormContractSearchForm",
+                "generatedName": "ContractSearchFormOne",
                 "nameOverride": undefined,
                 "schema": "ContractSearchFormWithoutCursor",
                 "type": "reference",
@@ -10033,7 +10033,7 @@ exports[`open api parser deel parse open api 1`] = `
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "ContractSearchFormWithoutCursorTypesContractSearchFormWithoutCursorTypes",
+                        "generatedName": "ContractSearchFormWithoutCursorTypesZero",
                         "nameOverride": undefined,
                         "schema": "ContractTypeEnum",
                         "type": "reference",
@@ -10041,7 +10041,7 @@ exports[`open api parser deel parse open api 1`] = `
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "ContractSearchFormWithoutCursorTypesContractSearchFormWithoutCursorTypes",
+                        "generatedName": "ContractSearchFormWithoutCursorTypesOne",
                         "nameOverride": undefined,
                         "schema": "ContractTypeEnumList",
                         "type": "reference",
@@ -10069,7 +10069,7 @@ exports[`open api parser deel parse open api 1`] = `
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "ContractSearchFormWithoutCursorStatusesContractSearchFormWithoutCursorStatuses",
+                        "generatedName": "ContractSearchFormWithoutCursorStatusesZero",
                         "nameOverride": undefined,
                         "schema": "ContractStatusEnumList",
                         "type": "reference",
@@ -10077,7 +10077,7 @@ exports[`open api parser deel parse open api 1`] = `
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "ContractSearchFormWithoutCursorStatusesContractSearchFormWithoutCursorStatuses",
+                        "generatedName": "ContractSearchFormWithoutCursorStatusesOne",
                         "nameOverride": undefined,
                         "schema": "ContractStatusEnum",
                         "type": "reference",
@@ -10141,7 +10141,7 @@ exports[`open api parser deel parse open api 1`] = `
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "ContractSearchFormWithoutCursorCountriesContractSearchFormWithoutCursorCountries",
+                        "generatedName": "ContractSearchFormWithoutCursorCountriesZero",
                         "nameOverride": undefined,
                         "schema": "CountryCodeList",
                         "type": "reference",
@@ -10149,7 +10149,7 @@ exports[`open api parser deel parse open api 1`] = `
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "ContractSearchFormWithoutCursorCountriesContractSearchFormWithoutCursorCountries",
+                        "generatedName": "ContractSearchFormWithoutCursorCountriesOne",
                         "nameOverride": undefined,
                         "schema": "CountryCode",
                         "type": "reference",
@@ -10177,7 +10177,7 @@ exports[`open api parser deel parse open api 1`] = `
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "ContractSearchFormWithoutCursorCurrenciesContractSearchFormWithoutCursorCurrencies",
+                        "generatedName": "ContractSearchFormWithoutCursorCurrenciesZero",
                         "nameOverride": undefined,
                         "schema": "CurrencyCodeList",
                         "type": "reference",
@@ -10185,7 +10185,7 @@ exports[`open api parser deel parse open api 1`] = `
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "ContractSearchFormWithoutCursorCurrenciesContractSearchFormWithoutCursorCurrencies",
+                        "generatedName": "ContractSearchFormWithoutCursorCurrenciesOne",
                         "nameOverride": undefined,
                         "schema": "CurrencyCodeRequired",
                         "type": "reference",
@@ -10587,7 +10587,7 @@ exports[`open api parser deel parse open api 1`] = `
               {
                 "description": undefined,
                 "file": undefined,
-                "generatedName": "ContractToCreateContractToCreate",
+                "generatedName": "ContractToCreateZero",
                 "nameOverride": undefined,
                 "schema": "ContractToCreate_pay_as_you_go_time_based",
                 "type": "reference",
@@ -10595,7 +10595,7 @@ exports[`open api parser deel parse open api 1`] = `
               {
                 "description": undefined,
                 "file": undefined,
-                "generatedName": "ContractToCreateContractToCreate",
+                "generatedName": "ContractToCreateOne",
                 "nameOverride": undefined,
                 "schema": "ContractToCreate_payg_tasks",
                 "type": "reference",
@@ -10603,7 +10603,7 @@ exports[`open api parser deel parse open api 1`] = `
               {
                 "description": undefined,
                 "file": undefined,
-                "generatedName": "ContractToCreateContractToCreate",
+                "generatedName": "ContractToCreateTwo",
                 "nameOverride": undefined,
                 "schema": "ContractToCreate_payg_milestones",
                 "type": "reference",
@@ -10611,7 +10611,7 @@ exports[`open api parser deel parse open api 1`] = `
               {
                 "description": undefined,
                 "file": undefined,
-                "generatedName": "ContractToCreateContractToCreate",
+                "generatedName": "ContractToCreateThree",
                 "nameOverride": undefined,
                 "schema": "ContractToCreate_ongoing_time_based",
                 "type": "reference",
@@ -12312,9 +12312,7 @@ exports[`open api parser deel parse open api 1`] = `
           "value": {
             "description": "Long date-time format following ISO-8601",
             "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "type": "datetime",
             },
             "type": "primitive",
           },
@@ -12325,9 +12323,7 @@ exports[`open api parser deel parse open api 1`] = `
           "value": {
             "description": "Long date-time format following ISO-8601",
             "schema": {
-              "maxLength": undefined,
-              "minLength": undefined,
-              "type": "string",
+              "type": "datetime",
             },
             "type": "primitive",
           },
@@ -18293,7 +18289,7 @@ exports[`open api parser deel parse open api 1`] = `
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "HrisDirectEmployeeJobInformationHrisDirectEmployeeJobInformation",
+                      "generatedName": "HrisDirectEmployeeJobInformationZero",
                       "nameOverride": undefined,
                       "schema": "HrisJobInformationTitleId",
                       "type": "reference",
@@ -18301,7 +18297,7 @@ exports[`open api parser deel parse open api 1`] = `
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "HrisDirectEmployeeJobInformationHrisDirectEmployeeJobInformation",
+                      "generatedName": "HrisDirectEmployeeJobInformationOne",
                       "nameOverride": undefined,
                       "schema": "HrisJobInformationTitleName",
                       "type": "reference",
@@ -18338,7 +18334,7 @@ exports[`open api parser deel parse open api 1`] = `
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "HrisDirectEmployeeContractHrisDirectEmployeeContract",
+                      "generatedName": "HrisDirectEmployeeContractZero",
                       "nameOverride": undefined,
                       "schema": "HrisContractPartTime",
                       "type": "reference",
@@ -18346,7 +18342,7 @@ exports[`open api parser deel parse open api 1`] = `
                     {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "HrisDirectEmployeeContractHrisDirectEmployeeContract",
+                      "generatedName": "HrisDirectEmployeeContractOne",
                       "nameOverride": undefined,
                       "schema": "HrisContractFullTime",
                       "type": "reference",
@@ -19830,7 +19826,7 @@ exports[`open api parser deel parse open api 1`] = `
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "InvoiceAdjustmentSearchContainerContractTypesInvoiceAdjustmentSearchContainerContractTypes",
+                        "generatedName": "InvoiceAdjustmentSearchContainerContractTypesZero",
                         "nameOverride": undefined,
                         "schema": "ContractTypeEnumList",
                         "type": "reference",
@@ -19838,7 +19834,7 @@ exports[`open api parser deel parse open api 1`] = `
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "InvoiceAdjustmentSearchContainerContractTypesInvoiceAdjustmentSearchContainerContractTypes",
+                        "generatedName": "InvoiceAdjustmentSearchContainerContractTypesOne",
                         "nameOverride": undefined,
                         "schema": "ContractTypeEnum",
                         "type": "reference",
@@ -19866,7 +19862,7 @@ exports[`open api parser deel parse open api 1`] = `
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "InvoiceAdjustmentSearchContainerTypesInvoiceAdjustmentSearchContainerTypes",
+                        "generatedName": "InvoiceAdjustmentSearchContainerTypesZero",
                         "nameOverride": undefined,
                         "schema": "InvoiceAdjustmentTypeEnumList",
                         "type": "reference",
@@ -19874,7 +19870,7 @@ exports[`open api parser deel parse open api 1`] = `
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "InvoiceAdjustmentSearchContainerTypesInvoiceAdjustmentSearchContainerTypes",
+                        "generatedName": "InvoiceAdjustmentSearchContainerTypesOne",
                         "nameOverride": undefined,
                         "schema": "InvoiceAdjustmentTypeEnum",
                         "type": "reference",
@@ -19902,7 +19898,7 @@ exports[`open api parser deel parse open api 1`] = `
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "InvoiceAdjustmentSearchContainerStatusesInvoiceAdjustmentSearchContainerStatuses",
+                        "generatedName": "InvoiceAdjustmentSearchContainerStatusesZero",
                         "nameOverride": undefined,
                         "schema": "InvoiceAdjustmentStatusEnumList",
                         "type": "reference",
@@ -19910,7 +19906,7 @@ exports[`open api parser deel parse open api 1`] = `
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "InvoiceAdjustmentSearchContainerStatusesInvoiceAdjustmentSearchContainerStatuses",
+                        "generatedName": "InvoiceAdjustmentSearchContainerStatusesOne",
                         "nameOverride": undefined,
                         "schema": "InvoiceAdjustmentStatusEnum",
                         "type": "reference",
@@ -20670,9 +20666,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "value": {
                   "description": "Expiration date time of download URL.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -26879,7 +26873,7 @@ exports[`open api parser deel parse open api 1`] = `
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TimesheetSearchContainerContractTypesTimesheetSearchContainerContractTypes",
+                        "generatedName": "TimesheetSearchContainerContractTypesZero",
                         "nameOverride": undefined,
                         "schema": "ContractTypeEnumList",
                         "type": "reference",
@@ -26887,7 +26881,7 @@ exports[`open api parser deel parse open api 1`] = `
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TimesheetSearchContainerContractTypesTimesheetSearchContainerContractTypes",
+                        "generatedName": "TimesheetSearchContainerContractTypesOne",
                         "nameOverride": undefined,
                         "schema": "ContractTypeEnum",
                         "type": "reference",
@@ -26915,7 +26909,7 @@ exports[`open api parser deel parse open api 1`] = `
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TimesheetSearchContainerTypesTimesheetSearchContainerTypes",
+                        "generatedName": "TimesheetSearchContainerTypesZero",
                         "nameOverride": undefined,
                         "schema": "TimesheetTypeEnumList",
                         "type": "reference",
@@ -26923,7 +26917,7 @@ exports[`open api parser deel parse open api 1`] = `
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TimesheetSearchContainerTypesTimesheetSearchContainerTypes",
+                        "generatedName": "TimesheetSearchContainerTypesOne",
                         "nameOverride": undefined,
                         "schema": "TimesheetTypeEnum",
                         "type": "reference",
@@ -26951,7 +26945,7 @@ exports[`open api parser deel parse open api 1`] = `
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TimesheetSearchContainerStatusesTimesheetSearchContainerStatuses",
+                        "generatedName": "TimesheetSearchContainerStatusesZero",
                         "nameOverride": undefined,
                         "schema": "TimesheetStatusEnumList",
                         "type": "reference",
@@ -26959,7 +26953,7 @@ exports[`open api parser deel parse open api 1`] = `
                       {
                         "description": undefined,
                         "file": undefined,
-                        "generatedName": "TimesheetSearchContainerStatusesTimesheetSearchContainerStatuses",
+                        "generatedName": "TimesheetSearchContainerStatusesOne",
                         "nameOverride": undefined,
                         "schema": "TimesheetStatusEnum",
                         "type": "reference",

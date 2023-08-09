@@ -40,18 +40,7 @@
     { "path": "../commons/fs-utils" },
     { "path": "../commons/loadable" },
     { "path": "../commons/logging-execa" },
-    { "path": "../commons/react/common-components" },
-    { "path": "../commons/react/contexted-dialog" },
-    { "path": "../commons/react/fonts" },
-    { "path": "../commons/react/react-commons" },
-    { "path": "../commons/react/react-query-utils" },
-    { "path": "../commons/react/routing-utils" },
-    { "path": "../commons/react/split-view" },
-    { "path": "../commons/react/theme" },
-    { "path": "../commons/react/toaster" },
-    { "path": "../demo-setup" },
     { "path": "../scripts" },
-    { "path": "../ui/app" },
-    { "path": "../ui/deploy" }
+    { "path": "../seed" }
   ]
 }

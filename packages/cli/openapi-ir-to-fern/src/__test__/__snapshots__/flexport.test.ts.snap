@@ -21,27 +21,27 @@ exports[`open api parser flexport simple 1`] = `
             },
             "delivery_appointment_requested_at_date": {
               "docs": "Date at which the appointment was first requested",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "delivery_appointment_requested_date": {
               "docs": "Date of the actual appointment date that was requested in that initial request",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "delivery_appointment_scheduled_at_date": {
               "docs": "Date at which the appointment was confirmed by the DC",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "delivery_appointment_scheduled_date": {
               "docs": "Date of the actual confirmed appointment",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "delivery_completed": {
               "docs": "Date when the cargo for this leg was unloaded and fully received at the final destination",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "loaded_on_truck_date": {
               "docs": "Date when the cargo has been transloaded from an ocean container to a truck",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -325,7 +325,7 @@ exports[`open api parser flexport simple 1`] = `
             },
             "created_at": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "delivery_date": {
               "docs": undefined,
@@ -1225,11 +1225,11 @@ exports[`open api parser flexport simple 1`] = `
             },
             "created_at": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "deleted_at": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "id": {
               "docs": undefined,
@@ -1237,7 +1237,7 @@ exports[`open api parser flexport simple 1`] = `
             },
             "updated_at": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -3725,7 +3725,7 @@ exports[`open api parser flexport simple 1`] = `
             },
             "credited_at": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "reason": {
               "docs": "DEPRECATED - Not available after v3. Please use \`reasons\`.",
@@ -3928,7 +3928,7 @@ exports[`open api parser flexport simple 1`] = `
             },
             "archived_at": {
               "docs": "Date-time string when this document was archived. Null if not archived.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "document_type": {
               "docs": "Type of the document.",
@@ -4425,7 +4425,7 @@ exports[`open api parser flexport simple 1`] = `
             },
             "issued_at": {
               "docs": "When the invoice was issued",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "issuer": {
               "docs": undefined,
@@ -4437,7 +4437,7 @@ exports[`open api parser flexport simple 1`] = `
             },
             "last_updated_at": {
               "docs": "Time of the last adjustment to in invoice",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "name": {
               "docs": "Unique name for the invoice",
@@ -4469,7 +4469,7 @@ exports[`open api parser flexport simple 1`] = `
             },
             "voided_at": {
               "docs": "When the invoice was voided (if applicable)",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -5019,15 +5019,15 @@ exports[`open api parser flexport simple 1`] = `
           "union": [
             {
               "docs": "Object format.",
-              "type": "MetadataCreateMetadataCreate",
+              "type": "MetadataCreateExampleKey",
             },
             {
               "docs": "Array format.",
-              "type": "list<MetadataCreateMetadataCreateItem>",
+              "type": "list<MetadataCreateItem>",
             },
           ],
         },
-        "MetadataCreateMetadataCreate": {
+        "MetadataCreateExampleKey": {
           "docs": "Object format.",
           "properties": {
             "example_key": {
@@ -5036,7 +5036,7 @@ exports[`open api parser flexport simple 1`] = `
             },
           },
         },
-        "MetadataCreateMetadataCreateItem": {
+        "MetadataCreateItem": {
           "docs": undefined,
           "properties": {
             "name": {
@@ -5621,7 +5621,7 @@ exports[`open api parser flexport simple 1`] = `
             },
             "confirmed_space_released_at": {
               "docs": "the date-time at which the carrier confirms space release related to the shipping order",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "containers": {
               "docs": undefined,
@@ -5933,7 +5933,7 @@ exports[`open api parser flexport simple 1`] = `
             },
             "archived_at": {
               "docs": "If the product has been archived, the time it was archived. If the product is still active this will be null.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "classifications": {
               "docs": undefined,
@@ -7183,19 +7183,19 @@ exports[`open api parser flexport simple 1`] = `
             },
             "actual_arrival_date": {
               "docs": "Actual arrival date to the last port of the main voyage",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "actual_delivered_in_full_date": {
               "docs": "Actual delivery date to the destination location. For ocean shipments with multiple containers, this is the date of last delivered container",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "actual_departure_date": {
               "docs": "Actual departure date from the first port of the main voyage",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "actual_picked_up_in_full_date": {
               "docs": "Actual pickup date from the origin location. For ocean shipments with multiple containers, this is the date of last picked up container",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "air_shipment": {
               "docs": undefined,
@@ -7203,7 +7203,7 @@ exports[`open api parser flexport simple 1`] = `
             },
             "arrival_date": {
               "docs": "DEPRECATED date field",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "belongs_to_a_buyers_consol": {
               "docs": "Indicated whether the shipment is part of a buyer's consol.",
@@ -7243,7 +7243,7 @@ exports[`open api parser flexport simple 1`] = `
             },
             "created_date": {
               "docs": "Date the user confirmed the Flexport quote for this Shipment",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "customs_entries": {
               "docs": undefined,
@@ -7255,11 +7255,11 @@ exports[`open api parser flexport simple 1`] = `
             },
             "delivered_in_full_date": {
               "docs": "DEPRECATED date field",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "departure_date": {
               "docs": "DEPRECATED date field",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "documents": {
               "docs": undefined,
@@ -7267,19 +7267,19 @@ exports[`open api parser flexport simple 1`] = `
             },
             "estimated_arrival_date": {
               "docs": "Estimated arrival date to the last port of the main voyage",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "estimated_delivered_in_full_date": {
               "docs": "Estimated delivery date to the destination location. For ocean shipments with multiple containers, this is the date of last delivered container",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "estimated_departure_date": {
               "docs": "Estimated departure date from the first port of the main voyage",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "estimated_picked_up_in_full_date": {
               "docs": "Estimated pickup date from the origin location. For ocean shipments with multiple containers, this is the date of last picked up container",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "freight_type": {
               "docs": undefined,
@@ -7327,7 +7327,7 @@ exports[`open api parser flexport simple 1`] = `
             },
             "picked_up_in_full_date": {
               "docs": "DEPRECATED date field",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "pieces": {
               "docs": undefined,
@@ -7359,7 +7359,7 @@ exports[`open api parser flexport simple 1`] = `
             },
             "updated_at": {
               "docs": "Date when the shipment object was last updated",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "visibility_only": {
               "docs": "Indicates if a shipment was requested for tracking via the Flexport visibility-only service.",
@@ -7412,23 +7412,23 @@ exports[`open api parser flexport simple 1`] = `
             },
             "actual_arrival_date": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "actual_delivery_date": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "actual_departure_date": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "actual_pickup_date": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "available_for_pickup_date": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "cargo_ready_date": {
               "docs": undefined,
@@ -7460,23 +7460,23 @@ exports[`open api parser flexport simple 1`] = `
             },
             "estimated_arrival_date": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "estimated_available_for_pickup_date": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "estimated_delivery_date": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "estimated_departure_date": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "estimated_pickup_date": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "id": {
               "docs": undefined,
@@ -7488,7 +7488,7 @@ exports[`open api parser flexport simple 1`] = `
             },
             "last_free_day_date": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "metadata": {
               "docs": undefined,
@@ -7891,11 +7891,11 @@ exports[`open api parser flexport simple 1`] = `
             },
             "actual_arrival_date": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "actual_departure_date": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "additional_dates": {
               "docs": undefined,
@@ -7915,7 +7915,7 @@ exports[`open api parser flexport simple 1`] = `
             },
             "deleted_at": {
               "docs": "Date-time string when this leg was deleted. Null if not deleted.",
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "destination": {
               "docs": undefined,
@@ -7923,11 +7923,11 @@ exports[`open api parser flexport simple 1`] = `
             },
             "estimated_arrival_date": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "estimated_departure_date": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "id": {
               "docs": undefined,

@@ -32,7 +32,7 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/docs-config": "0.0.34",
+    "@fern-fern/docs-config": "0.0.36",
     "@fern-fern/registry-node": "0.11.1-4-gcbb472a",
     "js-yaml": "^4.1.0"
   },

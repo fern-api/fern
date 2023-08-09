@@ -1634,9 +1634,7 @@ to access.
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -1653,9 +1651,7 @@ to access.
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -1745,9 +1741,7 @@ used.
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -1764,9 +1758,7 @@ used.
                 "value": {
                   "description": undefined,
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -3747,9 +3739,7 @@ organizations.
                 "value": {
                   "description": "The expiration timestamp of the URL.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -3923,9 +3913,7 @@ organizations.
                 "value": {
                   "description": "Timestamp when the object was created.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -3990,9 +3978,7 @@ organizations.
                 "value": {
                   "description": "Timestamp when the object was last modified.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -4522,9 +4508,7 @@ token. Only applicable for application access tokens.
                 "value": {
                   "description": "The time at which the token expires.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -4540,9 +4524,7 @@ token. Only applicable for application access tokens.
                 "value": {
                   "description": "The time at which the token was issued.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -6107,9 +6089,7 @@ sort order. If not set, then no prior elements exist.
                 "value": {
                   "description": "Timestamp when the enhancement is expected to be closed.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -7797,9 +7777,7 @@ always be returned in the specified sort-by order.
                   "description": "Target close date by which enhancement is expected to be closed.
 ",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -8139,9 +8117,7 @@ sort order. If not set, then no prior elements exist.
                 "value": {
                   "description": "Updates the target close date of the enhancement.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -10861,9 +10837,7 @@ should only be processed if the timestamp isn't stale by several
 seconds.
 ",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -11814,9 +11788,7 @@ event types. Note this is mutually exclusive with 'add' and
                 "value": {
                   "description": "Timestamp when the work is expected to be complete.",
                   "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
+                    "type": "datetime",
                   },
                   "type": "primitive",
                 },
@@ -11993,9 +11965,7 @@ issues.
                   "value": {
                     "description": "Timestamp for when the work is expected to be complete.",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -12458,9 +12428,7 @@ sort order. If not set, then no prior elements exist.
                     "description": "Updates the timestamp for when the work is expected to be complete.
 ",
                     "schema": {
-                      "maxLength": undefined,
-                      "minLength": undefined,
-                      "type": "string",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },

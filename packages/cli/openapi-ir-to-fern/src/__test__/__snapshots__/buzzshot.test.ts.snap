@@ -12,7 +12,7 @@ exports[`open api parser buzzshot simple 1`] = `
           "properties": {
             "added_at": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "complete": {
               "docs": undefined,
@@ -48,7 +48,7 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "start_at": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "time": {
               "docs": undefined,
@@ -56,7 +56,7 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "updated_at": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -65,7 +65,7 @@ exports[`open api parser buzzshot simple 1`] = `
           "properties": {
             "completed_at": {
               "docs": undefined,
-              "type": "string",
+              "type": "datetime",
             },
             "completion_time": {
               "docs": undefined,
@@ -111,7 +111,7 @@ exports[`open api parser buzzshot simple 1`] = `
           "properties": {
             "added_at": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "photo": {
               "docs": undefined,
@@ -132,7 +132,7 @@ exports[`open api parser buzzshot simple 1`] = `
           "properties": {
             "added_at": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "date": {
               "docs": undefined,
@@ -164,7 +164,7 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "start_at": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "time": {
               "docs": undefined,
@@ -172,7 +172,7 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "updated_at": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -181,7 +181,7 @@ exports[`open api parser buzzshot simple 1`] = `
           "properties": {
             "added_at": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "complete": {
               "docs": undefined,
@@ -209,7 +209,7 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "start_at": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "time": {
               "docs": undefined,
@@ -217,7 +217,7 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "updated_at": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -226,7 +226,7 @@ exports[`open api parser buzzshot simple 1`] = `
           "properties": {
             "completed_at": {
               "docs": undefined,
-              "type": "string",
+              "type": "datetime",
             },
             "completion_time": {
               "docs": undefined,
@@ -272,7 +272,7 @@ exports[`open api parser buzzshot simple 1`] = `
           "properties": {
             "added_at": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "game": {
               "docs": undefined,
@@ -297,7 +297,7 @@ exports[`open api parser buzzshot simple 1`] = `
           "properties": {
             "added_at": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "email": {
               "docs": undefined,
@@ -329,7 +329,7 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "updated_at": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },
@@ -485,7 +485,7 @@ exports[`open api parser buzzshot simple 1`] = `
           "properties": {
             "added_at": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "id": {
               "docs": undefined,
@@ -506,7 +506,7 @@ exports[`open api parser buzzshot simple 1`] = `
           "properties": {
             "added_at": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "game": {
               "docs": undefined,
@@ -535,7 +535,7 @@ exports[`open api parser buzzshot simple 1`] = `
           "properties": {
             "added_at": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
             "email": {
               "docs": undefined,
@@ -567,7 +567,7 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "updated_at": {
               "docs": undefined,
-              "type": "optional<string>",
+              "type": "optional<datetime>",
             },
           },
         },

@@ -1,6 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { readFile } from "fs/promises";
+import path from "path";
 import {
     GenerationLanguage,
     GeneratorGroup,
@@ -11,32 +13,35 @@ import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
 import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
+import { GithubLicenseSchema } from "./schemas/GithubLicenseSchema";
 
-export function convertGeneratorsConfiguration({
+export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
     rawGeneratorsConfiguration,
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     rawGeneratorsConfiguration: GeneratorsConfigurationSchema;
-}): GeneratorsConfiguration {
+}): Promise<GeneratorsConfiguration> {
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         rawConfiguration: rawGeneratorsConfiguration,
         defaultGroup: rawGeneratorsConfiguration["default-group"],
         groups:
             rawGeneratorsConfiguration.groups != null
-                ? Object.entries(rawGeneratorsConfiguration.groups).map(([groupName, group]) =>
-                      convertGroup({
-                          absolutePathToGeneratorsConfiguration,
-                          groupName,
-                          group,
-                      })
+                ? await Promise.all(
+                      Object.entries(rawGeneratorsConfiguration.groups).map(([groupName, group]) =>
+                          convertGroup({
+                              absolutePathToGeneratorsConfiguration,
+                              groupName,
+                              group,
+                          })
+                      )
                   )
                 : [],
     };
 }
 
-function convertGroup({
+async function convertGroup({
     absolutePathToGeneratorsConfiguration,
     groupName,
     group,
@@ -44,28 +49,28 @@ function convertGroup({
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     groupName: string;
     group: GeneratorGroupSchema;
-}): GeneratorGroup {
+}): Promise<GeneratorGroup> {
     return {
         groupName,
         audiences: group.audiences == null ? { type: "all" } : { type: "select", audiences: group.audiences },
-        generators: group.generators.map((generator) =>
-            convertGenerator({ absolutePathToGeneratorsConfiguration, generator })
+        generators: await Promise.all(
+            group.generators.map((generator) => convertGenerator({ absolutePathToGeneratorsConfiguration, generator }))
         ),
     };
 }
 
-function convertGenerator({
+async function convertGenerator({
     absolutePathToGeneratorsConfiguration,
     generator,
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: GeneratorInvocationSchema;
-}): GeneratorInvocation {
+}): Promise<GeneratorInvocation> {
     return {
         name: generator.name,
         version: generator.version,
         config: generator.config,
-        outputMode: convertOutputMode(generator),
+        outputMode: await convertOutputMode({ absolutePathToGeneratorsConfiguration, generator }),
         absolutePathToLocalOutput:
             generator.output?.location === "local-file-system"
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.output.path)
@@ -74,13 +79,26 @@ function convertGenerator({
     };
 }
 
-function convertOutputMode(generator: GeneratorInvocationSchema): FernFiddle.OutputMode {
+async function convertOutputMode({
+    absolutePathToGeneratorsConfiguration,
+    generator,
+}: {
+    absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
+    generator: GeneratorInvocationSchema;
+}): Promise<FernFiddle.OutputMode> {
     if (generator.github != null) {
         const indexOfFirstSlash = generator.github.repository.indexOf("/");
         return FernFiddle.OutputMode.github({
             owner: generator.github.repository.slice(0, indexOfFirstSlash),
             repo: generator.github.repository.slice(indexOfFirstSlash + 1),
             makePr: generator.github.mode === "pull-request",
+            license:
+                generator.github.license != null
+                    ? await getGithubLicense({
+                          absolutePathToGeneratorsConfiguration,
+                          githubLicense: generator.github.license,
+                      })
+                    : undefined,
             publishInfo: generator.output != null ? getGithubPublishInfo(generator.output) : undefined,
         });
     }
@@ -126,6 +144,31 @@ function convertOutputMode(generator: GeneratorInvocationSchema): FernFiddle.Out
         default:
             assertNever(generator.output);
     }
+}
+
+async function getGithubLicense({
+    absolutePathToGeneratorsConfiguration,
+    githubLicense,
+}: {
+    absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
+    githubLicense: GithubLicenseSchema;
+}): Promise<FernFiddle.GithubLicense> {
+    if (typeof githubLicense === "string") {
+        switch (githubLicense) {
+            case "MIT":
+                return FernFiddle.GithubLicense.id(FernFiddle.GithubLicenseId.Mit);
+            case "Apache-2.0":
+                return FernFiddle.GithubLicense.id(FernFiddle.GithubLicenseId.Apache2);
+            default:
+                assertNever(githubLicense);
+        }
+    }
+    const absolutePathToLicense = join(
+        AbsoluteFilePath.of(path.dirname(absolutePathToGeneratorsConfiguration)),
+        RelativeFilePath.of(githubLicense.custom)
+    );
+    const licenseContent = await readFile(absolutePathToLicense);
+    return FernFiddle.GithubLicense.file(licenseContent.toString());
 }
 
 function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubPublishInfo {

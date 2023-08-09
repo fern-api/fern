@@ -169,6 +169,9 @@ jobs:
           name: Publish all packages
           command: yarn run publish --tag next
       - run:
+          name: Publish seed CLI
+          command: yarn workspace @fern-api/seed-cli publish:cli
+      - run:
           name: Publish fern-api-dev CLI
           command: yarn workspace @fern-api/cli publish:cli:dev --access restricted
 
@@ -202,6 +205,9 @@ jobs:
       - run:
           name: Publish fern-api-dev CLI
           command: yarn workspace @fern-api/cli publish:cli:dev --access restricted
+      - run:
+          name: Publish seed CLI
+          command: yarn workspace @fern-api/seed-cli publish:cli
       - run:
           name: Publish fern-api CLI
           command: |
@@ -238,6 +244,9 @@ jobs:
           name: Publish fern-api-dev CLI
           command: yarn workspace @fern-api/cli publish:cli:dev --access restricted
       - run:
+          name: Publish seed CLI
+          command: yarn workspace @fern-api/seed-cli publish:cli
+      - run:
           name: Publish fern-api CLI
           command: |
             yarn workspace @fern-api/cli publish:cli:prod --tag latest
@@ -268,74 +277,6 @@ jobs:
           command: |
             yarn generate-json-schema
             git --no-pager diff --exit-code
-
-  check-docs-release-is-allowed:
-    docker:
-      - image: cimg/node:lts
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn-berry
-      - run:
-          name: Check release blockers
-          command: yarn check-docs-release-blockers
-
-  deploy-docs-preview:
-    docker:
-      - image: cimg/node:lts
-    resource_class: large
-    steps:
-      - checkout
-      - run:
-          name: Install vercel
-          command: sudo npm install --global vercel@latest
-      - run:
-          name: Pull Vercel environment information
-          command: vercel pull --yes --environment=preview --token=${VERCEL_TOKEN}
-      - run:
-          name: Build project artifacts
-          command: vercel build --token=${VERCEL_TOKEN}
-      - run:
-          name: Deploy
-          command: vercel deploy --prebuilt --token=${VERCEL_TOKEN}
-
-  deploy-docs-dev:
-    docker:
-      - image: cimg/node:lts
-    resource_class: large
-    steps:
-      - checkout
-      - run:
-          name: Install vercel
-          command: sudo npm install --global vercel@latest
-      - run:
-          name: Pull Vercel environment information
-          command: vercel pull --yes --environment=production --token=${VERCEL_TOKEN}
-      - run:
-          name: Build project artifacts
-          command: vercel build --prod --token=${VERCEL_TOKEN}
-      - run:
-          name: Deploy
-          command: vercel deploy --prebuilt --prod --token=${VERCEL_TOKEN}
-
-  deploy-docs:
-    docker:
-      - image: cimg/node:lts
-    resource_class: large
-    steps:
-      - checkout
-      - run:
-          name: Install vercel
-          command: sudo npm install --global vercel@latest
-      - run:
-          name: Pull Vercel environment information
-          command: vercel pull --yes --environment=production --token=${VERCEL_TOKEN}
-      - run:
-          name: Build project artifacts
-          command: vercel build --prod --token=${VERCEL_TOKEN}
-      - run:
-          name: Deploy
-          command: vercel deploy --prebuilt --prod --token=${VERCEL_TOKEN}
 
 workflows:
   version: 2
@@ -464,54 +405,6 @@ workflows:
             - live-test-dev
           context:
             - fern-tokens
-
-      - deploy-docs-preview:
-          filters:
-            branches:
-              ignore: main
-          context:
-            - vercel-dev
-
-      - deploy-docs-dev:
-          filters:
-            branches:
-              only: main
-          requires:
-            - check
-            - organize-imports
-            - compile
-            - eslint
-            - test
-            - ete-tests
-          context:
-            - vercel-dev
-
-      - deploy-docs:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^docs@([0-9]+)\.([0-9]+)\.([0-9]+)$/
-          requires:
-            - check-docs-release-is-allowed
-            - check
-            - organize-imports
-            - compile
-            - eslint
-            - test
-            - ete-tests
-            - live-test-dev
-            - live-test
-          context:
-            - vercel-prod
-            - fe-algolia-prod
-
-      - check-docs-release-is-allowed:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^docs@([0-9]+)\.([0-9]+)\.([0-9]+)$/
 
       - check-cli-release-is-allowed:
           filters:
