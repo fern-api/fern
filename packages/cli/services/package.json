@@ -29,7 +29,7 @@
   "dependencies": {
     "@fern-api/venus-api-sdk": "0.0.20-7-g6ea8dc4",
     "@fern-fern/fiddle-sdk": "^0.0.290",
-    "@fern-fern/registry-node": "0.11.1-4-gcbb472a"
+    "@fern-fern/registry-node": "0.12.1-1-g4f47174"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
