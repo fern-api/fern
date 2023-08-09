@@ -26,6 +26,9 @@ jobs:
           name: fern check
           command: npx fern-api check
       - run:
+          name: fern check seed definitons
+          command: cd packages/seed && npx fern-api check
+      - run:
           name: generate (dev) JSON Schema
           command: yarn generate-json-schema:dev
       - run:
