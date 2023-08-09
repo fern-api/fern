@@ -420,6 +420,7 @@ async function convertNavigationItem({
                     )
                 ),
                 urlSlugOverride: item.slug,
+                collapsed: item.collapsed,
             });
         case "apiSection": {
             const apiDefinitionId = await registerApi({
