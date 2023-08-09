@@ -76,6 +76,7 @@ types:
     properties:
       section: string
       contents: list<NavigationItem>
+      collapsed: optional<boolean>
       slug: optional<string>
 
   ApiSectionConfiguration:

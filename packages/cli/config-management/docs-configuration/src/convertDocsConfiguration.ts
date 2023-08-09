@@ -202,6 +202,7 @@ async function convertNavigationItem({
                 )
             ),
             slug: rawConfig.slug ?? undefined,
+            collapsed: rawConfig.collapsed ?? undefined,
         };
     }
     if (isRawApiSectionConfig(rawConfig)) {

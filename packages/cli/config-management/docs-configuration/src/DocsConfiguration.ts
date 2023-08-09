@@ -76,6 +76,7 @@ export declare namespace DocsNavigationItem {
         type: "section";
         title: string;
         contents: DocsNavigationItem[];
+        collapsed: boolean | undefined;
         slug: string | undefined;
     }
 
