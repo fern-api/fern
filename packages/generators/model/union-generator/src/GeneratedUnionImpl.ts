@@ -169,11 +169,15 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     }
 
     public buildUnknown({ existingValue, context }: { existingValue: ts.Expression; context: Context }): ts.Expression {
-        return this.buildSingleUnionTypeFromExistingValue({
-            existingValue,
-            context,
-            singleUnionType: this.unknownSingleUnionType,
-        });
+        if (this.includeOtherInUnionTypes) {
+            return this.buildSingleUnionTypeFromExistingValue({
+                existingValue,
+                context,
+                singleUnionType: this.unknownSingleUnionType,
+            });
+        } else {
+            return ts.factory.createAsExpression(existingValue, this.getReferenceToUnion(context).getTypeNode());
+        }
     }
 
     private buildSingleUnionTypeFromExistingValue({
@@ -405,7 +409,10 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             throw new Error("Cannot create builders because union has base properties");
         }
 
-        for (const singleUnionType of this.getAllSingleUnionTypesIncludingUnknown()) {
+        const singleUnionTypes = this.includeOtherInUnionTypes
+            ? this.getAllSingleUnionTypesIncludingUnknown()
+            : this.parsedSingleUnionTypes;
+        for (const singleUnionType of singleUnionTypes) {
             writer.addProperty({
                 key: singleUnionType.getBuilderName(),
                 value: getTextOfTsNode(singleUnionType.getBuilder(context, this)),

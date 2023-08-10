@@ -249,6 +249,17 @@ const FIXTURES: FixtureInfo[] = [
             expect(await doesPathExist(path.join(outputPath, "src", "core", "schemas"))).toBe(false);
         },
     },
+    {
+        path: "fern-ir",
+        orgName: "fern",
+        outputMode: "github",
+        apiName: "api",
+        targetRuntime: JavaScriptRuntime.NODE,
+        customConfig: {
+            useBrandedStringAliases: true,
+            includeUtilsOnUnionMembers: true,
+        },
+    },
 ];
 const FIXTURES_PATH = path.join(__dirname, "fixtures");
 
