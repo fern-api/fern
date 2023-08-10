@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import * as Ir from "@fern-fern/ir-model";
+import { FernIr as Ir } from "@fern-fern/ir-sdk";
 import { FernRegistry } from "@fern-fern/registry-node";
 import { startCase } from "lodash-es";
 import { convertTypeId, convertTypeReference } from "./convertTypeShape";
@@ -108,16 +108,18 @@ function convertIrEnvironments({
 }
 
 function convertHttpMethod(method: Ir.http.HttpMethod): FernRegistry.api.v1.register.HttpMethod {
-    return Ir.http.HttpMethod._visit<FernRegistry.api.v1.register.HttpMethod>(method, {
-        get: () => FernRegistry.api.v1.register.HttpMethod.Get,
-        post: () => FernRegistry.api.v1.register.HttpMethod.Post,
-        put: () => FernRegistry.api.v1.register.HttpMethod.Put,
-        patch: () => FernRegistry.api.v1.register.HttpMethod.Patch,
-        delete: () => FernRegistry.api.v1.register.HttpMethod.Delete,
-        _unknown: () => {
-            throw new Error("Unknown http method: " + method);
-        },
-    });
+    switch (method) {
+        case Ir.http.HttpMethod.Get:
+            return FernRegistry.api.v1.register.HttpMethod.Get;
+        case Ir.http.HttpMethod.Post:
+            return FernRegistry.api.v1.register.HttpMethod.Post;
+        case Ir.http.HttpMethod.Put:
+            return FernRegistry.api.v1.register.HttpMethod.Put;
+        case Ir.http.HttpMethod.Patch:
+            return FernRegistry.api.v1.register.HttpMethod.Patch;
+        case Ir.http.HttpMethod.Delete:
+            return FernRegistry.api.v1.register.HttpMethod.Delete;
+    }
 }
 
 function convertHttpPath(irPath: Ir.http.HttpPath): FernRegistry.api.v1.register.EndpointPathPart[] {
@@ -167,7 +169,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FernRegistry.ap
         bytes: () => {
             return undefined;
         },
-        _unknown: () => {
+        _other: () => {
             throw new Error("Unknown HttpRequestBody: " + irRequest.type);
         },
     });
@@ -189,7 +191,7 @@ function convertResponse(irResponse: Ir.http.HttpResponse): FernRegistry.api.v1.
                 }
                 return undefined;
             },
-            _unknown: () => {
+            _other: () => {
                 throw new Error("Unknown HttpResponse: " + irResponse.type);
             },
         }
@@ -255,7 +257,7 @@ function convertExampleEndpointCall(
                 }
                 return error.statusCode;
             },
-            _unknown: () => {
+            _other: () => {
                 throw new Error("Unknown ExampleResponse: " + irExample.response.type);
             },
         }),

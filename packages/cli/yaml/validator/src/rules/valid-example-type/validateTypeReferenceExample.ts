@@ -2,7 +2,7 @@ import { assertNever, isPlainObject } from "@fern-api/core-utils";
 import { ExampleResolver, FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { EXAMPLE_REFERENCE_PREFIX, RawSchemas, visitRawTypeReference } from "@fern-api/yaml-schema";
-import { PrimitiveType } from "@fern-fern/ir-model/types";
+import { PrimitiveType } from "@fern-fern/ir-sdk/api";
 import { RuleViolation } from "../../Rule";
 import { getDuplicates } from "../../utils/getDuplicates";
 import { getRuleViolationsForMisshapenExample } from "./getRuleViolationsForMisshapenExample";
@@ -187,20 +187,26 @@ function validatePrimitiveExample({
     primitiveType: PrimitiveType;
     example: RawSchemas.ExampleTypeReferenceSchema;
 }): RuleViolation[] {
-    return PrimitiveType._visit<RuleViolation[]>(primitiveType, {
-        string: () => validateString(example),
-        integer: () => validateInteger(example),
-        double: () => validateDouble(example),
-        long: () => validateLong(example),
-        boolean: () => validateBoolean(example),
-        uuid: () => validateUuid(example),
-        dateTime: () => validateDateTime(example),
-        date: () => validateString(example),
-        base64: () => validateString(example),
-        _unknown: () => {
-            throw new Error("Unknown primitive type: " + primitiveType);
-        },
-    });
+    switch (primitiveType) {
+        case PrimitiveType.String:
+            return validateString(example);
+        case PrimitiveType.Integer:
+            return validateInteger(example);
+        case PrimitiveType.Double:
+            return validateDouble(example);
+        case PrimitiveType.Long:
+            return validateLong(example);
+        case PrimitiveType.Boolean:
+            return validateBoolean(example);
+        case PrimitiveType.Uuid:
+            return validateUuid(example);
+        case PrimitiveType.DateTime:
+            return validateDateTime(example);
+        case PrimitiveType.Date:
+            return validateString(example);
+        case PrimitiveType.Base64:
+            return validateString(example);
+    }
 }
 
 const validateString = createValidator((example) => typeof example === "string", "a string");

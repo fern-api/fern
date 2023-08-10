@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { ContainerType, TypeReference } from "@fern-fern/ir-model/types";
+import { ContainerType, TypeReference } from "@fern-fern/ir-sdk/api";
 import { constructCasingsGenerator } from "../casings/CasingsGenerator";
 import { constructFernFileContext } from "../FernFileContext";
 import { convertToFernFilepath } from "../utils/convertToFernFilepath";

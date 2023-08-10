@@ -1,5 +1,5 @@
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
-import { SingleUnionType, SingleUnionTypeProperties, Type, TypeReference } from "@fern-fern/ir-model/types";
+import { SingleUnionType, SingleUnionTypeProperties, Type, TypeReference } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getDocs } from "../../utils/getDocs";

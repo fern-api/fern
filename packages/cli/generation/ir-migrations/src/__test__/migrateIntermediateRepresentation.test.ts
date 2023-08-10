@@ -2,7 +2,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorName } from "@fern-api/generators-configuration";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { getIntermediateRepresentationMigrator } from "../IntermediateRepresentationMigrator";
 import { IrVersions } from "../ir-versions";
 import { migrateIntermediateRepresentationForGenerator } from "../migrateIntermediateRepresentationForGenerator";

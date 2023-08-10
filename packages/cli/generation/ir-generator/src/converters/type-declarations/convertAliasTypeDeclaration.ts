@@ -6,7 +6,7 @@ import {
     isRawUndiscriminatedUnionDefinition,
     RawSchemas,
 } from "@fern-api/yaml-schema";
-import { ResolvedTypeReference, ShapeType, Type } from "@fern-fern/ir-model/types";
+import { ResolvedTypeReference, ShapeType, Type } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 
@@ -38,9 +38,11 @@ function constructResolvedTypeReference({
     const resolvedType = typeResolver.resolveTypeOrThrow({ type: aliasOf, file });
     switch (resolvedType._type) {
         case "primitive":
+            return ResolvedTypeReference.primitive(resolvedType.originalTypeReference.primitive);
         case "container":
+            return ResolvedTypeReference.container(resolvedType.originalTypeReference.container);
         case "unknown":
-            return resolvedType.originalTypeReference;
+            return ResolvedTypeReference.unknown();
         case "named": {
             const shapeType = isRawObjectDefinition(resolvedType.declaration)
                 ? ShapeType.Object

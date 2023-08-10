@@ -1,5 +1,5 @@
 import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/yaml-schema";
-import { ApiAuth, AuthScheme, AuthSchemesRequirement } from "@fern-fern/ir-model/auth";
+import { ApiAuth, AuthScheme, AuthSchemesRequirement } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../FernFileContext";
 
 export function convertApiAuth({

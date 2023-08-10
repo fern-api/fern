@@ -1,6 +1,4 @@
-import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
-import { TypeDeclaration } from "@fern-fern/ir-model/types";
+import { ErrorDeclaration, HttpEndpoint, HttpService, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { IdGenerator } from "../IdGenerator";
 import { EndpointId, ErrorId, ServiceId, SubpackageId, TypeId } from "./ids";
 

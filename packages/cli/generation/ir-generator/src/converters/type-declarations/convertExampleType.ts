@@ -15,7 +15,7 @@ import {
     ExampleTypeReferenceShape,
     ExampleTypeShape,
     PrimitiveType,
-} from "@fern-fern/ir-model/types";
+} from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
@@ -236,7 +236,7 @@ export function convertTypeReferenceExample({
                 file: fileContainingRawTypeReference,
             });
             const parsedReferenceToNamedType = fileContainingRawTypeReference.parseTypeReference(named);
-            if (parsedReferenceToNamedType._type !== "named") {
+            if (parsedReferenceToNamedType.type !== "named") {
                 throw new Error("Type reference is not to a named type.");
             }
             const typeName: DeclaredTypeName = {
@@ -275,65 +275,53 @@ function convertPrimitiveExample({
     example: RawSchemas.ExampleTypeReferenceSchema;
     typeBeingExemplified: PrimitiveType;
 }): ExampleTypeReferenceShape {
-    return PrimitiveType._visit(typeBeingExemplified, {
-        string: () => {
+    switch (typeBeingExemplified) {
+        case PrimitiveType.String:
             if (typeof example !== "string") {
                 throw new Error("Example is not a string");
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.string(example));
-        },
-        dateTime: () => {
+        case PrimitiveType.DateTime:
             if (typeof example !== "string") {
                 throw new Error("Example is not a string");
             }
-            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.datetime(example));
-        },
-        date: () => {
+            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.datetime(new Date(example)));
+        case PrimitiveType.Date:
             if (typeof example !== "string") {
                 throw new Error("Example is not a string");
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.date(example));
-        },
-        base64: () => {
+        case PrimitiveType.Base64:
             if (typeof example !== "string") {
                 throw new Error("Example is not a string");
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.string(example));
-        },
-        integer: () => {
+        case PrimitiveType.Integer:
             if (typeof example !== "number") {
                 throw new Error("Example is not a number");
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(example));
-        },
-        double: () => {
+        case PrimitiveType.Double:
             if (typeof example !== "number") {
                 throw new Error("Example is not a number");
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.double(example));
-        },
-        long: () => {
+        case PrimitiveType.Long:
             if (typeof example !== "number") {
                 throw new Error("Example is not a number");
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.long(example));
-        },
-        boolean: () => {
+        case PrimitiveType.Boolean:
             if (typeof example !== "boolean") {
                 throw new Error("Example is not a boolean");
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(example));
-        },
-        uuid: () => {
+        case PrimitiveType.Uuid:
             if (typeof example !== "string") {
                 throw new Error("Example is not a string");
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uuid(example));
-        },
-        _unknown: () => {
-            throw new Error("Unknown primitive type: " + typeBeingExemplified);
-        },
-    });
+    }
 }
 
 function convertObject({
@@ -499,7 +487,7 @@ function convertUnionProperties({
         typeResolver,
     });
 
-    switch (parsedSingleUnionTypeProperties._type) {
+    switch (parsedSingleUnionTypeProperties.propertiesType) {
         case "singleProperty": {
             if (!isPlainObject(example)) {
                 throw new Error("Example is not an object");
