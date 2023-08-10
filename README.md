@@ -346,6 +346,10 @@ See [treatUnknownAsAny](#treatUnknownAsAny) under SDK Configuration
 
 See [noSerdeLayer](#noSerdeLayer) under SDK Configuration
 
+#### ✨ `outputSourceFiles`
+
+See [outputSourceFiles](#outputSourceFiles) under SDK Configuration
+
 #### ✨ `areImplementationsOptional`
 
 **Type:** boolean
