@@ -39,8 +39,8 @@ class AiClient:
                         continue
                     yield pydantic.parse_obj_as(StreamResponse, json.loads(_text))  # type: ignore
                 return
+            _response.read()
             try:
-                _response.read()
                 _response_json = _response.json()
             except JSONDecodeError:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -70,8 +70,8 @@ class AsyncAiClient:
                         continue
                     yield pydantic.parse_obj_as(StreamResponse, json.loads(_text))  # type: ignore
                 return
+            await _response.aread()
             try:
-                await _response.aread()
                 _response_json = _response.json()
             except JSONDecodeError:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
