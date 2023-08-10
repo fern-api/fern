@@ -212,7 +212,6 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         "$L.addHeader($S, $L)",
                         AbstractEndpointWriter.REQUEST_BUILDER_NAME,
                         header.wireKey().get(),
-                        sdkRequest.getRequestParameterName().getCamelCase().getSafeName(),
                         PoetTypeNameStringifier.stringify(
                                 CodeBlock.of("$L.$N()", "request", header.getterProperty())
                                         .toString(),

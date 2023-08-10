@@ -74,6 +74,26 @@ jobs:
       - store_test_results: { path: ~/junit }
       - store_artifacts: { path: ~/artifacts }
 
+  seed-test:
+    machine:
+      image: ubuntu-2004:current
+    environment:
+      CIRCLE_TEST_REPORTS: /home/circleci/junit
+      CIRCLE_ARTIFACTS: /home/circleci/artifacts
+      GRADLE_OPTS: -Dorg.gradle.jvmargs='-XX:MaxMetaspaceSize=256m' -Dorg.gradle.workers.max=4
+      _JAVA_OPTIONS: -XX:ActiveProcessorCount=4 -Xmx1177m -XX:MaxMetaspaceSize=512m -XX:ErrorFile=/home/circleci/artifacts/hs_err_pid%p.log -XX:HeapDumpPath=/home/circleci/artifacts
+      TERM: dumb
+    steps:
+      - attach_workspace: { at: /home/circleci }
+      - restore_cache: { key: 'gradle-wrapper-v2-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}' }
+      - restore_cache: { key: 'unit-test-gradle-cache-v2-{{ checksum "versions.props" }}-{{ checksum "build.gradle" }}' }
+      - run:
+          name: Install Seed
+          command: |
+            npm install -g @fern-api/seed-cli@0.14.3-4-g9dd53050
+            ./gradlew :client-generator:dockerTagLatest
+            seed test --docker java-client:latest --irVersion v20 --language java --compile-command './gradlew compileJava' --fixture exhaustive
+
   build:
     machine:
       image: ubuntu-2004:current
@@ -166,6 +186,11 @@ workflows:
           filters: { tags: { only: /.*/ } }
           context: jfrog
 
+      - seed-test:
+          requires: [ compile ]
+          filters: { tags: { only: /.*/ } }
+          context: jfrog
+
       - check:
           requires: [ compile ]
           filters: { tags: { only: /.*/ } }
@@ -179,7 +204,7 @@ workflows:
             - npm
 
       - publish-docker:
-          requires: [ check, unit-test, build ]
+          requires: [ check, unit-test, build, seed-test ]
           filters:
             branches:
               only: main
@@ -189,7 +214,7 @@ workflows:
             - docker-hub
 
       - publish-jars:
-          requires: [ check, unit-test, build]
+          requires: [ check, unit-test, build, seed-test ]
           filters:
             branches:
               ignore: /.*/

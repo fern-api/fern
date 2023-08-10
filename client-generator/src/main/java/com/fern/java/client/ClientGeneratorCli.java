@@ -53,10 +53,10 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
     private static final Logger log = LoggerFactory.getLogger(ClientGeneratorCli.class);
 
     private final List<String> subprojects = new ArrayList<>();
-    private final List<GradleDependency> dependencies;
+    private final List<GradleDependency> dependencies = new ArrayList<>();
 
     public ClientGeneratorCli() {
-        this.dependencies = List.of(
+        this.dependencies.addAll(List.of(
                 GradleDependency.builder()
                         .type(DependencyType.API)
                         .group("com.squareup.okhttp3")
@@ -80,7 +80,7 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
                         .group("com.fasterxml.jackson.datatype")
                         .artifact("jackson-datatype-jsr310")
                         .version(GradleDependency.JACKSON_JDK8_VERSION)
-                        .build());
+                        .build()));
     }
 
     @Override
