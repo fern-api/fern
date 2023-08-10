@@ -13,6 +13,7 @@ export declare namespace AbstractGeneratedType {
         fernFilepath: FernFilepath;
         getReferenceToSelf: (context: Context) => Reference;
         includeSerdeLayer: boolean;
+        noOptionalProperties: boolean;
     }
 }
 
@@ -25,6 +26,7 @@ export abstract class AbstractGeneratedType<Shape, Context> implements BaseGener
     protected fernFilepath: FernFilepath;
     protected getReferenceToSelf: (context: Context) => Reference;
     protected includeSerdeLayer: boolean;
+    protected noOptionalProperties: boolean;
 
     private docs: string | undefined;
 
@@ -36,6 +38,7 @@ export abstract class AbstractGeneratedType<Shape, Context> implements BaseGener
         docs,
         fernFilepath,
         includeSerdeLayer,
+        noOptionalProperties,
     }: AbstractGeneratedType.Init<Shape, Context>) {
         this.typeName = typeName;
         this.shape = shape;
@@ -44,6 +47,7 @@ export abstract class AbstractGeneratedType<Shape, Context> implements BaseGener
         this.docs = docs;
         this.fernFilepath = fernFilepath;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.noOptionalProperties = noOptionalProperties;
     }
 
     protected getDocs(context: Context): string | undefined {

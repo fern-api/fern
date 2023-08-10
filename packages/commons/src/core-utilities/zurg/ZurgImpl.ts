@@ -33,6 +33,27 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         };
     });
 
+    public objectWithoutOptionalProperties = this.withExportedName(
+        "objectWithoutOptionalProperties",
+        (objectWithoutOptionalProperties) =>
+            (properties: Zurg.Property[]): Zurg.ObjectSchema => {
+                const baseSchema: Zurg.BaseSchema = {
+                    isOptional: false,
+                    toExpression: () =>
+                        ts.factory.createCallExpression(objectWithoutOptionalProperties.getExpression(), undefined, [
+                            this.constructObjectLiteralForProperties(properties),
+                        ]),
+                };
+
+                return {
+                    ...baseSchema,
+                    ...this.getSchemaUtils(baseSchema),
+                    ...this.getObjectLikeUtils(baseSchema),
+                    ...this.getObjectUtils(baseSchema),
+                };
+            }
+    );
+
     private constructObjectLiteralForProperties(properties: Zurg.Property[]): ts.ObjectLiteralExpression {
         return ts.factory.createObjectLiteralExpression(
             properties.map((property) => {

@@ -20,6 +20,7 @@ export declare namespace ParsedSingleUnionTypeForUnion {
         union: UnionTypeDeclaration;
         includeUtilsOnUnionMembers: boolean;
         includeSerdeLayer: boolean;
+        noOptionalProperties: boolean;
     }
 }
 
@@ -33,6 +34,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends ModelContext> extends
         union,
         includeUtilsOnUnionMembers,
         includeSerdeLayer,
+        noOptionalProperties,
     }: ParsedSingleUnionTypeForUnion.Init) {
         super({
             singleUnionType: SingleUnionTypeProperties._visit<SingleUnionTypeGenerator<Context>>(
@@ -48,6 +50,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends ModelContext> extends
                             }),
                             getReferenceToPropertyType: (context) =>
                                 context.type.getReferenceToType(singleProperty.type),
+                            noOptionalProperties,
                         }),
                     _unknown: () => {
                         throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape._type);

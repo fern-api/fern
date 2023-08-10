@@ -299,6 +299,37 @@ By default, the generated client includes a layer for serializing requests and d
 
 When `noSerdeLayer` is enabled, no (de-)serialization code is generated. The client uses `JSON.parse()` and `JSON.stringify()` instead.
 
+#### ✨ `noOptionalProperties`
+
+**Type:** boolean
+
+**Default:** `false`
+
+By default, Fern's `optional<>` properties will translate to optional TypeScript properties:
+
+```yaml
+Person:
+  properties:
+    name: string
+    age: optional<integer>
+```
+
+```typescript
+interface Person {
+  name: string;
+  age?: number;
+}
+```
+
+When `noOptionalProperties` is enabled, the generated properties are never optional. Instead, the type is generated with `| undefined`:
+
+```typescript
+interface Person {
+  name: string;
+  age: number | undefined;
+}
+```
+
 ### Express Configuration
 
 The following options are supported when generating an Express backend:

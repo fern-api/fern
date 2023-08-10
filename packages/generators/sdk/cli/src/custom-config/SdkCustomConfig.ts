@@ -19,4 +19,5 @@ export interface SdkCustomConfig {
     treatUnknownAsAny: boolean;
     includeContentHeadersOnFileDownloadResponse: boolean;
     noSerdeLayer: boolean;
+    noOptionalProperties: boolean;
 }

@@ -16,6 +16,7 @@ export const SdkCustomConfigSchema = z.strictObject({
     extraDependencies: z.optional(z.record(z.string())),
     treatUnknownAsAny: z.optional(z.boolean()),
     noSerdeLayer: z.optional(z.boolean()),
+    noOptionalProperties: z.optional(z.boolean()),
 
     // beta (not in docs)
     includeContentHeadersOnFileDownloadResponse: z.optional(z.boolean()),

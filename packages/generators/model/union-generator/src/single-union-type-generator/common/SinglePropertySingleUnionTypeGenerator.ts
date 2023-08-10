@@ -6,6 +6,7 @@ export declare namespace SinglePropertySingleUnionTypeGenerator {
     export interface Init<Context> {
         propertyName: string;
         getReferenceToPropertyType: (context: Context) => TypeReferenceNode;
+        noOptionalProperties: boolean;
     }
 }
 
@@ -14,10 +15,16 @@ export class SinglePropertySingleUnionTypeGenerator<Context> implements SingleUn
 
     private propertyName: string;
     private getReferenceToPropertyType: (context: Context) => TypeReferenceNode;
+    private noOptionalProperties: boolean;
 
-    constructor({ propertyName, getReferenceToPropertyType }: SinglePropertySingleUnionTypeGenerator.Init<Context>) {
+    constructor({
+        propertyName,
+        getReferenceToPropertyType,
+        noOptionalProperties,
+    }: SinglePropertySingleUnionTypeGenerator.Init<Context>) {
         this.propertyName = propertyName;
         this.getReferenceToPropertyType = getReferenceToPropertyType;
+        this.noOptionalProperties = noOptionalProperties;
     }
 
     public getExtendsForInterface(): ts.TypeNode[] {
@@ -29,8 +36,8 @@ export class SinglePropertySingleUnionTypeGenerator<Context> implements SingleUn
         return [
             {
                 name: this.propertyName,
-                type: getTextOfTsNode(type.typeNodeWithoutUndefined),
-                hasQuestionToken: type.isOptional,
+                type: getTextOfTsNode(this.noOptionalProperties ? type.typeNode : type.typeNodeWithoutUndefined),
+                hasQuestionToken: !this.noOptionalProperties && type.isOptional,
             },
         ];
     }

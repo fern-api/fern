@@ -1351,6 +1351,8 @@ exports.stringLiteral = stringLiteral;
                     "contents": Array [
                       Object {
                         "contents": "export { getObjectUtils, object } from \\"./object\\";
+export { objectWithoutOptionalProperties } from \\"./objectWithoutOptionalProperties\\";
+export type { inferObjectWithoutOptionalPropertiesSchemaFromPropertySchemas, inferParsedObjectWithoutOptionalPropertiesFromPropertySchemas, } from \\"./objectWithoutOptionalProperties\\";
 export { isProperty, property } from \\"./property\\";
 export type { Property } from \\"./property\\";
 export type { BaseObjectSchema, inferObjectSchemaFromPropertySchemas, inferParsedObject, inferParsedObjectFromPropertySchemas, inferParsedPropertySchema, inferRawKey, inferRawObject, inferRawObjectFromPropertySchemas, inferRawPropertySchema, ObjectSchema, ObjectUtils, PropertySchemas, } from \\"./types\\";
@@ -1361,10 +1363,12 @@ export type { BaseObjectSchema, inferObjectSchemaFromPropertySchemas, inferParse
                       Object {
                         "contents": "\\"use strict\\";
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
-exports.property = exports.isProperty = exports.object = exports.getObjectUtils = void 0;
+exports.property = exports.isProperty = exports.objectWithoutOptionalProperties = exports.object = exports.getObjectUtils = void 0;
 var object_1 = require(\\"./object\\");
 Object.defineProperty(exports, \\"getObjectUtils\\", { enumerable: true, get: function () { return object_1.getObjectUtils; } });
 Object.defineProperty(exports, \\"object\\", { enumerable: true, get: function () { return object_1.object; } });
+var objectWithoutOptionalProperties_1 = require(\\"./objectWithoutOptionalProperties\\");
+Object.defineProperty(exports, \\"objectWithoutOptionalProperties\\", { enumerable: true, get: function () { return objectWithoutOptionalProperties_1.objectWithoutOptionalProperties; } });
 var property_1 = require(\\"./property\\");
 Object.defineProperty(exports, \\"isProperty\\", { enumerable: true, get: function () { return property_1.isProperty; } });
 Object.defineProperty(exports, \\"property\\", { enumerable: true, get: function () { return property_1.property; } });
@@ -1641,6 +1645,30 @@ function isSchemaOptional(schema) {
 }
 ",
                         "name": "object.js",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { inferParsedPropertySchema, inferRawObjectFromPropertySchemas, ObjectSchema, PropertySchemas } from \\"./types\\";
+export declare function objectWithoutOptionalProperties<ParsedKeys extends string, T extends PropertySchemas<ParsedKeys>>(schemas: T): inferObjectWithoutOptionalPropertiesSchemaFromPropertySchemas<T>;
+export declare type inferObjectWithoutOptionalPropertiesSchemaFromPropertySchemas<T extends PropertySchemas<keyof T>> = ObjectSchema<inferRawObjectFromPropertySchemas<T>, inferParsedObjectWithoutOptionalPropertiesFromPropertySchemas<T>>;
+export declare type inferParsedObjectWithoutOptionalPropertiesFromPropertySchemas<T extends PropertySchemas<keyof T>> = {
+    [K in keyof T]: inferParsedPropertySchema<T[K]>;
+};
+",
+                        "name": "objectWithoutOptionalProperties.d.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "\\"use strict\\";
+Object.defineProperty(exports, \\"__esModule\\", { value: true });
+exports.objectWithoutOptionalProperties = void 0;
+const object_1 = require(\\"./object\\");
+function objectWithoutOptionalProperties(schemas) {
+    return (0, object_1.object)(schemas);
+}
+exports.objectWithoutOptionalProperties = objectWithoutOptionalProperties;
+",
+                        "name": "objectWithoutOptionalProperties.js",
                         "type": "file",
                       },
                       Object {
@@ -4371,6 +4399,11 @@ export function stringLiteral<V extends string>(literal: V): Schema<V, V> {
                     "contents": Array [
                       Object {
                         "contents": "export { getObjectUtils, object } from \\"./object\\";
+export { objectWithoutOptionalProperties } from \\"./objectWithoutOptionalProperties\\";
+export type {
+    inferObjectWithoutOptionalPropertiesSchemaFromPropertySchemas,
+    inferParsedObjectWithoutOptionalPropertiesFromPropertySchemas,
+} from \\"./objectWithoutOptionalProperties\\";
 export { isProperty, property } from \\"./property\\";
 export type { Property } from \\"./property\\";
 export type {
@@ -4727,6 +4760,29 @@ async function isSchemaOptional(schema: Schema<any, any>): Promise<boolean> {
 }
 ",
                         "name": "object.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { object } from \\"./object\\";
+import { inferParsedPropertySchema, inferRawObjectFromPropertySchemas, ObjectSchema, PropertySchemas } from \\"./types\\";
+
+export function objectWithoutOptionalProperties<ParsedKeys extends string, T extends PropertySchemas<ParsedKeys>>(
+    schemas: T
+): inferObjectWithoutOptionalPropertiesSchemaFromPropertySchemas<T> {
+    return object(schemas) as unknown as inferObjectWithoutOptionalPropertiesSchemaFromPropertySchemas<T>;
+}
+
+export type inferObjectWithoutOptionalPropertiesSchemaFromPropertySchemas<T extends PropertySchemas<keyof T>> =
+    ObjectSchema<
+        inferRawObjectFromPropertySchemas<T>,
+        inferParsedObjectWithoutOptionalPropertiesFromPropertySchemas<T>
+    >;
+
+export type inferParsedObjectWithoutOptionalPropertiesFromPropertySchemas<T extends PropertySchemas<keyof T>> = {
+    [K in keyof T]: inferParsedPropertySchema<T[K]>;
+};
+",
+                        "name": "objectWithoutOptionalProperties.ts",
                         "type": "file",
                       },
                       Object {

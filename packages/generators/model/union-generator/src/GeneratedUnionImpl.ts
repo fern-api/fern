@@ -34,6 +34,7 @@ export declare namespace GeneratedUnionImpl {
         includeOtherInUnionTypes: boolean;
         baseProperties?: ObjectProperty[];
         includeSerdeLayer: boolean;
+        noOptionalProperties: boolean;
     }
 }
 
@@ -60,6 +61,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     private baseProperties: ObjectProperty[];
     private includeSerdeLayer: boolean;
     private includeConstBuilders: boolean;
+    private noOptionalProperties: boolean;
 
     constructor({
         typeName,
@@ -73,6 +75,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         includeOtherInUnionTypes,
         baseProperties = [],
         includeSerdeLayer,
+        noOptionalProperties,
     }: GeneratedUnionImpl.Init<Context>) {
         this.getReferenceToUnion = getReferenceToUnion;
         this.discriminant = discriminant;
@@ -85,6 +88,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         this.baseProperties = baseProperties;
         this.includeSerdeLayer = includeSerdeLayer;
         this.includeConstBuilders = includeConstBuilders;
+        this.noOptionalProperties = noOptionalProperties;
     }
 
     public writeToFile(context: Context): void {
@@ -317,8 +321,8 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                 return {
                     name: this._getBasePropertyKey(property),
                     docs: property.docs != null ? [property.docs] : undefined,
-                    type: getTextOfTsNode(type.typeNodeWithoutUndefined),
-                    hasQuestionToken: type.isOptional,
+                    type: getTextOfTsNode(this.noOptionalProperties ? type.typeNode : type.typeNodeWithoutUndefined),
+                    hasQuestionToken: !this.noOptionalProperties && type.isOptional,
                 };
             }),
         };

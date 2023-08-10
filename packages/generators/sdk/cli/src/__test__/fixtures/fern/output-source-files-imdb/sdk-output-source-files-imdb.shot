@@ -1066,6 +1066,11 @@ export function stringLiteral<V extends string>(literal: V): Schema<V, V> {
                 "contents": Array [
                   Object {
                     "contents": "export { getObjectUtils, object } from \\"./object\\";
+export { objectWithoutOptionalProperties } from \\"./objectWithoutOptionalProperties\\";
+export type {
+    inferObjectWithoutOptionalPropertiesSchemaFromPropertySchemas,
+    inferParsedObjectWithoutOptionalPropertiesFromPropertySchemas,
+} from \\"./objectWithoutOptionalProperties\\";
 export { isProperty, property } from \\"./property\\";
 export type { Property } from \\"./property\\";
 export type {
@@ -1422,6 +1427,29 @@ async function isSchemaOptional(schema: Schema<any, any>): Promise<boolean> {
 }
 ",
                     "name": "object.ts",
+                    "type": "file",
+                  },
+                  Object {
+                    "contents": "import { object } from \\"./object\\";
+import { inferParsedPropertySchema, inferRawObjectFromPropertySchemas, ObjectSchema, PropertySchemas } from \\"./types\\";
+
+export function objectWithoutOptionalProperties<ParsedKeys extends string, T extends PropertySchemas<ParsedKeys>>(
+    schemas: T
+): inferObjectWithoutOptionalPropertiesSchemaFromPropertySchemas<T> {
+    return object(schemas) as unknown as inferObjectWithoutOptionalPropertiesSchemaFromPropertySchemas<T>;
+}
+
+export type inferObjectWithoutOptionalPropertiesSchemaFromPropertySchemas<T extends PropertySchemas<keyof T>> =
+    ObjectSchema<
+        inferRawObjectFromPropertySchemas<T>,
+        inferParsedObjectWithoutOptionalPropertiesFromPropertySchemas<T>
+    >;
+
+export type inferParsedObjectWithoutOptionalPropertiesFromPropertySchemas<T extends PropertySchemas<keyof T>> = {
+    [K in keyof T]: inferParsedPropertySchema<T[K]>;
+};
+",
+                    "name": "objectWithoutOptionalProperties.ts",
                     "type": "file",
                   },
                   Object {

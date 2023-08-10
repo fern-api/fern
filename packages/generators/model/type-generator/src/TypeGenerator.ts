@@ -32,6 +32,7 @@ export declare namespace TypeGenerator {
         includeUtilsOnUnionMembers: boolean;
         includeOtherInUnionTypes: boolean;
         includeSerdeLayer: boolean;
+        noOptionalProperties: boolean;
     }
 
     export namespace generateType {
@@ -52,17 +53,20 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
     private includeUtilsOnUnionMembers: boolean;
     private includeOtherInUnionTypes: boolean;
     private includeSerdeLayer: boolean;
+    private noOptionalProperties: boolean;
 
     constructor({
         useBrandedStringAliases,
         includeUtilsOnUnionMembers,
         includeOtherInUnionTypes,
         includeSerdeLayer,
+        noOptionalProperties,
     }: TypeGenerator.Init) {
         this.useBrandedStringAliases = useBrandedStringAliases;
         this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
         this.includeOtherInUnionTypes = includeOtherInUnionTypes;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.noOptionalProperties = noOptionalProperties;
     }
 
     public generateType({
@@ -125,6 +129,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
             fernFilepath,
             getReferenceToSelf,
             includeSerdeLayer: this.includeSerdeLayer,
+            noOptionalProperties: this.noOptionalProperties,
         });
     }
 
@@ -153,6 +158,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
             includeUtilsOnUnionMembers: this.includeUtilsOnUnionMembers,
             includeOtherInUnionTypes: this.includeOtherInUnionTypes,
             includeSerdeLayer: this.includeSerdeLayer,
+            noOptionalProperties: this.noOptionalProperties,
         });
     }
 
@@ -179,6 +185,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
             fernFilepath,
             getReferenceToSelf,
             includeSerdeLayer: this.includeSerdeLayer,
+            noOptionalProperties: this.noOptionalProperties,
         });
     }
 
@@ -205,6 +212,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
             fernFilepath,
             getReferenceToSelf,
             includeSerdeLayer: this.includeSerdeLayer,
+            noOptionalProperties: this.noOptionalProperties,
         });
     }
 
@@ -232,6 +240,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
                   fernFilepath,
                   getReferenceToSelf,
                   includeSerdeLayer: this.includeSerdeLayer,
+                  noOptionalProperties: this.noOptionalProperties,
               })
             : new GeneratedAliasTypeImpl({
                   typeName,
@@ -241,6 +250,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
                   fernFilepath,
                   getReferenceToSelf,
                   includeSerdeLayer: this.includeSerdeLayer,
+                  noOptionalProperties: this.noOptionalProperties,
               });
     }
 }

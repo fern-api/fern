@@ -16,6 +16,7 @@ export declare namespace ParsedSingleUnionTypeForError {
         errorResolver: ErrorResolver;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         includeUtilsOnUnionMembers: boolean;
+        noOptionalProperties: boolean;
     }
 }
 
@@ -29,10 +30,15 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
         errorDiscriminationStrategy,
         errorResolver,
         includeUtilsOnUnionMembers,
+        noOptionalProperties,
     }: ParsedSingleUnionTypeForError.Init) {
         const errorDeclaration = errorResolver.getErrorDeclarationFromName(error.error);
         super({
-            singleUnionType: getSingleUnionTypeGenerator({ errorDiscriminationStrategy, errorDeclaration }),
+            singleUnionType: getSingleUnionTypeGenerator({
+                errorDiscriminationStrategy,
+                errorDeclaration,
+                noOptionalProperties,
+            }),
             includeUtilsOnUnionMembers,
         });
 
@@ -73,9 +79,11 @@ const CONTENT_PROPERTY_FOR_STATUS_CODE_DISCRIMINATED_ERRORS = "content";
 function getSingleUnionTypeGenerator({
     errorDiscriminationStrategy,
     errorDeclaration,
+    noOptionalProperties,
 }: {
     errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     errorDeclaration: ErrorDeclaration;
+    noOptionalProperties: boolean;
 }): SingleUnionTypeGenerator<SdkContext> {
     if (errorDeclaration.type == null) {
         return new NoPropertiesSingleUnionTypeGenerator();
@@ -93,5 +101,6 @@ function getSingleUnionTypeGenerator({
     return new SinglePropertySingleUnionTypeGenerator<SdkContext>({
         propertyName,
         getReferenceToPropertyType: (context) => context.type.getReferenceToType(type),
+        noOptionalProperties,
     });
 }

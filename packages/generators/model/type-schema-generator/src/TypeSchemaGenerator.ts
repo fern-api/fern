@@ -26,6 +26,7 @@ import { GeneratedUnionTypeSchemaImpl } from "./union/GeneratedUnionTypeSchemaIm
 export declare namespace TypeSchemaGenerator {
     export interface Init {
         includeUtilsOnUnionMembers: boolean;
+        noOptionalProperties: boolean;
     }
 
     export namespace generateTypeSchema {
@@ -41,9 +42,11 @@ export declare namespace TypeSchemaGenerator {
 
 export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
     private includeUtilsOnUnionMembers: boolean;
+    private noOptionalProperties: boolean;
 
-    constructor({ includeUtilsOnUnionMembers }: TypeSchemaGenerator.Init) {
+    constructor({ includeUtilsOnUnionMembers, noOptionalProperties }: TypeSchemaGenerator.Init) {
         this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
+        this.noOptionalProperties = noOptionalProperties;
     }
 
     public generateTypeSchema({
@@ -120,6 +123,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
             includeUtilsOnUnionMembers: this.includeUtilsOnUnionMembers,
+            noOptionalProperties: this.noOptionalProperties,
         });
     }
 
@@ -142,6 +146,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getGeneratedType,
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
+            noOptionalProperties: this.noOptionalProperties,
         });
     }
 
@@ -164,6 +169,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getGeneratedType,
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
+            noOptionalProperties: this.noOptionalProperties,
         });
     }
 
@@ -186,6 +192,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getGeneratedType,
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
+            noOptionalProperties: this.noOptionalProperties,
         });
     }
 
@@ -208,6 +215,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getGeneratedType,
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
+            noOptionalProperties: this.noOptionalProperties,
         });
     }
 }

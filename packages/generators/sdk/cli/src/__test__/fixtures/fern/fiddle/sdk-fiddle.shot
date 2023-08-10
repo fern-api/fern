@@ -1913,6 +1913,7 @@ __export(schemas_exports, {
   list: () => list,
   number: () => number,
   object: () => object,
+  objectWithoutOptionalProperties: () => objectWithoutOptionalProperties,
   optional: () => optional,
   property: () => property,
   record: () => record,
@@ -2581,6 +2582,11 @@ function isSchemaOptional(schema) {
         return false;
     }
   });
+}
+
+// src/core/schemas/builders/object/objectWithoutOptionalProperties.ts
+function objectWithoutOptionalProperties(schemas) {
+  return object(schemas);
 }
 
 // src/core/schemas/builders/lazy/lazyObject.ts
@@ -6583,11 +6589,23 @@ var init_object = __esm({
   }
 });
 
+// src/core/schemas/builders/object/objectWithoutOptionalProperties.ts
+function objectWithoutOptionalProperties(schemas) {
+  return object(schemas);
+}
+var init_objectWithoutOptionalProperties = __esm({
+  \\"src/core/schemas/builders/object/objectWithoutOptionalProperties.ts\\"() {
+    \\"use strict\\";
+    init_object();
+  }
+});
+
 // src/core/schemas/builders/object/index.ts
 var init_object2 = __esm({
   \\"src/core/schemas/builders/object/index.ts\\"() {
     \\"use strict\\";
     init_object();
+    init_objectWithoutOptionalProperties();
     init_property();
   }
 });
@@ -7316,6 +7334,7 @@ __export(schemas_exports, {
   list: () => list,
   number: () => number,
   object: () => object,
+  objectWithoutOptionalProperties: () => objectWithoutOptionalProperties,
   optional: () => optional,
   property: () => property,
   record: () => record,
@@ -12070,11 +12089,23 @@ var init_object = __esm({
   }
 });
 
+// src/core/schemas/builders/object/objectWithoutOptionalProperties.ts
+function objectWithoutOptionalProperties(schemas) {
+  return object(schemas);
+}
+var init_objectWithoutOptionalProperties = __esm({
+  \\"src/core/schemas/builders/object/objectWithoutOptionalProperties.ts\\"() {
+    \\"use strict\\";
+    init_object();
+  }
+});
+
 // src/core/schemas/builders/object/index.ts
 var init_object2 = __esm({
   \\"src/core/schemas/builders/object/index.ts\\"() {
     \\"use strict\\";
     init_object();
+    init_objectWithoutOptionalProperties();
     init_property();
   }
 });
@@ -12803,6 +12834,7 @@ __export(schemas_exports, {
   list: () => list,
   number: () => number,
   object: () => object,
+  objectWithoutOptionalProperties: () => objectWithoutOptionalProperties,
   optional: () => optional,
   property: () => property,
   record: () => record,
@@ -15729,6 +15761,7 @@ __export(schemas_exports, {
   list: () => list,
   number: () => number,
   object: () => object,
+  objectWithoutOptionalProperties: () => objectWithoutOptionalProperties,
   optional: () => optional,
   property: () => property,
   record: () => record,
@@ -16397,6 +16430,11 @@ function isSchemaOptional(schema) {
         return false;
     }
   });
+}
+
+// src/core/schemas/builders/object/objectWithoutOptionalProperties.ts
+function objectWithoutOptionalProperties(schemas) {
+  return object(schemas);
 }
 
 // src/core/schemas/builders/lazy/lazyObject.ts
@@ -20404,11 +20442,23 @@ var init_object = __esm({
   }
 });
 
+// src/core/schemas/builders/object/objectWithoutOptionalProperties.ts
+function objectWithoutOptionalProperties(schemas) {
+  return object(schemas);
+}
+var init_objectWithoutOptionalProperties = __esm({
+  \\"src/core/schemas/builders/object/objectWithoutOptionalProperties.ts\\"() {
+    \\"use strict\\";
+    init_object();
+  }
+});
+
 // src/core/schemas/builders/object/index.ts
 var init_object2 = __esm({
   \\"src/core/schemas/builders/object/index.ts\\"() {
     \\"use strict\\";
     init_object();
+    init_objectWithoutOptionalProperties();
     init_property();
   }
 });
@@ -21137,6 +21187,7 @@ __export(schemas_exports, {
   list: () => list,
   number: () => number,
   object: () => object,
+  objectWithoutOptionalProperties: () => objectWithoutOptionalProperties,
   optional: () => optional,
   property: () => property,
   record: () => record,
@@ -25887,11 +25938,23 @@ var init_object = __esm({
   }
 });
 
+// src/core/schemas/builders/object/objectWithoutOptionalProperties.ts
+function objectWithoutOptionalProperties(schemas) {
+  return object(schemas);
+}
+var init_objectWithoutOptionalProperties = __esm({
+  \\"src/core/schemas/builders/object/objectWithoutOptionalProperties.ts\\"() {
+    \\"use strict\\";
+    init_object();
+  }
+});
+
 // src/core/schemas/builders/object/index.ts
 var init_object2 = __esm({
   \\"src/core/schemas/builders/object/index.ts\\"() {
     \\"use strict\\";
     init_object();
+    init_objectWithoutOptionalProperties();
     init_property();
   }
 });
@@ -26620,6 +26683,7 @@ __export(schemas_exports, {
   list: () => list,
   number: () => number,
   object: () => object,
+  objectWithoutOptionalProperties: () => objectWithoutOptionalProperties,
   optional: () => optional,
   property: () => property,
   record: () => record,
@@ -39773,6 +39837,7 @@ __export(schemas_exports, {
   list: () => list,
   number: () => number,
   object: () => object,
+  objectWithoutOptionalProperties: () => objectWithoutOptionalProperties,
   optional: () => optional,
   property: () => property,
   record: () => record,
@@ -40451,6 +40516,11 @@ async function isSchemaOptional(schema) {
     default:
       return false;
   }
+}
+
+// src/core/schemas/builders/object/objectWithoutOptionalProperties.ts
+function objectWithoutOptionalProperties(schemas) {
+  return object(schemas);
 }
 
 // src/core/schemas/builders/lazy/lazyObject.ts
@@ -54668,11 +54738,23 @@ var init_object = __esm({
   }
 });
 
+// src/core/schemas/builders/object/objectWithoutOptionalProperties.ts
+function objectWithoutOptionalProperties(schemas) {
+  return object(schemas);
+}
+var init_objectWithoutOptionalProperties = __esm({
+  \\"src/core/schemas/builders/object/objectWithoutOptionalProperties.ts\\"() {
+    \\"use strict\\";
+    init_object();
+  }
+});
+
 // src/core/schemas/builders/object/index.ts
 var init_object2 = __esm({
   \\"src/core/schemas/builders/object/index.ts\\"() {
     \\"use strict\\";
     init_object();
+    init_objectWithoutOptionalProperties();
     init_property();
   }
 });
@@ -55393,6 +55475,7 @@ __export(schemas_exports, {
   list: () => list,
   number: () => number,
   object: () => object,
+  objectWithoutOptionalProperties: () => objectWithoutOptionalProperties,
   optional: () => optional,
   property: () => property,
   record: () => record,
@@ -70190,11 +70273,23 @@ var init_object = __esm({
   }
 });
 
+// src/core/schemas/builders/object/objectWithoutOptionalProperties.ts
+function objectWithoutOptionalProperties(schemas) {
+  return object(schemas);
+}
+var init_objectWithoutOptionalProperties = __esm({
+  \\"src/core/schemas/builders/object/objectWithoutOptionalProperties.ts\\"() {
+    \\"use strict\\";
+    init_object();
+  }
+});
+
 // src/core/schemas/builders/object/index.ts
 var init_object2 = __esm({
   \\"src/core/schemas/builders/object/index.ts\\"() {
     \\"use strict\\";
     init_object();
+    init_objectWithoutOptionalProperties();
     init_property();
   }
 });
@@ -70915,6 +71010,7 @@ __export(schemas_exports, {
   list: () => list,
   number: () => number,
   object: () => object,
+  objectWithoutOptionalProperties: () => objectWithoutOptionalProperties,
   optional: () => optional,
   property: () => property,
   record: () => record,
@@ -73457,6 +73553,8 @@ export declare function stringLiteral<V extends string>(literal: V): Schema<V, V
                     "contents": Array [
                       Object {
                         "contents": "export { getObjectUtils, object } from \\"./object\\";
+export { objectWithoutOptionalProperties } from \\"./objectWithoutOptionalProperties\\";
+export type { inferObjectWithoutOptionalPropertiesSchemaFromPropertySchemas, inferParsedObjectWithoutOptionalPropertiesFromPropertySchemas, } from \\"./objectWithoutOptionalProperties\\";
 export { isProperty, property } from \\"./property\\";
 export type { Property } from \\"./property\\";
 export type { BaseObjectSchema, inferObjectSchemaFromPropertySchemas, inferParsedObject, inferParsedObjectFromPropertySchemas, inferParsedPropertySchema, inferRawKey, inferRawObject, inferRawObjectFromPropertySchemas, inferRawPropertySchema, ObjectSchema, ObjectUtils, PropertySchemas, } from \\"./types\\";
@@ -73470,6 +73568,17 @@ export declare function object<ParsedKeys extends string, T extends PropertySche
 export declare function getObjectUtils<Raw, Parsed>(schema: BaseObjectSchema<Raw, Parsed>): ObjectUtils<Raw, Parsed>;
 ",
                         "name": "object.d.ts",
+                        "type": "file",
+                      },
+                      Object {
+                        "contents": "import { inferParsedPropertySchema, inferRawObjectFromPropertySchemas, ObjectSchema, PropertySchemas } from \\"./types\\";
+export declare function objectWithoutOptionalProperties<ParsedKeys extends string, T extends PropertySchemas<ParsedKeys>>(schemas: T): inferObjectWithoutOptionalPropertiesSchemaFromPropertySchemas<T>;
+export declare type inferObjectWithoutOptionalPropertiesSchemaFromPropertySchemas<T extends PropertySchemas<keyof T>> = ObjectSchema<inferRawObjectFromPropertySchemas<T>, inferParsedObjectWithoutOptionalPropertiesFromPropertySchemas<T>>;
+export declare type inferParsedObjectWithoutOptionalPropertiesFromPropertySchemas<T extends PropertySchemas<keyof T>> = {
+    [K in keyof T]: inferParsedPropertySchema<T[K]>;
+};
+",
+                        "name": "objectWithoutOptionalProperties.d.ts",
                         "type": "file",
                       },
                       Object {

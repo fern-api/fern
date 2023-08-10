@@ -10,6 +10,7 @@ export declare namespace AbstractGeneratedTypeSchema {
         getGeneratedType: () => GeneratedType<Context>;
         getReferenceToGeneratedType: (context: Context) => ts.TypeNode;
         getReferenceToGeneratedTypeSchema: (context: Context) => Reference;
+        noOptionalProperties: boolean;
     }
 }
 
@@ -20,6 +21,7 @@ export abstract class AbstractGeneratedTypeSchema<
     protected shape: Shape;
     protected getGeneratedType: () => GeneratedType<Context>;
     protected getReferenceToSchema: (context: Context) => Reference;
+    protected noOptionalProperties: boolean;
     private getReferenceToGeneratedType: (context: Context) => ts.TypeNode;
 
     constructor({
@@ -28,12 +30,14 @@ export abstract class AbstractGeneratedTypeSchema<
         getGeneratedType,
         getReferenceToGeneratedType,
         getReferenceToGeneratedTypeSchema,
+        noOptionalProperties,
     }: AbstractGeneratedTypeSchema.Init<Shape, Context>) {
         super({ typeName });
         this.shape = shape;
         this.getGeneratedType = getGeneratedType;
         this.getReferenceToGeneratedType = getReferenceToGeneratedType;
         this.getReferenceToSchema = getReferenceToGeneratedTypeSchema;
+        this.noOptionalProperties = noOptionalProperties;
     }
 
     public writeToFile(context: Context): void {

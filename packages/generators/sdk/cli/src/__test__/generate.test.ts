@@ -256,8 +256,8 @@ const FIXTURES: FixtureInfo[] = [
         apiName: "api",
         targetRuntime: JavaScriptRuntime.NODE,
         customConfig: {
-            useBrandedStringAliases: true,
             includeUtilsOnUnionMembers: true,
+            noOptionalProperties: true,
         },
     },
 ];

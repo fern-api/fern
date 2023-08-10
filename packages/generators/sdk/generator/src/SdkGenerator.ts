@@ -74,6 +74,7 @@ export declare namespace SdkGenerator {
         treatUnknownAsAny: boolean;
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
+        noOptionalProperties: boolean;
     }
 }
 
@@ -209,9 +210,11 @@ export class SdkGenerator {
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
             includeOtherInUnionTypes: config.includeOtherInUnionTypes,
             includeSerdeLayer: config.includeSerdeLayer,
+            noOptionalProperties: config.noOptionalProperties,
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
+            noOptionalProperties: config.noOptionalProperties,
         });
         this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator();
         this.sdkErrorGenerator = new SdkErrorGenerator({
@@ -225,6 +228,7 @@ export class SdkGenerator {
             errorResolver: this.errorResolver,
             intermediateRepresentation,
             includeSerdeLayer: config.includeSerdeLayer,
+            noOptionalProperties: config.noOptionalProperties,
         });
         this.sdkEndpointTypeSchemasGenerator = new SdkEndpointTypeSchemasGenerator({
             errorResolver: this.errorResolver,

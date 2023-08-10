@@ -17,15 +17,21 @@ export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>
             throw new Error("Type is not an object: " + this.typeName);
         }
 
-        let schema = context.coreUtilities.zurg.object(
-            this.shape.properties.map((property) => ({
+        const properties = this.shape.properties.map(
+            (property): Zurg.Property => ({
                 key: {
                     raw: property.name.wireValue,
                     parsed: generatedType.getPropertyKey({ propertyWireKey: property.name.wireValue }),
                 },
                 value: context.typeSchema.getSchemaOfTypeReference(property.valueType),
-            }))
+            })
         );
+
+        let schema = (
+            this.noOptionalProperties
+                ? context.coreUtilities.zurg.objectWithoutOptionalProperties
+                : context.coreUtilities.zurg.object
+        )(properties);
 
         for (const extension of this.shape.extends) {
             schema = schema.extend(context.typeSchema.getSchemaOfNamedType(extension, { isGeneratingSchema: true }));

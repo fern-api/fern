@@ -43,6 +43,7 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
                     union: this.shape,
                     includeUtilsOnUnionMembers,
                     includeSerdeLayer: this.includeSerdeLayer,
+                    noOptionalProperties: this.noOptionalProperties,
                 })
         );
 
@@ -64,6 +65,7 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
             }),
             baseProperties: this.shape.baseProperties,
             includeSerdeLayer: this.includeSerdeLayer,
+            noOptionalProperties: this.noOptionalProperties,
         });
     }
 
