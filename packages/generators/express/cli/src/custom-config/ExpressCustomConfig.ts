@@ -9,4 +9,5 @@ export interface ExpressCustomConfig {
     treatUnknownAsAny: boolean;
     noSerdeLayer: boolean;
     outputEsm: boolean;
+    outputSourceFiles: boolean;
 }

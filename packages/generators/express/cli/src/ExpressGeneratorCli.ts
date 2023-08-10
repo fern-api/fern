@@ -21,6 +21,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
             treatUnknownAsAny: parsed?.treatUnknownAsAny ?? false,
             noSerdeLayer,
             outputEsm: parsed?.outputEsm ?? false,
+            outputSourceFiles: parsed?.outputSourceFiles ?? false,
         };
     }
 
@@ -69,7 +70,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
         return false;
     }
 
-    protected outputSourceFiles(): boolean {
-        return false;
+    protected outputSourceFiles(customConfig: ExpressCustomConfig): boolean {
+        return customConfig.outputSourceFiles;
     }
 }

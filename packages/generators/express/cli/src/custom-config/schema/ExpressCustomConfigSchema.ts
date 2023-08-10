@@ -8,6 +8,7 @@ export const ExpressCustomConfigSchema = z.strictObject({
     noSerdeLayer: z.optional(z.boolean()),
     outputEsm: z.optional(z.boolean()),
     // beta (not in docs)
+    outputSourceFiles: z.optional(z.boolean()),
     includeUtilsOnUnionMembers: z.optional(z.boolean()),
     includeOtherInUnionTypes: z.optional(z.boolean()),
 });

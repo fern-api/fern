@@ -45,6 +45,15 @@ const FIXTURES: FixtureInfo[] = [
         },
     },
     {
+        path: "output-source-files-simple",
+        orgName: "fern",
+        outputMode: "local",
+        apiName: "api",
+        customConfig: {
+            outputSourceFiles: true,
+        },
+    },
+    {
         path: "folders",
         orgName: "fern",
         outputMode: "local",
