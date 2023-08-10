@@ -34,6 +34,7 @@ import com.fern.java.client.generators.RootClientGenerator;
 import com.fern.java.client.generators.SampleAppGenerator;
 import com.fern.java.client.generators.SubpackageClientGenerator;
 import com.fern.java.client.generators.SuppliersGenerator;
+import com.fern.java.client.generators.TestGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
@@ -52,6 +53,35 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
     private static final Logger log = LoggerFactory.getLogger(ClientGeneratorCli.class);
 
     private final List<String> subprojects = new ArrayList<>();
+    private final List<GradleDependency> dependencies;
+
+    public ClientGeneratorCli() {
+        this.dependencies = List.of(
+                GradleDependency.builder()
+                        .type(DependencyType.API)
+                        .group("com.squareup.okhttp3")
+                        .artifact("okhttp")
+                        .version(GradleDependency.OKHTTP_VERSION)
+                        .build(),
+                GradleDependency.builder()
+                        .type(DependencyType.API)
+                        .group("com.fasterxml.jackson.core")
+                        .artifact("jackson-databind")
+                        .version(GradleDependency.JACKSON_DATABIND_VERSION)
+                        .build(),
+                GradleDependency.builder()
+                        .type(DependencyType.API)
+                        .group("com.fasterxml.jackson.datatype")
+                        .artifact("jackson-datatype-jdk8")
+                        .version(GradleDependency.JACKSON_JDK8_VERSION)
+                        .build(),
+                GradleDependency.builder()
+                        .type(DependencyType.API)
+                        .group("com.fasterxml.jackson.datatype")
+                        .artifact("jackson-datatype-jsr310")
+                        .version(GradleDependency.JACKSON_JDK8_VERSION)
+                        .build());
+    }
 
     @Override
     public void runInDownloadFilesModeHook(
@@ -86,6 +116,20 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
         SampleAppGenerator sampleAppGenerator = new SampleAppGenerator(context, generatedClientWrapper);
         sampleAppGenerator.generateFiles().forEach(this::addGeneratedFile);
         subprojects.add(SampleAppGenerator.SAMPLE_APP_DIRECTORY);
+        dependencies.add(GradleDependency.builder()
+                .type(DependencyType.TEST_IMPLEMENTATION)
+                .group("org.junit.jupiter")
+                .artifact("junit-jupiter-api")
+                .version(GradleDependency.JUNIT_DEPENDENCY)
+                .build());
+        dependencies.add(GradleDependency.builder()
+                .type(DependencyType.TEST_IMPLEMENTATION)
+                .group("org.junit.jupiter")
+                .artifact("junit-jupiter-engine")
+                .version(GradleDependency.JUNIT_DEPENDENCY)
+                .build());
+        TestGenerator testGenerator = new TestGenerator(context);
+        this.addGeneratedFile(testGenerator.generateFile());
     }
 
     @Override
@@ -172,31 +216,7 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
 
     @Override
     public List<GradleDependency> getBuildGradleDependencies() {
-        return List.of(
-                GradleDependency.builder()
-                        .type(DependencyType.API)
-                        .group("com.squareup.okhttp3")
-                        .artifact("okhttp")
-                        .version(GradleDependency.OKHTTP_VERSION)
-                        .build(),
-                GradleDependency.builder()
-                        .type(DependencyType.API)
-                        .group("com.fasterxml.jackson.core")
-                        .artifact("jackson-databind")
-                        .version(GradleDependency.JACKSON_DATABIND_VERSION)
-                        .build(),
-                GradleDependency.builder()
-                        .type(DependencyType.API)
-                        .group("com.fasterxml.jackson.datatype")
-                        .artifact("jackson-datatype-jdk8")
-                        .version(GradleDependency.JACKSON_JDK8_VERSION)
-                        .build(),
-                GradleDependency.builder()
-                        .type(DependencyType.API)
-                        .group("com.fasterxml.jackson.datatype")
-                        .artifact("jackson-datatype-jsr310")
-                        .version(GradleDependency.JACKSON_JDK8_VERSION)
-                        .build());
+        return dependencies;
     }
 
     @Override

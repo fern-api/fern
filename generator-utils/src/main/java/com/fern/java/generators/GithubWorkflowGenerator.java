@@ -46,6 +46,7 @@ public final class GithubWorkflowGenerator {
                 + "      - name: Compile\n"
                 + "        run: ./gradlew compileJava\n"
                 + "\n";
+        contents += getTestWorkflow();
         if (registryUrl.isPresent()) {
             contents += getPublishWorkflow(registryUrl.get());
         }
@@ -56,9 +57,29 @@ public final class GithubWorkflowGenerator {
                 .build();
     }
 
+    public static String getTestWorkflow() {
+        return "  test:\n"
+                + "    needs: [ compile ]\n"
+                + "    runs-on: ubuntu-latest\n"
+                + "    steps:\n"
+                + "      - name: Checkout repo\n"
+                + "        uses: actions/checkout@v3\n"
+                + "\n"
+                + "      - name: Set up Java\n"
+                + "        id: setup-jre\n"
+                + "        uses: actions/setup-java@v1\n"
+                + "        with:\n"
+                + "          java-version: \"11\"\n"
+                + "          architecture: x64\n"
+                + "\n"
+                + "      - name: Test\n"
+                + "        run: ./gradlew test"
+                + "\n";
+    }
+
     public static String getPublishWorkflow(String registryUrl) {
         return "  publish:\n"
-                + "    needs: [ compile ]\n"
+                + "    needs: [ compile, test ]\n"
                 + "    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')\n"
                 + "    runs-on: ubuntu-latest\n"
                 + "\n"

@@ -29,6 +29,8 @@ public abstract class GradleDependency extends AbstractGradleDependency {
     public static final String OKHTTP_VERSION = "4.9.3";
     public static final String FEIGN_VERSION = "11.8";
 
+    public static final String JUNIT_DEPENDENCY = "5.8.2";
+
     public abstract String group();
 
     public abstract String artifact();

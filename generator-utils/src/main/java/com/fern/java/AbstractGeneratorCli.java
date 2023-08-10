@@ -34,6 +34,7 @@ import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.jackson.ClientObjectMappers;
 import com.fern.java.output.GeneratedBuildGradle;
 import com.fern.java.output.GeneratedFile;
+import com.fern.java.output.ImmutableGeneratedBuildGradle;
 import com.fern.java.output.RawGeneratedFile;
 import com.fern.java.output.gradle.GradleDependency;
 import com.fern.java.output.gradle.GradlePlugin;
@@ -148,7 +149,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
         runInGithubModeHook(generatorExecClient, generatorConfig, ir, customConfig, githubOutputMode);
 
         // add project level files
-        addRootProjectFiles(maybeMavenCoordinate);
+        addRootProjectFiles(maybeMavenCoordinate, true);
         addGeneratedFile(GithubWorkflowGenerator.getGithubWorkflow(
                 githubOutputMode.getPublishInfo().flatMap(githubPublishInfo -> githubPublishInfo
                         .getMaven()
@@ -188,7 +189,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
 
         runInPublishModeHook(generatorExecClient, generatorConfig, ir, customConfig, publishOutputMode);
 
-        addRootProjectFiles(Optional.of(mavenCoordinate));
+        addRootProjectFiles(Optional.of(mavenCoordinate), false);
 
         generatedFiles.forEach(generatedFile -> generatedFile.write(outputDirectory, false, Optional.empty()));
         runCommandBlocking(new String[] {"gradle", "wrapper"}, outputDirectory, Collections.emptyMap());
@@ -233,8 +234,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
         }
     }
 
-    private void addRootProjectFiles(Optional<MavenCoordinate> maybeMavenCoordinate) {
-        GeneratedBuildGradle buildGradle = GeneratedBuildGradle.builder()
+    private void addRootProjectFiles(Optional<MavenCoordinate> maybeMavenCoordinate, boolean addTestBlock) {
+        ImmutableGeneratedBuildGradle.Builder buildGradle = GeneratedBuildGradle.builder()
                 .addAllPlugins(List.of(
                         GradlePlugin.builder()
                                 .pluginId(GeneratedBuildGradle.JAVA_LIBRARY_PLUGIN_ID)
@@ -256,9 +257,12 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
                         .build()))
                 .addAllDependencies(getBuildGradleDependencies())
                 .addCustomBlocks("spotless {\n" + "    java {\n" + "        palantirJavaFormat()\n" + "    }\n" + "}\n")
-                .addCustomBlocks("java {\n" + "    withSourcesJar()\n" + "    withJavadocJar()\n" + "}\n")
-                .build();
-        addGeneratedFile(buildGradle);
+                .addCustomBlocks("java {\n" + "    withSourcesJar()\n" + "    withJavadocJar()\n" + "}\n");
+        if (addTestBlock) {
+            buildGradle.addCustomBlocks("test {\n" + "    useJUnitPlatform()\n" + "}\n");
+        }
+
+        addGeneratedFile(buildGradle.build());
         addGeneratedFile(RawGeneratedFile.builder()
                 .filename("settings.gradle")
                 .contents(getSubProjects().stream()

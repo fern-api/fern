@@ -24,11 +24,15 @@ public abstract class AbstractGradleDependency {
 
     @Override
     public final String toString() {
+        if (type().equals(DependencyType.TEST_IMPLEMENTATION)) {
+            return "testImplementation " + coordinate();
+        }
         return type().toString().toLowerCase() + " " + coordinate();
     }
 
     public enum DependencyType {
         IMPLEMENTATION,
-        API
+        API,
+        TEST_IMPLEMENTATION,
     }
 }

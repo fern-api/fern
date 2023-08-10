@@ -34,6 +34,8 @@ public abstract class AbstractGeneratedJavaFile extends GeneratedFile {
 
     public abstract JavaFile javaFile();
 
+    public abstract Optional<Boolean> testFile();
+
     @Override
     public final String filename() {
         return getClassName().simpleName() + ".java";
@@ -58,6 +60,8 @@ public abstract class AbstractGeneratedJavaFile extends GeneratedFile {
             } else {
                 javaFile().writeToFile(directory.toFile());
             }
+        } else if (testFile().isPresent() && testFile().get()) {
+            javaFile().writeToFile(directory.resolve("src/test/java").toFile());
         } else {
             javaFile().writeToFile(directory.resolve("src/main/java").toFile());
         }
