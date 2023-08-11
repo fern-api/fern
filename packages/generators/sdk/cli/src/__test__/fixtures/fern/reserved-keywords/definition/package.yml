@@ -5,6 +5,7 @@ types:
   Record:
     properties:
       foo: map<string, string>
+      3d: integer
 
 service:
   base-path: /
