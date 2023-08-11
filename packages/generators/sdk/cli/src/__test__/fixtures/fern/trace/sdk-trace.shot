@@ -6324,7 +6324,7 @@ exports.CreateProblemResponse = {
  */
 export interface GenericCreateProblemError {
     message: string;
-    type_: string;
+    type: string;
     stacktrace: string;
 }
 ",
@@ -13450,7 +13450,7 @@ exports.TestCaseId = TestCaseId;
 import * as TraceApi from \\"../../../../..\\";
 export interface TestCaseImplementation {
     description: TraceApi.v2.TestCaseImplementationDescription;
-    function_: TraceApi.v2.TestCaseFunction;
+    function: TraceApi.v2.TestCaseFunction;
 }
 ",
                             "name": "TestCaseImplementation.d.ts",
@@ -15839,7 +15839,7 @@ exports.TestCaseId = TestCaseId;
 import * as TraceApi from \\"../../../../../../..\\";
 export interface TestCaseImplementation {
     description: TraceApi.v2.v3.TestCaseImplementationDescription;
-    function_: TraceApi.v2.v3.TestCaseFunction;
+    function: TraceApi.v2.v3.TestCaseFunction;
 }
 ",
                                     "name": "TestCaseImplementation.d.ts",
@@ -25580,7 +25580,7 @@ exports.CreateProblemResponse = {
  */
 export interface GenericCreateProblemError {
     message: string;
-    type_: string;
+    type: string;
     stacktrace: string;
 }
 ",
@@ -32706,7 +32706,7 @@ exports.TestCaseId = TestCaseId;
 import * as TraceApi from \\"../../../../..\\";
 export interface TestCaseImplementation {
     description: TraceApi.v2.TestCaseImplementationDescription;
-    function_: TraceApi.v2.TestCaseFunction;
+    function: TraceApi.v2.TestCaseFunction;
 }
 ",
                                 "name": "TestCaseImplementation.d.ts",
@@ -35095,7 +35095,7 @@ exports.TestCaseId = TestCaseId;
 import * as TraceApi from \\"../../../../../../..\\";
 export interface TestCaseImplementation {
     description: TraceApi.v2.v3.TestCaseImplementationDescription;
-    function_: TraceApi.v2.v3.TestCaseFunction;
+    function: TraceApi.v2.v3.TestCaseFunction;
 }
 ",
                                         "name": "TestCaseImplementation.d.ts",
@@ -43752,7 +43752,7 @@ exports.GenericCreateProblemError = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.GenericCreateProblemError = core.serialization.object({
     message: core.serialization.string(),
-    type_: core.serialization.property(\\"type\\", core.serialization.string()),
+    type: core.serialization.string(),
     stacktrace: core.serialization.string(),
 });
 ",
@@ -53066,7 +53066,7 @@ exports.TestCaseImplementation = void 0;
 const core = __importStar(require(\\"../../../../../../core\\"));
 exports.TestCaseImplementation = core.serialization.object({
     description: core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.TestCaseImplementationDescription; })),
-    function_: core.serialization.property(\\"function\\", core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.TestCaseFunction; }))),
+    function: core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.TestCaseFunction; })),
 });
 ",
                                 "name": "TestCaseImplementation.js",
@@ -56355,7 +56355,7 @@ exports.TestCaseImplementation = void 0;
 const core = __importStar(require(\\"../../../../../../../../core\\"));
 exports.TestCaseImplementation = core.serialization.object({
     description: core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.TestCaseImplementationDescription; })),
-    function_: core.serialization.property(\\"function\\", core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.TestCaseFunction; }))),
+    function: core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.TestCaseFunction; })),
 });
 ",
                                         "name": "TestCaseImplementation.js",
@@ -62633,7 +62633,7 @@ exports.GenericCreateProblemError = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.GenericCreateProblemError = core.serialization.object({
     message: core.serialization.string(),
-    type_: core.serialization.property(\\"type\\", core.serialization.string()),
+    type: core.serialization.string(),
     stacktrace: core.serialization.string(),
 });
 ",
@@ -71947,7 +71947,7 @@ exports.TestCaseImplementation = void 0;
 const core = __importStar(require(\\"../../../../../../core\\"));
 exports.TestCaseImplementation = core.serialization.object({
     description: core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.TestCaseImplementationDescription; })),
-    function_: core.serialization.property(\\"function\\", core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.TestCaseFunction; }))),
+    function: core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../..\\")))).v2.TestCaseFunction; })),
 });
 ",
                             "name": "TestCaseImplementation.js",
@@ -75236,7 +75236,7 @@ exports.TestCaseImplementation = void 0;
 const core = __importStar(require(\\"../../../../../../../../core\\"));
 exports.TestCaseImplementation = core.serialization.object({
     description: core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.TestCaseImplementationDescription; })),
-    function_: core.serialization.property(\\"function\\", core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.TestCaseFunction; }))),
+    function: core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../../../../../..\\")))).v2.v3.TestCaseFunction; })),
 });
 ",
                                     "name": "TestCaseImplementation.js",

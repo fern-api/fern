@@ -48,7 +48,7 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
 
     private getPropertyKeyFromProperty(property: ObjectProperty): string {
         if (this.includeSerdeLayer) {
-            return property.name.name.camelCase.safeName;
+            return property.name.name.camelCase.unsafeName;
         } else {
             return property.name.wireValue;
         }

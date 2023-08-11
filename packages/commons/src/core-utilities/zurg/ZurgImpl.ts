@@ -61,7 +61,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                 if (property.key.raw !== property.key.parsed) {
                     value = this.property(property.key.raw, value);
                 }
-                return ts.factory.createPropertyAssignment(property.key.parsed, value);
+                return ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(property.key.parsed), value);
             }),
             true
         );
