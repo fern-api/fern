@@ -187,26 +187,20 @@ function validatePrimitiveExample({
     primitiveType: PrimitiveType;
     example: RawSchemas.ExampleTypeReferenceSchema;
 }): RuleViolation[] {
-    switch (primitiveType) {
-        case PrimitiveType.String:
-            return validateString(example);
-        case PrimitiveType.Integer:
-            return validateInteger(example);
-        case PrimitiveType.Double:
-            return validateDouble(example);
-        case PrimitiveType.Long:
-            return validateLong(example);
-        case PrimitiveType.Boolean:
-            return validateBoolean(example);
-        case PrimitiveType.Uuid:
-            return validateUuid(example);
-        case PrimitiveType.DateTime:
-            return validateDateTime(example);
-        case PrimitiveType.Date:
-            return validateString(example);
-        case PrimitiveType.Base64:
-            return validateString(example);
-    }
+    return PrimitiveType._visit<RuleViolation[]>(primitiveType, {
+        string: () => validateString(example),
+        integer: () => validateInteger(example),
+        double: () => validateDouble(example),
+        long: () => validateLong(example),
+        boolean: () => validateBoolean(example),
+        uuid: () => validateUuid(example),
+        dateTime: () => validateDateTime(example),
+        date: () => validateString(example),
+        base64: () => validateString(example),
+        _other: () => {
+            throw new Error("Unknown primitive type: " + primitiveType);
+        },
+    });
 }
 
 const validateString = createValidator((example) => typeof example === "string", "a string");

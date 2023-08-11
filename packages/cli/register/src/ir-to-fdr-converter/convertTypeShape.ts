@@ -18,7 +18,7 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.api.v1.reg
         },
         object: (object) => {
             return FernRegistry.api.v1.register.TypeShape.object({
-                extends: object.extends.map((extension) => convertTypeId(extension.typeId)),
+                extends: object.extends_.map((extension) => convertTypeId(extension.typeId)),
                 properties: object.properties.map(
                     (property): FernRegistry.api.v1.register.ObjectProperty => ({
                         description: property.docs ?? undefined,
@@ -48,7 +48,7 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.api.v1.reg
                                         properties: [
                                             {
                                                 key: singleProperty.name.wireValue,
-                                                valueType: convertTypeReference(singleProperty.type),
+                                                valueType: convertTypeReference(singleProperty.type_),
                                             },
                                         ],
                                     }),
@@ -72,7 +72,7 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.api.v1.reg
                 variants: union.members.map((variant): FernRegistry.api.v1.register.UndiscriminatedUnionVariant => {
                     return {
                         description: variant.docs ?? undefined,
-                        type: convertTypeReference(variant.type),
+                        type: convertTypeReference(variant.type_),
                     };
                 }),
             });
@@ -130,44 +130,22 @@ export function convertTypeReference(
             return FernRegistry.api.v1.register.TypeReference.id(convertTypeId(name.typeId));
         },
         primitive: (primitive) => {
-            switch (primitive) {
-                case Ir.types.PrimitiveType.Integer:
-                    return FernRegistry.api.v1.register.TypeReference.primitive(
-                        FernRegistry.api.v1.register.PrimitiveType.integer()
-                    );
-                case Ir.types.PrimitiveType.Double:
-                    return FernRegistry.api.v1.register.TypeReference.primitive(
-                        FernRegistry.api.v1.register.PrimitiveType.double()
-                    );
-                case Ir.types.PrimitiveType.Long:
-                    return FernRegistry.api.v1.register.TypeReference.primitive(
-                        FernRegistry.api.v1.register.PrimitiveType.long()
-                    );
-                case Ir.types.PrimitiveType.String:
-                    return FernRegistry.api.v1.register.TypeReference.primitive(
-                        FernRegistry.api.v1.register.PrimitiveType.string()
-                    );
-                case Ir.types.PrimitiveType.Boolean:
-                    return FernRegistry.api.v1.register.TypeReference.primitive(
-                        FernRegistry.api.v1.register.PrimitiveType.boolean()
-                    );
-                case Ir.types.PrimitiveType.DateTime:
-                    return FernRegistry.api.v1.register.TypeReference.primitive(
-                        FernRegistry.api.v1.register.PrimitiveType.datetime()
-                    );
-                case Ir.types.PrimitiveType.Date:
-                    return FernRegistry.api.v1.register.TypeReference.primitive(
-                        FernRegistry.api.v1.register.PrimitiveType.date()
-                    );
-                case Ir.types.PrimitiveType.Base64:
-                    return FernRegistry.api.v1.register.TypeReference.primitive(
-                        FernRegistry.api.v1.register.PrimitiveType.base64()
-                    );
-                case Ir.types.PrimitiveType.Uuid:
-                    return FernRegistry.api.v1.register.TypeReference.primitive(
-                        FernRegistry.api.v1.register.PrimitiveType.uuid()
-                    );
-            }
+            return FernRegistry.api.v1.register.TypeReference.primitive(
+                Ir.types.PrimitiveType._visit<FernRegistry.api.v1.register.PrimitiveType>(primitive, {
+                    integer: FernRegistry.api.v1.register.PrimitiveType.integer,
+                    double: FernRegistry.api.v1.register.PrimitiveType.double,
+                    long: FernRegistry.api.v1.register.PrimitiveType.long,
+                    string: FernRegistry.api.v1.register.PrimitiveType.string,
+                    boolean: FernRegistry.api.v1.register.PrimitiveType.boolean,
+                    dateTime: FernRegistry.api.v1.register.PrimitiveType.datetime,
+                    date: FernRegistry.api.v1.register.PrimitiveType.date,
+                    base64: FernRegistry.api.v1.register.PrimitiveType.base64,
+                    uuid: FernRegistry.api.v1.register.PrimitiveType.uuid,
+                    _other: () => {
+                        throw new Error("Unknown primitive: " + primitive);
+                    },
+                })
+            );
         },
         unknown: () => {
             return FernRegistry.api.v1.register.TypeReference.unknown();

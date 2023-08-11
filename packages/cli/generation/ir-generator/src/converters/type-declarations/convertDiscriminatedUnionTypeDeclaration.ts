@@ -24,7 +24,7 @@ export function convertDiscriminatedUnionTypeDeclaration({
             wireValue: discriminant,
             name: getUnionDiscriminantName(union).name,
         }),
-        extends: getExtensionsAsList(union.extends).map((extended) => parseTypeName({ typeName: extended, file })),
+        extends_: getExtensionsAsList(union.extends).map((extended) => parseTypeName({ typeName: extended, file })),
         baseProperties:
             union["base-properties"] != null
                 ? Object.entries(union["base-properties"]).map(([propertyKey, propertyDefinition]) => ({
@@ -153,7 +153,7 @@ export function getSingleUnionTypeProperties({
             wireValue: getSinglePropertyKeyValue(singlePropertyKey),
             name: getSinglePropertyKeyName(singlePropertyKey),
         }),
-        type: parsedValueType,
+        type_: parsedValueType,
     });
 }
 

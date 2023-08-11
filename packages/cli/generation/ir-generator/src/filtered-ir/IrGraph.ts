@@ -75,8 +75,8 @@ export class IrGraph {
         const errorId = IdGenerator.generateErrorId(errorDeclaration.name);
         const referencedTypes = new Set<TypeId>();
         const referencedSubpackages = new Set<FernFilepath>();
-        if (errorDeclaration.type != null) {
-            populateReferencesFromTypeReference(errorDeclaration.type, referencedTypes, referencedSubpackages);
+        if (errorDeclaration.type_ != null) {
+            populateReferencesFromTypeReference(errorDeclaration.type_, referencedTypes, referencedSubpackages);
         }
         const errorNode: ErrorNode = {
             errorId,
@@ -104,7 +104,7 @@ export class IrGraph {
         if (httpEndpoint.requestBody != null) {
             HttpRequestBody._visit(httpEndpoint.requestBody, {
                 inlinedRequestBody: (inlinedRequestBody) => {
-                    for (const extension of inlinedRequestBody.extends) {
+                    for (const extension of inlinedRequestBody.extends_) {
                         populateReferencesFromTypeName(extension, referencedTypes, referencedSubpackages);
                     }
                     for (const property of inlinedRequestBody.properties) {

@@ -110,7 +110,7 @@ export async function generateIntermediateRepresentation({
                       docs: typeof variable !== "string" ? variable.docs : undefined,
                       id: key,
                       name: rootApiFileContext.casingsGenerator.generateName(key),
-                      type: rootApiFileContext.parseTypeReference(variable),
+                      type_: rootApiFileContext.parseTypeReference(variable),
                   }))
                 : [],
         serviceTypeReferenceInfo: {

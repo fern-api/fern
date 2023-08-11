@@ -275,53 +275,65 @@ function convertPrimitiveExample({
     example: RawSchemas.ExampleTypeReferenceSchema;
     typeBeingExemplified: PrimitiveType;
 }): ExampleTypeReferenceShape {
-    switch (typeBeingExemplified) {
-        case PrimitiveType.String:
+    return PrimitiveType._visit(typeBeingExemplified, {
+        string: () => {
             if (typeof example !== "string") {
                 throw new Error("Example is not a string");
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.string(example));
-        case PrimitiveType.DateTime:
+        },
+        dateTime: () => {
             if (typeof example !== "string") {
                 throw new Error("Example is not a string");
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.datetime(new Date(example)));
-        case PrimitiveType.Date:
+        },
+        date: () => {
             if (typeof example !== "string") {
                 throw new Error("Example is not a string");
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.date(example));
-        case PrimitiveType.Base64:
+        },
+        base64: () => {
             if (typeof example !== "string") {
                 throw new Error("Example is not a string");
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.string(example));
-        case PrimitiveType.Integer:
+        },
+        integer: () => {
             if (typeof example !== "number") {
                 throw new Error("Example is not a number");
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(example));
-        case PrimitiveType.Double:
+        },
+        double: () => {
             if (typeof example !== "number") {
                 throw new Error("Example is not a number");
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.double(example));
-        case PrimitiveType.Long:
+        },
+        long: () => {
             if (typeof example !== "number") {
                 throw new Error("Example is not a number");
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.long(example));
-        case PrimitiveType.Boolean:
+        },
+        boolean: () => {
             if (typeof example !== "boolean") {
                 throw new Error("Example is not a boolean");
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(example));
-        case PrimitiveType.Uuid:
+        },
+        uuid: () => {
             if (typeof example !== "string") {
                 throw new Error("Example is not a string");
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uuid(example));
-    }
+        },
+        _other: () => {
+            throw new Error("Unknown primitive type: " + typeBeingExemplified);
+        },
+    });
 }
 
 function convertObject({

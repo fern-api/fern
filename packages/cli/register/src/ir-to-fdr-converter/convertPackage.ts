@@ -108,18 +108,16 @@ function convertIrEnvironments({
 }
 
 function convertHttpMethod(method: Ir.http.HttpMethod): FernRegistry.api.v1.register.HttpMethod {
-    switch (method) {
-        case Ir.http.HttpMethod.Get:
-            return FernRegistry.api.v1.register.HttpMethod.Get;
-        case Ir.http.HttpMethod.Post:
-            return FernRegistry.api.v1.register.HttpMethod.Post;
-        case Ir.http.HttpMethod.Put:
-            return FernRegistry.api.v1.register.HttpMethod.Put;
-        case Ir.http.HttpMethod.Patch:
-            return FernRegistry.api.v1.register.HttpMethod.Patch;
-        case Ir.http.HttpMethod.Delete:
-            return FernRegistry.api.v1.register.HttpMethod.Delete;
-    }
+    return Ir.http.HttpMethod._visit<FernRegistry.api.v1.register.HttpMethod>(method, {
+        get: () => FernRegistry.api.v1.register.HttpMethod.Get,
+        post: () => FernRegistry.api.v1.register.HttpMethod.Post,
+        put: () => FernRegistry.api.v1.register.HttpMethod.Put,
+        patch: () => FernRegistry.api.v1.register.HttpMethod.Patch,
+        delete: () => FernRegistry.api.v1.register.HttpMethod.Delete,
+        _other: () => {
+            throw new Error("Unknown http method: " + method);
+        },
+    });
 }
 
 function convertHttpPath(irPath: Ir.http.HttpPath): FernRegistry.api.v1.register.EndpointPathPart[] {
@@ -145,7 +143,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FernRegistry.ap
                 contentType: inlinedRequestBody.contentType ?? "application/json",
                 shape: FernRegistry.api.v1.register.JsonRequestBodyShape.object(
                     FernRegistry.api.v1.register.HttpRequestBodyShape.object({
-                        extends: inlinedRequestBody.extends.map((extension) => convertTypeId(extension.typeId)),
+                        extends: inlinedRequestBody.extends_.map((extension) => convertTypeId(extension.typeId)),
                         properties: inlinedRequestBody.properties.map(
                             (property): FernRegistry.api.v1.register.ObjectProperty => ({
                                 description: property.docs ?? undefined,
@@ -212,7 +210,7 @@ function convertResponseErrors(
         const errorDeclaration = ir.errors[irResponseError.error.errorId];
         if (errorDeclaration) {
             errors.push({
-                type: errorDeclaration.type == null ? undefined : convertTypeReference(errorDeclaration.type),
+                type: errorDeclaration.type_ == null ? undefined : convertTypeReference(errorDeclaration.type_),
                 statusCode: errorDeclaration.statusCode,
                 description: errorDeclaration.docs ?? undefined,
             });

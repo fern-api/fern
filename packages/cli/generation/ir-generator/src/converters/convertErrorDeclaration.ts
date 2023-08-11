@@ -23,6 +23,6 @@ export function convertErrorDeclaration({
         }),
         docs: typeof errorDeclaration !== "string" ? errorDeclaration.docs : undefined,
         statusCode: errorDeclaration["status-code"],
-        type: errorDeclaration.type != null ? file.parseTypeReference(errorDeclaration.type) : undefined,
+        type_: errorDeclaration.type != null ? file.parseTypeReference(errorDeclaration.type) : undefined,
     };
 }
