@@ -1336,7 +1336,7 @@ import * as FernApi from \\"../../..\\";
 export interface ErrorDeclaration extends FernApi.WithDocs {
     name: FernApi.DeclaredErrorName;
     discriminantValue: FernApi.NameAndWireValue;
-    type: FernApi.TypeReference | undefined;
+    type_: FernApi.TypeReference | undefined;
     statusCode: number;
 }
 ",
@@ -2494,7 +2494,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 import * as FernApi from \\"../../..\\";
 export interface InlinedRequestBody {
     name: FernApi.Name;
-    extends: FernApi.DeclaredTypeName[];
+    extends_: FernApi.DeclaredTypeName[];
     properties: FernApi.InlinedRequestBodyProperty[];
     contentType: string | undefined;
 }
@@ -4946,7 +4946,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 import * as FernApi from \\"../../..\\";
 export interface ObjectTypeDeclaration {
     /** A list of other types to inherit from */
-    extends: FernApi.DeclaredTypeName[];
+    extends_: FernApi.DeclaredTypeName[];
     properties: FernApi.ObjectProperty[];
 }
 ",
@@ -5325,7 +5325,7 @@ exports.SingleUnionTypeProperties = {
 import * as FernApi from \\"../../..\\";
 export interface SingleUnionTypeProperty {
     name: FernApi.NameAndWireValue;
-    type: FernApi.TypeReference;
+    type_: FernApi.TypeReference;
 }
 ",
                         "name": "SingleUnionTypeProperty.d.ts",
@@ -5629,7 +5629,7 @@ exports.TypeReference = {
  */
 import * as FernApi from \\"../../..\\";
 export interface UndiscriminatedUnionMember extends FernApi.WithDocs {
-    type: FernApi.TypeReference;
+    type_: FernApi.TypeReference;
 }
 ",
                         "name": "UndiscriminatedUnionMember.d.ts",
@@ -5675,7 +5675,7 @@ import * as FernApi from \\"../../..\\";
 export interface UnionTypeDeclaration {
     discriminant: FernApi.NameAndWireValue;
     /** A list of other types to inherit from */
-    extends: FernApi.DeclaredTypeName[];
+    extends_: FernApi.DeclaredTypeName[];
     types: FernApi.SingleUnionType[];
     baseProperties: FernApi.ObjectProperty[];
 }
@@ -5839,7 +5839,7 @@ import * as FernApi from \\"../../..\\";
 export interface VariableDeclaration extends FernApi.WithDocs {
     id: FernApi.VariableId;
     name: FernApi.Name;
-    type: FernApi.TypeReference;
+    type_: FernApi.TypeReference;
 }
 ",
                         "name": "VariableDeclaration.d.ts",
@@ -10954,7 +10954,7 @@ exports.ErrorDeclaration = core.serialization
     .objectWithoutOptionalProperties({
     name: core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).DeclaredErrorName; })),
     discriminantValue: core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).NameAndWireValue; })),
-    type: core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).TypeReference; })).optional(),
+    type_: core.serialization.property(\\"type\\", core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).TypeReference; })).optional()),
     statusCode: core.serialization.number(),
 })
     .extend(core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).WithDocs; })));
@@ -13045,7 +13045,7 @@ exports.InlinedRequestBody = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.InlinedRequestBody = core.serialization.objectWithoutOptionalProperties({
     name: core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).Name; })),
-    extends: core.serialization.list(core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).DeclaredTypeName; }))),
+    extends_: core.serialization.property(\\"extends\\", core.serialization.list(core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).DeclaredTypeName; })))),
     properties: core.serialization.list(core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).InlinedRequestBodyProperty; }))),
     contentType: core.serialization.string().optional(),
 });
@@ -16903,7 +16903,7 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.ObjectTypeDeclaration = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.ObjectTypeDeclaration = core.serialization.objectWithoutOptionalProperties({
-    extends: core.serialization.list(core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).DeclaredTypeName; }))),
+    extends_: core.serialization.property(\\"extends\\", core.serialization.list(core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).DeclaredTypeName; })))),
     properties: core.serialization.list(core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).ObjectProperty; }))),
 });
 ",
@@ -17436,7 +17436,7 @@ exports.SingleUnionTypeProperty = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.SingleUnionTypeProperty = core.serialization.objectWithoutOptionalProperties({
     name: core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).NameAndWireValue; })),
-    type: core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).TypeReference; })),
+    type_: core.serialization.property(\\"type\\", core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).TypeReference; }))),
 });
 ",
                         "name": "SingleUnionTypeProperty.js",
@@ -17805,7 +17805,7 @@ exports.UndiscriminatedUnionMember = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.UndiscriminatedUnionMember = core.serialization
     .objectWithoutOptionalProperties({
-    type: core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).TypeReference; })),
+    type_: core.serialization.property(\\"type\\", core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).TypeReference; }))),
 })
     .extend(core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).WithDocs; })));
 ",
@@ -17938,7 +17938,7 @@ exports.UnionTypeDeclaration = void 0;
 const core = __importStar(require(\\"../../../../core\\"));
 exports.UnionTypeDeclaration = core.serialization.objectWithoutOptionalProperties({
     discriminant: core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).NameAndWireValue; })),
-    extends: core.serialization.list(core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).DeclaredTypeName; }))),
+    extends_: core.serialization.property(\\"extends\\", core.serialization.list(core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).DeclaredTypeName; })))),
     types: core.serialization.list(core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).SingleUnionType; }))),
     baseProperties: core.serialization.list(core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).ObjectProperty; }))),
 });
@@ -18147,7 +18147,7 @@ exports.VariableDeclaration = core.serialization
     .objectWithoutOptionalProperties({
     id: core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).VariableId; })),
     name: core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).Name; })),
-    type: core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).TypeReference; })),
+    type_: core.serialization.property(\\"type\\", core.serialization.lazy(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).TypeReference; }))),
 })
     .extend(core.serialization.lazyObject(() => __awaiter(void 0, void 0, void 0, function* () { return (yield Promise.resolve().then(() => __importStar(require(\\"../../..\\")))).WithDocs; })));
 ",
@@ -18984,7 +18984,7 @@ import * as FernApi from \\"../../..\\";
 export interface ErrorDeclaration extends FernApi.WithDocs {
     name: FernApi.DeclaredErrorName;
     discriminantValue: FernApi.NameAndWireValue;
-    type: FernApi.TypeReference | undefined;
+    type_: FernApi.TypeReference | undefined;
     statusCode: number;
 }
 ",
@@ -19835,7 +19835,7 @@ import * as FernApi from \\"../../..\\";
 
 export interface InlinedRequestBody {
     name: FernApi.Name;
-    extends: FernApi.DeclaredTypeName[];
+    extends_: FernApi.DeclaredTypeName[];
     properties: FernApi.InlinedRequestBodyProperty[];
     contentType: string | undefined;
 }
@@ -21671,7 +21671,7 @@ import * as FernApi from \\"../../..\\";
 
 export interface ObjectTypeDeclaration {
     /** A list of other types to inherit from */
-    extends: FernApi.DeclaredTypeName[];
+    extends_: FernApi.DeclaredTypeName[];
     properties: FernApi.ObjectProperty[];
 }
 ",
@@ -21984,7 +21984,7 @@ import * as FernApi from \\"../../..\\";
 
 export interface SingleUnionTypeProperty {
     name: FernApi.NameAndWireValue;
-    type: FernApi.TypeReference;
+    type_: FernApi.TypeReference;
 }
 ",
                         "name": "SingleUnionTypeProperty.ts",
@@ -22259,7 +22259,7 @@ export const TypeReference = {
 import * as FernApi from \\"../../..\\";
 
 export interface UndiscriminatedUnionMember extends FernApi.WithDocs {
-    type: FernApi.TypeReference;
+    type_: FernApi.TypeReference;
 }
 ",
                         "name": "UndiscriminatedUnionMember.ts",
@@ -22289,7 +22289,7 @@ import * as FernApi from \\"../../..\\";
 export interface UnionTypeDeclaration {
     discriminant: FernApi.NameAndWireValue;
     /** A list of other types to inherit from */
-    extends: FernApi.DeclaredTypeName[];
+    extends_: FernApi.DeclaredTypeName[];
     types: FernApi.SingleUnionType[];
     baseProperties: FernApi.ObjectProperty[];
 }
@@ -22366,7 +22366,7 @@ import * as FernApi from \\"../../..\\";
 export interface VariableDeclaration extends FernApi.WithDocs {
     id: FernApi.VariableId;
     name: FernApi.Name;
-    type: FernApi.TypeReference;
+    type_: FernApi.TypeReference;
 }
 ",
                         "name": "VariableDeclaration.ts",
@@ -25651,7 +25651,10 @@ export const ErrorDeclaration: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         name: core.serialization.lazyObject(async () => (await import(\\"../../..\\")).DeclaredErrorName),
         discriminantValue: core.serialization.lazyObject(async () => (await import(\\"../../..\\")).NameAndWireValue),
-        type: core.serialization.lazy(async () => (await import(\\"../../..\\")).TypeReference).optional(),
+        type_: core.serialization.property(
+            \\"type\\",
+            core.serialization.lazy(async () => (await import(\\"../../..\\")).TypeReference).optional()
+        ),
         statusCode: core.serialization.number(),
     })
     .extend(core.serialization.lazyObject(async () => (await import(\\"../../..\\")).WithDocs));
@@ -26598,8 +26601,9 @@ export const InlinedRequestBody: core.serialization.ObjectSchema<
     FernApi.InlinedRequestBody
 > = core.serialization.objectWithoutOptionalProperties({
     name: core.serialization.lazyObject(async () => (await import(\\"../../..\\")).Name),
-    extends: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import(\\"../../..\\")).DeclaredTypeName)
+    extends_: core.serialization.property(
+        \\"extends\\",
+        core.serialization.list(core.serialization.lazyObject(async () => (await import(\\"../../..\\")).DeclaredTypeName))
     ),
     properties: core.serialization.list(
         core.serialization.lazyObject(async () => (await import(\\"../../..\\")).InlinedRequestBodyProperty)
@@ -28420,8 +28424,9 @@ export const ObjectTypeDeclaration: core.serialization.ObjectSchema<
     serializers.ObjectTypeDeclaration.Raw,
     FernApi.ObjectTypeDeclaration
 > = core.serialization.objectWithoutOptionalProperties({
-    extends: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import(\\"../../..\\")).DeclaredTypeName)
+    extends_: core.serialization.property(
+        \\"extends\\",
+        core.serialization.list(core.serialization.lazyObject(async () => (await import(\\"../../..\\")).DeclaredTypeName))
     ),
     properties: core.serialization.list(
         core.serialization.lazyObject(async () => (await import(\\"../../..\\")).ObjectProperty)
@@ -28682,7 +28687,10 @@ export const SingleUnionTypeProperty: core.serialization.ObjectSchema<
     FernApi.SingleUnionTypeProperty
 > = core.serialization.objectWithoutOptionalProperties({
     name: core.serialization.lazyObject(async () => (await import(\\"../../..\\")).NameAndWireValue),
-    type: core.serialization.lazy(async () => (await import(\\"../../..\\")).TypeReference),
+    type_: core.serialization.property(
+        \\"type\\",
+        core.serialization.lazy(async () => (await import(\\"../../..\\")).TypeReference)
+    ),
 });
 
 export declare namespace SingleUnionTypeProperty {
@@ -28876,7 +28884,10 @@ export const UndiscriminatedUnionMember: core.serialization.ObjectSchema<
     FernApi.UndiscriminatedUnionMember
 > = core.serialization
     .objectWithoutOptionalProperties({
-        type: core.serialization.lazy(async () => (await import(\\"../../..\\")).TypeReference),
+        type_: core.serialization.property(
+            \\"type\\",
+            core.serialization.lazy(async () => (await import(\\"../../..\\")).TypeReference)
+        ),
     })
     .extend(core.serialization.lazyObject(async () => (await import(\\"../../..\\")).WithDocs));
 
@@ -28930,8 +28941,9 @@ export const UnionTypeDeclaration: core.serialization.ObjectSchema<
     FernApi.UnionTypeDeclaration
 > = core.serialization.objectWithoutOptionalProperties({
     discriminant: core.serialization.lazyObject(async () => (await import(\\"../../..\\")).NameAndWireValue),
-    extends: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import(\\"../../..\\")).DeclaredTypeName)
+    extends_: core.serialization.property(
+        \\"extends\\",
+        core.serialization.list(core.serialization.lazyObject(async () => (await import(\\"../../..\\")).DeclaredTypeName))
     ),
     types: core.serialization.list(
         core.serialization.lazyObject(async () => (await import(\\"../../..\\")).SingleUnionType)
@@ -29028,7 +29040,10 @@ export const VariableDeclaration: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         id: core.serialization.lazy(async () => (await import(\\"../../..\\")).VariableId),
         name: core.serialization.lazyObject(async () => (await import(\\"../../..\\")).Name),
-        type: core.serialization.lazy(async () => (await import(\\"../../..\\")).TypeReference),
+        type_: core.serialization.property(
+            \\"type\\",
+            core.serialization.lazy(async () => (await import(\\"../../..\\")).TypeReference)
+        ),
     })
     .extend(core.serialization.lazyObject(async () => (await import(\\"../../..\\")).WithDocs));
 
