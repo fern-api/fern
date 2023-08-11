@@ -1,4 +1,4 @@
-name: basic-auth
-auth: basic
+name: no-environment
+auth: bearer
 error-discrimination:
   strategy: status-code

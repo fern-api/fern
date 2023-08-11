@@ -1,4 +1,4 @@
-name: api
+name: custom-auth
 auth: CustomAuthScheme
 auth-schemes:
   CustomAuthScheme:
