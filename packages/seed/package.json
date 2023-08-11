@@ -29,7 +29,7 @@
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
     "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
-    "dist:cli": "yarn compile && node build.cjs && cp -R src/fern dist",
+    "dist:cli": "yarn compile && node build.cjs && cp -R fern dist",
     "publish:cli": "yarn dist:cli && cd dist && yarn npm publish --access public"
   },
   "dependencies": {

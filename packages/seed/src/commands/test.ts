@@ -27,6 +27,7 @@ export async function runTests({
     docker,
     compileCmd,
     taskContext,
+    update
 }: {
     irVersion: string | undefined;
     language: GenerationLanguage;
@@ -34,10 +35,56 @@ export async function runTests({
     docker: ParsedDockerName;
     compileCmd: string;
     taskContext: TaskContext;
+    update: boolean
 }): Promise<void> {
+
     const testCases = fixture != null ? [fixture] : Object.values(FIXTURE);
+
     for (const testCase of testCases) {
-        taskContext.logger.info(`Running tests for fixture ${testCase}`);
+        if(update) 
+        {
+            await testWithWriteToDisk({
+                testCase,
+                irVersion,
+                language,
+                docker,
+                compileCmd,
+                taskContext
+            });
+        }
+        else
+        {
+            await testSnapshotDiffsInCI({
+                testCase, 
+                irVersion,
+                language,
+                docker,
+                compileCmd,
+                taskContext
+            });
+        }
+    }
+}
+
+const ALL_AUDIENCES: Audiences = { type: "all" };
+
+async function testWithWriteToDisk({
+    testCase,
+    irVersion,
+    language,
+    docker,
+    compileCmd,
+    taskContext
+} : {
+    testCase: string;
+    irVersion: string | undefined;
+    language: GenerationLanguage;
+    docker: ParsedDockerName;
+    compileCmd: string;
+    taskContext: TaskContext;
+}) : Promise<void>
+{
+    taskContext.logger.info(`Running tests for fixture ${testCase}`);
         const absolutePathToWorkspace = AbsoluteFilePath.of(path.join(__dirname, FERN_DIRECTORY, testCase));
         const workspace = await loadWorkspace({
             absolutePathToWorkspace,
@@ -46,11 +93,11 @@ export async function runTests({
         });
         if (!workspace.didSucceed) {
             taskContext.logger.error(`Failed to load workspace for fixture ${testCase}`);
-            continue;
+            return;
         }
         if (workspace.workspace.type === "openapi") {
             taskContext.logger.error(`Expected fixture ${testCase} to be a fern workspace. Found OpenAPI instead!`);
-            continue;
+            return;
         }
         const ir = await getIntermediateRepresentation({
             fernWorkspace: workspace.workspace,
@@ -75,10 +122,65 @@ export async function runTests({
             context: taskContext,
             testCase,
         });
-    }
 }
 
-const ALL_AUDIENCES: Audiences = { type: "all" };
+async function testSnapshotDiffsInCI({
+    testCase,
+    irVersion,
+    language,
+    docker,
+    compileCmd,
+    taskContext
+} : {
+    testCase: string;
+    irVersion: string | undefined;
+    language: GenerationLanguage;
+    docker: ParsedDockerName;
+    compileCmd: string;
+    taskContext: TaskContext;
+}) : Promise<void>
+{
+    taskContext.logger.info(`Running tests for fixture ${testCase}`);
+        const absolutePathToWorkspace = AbsoluteFilePath.of(path.join(__dirname, FERN_DIRECTORY, testCase));
+        //absolutePathToWorkspace - functions within the npm package to reference the fern definitions
+        const workspace = await loadWorkspace({
+            absolutePathToWorkspace,
+            context: taskContext,
+            cliVersion: "DUMMY",
+        });
+        if (!workspace.didSucceed) {
+            taskContext.logger.error(`Failed to load workspace for fixture ${testCase}`);
+            return;
+        }
+        if (workspace.workspace.type === "openapi") {
+            taskContext.logger.error(`Expected fixture ${testCase} to be a fern workspace. Found OpenAPI instead!`);
+            return;
+        }
+        const ir = await getIntermediateRepresentation({
+            fernWorkspace: workspace.workspace,
+            taskContext,
+            generationLanguage: language,
+            irVersion,
+        });
+        taskContext.logger.info(`Generated IR for fixture ${testCase} ${typeof ir}`);
+        const absolutePathToOutput = AbsoluteFilePath.of(resolve(cwd(), ".seed", testCase));
+        //absolutePathToOutput - functions within the consuming folder to create a place where generated code is stored
+        await runDockerForWorkspace({
+            absolutePathToOutput,
+            docker,
+            workspace: workspace.workspace,
+            language,
+            taskContext,
+            irVersion,
+        });
+        taskContext.logger.info(`Receinved compile command: ${compileCmd}`);
+        await compileGeneratedCode({
+            absolutePathToOutput,
+            command: compileCmd,
+            context: taskContext,
+            testCase,
+        });
+}
 
 async function getIntermediateRepresentation({
     fernWorkspace,
@@ -171,18 +273,34 @@ async function compileGeneratedCode({
 
     const commands = command.split("&& ");
     if (commands[0] != null && commands[1] != null) {
-        await executeCommand(commands[0], [], context, absolutePathToOutput);
-        await executeCommand(commands[1], [], context, absolutePathToOutput);
+        await executeCommand({ 
+            command: commands[0], 
+            args: [], 
+            context, 
+            cwd: absolutePathToOutput
+        });
+        await executeCommand({ 
+            command: commands[1], 
+            args: [], 
+            context, 
+            cwd: absolutePathToOutput
+        });
     }
 }
 
-function executeCommand(
+async function executeCommand({
+    command,
+    args,
+    context,
+    cwd
+} : 
+{
     command: string,
     args: string[],
     context: TaskContext,
-    absolutePathToOutput: AbsoluteFilePath
-): Promise<void> {
-    const childProcess: ChildProcess = spawn(command, args, { shell: true, cwd: absolutePathToOutput });
+    cwd?: AbsoluteFilePath
+}): Promise<void> {
+    const childProcess: ChildProcess = spawn(command, args, { shell: true, cwd });
 
     return new Promise((resolve, reject) => {
         childProcess.on("close", (code) => {

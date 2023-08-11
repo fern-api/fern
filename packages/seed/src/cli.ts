@@ -61,6 +61,12 @@ function addTestCommand(cli: Argv, taskContext: TaskContext) {
                     type: "string",
                     demandOption: true,
                     description: "User inputted command to compile generated code with",
+                })
+                .option("update", {
+                    type: "boolean",
+                    alias: "u",
+                    description: "Determines whether or not snapshots are written to disk",
+                    default: false
                 }),
         async (argv) => {
             const parsedDockerImage = validateAndParseDockerImage(argv.docker);
@@ -71,6 +77,7 @@ function addTestCommand(cli: Argv, taskContext: TaskContext) {
                 docker: parsedDockerImage,
                 compileCmd: argv["compile-command"],
                 taskContext,
+                update: argv.update
             });
         }
     );

@@ -157,6 +157,8 @@ async function writeFilesToDiskAndRunGenerator({
     const absolutePathToWriteConfigJson = AbsoluteFilePath.of(configJsonFile.path);
     context.logger.debug("Will write config.json to: " + absolutePathToWriteConfigJson);
 
+    
+
     const tmpOutputDirectory = await tmp.dir({
         tmpdir: workspaceTempDir.path,
     });
