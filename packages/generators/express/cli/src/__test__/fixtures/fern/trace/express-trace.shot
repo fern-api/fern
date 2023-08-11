@@ -1183,7 +1183,16 @@ export declare const Language: {
     readonly Java: \\"JAVA\\";
     readonly Javascript: \\"JAVASCRIPT\\";
     readonly Python: \\"PYTHON\\";
+    readonly _visit: <R>(value: Language, visitor: Language.Visitor<R>) => R;
 };
+export declare namespace Language {
+    interface Visitor<R> {
+        java: () => R;
+        javascript: () => R;
+        python: () => R;
+        _other: () => R;
+    }
+}
 ",
                     "name": "Language.d.ts",
                     "type": "file",
@@ -1199,6 +1208,18 @@ exports.Language = {
     Java: \\"JAVA\\",
     Javascript: \\"JAVASCRIPT\\",
     Python: \\"PYTHON\\",
+    _visit: (value, visitor) => {
+        switch (value) {
+            case exports.Language.Java:
+                return visitor.java();
+            case exports.Language.Javascript:
+                return visitor.javascript();
+            case exports.Language.Python:
+                return visitor.python();
+            default:
+                return visitor._other();
+        }
+    },
 };
 ",
                     "name": "Language.js",
@@ -2630,7 +2651,16 @@ export declare const MigrationStatus: {
     readonly Running: \\"RUNNING\\";
     readonly Failed: \\"FAILED\\";
     readonly Finished: \\"FINISHED\\";
+    readonly _visit: <R>(value: MigrationStatus, visitor: MigrationStatus.Visitor<R>) => R;
 };
+export declare namespace MigrationStatus {
+    interface Visitor<R> {
+        running: () => R;
+        failed: () => R;
+        finished: () => R;
+        _other: () => R;
+    }
+}
 ",
                     "name": "MigrationStatus.d.ts",
                     "type": "file",
@@ -2646,6 +2676,18 @@ exports.MigrationStatus = {
     Running: \\"RUNNING\\",
     Failed: \\"FAILED\\",
     Finished: \\"FINISHED\\",
+    _visit: (value, visitor) => {
+        switch (value) {
+            case exports.MigrationStatus.Running:
+                return visitor.running();
+            case exports.MigrationStatus.Failed:
+                return visitor.failed();
+            case exports.MigrationStatus.Finished:
+                return visitor.finished();
+            default:
+                return visitor._other();
+        }
+    },
 };
 ",
                     "name": "MigrationStatus.js",
@@ -3223,7 +3265,15 @@ export declare type Color = \\"RED\\" | \\"BLUE\\";
 export declare const Color: {
     readonly Red: \\"RED\\";
     readonly Blue: \\"BLUE\\";
+    readonly _visit: <R>(value: Color, visitor: Color.Visitor<R>) => R;
 };
+export declare namespace Color {
+    interface Visitor<R> {
+        red: () => R;
+        blue: () => R;
+        _other: () => R;
+    }
+}
 ",
                     "name": "Color.d.ts",
                     "type": "file",
@@ -3238,6 +3288,16 @@ exports.Color = void 0;
 exports.Color = {
     Red: \\"RED\\",
     Blue: \\"BLUE\\",
+    _visit: (value, visitor) => {
+        switch (value) {
+            case exports.Color.Red:
+                return visitor.red();
+            case exports.Color.Blue:
+                return visitor.blue();
+            default:
+                return visitor._other();
+        }
+    },
 };
 ",
                     "name": "Color.js",
@@ -3574,7 +3634,16 @@ export declare const ReservedKeywordEnum: {
     readonly Is: \\"is\\";
     readonly As: \\"as\\";
     readonly Date: \\"date\\";
+    readonly _visit: <R>(value: ReservedKeywordEnum, visitor: ReservedKeywordEnum.Visitor<R>) => R;
 };
+export declare namespace ReservedKeywordEnum {
+    interface Visitor<R> {
+        is: () => R;
+        as: () => R;
+        date: () => R;
+        _other: () => R;
+    }
+}
 ",
                     "name": "ReservedKeywordEnum.d.ts",
                     "type": "file",
@@ -3590,6 +3659,18 @@ exports.ReservedKeywordEnum = {
     Is: \\"is\\",
     As: \\"as\\",
     Date: \\"date\\",
+    _visit: (value, visitor) => {
+        switch (value) {
+            case exports.ReservedKeywordEnum.Is:
+                return visitor.is();
+            case exports.ReservedKeywordEnum.As:
+                return visitor.as();
+            case exports.ReservedKeywordEnum.Date:
+                return visitor.date();
+            default:
+                return visitor._other();
+        }
+    },
 };
 ",
                     "name": "ReservedKeywordEnum.js",
@@ -5689,7 +5770,19 @@ export declare const ExecutionSessionStatus: {
     readonly RunningContainer: \\"RUNNING_CONTAINER\\";
     readonly LiveContainer: \\"LIVE_CONTAINER\\";
     readonly FailedToLaunch: \\"FAILED_TO_LAUNCH\\";
+    readonly _visit: <R>(value: ExecutionSessionStatus, visitor: ExecutionSessionStatus.Visitor<R>) => R;
 };
+export declare namespace ExecutionSessionStatus {
+    interface Visitor<R> {
+        creatingContainer: () => R;
+        provisioningContainer: () => R;
+        pendingContainer: () => R;
+        runningContainer: () => R;
+        liveContainer: () => R;
+        failedToLaunch: () => R;
+        _other: () => R;
+    }
+}
 ",
                     "name": "ExecutionSessionStatus.d.ts",
                     "type": "file",
@@ -5708,6 +5801,24 @@ exports.ExecutionSessionStatus = {
     RunningContainer: \\"RUNNING_CONTAINER\\",
     LiveContainer: \\"LIVE_CONTAINER\\",
     FailedToLaunch: \\"FAILED_TO_LAUNCH\\",
+    _visit: (value, visitor) => {
+        switch (value) {
+            case exports.ExecutionSessionStatus.CreatingContainer:
+                return visitor.creatingContainer();
+            case exports.ExecutionSessionStatus.ProvisioningContainer:
+                return visitor.provisioningContainer();
+            case exports.ExecutionSessionStatus.PendingContainer:
+                return visitor.pendingContainer();
+            case exports.ExecutionSessionStatus.RunningContainer:
+                return visitor.runningContainer();
+            case exports.ExecutionSessionStatus.LiveContainer:
+                return visitor.liveContainer();
+            case exports.ExecutionSessionStatus.FailedToLaunch:
+                return visitor.failedToLaunch();
+            default:
+                return visitor._other();
+        }
+    },
 };
 ",
                     "name": "ExecutionSessionStatus.js",
@@ -6234,7 +6345,18 @@ export declare const RunningSubmissionState: {
     readonly WritingSubmissionToFile: \\"WRITING_SUBMISSION_TO_FILE\\";
     readonly CompilingSubmission: \\"COMPILING_SUBMISSION\\";
     readonly RunningSubmission: \\"RUNNING_SUBMISSION\\";
+    readonly _visit: <R>(value: RunningSubmissionState, visitor: RunningSubmissionState.Visitor<R>) => R;
 };
+export declare namespace RunningSubmissionState {
+    interface Visitor<R> {
+        queueingSubmission: () => R;
+        killingHistoricalSubmissions: () => R;
+        writingSubmissionToFile: () => R;
+        compilingSubmission: () => R;
+        runningSubmission: () => R;
+        _other: () => R;
+    }
+}
 ",
                     "name": "RunningSubmissionState.d.ts",
                     "type": "file",
@@ -6252,6 +6374,22 @@ exports.RunningSubmissionState = {
     WritingSubmissionToFile: \\"WRITING_SUBMISSION_TO_FILE\\",
     CompilingSubmission: \\"COMPILING_SUBMISSION\\",
     RunningSubmission: \\"RUNNING_SUBMISSION\\",
+    _visit: (value, visitor) => {
+        switch (value) {
+            case exports.RunningSubmissionState.QueueingSubmission:
+                return visitor.queueingSubmission();
+            case exports.RunningSubmissionState.KillingHistoricalSubmissions:
+                return visitor.killingHistoricalSubmissions();
+            case exports.RunningSubmissionState.WritingSubmissionToFile:
+                return visitor.writingSubmissionToFile();
+            case exports.RunningSubmissionState.CompilingSubmission:
+                return visitor.compilingSubmission();
+            case exports.RunningSubmissionState.RunningSubmission:
+                return visitor.runningSubmission();
+            default:
+                return visitor._other();
+        }
+    },
 };
 ",
                     "name": "RunningSubmissionState.js",
@@ -7054,7 +7192,14 @@ exports.SubmissionStatusV2 = {
 export declare type SubmissionTypeEnum = \\"TEST\\";
 export declare const SubmissionTypeEnum: {
     readonly Test: \\"TEST\\";
+    readonly _visit: <R>(value: SubmissionTypeEnum, visitor: SubmissionTypeEnum.Visitor<R>) => R;
 };
+export declare namespace SubmissionTypeEnum {
+    interface Visitor<R> {
+        test: () => R;
+        _other: () => R;
+    }
+}
 ",
                     "name": "SubmissionTypeEnum.d.ts",
                     "type": "file",
@@ -7068,6 +7213,14 @@ Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.SubmissionTypeEnum = void 0;
 exports.SubmissionTypeEnum = {
     Test: \\"TEST\\",
+    _visit: (value, visitor) => {
+        switch (value) {
+            case exports.SubmissionTypeEnum.Test:
+                return visitor.test();
+            default:
+                return visitor._other();
+        }
+    },
 };
 ",
                     "name": "SubmissionTypeEnum.js",

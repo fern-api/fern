@@ -3564,7 +3564,21 @@ var init_LogLevel = __esm({
       Debug: \\"DEBUG\\",
       Info: \\"INFO\\",
       Warn: \\"WARN\\",
-      Error: \\"ERROR\\"
+      Error: \\"ERROR\\",
+      _visit: (value, visitor) => {
+        switch (value) {
+          case LogLevel.Debug:
+            return visitor.debug();
+          case LogLevel.Info:
+            return visitor.info();
+          case LogLevel.Warn:
+            return visitor.warn();
+          case LogLevel.Error:
+            return visitor.error();
+          default:
+            return visitor._other();
+        }
+      }
     };
   }
 });
@@ -3585,7 +3599,21 @@ var init_PackagePublishStatus = __esm({
       NotStartedPublishing: \\"NOT_STARTED_PUBLISHING\\",
       Publishing: \\"PUBLISHING\\",
       Published: \\"PUBLISHED\\",
-      FailedToPublish: \\"FAILED_TO_PUBLISH\\"
+      FailedToPublish: \\"FAILED_TO_PUBLISH\\",
+      _visit: (value, visitor) => {
+        switch (value) {
+          case PackagePublishStatus.NotStartedPublishing:
+            return visitor.notStartedPublishing();
+          case PackagePublishStatus.Publishing:
+            return visitor.publishing();
+          case PackagePublishStatus.Published:
+            return visitor.published();
+          case PackagePublishStatus.FailedToPublish:
+            return visitor.failedToPublish();
+          default:
+            return visitor._other();
+        }
+      }
     };
   }
 });
@@ -9175,7 +9203,21 @@ var init_LogLevel = __esm({
       Debug: \\"DEBUG\\",
       Info: \\"INFO\\",
       Warn: \\"WARN\\",
-      Error: \\"ERROR\\"
+      Error: \\"ERROR\\",
+      _visit: (value, visitor) => {
+        switch (value) {
+          case LogLevel.Debug:
+            return visitor.debug();
+          case LogLevel.Info:
+            return visitor.info();
+          case LogLevel.Warn:
+            return visitor.warn();
+          case LogLevel.Error:
+            return visitor.error();
+          default:
+            return visitor._other();
+        }
+      }
     };
   }
 });
@@ -9196,7 +9238,21 @@ var init_PackagePublishStatus = __esm({
       NotStartedPublishing: \\"NOT_STARTED_PUBLISHING\\",
       Publishing: \\"PUBLISHING\\",
       Published: \\"PUBLISHED\\",
-      FailedToPublish: \\"FAILED_TO_PUBLISH\\"
+      FailedToPublish: \\"FAILED_TO_PUBLISH\\",
+      _visit: (value, visitor) => {
+        switch (value) {
+          case PackagePublishStatus.NotStartedPublishing:
+            return visitor.notStartedPublishing();
+          case PackagePublishStatus.Publishing:
+            return visitor.publishing();
+          case PackagePublishStatus.Published:
+            return visitor.published();
+          case PackagePublishStatus.FailedToPublish:
+            return visitor.failedToPublish();
+          default:
+            return visitor._other();
+        }
+      }
     };
   }
 });
@@ -17417,7 +17473,21 @@ var init_LogLevel = __esm({
       Debug: \\"DEBUG\\",
       Info: \\"INFO\\",
       Warn: \\"WARN\\",
-      Error: \\"ERROR\\"
+      Error: \\"ERROR\\",
+      _visit: (value, visitor) => {
+        switch (value) {
+          case LogLevel.Debug:
+            return visitor.debug();
+          case LogLevel.Info:
+            return visitor.info();
+          case LogLevel.Warn:
+            return visitor.warn();
+          case LogLevel.Error:
+            return visitor.error();
+          default:
+            return visitor._other();
+        }
+      }
     };
   }
 });
@@ -17438,7 +17508,21 @@ var init_PackagePublishStatus = __esm({
       NotStartedPublishing: \\"NOT_STARTED_PUBLISHING\\",
       Publishing: \\"PUBLISHING\\",
       Published: \\"PUBLISHED\\",
-      FailedToPublish: \\"FAILED_TO_PUBLISH\\"
+      FailedToPublish: \\"FAILED_TO_PUBLISH\\",
+      _visit: (value, visitor) => {
+        switch (value) {
+          case PackagePublishStatus.NotStartedPublishing:
+            return visitor.notStartedPublishing();
+          case PackagePublishStatus.Publishing:
+            return visitor.publishing();
+          case PackagePublishStatus.Published:
+            return visitor.published();
+          case PackagePublishStatus.FailedToPublish:
+            return visitor.failedToPublish();
+          default:
+            return visitor._other();
+        }
+      }
     };
   }
 });
@@ -23024,7 +23108,21 @@ var init_LogLevel = __esm({
       Debug: \\"DEBUG\\",
       Info: \\"INFO\\",
       Warn: \\"WARN\\",
-      Error: \\"ERROR\\"
+      Error: \\"ERROR\\",
+      _visit: (value, visitor) => {
+        switch (value) {
+          case LogLevel.Debug:
+            return visitor.debug();
+          case LogLevel.Info:
+            return visitor.info();
+          case LogLevel.Warn:
+            return visitor.warn();
+          case LogLevel.Error:
+            return visitor.error();
+          default:
+            return visitor._other();
+        }
+      }
     };
   }
 });
@@ -23045,7 +23143,21 @@ var init_PackagePublishStatus = __esm({
       NotStartedPublishing: \\"NOT_STARTED_PUBLISHING\\",
       Publishing: \\"PUBLISHING\\",
       Published: \\"PUBLISHED\\",
-      FailedToPublish: \\"FAILED_TO_PUBLISH\\"
+      FailedToPublish: \\"FAILED_TO_PUBLISH\\",
+      _visit: (value, visitor) => {
+        switch (value) {
+          case PackagePublishStatus.NotStartedPublishing:
+            return visitor.notStartedPublishing();
+          case PackagePublishStatus.Publishing:
+            return visitor.publishing();
+          case PackagePublishStatus.Published:
+            return visitor.published();
+          case PackagePublishStatus.FailedToPublish:
+            return visitor.failedToPublish();
+          default:
+            return visitor._other();
+        }
+      }
     };
   }
 });
@@ -41478,7 +41590,21 @@ var init_LogLevel = __esm({
       Debug: \\"DEBUG\\",
       Info: \\"INFO\\",
       Warn: \\"WARN\\",
-      Error: \\"ERROR\\"
+      Error: \\"ERROR\\",
+      _visit: (value, visitor) => {
+        switch (value) {
+          case LogLevel.Debug:
+            return visitor.debug();
+          case LogLevel.Info:
+            return visitor.info();
+          case LogLevel.Warn:
+            return visitor.warn();
+          case LogLevel.Error:
+            return visitor.error();
+          default:
+            return visitor._other();
+        }
+      }
     };
   }
 });
@@ -41499,7 +41625,21 @@ var init_PackagePublishStatus = __esm({
       NotStartedPublishing: \\"NOT_STARTED_PUBLISHING\\",
       Publishing: \\"PUBLISHING\\",
       Published: \\"PUBLISHED\\",
-      FailedToPublish: \\"FAILED_TO_PUBLISH\\"
+      FailedToPublish: \\"FAILED_TO_PUBLISH\\",
+      _visit: (value, visitor) => {
+        switch (value) {
+          case PackagePublishStatus.NotStartedPublishing:
+            return visitor.notStartedPublishing();
+          case PackagePublishStatus.Publishing:
+            return visitor.publishing();
+          case PackagePublishStatus.Published:
+            return visitor.published();
+          case PackagePublishStatus.FailedToPublish:
+            return visitor.failedToPublish();
+          default:
+            return visitor._other();
+        }
+      }
     };
   }
 });
@@ -57173,7 +57313,21 @@ var init_LogLevel = __esm({
       Debug: \\"DEBUG\\",
       Info: \\"INFO\\",
       Warn: \\"WARN\\",
-      Error: \\"ERROR\\"
+      Error: \\"ERROR\\",
+      _visit: (value, visitor) => {
+        switch (value) {
+          case LogLevel.Debug:
+            return visitor.debug();
+          case LogLevel.Info:
+            return visitor.info();
+          case LogLevel.Warn:
+            return visitor.warn();
+          case LogLevel.Error:
+            return visitor.error();
+          default:
+            return visitor._other();
+        }
+      }
     };
   }
 });
@@ -57194,7 +57348,21 @@ var init_PackagePublishStatus = __esm({
       NotStartedPublishing: \\"NOT_STARTED_PUBLISHING\\",
       Publishing: \\"PUBLISHING\\",
       Published: \\"PUBLISHED\\",
-      FailedToPublish: \\"FAILED_TO_PUBLISH\\"
+      FailedToPublish: \\"FAILED_TO_PUBLISH\\",
+      _visit: (value, visitor) => {
+        switch (value) {
+          case PackagePublishStatus.NotStartedPublishing:
+            return visitor.notStartedPublishing();
+          case PackagePublishStatus.Publishing:
+            return visitor.publishing();
+          case PackagePublishStatus.Published:
+            return visitor.published();
+          case PackagePublishStatus.FailedToPublish:
+            return visitor.failedToPublish();
+          default:
+            return visitor._other();
+        }
+      }
     };
   }
 });
@@ -72731,7 +72899,17 @@ export declare const LogLevel: {
     readonly Info: \\"INFO\\";
     readonly Warn: \\"WARN\\";
     readonly Error: \\"ERROR\\";
+    readonly _visit: <R>(value: LogLevel, visitor: LogLevel.Visitor<R>) => R;
 };
+export declare namespace LogLevel {
+    interface Visitor<R> {
+        debug: () => R;
+        info: () => R;
+        warn: () => R;
+        error: () => R;
+        _other: () => R;
+    }
+}
 ",
                         "name": "LogLevel.d.ts",
                         "type": "file",
@@ -72932,7 +73110,17 @@ export declare const PackagePublishStatus: {
     readonly Publishing: \\"PUBLISHING\\";
     readonly Published: \\"PUBLISHED\\";
     readonly FailedToPublish: \\"FAILED_TO_PUBLISH\\";
+    readonly _visit: <R>(value: PackagePublishStatus, visitor: PackagePublishStatus.Visitor<R>) => R;
 };
+export declare namespace PackagePublishStatus {
+    interface Visitor<R> {
+        notStartedPublishing: () => R;
+        publishing: () => R;
+        published: () => R;
+        failedToPublish: () => R;
+        _other: () => R;
+    }
+}
 ",
                         "name": "PackagePublishStatus.d.ts",
                         "type": "file",

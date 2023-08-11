@@ -291,7 +291,15 @@ export declare type AuthSchemesRequirement = \\"ALL\\" | \\"ANY\\";
 export declare const AuthSchemesRequirement: {
     readonly All: \\"ALL\\";
     readonly Any: \\"ANY\\";
+    readonly _visit: <R>(value: AuthSchemesRequirement, visitor: AuthSchemesRequirement.Visitor<R>) => R;
 };
+export declare namespace AuthSchemesRequirement {
+    interface Visitor<R> {
+        all: () => R;
+        any: () => R;
+        _other: () => R;
+    }
+}
 ",
                         "name": "AuthSchemesRequirement.d.ts",
                         "type": "file",
@@ -306,6 +314,16 @@ exports.AuthSchemesRequirement = void 0;
 exports.AuthSchemesRequirement = {
     All: \\"ALL\\",
     Any: \\"ANY\\",
+    _visit: (value, visitor) => {
+        switch (value) {
+            case exports.AuthSchemesRequirement.All:
+                return visitor.all();
+            case exports.AuthSchemesRequirement.Any:
+                return visitor.any();
+            default:
+                return visitor._other();
+        }
+    },
 };
 ",
                         "name": "AuthSchemesRequirement.js",
@@ -491,7 +509,17 @@ export declare const AvailabilityStatus: {
     readonly PreRelease: \\"PRE_RELEASE\\";
     readonly GeneralAvailability: \\"GENERAL_AVAILABILITY\\";
     readonly Deprecated: \\"DEPRECATED\\";
+    readonly _visit: <R>(value: AvailabilityStatus, visitor: AvailabilityStatus.Visitor<R>) => R;
 };
+export declare namespace AvailabilityStatus {
+    interface Visitor<R> {
+        inDevelopment: () => R;
+        preRelease: () => R;
+        generalAvailability: () => R;
+        deprecated: () => R;
+        _other: () => R;
+    }
+}
 ",
                         "name": "AvailabilityStatus.d.ts",
                         "type": "file",
@@ -508,6 +536,20 @@ exports.AvailabilityStatus = {
     PreRelease: \\"PRE_RELEASE\\",
     GeneralAvailability: \\"GENERAL_AVAILABILITY\\",
     Deprecated: \\"DEPRECATED\\",
+    _visit: (value, visitor) => {
+        switch (value) {
+            case exports.AvailabilityStatus.InDevelopment:
+                return visitor.inDevelopment();
+            case exports.AvailabilityStatus.PreRelease:
+                return visitor.preRelease();
+            case exports.AvailabilityStatus.GeneralAvailability:
+                return visitor.generalAvailability();
+            case exports.AvailabilityStatus.Deprecated:
+                return visitor.deprecated();
+            default:
+                return visitor._other();
+        }
+    },
 };
 ",
                         "name": "AvailabilityStatus.js",
@@ -2164,7 +2206,18 @@ export declare const HttpMethod: {
     readonly Put: \\"PUT\\";
     readonly Patch: \\"PATCH\\";
     readonly Delete: \\"DELETE\\";
+    readonly _visit: <R>(value: HttpMethod, visitor: HttpMethod.Visitor<R>) => R;
 };
+export declare namespace HttpMethod {
+    interface Visitor<R> {
+        get: () => R;
+        post: () => R;
+        put: () => R;
+        patch: () => R;
+        delete: () => R;
+        _other: () => R;
+    }
+}
 ",
                         "name": "HttpMethod.d.ts",
                         "type": "file",
@@ -2182,6 +2235,22 @@ exports.HttpMethod = {
     Put: \\"PUT\\",
     Patch: \\"PATCH\\",
     Delete: \\"DELETE\\",
+    _visit: (value, visitor) => {
+        switch (value) {
+            case exports.HttpMethod.Get:
+                return visitor.get();
+            case exports.HttpMethod.Post:
+                return visitor.post();
+            case exports.HttpMethod.Put:
+                return visitor.put();
+            case exports.HttpMethod.Patch:
+                return visitor.patch();
+            case exports.HttpMethod.Delete:
+                return visitor.delete();
+            default:
+                return visitor._other();
+        }
+    },
 };
 ",
                         "name": "HttpMethod.js",
@@ -2615,7 +2684,16 @@ export declare const PathParameterLocation: {
     readonly Root: \\"ROOT\\";
     readonly Service: \\"SERVICE\\";
     readonly Endpoint: \\"ENDPOINT\\";
+    readonly _visit: <R>(value: PathParameterLocation, visitor: PathParameterLocation.Visitor<R>) => R;
 };
+export declare namespace PathParameterLocation {
+    interface Visitor<R> {
+        root: () => R;
+        service: () => R;
+        endpoint: () => R;
+        _other: () => R;
+    }
+}
 ",
                         "name": "PathParameterLocation.d.ts",
                         "type": "file",
@@ -2631,6 +2709,18 @@ exports.PathParameterLocation = {
     Root: \\"ROOT\\",
     Service: \\"SERVICE\\",
     Endpoint: \\"ENDPOINT\\",
+    _visit: (value, visitor) => {
+        switch (value) {
+            case exports.PathParameterLocation.Root:
+                return visitor.root();
+            case exports.PathParameterLocation.Service:
+                return visitor.service();
+            case exports.PathParameterLocation.Endpoint:
+                return visitor.endpoint();
+            default:
+                return visitor._other();
+        }
+    },
 };
 ",
                         "name": "PathParameterLocation.js",
@@ -4981,7 +5071,22 @@ export declare const PrimitiveType: {
     readonly Date: \\"DATE\\";
     readonly Uuid: \\"UUID\\";
     readonly Base64: \\"BASE_64\\";
+    readonly _visit: <R>(value: PrimitiveType, visitor: PrimitiveType.Visitor<R>) => R;
 };
+export declare namespace PrimitiveType {
+    interface Visitor<R> {
+        integer: () => R;
+        double: () => R;
+        string: () => R;
+        boolean: () => R;
+        long: () => R;
+        dateTime: () => R;
+        date: () => R;
+        uuid: () => R;
+        base64: () => R;
+        _other: () => R;
+    }
+}
 ",
                         "name": "PrimitiveType.d.ts",
                         "type": "file",
@@ -5003,6 +5108,30 @@ exports.PrimitiveType = {
     Date: \\"DATE\\",
     Uuid: \\"UUID\\",
     Base64: \\"BASE_64\\",
+    _visit: (value, visitor) => {
+        switch (value) {
+            case exports.PrimitiveType.Integer:
+                return visitor.integer();
+            case exports.PrimitiveType.Double:
+                return visitor.double();
+            case exports.PrimitiveType.String:
+                return visitor.string();
+            case exports.PrimitiveType.Boolean:
+                return visitor.boolean();
+            case exports.PrimitiveType.Long:
+                return visitor.long();
+            case exports.PrimitiveType.DateTime:
+                return visitor.dateTime();
+            case exports.PrimitiveType.Date:
+                return visitor.date();
+            case exports.PrimitiveType.Uuid:
+                return visitor.uuid();
+            case exports.PrimitiveType.Base64:
+                return visitor.base64();
+            default:
+                return visitor._other();
+        }
+    },
 };
 ",
                         "name": "PrimitiveType.js",
@@ -5168,7 +5297,17 @@ export declare const ShapeType: {
     readonly Object: \\"OBJECT\\";
     readonly Union: \\"UNION\\";
     readonly UndiscriminatedUnion: \\"UNDISCRIMINATED_UNION\\";
+    readonly _visit: <R>(value: ShapeType, visitor: ShapeType.Visitor<R>) => R;
 };
+export declare namespace ShapeType {
+    interface Visitor<R> {
+        enum: () => R;
+        object: () => R;
+        union: () => R;
+        undiscriminatedUnion: () => R;
+        _other: () => R;
+    }
+}
 ",
                         "name": "ShapeType.d.ts",
                         "type": "file",
@@ -5185,6 +5324,20 @@ exports.ShapeType = {
     Object: \\"OBJECT\\",
     Union: \\"UNION\\",
     UndiscriminatedUnion: \\"UNDISCRIMINATED_UNION\\",
+    _visit: (value, visitor) => {
+        switch (value) {
+            case exports.ShapeType.Enum:
+                return visitor.enum();
+            case exports.ShapeType.Object:
+                return visitor.object();
+            case exports.ShapeType.Union:
+                return visitor.union();
+            case exports.ShapeType.UndiscriminatedUnion:
+                return visitor.undiscriminatedUnion();
+            default:
+                return visitor._other();
+        }
+    },
 };
 ",
                         "name": "ShapeType.js",
@@ -18406,7 +18559,25 @@ export type AuthSchemesRequirement = \\"ALL\\" | \\"ANY\\";
 export const AuthSchemesRequirement = {
     All: \\"ALL\\",
     Any: \\"ANY\\",
+    _visit: <R>(value: AuthSchemesRequirement, visitor: AuthSchemesRequirement.Visitor<R>) => {
+        switch (value) {
+            case AuthSchemesRequirement.All:
+                return visitor.all();
+            case AuthSchemesRequirement.Any:
+                return visitor.any();
+            default:
+                return visitor._other();
+        }
+    },
 } as const;
+
+export declare namespace AuthSchemesRequirement {
+    interface Visitor<R> {
+        all: () => R;
+        any: () => R;
+        _other: () => R;
+    }
+}
 ",
                         "name": "AuthSchemesRequirement.ts",
                         "type": "file",
@@ -18512,7 +18683,31 @@ export const AvailabilityStatus = {
     PreRelease: \\"PRE_RELEASE\\",
     GeneralAvailability: \\"GENERAL_AVAILABILITY\\",
     Deprecated: \\"DEPRECATED\\",
+    _visit: <R>(value: AvailabilityStatus, visitor: AvailabilityStatus.Visitor<R>) => {
+        switch (value) {
+            case AvailabilityStatus.InDevelopment:
+                return visitor.inDevelopment();
+            case AvailabilityStatus.PreRelease:
+                return visitor.preRelease();
+            case AvailabilityStatus.GeneralAvailability:
+                return visitor.generalAvailability();
+            case AvailabilityStatus.Deprecated:
+                return visitor.deprecated();
+            default:
+                return visitor._other();
+        }
+    },
 } as const;
+
+export declare namespace AvailabilityStatus {
+    interface Visitor<R> {
+        inDevelopment: () => R;
+        preRelease: () => R;
+        generalAvailability: () => R;
+        deprecated: () => R;
+        _other: () => R;
+    }
+}
 ",
                         "name": "AvailabilityStatus.ts",
                         "type": "file",
@@ -19570,7 +19765,34 @@ export const HttpMethod = {
     Put: \\"PUT\\",
     Patch: \\"PATCH\\",
     Delete: \\"DELETE\\",
+    _visit: <R>(value: HttpMethod, visitor: HttpMethod.Visitor<R>) => {
+        switch (value) {
+            case HttpMethod.Get:
+                return visitor.get();
+            case HttpMethod.Post:
+                return visitor.post();
+            case HttpMethod.Put:
+                return visitor.put();
+            case HttpMethod.Patch:
+                return visitor.patch();
+            case HttpMethod.Delete:
+                return visitor.delete();
+            default:
+                return visitor._other();
+        }
+    },
 } as const;
+
+export declare namespace HttpMethod {
+    interface Visitor<R> {
+        get: () => R;
+        post: () => R;
+        put: () => R;
+        patch: () => R;
+        delete: () => R;
+        _other: () => R;
+    }
+}
 ",
                         "name": "HttpMethod.ts",
                         "type": "file",
@@ -19916,7 +20138,28 @@ export const PathParameterLocation = {
     Root: \\"ROOT\\",
     Service: \\"SERVICE\\",
     Endpoint: \\"ENDPOINT\\",
+    _visit: <R>(value: PathParameterLocation, visitor: PathParameterLocation.Visitor<R>) => {
+        switch (value) {
+            case PathParameterLocation.Root:
+                return visitor.root();
+            case PathParameterLocation.Service:
+                return visitor.service();
+            case PathParameterLocation.Endpoint:
+                return visitor.endpoint();
+            default:
+                return visitor._other();
+        }
+    },
 } as const;
+
+export declare namespace PathParameterLocation {
+    interface Visitor<R> {
+        root: () => R;
+        service: () => R;
+        endpoint: () => R;
+        _other: () => R;
+    }
+}
 ",
                         "name": "PathParameterLocation.ts",
                         "type": "file",
@@ -21706,7 +21949,46 @@ export const PrimitiveType = {
     Date: \\"DATE\\",
     Uuid: \\"UUID\\",
     Base64: \\"BASE_64\\",
+    _visit: <R>(value: PrimitiveType, visitor: PrimitiveType.Visitor<R>) => {
+        switch (value) {
+            case PrimitiveType.Integer:
+                return visitor.integer();
+            case PrimitiveType.Double:
+                return visitor.double();
+            case PrimitiveType.String:
+                return visitor.string();
+            case PrimitiveType.Boolean:
+                return visitor.boolean();
+            case PrimitiveType.Long:
+                return visitor.long();
+            case PrimitiveType.DateTime:
+                return visitor.dateTime();
+            case PrimitiveType.Date:
+                return visitor.date();
+            case PrimitiveType.Uuid:
+                return visitor.uuid();
+            case PrimitiveType.Base64:
+                return visitor.base64();
+            default:
+                return visitor._other();
+        }
+    },
 } as const;
+
+export declare namespace PrimitiveType {
+    interface Visitor<R> {
+        integer: () => R;
+        double: () => R;
+        string: () => R;
+        boolean: () => R;
+        long: () => R;
+        dateTime: () => R;
+        date: () => R;
+        uuid: () => R;
+        base64: () => R;
+        _other: () => R;
+    }
+}
 ",
                         "name": "PrimitiveType.ts",
                         "type": "file",
@@ -21857,7 +22139,31 @@ export const ShapeType = {
     Object: \\"OBJECT\\",
     Union: \\"UNION\\",
     UndiscriminatedUnion: \\"UNDISCRIMINATED_UNION\\",
+    _visit: <R>(value: ShapeType, visitor: ShapeType.Visitor<R>) => {
+        switch (value) {
+            case ShapeType.Enum:
+                return visitor.enum();
+            case ShapeType.Object:
+                return visitor.object();
+            case ShapeType.Union:
+                return visitor.union();
+            case ShapeType.UndiscriminatedUnion:
+                return visitor.undiscriminatedUnion();
+            default:
+                return visitor._other();
+        }
+    },
 } as const;
+
+export declare namespace ShapeType {
+    interface Visitor<R> {
+        enum: () => R;
+        object: () => R;
+        union: () => R;
+        undiscriminatedUnion: () => R;
+        _other: () => R;
+    }
+}
 ",
                         "name": "ShapeType.ts",
                         "type": "file",

@@ -213,6 +213,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
             getReferenceToSelf,
             includeSerdeLayer: this.includeSerdeLayer,
             noOptionalProperties: this.noOptionalProperties,
+            includeEnumUtils: this.includeUtilsOnUnionMembers,
         });
     }
 
