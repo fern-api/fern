@@ -8,15 +8,13 @@ import pydantic
 
 from .....core.api_error import ApiError
 from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .....environment import FernIrEnvironment
 from ....commons.types.problem_id import ProblemId
 from .types.lightweight_problem_info_v_2 import LightweightProblemInfoV2
 from .types.problem_info_v_2 import ProblemInfoV2
 
 
 class ProblemClient:
-    def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PROD, client_wrapper: SyncClientWrapper):
-        self._environment = environment
+    def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     def get_lightweight_problems(self) -> typing.List[LightweightProblemInfoV2]:
@@ -25,7 +23,7 @@ class ProblemClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment.value}/", "problems-v2/lightweight-problem-info"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "problems-v2/lightweight-problem-info"),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
@@ -43,7 +41,7 @@ class ProblemClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment.value}/", "problems-v2/problem-info"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "problems-v2/problem-info"),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
@@ -64,7 +62,7 @@ class ProblemClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"problems-v2/problem-info/{problem_id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"problems-v2/problem-info/{problem_id}"),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
@@ -88,7 +86,8 @@ class ProblemClient:
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(
-                f"{self._environment.value}/", f"problems-v2/problem-info/{problem_id}/version/{problem_version}"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"problems-v2/problem-info/{problem_id}/version/{problem_version}",
             ),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
@@ -103,8 +102,7 @@ class ProblemClient:
 
 
 class AsyncProblemClient:
-    def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PROD, client_wrapper: AsyncClientWrapper):
-        self._environment = environment
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     async def get_lightweight_problems(self) -> typing.List[LightweightProblemInfoV2]:
@@ -113,7 +111,7 @@ class AsyncProblemClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment.value}/", "problems-v2/lightweight-problem-info"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "problems-v2/lightweight-problem-info"),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
@@ -131,7 +129,7 @@ class AsyncProblemClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment.value}/", "problems-v2/problem-info"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "problems-v2/problem-info"),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
@@ -152,7 +150,7 @@ class AsyncProblemClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"problems-v2/problem-info/{problem_id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"problems-v2/problem-info/{problem_id}"),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
@@ -176,7 +174,8 @@ class AsyncProblemClient:
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(
-                f"{self._environment.value}/", f"problems-v2/problem-info/{problem_id}/version/{problem_version}"
+                f"{self._client_wrapper.get_base_url()}/",
+                f"problems-v2/problem-info/{problem_id}/version/{problem_version}",
             ),
             headers=self._client_wrapper.get_headers(),
             timeout=None,

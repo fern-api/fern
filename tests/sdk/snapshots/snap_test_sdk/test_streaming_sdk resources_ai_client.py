@@ -17,8 +17,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 
 class AiClient:
-    def __init__(self, *, environment: str, client_wrapper: SyncClientWrapper):
-        self._environment = environment
+    def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     def generate_stream(self, *, num_events: int) -> typing.Iterator[StreamResponse]:
@@ -28,7 +27,7 @@ class AiClient:
         """
         with self._client_wrapper.httpx_client.stream(
             "POST",
-            urllib.parse.urljoin(f"{self._environment}/", "generate-stream"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "generate-stream"),
             json=jsonable_encoder({"num_events": num_events}),
             headers=self._client_wrapper.get_headers(),
             timeout=60,
@@ -48,8 +47,7 @@ class AiClient:
 
 
 class AsyncAiClient:
-    def __init__(self, *, environment: str, client_wrapper: AsyncClientWrapper):
-        self._environment = environment
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     async def generate_stream(self, *, num_events: int) -> typing.AsyncIterator[StreamResponse]:
@@ -59,7 +57,7 @@ class AsyncAiClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             "POST",
-            urllib.parse.urljoin(f"{self._environment}/", "generate-stream"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "generate-stream"),
             json=jsonable_encoder({"num_events": num_events}),
             headers=self._client_wrapper.get_headers(),
             timeout=60,

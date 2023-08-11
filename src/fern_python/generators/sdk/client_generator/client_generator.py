@@ -11,10 +11,6 @@ from fern_python.generators.sdk.client_generator.endpoint_response_code_writer i
 )
 
 from ..context.sdk_generator_context import SdkGeneratorContext
-from ..environment_generators import (
-    MultipleBaseUrlsEnvironmentGenerator,
-    SingleBaseUrlEnvironmentGenerator,
-)
 from .constants import DEFAULT_BODY_PARAMETER_VALUE
 from .endpoint_function_generator import EndpointFunctionGenerator
 
@@ -38,9 +34,6 @@ HTTPX_PRIMITIVE_DATA_TYPES = set(
 
 
 class ClientGenerator:
-    ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME = "environment"
-    ENVIRONMENT_MEMBER_NAME = "_environment"
-
     RESPONSE_VARIABLE = EndpointResponseCodeWriter.RESPONSE_VARIABLE
     RESPONSE_JSON_VARIABLE = EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE
 
@@ -105,7 +98,6 @@ class ClientGenerator:
                     endpoint=endpoint,
                     is_async=is_async,
                     client_wrapper_member_name=self._get_client_wrapper_member_name(),
-                    environment_member_name=ClientGenerator.ENVIRONMENT_MEMBER_NAME,
                 )
                 generated_endpoint_function = endpoint_function_generator.generate()
                 class_declaration.add_method(generated_endpoint_function.function)
@@ -119,29 +111,6 @@ class ClientGenerator:
 
     def _get_constructor_parameters(self, *, is_async: bool) -> List[ConstructorParameter]:
         parameters: List[ConstructorParameter] = []
-
-        parameters.append(
-            ConstructorParameter(
-                constructor_parameter_name=ClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
-                private_member_name=ClientGenerator.ENVIRONMENT_MEMBER_NAME,
-                type_hint=AST.TypeHint(self._context.get_reference_to_environments_class())
-                if self._environment_is_enum()
-                else AST.TypeHint.str_(),
-                initializer=AST.Expression(
-                    self._context.ir.environments.environments.visit(
-                        single_base_url=lambda single_base_url_environments: SingleBaseUrlEnvironmentGenerator(
-                            context=self._context, environments=single_base_url_environments
-                        ).get_reference_to_default_environment(),
-                        multiple_base_urls=lambda multiple_base_urls_environments: MultipleBaseUrlsEnvironmentGenerator(
-                            context=self._context, environments=multiple_base_urls_environments
-                        ).get_reference_to_default_environment(),
-                    )
-                )
-                if self._context.ir.environments is not None
-                and self._context.ir.environments.default_environment is not None
-                else None,
-            )
-        )
 
         parameters.append(
             ConstructorParameter(

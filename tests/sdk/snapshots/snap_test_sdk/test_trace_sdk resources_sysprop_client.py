@@ -8,13 +8,11 @@ import pydantic
 
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ...environment import FernIrEnvironment
 from ..commons.types.language import Language
 
 
 class SyspropClient:
-    def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PROD, client_wrapper: SyncClientWrapper):
-        self._environment = environment
+    def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     def set_num_warm_instances(self, language: Language, num_warm_instances: int) -> None:
@@ -27,7 +25,7 @@ class SyspropClient:
         _response = self._client_wrapper.httpx_client.request(
             "PUT",
             urllib.parse.urljoin(
-                f"{self._environment.value}/", f"sysprop/num-warm-instances/{language}/{num_warm_instances}"
+                f"{self._client_wrapper.get_base_url()}/", f"sysprop/num-warm-instances/{language}/{num_warm_instances}"
             ),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
@@ -43,7 +41,7 @@ class SyspropClient:
     def get_num_warm_instances(self) -> typing.Dict[Language, int]:
         _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment.value}/", "sysprop/num-warm-instances"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "sysprop/num-warm-instances"),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
@@ -57,8 +55,7 @@ class SyspropClient:
 
 
 class AsyncSyspropClient:
-    def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PROD, client_wrapper: AsyncClientWrapper):
-        self._environment = environment
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     async def set_num_warm_instances(self, language: Language, num_warm_instances: int) -> None:
@@ -71,7 +68,7 @@ class AsyncSyspropClient:
         _response = await self._client_wrapper.httpx_client.request(
             "PUT",
             urllib.parse.urljoin(
-                f"{self._environment.value}/", f"sysprop/num-warm-instances/{language}/{num_warm_instances}"
+                f"{self._client_wrapper.get_base_url()}/", f"sysprop/num-warm-instances/{language}/{num_warm_instances}"
             ),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
@@ -87,7 +84,7 @@ class AsyncSyspropClient:
     async def get_num_warm_instances(self) -> typing.Dict[Language, int]:
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment.value}/", "sysprop/num-warm-instances"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "sysprop/num-warm-instances"),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )

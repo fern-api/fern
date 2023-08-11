@@ -12,7 +12,6 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.datetime_utils import serialize_datetime
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_dict import remove_none_from_dict
-from ...environment import FernIrEnvironment
 from .errors.playlist_id_not_found_error import PlaylistIdNotFoundError
 from .errors.unauthorized_error import UnauthorizedError
 from .types.playlist import Playlist
@@ -26,8 +25,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 
 class PlaylistClient:
-    def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PROD, client_wrapper: SyncClientWrapper):
-        self._environment = environment
+    def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     def create_playlist(
@@ -52,7 +50,7 @@ class PlaylistClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/create"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/create"),
             params=remove_none_from_dict(
                 {
                     "datetime": serialize_datetime(datetime),
@@ -102,7 +100,7 @@ class PlaylistClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/all"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/all"),
             params=remove_none_from_dict(
                 {
                     "limit": limit,
@@ -134,7 +132,9 @@ class PlaylistClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
+            ),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
@@ -168,7 +168,9 @@ class PlaylistClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "PUT",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
+            ),
             json=jsonable_encoder(request),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
@@ -197,7 +199,9 @@ class PlaylistClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
+            ),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
@@ -211,8 +215,7 @@ class PlaylistClient:
 
 
 class AsyncPlaylistClient:
-    def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PROD, client_wrapper: AsyncClientWrapper):
-        self._environment = environment
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     async def create_playlist(
@@ -237,7 +240,7 @@ class AsyncPlaylistClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/create"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/create"),
             params=remove_none_from_dict(
                 {
                     "datetime": serialize_datetime(datetime),
@@ -287,7 +290,7 @@ class AsyncPlaylistClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/all"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/all"),
             params=remove_none_from_dict(
                 {
                     "limit": limit,
@@ -319,7 +322,9 @@ class AsyncPlaylistClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
+            ),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
@@ -353,7 +358,9 @@ class AsyncPlaylistClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "PUT",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
+            ),
             json=jsonable_encoder(request),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
@@ -382,7 +389,9 @@ class AsyncPlaylistClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"v2/playlist/{service_param}/{playlist_id}"),
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
+            ),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )

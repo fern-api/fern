@@ -7,7 +7,6 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
-from ...environment import FernIrEnvironment
 from ..submission.types.submission_id import SubmissionId
 from ..submission.types.test_case_result_with_stdout import TestCaseResultWithStdout
 from ..submission.types.test_submission_status import TestSubmissionStatus
@@ -24,8 +23,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 
 class AdminClient:
-    def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PROD, client_wrapper: SyncClientWrapper):
-        self._environment = environment
+    def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     def update_test_submission_status(self, submission_id: SubmissionId, *, request: TestSubmissionStatus) -> None:
@@ -37,7 +35,9 @@ class AdminClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"admin/store-test-submission-status/{submission_id}"),
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"admin/store-test-submission-status/{submission_id}"
+            ),
             json=jsonable_encoder(request),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
@@ -60,7 +60,7 @@ class AdminClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._environment.value}/", f"admin/store-test-submission-status-v2/{submission_id}"
+                f"{self._client_wrapper.get_base_url()}/", f"admin/store-test-submission-status-v2/{submission_id}"
             ),
             json=jsonable_encoder(request),
             headers=self._client_wrapper.get_headers(),
@@ -86,7 +86,7 @@ class AdminClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._environment.value}/", f"admin/store-workspace-submission-status/{submission_id}"
+                f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-submission-status/{submission_id}"
             ),
             json=jsonable_encoder(request),
             headers=self._client_wrapper.get_headers(),
@@ -112,7 +112,7 @@ class AdminClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._environment.value}/", f"admin/store-workspace-submission-status-v2/{submission_id}"
+                f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-submission-status-v2/{submission_id}"
             ),
             json=jsonable_encoder(request),
             headers=self._client_wrapper.get_headers(),
@@ -147,7 +147,7 @@ class AdminClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._environment.value}/",
+                f"{self._client_wrapper.get_base_url()}/",
                 f"admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
             ),
             json=jsonable_encoder({"result": result, "traceResponses": trace_responses}),
@@ -176,7 +176,7 @@ class AdminClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._environment.value}/",
+                f"{self._client_wrapper.get_base_url()}/",
                 f"admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
             ),
             json=jsonable_encoder(request),
@@ -209,7 +209,7 @@ class AdminClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._environment.value}/", f"admin/store-workspace-trace/submission/{submission_id}"
+                f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-trace/submission/{submission_id}"
             ),
             json=jsonable_encoder({"workspaceRunDetails": workspace_run_details, "traceResponses": trace_responses}),
             headers=self._client_wrapper.get_headers(),
@@ -233,7 +233,7 @@ class AdminClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._environment.value}/", f"admin/store-workspace-trace-v2/submission/{submission_id}"
+                f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-trace-v2/submission/{submission_id}"
             ),
             json=jsonable_encoder(request),
             headers=self._client_wrapper.get_headers(),
@@ -249,8 +249,7 @@ class AdminClient:
 
 
 class AsyncAdminClient:
-    def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PROD, client_wrapper: AsyncClientWrapper):
-        self._environment = environment
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     async def update_test_submission_status(
@@ -264,7 +263,9 @@ class AsyncAdminClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"admin/store-test-submission-status/{submission_id}"),
+            urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", f"admin/store-test-submission-status/{submission_id}"
+            ),
             json=jsonable_encoder(request),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
@@ -287,7 +288,7 @@ class AsyncAdminClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._environment.value}/", f"admin/store-test-submission-status-v2/{submission_id}"
+                f"{self._client_wrapper.get_base_url()}/", f"admin/store-test-submission-status-v2/{submission_id}"
             ),
             json=jsonable_encoder(request),
             headers=self._client_wrapper.get_headers(),
@@ -313,7 +314,7 @@ class AsyncAdminClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._environment.value}/", f"admin/store-workspace-submission-status/{submission_id}"
+                f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-submission-status/{submission_id}"
             ),
             json=jsonable_encoder(request),
             headers=self._client_wrapper.get_headers(),
@@ -339,7 +340,7 @@ class AsyncAdminClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._environment.value}/", f"admin/store-workspace-submission-status-v2/{submission_id}"
+                f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-submission-status-v2/{submission_id}"
             ),
             json=jsonable_encoder(request),
             headers=self._client_wrapper.get_headers(),
@@ -374,7 +375,7 @@ class AsyncAdminClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._environment.value}/",
+                f"{self._client_wrapper.get_base_url()}/",
                 f"admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
             ),
             json=jsonable_encoder({"result": result, "traceResponses": trace_responses}),
@@ -403,7 +404,7 @@ class AsyncAdminClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._environment.value}/",
+                f"{self._client_wrapper.get_base_url()}/",
                 f"admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
             ),
             json=jsonable_encoder(request),
@@ -436,7 +437,7 @@ class AsyncAdminClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._environment.value}/", f"admin/store-workspace-trace/submission/{submission_id}"
+                f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-trace/submission/{submission_id}"
             ),
             json=jsonable_encoder({"workspaceRunDetails": workspace_run_details, "traceResponses": trace_responses}),
             headers=self._client_wrapper.get_headers(),
@@ -462,7 +463,7 @@ class AsyncAdminClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
-                f"{self._environment.value}/", f"admin/store-workspace-trace-v2/submission/{submission_id}"
+                f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-trace-v2/submission/{submission_id}"
             ),
             json=jsonable_encoder(request),
             headers=self._client_wrapper.get_headers(),

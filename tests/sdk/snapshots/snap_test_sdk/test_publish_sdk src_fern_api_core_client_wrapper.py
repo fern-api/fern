@@ -6,8 +6,9 @@ import httpx
 
 
 class BaseClientWrapper:
-    def __init__(self, *, api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None):
+    def __init__(self, *, api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None, base_url: str):
         self._api_key = api_key
+        self._base_url = base_url
 
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
@@ -26,15 +27,19 @@ class BaseClientWrapper:
         else:
             return self._api_key()
 
+    def get_base_url(self) -> str:
+        return self._base_url
+
 
 class SyncClientWrapper(BaseClientWrapper):
     def __init__(
         self,
         *,
         api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        base_url: str,
         httpx_client: httpx.Client,
     ):
-        super().__init__(api_key=api_key)
+        super().__init__(api_key=api_key, base_url=base_url)
         self.httpx_client = httpx_client
 
 
@@ -43,7 +48,8 @@ class AsyncClientWrapper(BaseClientWrapper):
         self,
         *,
         api_key: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        base_url: str,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(api_key=api_key)
+        super().__init__(api_key=api_key, base_url=base_url)
         self.httpx_client = httpx_client

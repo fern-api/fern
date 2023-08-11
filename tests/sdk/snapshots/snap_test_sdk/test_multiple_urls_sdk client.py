@@ -15,19 +15,19 @@ class FernIr:
     def __init__(
         self, *, environment: FernIrEnvironment = FernIrEnvironment.PRODUCTION, timeout: typing.Optional[float] = 60
     ):
-        self._environment = environment
-        self._client_wrapper = SyncClientWrapper(httpx_client=httpx.Client(timeout=timeout))
-        self.a = AClient(environment=environment, client_wrapper=self._client_wrapper)
-        self.b = BClient(environment=environment, client_wrapper=self._client_wrapper)
-        self.commons = CommonsClient(environment=environment, client_wrapper=self._client_wrapper)
+        self._client_wrapper = SyncClientWrapper(environment=environment, httpx_client=httpx.Client(timeout=timeout))
+        self.a = AClient(client_wrapper=self._client_wrapper)
+        self.b = BClient(client_wrapper=self._client_wrapper)
+        self.commons = CommonsClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncFernIr:
     def __init__(
         self, *, environment: FernIrEnvironment = FernIrEnvironment.PRODUCTION, timeout: typing.Optional[float] = 60
     ):
-        self._environment = environment
-        self._client_wrapper = AsyncClientWrapper(httpx_client=httpx.AsyncClient(timeout=timeout))
-        self.a = AsyncAClient(environment=environment, client_wrapper=self._client_wrapper)
-        self.b = AsyncBClient(environment=environment, client_wrapper=self._client_wrapper)
-        self.commons = AsyncCommonsClient(environment=environment, client_wrapper=self._client_wrapper)
+        self._client_wrapper = AsyncClientWrapper(
+            environment=environment, httpx_client=httpx.AsyncClient(timeout=timeout)
+        )
+        self.a = AsyncAClient(client_wrapper=self._client_wrapper)
+        self.b = AsyncBClient(client_wrapper=self._client_wrapper)
+        self.commons = AsyncCommonsClient(client_wrapper=self._client_wrapper)

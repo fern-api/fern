@@ -20,8 +20,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 
 class MovieClient:
-    def __init__(self, *, environment: str, client_wrapper: SyncClientWrapper):
-        self._environment = environment
+    def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     def get_movie(self, movie_id: MovieId) -> Movie:
@@ -31,7 +30,7 @@ class MovieClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"movie/movie/{movie_id}"),
             headers=self._client_wrapper.get_headers(),
             timeout=5,
         )
@@ -48,7 +47,7 @@ class MovieClient:
     def get_all_movies(self) -> typing.List[Movie]:
         _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment}/", "movie/all-movies"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "movie/all-movies"),
             headers=self._client_wrapper.get_headers(),
             timeout=5,
         )
@@ -67,7 +66,7 @@ class MovieClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment}/", "movie/movie"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "movie/movie"),
             json=jsonable_encoder(request),
             headers=self._client_wrapper.get_headers(),
             timeout=5,
@@ -91,7 +90,7 @@ class MovieClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
-            urllib.parse.urljoin(f"{self._environment}/", f"movie/{movie_id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"movie/{movie_id}"),
             headers=self._client_wrapper.get_headers(),
             timeout=5,
         )
@@ -107,8 +106,7 @@ class MovieClient:
 
 
 class AsyncMovieClient:
-    def __init__(self, *, environment: str, client_wrapper: AsyncClientWrapper):
-        self._environment = environment
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     async def get_movie(self, movie_id: MovieId) -> Movie:
@@ -118,7 +116,7 @@ class AsyncMovieClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"movie/movie/{movie_id}"),
             headers=self._client_wrapper.get_headers(),
             timeout=5,
         )
@@ -135,7 +133,7 @@ class AsyncMovieClient:
     async def get_all_movies(self) -> typing.List[Movie]:
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment}/", "movie/all-movies"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "movie/all-movies"),
             headers=self._client_wrapper.get_headers(),
             timeout=5,
         )
@@ -154,7 +152,7 @@ class AsyncMovieClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment}/", "movie/movie"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "movie/movie"),
             json=jsonable_encoder(request),
             headers=self._client_wrapper.get_headers(),
             timeout=5,
@@ -178,7 +176,7 @@ class AsyncMovieClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
-            urllib.parse.urljoin(f"{self._environment}/", f"movie/{movie_id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"movie/{movie_id}"),
             headers=self._client_wrapper.get_headers(),
             timeout=5,
         )

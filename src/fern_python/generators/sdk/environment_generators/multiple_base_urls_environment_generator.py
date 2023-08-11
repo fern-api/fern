@@ -32,7 +32,7 @@ class MultipleBaseUrlsEnvironmentGenerator:
             signature=AST.FunctionSignature(
                 named_parameters=[
                     AST.NamedFunctionParameter(
-                        name=self._get_base_url_property_name(base_url),
+                        name=get_base_url_property_name(base_url),
                         type_hint=AST.TypeHint.str_(),
                     )
                     for base_url in self._environments.base_urls
@@ -67,21 +67,12 @@ class MultipleBaseUrlsEnvironmentGenerator:
         def write(writer: AST.NodeWriter) -> None:
             writer.write_node(reference_to_environments)
             writer.write(".")
-            writer.write(self._get_base_url_property_name(self._get_base_url(base_url_id)))
+            writer.write(get_base_url_property_name(get_base_url(self._environments, base_url_id)))
 
         return AST.Expression(AST.CodeWriter(write))
 
     def _get_class_var_name(self, environment: ir_types.MultipleBaseUrlsEnvironment) -> str:
         return environment.name.screaming_snake_case.safe_name
-
-    def _get_base_url_property_name(self, base_url: ir_types.EnvironmentBaseUrlWithId) -> str:
-        return base_url.name.snake_case.safe_name
-
-    def _get_base_url(self, base_url_id: ir_types.EnvironmentBaseUrlId) -> ir_types.EnvironmentBaseUrlWithId:
-        for base_url in self._environments.base_urls:
-            if base_url.id == base_url_id:
-                return base_url
-        raise RuntimeError("Base URL does not exist: " + base_url_id.get_as_str())
 
     def _get_environment(
         self,
@@ -96,7 +87,7 @@ class MultipleBaseUrlsEnvironmentGenerator:
 
     def _write_constructor_body(self, writer: AST.NodeWriter) -> None:
         for base_url in self._environments.base_urls:
-            property_name = self._get_base_url_property_name(base_url)
+            property_name = get_base_url_property_name(base_url)
             writer.write_line(f"self.{property_name} = {property_name}")
 
     def _write_bottom_statements(self, writer: AST.NodeWriter) -> None:
@@ -109,7 +100,7 @@ class MultipleBaseUrlsEnvironmentGenerator:
                     class_=AST.ClassReference(qualified_name_excluding_import=(class_name,)),
                     kwargs=[
                         (
-                            self._get_base_url_property_name(base_url),
+                            get_base_url_property_name(base_url),
                             AST.Expression(f'"{environment.urls[base_url.id].get_as_str()}"'),
                         )
                         for base_url in self._environments.base_urls
@@ -117,3 +108,16 @@ class MultipleBaseUrlsEnvironmentGenerator:
                 )
             )
             writer.write_newline_if_last_line_not()
+
+
+def get_base_url_property_name(base_url: ir_types.EnvironmentBaseUrlWithId) -> str:
+    return base_url.name.snake_case.safe_name
+
+
+def get_base_url(
+    environments: ir_types.MultipleBaseUrlsEnvironments, base_url_id: ir_types.EnvironmentBaseUrlId
+) -> ir_types.EnvironmentBaseUrlWithId:
+    for base_url in environments.base_urls:
+        if base_url.id == base_url_id:
+            return base_url
+    raise RuntimeError("Base URL does not exist: " + base_url_id.get_as_str())

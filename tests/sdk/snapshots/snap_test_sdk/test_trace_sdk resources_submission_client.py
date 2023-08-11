@@ -8,15 +8,13 @@ import pydantic
 
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ...environment import FernIrEnvironment
 from ..commons.types.language import Language
 from .types.execution_session_response import ExecutionSessionResponse
 from .types.get_execution_session_state_response import GetExecutionSessionStateResponse
 
 
 class SubmissionClient:
-    def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PROD, client_wrapper: SyncClientWrapper):
-        self._environment = environment
+    def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     def create_execution_session(self, language: Language) -> ExecutionSessionResponse:
@@ -28,7 +26,7 @@ class SubmissionClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/create-session/{language}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"sessions/create-session/{language}"),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
@@ -49,7 +47,7 @@ class SubmissionClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/{session_id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"sessions/{session_id}"),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
@@ -70,7 +68,7 @@ class SubmissionClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/stop/{session_id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"sessions/stop/{session_id}"),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
@@ -85,7 +83,7 @@ class SubmissionClient:
     def get_execution_sessions_state(self) -> GetExecutionSessionStateResponse:
         _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment.value}/", "sessions/execution-sessions-state"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "sessions/execution-sessions-state"),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
@@ -99,8 +97,7 @@ class SubmissionClient:
 
 
 class AsyncSubmissionClient:
-    def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PROD, client_wrapper: AsyncClientWrapper):
-        self._environment = environment
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     async def create_execution_session(self, language: Language) -> ExecutionSessionResponse:
@@ -112,7 +109,7 @@ class AsyncSubmissionClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/create-session/{language}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"sessions/create-session/{language}"),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
@@ -133,7 +130,7 @@ class AsyncSubmissionClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/{session_id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"sessions/{session_id}"),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
@@ -154,7 +151,7 @@ class AsyncSubmissionClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"sessions/stop/{session_id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"sessions/stop/{session_id}"),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
@@ -169,7 +166,7 @@ class AsyncSubmissionClient:
     async def get_execution_sessions_state(self) -> GetExecutionSessionStateResponse:
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment.value}/", "sessions/execution-sessions-state"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "sessions/execution-sessions-state"),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )

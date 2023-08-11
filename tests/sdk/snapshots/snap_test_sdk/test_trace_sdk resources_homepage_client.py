@@ -9,7 +9,6 @@ import pydantic
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
-from ...environment import FernIrEnvironment
 from ..commons.types.problem_id import ProblemId
 
 # this is used as the default value for optional parameters
@@ -17,14 +16,13 @@ OMIT = typing.cast(typing.Any, ...)
 
 
 class HomepageClient:
-    def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PROD, client_wrapper: SyncClientWrapper):
-        self._environment = environment
+    def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     def get_homepage_problems(self) -> typing.List[ProblemId]:
         _response = self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment.value}/", "homepage-problems"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "homepage-problems"),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
@@ -43,7 +41,7 @@ class HomepageClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment.value}/", "homepage-problems"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "homepage-problems"),
             json=jsonable_encoder(request),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
@@ -58,14 +56,13 @@ class HomepageClient:
 
 
 class AsyncHomepageClient:
-    def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PROD, client_wrapper: AsyncClientWrapper):
-        self._environment = environment
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     async def get_homepage_problems(self) -> typing.List[ProblemId]:
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
-            urllib.parse.urljoin(f"{self._environment.value}/", "homepage-problems"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "homepage-problems"),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
@@ -84,7 +81,7 @@ class AsyncHomepageClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment.value}/", "homepage-problems"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "homepage-problems"),
             json=jsonable_encoder(request),
             headers=self._client_wrapper.get_headers(),
             timeout=None,

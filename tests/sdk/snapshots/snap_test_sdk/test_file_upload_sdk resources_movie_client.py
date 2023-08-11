@@ -14,8 +14,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 
 class MovieClient:
-    def __init__(self, *, environment: str, client_wrapper: SyncClientWrapper):
-        self._environment = environment
+    def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     def upload_movie(self, movie_id: MovieId, *, name: str, contents: typing.IO) -> None:
@@ -29,7 +28,7 @@ class MovieClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"movie/movie/{movie_id}"),
             data=jsonable_encoder({"name": name}),
             files={"contents": contents},
             headers=self._client_wrapper.get_headers(),
@@ -50,7 +49,7 @@ class MovieClient:
         """
         with self._client_wrapper.httpx_client.stream(
             "GET",
-            urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"movie/movie/{movie_id}"),
             headers=self._client_wrapper.get_headers(),
             timeout=60,
         ) as _response:
@@ -67,8 +66,7 @@ class MovieClient:
 
 
 class AsyncMovieClient:
-    def __init__(self, *, environment: str, client_wrapper: AsyncClientWrapper):
-        self._environment = environment
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     async def upload_movie(self, movie_id: MovieId, *, name: str, contents: typing.IO) -> None:
@@ -82,7 +80,7 @@ class AsyncMovieClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"movie/movie/{movie_id}"),
             data=jsonable_encoder({"name": name}),
             files={"contents": contents},
             headers=self._client_wrapper.get_headers(),
@@ -103,7 +101,7 @@ class AsyncMovieClient:
         """
         async with self._client_wrapper.httpx_client.stream(
             "GET",
-            urllib.parse.urljoin(f"{self._environment}/", f"movie/movie/{movie_id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"movie/movie/{movie_id}"),
             headers=self._client_wrapper.get_headers(),
             timeout=60,
         ) as _response:

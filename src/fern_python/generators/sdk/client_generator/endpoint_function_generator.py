@@ -10,9 +10,12 @@ from fern_python.generators.sdk.client_generator.endpoint_response_code_writer i
     EndpointResponseCodeWriter,
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
+from fern_python.generators.sdk.environment_generators.multiple_base_urls_environment_generator import (
+    get_base_url,
+    get_base_url_property_name,
+)
 
 from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
-from ..environment_generators import MultipleBaseUrlsEnvironmentGenerator
 from .request_body_parameters import (
     AbstractRequestBodyParameters,
     FileUploadRequestBodyParameters,
@@ -44,7 +47,6 @@ class EndpointFunctionGenerator:
         service: ir_types.HttpService,
         endpoint: ir_types.HttpEndpoint,
         client_wrapper_member_name: str,
-        environment_member_name: str,
         is_async: bool,
     ):
         self._context = context
@@ -52,7 +54,6 @@ class EndpointFunctionGenerator:
         self._endpoint = endpoint
         self._is_async = is_async
         self._client_wrapper_member_name = client_wrapper_member_name
-        self._environment_member_name = environment_member_name
 
     def generate(self) -> GeneratedEndpointFunction:
         request_body_parameters: Optional[AbstractRequestBodyParameters] = (
@@ -434,18 +435,18 @@ class EndpointFunctionGenerator:
         if self._context.ir.environments is not None:
             environments_as_union = self._context.ir.environments.environments.get_as_union()
             if environments_as_union.type == "multipleBaseUrls":
-                if endpoint.base_url is None:
+                base_url = endpoint.base_url
+                if base_url is None:
                     raise RuntimeError("Service is missing base_url")
-                return MultipleBaseUrlsEnvironmentGenerator(
-                    context=self._context, environments=environments_as_union
-                ).get_reference_to_base_url(
-                    reference_to_environments=AST.Expression(f"self.{self._environment_member_name}"),
-                    base_url_id=endpoint.base_url,
+                url_reference = get_base_url_property_name(
+                    get_base_url(environments=environments_as_union, base_url_id=base_url)
                 )
-        if self._environment_is_enum():
-            return AST.Expression(f"self.{self._environment_member_name}.value")
-        else:
-            return AST.Expression(f"self.{self._environment_member_name}")
+                return AST.Expression(
+                    f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.GET_ENVIRONMENT_METHOD_NAME}().{url_reference}"
+                )
+        return AST.Expression(
+            f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.GET_BASE_URL_METHOD_NAME}()"
+        )
 
     def _get_headers_for_endpoint(
         self,

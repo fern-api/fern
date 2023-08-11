@@ -20,43 +20,53 @@ class FernIr:
     def __init__(
         self,
         *,
+        base_url: typing.Optional[str] = None,
         environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         timeout: typing.Optional[float] = None
     ):
-        self._environment = environment
+        if base_url is None and environment is None:
+            raise Exception("Please pass in either base_url or environment to construct the client")
         self._client_wrapper = SyncClientWrapper(
-            x_random_header=x_random_header, token=token, httpx_client=httpx.Client(timeout=timeout)
+            base_url=base_url if base_url is not None else environment.value,
+            x_random_header=x_random_header,
+            token=token,
+            httpx_client=httpx.Client(timeout=timeout),
         )
-        self.v_2 = V2Client(environment=environment, client_wrapper=self._client_wrapper)
-        self.admin = AdminClient(environment=environment, client_wrapper=self._client_wrapper)
-        self.homepage = HomepageClient(environment=environment, client_wrapper=self._client_wrapper)
-        self.migration = MigrationClient(environment=environment, client_wrapper=self._client_wrapper)
-        self.playlist = PlaylistClient(environment=environment, client_wrapper=self._client_wrapper)
-        self.problem = ProblemClient(environment=environment, client_wrapper=self._client_wrapper)
-        self.submission = SubmissionClient(environment=environment, client_wrapper=self._client_wrapper)
-        self.sysprop = SyspropClient(environment=environment, client_wrapper=self._client_wrapper)
+        self.v_2 = V2Client(client_wrapper=self._client_wrapper)
+        self.admin = AdminClient(client_wrapper=self._client_wrapper)
+        self.homepage = HomepageClient(client_wrapper=self._client_wrapper)
+        self.migration = MigrationClient(client_wrapper=self._client_wrapper)
+        self.playlist = PlaylistClient(client_wrapper=self._client_wrapper)
+        self.problem = ProblemClient(client_wrapper=self._client_wrapper)
+        self.submission = SubmissionClient(client_wrapper=self._client_wrapper)
+        self.sysprop = SyspropClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncFernIr:
     def __init__(
         self,
         *,
+        base_url: typing.Optional[str] = None,
         environment: FernIrEnvironment = FernIrEnvironment.PROD,
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         timeout: typing.Optional[float] = None
     ):
-        self._environment = environment
+        if base_url is None and environment is None:
+            raise Exception("Please pass in either base_url or environment to construct the client")
         self._client_wrapper = AsyncClientWrapper(
-            x_random_header=x_random_header, token=token, httpx_client=httpx.AsyncClient(timeout=timeout)
+            base_url=base_url if base_url is not None else environment.value,
+            x_random_header=x_random_header,
+            token=token,
+            httpx_client=httpx.AsyncClient(timeout=timeout),
         )
-        self.v_2 = AsyncV2Client(environment=environment, client_wrapper=self._client_wrapper)
-        self.admin = AsyncAdminClient(environment=environment, client_wrapper=self._client_wrapper)
-        self.homepage = AsyncHomepageClient(environment=environment, client_wrapper=self._client_wrapper)
-        self.migration = AsyncMigrationClient(environment=environment, client_wrapper=self._client_wrapper)
-        self.playlist = AsyncPlaylistClient(environment=environment, client_wrapper=self._client_wrapper)
-        self.problem = AsyncProblemClient(environment=environment, client_wrapper=self._client_wrapper)
-        self.submission = AsyncSubmissionClient(environment=environment, client_wrapper=self._client_wrapper)
-        self.sysprop = AsyncSyspropClient(environment=environment, client_wrapper=self._client_wrapper)
+        self.v_2 = AsyncV2Client(client_wrapper=self._client_wrapper)
+        self.admin = AsyncAdminClient(client_wrapper=self._client_wrapper)
+        self.homepage = AsyncHomepageClient(client_wrapper=self._client_wrapper)
+        self.migration = AsyncMigrationClient(client_wrapper=self._client_wrapper)
+        self.playlist = AsyncPlaylistClient(client_wrapper=self._client_wrapper)
+        self.problem = AsyncProblemClient(client_wrapper=self._client_wrapper)
+        self.submission = AsyncSubmissionClient(client_wrapper=self._client_wrapper)
+        self.sysprop = AsyncSyspropClient(client_wrapper=self._client_wrapper)

@@ -9,7 +9,6 @@ import pydantic
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
-from ...environment import FernIrEnvironment
 from ..commons.types.problem_id import ProblemId
 from ..commons.types.variable_type import VariableType
 from .types.create_problem_request import CreateProblemRequest
@@ -23,8 +22,7 @@ OMIT = typing.cast(typing.Any, ...)
 
 
 class ProblemClient:
-    def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PROD, client_wrapper: SyncClientWrapper):
-        self._environment = environment
+    def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     def create_problem(self, *, request: CreateProblemRequest) -> CreateProblemResponse:
@@ -36,7 +34,7 @@ class ProblemClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment.value}/", "problem-crud/create"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "problem-crud/create"),
             json=jsonable_encoder(request),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
@@ -60,7 +58,7 @@ class ProblemClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"problem-crud/update/{problem_id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"problem-crud/update/{problem_id}"),
             json=jsonable_encoder(request),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
@@ -82,7 +80,7 @@ class ProblemClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"problem-crud/delete/{problem_id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"problem-crud/delete/{problem_id}"),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
@@ -115,7 +113,7 @@ class ProblemClient:
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment.value}/", "problem-crud/default-starter-files"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "problem-crud/default-starter-files"),
             json=jsonable_encoder({"inputParams": input_params, "outputType": output_type, "methodName": method_name}),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
@@ -130,8 +128,7 @@ class ProblemClient:
 
 
 class AsyncProblemClient:
-    def __init__(self, *, environment: FernIrEnvironment = FernIrEnvironment.PROD, client_wrapper: AsyncClientWrapper):
-        self._environment = environment
+    def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
     async def create_problem(self, *, request: CreateProblemRequest) -> CreateProblemResponse:
@@ -143,7 +140,7 @@ class AsyncProblemClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment.value}/", "problem-crud/create"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "problem-crud/create"),
             json=jsonable_encoder(request),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
@@ -167,7 +164,7 @@ class AsyncProblemClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"problem-crud/update/{problem_id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"problem-crud/update/{problem_id}"),
             json=jsonable_encoder(request),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
@@ -189,7 +186,7 @@ class AsyncProblemClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
-            urllib.parse.urljoin(f"{self._environment.value}/", f"problem-crud/delete/{problem_id}"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"problem-crud/delete/{problem_id}"),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
         )
@@ -222,7 +219,7 @@ class AsyncProblemClient:
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
-            urllib.parse.urljoin(f"{self._environment.value}/", "problem-crud/default-starter-files"),
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "problem-crud/default-starter-files"),
             json=jsonable_encoder({"inputParams": input_params, "outputType": output_type, "methodName": method_name}),
             headers=self._client_wrapper.get_headers(),
             timeout=None,
