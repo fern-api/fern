@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { GeneratorName } from "@fern-api/generators-configuration";
+import { mapValues } from "lodash-es";
 import { IrVersions } from "../../ir-versions";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
 
@@ -48,47 +49,71 @@ export const V23_TO_V22_MIGRATION: IrMigration<
             v22Services[serviceId] = {
                 ...service,
                 endpoints: v22Endpoints,
+                headers: service.headers.map((header) => convertHeader(header)),
+                pathParameters: service.pathParameters.map((pathParameter) => convertPathParameter(pathParameter)),
             };
         }
         return {
             ...v23,
+            auth: {
+                ...v23.auth,
+                schemes: v23.auth.schemes.map((scheme) => convertAuthScheme(scheme)),
+            },
+            headers: v23.headers.map((header) => convertHeader(header)),
+            types: mapValues(v23.types, (type) => convertType(type)),
             services: v22Services,
+            errors: mapValues(v23.errors, (error) => convertError(error)),
+            subpackages: mapValues(v23.subpackages, (subpackage) => convertSubpackage(subpackage)),
+            pathParameters: v23.pathParameters.map((pathParameter) => convertPathParameter(pathParameter)),
+            variables: v23.variables.map((variable) => convertVariable(variable)),
         };
     },
 };
 
 function convertEndpoint(endpoint: IrVersions.V23.http.HttpEndpoint): IrVersions.V22.http.HttpEndpoint | undefined {
-    if (endpoint.requestBody == null) {
-        return {
-            ...endpoint,
-            requestBody: undefined,
-        };
-    }
-    switch (endpoint.requestBody.type) {
+    return {
+        ...endpoint,
+        headers: endpoint.headers.map((header) => convertHeader(header)),
+        pathParameters: endpoint.pathParameters.map((pathParameter) => convertPathParameter(pathParameter)),
+        allPathParameters: endpoint.allPathParameters.map((pathParameter) => convertPathParameter(pathParameter)),
+        queryParameters: endpoint.queryParameters.map((queryParameter) => convertQueryParameter(queryParameter)),
+        requestBody: endpoint.requestBody != null ? convertRequestBody(endpoint.requestBody) : undefined,
+        sdkRequest:
+            endpoint.sdkRequest != null
+                ? {
+                      requestParameterName: endpoint.sdkRequest.requestParameterName,
+                      shape: convertSdkRequestShape(endpoint.sdkRequest.shape),
+                  }
+                : undefined,
+        response: endpoint.response != null ? convertResponse(endpoint.response) : undefined,
+        examples: endpoint.examples.map((exampleEndpointCall) => convertExampleEndpointCall(exampleEndpointCall)),
+    };
+}
+
+function convertRequestBody(
+    requestBody: IrVersions.V23.http.HttpRequestBody
+): IrVersions.V22.http.HttpRequestBody | undefined {
+    switch (requestBody.type) {
         case "bytes":
-            return undefined;
+            throw new Error("TODO");
         case "fileUpload":
-            return {
-                ...endpoint,
-                requestBody: IrVersions.V22.http.HttpRequestBody.fileUpload({
-                    ...endpoint.requestBody,
-                }),
-            };
+            return IrVersions.V22.http.HttpRequestBody.fileUpload({
+                ...requestBody,
+                properties: requestBody.properties.map((property) => convertFileUploadRequestBodyProperty(property)),
+            });
         case "inlinedRequestBody":
-            return {
-                ...endpoint,
-                requestBody: IrVersions.V22.http.HttpRequestBody.inlinedRequestBody({
-                    ...endpoint.requestBody,
-                }),
-            };
+            return IrVersions.V22.http.HttpRequestBody.inlinedRequestBody({
+                ...requestBody,
+                properties: requestBody.properties.map((property) => convertInlinedRequestBodyProperty(property)),
+            });
         case "reference":
-            return {
-                ...endpoint,
-                requestBody: IrVersions.V22.http.HttpRequestBody.reference({
-                    ...endpoint.requestBody,
-                }),
-            };
+            return IrVersions.V22.http.HttpRequestBody.reference({
+                ...requestBody,
+                requestBodyType: convertTypeReference(requestBody.requestBodyType),
+            });
         default:
-            assertNever(endpoint.requestBody);
+            assertNever(requestBody);
     }
 }
+
+function convertHeader(header: IrVersions.V23.HttpHeader): IrVersions.V22.commons.HttpHeader {}

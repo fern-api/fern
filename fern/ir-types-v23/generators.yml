@@ -7,9 +7,10 @@ groups:
         config:
           mode: model
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.7.4-rc0-1-g301f53f3
+        version: 0.7.4-rc0-2-g3748ac22
         config:
           includeUtilsOnUnionMembers: true
+          noOptionalProperties: true
   sdks:
     generators:
       - name: fernapi/java-model
