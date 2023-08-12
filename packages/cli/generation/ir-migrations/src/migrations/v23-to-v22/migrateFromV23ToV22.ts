@@ -330,7 +330,7 @@ function convertContainerType(container: IrVersions.V23.ContainerType): IrVersio
         map: (mapType) =>
             IrVersions.V22.types.ContainerType.map({
                 keyType: convertTypeReference(mapType.keyType),
-                valueType: convertTypeReference(mapType.keyType),
+                valueType: convertTypeReference(mapType.valueType),
             }),
         literal: IrVersions.V22.types.ContainerType.literal,
         _other: () => {
