@@ -3,7 +3,7 @@ import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
-import { FIXTURE, runTests } from "./commands/test";
+import { FIXTURE, handleConcurrentTesting } from "./commands/test";
 import { TaskContextImpl } from "./TaskContextImpl";
 
 void tryRunCli();
@@ -70,7 +70,7 @@ function addTestCommand(cli: Argv, taskContext: TaskContext) {
                 }),
         async (argv) => {
             const parsedDockerImage = validateAndParseDockerImage(argv.docker);
-            await runTests({
+            await handleConcurrentTesting({
                 fixture: argv.fixture,
                 irVersion: argv.irVersion,
                 language: argv.language,

@@ -20,15 +20,48 @@ export const FIXTURE = {
     ERROR_PROPERTY: "error-property",
 } as const;
 
-export async function runTests({
+export const MAX_NUM_DOCKERS_RUNNING = 4;
+
+const numRunningDockers = 0;
+
+function createSemaphore(initialCount: number): {
+    acquire: () => Promise<void>,
+    release: () => void
+} {
+    let count = initialCount;
+    const waiting: (() => void)[] = [];
+
+    async function acquire(): Promise<void> {
+        if (count > 0) {
+        count--;
+        } else {
+        await new Promise<void>(resolve => waiting.push(resolve));
+        }
+    }
+
+    function release(): void {
+        count++;
+        const next = waiting.shift();
+        if (next) {
+        next();
+        }
+    }
+
+    return {
+        acquire,
+        release
+    };
+}
+  
+export async function handleConcurrentTesting({
     irVersion,
     language,
     fixture,
     docker,
     compileCmd,
     taskContext,
-    update
-}: {
+    update 
+} : {
     irVersion: string | undefined;
     language: GenerationLanguage;
     fixture: string | undefined;
@@ -36,11 +69,56 @@ export async function runTests({
     compileCmd: string;
     taskContext: TaskContext;
     update: boolean
-}): Promise<void> {
+}) : Promise<void> {
+    const semaphore = createSemaphore(MAX_NUM_DOCKERS_RUNNING); // Adjust the initial count as needed
+    const testCases: string[] = fixture != null ? [fixture] : Object.values(FIXTURE);
+    const tasks = [];
+    for (let i = 0; i < testCases.length; i++) {
+        tasks.push(runTest({
+            semaphore,
+            irVersion,
+            language,
+            testCases,
+            testCaseInd : i,
+            docker,
+            compileCmd,
+            taskContext,
+            update,
+        }));
+    }
 
-    const testCases = fixture != null ? [fixture] : Object.values(FIXTURE);
-
-    for (const testCase of testCases) {
+    await Promise.all(tasks);
+    taskContext.logger.info("All tasks completed");
+}
+  
+export async function runTest({
+    semaphore,
+    irVersion,
+    language,
+    testCases,
+    testCaseInd,
+    docker,
+    compileCmd,
+    taskContext,
+    update,
+}: {
+    semaphore: ReturnType<typeof createSemaphore>
+    irVersion: string | undefined;
+    language: GenerationLanguage;
+    testCases: string[];
+    testCaseInd: number;
+    docker: ParsedDockerName;
+    compileCmd: string;
+    taskContext: TaskContext;
+    update: boolean;
+}): Promise<void>
+{
+    await semaphore.acquire();
+    taskContext.logger.info("Num Dockers Running: ", String(numRunningDockers));
+    const testCase = testCases[testCaseInd];
+    if(testCase !== undefined) 
+    {
+        taskContext.logger.info("Test Case ", String(testCaseInd+1), "not undefined");
         if(update) 
         {
             await testWithWriteToDisk({
@@ -64,6 +142,7 @@ export async function runTests({
             });
         }
     }
+    semaphore.release();
 }
 
 const ALL_AUDIENCES: Audiences = { type: "all" };
@@ -115,7 +194,7 @@ async function testWithWriteToDisk({
             taskContext,
             irVersion,
         });
-        taskContext.logger.info(`Receinved compile command: ${compileCmd}`);
+        taskContext.logger.info(`Received compile command: ${compileCmd}`);
         await compileGeneratedCode({
             absolutePathToOutput,
             command: compileCmd,
@@ -173,7 +252,7 @@ async function testSnapshotDiffsInCI({
             taskContext,
             irVersion,
         });
-        taskContext.logger.info(`Receinved compile command: ${compileCmd}`);
+        taskContext.logger.info(`Received compile command: ${compileCmd}`);
         await compileGeneratedCode({
             absolutePathToOutput,
             command: compileCmd,

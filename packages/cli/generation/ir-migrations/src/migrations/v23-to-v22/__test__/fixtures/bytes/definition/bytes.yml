@@ -1,0 +1,8 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    upload:
+      method: POST
+      path: /upload
+      request: bytes
