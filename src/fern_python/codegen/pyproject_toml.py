@@ -82,7 +82,7 @@ packages = [
 
         def to_string(self) -> str:
             deps = ""
-            for dep in self.dependencies:
+            for dep in sorted(self.dependencies, key=lambda dep: dep.name):
                 compatiblity = dep.compatibility
                 # TODO(dsinghvi): assert all enum cases are visited
                 if compatiblity is DependencyCompatibility.EXACT:

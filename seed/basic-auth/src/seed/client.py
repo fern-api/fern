@@ -12,29 +12,27 @@ class SeedApi:
     def __init__(
         self,
         *,
-        environment: str,
+        base_url: str,
         username: typing.Union[str, typing.Callable[[], str]],
         password: typing.Union[str, typing.Callable[[], str]],
         timeout: typing.Optional[float] = 60
     ):
-        self._environment = environment
         self._client_wrapper = SyncClientWrapper(
-            username=username, password=password, httpx_client=httpx.Client(timeout=timeout)
+            base_url=base_url, username=username, password=password, httpx_client=httpx.Client(timeout=timeout)
         )
-        self.basic_auth = BasicAuthClient(environment=environment, client_wrapper=self._client_wrapper)
+        self.basic_auth = BasicAuthClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncSeedApi:
     def __init__(
         self,
         *,
-        environment: str,
+        base_url: str,
         username: typing.Union[str, typing.Callable[[], str]],
         password: typing.Union[str, typing.Callable[[], str]],
         timeout: typing.Optional[float] = 60
     ):
-        self._environment = environment
         self._client_wrapper = AsyncClientWrapper(
-            username=username, password=password, httpx_client=httpx.AsyncClient(timeout=timeout)
+            base_url=base_url, username=username, password=password, httpx_client=httpx.AsyncClient(timeout=timeout)
         )
-        self.basic_auth = AsyncBasicAuthClient(environment=environment, client_wrapper=self._client_wrapper)
+        self.basic_auth = AsyncBasicAuthClient(client_wrapper=self._client_wrapper)
