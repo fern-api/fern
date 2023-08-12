@@ -18,11 +18,13 @@ export const FIXTURE = {
     BASIC_AUTH: "basic-auth",
     CUSTOM_AUTH: "custom-auth",
     ERROR_PROPERTY: "error-property",
+    MULTI_URL_ENVIRONMENT: "multi-url-environment",
+    NO_ENVIRONMENT: "no-environment",
+    SINGLE_URL_ENVIRONMENT: "single-url-environment-default",
+    SINGLE_URL_ENVIRONMENT_NO_DEFAULT: "single-url-environment-no-default"
 } as const;
 
 export const MAX_NUM_DOCKERS_RUNNING = 4;
-
-const numRunningDockers = 0;
 
 function createSemaphore(initialCount: number): {
     acquire: () => Promise<void>,
@@ -46,7 +48,7 @@ function createSemaphore(initialCount: number): {
         next();
         }
     }
-
+    
     return {
         acquire,
         release
@@ -114,11 +116,9 @@ export async function runTest({
 }): Promise<void>
 {
     await semaphore.acquire();
-    taskContext.logger.info("Num Dockers Running: ", String(numRunningDockers));
     const testCase = testCases[testCaseInd];
     if(testCase !== undefined) 
     {
-        taskContext.logger.info("Test Case ", String(testCaseInd+1), "not undefined");
         if(update) 
         {
             await testWithWriteToDisk({
@@ -242,7 +242,7 @@ async function testSnapshotDiffsInCI({
             irVersion,
         });
         taskContext.logger.info(`Generated IR for fixture ${testCase} ${typeof ir}`);
-        const absolutePathToOutput = AbsoluteFilePath.of(resolve(cwd(), ".seed", testCase));
+        const absolutePathToOutput = AbsoluteFilePath.of(resolve(cwd(), "seed", testCase));
         //absolutePathToOutput - functions within the consuming folder to create a place where generated code is stored
         await runDockerForWorkspace({
             absolutePathToOutput,
