@@ -11,10 +11,11 @@ export function migrateIntermediateRepresentationForGenerator({
     intermediateRepresentation: IntermediateRepresentation;
     context: TaskContext;
     targetGenerator: GeneratorNameAndVersion;
-}): unknown {
-    return getIntermediateRepresentationMigrator().migrateForGenerator({
+}): Promise<unknown> {
+    const migrated = getIntermediateRepresentationMigrator().migrateForGenerator({
         intermediateRepresentation,
         context,
         targetGenerator,
     });
+    return migrated.jsonify();
 }

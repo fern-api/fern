@@ -2,6 +2,7 @@ import { GeneratorName } from "@fern-api/generators-configuration";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { GeneratorNameAndVersion } from "./IrMigrationContext";
 import { V10_TO_V9_MIGRATION } from "./migrations/v10-to-v9/migrateFromV10ToV9";
 import { V11_TO_V10_MIGRATION } from "./migrations/v11-to-v10/migrateFromV11ToV10";
@@ -37,19 +38,24 @@ export interface IntermediateRepresentationMigrator {
         intermediateRepresentation: IntermediateRepresentation;
         context: TaskContext;
         targetGenerator: GeneratorNameAndVersion;
-    }) => unknown;
+    }) => MigratedIntermediateMigration<unknown>;
     migrateThroughMigration<LaterVersion, EarlierVersion>(args: {
         migration: IrMigration<LaterVersion, EarlierVersion>;
         intermediateRepresentation: IntermediateRepresentation;
         context: TaskContext;
         targetGenerator: GeneratorNameAndVersion;
-    }): EarlierVersion;
+    }): MigratedIntermediateMigration<EarlierVersion>;
     migrateThroughVersion<Migrated>(args: {
         version: string;
         intermediateRepresentation: IntermediateRepresentation;
         context: TaskContext;
         targetGenerator?: GeneratorNameAndVersion;
-    }): Migrated;
+    }): MigratedIntermediateMigration<Migrated>;
+}
+
+export interface MigratedIntermediateMigration<Migrated> {
+    ir: Migrated;
+    jsonify: () => Promise<unknown>;
 }
 
 interface IntermediateRepresentationMigratorBuilder<LaterVersion> {
@@ -100,7 +106,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         intermediateRepresentation: IntermediateRepresentation;
         context: TaskContext;
         targetGenerator: GeneratorNameAndVersion;
-    }): unknown {
+    }): MigratedIntermediateMigration<unknown> {
         return this.migrate({
             intermediateRepresentation,
             shouldMigrate: (migration) => this.shouldRunMigration({ migration, targetGenerator }),
@@ -119,7 +125,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         intermediateRepresentation: IntermediateRepresentation;
         context: TaskContext;
         targetGenerator: GeneratorNameAndVersion;
-    }): EarlierVersion {
+    }): MigratedIntermediateMigration<EarlierVersion> {
         return this.migrateThroughVersion({
             version: migration.earlierVersion,
             intermediateRepresentation,
@@ -138,10 +144,10 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         intermediateRepresentation: IntermediateRepresentation;
         context: TaskContext;
         targetGenerator?: GeneratorNameAndVersion;
-    }): Migrated {
+    }): MigratedIntermediateMigration<Migrated> {
         let hasEncouneredMigrationYet = false;
 
-        const migrated = this.migrate({
+        const migrated = this.migrate<Migrated>({
             intermediateRepresentation,
             shouldMigrate: (nextMigration) => {
                 const isEncounteringMigration = nextMigration.earlierVersion === version;
@@ -157,10 +163,10 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
             context.failAndThrow(`IR ${version} does not exist`);
         }
 
-        return migrated as Migrated;
+        return migrated;
     }
 
-    private migrate({
+    private migrate<Migrated>({
         intermediateRepresentation,
         shouldMigrate,
         context,
@@ -170,9 +176,13 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         shouldMigrate: (migration: IrMigration<unknown, unknown>) => boolean;
         context: TaskContext;
         targetGenerator: GeneratorNameAndVersion | undefined;
-    }): unknown {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        let migrated: any = intermediateRepresentation;
+    }): MigratedIntermediateMigration<Migrated> {
+        let migrated: unknown = intermediateRepresentation;
+        let jsonify: () => Promise<unknown> = () =>
+            IrSerialization.IntermediateRepresentation.jsonOrThrow(migrated, {
+                unrecognizedObjectKeys: "strip",
+            });
+
         for (const migration of this.migrations) {
             if (!shouldMigrate(migration)) {
                 break;
@@ -182,8 +192,13 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
                 taskContext: context,
                 targetGenerator,
             });
+            jsonify = () => Promise.resolve().then(() => migration.jsonifyEarlierVersion(migrated));
         }
-        return migrated;
+
+        return {
+            ir: migrated as Migrated,
+            jsonify,
+        };
     }
 
     private shouldRunMigration({

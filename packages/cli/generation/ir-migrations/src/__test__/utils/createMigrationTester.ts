@@ -20,7 +20,7 @@ async function runFixtureThroughMigration<LaterVersion, EarlierVersion>(
     migration: IrMigration<LaterVersion, EarlierVersion>,
     { pathToFixture, context }: MigrationTesterArgs
 ): Promise<EarlierVersion> {
-    return getIntermediateRepresentationMigrator().migrateThroughMigration({
+    const migrated = getIntermediateRepresentationMigrator().migrateThroughMigration({
         migration,
         intermediateRepresentation: await getIrForApi(pathToFixture),
         context: context?.taskContext ?? createMockTaskContext(),
@@ -29,4 +29,5 @@ async function runFixtureThroughMigration<LaterVersion, EarlierVersion>(
             version: "",
         },
     });
+    return migrated.ir;
 }

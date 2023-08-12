@@ -10,10 +10,11 @@ export function migrateIntermediateRepresentationThroughVersion({
     intermediateRepresentation: IntermediateRepresentation;
     context: TaskContext;
     version: string;
-}): unknown {
-    return getIntermediateRepresentationMigrator().migrateThroughVersion({
+}): Promise<unknown> {
+    const migrated = getIntermediateRepresentationMigrator().migrateThroughVersion({
         version,
         intermediateRepresentation,
         context,
     });
+    return migrated.jsonify();
 }

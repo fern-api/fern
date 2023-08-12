@@ -29,6 +29,7 @@ export const V22_TO_V21_MIGRATION: IrMigration<
         [GeneratorName.GO_MODEL]: "0.0.14-8-g2fa39f7",
         [GeneratorName.GO_SDK]: "0.0.14-8-g2fa39f7",
     },
+    jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v22): IrVersions.V21.ir.IntermediateRepresentation => {
         return {
             ...v22,
