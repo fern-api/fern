@@ -1,4 +1,0 @@
-name: api
-auth: basic
-error-discrimination:
-  strategy: status-code
