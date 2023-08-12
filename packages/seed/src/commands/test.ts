@@ -24,7 +24,7 @@ export const FIXTURE = {
     SINGLE_URL_ENVIRONMENT_NO_DEFAULT: "single-url-environment-no-default",
 } as const;
 
-export const MAX_NUM_DOCKERS_RUNNING = 4;
+export const MAX_NUM_DOCKERS_RUNNING = 3;
 
 function createSemaphore(initialCount: number): {
     acquire: () => Promise<void>;
@@ -386,6 +386,7 @@ async function executeCommand({
         // childProcess.stdout?.on("data", (data) => {
         //     context.logger.info(`Output for '${command}':\n${data}`);
         // });
+        context.logger.info("");
     });
 }
 
