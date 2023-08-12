@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { GeneratorName } from "@fern-api/generators-configuration";
 import { IrVersions } from "../../ir-versions";
+import { IrMigrationContext } from "../../IrMigrationContext";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
 
 export const V23_TO_V22_MIGRATION: IrMigration<
@@ -29,20 +30,12 @@ export const V23_TO_V22_MIGRATION: IrMigration<
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
     },
-    migrateBackwards: (v23, { taskContext, targetGenerator }): IrVersions.V22.ir.IntermediateRepresentation => {
+    migrateBackwards: (v23, context): IrVersions.V22.ir.IntermediateRepresentation => {
         const v22Services: Record<IrVersions.V22.commons.ServiceId, IrVersions.V22.http.HttpService> = {};
         for (const [serviceId, service] of Object.entries(v23.services)) {
             const v22Endpoints: IrVersions.V22.http.HttpEndpoint[] = [];
             for (const endpoint of service.endpoints) {
-                const convertedEndpoint = convertEndpoint(endpoint);
-                if (convertedEndpoint == null) {
-                    return taskContext.failAndThrow(
-                        targetGenerator != null
-                            ? `Generator ${targetGenerator.name}@${targetGenerator.version}` +
-                                  " does not support bytes requests."
-                            : "Cannot backwards-migrate IR because this IR contains bytes requests."
-                    );
-                }
+                const convertedEndpoint = convertEndpoint(endpoint, context);
                 v22Endpoints.push(convertedEndpoint);
             }
             v22Services[serviceId] = {
@@ -57,7 +50,10 @@ export const V23_TO_V22_MIGRATION: IrMigration<
     },
 };
 
-function convertEndpoint(endpoint: IrVersions.V23.http.HttpEndpoint): IrVersions.V22.http.HttpEndpoint | undefined {
+function convertEndpoint(
+    endpoint: IrVersions.V23.http.HttpEndpoint,
+    { taskContext, targetGenerator }: IrMigrationContext
+): IrVersions.V22.http.HttpEndpoint {
     if (endpoint.requestBody == null) {
         return {
             ...endpoint,
@@ -66,7 +62,12 @@ function convertEndpoint(endpoint: IrVersions.V23.http.HttpEndpoint): IrVersions
     }
     switch (endpoint.requestBody.type) {
         case "bytes":
-            return undefined;
+            return taskContext.failAndThrow(
+                targetGenerator != null
+                    ? `Generator ${targetGenerator.name}@${targetGenerator.version}` +
+                          " does not support bytes requests."
+                    : "Cannot backwards-migrate IR because this IR contains bytes requests."
+            );
         case "fileUpload":
             return {
                 ...endpoint,
