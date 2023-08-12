@@ -1,4 +1,3 @@
-import { identity } from "@fern-api/core-utils";
 import { GeneratorName } from "@fern-api/generators-configuration";
 import { mapValues } from "lodash-es";
 import { IrVersions } from "../../ir-versions";
@@ -30,7 +29,6 @@ export const V22_TO_V21_MIGRATION: IrMigration<
         [GeneratorName.GO_MODEL]: "0.0.14-8-g2fa39f7",
         [GeneratorName.GO_SDK]: "0.0.14-8-g2fa39f7",
     },
-    serializeLaterVersion: identity,
     migrateBackwards: (v22): IrVersions.V21.ir.IntermediateRepresentation => {
         return {
             ...v22,

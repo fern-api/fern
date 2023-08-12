@@ -37,19 +37,19 @@ export interface IntermediateRepresentationMigrator {
         intermediateRepresentation: IntermediateRepresentation;
         context: TaskContext;
         targetGenerator: GeneratorNameAndVersion;
-    }) => Promise<unknown>;
+    }) => unknown;
     migrateThroughMigration<LaterVersion, EarlierVersion>(args: {
         migration: IrMigration<LaterVersion, EarlierVersion>;
         intermediateRepresentation: IntermediateRepresentation;
         context: TaskContext;
         targetGenerator: GeneratorNameAndVersion;
-    }): Promise<EarlierVersion>;
-    migrateThroughVersion(args: {
+    }): EarlierVersion;
+    migrateThroughVersion<Migrated>(args: {
         version: string;
         intermediateRepresentation: IntermediateRepresentation;
         context: TaskContext;
         targetGenerator?: GeneratorNameAndVersion;
-    }): Promise<unknown>;
+    }): Migrated;
 }
 
 interface IntermediateRepresentationMigratorBuilder<LaterVersion> {
@@ -92,7 +92,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     constructor(public readonly migrations: IrMigration<any, any>[]) {}
 
-    public async migrateForGenerator({
+    public migrateForGenerator({
         intermediateRepresentation,
         context,
         targetGenerator,
@@ -100,8 +100,8 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         intermediateRepresentation: IntermediateRepresentation;
         context: TaskContext;
         targetGenerator: GeneratorNameAndVersion;
-    }): Promise<unknown> {
-        return await this.migrate({
+    }): unknown {
+        return this.migrate({
             intermediateRepresentation,
             shouldMigrate: (migration) => this.shouldRunMigration({ migration, targetGenerator }),
             context,
@@ -109,7 +109,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         });
     }
 
-    public async migrateThroughMigration<LaterVersion, EarlierVersion>({
+    public migrateThroughMigration<LaterVersion, EarlierVersion>({
         migration,
         intermediateRepresentation,
         context,
@@ -119,8 +119,8 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         intermediateRepresentation: IntermediateRepresentation;
         context: TaskContext;
         targetGenerator: GeneratorNameAndVersion;
-    }): Promise<EarlierVersion> {
-        return await this.migrateThroughVersion({
+    }): EarlierVersion {
+        return this.migrateThroughVersion({
             version: migration.earlierVersion,
             intermediateRepresentation,
             context,
@@ -128,7 +128,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         });
     }
 
-    public async migrateThroughVersion<Migrated>({
+    public migrateThroughVersion<Migrated>({
         version,
         intermediateRepresentation,
         context,
@@ -138,10 +138,10 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         intermediateRepresentation: IntermediateRepresentation;
         context: TaskContext;
         targetGenerator?: GeneratorNameAndVersion;
-    }): Promise<Migrated> {
+    }): Migrated {
         let hasEncouneredMigrationYet = false;
 
-        const migrated = await this.migrate({
+        const migrated = this.migrate({
             intermediateRepresentation,
             shouldMigrate: (nextMigration) => {
                 const isEncounteringMigration = nextMigration.earlierVersion === version;
@@ -160,7 +160,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         return migrated as Migrated;
     }
 
-    private async migrate({
+    private migrate({
         intermediateRepresentation,
         shouldMigrate,
         context,
@@ -170,12 +170,11 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         shouldMigrate: (migration: IrMigration<unknown, unknown>) => boolean;
         context: TaskContext;
         targetGenerator: GeneratorNameAndVersion | undefined;
-    }): Promise<unknown> {
+    }): unknown {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         let migrated: any = intermediateRepresentation;
         for (const migration of this.migrations) {
             if (!shouldMigrate(migration)) {
-                migrated = await migration.serializeLaterVersion(migrated);
                 break;
             }
             context.logger.debug(`Migrating IR from ${migration.laterVersion} to ${migration.earlierVersion}`);

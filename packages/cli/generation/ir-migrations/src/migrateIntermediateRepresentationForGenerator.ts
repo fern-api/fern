@@ -11,7 +11,7 @@ export function migrateIntermediateRepresentationForGenerator({
     intermediateRepresentation: IntermediateRepresentation;
     context: TaskContext;
     targetGenerator: GeneratorNameAndVersion;
-}): Promise<unknown> {
+}): unknown {
     return getIntermediateRepresentationMigrator().migrateForGenerator({
         intermediateRepresentation,
         context,

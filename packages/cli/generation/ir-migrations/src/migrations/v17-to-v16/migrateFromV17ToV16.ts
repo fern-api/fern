@@ -1,4 +1,3 @@
-import { identity } from "@fern-api/core-utils";
 import { GeneratorName } from "@fern-api/generators-configuration";
 import { IrVersions } from "../../ir-versions";
 import {
@@ -33,7 +32,6 @@ export const V17_TO_V16_MIGRATION: IrMigration<
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
     },
-    serializeLaterVersion: identity,
     migrateBackwards: (v17, { taskContext, targetGenerator }): IrVersions.V16.ir.IntermediateRepresentation => {
         for (const [typeName, typeDeclaration] of Object.entries(v17.types)) {
             if (typeDeclaration.shape._type === "union" && typeDeclaration.shape.extends.length > 0) {

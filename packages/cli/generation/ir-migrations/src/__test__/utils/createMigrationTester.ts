@@ -16,7 +16,7 @@ export function createMigrationTester<LaterVersion, EarlierVersion>(
     return (args) => runFixtureThroughMigration(migration, args);
 }
 
-export async function runFixtureThroughMigration<LaterVersion, EarlierVersion>(
+async function runFixtureThroughMigration<LaterVersion, EarlierVersion>(
     migration: IrMigration<LaterVersion, EarlierVersion>,
     { pathToFixture, context }: MigrationTesterArgs
 ): Promise<EarlierVersion> {

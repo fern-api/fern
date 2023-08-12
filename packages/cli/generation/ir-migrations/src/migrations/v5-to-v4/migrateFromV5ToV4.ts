@@ -1,4 +1,3 @@
-import { identity } from "@fern-api/core-utils";
 import { GeneratorName } from "@fern-api/generators-configuration";
 import { IrVersions } from "../../ir-versions";
 import {
@@ -42,7 +41,6 @@ export const V5_TO_V4_MIGRATION: IrMigration<
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
     },
-    serializeLaterVersion: identity,
     migrateBackwards: (v5): IrVersions.V4.ir.IntermediateRepresentation => {
         const typeReferenceResolver = new TypeReferenceResolverImpl(v5);
         const errorResolver = new ErrorResolverImpl(v5);
