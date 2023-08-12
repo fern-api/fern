@@ -143,7 +143,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FernRegistry.ap
                 contentType: inlinedRequestBody.contentType ?? "application/json",
                 shape: FernRegistry.api.v1.register.JsonRequestBodyShape.object(
                     FernRegistry.api.v1.register.HttpRequestBodyShape.object({
-                        extends: inlinedRequestBody.extends_.map((extension) => convertTypeId(extension.typeId)),
+                        extends: inlinedRequestBody.extends.map((extension) => convertTypeId(extension.typeId)),
                         properties: inlinedRequestBody.properties.map(
                             (property): FernRegistry.api.v1.register.ObjectProperty => ({
                                 description: property.docs ?? undefined,
@@ -210,7 +210,7 @@ function convertResponseErrors(
         const errorDeclaration = ir.errors[irResponseError.error.errorId];
         if (errorDeclaration) {
             errors.push({
-                type: errorDeclaration.type_ == null ? undefined : convertTypeReference(errorDeclaration.type_),
+                type: errorDeclaration.type == null ? undefined : convertTypeReference(errorDeclaration.type),
                 statusCode: errorDeclaration.statusCode,
                 description: errorDeclaration.docs ?? undefined,
             });

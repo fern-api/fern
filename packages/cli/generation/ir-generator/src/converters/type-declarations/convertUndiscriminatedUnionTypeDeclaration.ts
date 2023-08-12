@@ -14,11 +14,11 @@ export function convertUndiscriminatedUnionTypeDeclaration({
             if (typeof unionMember === "string") {
                 return {
                     docs: undefined,
-                    type_: file.parseTypeReference(unionMember),
+                    type: file.parseTypeReference(unionMember),
                 };
             }
             return {
-                type_: file.parseTypeReference(unionMember.type),
+                type: file.parseTypeReference(unionMember.type),
                 docs: unionMember.docs,
             };
         }),

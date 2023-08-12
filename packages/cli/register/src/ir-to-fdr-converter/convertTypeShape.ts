@@ -18,7 +18,7 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.api.v1.reg
         },
         object: (object) => {
             return FernRegistry.api.v1.register.TypeShape.object({
-                extends: object.extends_.map((extension) => convertTypeId(extension.typeId)),
+                extends: object.extends.map((extension) => convertTypeId(extension.typeId)),
                 properties: object.properties.map(
                     (property): FernRegistry.api.v1.register.ObjectProperty => ({
                         description: property.docs ?? undefined,
@@ -48,7 +48,7 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.api.v1.reg
                                         properties: [
                                             {
                                                 key: singleProperty.name.wireValue,
-                                                valueType: convertTypeReference(singleProperty.type_),
+                                                valueType: convertTypeReference(singleProperty.type),
                                             },
                                         ],
                                     }),
@@ -72,7 +72,7 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.api.v1.reg
                 variants: union.members.map((variant): FernRegistry.api.v1.register.UndiscriminatedUnionVariant => {
                     return {
                         description: variant.docs ?? undefined,
-                        type: convertTypeReference(variant.type_),
+                        type: convertTypeReference(variant.type),
                     };
                 }),
             });

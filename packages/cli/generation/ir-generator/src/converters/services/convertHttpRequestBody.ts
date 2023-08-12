@@ -70,7 +70,7 @@ export function convertHttpRequestBody({
 
         return HttpRequestBody.inlinedRequestBody({
             name: file.casingsGenerator.generateName(request.name),
-            extends_: getExtensionsAsList(request.body.extends).map((extended) =>
+            extends: getExtensionsAsList(request.body.extends).map((extended) =>
                 parseTypeName({ typeName: extended, file })
             ),
             contentType: request["content-type"],
