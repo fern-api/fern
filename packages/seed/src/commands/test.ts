@@ -252,7 +252,7 @@ async function testSnapshotDiffsInCI({
         absolutePathToOutput,
         command: compileCmd,
         context: taskContext,
-        testCase,
+        testCase
     });
 }
 
@@ -383,9 +383,9 @@ async function executeCommand({
                 reject(new Error(`Command '${command}' exited with code ${code}`));
             }
         });
-        childProcess.stdout?.on("data", (data) => {
-            context.logger.info(`Output for '${command}':\n${data}`);
-        });
+        // childProcess.stdout?.on("data", (data) => {
+        //     context.logger.info(`Output for '${command}':\n${data}`);
+        // });
     });
 }
 
