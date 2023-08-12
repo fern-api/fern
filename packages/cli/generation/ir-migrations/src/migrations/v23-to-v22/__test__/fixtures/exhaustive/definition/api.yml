@@ -1,4 +1,4 @@
-name: basic-auth
-auth: basic
+name: api
+auth: bearer
 error-discrimination:
   strategy: status-code

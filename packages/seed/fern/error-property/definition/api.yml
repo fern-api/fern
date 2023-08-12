@@ -1,4 +1,4 @@
-name: api
+name: error-property
 error-discrimination:
   strategy: property
   property-name: errorName
