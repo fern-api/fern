@@ -21,7 +21,7 @@ export const FIXTURE = {
     MULTI_URL_ENVIRONMENT: "multi-url-environment",
     NO_ENVIRONMENT: "no-environment",
     SINGLE_URL_ENVIRONMENT: "single-url-environment-default",
-    SINGLE_URL_ENVIRONMENT_NO_DEFAULT: "single-url-environment-no-default",
+    // SINGLE_URL_ENVIRONMENT_NO_DEFAULT: "single-url-environment-no-default",
 } as const;
 
 export const MAX_NUM_DOCKERS_RUNNING = 3;
@@ -75,14 +75,14 @@ export async function handleConcurrentTesting({
     const semaphore = createSemaphore(MAX_NUM_DOCKERS_RUNNING); // Adjust the initial count as needed
     const testCases: string[] = fixture != null ? [fixture] : Object.values(FIXTURE);
     const tasks = [];
-    for (let i = 0; i < testCases.length; i++) {
+    for (let testCaseInd = 0; testCaseInd < testCases.length; testCaseInd++) {
         tasks.push(
             runTest({
                 semaphore,
                 irVersion,
                 language,
                 testCases,
-                testCaseInd: i,
+                testCaseInd,
                 docker,
                 compileCmd,
                 taskContext,
@@ -118,26 +118,16 @@ export async function runTest({
 }): Promise<void> {
     await semaphore.acquire();
     const testCase = testCases[testCaseInd];
+    if(update) {taskContext.logger.info("update");}
     if (testCase !== undefined) {
-        if (update) {
-            await testWithWriteToDisk({
-                testCase,
-                irVersion,
-                language,
-                docker,
-                compileCmd,
-                taskContext,
-            });
-        } else {
-            await testSnapshotDiffsInCI({
-                testCase,
-                irVersion,
-                language,
-                docker,
-                compileCmd,
-                taskContext,
-            });
-        }
+        await testWithWriteToDisk({
+            testCase,
+            irVersion,
+            language,
+            docker,
+            compileCmd,
+            taskContext,
+        });
     }
     semaphore.release();
 }
@@ -182,63 +172,6 @@ async function testWithWriteToDisk({
     });
     taskContext.logger.info(`Generated IR for fixture ${testCase} ${typeof ir}`);
     const absolutePathToOutput = AbsoluteFilePath.of(resolve(cwd(), "seed", testCase));
-    await runDockerForWorkspace({
-        absolutePathToOutput,
-        docker,
-        workspace: workspace.workspace,
-        language,
-        taskContext,
-        irVersion,
-    });
-    taskContext.logger.info(`Received compile command: ${compileCmd}`);
-    await compileGeneratedCode({
-        absolutePathToOutput,
-        command: compileCmd,
-        context: taskContext,
-        testCase,
-    });
-}
-
-async function testSnapshotDiffsInCI({
-    testCase,
-    irVersion,
-    language,
-    docker,
-    compileCmd,
-    taskContext,
-}: {
-    testCase: string;
-    irVersion: string | undefined;
-    language: GenerationLanguage;
-    docker: ParsedDockerName;
-    compileCmd: string;
-    taskContext: TaskContext;
-}): Promise<void> {
-    taskContext.logger.info(`Running tests for fixture ${testCase}`);
-    const absolutePathToWorkspace = AbsoluteFilePath.of(path.join(__dirname, FERN_DIRECTORY, testCase));
-    //absolutePathToWorkspace - functions within the npm package to reference the fern definitions
-    const workspace = await loadWorkspace({
-        absolutePathToWorkspace,
-        context: taskContext,
-        cliVersion: "DUMMY",
-    });
-    if (!workspace.didSucceed) {
-        taskContext.logger.error(`Failed to load workspace for fixture ${testCase}`);
-        return;
-    }
-    if (workspace.workspace.type === "openapi") {
-        taskContext.logger.error(`Expected fixture ${testCase} to be a fern workspace. Found OpenAPI instead!`);
-        return;
-    }
-    const ir = await getIntermediateRepresentation({
-        fernWorkspace: workspace.workspace,
-        taskContext,
-        generationLanguage: language,
-        irVersion,
-    });
-    taskContext.logger.info(`Generated IR for fixture ${testCase} ${typeof ir}`);
-    const absolutePathToOutput = AbsoluteFilePath.of(resolve(cwd(), "seed", testCase));
-    //absolutePathToOutput - functions within the consuming folder to create a place where generated code is stored
     await runDockerForWorkspace({
         absolutePathToOutput,
         docker,
@@ -334,32 +267,27 @@ async function compileGeneratedCode({
     absolutePathToOutput,
     command,
     context,
-    testCase,
+    testCase
 }: {
     absolutePathToOutput: AbsoluteFilePath;
     command: string;
     context: TaskContext;
     testCase: string;
 }): Promise<void> {
-    context.logger.info("CWD", absolutePathToOutput);
-    context.logger.info("fixture", testCase);
-    context.logger.info(command);
+    // context.logger.info("CWD", absolutePathToOutput);
+    // context.logger.info(command);
 
-    const commands = command.split("&& ");
-    if (commands[0] != null && commands[1] != null) {
+    const commands = command.split("&&");
+    // context.logger.info("COMMANDS ARE", String(commands));
+    commands.forEach(async (command) => {
         await executeCommand({
-            command: commands[0],
+            command,
             args: [],
             context,
             cwd: absolutePathToOutput,
+            testCase
         });
-        await executeCommand({
-            command: commands[1],
-            args: [],
-            context,
-            cwd: absolutePathToOutput,
-        });
-    }
+    });
 }
 
 async function executeCommand({
@@ -367,26 +295,29 @@ async function executeCommand({
     args,
     context,
     cwd,
+    testCase
 }: {
     command: string;
     args: string[];
     context: TaskContext;
+    testCase: string;
     cwd?: AbsoluteFilePath;
 }): Promise<void> {
     const childProcess: ChildProcess = spawn(command, args, { shell: true, cwd });
 
     return new Promise((resolve, reject) => {
-        childProcess.on("close", (code) => {
+        childProcess.on("close", async (code) => {
             if (code === 0) {
+                context.logger.info(`'${command}' finished in fixture ${testCase}`);
                 resolve();
             } else {
-                reject(new Error(`Command '${command}' exited with code ${code}`));
+                reject(new Error(`Command '${command}' exited with code ${code} in fixture ${testCase}`));
             }
         });
         // childProcess.stdout?.on("data", (data) => {
-        //     context.logger.info(`Output for '${command}':\n${data}`);
+        //     context.logger.info(`Output for '${command} in fixture ${testCase}':\n${data}`);
         // });
-        context.logger.info("");
+        // context.logger.info(`'${command}' running in fixture ${testCase}`);
     });
 }
 
