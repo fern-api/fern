@@ -31,4 +31,6 @@ export interface IrMigration<LaterVersion, EarlierVersion> {
      * we throw if this migration is encountered for this generator.
      */
     firstGeneratorVersionToConsumeNewIR: Record<GeneratorName, GeneratorVersion>;
+
+    serializeLaterVersion: (ir: LaterVersion) => unknown | Promise<unknown>;
 }

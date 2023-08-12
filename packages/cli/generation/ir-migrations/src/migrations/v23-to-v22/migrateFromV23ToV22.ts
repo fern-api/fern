@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { GeneratorName } from "@fern-api/generators-configuration";
+import * as IrV23Serialization from "@fern-fern/ir-sdk/serialization";
 import { mapValues } from "lodash-es";
 import { IrVersions } from "../../ir-versions";
 import { IrMigrationContext } from "../../IrMigrationContext";
@@ -31,6 +32,7 @@ export const V23_TO_V22_MIGRATION: IrMigration<
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
     },
+    serializeLaterVersion: IrV23Serialization.IntermediateRepresentation.jsonOrThrow,
     migrateBackwards: (v23, context): IrVersions.V22.ir.IntermediateRepresentation => {
         const v22Services: Record<IrVersions.V22.commons.ServiceId, IrVersions.V22.http.HttpService> = {};
         for (const [serviceId, service] of Object.entries(v23.services)) {

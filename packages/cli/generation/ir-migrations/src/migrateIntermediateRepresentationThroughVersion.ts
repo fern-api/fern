@@ -10,7 +10,7 @@ export function migrateIntermediateRepresentationThroughVersion({
     intermediateRepresentation: IntermediateRepresentation;
     context: TaskContext;
     version: string;
-}): unknown {
+}): Promise<unknown> {
     return getIntermediateRepresentationMigrator().migrateThroughVersion({
         version,
         intermediateRepresentation,

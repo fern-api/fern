@@ -47,7 +47,7 @@ describe("migrateIntermediateRepresentation", () => {
     });
 
     it("does not run migration if generator version is equal to migration's 'minVersiontoExclude'", async () => {
-        const migrated = migrateIntermediateRepresentationForGenerator({
+        const migrated = await migrateIntermediateRepresentationForGenerator({
             intermediateRepresentation: await getIrForSimpleApi(),
             context: createMockTaskContext(),
             targetGenerator: {
@@ -62,7 +62,7 @@ describe("migrateIntermediateRepresentation", () => {
     });
 
     it("runs migration if generator (dev) version is less than migration's 'minVersiontoExclude'", async () => {
-        const migrated = migrateIntermediateRepresentationForGenerator({
+        const migrated = await migrateIntermediateRepresentationForGenerator({
             intermediateRepresentation: await getIrForSimpleApi(),
             context: createMockTaskContext(),
             targetGenerator: {
@@ -82,7 +82,7 @@ describe("migrateIntermediateRepresentation", () => {
     });
 
     it("runs migration if generator (release) version is less than migration's 'minVersiontoExclude'", async () => {
-        const migrated = migrateIntermediateRepresentationForGenerator({
+        const migrated = await migrateIntermediateRepresentationForGenerator({
             intermediateRepresentation: await getIrForSimpleApi(),
             context: createMockTaskContext(),
             targetGenerator: {
@@ -102,7 +102,7 @@ describe("migrateIntermediateRepresentation", () => {
     });
 
     it("does not run migration if generator (dev) version is greater than migration's 'minVersiontoExclude'", async () => {
-        const migrated = migrateIntermediateRepresentationForGenerator({
+        const migrated = await migrateIntermediateRepresentationForGenerator({
             intermediateRepresentation: await getIrForSimpleApi(),
             context: createMockTaskContext(),
             targetGenerator: {
@@ -115,7 +115,7 @@ describe("migrateIntermediateRepresentation", () => {
     });
 
     it("does not run migration if generator (release) version is greater than migration's 'minVersiontoExclude'", async () => {
-        const migrated = migrateIntermediateRepresentationForGenerator({
+        const migrated = await migrateIntermediateRepresentationForGenerator({
             intermediateRepresentation: await getIrForSimpleApi(),
             context: createMockTaskContext(),
             targetGenerator: {

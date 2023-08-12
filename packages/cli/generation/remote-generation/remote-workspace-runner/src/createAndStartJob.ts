@@ -131,7 +131,7 @@ async function startJob({
     job: FernFiddle.remoteGen.CreateJobResponse;
     context: TaskContext;
 }): Promise<void> {
-    const migratedIntermediateRepresentation = migrateIntermediateRepresentationForGenerator({
+    const migratedIntermediateRepresentation = await migrateIntermediateRepresentationForGenerator({
         intermediateRepresentation,
         context,
         targetGenerator: {
