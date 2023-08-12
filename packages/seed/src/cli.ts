@@ -66,7 +66,7 @@ function addTestCommand(cli: Argv, taskContext: TaskContext) {
                     type: "boolean",
                     alias: "u",
                     description: "Determines whether or not snapshots are written to disk",
-                    default: false
+                    default: false,
                 }),
         async (argv) => {
             const parsedDockerImage = validateAndParseDockerImage(argv.docker);
@@ -77,7 +77,7 @@ function addTestCommand(cli: Argv, taskContext: TaskContext) {
                 docker: parsedDockerImage,
                 compileCmd: argv["compile-command"],
                 taskContext,
-                update: argv.update
+                update: argv.update,
             });
         }
     );
