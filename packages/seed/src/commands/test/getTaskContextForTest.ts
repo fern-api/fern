@@ -6,9 +6,10 @@ import { TaskContextImpl } from "../../TaskContextImpl";
 const TASK_COLORS = ["#2E86AB", "#A23B72", "#F18F01", "#C73E1D", "#CCE2A3"];
 
 export class TaskContextFactory {
-    private idx: number = 0;
+    private idx = 0;
 
     create(prefix: string): TaskContext {
+        //@typescript-eslint/no-non-null-assertion
         const colorForWorkspace = TASK_COLORS[this.idx++ % TASK_COLORS.length]!;
         const prefixWithColor = chalk.hex(colorForWorkspace)(prefix);
         return new TaskContextImpl({
