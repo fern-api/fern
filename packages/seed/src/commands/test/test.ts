@@ -1,10 +1,10 @@
 import { AbsoluteFilePath, cwd, resolve } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { CONSOLE_LOGGER, LogLevel } from "@fern-api/logger";
+import { loggingExeca } from "@fern-api/logging-execa";
 import { FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { loadWorkspace } from "@fern-api/workspace-loader";
-import { ChildProcess, spawn } from "child_process";
 import path from "path";
 import { ParsedDockerName } from "../../cli";
 import { Semaphore } from "../../Semaphore";
@@ -98,7 +98,7 @@ export async function acquireLocksAndRunTest({
     compileCommand: string | undefined;
     taskContext: TaskContext;
 }): Promise<TestResult> {
-    taskContext.logger.info("Acquiring lock...");
+    taskContext.logger.debug("Acquiring lock...");
     await lock.acquire();
     taskContext.logger.info("Running test...");
     const result = await testWithWriteToDisk({
@@ -109,7 +109,7 @@ export async function acquireLocksAndRunTest({
         compileCommand,
         taskContext,
     });
-    taskContext.logger.info("Releasing lock...");
+    taskContext.logger.debug("Releasing lock...");
     lock.release();
     return result;
 }
@@ -137,7 +137,7 @@ async function testWithWriteToDisk({
             cliVersion: "DUMMY",
         });
         if (!workspace.didSucceed) {
-            taskContext.logger.error(`Failed to load workspace for fixture ${fixture}`);
+            taskContext.logger.info(`Failed to load workspace for fixture ${fixture}`);
             return {
                 type: "failure",
                 reason: Object.entries(workspace.failures)
@@ -164,12 +164,19 @@ async function testWithWriteToDisk({
             irVersion,
         });
         if (compileCommand != null) {
-            await compileGeneratedCode({
-                absolutePathToOutput,
-                command: compileCommand,
-                context: taskContext,
-                fixture,
-            });
+            const commands = compileCommand.split("&&").map((command) => command.trim());
+            for (const command of commands) {
+                taskContext.logger.error(`Running command: ${command}`);
+                const spaceDelimitedCommand = command.split(" ");
+                await loggingExeca(
+                    taskContext.logger,
+                    spaceDelimitedCommand[0] ?? command,
+                    spaceDelimitedCommand.slice(1),
+                    {
+                        cwd: absolutePathToOutput,
+                    }
+                );
+            }
         }
         return { type: "success", fixture };
     } catch (err) {
@@ -179,53 +186,4 @@ async function testWithWriteToDisk({
             fixture,
         };
     }
-}
-
-async function compileGeneratedCode({
-    absolutePathToOutput,
-    command,
-    context,
-    fixture,
-}: {
-    absolutePathToOutput: AbsoluteFilePath;
-    command: string;
-    context: TaskContext;
-    fixture: string;
-}): Promise<void> {
-    const commands = command.split("&&");
-    commands.forEach(async (command) => {
-        await executeCommand({
-            command,
-            args: [],
-            context,
-            cwd: absolutePathToOutput,
-            fixture,
-        });
-    });
-}
-
-async function executeCommand({
-    command,
-    args,
-    context,
-    cwd,
-    fixture,
-}: {
-    command: string;
-    args: string[];
-    context: TaskContext;
-    fixture: string;
-    cwd?: AbsoluteFilePath;
-}): Promise<void> {
-    const childProcess: ChildProcess = spawn(command, args, { shell: true, cwd });
-    return new Promise((resolve, reject) => {
-        childProcess.on("close", async (code) => {
-            if (code === 0) {
-                context.logger.info(`'${command}' finished in fixture ${fixture}`);
-                resolve();
-            } else {
-                reject(new Error(`Command '${command}' exited with code ${code} in fixture ${fixture}`));
-            }
-        });
-    });
 }
