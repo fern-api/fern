@@ -3,6 +3,7 @@ import { AbsoluteFilePath, cwd, resolve } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-migrations";
+import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, loadWorkspace } from "@fern-api/workspace-loader";
@@ -10,6 +11,7 @@ import { ChildProcess, spawn } from "child_process";
 import path from "path";
 import { ParsedDockerName } from "../../cli";
 import { Semaphore } from "../../Semaphore";
+import { TaskContextFactory } from "./getTaskContextForTest";
 import { runDockerForWorkspace } from "./runDockerForWorkspace";
 
 export const FIXTURES = {
@@ -31,16 +33,15 @@ export async function runTests({
     fixtures,
     docker,
     compileCommand,
-    taskContext,
 }: {
     irVersion: string | undefined;
     language: GenerationLanguage;
     fixtures: string[];
     docker: ParsedDockerName;
     compileCommand: string | undefined;
-    taskContext: TaskContext;
 }): Promise<void> {
     const semaphore = new Semaphore(MAX_NUM_DOCKERS_RUNNING);
+    const taskContextFactory = new TaskContextFactory();
     const testCases = [];
     for (const fixture of fixtures) {
         testCases.push(
@@ -51,12 +52,12 @@ export async function runTests({
                 fixture,
                 docker,
                 compileCommand,
-                taskContext,
+                taskContext: taskContextFactory.create(fixture),
             })
         );
     }
     await Promise.all(testCases);
-    taskContext.logger.info("All testcases completed");
+    CONSOLE_LOGGER.info("All testcases completed");
 }
 
 export async function runTest({
@@ -76,9 +77,9 @@ export async function runTest({
     compileCommand: string | undefined;
     taskContext: TaskContext;
 }): Promise<void> {
-    taskContext.logger.info(`[${fixture}]: Acquiring lock`);
+    taskContext.logger.info("Acquiring lock...");
     await semaphore.acquire();
-    taskContext.logger.info(`[${fixture}]: Running test`);
+    taskContext.logger.info("Running test...");
     await testWithWriteToDisk({
         fixture,
         irVersion,
@@ -87,7 +88,7 @@ export async function runTest({
         compileCommand,
         taskContext,
     });
-    taskContext.logger.info(`[${fixture}]: Releasing lock`);
+    taskContext.logger.info("Releasing lock...");
     semaphore.release();
 }
 

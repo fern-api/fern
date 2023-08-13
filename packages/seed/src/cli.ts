@@ -1,38 +1,22 @@
 import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
-import { TaskContext } from "@fern-api/task-context";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import { FIXTURES, runTests } from "./commands/test/test";
-import { TaskContextImpl } from "./TaskContextImpl";
 
 void tryRunCli();
 
 export async function tryRunCli(): Promise<void> {
     const cli: Argv = yargs(hideBin(process.argv));
-    const taskContext = new TaskContextImpl({
-        logImmediately: (logs) => {
-            logs.forEach((log) => {
-                CONSOLE_LOGGER.info(...log.parts);
-            });
-        },
-        takeOverTerminal: async () => {
-            return;
-        },
-        shouldBufferLogs: false,
-        instrumentPostHogEvent: () => {
-            return;
-        },
-    });
 
-    addTestCommand(cli, taskContext);
+    addTestCommand(cli);
 
     await cli.parse();
 
-    taskContext.logger.info("Seed has finished...");
+    CONSOLE_LOGGER.info("Seed has finished...");
 }
 
-function addTestCommand(cli: Argv, taskContext: TaskContext) {
+function addTestCommand(cli: Argv) {
     cli.command(
         "test",
         "Run all snapshot tests",
@@ -69,7 +53,6 @@ function addTestCommand(cli: Argv, taskContext: TaskContext) {
                     default: false,
                 }),
         async (argv) => {
-            taskContext.logger.info("Hello");
             const parsedDockerImage = validateAndParseDockerImage(argv.docker);
             await runTests({
                 fixtures: argv.fixture != null ? [argv.fixture] : Object.values(FIXTURES),
@@ -77,7 +60,6 @@ function addTestCommand(cli: Argv, taskContext: TaskContext) {
                 language: argv.language,
                 docker: parsedDockerImage,
                 compileCommand: argv["compile-command"],
-                taskContext,
             });
         }
     );
