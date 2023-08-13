@@ -7,10 +7,7 @@ import { FIXTURES, runTests } from "./commands/test/test";
 void tryRunCli();
 
 export async function tryRunCli(): Promise<void> {
-    const cli: Argv = yargs(hideBin(process.argv)).option("log-level", {
-        default: LogLevel.Info,
-        choices: LOG_LEVELS,
-    });
+    const cli: Argv = yargs(hideBin(process.argv));
 
     addTestCommand(cli);
 
@@ -54,6 +51,10 @@ function addTestCommand(cli: Argv) {
                     alias: "u",
                     description: "Determines whether or not snapshots are written to disk",
                     default: false,
+                })
+                .option("log-level", {
+                    default: LogLevel.Info,
+                    choices: LOG_LEVELS,
                 }),
         async (argv) => {
             const parsedDockerImage = validateAndParseDockerImage(argv.docker);
@@ -63,6 +64,7 @@ function addTestCommand(cli: Argv) {
                 language: argv.language,
                 docker: parsedDockerImage,
                 compileCommand: argv["compile-command"],
+                logLevel: argv["log-level"],
             });
         }
     );

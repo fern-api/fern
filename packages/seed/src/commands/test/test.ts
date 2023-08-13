@@ -3,7 +3,7 @@ import { AbsoluteFilePath, cwd, resolve } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-migrations";
-import { CONSOLE_LOGGER } from "@fern-api/logger";
+import { CONSOLE_LOGGER, LogLevel } from "@fern-api/logger";
 import { FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace, loadWorkspace } from "@fern-api/workspace-loader";
@@ -11,8 +11,8 @@ import { ChildProcess, spawn } from "child_process";
 import path from "path";
 import { ParsedDockerName } from "../../cli";
 import { Semaphore } from "../../Semaphore";
-import { TaskContextFactory } from "./getTaskContextForTest";
 import { runDockerForWorkspace } from "./runDockerForWorkspace";
+import { TaskContextFactory } from "./TaskContextFactory";
 
 export const FIXTURES = {
     EXHAUSTIVE: "exhaustive",
@@ -22,7 +22,7 @@ export const FIXTURES = {
     MULTI_URL_ENVIRONMENT: "multi-url-environment",
     NO_ENVIRONMENT: "no-environment",
     SINGLE_URL_ENVIRONMENT: "single-url-environment-default",
-    // SINGLE_URL_ENVIRONMENT_NO_DEFAULT: "single-url-environment-no-default",
+    SINGLE_URL_ENVIRONMENT_NO_DEFAULT: "single-url-environment-no-default",
 } as const;
 
 export const MAX_NUM_DOCKERS_RUNNING = 3;
@@ -33,15 +33,17 @@ export async function runTests({
     fixtures,
     docker,
     compileCommand,
+    logLevel,
 }: {
     irVersion: string | undefined;
     language: GenerationLanguage;
     fixtures: string[];
     docker: ParsedDockerName;
     compileCommand: string | undefined;
+    logLevel: LogLevel;
 }): Promise<void> {
     const semaphore = new Semaphore(MAX_NUM_DOCKERS_RUNNING);
-    const taskContextFactory = new TaskContextFactory();
+    const taskContextFactory = new TaskContextFactory(logLevel);
     const testCases = [];
     for (const fixture of fixtures) {
         testCases.push(
