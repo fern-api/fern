@@ -3,7 +3,7 @@ import { runSeedCli } from "../../utils/runSeedCli";
 
 describe("seed", () => {
     it("python", async () => {
-        const { exitCode } = await runSeedCli(
+        const { exitCode, stdout } = await runSeedCli(
             [
                 "test",
                 "--docker",
@@ -19,6 +19,7 @@ describe("seed", () => {
                 cwd: (await tmp.dir()).path,
             }
         );
+        expect(stdout).toContain("test cases passed");
         expect(exitCode).toEqual(0);
     }, 60_000);
 });

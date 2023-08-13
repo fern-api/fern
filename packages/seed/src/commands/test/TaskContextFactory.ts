@@ -23,16 +23,16 @@ export class TaskContextFactory {
                 filtered.forEach((log) => {
                     switch (log.level) {
                         case "debug":
-                            CONSOLE_LOGGER.debug(...log.parts);
+                            CONSOLE_LOGGER.debug(`[${prefixWithColor}]: `, ...log.parts);
                             break;
                         case "error":
-                            CONSOLE_LOGGER.error(...log.parts);
+                            CONSOLE_LOGGER.error(`[${prefixWithColor}]: `, ...log.parts);
                             break;
                         case "warn":
-                            CONSOLE_LOGGER.warn(...log.parts);
+                            CONSOLE_LOGGER.warn(`[${prefixWithColor}]: `, ...log.parts);
                             break;
                         case "info":
-                            CONSOLE_LOGGER.info(...log.parts);
+                            CONSOLE_LOGGER.info(`[${prefixWithColor}]: `, ...log.parts);
                             break;
                         default:
                             assertNever(log.level);
