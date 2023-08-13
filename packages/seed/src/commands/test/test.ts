@@ -1,12 +1,9 @@
-import { Audiences } from "@fern-api/config-management-commons";
 import { AbsoluteFilePath, cwd, resolve } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
-import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-migrations";
 import { CONSOLE_LOGGER, LogLevel } from "@fern-api/logger";
 import { FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace, loadWorkspace } from "@fern-api/workspace-loader";
+import { loadWorkspace } from "@fern-api/workspace-loader";
 import { ChildProcess, spawn } from "child_process";
 import path from "path";
 import { ParsedDockerName } from "../../cli";
@@ -25,6 +22,19 @@ export const FIXTURES = {
     SINGLE_URL_ENVIRONMENT_NO_DEFAULT: "single-url-environment-no-default",
 } as const;
 
+type TestResult = TestSuccess | TestFailure;
+
+interface TestSuccess {
+    type: "success";
+    fixture: string;
+}
+
+interface TestFailure {
+    type: "failure";
+    reason: string | undefined;
+    fixture: string;
+}
+
 export const MAX_NUM_DOCKERS_RUNNING = 3;
 
 export async function runTests({
@@ -42,13 +52,13 @@ export async function runTests({
     compileCommand: string | undefined;
     logLevel: LogLevel;
 }): Promise<void> {
-    const semaphore = new Semaphore(MAX_NUM_DOCKERS_RUNNING);
+    const lock = new Semaphore(MAX_NUM_DOCKERS_RUNNING);
     const taskContextFactory = new TaskContextFactory(logLevel);
     const testCases = [];
     for (const fixture of fixtures) {
         testCases.push(
-            runTest({
-                semaphore,
+            acquireLocksAndRunTest({
+                lock,
                 irVersion,
                 language,
                 fixture,
@@ -58,12 +68,21 @@ export async function runTests({
             })
         );
     }
-    await Promise.all(testCases);
-    CONSOLE_LOGGER.info("All testcases completed");
+    const results = await Promise.all(testCases);
+    const failedFixtures = results.filter((res) => res.type === "failure").map((res) => res.fixture);
+    if (failedFixtures.length === 0) {
+        CONSOLE_LOGGER.info(`${results.length}/${results.length} test cases passed :white_check_mark:`);
+    } else {
+        CONSOLE_LOGGER.info(
+            `${failedFixtures.length}/${
+                results.length
+            } test cases failed. The failed fixtures include ${failedFixtures.join(", ")}.`
+        );
+    }
 }
 
-export async function runTest({
-    semaphore,
+export async function acquireLocksAndRunTest({
+    lock,
     irVersion,
     language,
     fixture,
@@ -71,18 +90,18 @@ export async function runTest({
     compileCommand,
     taskContext,
 }: {
-    semaphore: Semaphore;
+    lock: Semaphore;
     irVersion: string | undefined;
     language: GenerationLanguage;
     fixture: string;
     docker: ParsedDockerName;
     compileCommand: string | undefined;
     taskContext: TaskContext;
-}): Promise<void> {
+}): Promise<TestResult> {
     taskContext.logger.info("Acquiring lock...");
-    await semaphore.acquire();
+    await lock.acquire();
     taskContext.logger.info("Running test...");
-    await testWithWriteToDisk({
+    const result = await testWithWriteToDisk({
         fixture,
         irVersion,
         language,
@@ -91,7 +110,8 @@ export async function runTest({
         taskContext,
     });
     taskContext.logger.info("Releasing lock...");
-    semaphore.release();
+    lock.release();
+    return result;
 }
 
 async function testWithWriteToDisk({
@@ -108,74 +128,57 @@ async function testWithWriteToDisk({
     docker: ParsedDockerName;
     compileCommand: string | undefined;
     taskContext: TaskContext;
-}): Promise<void> {
-    const absolutePathToWorkspace = AbsoluteFilePath.of(path.join(__dirname, FERN_DIRECTORY, fixture));
-    const workspace = await loadWorkspace({
-        absolutePathToWorkspace,
-        context: taskContext,
-        cliVersion: "DUMMY",
-    });
-    if (!workspace.didSucceed) {
-        taskContext.logger.error(`Failed to load workspace for fixture ${fixture}`);
-        return;
-    }
-    if (workspace.workspace.type === "openapi") {
-        taskContext.logger.error(`Expected fixture ${fixture} to be a fern workspace. Found OpenAPI instead!`);
-        return;
-    }
-    const ir = await getIntermediateRepresentation({
-        fernWorkspace: workspace.workspace,
-        taskContext,
-        generationLanguage: language,
-        irVersion,
-    });
-    taskContext.logger.info(`Generated IR for fixture ${fixture} ${typeof ir}`);
-    const absolutePathToOutput = AbsoluteFilePath.of(resolve(cwd(), "seed", fixture));
-    await runDockerForWorkspace({
-        absolutePathToOutput,
-        docker,
-        workspace: workspace.workspace,
-        language,
-        taskContext,
-        irVersion,
-    });
-    taskContext.logger.info(`Received compile command: ${compileCommand}`);
-    if (compileCommand != null) {
-        await compileGeneratedCode({
+}): Promise<TestResult> {
+    try {
+        const absolutePathToWorkspace = AbsoluteFilePath.of(path.join(__dirname, FERN_DIRECTORY, fixture));
+        const workspace = await loadWorkspace({
+            absolutePathToWorkspace,
+            context: taskContext,
+            cliVersion: "DUMMY",
+        });
+        if (!workspace.didSucceed) {
+            taskContext.logger.error(`Failed to load workspace for fixture ${fixture}`);
+            return {
+                type: "failure",
+                reason: Object.entries(workspace.failures)
+                    .map(([file, reason]) => `${file}: ${reason.type}`)
+                    .join("\n"),
+                fixture,
+            };
+        }
+        if (workspace.workspace.type === "openapi") {
+            taskContext.logger.error("Expected fern workspace. Found OpenAPI instead!");
+            return {
+                type: "failure",
+                reason: "Expected fern workspace. Found OpenAPI instead!",
+                fixture,
+            };
+        }
+        const absolutePathToOutput = AbsoluteFilePath.of(resolve(cwd(), "seed", fixture));
+        await runDockerForWorkspace({
             absolutePathToOutput,
-            command: compileCommand,
-            context: taskContext,
+            docker,
+            workspace: workspace.workspace,
+            language,
+            taskContext,
+            irVersion,
+        });
+        if (compileCommand != null) {
+            await compileGeneratedCode({
+                absolutePathToOutput,
+                command: compileCommand,
+                context: taskContext,
+                fixture,
+            });
+        }
+        return { type: "success", fixture };
+    } catch (err) {
+        return {
+            type: "failure",
+            reason: (err as Error).message,
             fixture,
-        });
+        };
     }
-}
-
-const ALL_AUDIENCES: Audiences = { type: "all" };
-
-async function getIntermediateRepresentation({
-    fernWorkspace,
-    generationLanguage,
-    irVersion,
-    taskContext,
-}: {
-    fernWorkspace: FernWorkspace;
-    generationLanguage: GenerationLanguage;
-    irVersion: string | undefined;
-    taskContext: TaskContext;
-}): Promise<unknown> {
-    const ir = await generateIntermediateRepresentation({
-        workspace: fernWorkspace,
-        generationLanguage,
-        audiences: ALL_AUDIENCES,
-    });
-    if (irVersion != null) {
-        return await migrateIntermediateRepresentationThroughVersion({
-            intermediateRepresentation: ir,
-            context: taskContext,
-            version: irVersion,
-        });
-    }
-    return ir;
 }
 
 async function compileGeneratedCode({
