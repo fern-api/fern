@@ -9,7 +9,6 @@ export class TaskContextFactory {
     private idx = 0;
 
     create(prefix: string): TaskContext {
-        //@typescript-eslint/no-non-null-assertion
         const colorForWorkspace = TASK_COLORS[this.idx++ % TASK_COLORS.length]!;
         const prefixWithColor = chalk.hex(colorForWorkspace)(prefix);
         return new TaskContextImpl({
