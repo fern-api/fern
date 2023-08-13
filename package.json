@@ -14,7 +14,7 @@
     "clean": "yarn workspace @fern-api/compile-root run clean",
     "compile": "yarn workspace @fern-api/compile-root run compile",
     "test": "yarn compile && jest --passWithNoTests",
-    "test:ete": "yarn workspace @fern-api/cli dist:cli:dev && yarn workspace @fern-api/ete-tests test",
+    "test:ete": "yarn workspace @fern-api/cli dist:cli:dev && yarn workspace @fern-api/seed-cli dist:cli && yarn workspace @fern-api/ete-tests test",
     "lint:eslint": "eslint --max-warnings 0 . --report-unused-disable-directives",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "lint:monorepo": "mrlint lint",
@@ -38,7 +38,8 @@
     "check-docs-release-blockers": "yarn fern-script check-docs-release-blockers",
     "root-package:check": "yarn fern-script check-root-package",
     "root-package:fix": "yarn root-package:check --fix",
-    "demo-setup": "yarn workspace @fern-api/demo-setup dist:cli && node $(yarn workspace @fern-api/demo-setup bin demo-setup)"
+    "demo-setup": "yarn workspace @fern-api/demo-setup dist:cli && node $(yarn workspace @fern-api/demo-setup bin demo-setup)",
+    "seed:local": "yarn workspace @fern-api/seed-cli dist:cli && node $(yarn workspace @fern-api/seed-cli bin seed)"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",

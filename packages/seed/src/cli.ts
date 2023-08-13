@@ -3,7 +3,7 @@ import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
-import { FIXTURE, runTests } from "./commands/test";
+import { FIXTURES, runTests } from "./commands/test/test";
 import { TaskContextImpl } from "./TaskContextImpl";
 
 void tryRunCli();
@@ -53,23 +53,30 @@ function addTestCommand(cli: Argv, taskContext: TaskContext) {
                 })
                 .option("fixture", {
                     type: "string",
-                    choices: Object.values(FIXTURE),
+                    choices: Object.values(FIXTURES),
                     demandOption: false,
                     description: "Runs on all fixtures if not provided",
                 })
                 .options("compile-command", {
                     type: "string",
-                    demandOption: true,
+                    demandOption: false,
                     description: "User inputted command to compile generated code with",
+                })
+                .option("update", {
+                    type: "boolean",
+                    alias: "u",
+                    description: "Determines whether or not snapshots are written to disk",
+                    default: false,
                 }),
         async (argv) => {
+            taskContext.logger.info("Hello");
             const parsedDockerImage = validateAndParseDockerImage(argv.docker);
             await runTests({
-                fixture: argv.fixture,
+                fixtures: argv.fixture != null ? [argv.fixture] : Object.values(FIXTURES),
                 irVersion: argv.irVersion,
                 language: argv.language,
                 docker: parsedDockerImage,
-                compileCmd: argv["compile-command"],
+                compileCommand: argv["compile-command"],
                 taskContext,
             });
         }
