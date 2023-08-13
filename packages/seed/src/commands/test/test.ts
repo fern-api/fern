@@ -9,8 +9,8 @@ import { FernWorkspace, loadWorkspace } from "@fern-api/workspace-loader";
 import { ChildProcess, spawn } from "child_process";
 import path from "path";
 import { ParsedDockerName } from "../../cli";
+import { Semaphore } from "../../Semaphore";
 import { runDockerForWorkspace } from "./runDockerForWorkspace";
-import { Semaphore } from "./Semaphore";
 
 export const FIXTURES = {
     EXHAUSTIVE: "exhaustive",
