@@ -59,7 +59,7 @@ function addTestCommand(cli: Argv, taskContext: TaskContext) {
                 })
                 .options("compile-command", {
                     type: "string",
-                    demandOption: true,
+                    demandOption: false,
                     description: "User inputted command to compile generated code with",
                 })
                 .option("update", {
@@ -69,15 +69,15 @@ function addTestCommand(cli: Argv, taskContext: TaskContext) {
                     default: false,
                 }),
         async (argv) => {
+            taskContext.logger.info("Hello");
             const parsedDockerImage = validateAndParseDockerImage(argv.docker);
             await runTests({
                 fixtures: argv.fixture != null ? [argv.fixture] : Object.values(FIXTURES),
                 irVersion: argv.irVersion,
                 language: argv.language,
                 docker: parsedDockerImage,
-                compileCmd: argv["compile-command"],
+                compileCommand: argv["compile-command"],
                 taskContext,
-                update: argv.update,
             });
         }
     );

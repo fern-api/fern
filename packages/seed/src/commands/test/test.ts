@@ -10,7 +10,7 @@ import { ChildProcess, spawn } from "child_process";
 import path from "path";
 import { ParsedDockerName } from "../../cli";
 import { runDockerForWorkspace } from "./runDockerForWorkspace";
-import { Semaphore } from "./semaphore";
+import { Semaphore } from "./Semaphore";
 
 export const FIXTURES = {
     EXHAUSTIVE: "exhaustive",
@@ -30,17 +30,15 @@ export async function runTests({
     language,
     fixtures,
     docker,
-    compileCmd,
+    compileCommand,
     taskContext,
-    update,
 }: {
     irVersion: string | undefined;
     language: GenerationLanguage;
     fixtures: string[];
     docker: ParsedDockerName;
-    compileCmd: string;
+    compileCommand: string | undefined;
     taskContext: TaskContext;
-    update: boolean;
 }): Promise<void> {
     const semaphore = new Semaphore(MAX_NUM_DOCKERS_RUNNING);
     const testCases = [];
@@ -52,9 +50,8 @@ export async function runTests({
                 language,
                 fixture,
                 docker,
-                compileCmd,
+                compileCommand,
                 taskContext,
-                update,
             })
         );
     }
@@ -68,31 +65,29 @@ export async function runTest({
     language,
     fixture,
     docker,
-    compileCmd,
+    compileCommand,
     taskContext,
-    update,
 }: {
     semaphore: Semaphore;
     irVersion: string | undefined;
     language: GenerationLanguage;
     fixture: string;
     docker: ParsedDockerName;
-    compileCmd: string;
+    compileCommand: string | undefined;
     taskContext: TaskContext;
-    update: boolean;
 }): Promise<void> {
+    taskContext.logger.info(`[${fixture}]: Acquiring lock`);
     await semaphore.acquire();
-    if (update) {
-        taskContext.logger.info("update");
-    }
+    taskContext.logger.info(`[${fixture}]: Running test`);
     await testWithWriteToDisk({
         fixture,
         irVersion,
         language,
         docker,
-        compileCmd,
+        compileCommand,
         taskContext,
     });
+    taskContext.logger.info(`[${fixture}]: Releasing lock`);
     semaphore.release();
 }
 
@@ -101,17 +96,16 @@ async function testWithWriteToDisk({
     irVersion,
     language,
     docker,
-    compileCmd,
+    compileCommand,
     taskContext,
 }: {
     fixture: string;
     irVersion: string | undefined;
     language: GenerationLanguage;
     docker: ParsedDockerName;
-    compileCmd: string;
+    compileCommand: string | undefined;
     taskContext: TaskContext;
 }): Promise<void> {
-    taskContext.logger.info(`Running tests for fixture ${fixture}`);
     const absolutePathToWorkspace = AbsoluteFilePath.of(path.join(__dirname, FERN_DIRECTORY, fixture));
     const workspace = await loadWorkspace({
         absolutePathToWorkspace,
@@ -142,13 +136,15 @@ async function testWithWriteToDisk({
         taskContext,
         irVersion,
     });
-    taskContext.logger.info(`Received compile command: ${compileCmd}`);
-    await compileGeneratedCode({
-        absolutePathToOutput,
-        command: compileCmd,
-        context: taskContext,
-        fixture,
-    });
+    taskContext.logger.info(`Received compile command: ${compileCommand}`);
+    if (compileCommand != null) {
+        await compileGeneratedCode({
+            absolutePathToOutput,
+            command: compileCommand,
+            context: taskContext,
+            fixture,
+        });
+    }
 }
 
 const ALL_AUDIENCES: Audiences = { type: "all" };
