@@ -1,5 +1,5 @@
 import { GenerationLanguage } from "@fern-api/generators-configuration";
-import { CONSOLE_LOGGER } from "@fern-api/logger";
+import { CONSOLE_LOGGER, LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import { FIXTURES, runTests } from "./commands/test/test";
@@ -51,6 +51,10 @@ function addTestCommand(cli: Argv) {
                     alias: "u",
                     description: "Determines whether or not snapshots are written to disk",
                     default: false,
+                })
+                .option("log-level", {
+                    default: LogLevel.Info,
+                    choices: LOG_LEVELS,
                 }),
         async (argv) => {
             const parsedDockerImage = validateAndParseDockerImage(argv.docker);
@@ -60,6 +64,7 @@ function addTestCommand(cli: Argv) {
                 language: argv.language,
                 docker: parsedDockerImage,
                 compileCommand: argv["compile-command"],
+                logLevel: argv["log-level"],
             });
         }
     );
