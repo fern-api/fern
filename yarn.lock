@@ -2317,6 +2317,7 @@ __metadata:
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/local-workspace-runner": "workspace:*"
     "@fern-api/logger": "workspace:*"
+    "@fern-api/logging-execa": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"

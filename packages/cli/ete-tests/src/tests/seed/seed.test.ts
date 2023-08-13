@@ -12,8 +12,10 @@ describe("seed", () => {
                 "v20",
                 "--language",
                 "python",
+                "--compile-command",
+                'echo "hello" && echo "hi"',
                 "--log-level",
-                "warn",
+                "info",
             ],
             {
                 cwd: (await tmp.dir()).path,
