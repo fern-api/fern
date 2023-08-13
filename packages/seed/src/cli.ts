@@ -1,5 +1,5 @@
 import { GenerationLanguage } from "@fern-api/generators-configuration";
-import { CONSOLE_LOGGER } from "@fern-api/logger";
+import { CONSOLE_LOGGER, LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import { FIXTURES, runTests } from "./commands/test/test";
@@ -7,7 +7,10 @@ import { FIXTURES, runTests } from "./commands/test/test";
 void tryRunCli();
 
 export async function tryRunCli(): Promise<void> {
-    const cli: Argv = yargs(hideBin(process.argv));
+    const cli: Argv = yargs(hideBin(process.argv)).option("log-level", {
+        default: LogLevel.Info,
+        choices: LOG_LEVELS,
+    });
 
     addTestCommand(cli);
 
