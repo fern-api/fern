@@ -3820,8 +3820,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
-            ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
-            ["@fern-api/ir-migrations", "workspace:packages/cli/generation/ir-migrations"],\
             ["@fern-api/local-workspace-runner", "workspace:packages/cli/generation/local-generation/local-workspace-runner"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
