@@ -165,7 +165,7 @@ async function testWithWriteToDisk({
         });
         if (compileCommand != null) {
             const commands = compileCommand.split("&&").map((command) => command.trim());
-            for(const command of commands){
+            for (const command of commands) {
                 taskContext.logger.info(`Running command: ${command}`);
                 const spaceDelimitedCommand = command.split(" ");
                 const result = await loggingExeca(
