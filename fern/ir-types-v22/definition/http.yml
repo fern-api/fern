@@ -146,7 +146,9 @@ types:
 
   StreamingResponseChunkType:
     union:
-      json: types.TypeReference
+      json:
+        type: types.TypeReference
+        key: json
       text: {}
 
   MaybeStreamingResponse:
