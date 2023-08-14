@@ -8,7 +8,7 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .resources.basic_auth.client import AsyncBasicAuthClient, BasicAuthClient
 
 
-class SeedApi:
+class SeedBasicAuth:
     def __init__(
         self,
         *,
@@ -23,7 +23,7 @@ class SeedApi:
         self.basic_auth = BasicAuthClient(client_wrapper=self._client_wrapper)
 
 
-class AsyncSeedApi:
+class AsyncSeedBasicAuth:
     def __init__(
         self,
         *,

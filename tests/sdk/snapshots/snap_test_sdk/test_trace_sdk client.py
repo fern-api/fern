@@ -26,10 +26,8 @@ class FernIr:
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         timeout: typing.Optional[float] = None
     ):
-        if base_url is None and environment is None:
-            raise Exception("Please pass in either base_url or environment to construct the client")
         self._client_wrapper = SyncClientWrapper(
-            base_url=base_url if base_url is not None else environment.value,
+            base_url=_get_base_url(base_url=base_url, environment=environment),
             x_random_header=x_random_header,
             token=token,
             httpx_client=httpx.Client(timeout=timeout),
@@ -54,10 +52,8 @@ class AsyncFernIr:
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         timeout: typing.Optional[float] = None
     ):
-        if base_url is None and environment is None:
-            raise Exception("Please pass in either base_url or environment to construct the client")
         self._client_wrapper = AsyncClientWrapper(
-            base_url=base_url if base_url is not None else environment.value,
+            base_url=_get_base_url(base_url=base_url, environment=environment),
             x_random_header=x_random_header,
             token=token,
             httpx_client=httpx.AsyncClient(timeout=timeout),
@@ -70,3 +66,12 @@ class AsyncFernIr:
         self.problem = AsyncProblemClient(client_wrapper=self._client_wrapper)
         self.submission = AsyncSubmissionClient(client_wrapper=self._client_wrapper)
         self.sysprop = AsyncSyspropClient(client_wrapper=self._client_wrapper)
+
+
+def _get_base_url(*, base_url: typing.Optional[str] = None, environment: FernIrEnvironment) -> str:
+    if base_url is not None:
+        return base_url
+    elif environment is not None:
+        return environment.value
+    else:
+        raise Exception("Please pass in either base_url or environment to construct the client")

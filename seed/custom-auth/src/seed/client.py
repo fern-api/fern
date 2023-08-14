@@ -8,7 +8,7 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .resources.custom_auth.client import AsyncCustomAuthClient, CustomAuthClient
 
 
-class SeedApi:
+class SeedCustomAuth:
     def __init__(self, *, base_url: str, custom_auth_scheme: str, timeout: typing.Optional[float] = 60):
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url, custom_auth_scheme=custom_auth_scheme, httpx_client=httpx.Client(timeout=timeout)
@@ -16,7 +16,7 @@ class SeedApi:
         self.custom_auth = CustomAuthClient(client_wrapper=self._client_wrapper)
 
 
-class AsyncSeedApi:
+class AsyncSeedCustomAuth:
     def __init__(self, *, base_url: str, custom_auth_scheme: str, timeout: typing.Optional[float] = 60):
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url, custom_auth_scheme=custom_auth_scheme, httpx_client=httpx.AsyncClient(timeout=timeout)

@@ -42,6 +42,8 @@ class RootClientGenerator:
     RESPONSE_VARIABLE = EndpointResponseCodeWriter.RESPONSE_VARIABLE
     RESPONSE_JSON_VARIABLE = EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE
 
+    GET_BASEURL_FUNCTION_NAME = "_get_base_url"
+
     def __init__(
         self,
         *,
@@ -55,6 +57,7 @@ class RootClientGenerator:
         self._class_name = class_name
         self._async_class_name = async_class_name
         self._is_default_body_parameter_used = False
+        self._environments_config = self._context.ir.environments
 
         client_wrapper_generator = ClientWrapperGenerator(context=self._context)
         self._client_wrapper_constructor_params = (
@@ -77,6 +80,33 @@ class RootClientGenerator:
             declaration=self._create_class_declaration(is_async=True),
             should_export=False,
         )
+        if self._environments_config is not None:
+            environments_union = self._environments_config.environments.get_as_union()
+            if environments_union.type == "singleBaseUrl":
+                source_file.add_declaration(
+                    AST.FunctionDeclaration(
+                        name=RootClientGenerator.GET_BASEURL_FUNCTION_NAME,
+                        signature=AST.FunctionSignature(
+                            named_parameters=[
+                                AST.NamedFunctionParameter(
+                                    name=RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME,
+                                    type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                                ),
+                                AST.NamedFunctionParameter(
+                                    name=RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
+                                    type_hint=AST.TypeHint(self._context.get_reference_to_environments_class())
+                                    if self._environments_config.default_environment is not None
+                                    else AST.TypeHint.optional(
+                                        AST.TypeHint(self._context.get_reference_to_environments_class())
+                                    ),
+                                ),
+                            ],
+                            return_type=AST.TypeHint.str_(),
+                        ),
+                        body=AST.CodeWriter(self._write_get_base_url_function),
+                    ),
+                    should_export=False,
+                )
 
     def _create_class_declaration(self, *, is_async: bool) -> AST.ClassDeclaration:
         constructor_parameters = self._get_constructor_parameters(is_async=is_async)
@@ -229,18 +259,11 @@ class RootClientGenerator:
                     )
                 )
             elif environments_config.environments.get_as_union().type == "singleBaseUrl":
-                writer.write_line(
-                    f"if {RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME} is None and {RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME} is None:"
-                )
-                with writer.indent():
-                    writer.write_line(
-                        'raise Exception("Please pass in either base_url or environment to construct the client")'
-                    )
                 client_wrapper_constructor_kwargs.append(
                     (
                         ClientWrapperGenerator.BASE_URL_PARAMETER_NAME,
                         AST.Expression(
-                            f"{RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME} if {RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME} is not None else {RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME}.value"
+                            f"{RootClientGenerator.GET_BASEURL_FUNCTION_NAME}({RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME}={RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME}, {RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME}={RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME})"
                         ),
                     )
                 )
@@ -321,6 +344,20 @@ class RootClientGenerator:
         writer.write_line("# this is used as the default value for optional parameters")
         writer.write(f"{DEFAULT_BODY_PARAMETER_VALUE} = ")
         writer.write_node(AST.TypeHint.cast(AST.TypeHint.any(), AST.Expression("...")))
+        writer.write_newline_if_last_line_not()
+
+    def _write_get_base_url_function(self, writer: AST.NodeWriter) -> None:
+        writer.write_line(f"if {RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME} is not None:")
+        with writer.indent():
+            writer.write_line(f"return {RootClientGenerator.BASE_URL_CONSTRUCTOR_PARAMETER_NAME}")
+        writer.write_line(f"elif {RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME} is not None:")
+        with writer.indent():
+            writer.write_line(f"return {RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME}.value")
+        writer.write("else:")
+        with writer.indent():
+            writer.write_line(
+                'raise Exception("Please pass in either base_url or environment to construct the client")'
+            )
         writer.write_newline_if_last_line_not()
 
     def _get_client_wrapper_constructor_parameter_name(
