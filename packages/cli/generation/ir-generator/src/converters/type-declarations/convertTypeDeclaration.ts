@@ -1,5 +1,5 @@
 import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
-import { ExampleType, Type, TypeDeclaration } from "@fern-fern/ir-model/types";
+import { ExampleType, Type, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";

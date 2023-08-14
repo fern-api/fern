@@ -1,4 +1,4 @@
-export * as V23 from "@fern-fern/ir-model";
+export { FernIr as V23 } from "@fern-fern/ir-sdk";
 export * as V1 from "@fern-fern/ir-v1-model";
 export * as V10 from "@fern-fern/ir-v10-model";
 export * as V11 from "@fern-fern/ir-v11-model";

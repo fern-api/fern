@@ -4,7 +4,7 @@ import {
     HttpRequestBody,
     HttpRequestBodyReference,
     InlinedRequestBodyProperty,
-} from "@fern-fern/ir-model/http";
+} from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { getExtensionsAsList, getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";

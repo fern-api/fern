@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { createMigrationTester } from "../../../__test__/utils/runFixtureThroughMigration";
+import { createMigrationTester } from "../../../__test__/utils/createMigrationTester";
 import { V16_TO_V15_MIGRATION } from "../migrateFromV16ToV15";
 
 const runMigration = createMigrationTester(V16_TO_V15_MIGRATION);

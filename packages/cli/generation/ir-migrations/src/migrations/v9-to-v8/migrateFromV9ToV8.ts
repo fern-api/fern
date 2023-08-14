@@ -33,6 +33,7 @@ export const V9_TO_V8_MIGRATION: IrMigration<
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
     },
+    jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v9, { taskContext, targetGenerator }): IrVersions.V8.ir.IntermediateRepresentation => {
         for (const [_, type] of Object.entries(v9.types)) {
             if (type.shape._type === "union" && type.shape.baseProperties.length > 0) {

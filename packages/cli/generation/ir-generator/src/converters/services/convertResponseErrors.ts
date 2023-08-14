@@ -1,5 +1,5 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { ResponseErrors } from "@fern-fern/ir-model/http";
+import { ResponseErrors } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { parseErrorName } from "../../utils/parseErrorName";
 

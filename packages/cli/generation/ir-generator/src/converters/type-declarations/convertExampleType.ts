@@ -15,7 +15,7 @@ import {
     ExampleTypeReferenceShape,
     ExampleTypeShape,
     PrimitiveType,
-} from "@fern-fern/ir-model/types";
+} from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
@@ -236,7 +236,7 @@ export function convertTypeReferenceExample({
                 file: fileContainingRawTypeReference,
             });
             const parsedReferenceToNamedType = fileContainingRawTypeReference.parseTypeReference(named);
-            if (parsedReferenceToNamedType._type !== "named") {
+            if (parsedReferenceToNamedType.type !== "named") {
                 throw new Error("Type reference is not to a named type.");
             }
             const typeName: DeclaredTypeName = {
@@ -286,7 +286,7 @@ function convertPrimitiveExample({
             if (typeof example !== "string") {
                 throw new Error("Example is not a string");
             }
-            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.datetime(example));
+            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.datetime(new Date(example)));
         },
         date: () => {
             if (typeof example !== "string") {
@@ -330,7 +330,7 @@ function convertPrimitiveExample({
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uuid(example));
         },
-        _unknown: () => {
+        _other: () => {
             throw new Error("Unknown primitive type: " + typeBeingExemplified);
         },
     });
@@ -499,7 +499,7 @@ function convertUnionProperties({
         typeResolver,
     });
 
-    switch (parsedSingleUnionTypeProperties._type) {
+    switch (parsedSingleUnionTypeProperties.propertiesType) {
         case "singleProperty": {
             if (!isPlainObject(example)) {
                 throw new Error("Example is not an object");

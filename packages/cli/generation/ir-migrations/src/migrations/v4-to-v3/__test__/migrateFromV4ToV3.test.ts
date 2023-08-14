@@ -1,6 +1,6 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { IrVersions } from "../../../ir-versions";
-import { createMigrationTester } from "../../../__test__/utils/runFixtureThroughMigration";
+import { createMigrationTester } from "../../../__test__/utils/createMigrationTester";
 import { V4_TO_V3_MIGRATION } from "../migrateFromV4ToV3";
 
 const runMigration = createMigrationTester(V4_TO_V3_MIGRATION);

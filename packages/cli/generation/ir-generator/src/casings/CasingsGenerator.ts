@@ -1,5 +1,5 @@
 import { GenerationLanguage } from "@fern-api/generators-configuration";
-import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-fern/ir-model/commons";
+import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-fern/ir-sdk/api";
 import { camelCase, snakeCase, upperFirst } from "lodash-es";
 import { RESERVED_KEYWORDS } from "./reserved";
 

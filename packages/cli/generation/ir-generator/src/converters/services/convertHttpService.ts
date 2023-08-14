@@ -8,8 +8,8 @@ import {
     PathParameter,
     PathParameterLocation,
     ResponseErrors,
-} from "@fern-fern/ir-model/http";
-import { TypeReference } from "@fern-fern/ir-model/types";
+    TypeReference,
+} from "@fern-fern/ir-sdk/api";
 import urlJoin from "url-join";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";

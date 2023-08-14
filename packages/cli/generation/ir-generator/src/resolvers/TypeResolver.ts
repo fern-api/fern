@@ -1,6 +1,6 @@
 import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
 import { isRawAliasDefinition, RawSchemas, recursivelyVisitRawTypeReference } from "@fern-api/yaml-schema";
-import { ContainerType, Literal, TypeReference } from "@fern-fern/ir-model/types";
+import { ContainerType, Literal, TypeReference } from "@fern-fern/ir-sdk/api";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { parseInlineType } from "../utils/parseInlineType";
 import { parseReferenceToTypeName } from "../utils/parseReferenceToTypeName";
@@ -261,7 +261,7 @@ export class TypeResolverImpl implements TypeResolver {
         }
 
         const parsedTypeReference = parseInlineType({ type: referenceToNamedType, file: referencedIn });
-        if (parsedTypeReference._type !== "named") {
+        if (parsedTypeReference.type !== "named") {
             return undefined;
         }
 

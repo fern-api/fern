@@ -6,7 +6,7 @@ import {
     MultipleBaseUrlsEnvironments,
     SingleBaseUrlEnvironment,
     SingleBaseUrlEnvironments,
-} from "@fern-fern/ir-model/environment";
+} from "@fern-fern/ir-sdk/api";
 import { CasingsGenerator } from "../casings/CasingsGenerator";
 
 export function convertEnvironments({
@@ -25,7 +25,7 @@ export function convertEnvironments({
     }
 
     return {
-        defaultEnvironment,
+        defaultEnvironment: defaultEnvironment ?? undefined,
         environments: visitRawEnvironmentDeclaration<Environments>(firstEnvironment, {
             singleBaseUrl: () =>
                 Environments.singleBaseUrl(convertSingleBaseUrlEnvironments({ environments, casingsGenerator })),
