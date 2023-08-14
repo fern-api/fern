@@ -76,7 +76,11 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 new AuthSchemeHandler(requestOptionsTypeSpec, builderTypeSpec, getHeadersCodeBlock);
         List<AuthSchemeFieldAndMethods> fields = new ArrayList<>();
         for (AuthScheme authScheme : generatorContext.getIr().getAuth().getSchemes()) {
-            fields.add(authScheme.visit(authSchemeHandler));
+            AuthSchemeFieldAndMethods fieldAndMethods = authScheme.visit(authSchemeHandler);
+            // TODO(dsinghvi): Support basic auth and remove null check
+            if (fieldAndMethods != null) {
+                fields.add(fieldAndMethods);
+            }
         }
         for (HttpHeader httpHeader : generatorContext.getIr().getHeaders()) {
             AuthScheme authScheme = AuthScheme.header(HeaderAuthScheme.builder()
