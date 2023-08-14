@@ -1355,10 +1355,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-model@npm:^0.0.1195":
-  version: 0.0.1195
-  resolution: "@fern-fern/ir-model@npm:0.0.1195"
-  checksum: 5abaf7f66c2fc96159354f649087db024505151227f7ef3e2a86ae4edaa6fc8196e6034b4ce413e6d1aef6e103877d0668bbf3e9817a9f164c78b48520c72b88
+"@fern-fern/ir-model@npm:0.0.2807":
+  version: 0.0.2807
+  resolution: "@fern-fern/ir-model@npm:0.0.2807"
+  checksum: 0aab0aa7afe75be5a4d1c32e3321552668edf70ab6eab8f243897203107b1710a2db7d6e7ba26fa8aee37c7960bb21b78b28bf793e44eef16aa5700abc7bd548
   languageName: node
   linkType: hard
 
@@ -3749,7 +3749,7 @@ __metadata:
     "@babel/preset-env": ^7.18.2
     "@babel/preset-typescript": ^7.17.12
     "@fern-fern/generator-exec-client": ^0.0.6
-    "@fern-fern/ir-model": ^0.0.1195
+    "@fern-fern/ir-model": 0.0.2807
     "@types/jest": ^27.5.0
     "@types/js-yaml": ^4.0.5
     "@types/lodash-es": ^4.17.6

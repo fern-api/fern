@@ -276,6 +276,18 @@ function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArrayS
                 format: "uuid",
             };
         },
+        date: () => {
+            return {
+                type: "string",
+                format: "date",
+            };
+        },
+        base64: () => {
+            return {
+                type: "string",
+                format: "byte",
+            };
+        },
         _unknown: () => {
             throw new Error("Encountered unknown primitiveType: " + primitiveType);
         },
@@ -368,11 +380,11 @@ function getExampleFromEndpointResponse(
 ): ExampleEndpointSuccessResponse | undefined {
     for (const service of Object.values(ir.services)) {
         for (const endpoint of service.endpoints) {
-            if (endpoint.examples.length <= 0) {
+            if (endpoint.examples.length <= 0 || endpoint.response?.type !== "json") {
                 continue;
             }
             if (
-                endpoint.response?.responseBodyType._type === "named" &&
+                endpoint.response.responseBodyType._type === "named" &&
                 areDeclaredTypeNamesEqual(endpoint.response.responseBodyType, declaredTypeName)
             ) {
                 const okResponseExample = endpoint.examples.find((exampleEndpoint) => {

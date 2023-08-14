@@ -9,8 +9,8 @@ import {
     HttpMethod,
     HttpPath,
     HttpRequestBody,
+    HttpResponse,
     HttpService,
-    NonStreamingResponse,
     PathParameter,
     QueryParameter,
     ResponseError,
@@ -138,8 +138,8 @@ function convertHttpEndpoint({
         summary: httpEndpoint.displayName ?? undefined,
     };
 
-    if (httpService.baseUrl != null) {
-        const baseUrlId = httpService.baseUrl;
+    if (httpEndpoint.baseUrl != null) {
+        const baseUrlId = httpEndpoint.baseUrl;
         if (environments?.environments.type !== "multipleBaseUrls") {
             throw new Error("baseUrl is defined environments are not multipleBaseUrls");
         }
@@ -300,6 +300,9 @@ function convertRequestBody({
                 },
             };
         },
+        bytes: () => {
+            throw new Error("bytes is not supported");
+        },
         _unknown: () => {
             throw new Error("Unknown HttpRequestBody type: " + httpRequest.type);
         },
@@ -313,7 +316,7 @@ function convertResponse({
     errorDiscriminationStrategy,
     examples,
 }: {
-    httpResponse: NonStreamingResponse | null | undefined;
+    httpResponse: HttpResponse | null | undefined;
     responseErrors: ResponseErrors;
     errorsByName: Record<string, ErrorDeclaration>;
     errorDiscriminationStrategy: ErrorDiscriminationStrategy;
@@ -324,7 +327,7 @@ function convertResponse({
         responseByStatusCode["204"] = {
             description: "",
         };
-    } else {
+    } else if (httpResponse.type === "json") {
         const convertedResponse: OpenAPIV3.MediaTypeObject = {
             schema: convertTypeReference(httpResponse.responseBodyType),
         };

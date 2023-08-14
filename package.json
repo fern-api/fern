@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@fern-fern/generator-exec-client": "^0.0.6",
-    "@fern-fern/ir-model": "^0.0.1195",
+    "@fern-fern/ir-model": "0.0.2807",
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",
     "openapi-types": "^12.0.0",
