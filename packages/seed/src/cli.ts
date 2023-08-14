@@ -1,38 +1,22 @@
 import { GenerationLanguage } from "@fern-api/generators-configuration";
-import { CONSOLE_LOGGER } from "@fern-api/logger";
-import { TaskContext } from "@fern-api/task-context";
+import { CONSOLE_LOGGER, LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
-import { FIXTURE, runTests } from "./commands/test";
-import { TaskContextImpl } from "./TaskContextImpl";
+import { FIXTURES, runTests } from "./commands/test/test";
 
 void tryRunCli();
 
 export async function tryRunCli(): Promise<void> {
     const cli: Argv = yargs(hideBin(process.argv));
-    const taskContext = new TaskContextImpl({
-        logImmediately: (logs) => {
-            logs.forEach((log) => {
-                CONSOLE_LOGGER.info(...log.parts);
-            });
-        },
-        takeOverTerminal: async () => {
-            return;
-        },
-        shouldBufferLogs: false,
-        instrumentPostHogEvent: () => {
-            return;
-        },
-    });
 
-    addTestCommand(cli, taskContext);
+    addTestCommand(cli);
 
     await cli.parse();
 
-    taskContext.logger.info("Seed has finished...");
+    CONSOLE_LOGGER.info("Seed has finished...");
 }
 
-function addTestCommand(cli: Argv, taskContext: TaskContext) {
+function addTestCommand(cli: Argv) {
     cli.command(
         "test",
         "Run all snapshot tests",
@@ -53,24 +37,34 @@ function addTestCommand(cli: Argv, taskContext: TaskContext) {
                 })
                 .option("fixture", {
                     type: "string",
-                    choices: Object.values(FIXTURE),
+                    choices: Object.values(FIXTURES),
                     demandOption: false,
                     description: "Runs on all fixtures if not provided",
                 })
                 .options("compile-command", {
                     type: "string",
-                    demandOption: true,
+                    demandOption: false,
                     description: "User inputted command to compile generated code with",
+                })
+                .option("update", {
+                    type: "boolean",
+                    alias: "u",
+                    description: "Determines whether or not snapshots are written to disk",
+                    default: false,
+                })
+                .option("log-level", {
+                    default: LogLevel.Info,
+                    choices: LOG_LEVELS,
                 }),
         async (argv) => {
             const parsedDockerImage = validateAndParseDockerImage(argv.docker);
             await runTests({
-                fixture: argv.fixture,
+                fixtures: argv.fixture != null ? [argv.fixture] : Object.values(FIXTURES),
                 irVersion: argv.irVersion,
                 language: argv.language,
                 docker: parsedDockerImage,
-                compileCmd: argv["compile-command"],
-                taskContext,
+                compileCommand: argv["compile-command"],
+                logLevel: argv["log-level"],
             });
         }
     );
