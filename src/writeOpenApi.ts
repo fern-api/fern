@@ -1,6 +1,7 @@
 import { GeneratorConfig } from "@fern-fern/generator-exec-client/model/config";
 import { ExitStatusUpdate, GeneratorUpdate } from "@fern-fern/generator-exec-client/model/logging";
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
@@ -60,5 +61,7 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
 }
 
 async function loadIntermediateRepresentation(pathToFile: string): Promise<IntermediateRepresentation> {
-    return JSON.parse((await readFile(pathToFile)).toString());
+    const irString = (await readFile(pathToFile)).toString();
+    const irJson = JSON.parse(irString);
+    return IrSerialization.IntermediateRepresentation.parseOrThrow(irJson);
 }

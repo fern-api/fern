@@ -1,6 +1,9 @@
-import { EnvironmentsConfig } from "@fern-fern/ir-model/environment";
-import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import {
+    ContainerType,
+    EnvironmentsConfig,
+    ErrorDeclaration,
+    ErrorDiscriminationByPropertyStrategy,
+    ErrorDiscriminationStrategy,
     ExampleEndpointCall,
     ExampleInlinedRequestBodyProperty,
     FileUploadRequestProperty,
@@ -15,9 +18,10 @@ import {
     QueryParameter,
     ResponseError,
     ResponseErrors,
-} from "@fern-fern/ir-model/http";
-import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
-import { ContainerType, Type, TypeDeclaration, TypeReference } from "@fern-fern/ir-model/types";
+    Type,
+    TypeDeclaration,
+    TypeReference,
+} from "@fern-fern/ir-sdk/api";
 import { isEqual, size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import urlJoin from "url-join";
@@ -191,7 +195,7 @@ function convertHttpMethod(httpMethod: HttpMethod): OpenAPIV3.HttpMethods {
         delete: () => {
             return OpenAPIV3.HttpMethods.DELETE;
         },
-        _unknown: () => {
+        _other: () => {
             throw new Error("Encountered unknown http method: " + httpMethod);
         },
     });
@@ -287,7 +291,7 @@ function convertRequestBody({
                                             ...convertTypeReference(bodyProperty.valueType),
                                         };
                                     },
-                                    _unknown: () => {
+                                    _other: () => {
                                         throw new Error("Unkonwn FileUploadRequestProperty: " + property.type);
                                     },
                                 });
@@ -303,7 +307,7 @@ function convertRequestBody({
         bytes: () => {
             throw new Error("bytes is not supported");
         },
-        _unknown: () => {
+        _other: () => {
             throw new Error("Unknown HttpRequestBody type: " + httpRequest.type);
         },
     });
@@ -437,7 +441,7 @@ function convertResponse({
                 };
             }
         },
-        _unknown: () => {
+        _other: () => {
             throw new Error("Unknown error discrimination strategy: " + errorDiscriminationStrategy.type);
         },
     });
@@ -445,16 +449,16 @@ function convertResponse({
 }
 
 function typeIsObject({ type, typesByName }: { type: Type; typesByName: Record<string, TypeDeclaration> }): boolean {
-    if (type._type === "object") {
+    if (type.type === "object") {
         return true;
-    } else if (type._type === "alias") {
+    } else if (type.type === "alias") {
         return typeReferenceIsObject(type.aliasOf, typesByName);
     }
     return false;
 }
 
 function typeReferenceIsObject(typeReference: TypeReference, typesByName: Record<string, TypeDeclaration>): boolean {
-    if (typeReference._type === "named") {
+    if (typeReference.type === "named") {
         const key = getDeclaredTypeNameKey(typeReference);
         const typeDeclaration = typesByName[key];
         if (typeDeclaration == null) {
@@ -642,15 +646,15 @@ function isTypeReferenceRequired({
     typeReference: TypeReference;
     typesByName: Record<string, TypeDeclaration>;
 }): boolean {
-    if (typeReference._type === "container" && typeReference.container._type === "optional") {
+    if (typeReference.type === "container" && typeReference.container.type === "optional") {
         return false;
-    } else if (typeReference._type === "named") {
+    } else if (typeReference.type === "named") {
         const key = getDeclaredTypeNameKey(typeReference);
         const typeDeclaration = typesByName[key];
         if (typeDeclaration == null) {
             throw new Error("Encountered non-existent type: " + typeReference.name.originalName);
         }
-        if (typeDeclaration.shape._type === "alias") {
+        if (typeDeclaration.shape.type === "alias") {
             return isTypeReferenceRequired({ typeReference: typeDeclaration.shape.aliasOf, typesByName });
         }
     }

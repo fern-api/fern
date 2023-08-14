@@ -1,6 +1,10 @@
-import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
-import { DeclaredTypeName, TypeDeclaration } from "@fern-fern/ir-model/types";
+import {
+    DeclaredErrorName,
+    DeclaredTypeName,
+    ErrorDeclaration,
+    IntermediateRepresentation,
+    TypeDeclaration,
+} from "@fern-fern/ir-sdk/api";
 import { OpenAPIV3 } from "openapi-types";
 import { convertServices } from "./converters/servicesConverter";
 import { convertType } from "./converters/typeConverter";

@@ -1,6 +1,10 @@
-import { NameAndWireValue } from "@fern-fern/ir-model/commons";
-import { ExampleInlinedRequestBodyProperty } from "@fern-fern/ir-model/http";
-import { DeclaredTypeName, ExampleObjectProperty, TypeReference } from "@fern-fern/ir-model/types";
+import {
+    DeclaredTypeName,
+    ExampleInlinedRequestBodyProperty,
+    ExampleObjectProperty,
+    NameAndWireValue,
+    TypeReference,
+} from "@fern-fern/ir-sdk/api";
 import { OpenAPIV3 } from "openapi-types";
 import { convertTypeReference, getReferenceFromDeclaredTypeName, OpenApiComponentSchema } from "./typeConverter";
 
@@ -26,13 +30,13 @@ export function convertObject({
         const convertedObjectProperty = convertTypeReference(objectProperty.valueType);
 
         let example: unknown = undefined;
-        if (objectProperty.example != null && objectProperty.valueType._type === "primitive") {
+        if (objectProperty.example != null && objectProperty.valueType.type === "primitive") {
             example = objectProperty.example.value.jsonExample;
         } else if (
             objectProperty.example != null &&
-            objectProperty.valueType._type === "container" &&
-            objectProperty.valueType.container._type === "list" &&
-            objectProperty.valueType.container.list._type === "primitive"
+            objectProperty.valueType.type === "container" &&
+            objectProperty.valueType.container.type === "list" &&
+            objectProperty.valueType.container.list.type === "primitive"
         ) {
             example = objectProperty.example.value.jsonExample;
         }
@@ -43,7 +47,7 @@ export function convertObject({
             example,
         };
         const isOptionalProperty =
-            objectProperty.valueType._type === "container" && objectProperty.valueType.container._type === "optional";
+            objectProperty.valueType.type === "container" && objectProperty.valueType.container.type === "optional";
         if (!isOptionalProperty) {
             required.push(objectProperty.name.wireValue);
         }

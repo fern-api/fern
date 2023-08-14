@@ -1,12 +1,13 @@
-import { ExampleEndpointSuccessResponse, ExampleRequestBody } from "@fern-fern/ir-model/http";
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import {
     AliasTypeDeclaration,
     ContainerType,
     DeclaredTypeName,
     EnumTypeDeclaration,
+    ExampleEndpointSuccessResponse,
     ExampleObjectProperty,
+    ExampleRequestBody,
     ExampleType,
+    IntermediateRepresentation,
     PrimitiveType,
     SingleUnionTypeProperties,
     Type,
@@ -14,7 +15,7 @@ import {
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration,
-} from "@fern-fern/ir-model/types";
+} from "@fern-fern/ir-sdk/api";
 import isEqual from "lodash-es/isEqual";
 import { OpenAPIV3 } from "openapi-types";
 import { convertObject } from "./convertObject";
@@ -91,8 +92,8 @@ export function convertType(typeDeclaration: TypeDeclaration, ir: IntermediateRe
         undiscriminatedUnion: (undiscriminatedUnionDeclaration) => {
             return convertUndiscriminatedUnion({ undiscriminatedUnionDeclaration, docs });
         },
-        _unknown: () => {
-            throw new Error("Encountered unknown type: " + shape._type);
+        _other: () => {
+            throw new Error("Encountered unknown type: " + shape.type);
         },
     });
     return {
@@ -172,8 +173,8 @@ export function convertUnion({
                 ],
                 required: [unionTypeDeclaration.discriminant.wireValue],
             }),
-            _unknown: () => {
-                throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape._type);
+            _other: () => {
+                throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape.propertiesType);
             },
         });
     });
@@ -191,7 +192,7 @@ export function convertUnion({
                 description: property.docs ?? undefined,
                 ...convertTypeReference(property.valueType),
             };
-            if (!(property.valueType._type === "container" && property.valueType.container._type === "optional")) {
+            if (!(property.valueType.type === "container" && property.valueType.container.type === "optional")) {
                 schema.required = [...(schema.required ?? []), property.name.wireValue];
             }
             return acc;
@@ -233,8 +234,8 @@ export function convertTypeReference(typeReference: TypeReference): OpenApiCompo
         unknown: () => {
             return {};
         },
-        _unknown: () => {
-            throw new Error("Encountered unknown typeReference: " + typeReference._type);
+        _other: () => {
+            throw new Error("Encountered unknown typeReference: " + typeReference.type);
         },
     });
 }
@@ -288,7 +289,7 @@ function convertPrimitiveType(primitiveType: PrimitiveType): OpenAPIV3.NonArrayS
                 format: "byte",
             };
         },
-        _unknown: () => {
+        _other: () => {
             throw new Error("Encountered unknown primitiveType: " + primitiveType);
         },
     });
@@ -310,9 +311,9 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
         },
         map: (mapType) => {
             if (
-                mapType.keyType._type === "primitive" &&
+                mapType.keyType.type === "primitive" &&
                 mapType.keyType.primitive === "STRING" &&
-                mapType.valueType._type === "unknown"
+                mapType.valueType.type === "unknown"
             ) {
                 return {
                     type: "object",
@@ -336,8 +337,8 @@ function convertContainerType(containerType: ContainerType): OpenApiComponentSch
                 enum: [literalType.string],
             };
         },
-        _unknown: () => {
-            throw new Error("Encountered unknown containerType: " + containerType._type);
+        _other: () => {
+            throw new Error("Encountered unknown containerType: " + containerType.type);
         },
     });
 }
@@ -364,7 +365,7 @@ function getExampleFromEndpointRequest(
             }
             if (
                 endpoint.requestBody?.type === "reference" &&
-                endpoint.requestBody.requestBodyType._type === "named" &&
+                endpoint.requestBody.requestBodyType.type === "named" &&
                 areDeclaredTypeNamesEqual(endpoint.requestBody.requestBodyType, declaredTypeName)
             ) {
                 return endpoint.examples[0]?.request ?? undefined;
@@ -384,7 +385,7 @@ function getExampleFromEndpointResponse(
                 continue;
             }
             if (
-                endpoint.response.responseBodyType._type === "named" &&
+                endpoint.response.responseBodyType.type === "named" &&
                 areDeclaredTypeNamesEqual(endpoint.response.responseBodyType, declaredTypeName)
             ) {
                 const okResponseExample = endpoint.examples.find((exampleEndpoint) => {

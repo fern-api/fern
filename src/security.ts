@@ -1,4 +1,4 @@
-import { ApiAuth, AuthScheme, AuthSchemesRequirement } from "@fern-fern/ir-model/auth";
+import { ApiAuth, AuthScheme, AuthSchemesRequirement } from "@fern-fern/ir-sdk/api";
 import { OpenAPIV3 } from "openapi-types";
 
 export function constructEndpointSecurity(apiAuth: ApiAuth): OpenAPIV3.SecurityRequirementObject[] {
@@ -18,7 +18,7 @@ export function constructEndpointSecurity(apiAuth: ApiAuth): OpenAPIV3.SecurityR
             apiAuth.schemes.map((scheme) => ({
                 [getNameForAuthScheme(scheme)]: [],
             })),
-        _unknown: () => {
+        _other: () => {
             throw new Error("Unknown auth scheme requiremen: " + apiAuth.requirement);
         },
     });
@@ -42,8 +42,8 @@ export function constructSecuritySchemes(apiAuth: ApiAuth): Record<string, OpenA
                 in: "header",
                 name: header.name.wireValue,
             }),
-            _unknown: () => {
-                throw new Error("Unknown auth scheme: " + scheme._type);
+            _other: () => {
+                throw new Error("Unknown auth scheme: " + scheme.type);
             },
         });
     }
@@ -56,8 +56,8 @@ function getNameForAuthScheme(authScheme: AuthScheme): string {
         bearer: () => "BearerAuth",
         basic: () => "BasicAuth",
         header: (header) => `${header.name.name.pascalCase.unsafeName}Auth`,
-        _unknown: () => {
-            throw new Error("Unknown auth scheme: " + authScheme._type);
+        _other: () => {
+            throw new Error("Unknown auth scheme: " + authScheme.type);
         },
     });
 }
