@@ -23112,7 +23112,7 @@ exports[`ir {"name":"streaming"} 1`] = `
                         "type": "streaming",
                         "dataEventType": {
                             "type": "json",
-                            "value": {
+                            "json": {
                                 "_type": "primitive",
                                 "primitive": "STRING"
                             }
@@ -23285,7 +23285,7 @@ exports[`ir {"name":"streaming"} 1`] = `
                         "type": "streaming",
                         "dataEventType": {
                             "type": "json",
-                            "value": {
+                            "json": {
                                 "_type": "primitive",
                                 "primitive": "STRING"
                             }
