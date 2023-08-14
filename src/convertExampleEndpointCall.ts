@@ -1,6 +1,10 @@
-import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { ExampleEndpointCall, HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
-import { TypeDeclaration } from "@fern-fern/ir-model/types";
+import {
+    ErrorDeclaration,
+    ExampleEndpointCall,
+    HttpEndpoint,
+    HttpService,
+    TypeDeclaration,
+} from "@fern-fern/ir-sdk/api";
 import { PostmanExampleResponse, PostmanHeader } from "@fern-fern/postman-sdk/api";
 import { isEqual, startCase } from "lodash";
 import { GeneratedExampleRequest } from "./request/GeneratedExampleRequest";

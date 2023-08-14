@@ -1,14 +1,15 @@
-import { FileUploadRequestProperty, HttpRequestBody } from "@fern-fern/ir-model/http";
 import {
     ContainerType,
     DeclaredTypeName,
+    FileUploadRequestProperty,
+    HttpRequestBody,
     PrimitiveType,
     SingleUnionTypeProperties,
     SingleUnionTypeProperty,
     Type,
     TypeDeclaration,
     TypeReference,
-} from "@fern-fern/ir-model/types";
+} from "@fern-fern/ir-sdk/api";
 import { noop } from "lodash";
 
 const ISO_DATE = "1994-11-05";
@@ -25,7 +26,7 @@ export function getMockBodyFromTypeReference({
     allTypes: TypeDeclaration[];
     visitedTypes?: Set<string>;
 }): unknown {
-    if (typeReference._type === "named") {
+    if (typeReference.type === "named") {
         if (visitedTypes.has(typeReference.typeId)) {
             return undefined;
         }
@@ -43,7 +44,7 @@ export function getMockBodyFromTypeReference({
                 date: () => ISO_DATE,
                 uuid: () => UUID,
                 base64: () => BASE_64,
-                _unknown: () => {
+                _other: () => {
                     throw new Error("Encountered unknown primtiveType: " + primitive);
                 },
             }),
@@ -67,8 +68,8 @@ export function getMockBodyFromTypeReference({
                 },
                 set: (value) => [getMockBodyFromTypeReference({ typeReference: value, allTypes, visitedTypes })],
                 optional: (value) => getMockBodyFromTypeReference({ typeReference: value, allTypes, visitedTypes }),
-                _unknown: () => {
-                    throw new Error("Encountered unknown wireMessage: " + typeReference._type);
+                _other: () => {
+                    throw new Error("Encountered unknown wireMessage: " + typeReference.type);
                 },
                 literal: () => {
                     throw new Error("Literals are unsupported!");
@@ -78,8 +79,8 @@ export function getMockBodyFromTypeReference({
             return getMockBodyFromType(getType(typeName, allTypes), allTypes, visitedTypes);
         },
         unknown: () => "UNKNOWN",
-        _unknown: () => {
-            throw new Error("Encountered unknown type reference: " + typeReference._type);
+        _other: () => {
+            throw new Error("Encountered unknown type reference: " + typeReference.type);
         },
     });
 }
@@ -160,8 +161,8 @@ function getMockBodyFromType(
                         ...discriminantProperties,
                     };
                 },
-                _unknown: () => {
-                    throw new Error("Encountered unknown typeReference: " + firstUnionType.shape._type);
+                _other: () => {
+                    throw new Error("Encountered unknown typeReference: " + firstUnionType.shape.propertiesType);
                 },
             });
         },
@@ -177,8 +178,8 @@ function getMockBodyFromType(
                 visitedTypes,
             });
         },
-        _unknown: () => {
-            throw new Error("Unknown type: " + type.shape._type);
+        _other: () => {
+            throw new Error("Unknown type: " + type.shape.type);
         },
     });
 }
@@ -234,7 +235,7 @@ export function getMockRequestBody({
                             visitedTypes,
                         });
                     },
-                    _unknown: () => {
+                    _other: () => {
                         throw new Error("Unknown FileUploadRequestProperty: " + property.type);
                     },
                 });
@@ -244,7 +245,7 @@ export function getMockRequestBody({
         bytes: () => {
             throw new Error("bytes is not supported");
         },
-        _unknown: () => {
+        _other: () => {
             throw new Error("Unknown HttpRequestBody: " + requestBody.type);
         },
     });

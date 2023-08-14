@@ -1,8 +1,13 @@
-import { ApiAuth, AuthScheme } from "@fern-fern/ir-model/auth";
-import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
-import { IntermediateRepresentation, Package } from "@fern-fern/ir-model/ir";
-import { TypeDeclaration } from "@fern-fern/ir-model/types";
+import {
+    ApiAuth,
+    AuthScheme,
+    ErrorDeclaration,
+    HttpEndpoint,
+    HttpService,
+    IntermediateRepresentation,
+    Package,
+    TypeDeclaration,
+} from "@fern-fern/ir-sdk/api";
 import {
     PostmanCollectionEndpointItem,
     PostmanCollectionItem,
@@ -78,8 +83,8 @@ function filterAuthSchemes(auth: ApiAuth): AuthScheme[] {
                 return (hasSeenAuthorizationHeader = true);
             },
             header: () => true,
-            _unknown: () => {
-                throw new Error("Unknown auth scheme: " + scheme._type);
+            _other: () => {
+                throw new Error("Unknown auth scheme: " + scheme.type);
             },
         });
     });

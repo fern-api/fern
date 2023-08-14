@@ -1,5 +1,4 @@
-import { HttpEndpoint, HttpHeader, HttpMethod, HttpPath, HttpService } from "@fern-fern/ir-model/http";
-import { TypeDeclaration } from "@fern-fern/ir-model/types";
+import { HttpEndpoint, HttpHeader, HttpMethod, HttpPath, HttpService, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import {
     PostmanHeader,
     PostmanMethod,
@@ -91,7 +90,7 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
             put: () => PostmanMethod.Put,
             patch: () => PostmanMethod.Patch,
             delete: () => PostmanMethod.Delete,
-            _unknown: () => {
+            _other: () => {
                 throw new Error("Unexpected httpMethod: " + httpMethod);
             },
         });

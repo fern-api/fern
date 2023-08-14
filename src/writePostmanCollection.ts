@@ -1,7 +1,8 @@
 import { validateSchema } from "@fern-api/config-management-commons";
 import { ExitStatusUpdate, GeneratorUpdate, LogLevel } from "@fern-fern/generator-exec-sdk/resources";
 import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { FernPostmanClient } from "@fern-fern/postman-sdk";
 import * as PostmanParsing from "@fern-fern/postman-sdk/serialization";
 import { readFile, writeFile } from "fs/promises";
@@ -177,5 +178,7 @@ async function publishCollection({
 }
 
 async function loadIntermediateRepresentation(pathToFile: string): Promise<IntermediateRepresentation> {
-    return JSON.parse((await readFile(pathToFile)).toString());
+    const irString = (await readFile(pathToFile)).toString();
+    const irJson = JSON.parse(irString);
+    return IrSerialization.IntermediateRepresentation.parseOrThrow(irJson);
 }

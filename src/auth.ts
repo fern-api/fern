@@ -1,4 +1,4 @@
-import { AuthScheme, HeaderAuthScheme } from "@fern-fern/ir-model/auth";
+import { AuthScheme, HeaderAuthScheme } from "@fern-fern/ir-sdk/api";
 import { PostmanHeader, PostmanRequestAuth, PostmanVariable } from "@fern-fern/postman-sdk/api";
 import { getReferenceToVariable } from "./utils";
 
@@ -56,8 +56,8 @@ export function convertAuth(schemes: AuthScheme[]): PostmanRequestAuth | undefin
                     ],
                 };
             },
-            _unknown: () => {
-                throw new Error("Unknown auth scheme: " + scheme._type);
+            _other: () => {
+                throw new Error("Unknown auth scheme: " + scheme.type);
             },
         });
 
@@ -82,8 +82,8 @@ export function getAuthHeaders(schemes: AuthScheme[]): PostmanHeader[] {
                     description: header.docs ?? undefined,
                 },
             ],
-            _unknown: () => {
-                throw new Error("Unknown auth scheme: " + scheme._type);
+            _other: () => {
+                throw new Error("Unknown auth scheme: " + scheme.type);
             },
         })
     );
@@ -117,8 +117,8 @@ export function getVariablesForAuthScheme(scheme: AuthScheme): PostmanVariable[]
                 type: "string",
             },
         ],
-        _unknown: () => {
-            throw new Error("Unknown auth scheme: " + scheme._type);
+        _other: () => {
+            throw new Error("Unknown auth scheme: " + scheme.type);
         },
     });
 }
