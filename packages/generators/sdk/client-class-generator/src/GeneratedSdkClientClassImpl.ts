@@ -108,6 +108,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 const requestBody = endpoint.requestBody ?? undefined;
 
                 const getGeneratedEndpointRequest = () => {
+                    if (requestBody?.type === "bytes") {
+                        throw new Error("bytes is not supported");
+                    }
                     if (requestBody?.type === "fileUpload") {
                         return new GeneratedFileUploadEndpointRequest({
                             packageId,

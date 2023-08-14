@@ -38,10 +38,8 @@ jobs:
           command: git --no-pager diff --exit-code
 
   test:
-    # this is machine because of the docker-utils tests
-    machine:
-      image: ubuntu-2004:current
-      docker_layer_caching: true
+    docker:
+      - image: cimg/node:lts
     steps:
       - checkout
       - node/install-packages:
@@ -49,7 +47,7 @@ jobs:
       - run:
           name: Run tests
           command: |
-            npm install -g fern-api
+            sudo npm install -g fern-api
             yarn test --ci
       - run:
           name: Ensure no changes to git-tracked files

@@ -222,7 +222,15 @@ export class PersistedTypescriptProject {
         });
         await git(["init"]);
         await git(["add", "."]);
-        await git(["commit", "-m", '"Initial commit"']);
+        await git([
+            "-c",
+            "user.name='fern'",
+            "-c",
+            "user.email='hey@buildwithfern.com'",
+            "commit",
+            "-m",
+            '"Initial commit"',
+        ]);
         await git(["clean", "-fdx"]);
 
         await rm(join(this.directory, ".git"), { recursive: true });

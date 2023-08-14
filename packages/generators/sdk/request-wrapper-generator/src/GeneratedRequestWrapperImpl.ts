@@ -100,6 +100,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                         });
                     }
                 },
+                bytes: () => {
+                    throw new Error("bytes is not supported");
+                },
                 _unknown: () => {
                     throw new Error("Unknown HttpRequestBody: " + this.endpoint.requestBody?.type);
                 },
@@ -229,7 +232,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             }
         }
         if (this.endpoint.requestBody != null) {
-            const areBodyPropertiesOptional = HttpRequestBody._visit(this.endpoint.requestBody, {
+            const areBodyPropertiesOptional = HttpRequestBody._visit<boolean>(this.endpoint.requestBody, {
                 reference: ({ requestBodyType }) => this.isTypeOptional(requestBodyType, context),
                 inlinedRequestBody: (inlinedRequestBody) => {
                     for (const property of inlinedRequestBody.properties) {
@@ -268,6 +271,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                         }
                     }
                     return true;
+                },
+                bytes: () => {
+                    throw new Error("bytes is not supported");
                 },
                 _unknown: () => {
                     throw new Error("Unknown HttpRequestBody: " + this.endpoint.requestBody?.type);
