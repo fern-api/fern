@@ -1,4 +1,4 @@
-import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-model/types";
+import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { getWriterForMultiLineUnionType, maybeAddDocs } from "@fern-typescript/commons";
 import { GeneratedUndiscriminatedUnionType, ModelContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";

@@ -1,4 +1,4 @@
-import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-model/types";
+import { UndiscriminatedUnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { GeneratedUndiscriminatedUnionTypeSchema, ModelContext } from "@fern-typescript/contexts";

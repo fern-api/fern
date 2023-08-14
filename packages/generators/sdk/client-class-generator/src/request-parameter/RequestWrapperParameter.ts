@@ -1,4 +1,4 @@
-import { HttpHeader, QueryParameter } from "@fern-fern/ir-model/http";
+import { HttpHeader, QueryParameter } from "@fern-fern/ir-sdk/api";
 import { GeneratedRequestWrapper, RequestWrapperNonBodyProperty, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { AbstractRequestParameter } from "./AbstractRequestParameter";

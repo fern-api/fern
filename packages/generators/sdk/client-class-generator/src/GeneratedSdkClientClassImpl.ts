@@ -1,8 +1,18 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AuthScheme, BasicAuthScheme, BearerAuthScheme, HeaderAuthScheme } from "@fern-fern/ir-model/auth";
-import { HttpEndpoint, HttpHeader, HttpResponse, PathParameter } from "@fern-fern/ir-model/http";
-import { IntermediateRepresentation, Package } from "@fern-fern/ir-model/ir";
-import { VariableDeclaration, VariableId } from "@fern-fern/ir-model/variables";
+import {
+    AuthScheme,
+    BasicAuthScheme,
+    BearerAuthScheme,
+    HeaderAuthScheme,
+    HttpEndpoint,
+    HttpHeader,
+    HttpResponse,
+    IntermediateRepresentation,
+    Package,
+    PathParameter,
+    VariableDeclaration,
+    VariableId,
+} from "@fern-fern/ir-sdk/api";
 import {
     getTextOfTsNode,
     JavaScriptRuntime,
@@ -218,7 +228,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             request: getGeneratedEndpointRequest(),
                             includeSerdeLayer,
                         }),
-                    _unknown: () => {
+                    _other: () => {
                         throw new Error("Unknown Response type: " + endpoint.response?.type);
                     },
                 });
@@ -254,8 +264,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 header: (header) => {
                     this.authHeaders.push(header);
                 },
-                _unknown: () => {
-                    throw new Error("Unknown auth scheme: " + authScheme._type);
+                _other: () => {
+                    throw new Error("Unknown auth scheme: " + authScheme.type);
                 },
             });
         }

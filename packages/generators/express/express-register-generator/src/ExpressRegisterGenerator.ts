@@ -1,4 +1,4 @@
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { GeneratedExpressRegister } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { GeneratedExpressRegisterImpl } from "./GeneratedExpressRegisterImpl";

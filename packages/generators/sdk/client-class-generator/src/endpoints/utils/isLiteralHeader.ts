@@ -1,4 +1,4 @@
-import { HttpHeader } from "@fern-fern/ir-model/http";
+import { HttpHeader } from "@fern-fern/ir-sdk/api";
 import { SdkContext } from "@fern-typescript/contexts";
 
 export function isLiteralHeader(header: HttpHeader, context: SdkContext): boolean {
@@ -7,7 +7,7 @@ export function isLiteralHeader(header: HttpHeader, context: SdkContext): boolea
 
 export function getLiteralValueForHeader(header: HttpHeader, context: SdkContext): string | undefined {
     const resolvedType = context.type.resolveTypeReference(header.valueType);
-    if (resolvedType._type === "container" && resolvedType.container._type === "literal") {
+    if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
         return resolvedType.container.literal.string;
     } else {
         return undefined;

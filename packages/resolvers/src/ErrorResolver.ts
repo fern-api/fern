@@ -1,6 +1,4 @@
-import { ErrorId } from "@fern-fern/ir-model/commons";
-import { DeclaredErrorName, ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { DeclaredErrorName, ErrorDeclaration, ErrorId, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 
 type SimpleErrorName = string;
 

@@ -1,6 +1,4 @@
-import { SubpackageId } from "@fern-fern/ir-model/commons";
-import { HttpService } from "@fern-fern/ir-model/http";
-import { IntermediateRepresentation, Package, Subpackage } from "@fern-fern/ir-model/ir";
+import { HttpService, IntermediateRepresentation, Package, Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api";
 import { PackageId } from "@fern-typescript/commons";
 
 export class PackageResolver {

@@ -1,5 +1,4 @@
-import { HttpEndpoint } from "@fern-fern/ir-model/http";
-import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
+import { ErrorDiscriminationStrategy, HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedEndpointErrorUnion, GeneratedUnion, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
@@ -75,7 +74,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
         return ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
             property: ({ discriminant }) => discriminant.name.camelCase.unsafeName,
             statusCode: () => GeneratedEndpointErrorUnionImpl.STATUS_CODE_DISCRIMINANT,
-            _unknown: () => {
+            _other: () => {
                 throw new Error("Unknown error discrimination strategy: " + errorDiscriminationStrategy.type);
             },
         });

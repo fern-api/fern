@@ -3,7 +3,7 @@ import {
     ExampleTypeShape,
     SingleUnionTypeProperty,
     UnionTypeDeclaration,
-} from "@fern-fern/ir-model/types";
+} from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { GeneratedUnion, GeneratedUnionType, ModelContext } from "@fern-typescript/contexts";
 import { GeneratedUnionImpl } from "@fern-typescript/union-generator";
@@ -97,7 +97,7 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
                         .getGeneratedType(exampleNamedType.typeName)
                         .buildExample(exampleNamedType.shape, context, opts),
                 noProperties: () => undefined,
-                _unknown: () => {
+                _other: () => {
                     throw new Error("Unknown ExampleSingleUnionTypeProperties: " + example.properties.type);
                 },
             }),
@@ -108,7 +108,7 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
                         const unionMember = this.shape.types.find(
                             (member) => member.discriminantValue.wireValue === example.wireDiscriminantValue
                         );
-                        if (unionMember == null || unionMember.shape._type !== "singleProperty") {
+                        if (unionMember == null || unionMember.shape.propertiesType !== "singleProperty") {
                             throw new Error(
                                 "Cannot generate union example because union member is not singleProperty."
                             );
@@ -132,7 +132,7 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
                         return generatedType.buildExampleProperties(exampleNamedType.shape, context, opts);
                     },
                     noProperties: () => [],
-                    _unknown: () => {
+                    _other: () => {
                         throw new Error("Unknown ExampleSingleUnionTypeProperties: " + example.properties.type);
                     },
                 }

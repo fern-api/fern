@@ -1,6 +1,4 @@
-import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { ResponseError } from "@fern-fern/ir-model/http";
-import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
+import { ErrorDeclaration, ErrorDiscriminationStrategy, ResponseError } from "@fern-fern/ir-sdk/api";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import {
@@ -59,7 +57,7 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
         return ErrorDiscriminationStrategy._visit<string | number>(this.errorDiscriminationStrategy, {
             property: () => this.errorDeclaration.discriminantValue.wireValue,
             statusCode: () => this.errorDeclaration.statusCode,
-            _unknown: () => {
+            _other: () => {
                 throw new Error("Unknown ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
             },
         });
@@ -93,7 +91,7 @@ function getSingleUnionTypeGenerator({
     const propertyName = ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
         property: ({ contentProperty }) => contentProperty.name.camelCase.unsafeName,
         statusCode: () => CONTENT_PROPERTY_FOR_STATUS_CODE_DISCRIMINATED_ERRORS,
-        _unknown: () => {
+        _other: () => {
             throw new Error("Unknown ErrorDiscriminationStrategy: " + errorDiscriminationStrategy.type);
         },
     });

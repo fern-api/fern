@@ -1,4 +1,4 @@
-import { DeclaredTypeName } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName } from "@fern-fern/ir-sdk/api";
 import { Zurg } from "@fern-typescript/commons";
 import { ModelContext } from "@fern-typescript/contexts";
 import { AbstractRawSingleUnionType } from "@fern-typescript/union-schema-generator";

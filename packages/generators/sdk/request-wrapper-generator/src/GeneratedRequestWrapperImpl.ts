@@ -7,8 +7,8 @@ import {
     HttpService,
     InlinedRequestBodyProperty,
     QueryParameter,
-} from "@fern-fern/ir-model/http";
-import { TypeReference } from "@fern-fern/ir-model/types";
+    TypeReference,
+} from "@fern-fern/ir-sdk/api";
 import { getTextOfTsNode, maybeAddDocs } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, RequestWrapperNonBodyProperty, SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";
@@ -94,7 +94,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                             bodyProperty: (inlinedProperty) => {
                                 requestInterface.addProperty(this.getInlineProperty(inlinedProperty, context));
                             },
-                            _unknown: () => {
+                            _other: () => {
                                 throw new Error("Unknown FileUploadRequestProperty: " + property.type);
                             },
                         });
@@ -103,7 +103,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 bytes: () => {
                     throw new Error("bytes is not supported");
                 },
-                _unknown: () => {
+                _other: () => {
                     throw new Error("Unknown HttpRequestBody: " + this.endpoint.requestBody?.type);
                 },
             });
@@ -182,7 +182,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         }
 
         const resolvedType = context.type.resolveTypeReference(queryParameter.valueType);
-        const isQueryParamOptional = resolvedType._type === "container" && resolvedType.container._type === "optional";
+        const isQueryParamOptional = resolvedType.type === "container" && resolvedType.container.type === "optional";
         if (isQueryParamOptional) {
             statements = [
                 ts.factory.createIfStatement(
@@ -260,7 +260,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                             // not present in the body
                             file: () => false,
                             bodyProperty: ({ valueType }) => !this.isTypeOptional(valueType, context),
-                            _unknown: () => {
+                            _other: () => {
                                 throw new Error(
                                     "Unknown FileUploadRequestProperty: " + this.endpoint.requestBody?.type
                                 );
@@ -275,7 +275,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 bytes: () => {
                     throw new Error("bytes is not supported");
                 },
-                _unknown: () => {
+                _other: () => {
                     throw new Error("Unknown HttpRequestBody: " + this.endpoint.requestBody?.type);
                 },
             });
@@ -288,7 +288,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 
     private isTypeOptional(typeReference: TypeReference, context: SdkContext): boolean {
         const resolvedType = context.type.resolveTypeReference(typeReference);
-        return resolvedType._type === "container" && resolvedType.container._type === "optional";
+        return resolvedType.type === "container" && resolvedType.container.type === "optional";
     }
 
     public getPropertyNameOfQueryParameter(queryParameter: QueryParameter): RequestWrapperNonBodyProperty {
@@ -312,7 +312,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private getAllNonLiteralHeaders(context: SdkContext): HttpHeader[] {
         return [...this.service.headers, ...this.endpoint.headers].filter((header) => {
             const resolvedType = context.type.resolveTypeReference(header.valueType);
-            const isLiteral = resolvedType._type === "container" && resolvedType.container._type === "literal";
+            const isLiteral = resolvedType.type === "container" && resolvedType.container.type === "literal";
             return !isLiteral;
         });
     }

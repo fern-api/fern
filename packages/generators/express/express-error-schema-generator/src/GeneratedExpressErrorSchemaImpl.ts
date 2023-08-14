@@ -1,6 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { TypeReference } from "@fern-fern/ir-model/types";
+import { ErrorDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressErrorSchema } from "@fern-typescript/contexts";
@@ -34,7 +33,7 @@ export class GeneratedExpressErrorSchemaImpl
         // named errors are not generated - consumers should
         // (de)serialize the named type directly.
         // unknown request bodies don't need to be serialized.
-        switch (this.type._type) {
+        switch (this.type.type) {
             case "primitive":
             case "container":
                 this.writeSchemaToFile(context);
@@ -58,7 +57,7 @@ export class GeneratedExpressErrorSchemaImpl
             return referenceToBody;
         }
 
-        switch (this.type._type) {
+        switch (this.type.type) {
             case "named":
                 return context.typeSchema
                     .getSchemaOfNamedType(this.type, { isGeneratingSchema: false })

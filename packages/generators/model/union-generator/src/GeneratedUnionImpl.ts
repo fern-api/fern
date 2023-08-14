@@ -1,4 +1,4 @@
-import { ObjectProperty } from "@fern-fern/ir-model/types";
+import { ObjectProperty } from "@fern-fern/ir-sdk/api";
 import {
     FernWriters,
     getTextOfTsNode,

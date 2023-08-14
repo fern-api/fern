@@ -1,4 +1,4 @@
-import { Name } from "@fern-fern/ir-model/commons";
+import { Name } from "@fern-fern/ir-sdk/api";
 import { ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkEndpointTypeSchemasContext } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";

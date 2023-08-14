@@ -1,10 +1,10 @@
-import { NameAndWireValue } from "@fern-fern/ir-model/commons";
 import {
+    NameAndWireValue,
     SingleUnionType,
     SingleUnionTypeProperties,
     SingleUnionTypeProperty,
     UnionTypeDeclaration,
-} from "@fern-fern/ir-model/types";
+} from "@fern-fern/ir-sdk/api";
 import { ModelContext } from "@fern-typescript/contexts";
 import {
     AbstractKnownSingleUnionType,
@@ -52,8 +52,8 @@ export class ParsedSingleUnionTypeForUnion<Context extends ModelContext> extends
                                 context.type.getReferenceToType(singleProperty.type),
                             noOptionalProperties,
                         }),
-                    _unknown: () => {
-                        throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape._type);
+                    _other: () => {
+                        throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape.propertiesType);
                     },
                 }
             ),

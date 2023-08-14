@@ -1,5 +1,4 @@
-import { FileUploadRequestProperty } from "@fern-fern/ir-model/http";
-import { ContainerType, Type, TypeReference } from "@fern-fern/ir-model/types";
+import { ContainerType, FileUploadRequestProperty, Type, TypeReference } from "@fern-fern/ir-sdk/api";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { FileUploadRequestParameter } from "../../request-parameter/FileUploadRequestParameter";
@@ -129,7 +128,7 @@ export function appendPropertyToFormData({
 
             return statement;
         },
-        _unknown: () => {
+        _other: () => {
             throw new Error("Unknown addPropertyToFormData: " + property.type);
         },
     });
@@ -144,8 +143,8 @@ function isMaybeIterable(typeReference: TypeReference, context: SdkContext): boo
                 map: () => false,
                 literal: () => false,
                 optional: (itemType) => isMaybeIterable(itemType, context),
-                _unknown: () => {
-                    throw new Error("Unknown ContainerType: " + container._type);
+                _other: () => {
+                    throw new Error("Unknown ContainerType: " + container.type);
                 },
             }),
         named: (typeName) => {
@@ -156,15 +155,15 @@ function isMaybeIterable(typeReference: TypeReference, context: SdkContext): boo
                 union: () => false,
                 alias: ({ aliasOf }) => isMaybeIterable(aliasOf, context),
                 undiscriminatedUnion: ({ members }) => members.some((member) => isMaybeIterable(member.type, context)),
-                _unknown: () => {
-                    throw new Error("Unknown Type: " + typeDeclaration.shape._type);
+                _other: () => {
+                    throw new Error("Unknown Type: " + typeDeclaration.shape.type);
                 },
             });
         },
         primitive: () => false,
         unknown: () => true,
-        _unknown: () => {
-            throw new Error("Unknown TypeReference: " + typeReference._type);
+        _other: () => {
+            throw new Error("Unknown TypeReference: " + typeReference.type);
         },
     });
 }
@@ -182,8 +181,8 @@ function stringifyIterableItemType(value: ts.Expression, iterable: TypeReference
                     throw new Error("Literal is not iterable.");
                 },
                 optional: (itemType) => stringifyIterableItemType(value, itemType, context),
-                _unknown: () => {
-                    throw new Error("Unknown ContainerType: " + container._type);
+                _other: () => {
+                    throw new Error("Unknown ContainerType: " + container.type);
                 },
             }),
         named: (typeName) => {
@@ -201,8 +200,8 @@ function stringifyIterableItemType(value: ts.Expression, iterable: TypeReference
                 alias: ({ aliasOf }) => stringifyIterableItemType(value, aliasOf, context),
                 undiscriminatedUnion: () =>
                     context.type.stringify(value, TypeReference.unknown(), { includeNullCheckIfOptional: false }),
-                _unknown: () => {
-                    throw new Error("Unknown Type: " + typeDeclaration.shape._type);
+                _other: () => {
+                    throw new Error("Unknown Type: " + typeDeclaration.shape.type);
                 },
             });
         },
@@ -210,8 +209,8 @@ function stringifyIterableItemType(value: ts.Expression, iterable: TypeReference
             throw new Error("Primitive is not iterable.");
         },
         unknown: () => context.type.stringify(value, TypeReference.unknown(), { includeNullCheckIfOptional: false }),
-        _unknown: () => {
-            throw new Error("Unknown TypeReference: " + iterable._type);
+        _other: () => {
+            throw new Error("Unknown TypeReference: " + iterable.type);
         },
     });
 }
@@ -225,8 +224,8 @@ function isDefinitelyIterable(typeReference: TypeReference, context: SdkContext)
                 map: () => false,
                 literal: () => false,
                 optional: (itemType) => isDefinitelyIterable(itemType, context),
-                _unknown: () => {
-                    throw new Error("Unknown ContainerType: " + container._type);
+                _other: () => {
+                    throw new Error("Unknown ContainerType: " + container.type);
                 },
             }),
         named: (typeName) => {
@@ -238,15 +237,15 @@ function isDefinitelyIterable(typeReference: TypeReference, context: SdkContext)
                 alias: ({ aliasOf }) => isDefinitelyIterable(aliasOf, context),
                 undiscriminatedUnion: ({ members }) =>
                     members.every((member) => isDefinitelyIterable(member.type, context)),
-                _unknown: () => {
-                    throw new Error("Unknown Type: " + typeDeclaration.shape._type);
+                _other: () => {
+                    throw new Error("Unknown Type: " + typeDeclaration.shape.type);
                 },
             });
         },
         primitive: () => false,
         unknown: () => false,
-        _unknown: () => {
-            throw new Error("Unknown TypeReference: " + typeReference._type);
+        _other: () => {
+            throw new Error("Unknown TypeReference: " + typeReference.type);
         },
     });
 }
@@ -260,8 +259,8 @@ function isMaybeList(typeReference: TypeReference, context: SdkContext): boolean
                 map: () => false,
                 literal: () => false,
                 optional: (itemType) => isMaybeList(itemType, context),
-                _unknown: () => {
-                    throw new Error("Unknown ContainerType: " + container._type);
+                _other: () => {
+                    throw new Error("Unknown ContainerType: " + container.type);
                 },
             }),
         named: (typeName) => {
@@ -272,15 +271,15 @@ function isMaybeList(typeReference: TypeReference, context: SdkContext): boolean
                 union: () => false,
                 alias: ({ aliasOf }) => isMaybeList(aliasOf, context),
                 undiscriminatedUnion: ({ members }) => members.some((member) => isMaybeList(member.type, context)),
-                _unknown: () => {
-                    throw new Error("Unknown Type: " + typeDeclaration.shape._type);
+                _other: () => {
+                    throw new Error("Unknown Type: " + typeDeclaration.shape.type);
                 },
             });
         },
         primitive: () => false,
         unknown: () => true,
-        _unknown: () => {
-            throw new Error("Unknown TypeReference: " + typeReference._type);
+        _other: () => {
+            throw new Error("Unknown TypeReference: " + typeReference.type);
         },
     });
 }
@@ -294,8 +293,8 @@ function isMaybeSet(typeReference: TypeReference, context: SdkContext): boolean 
                 map: () => false,
                 literal: () => false,
                 optional: (itemType) => isMaybeSet(itemType, context),
-                _unknown: () => {
-                    throw new Error("Unknown ContainerType: " + container._type);
+                _other: () => {
+                    throw new Error("Unknown ContainerType: " + container.type);
                 },
             }),
         named: (typeName) => {
@@ -306,15 +305,15 @@ function isMaybeSet(typeReference: TypeReference, context: SdkContext): boolean 
                 union: () => false,
                 alias: ({ aliasOf }) => isMaybeSet(aliasOf, context),
                 undiscriminatedUnion: ({ members }) => members.some((member) => isMaybeSet(member.type, context)),
-                _unknown: () => {
-                    throw new Error("Unknown Type: " + typeDeclaration.shape._type);
+                _other: () => {
+                    throw new Error("Unknown Type: " + typeDeclaration.shape.type);
                 },
             });
         },
         primitive: () => false,
         unknown: () => true,
-        _unknown: () => {
-            throw new Error("Unknown TypeReference: " + typeReference._type);
+        _other: () => {
+            throw new Error("Unknown TypeReference: " + typeReference.type);
         },
     });
 }

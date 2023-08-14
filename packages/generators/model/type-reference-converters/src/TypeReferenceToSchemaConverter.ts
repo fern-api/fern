@@ -1,4 +1,4 @@
-import { DeclaredTypeName, Literal, MapType, TypeReference } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName, Literal, MapType, TypeReference } from "@fern-fern/ir-sdk/api";
 import { Zurg } from "@fern-typescript/commons";
 import { AbstractTypeReferenceConverter } from "./AbstractTypeReferenceConverter";
 
@@ -58,7 +58,7 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
     protected override literal(literal: Literal): Zurg.Schema {
         return Literal._visit(literal, {
             string: (value) => this.zurg.stringLiteral(value),
-            _unknown: () => {
+            _other: () => {
                 throw new Error("Unknown literal: " + literal.type);
             },
         });

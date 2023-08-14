@@ -1,4 +1,4 @@
-import { SingleUnionTypeProperty } from "@fern-fern/ir-model/types";
+import { SingleUnionTypeProperty } from "@fern-fern/ir-sdk/api";
 import { GeneratedUnion } from "../../commons/GeneratedUnion";
 import { BaseGeneratedType } from "./BaseGeneratedType";
 

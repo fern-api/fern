@@ -1,4 +1,4 @@
-import { HttpEndpoint } from "@fern-fern/ir-model/http";
+import { HttpEndpoint } from "@fern-fern/ir-sdk/api";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 

@@ -1,4 +1,4 @@
-import { EnvironmentsConfig } from "@fern-fern/ir-model/environment";
+import { EnvironmentsConfig } from "@fern-fern/ir-sdk/api";
 import {
     ExportedFilePath,
     getReferenceToExportViaNamespaceImport,

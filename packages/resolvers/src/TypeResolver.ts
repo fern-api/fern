@@ -1,13 +1,13 @@
-import { TypeId } from "@fern-fern/ir-model/commons";
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
 import {
     DeclaredTypeName,
+    IntermediateRepresentation,
     ResolvedTypeReference,
     ShapeType,
     Type,
     TypeDeclaration,
+    TypeId,
     TypeReference,
-} from "@fern-fern/ir-model/types";
+} from "@fern-fern/ir-sdk/api";
 
 /**
  * TypeResolver converts a TypeName to a "resolved" value by following all
@@ -41,8 +41,8 @@ export class TypeResolver {
             container: ResolvedTypeReference.container,
             primitive: ResolvedTypeReference.primitive,
             unknown: ResolvedTypeReference.unknown,
-            _unknown: () => {
-                throw new Error("Unknown type reference type: " + type._type);
+            _other: () => {
+                throw new Error("Unknown type reference type: " + type.type);
             },
         });
     }
@@ -70,8 +70,8 @@ export class TypeResolver {
                     name: typeName,
                     shape: ShapeType.UndiscriminatedUnion,
                 }),
-            _unknown: () => {
-                throw new Error("Unknown type declaration type: " + declaration._type);
+            _other: () => {
+                throw new Error("Unknown type declaration type: " + declaration.type);
             },
         });
     }

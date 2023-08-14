@@ -1,4 +1,4 @@
-import { DeclaredTypeName, Literal, MapType, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName, Literal, MapType, ResolvedTypeReference, TypeReference } from "@fern-fern/ir-sdk/api";
 import { TypeReferenceNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { AbstractTypeReferenceConverter } from "./AbstractTypeReferenceConverter";
@@ -24,8 +24,8 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
             primitive: (primitive) => this.primitive(primitive).isOptional,
             named: () => false,
             unknown: () => this.unknown().isOptional,
-            _unknown: () => {
-                throw new Error("Unexpected ResolvedTypeReference type: " + resolvedType._type);
+            _other: () => {
+                throw new Error("Unexpected ResolvedTypeReference type: " + resolvedType.type);
             },
         });
 
@@ -105,7 +105,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
                     typeNodeWithoutUndefined: typeNode,
                 };
             },
-            _unknown: () => {
+            _other: () => {
                 throw new Error("Unknown literal: " + literal.type);
             },
         });

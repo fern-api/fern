@@ -4,7 +4,7 @@ import {
     ResolvedTypeReference,
     TypeDeclaration,
     TypeReference,
-} from "@fern-fern/ir-model/types";
+} from "@fern-fern/ir-sdk/api";
 import { Reference, TypeReferenceNode } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { GeneratedType } from "./GeneratedType";

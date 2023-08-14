@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { HttpEndpoint, HttpRequestBody, HttpService, SdkRequest, SdkRequestShape } from "@fern-fern/ir-model/http";
+import { HttpEndpoint, HttpRequestBody, HttpService, SdkRequest, SdkRequestShape } from "@fern-fern/ir-sdk/api";
 import { Fetcher, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
@@ -53,7 +53,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                       justRequestBody: (requestBodyReference) =>
                           new RequestBodyParameter({ packageId, requestBodyReference, service, endpoint, sdkRequest }),
                       wrapper: () => new RequestWrapperParameter({ packageId, service, endpoint, sdkRequest }),
-                      _unknown: () => {
+                      _other: () => {
                           throw new Error("Unknown SdkRequest: " + this.endpoint.sdkRequest?.shape.type);
                       },
                   })
@@ -176,7 +176,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                 return false;
             case "reference": {
                 const resolvedType = context.type.resolveTypeReference(requestBody.requestBodyType);
-                return resolvedType._type === "container" && resolvedType.container._type === "optional";
+                return resolvedType.type === "container" && resolvedType.container.type === "optional";
             }
             default:
                 assertNever(requestBody);

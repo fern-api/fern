@@ -1,4 +1,4 @@
-import { SingleUnionTypeProperties, UnionTypeDeclaration } from "@fern-fern/ir-model/types";
+import { SingleUnionTypeProperties, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { Zurg } from "@fern-typescript/commons";
 import { GeneratedUnionType, GeneratedUnionTypeSchema, ModelContext } from "@fern-typescript/contexts";
 import {
@@ -59,8 +59,10 @@ export class GeneratedUnionTypeSchemaImpl<Context extends ModelContext>
                             discriminantValue,
                             getGeneratedType: this.getGeneratedType.bind(this),
                         }),
-                    _unknown: () => {
-                        throw new Error("Unknown SingleUnionTypeProperties type: " + singleUnionType.shape._type);
+                    _other: () => {
+                        throw new Error(
+                            "Unknown SingleUnionTypeProperties type: " + singleUnionType.shape.propertiesType
+                        );
                     },
                 });
             }),

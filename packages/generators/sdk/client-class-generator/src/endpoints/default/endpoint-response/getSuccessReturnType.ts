@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { HttpResponse } from "@fern-fern/ir-model/http";
+import { HttpResponse } from "@fern-fern/ir-sdk/api";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 

@@ -5,7 +5,7 @@ import {
     ResolvedTypeReference,
     ShapeType,
     TypeReference,
-} from "@fern-fern/ir-model/types";
+} from "@fern-fern/ir-sdk/api";
 import { ts } from "ts-morph";
 import { AbstractTypeReferenceConverter } from "./AbstractTypeReferenceConverter";
 
@@ -20,13 +20,13 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
         const isNullable = TypeReference._visit(type, {
             named: (typeName) => {
                 const resolvedType = this.typeResolver.resolveTypeName(typeName);
-                return resolvedType._type === "container" && resolvedType.container._type === "optional";
+                return resolvedType.type === "container" && resolvedType.container.type === "optional";
             },
-            container: (container) => container._type === "optional",
+            container: (container) => container.type === "optional",
             primitive: () => false,
             unknown: () => true,
-            _unknown: () => {
-                throw new Error("Unknown TypeReference: " + type._type);
+            _other: () => {
+                throw new Error("Unknown TypeReference: " + type.type);
             },
         });
 
@@ -58,8 +58,8 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                     set: this.set.bind(this),
                     map: this.map.bind(this),
                     literal: this.literal.bind(this),
-                    _unknown: () => {
-                        throw new Error("Unknown ContainerType: " + containerType._type);
+                    _other: () => {
+                        throw new Error("Unknown ContainerType: " + containerType.type);
                     },
                 }),
             primitive: this.primitive.bind(this),
@@ -73,8 +73,8 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                 return this.jsonStringify.bind(this);
             },
             unknown: this.unknown.bind(this),
-            _unknown: () => {
-                throw new Error("Unknown ResolvedTypeReference: " + resolvedType._type);
+            _other: () => {
+                throw new Error("Unknown ResolvedTypeReference: " + resolvedType.type);
             },
         });
     }
@@ -129,7 +129,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
     protected override literal(literal: Literal): (reference: ts.Expression) => ts.Expression {
         return Literal._visit(literal, {
             string: () => (reference: ts.Expression) => reference,
-            _unknown: () => {
+            _other: () => {
                 throw new Error("Unknown literal: " + literal.type);
             },
         });

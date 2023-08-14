@@ -1,4 +1,4 @@
-import { EnumTypeDeclaration } from "@fern-fern/ir-model/types";
+import { EnumTypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { BaseContext, GeneratedEnumTypeSchema } from "@fern-typescript/contexts";

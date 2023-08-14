@@ -1,5 +1,9 @@
-import { HttpEndpoint, HttpResponse } from "@fern-fern/ir-model/http";
-import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
+import {
+    ErrorDiscriminationByPropertyStrategy,
+    ErrorDiscriminationStrategy,
+    HttpEndpoint,
+    HttpResponse,
+} from "@fern-fern/ir-sdk/api";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedEndpointErrorUnion, GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
@@ -143,7 +147,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                     propertyErrorDiscriminationStrategy,
                 }),
             statusCode: () => this.getSwitchStatementForStatusCodeDiscriminatedErrors(context),
-            _unknown: () => {
+            _other: () => {
                 throw new Error("Unknown ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
             },
         });

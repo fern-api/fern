@@ -1,14 +1,14 @@
-import { FernFilepath } from "@fern-fern/ir-model/commons";
 import {
     EnumTypeDeclaration,
     ExampleType,
+    FernFilepath,
     ObjectTypeDeclaration,
     PrimitiveType,
     Type,
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration,
-} from "@fern-fern/ir-model/types";
+} from "@fern-fern/ir-sdk/api";
 import { Reference } from "@fern-typescript/commons";
 import {
     GeneratedAliasType,
@@ -100,8 +100,8 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
                     fernFilepath,
                     getReferenceToSelf,
                 }),
-            _unknown: () => {
-                throw new Error("Unknown type declaration shape: " + shape._type);
+            _other: () => {
+                throw new Error("Unknown type declaration shape: " + shape.type);
             },
         });
     }
@@ -257,7 +257,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
 }
 
 function isTypeStringLike(type: TypeReference): boolean {
-    if (type._type !== "primitive") {
+    if (type.type !== "primitive") {
         return false;
     }
     return PrimitiveType._visit(type.primitive, {
@@ -270,6 +270,6 @@ function isTypeStringLike(type: TypeReference): boolean {
         uuid: () => true,
         date: () => true,
         base64: () => true,
-        _unknown: () => false,
+        _other: () => false,
     });
 }

@@ -1,5 +1,4 @@
-import { NameAndWireValue } from "@fern-fern/ir-model/commons";
-import { ObjectProperty } from "@fern-fern/ir-model/types";
+import { NameAndWireValue, ObjectProperty } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
 import { getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
 import { GeneratedUnion, ModelContext } from "@fern-typescript/contexts";

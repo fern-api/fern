@@ -1,4 +1,4 @@
-import { EnumTypeDeclaration, EnumValue, ExampleTypeShape } from "@fern-fern/ir-model/types";
+import { EnumTypeDeclaration, EnumValue, ExampleTypeShape } from "@fern-fern/ir-sdk/api";
 import {
     GetReferenceOpts,
     getTextOfTsNode,

@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { HttpEndpoint, PathParameter, PathParameterLocation } from "@fern-fern/ir-model/http";
+import { HttpEndpoint, PathParameter, PathParameterLocation } from "@fern-fern/ir-sdk/api";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
@@ -35,7 +35,7 @@ export function buildUrl({
 
             let referenceToPathParameterValue = getReferenceToPathParameter({ pathParameter, generatedClientClass });
 
-            if (includeSerdeLayer && pathParameter.valueType._type === "named") {
+            if (includeSerdeLayer && pathParameter.valueType.type === "named") {
                 referenceToPathParameterValue = context.typeSchema
                     .getSchemaOfNamedType(pathParameter.valueType, {
                         isGeneratingSchema: false,

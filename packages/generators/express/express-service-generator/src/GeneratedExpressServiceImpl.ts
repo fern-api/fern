@@ -4,9 +4,9 @@ import {
     HttpRequestBody,
     HttpResponse,
     HttpService,
+    Package,
     PathParameter,
-} from "@fern-fern/ir-model/http";
-import { Package } from "@fern-fern/ir-model/ir";
+} from "@fern-fern/ir-sdk/api";
 import { convertHttpPathToExpressRoute, getTextOfTsNode, maybeAddDocs, PackageId } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressService } from "@fern-typescript/contexts";
 import { ClassDeclaration, InterfaceDeclaration, Scope, ts } from "ts-morph";
@@ -352,7 +352,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                 put: () => "put",
                 patch: () => "patch",
                 delete: () => "delete",
-                _unknown: () => {
+                _other: () => {
                     throw new Error("Unknown ");
                 },
             }),
@@ -410,7 +410,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         // no validation required for `unknown` requests or when there's no serde layer
         const isRequestBodyUnknown =
             requestBody.type === "reference" &&
-            context.type.resolveTypeReference(requestBody.requestBodyType)._type === "unknown";
+            context.type.resolveTypeReference(requestBody.requestBodyType).type === "unknown";
         if (!this.includeSerdeLayer || isRequestBodyUnknown) {
             return [
                 this.getTryCatch({
@@ -861,7 +861,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             bytes: () => {
                 throw new Error("bytes is not supported");
             },
-            _unknown: () => {
+            _other: () => {
                 throw new Error("Unknown HttpRequestBody: " + requestBody.type);
             },
         });
@@ -893,7 +893,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             bytes: () => {
                 throw new Error("bytes is not supported");
             },
-            _unknown: () => {
+            _other: () => {
                 throw new Error("Unknown HttpRequestBody: " + requestBodyType.type);
             },
         });
@@ -912,7 +912,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             fileDownload: () => {
                 throw new Error("File download is not supported");
             },
-            _unknown: () => {
+            _other: () => {
                 throw new Error("Unknown HttpResponse: " + response.type);
             },
         });

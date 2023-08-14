@@ -1,5 +1,4 @@
-import { Constants } from "@fern-fern/ir-model/constants";
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { Constants, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import {
     CoreUtilitiesManager,
     createExternalDependencies,

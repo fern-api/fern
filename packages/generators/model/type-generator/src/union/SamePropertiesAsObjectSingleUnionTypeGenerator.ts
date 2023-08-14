@@ -1,4 +1,4 @@
-import { DeclaredTypeName } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName } from "@fern-fern/ir-sdk/api";
 import { ModelContext } from "@fern-typescript/contexts";
 import { SingleUnionTypeGenerator } from "@fern-typescript/union-generator";
 import { OptionalKind, PropertySignatureStructure, ts } from "ts-morph";

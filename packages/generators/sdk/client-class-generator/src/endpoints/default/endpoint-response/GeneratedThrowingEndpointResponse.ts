@@ -1,5 +1,10 @@
-import { HttpEndpoint, HttpResponse, ResponseError } from "@fern-fern/ir-model/http";
-import { ErrorDiscriminationByPropertyStrategy, ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
+import {
+    ErrorDiscriminationByPropertyStrategy,
+    ErrorDiscriminationStrategy,
+    HttpEndpoint,
+    HttpResponse,
+    ResponseError,
+} from "@fern-fern/ir-sdk/api";
 import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
@@ -172,7 +177,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     generateCaseBody,
                     defaultBody,
                 }),
-            _unknown: () => {
+            _other: () => {
                 throw new Error("Unknown ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
             },
         });

@@ -1,4 +1,4 @@
-import { Name } from "@fern-fern/ir-model/commons";
+import { Name } from "@fern-fern/ir-sdk/api";
 import { PackageId } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { GeneratedRequestWrapper } from "./GeneratedRequestWrapper";

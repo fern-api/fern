@@ -5,7 +5,7 @@ import {
     Type,
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration,
-} from "@fern-fern/ir-model/types";
+} from "@fern-fern/ir-sdk/api";
 import { Reference } from "@fern-typescript/commons";
 import {
     GeneratedAliasTypeSchema,
@@ -97,8 +97,8 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
                     getReferenceToGeneratedType,
                     getReferenceToGeneratedTypeSchema,
                 }),
-            _unknown: () => {
-                throw new Error("Unknown type declaration shape: " + shape._type);
+            _other: () => {
+                throw new Error("Unknown type declaration shape: " + shape.type);
             },
         });
     }

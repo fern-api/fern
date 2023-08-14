@@ -1,4 +1,4 @@
-import { Environments, EnvironmentsConfig } from "@fern-fern/ir-model/environment";
+import { Environments, EnvironmentsConfig } from "@fern-fern/ir-sdk/api";
 import { GeneratedEnvironments } from "@fern-typescript/contexts";
 import { EmptyGeneratedEnvironmentsImpl } from "./EmptyGeneratedEnvironmentsImpl";
 import { GeneratedMultipleUrlsEnvironmentsImpl } from "./GeneratedMultipleUrlsEnvironmentsImpl";
@@ -37,7 +37,7 @@ export class EnvironmentsGenerator {
                     environmentUrlsTypeName,
                     defaultEnvironmentId: environmentsConfig.defaultEnvironment ?? undefined,
                 }),
-            _unknown: () => {
+            _other: () => {
                 throw new Error("Unknown environments: " + environmentsConfig.environments.type);
             },
         });

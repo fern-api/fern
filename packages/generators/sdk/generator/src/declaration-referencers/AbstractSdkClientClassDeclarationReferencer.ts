@@ -1,6 +1,6 @@
 import { entries } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { FernFilepath } from "@fern-fern/ir-model/commons";
+import { FernFilepath } from "@fern-fern/ir-sdk/api";
 import {
     ExportDeclaration,
     ExportedDirectory,

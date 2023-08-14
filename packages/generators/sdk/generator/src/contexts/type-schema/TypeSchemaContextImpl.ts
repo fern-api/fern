@@ -1,4 +1,4 @@
-import { DeclaredTypeName, ShapeType, TypeReference } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName, ShapeType, TypeReference } from "@fern-fern/ir-sdk/api";
 import { ImportsManager, Reference, TypeReferenceNode, Zurg } from "@fern-typescript/commons";
 import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
 import { GeneratedTypeSchema, TypeSchemaContext } from "@fern-typescript/contexts";
@@ -163,7 +163,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
 
     private wrapSchemaWithLazy(schema: Zurg.Schema, typeName: DeclaredTypeName): Zurg.Schema {
         const resolvedType = this.typeResolver.resolveTypeName(typeName);
-        return resolvedType._type === "named" && resolvedType.shape === ShapeType.Object
+        return resolvedType.type === "named" && resolvedType.shape === ShapeType.Object
             ? this.coreUtilities.zurg.lazyObject(schema)
             : this.coreUtilities.zurg.lazy(schema);
     }

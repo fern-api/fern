@@ -1,6 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { HttpService } from "@fern-fern/ir-model/http";
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import {
     BundledTypescriptProject,
     convertExportedFilePathToFilePath,

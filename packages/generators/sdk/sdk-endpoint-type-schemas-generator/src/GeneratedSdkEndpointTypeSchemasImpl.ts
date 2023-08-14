@@ -1,6 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
-import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
+import { ErrorDiscriminationStrategy, HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
@@ -55,7 +54,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             // only generate request schemas for referenced request bodies.  inlined
             // request bodies are generated separately.
             if (endpoint.requestBody?.type === "reference") {
-                switch (endpoint.requestBody.requestBodyType._type) {
+                switch (endpoint.requestBody.requestBodyType.type) {
                     case "primitive":
                     case "container":
                         this.generatedRequestSchema = new GeneratedEndpointTypeSchemaImpl({
@@ -78,7 +77,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             }
 
             if (endpoint.response?.type === "json") {
-                switch (endpoint.response.responseBodyType._type) {
+                switch (endpoint.response.responseBodyType.type) {
                     case "primitive":
                     case "container":
                         this.generatedResponseSchema = new GeneratedEndpointTypeSchemaImpl({
@@ -104,7 +103,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                 if (endpoint.response.dataEventType.type === "text") {
                     throw new Error("Non-json responses are not supportd");
                 }
-                switch (endpoint.response.dataEventType.json._type) {
+                switch (endpoint.response.dataEventType.json.type) {
                     case "primitive":
                     case "container":
                         this.generatedStreamDataSchema = new GeneratedEndpointTypeSchemaImpl({
@@ -157,7 +156,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                     discriminationStrategy: properyDiscriminationStrategy,
                 }),
             statusCode: () => StatusCodeDiscriminatedEndpointErrorSchema,
-            _unknown: () => {
+            _other: () => {
                 throw new Error("Unknown ErrorDiscriminationStrategy: " + errorDiscriminationStrategy.type);
             },
         });
@@ -205,7 +204,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             return referenceToParsedRequest;
         }
 
-        switch (this.endpoint.requestBody.requestBodyType._type) {
+        switch (this.endpoint.requestBody.requestBodyType.type) {
             case "unknown":
                 return referenceToParsedRequest;
             case "named":
@@ -249,7 +248,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             return referenceToRawResponse;
         }
 
-        if (this.endpoint.response.responseBodyType._type === "unknown") {
+        if (this.endpoint.response.responseBodyType.type === "unknown") {
             return referenceToRawResponse;
         }
 
@@ -260,7 +259,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             );
         }
 
-        switch (this.endpoint.response.responseBodyType._type) {
+        switch (this.endpoint.response.responseBodyType.type) {
             case "named":
                 return context.typeSchema
                     .getSchemaOfNamedType(this.endpoint.response.responseBodyType, { isGeneratingSchema: false })
@@ -326,7 +325,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             throw new Error("Cannot deserialize non-json stream data");
         }
 
-        if (this.endpoint.response.dataEventType.json._type === "unknown") {
+        if (this.endpoint.response.dataEventType.json.type === "unknown") {
             return visitValid(referenceToRawStreamData);
         }
 
@@ -368,7 +367,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             return referenceToRawStreamData;
         }
 
-        switch (this.endpoint.response.dataEventType.json._type) {
+        switch (this.endpoint.response.dataEventType.json.type) {
             case "unknown":
                 return referenceToRawStreamData;
             case "named":

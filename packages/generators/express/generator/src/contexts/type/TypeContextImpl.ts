@@ -4,7 +4,7 @@ import {
     ResolvedTypeReference,
     TypeDeclaration,
     TypeReference,
-} from "@fern-fern/ir-model/types";
+} from "@fern-fern/ir-sdk/api";
 import { ImportsManager, Reference, TypeReferenceNode } from "@fern-typescript/commons";
 import { GeneratedType, GeneratedTypeReferenceExample, TypeContext } from "@fern-typescript/contexts";
 import { TypeResolver } from "@fern-typescript/resolvers";

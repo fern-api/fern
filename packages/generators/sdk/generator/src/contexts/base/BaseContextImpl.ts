@@ -1,4 +1,4 @@
-import { Constants } from "@fern-fern/ir-model/constants";
+import { Constants } from "@fern-fern/ir-sdk/api";
 import {
     CoreUtilitiesManager,
     createExternalDependencies,

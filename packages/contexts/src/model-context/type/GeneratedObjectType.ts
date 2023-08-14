@@ -1,4 +1,4 @@
-import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-model/types";
+import { ExampleTypeShape, TypeReference } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { BaseGeneratedType } from "./BaseGeneratedType";

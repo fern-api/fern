@@ -1,5 +1,4 @@
-import { SubpackageId } from "@fern-fern/ir-model/commons";
-import { Subpackage } from "@fern-fern/ir-model/ir";
+import { Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api";
 import { getTextOfTsNode, Reference } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ClassDeclaration, Scope, ts } from "ts-morph";

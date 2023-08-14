@@ -1,5 +1,4 @@
-import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
-import { ErrorDiscriminationByPropertyStrategy } from "@fern-fern/ir-model/ir";
+import { DeclaredErrorName, ErrorDiscriminationByPropertyStrategy } from "@fern-fern/ir-sdk/api";
 import { getTextOfTsNode, Zurg } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { AbstractRawSingleUnionType } from "@fern-typescript/union-schema-generator";

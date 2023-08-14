@@ -6,7 +6,7 @@ import {
     PrimitiveType,
     ShapeType,
     TypeReference,
-} from "@fern-fern/ir-model/types";
+} from "@fern-fern/ir-sdk/api";
 import { TypeReferenceNode } from "@fern-typescript/commons";
 import { TypeResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
@@ -33,8 +33,8 @@ export abstract class AbstractTypeReferenceConverter<T> {
             primitive: this.primitive.bind(this),
             container: this.container.bind(this),
             unknown: this.treatUnknownAsAny ? this.any.bind(this) : this.unknown.bind(this),
-            _unknown: () => {
-                throw new Error("Unexpected type reference: " + typeReference._type);
+            _other: () => {
+                throw new Error("Unexpected type reference: " + typeReference.type);
             },
         });
     }
@@ -46,8 +46,8 @@ export abstract class AbstractTypeReferenceConverter<T> {
             set: this.set.bind(this),
             optional: this.optional.bind(this),
             literal: this.literal.bind(this),
-            _unknown: () => {
-                throw new Error("Unexpected container type: " + container._type);
+            _other: () => {
+                throw new Error("Unexpected container type: " + container.type);
             },
         });
     }
@@ -75,7 +75,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
             dateTime: this.dateTime.bind(this),
             date: this.string.bind(this),
             base64: this.string.bind(this),
-            _unknown: () => {
+            _other: () => {
                 throw new Error("Unexpected primitive type: " + primitive);
             },
         });
@@ -83,7 +83,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
 
     protected map(mapType: MapType): T {
         const resolvdKeyType = this.typeResolver.resolveTypeReference(mapType.keyType);
-        if (resolvdKeyType._type === "named" && resolvdKeyType.shape === ShapeType.Enum) {
+        if (resolvdKeyType.type === "named" && resolvdKeyType.shape === ShapeType.Enum) {
             return this.mapWithEnumKeys(mapType);
         } else {
             return this.mapWithNonEnumKeys(mapType);
@@ -95,10 +95,10 @@ export abstract class AbstractTypeReferenceConverter<T> {
 
     protected isTypeReferencePrimitive(typeReference: TypeReference): boolean {
         const resolvedType = this.typeResolver.resolveTypeReference(typeReference);
-        if (resolvedType._type === "primitive") {
+        if (resolvedType.type === "primitive") {
             return true;
         }
-        if (resolvedType._type === "named" && resolvedType.shape === ShapeType.Enum) {
+        if (resolvedType.type === "named" && resolvedType.shape === ShapeType.Enum) {
             return true;
         }
         return false;

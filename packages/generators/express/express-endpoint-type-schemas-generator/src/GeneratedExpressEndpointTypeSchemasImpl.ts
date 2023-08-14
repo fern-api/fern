@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { HttpEndpoint, HttpService } from "@fern-fern/ir-model/http";
+import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
 import { PackageId } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
@@ -32,7 +32,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
             // only generate request schemas for referenced request bodies.  inlined
             // request bodies are generated separately.
             if (endpoint.requestBody?.type === "reference") {
-                switch (endpoint.requestBody.requestBodyType._type) {
+                switch (endpoint.requestBody.requestBodyType.type) {
                     case "primitive":
                     case "container":
                         this.generatedRequestSchema = new GeneratedEndpointTypeSchemaImpl({
@@ -55,7 +55,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
             }
 
             if (endpoint.response?.type === "json") {
-                switch (endpoint.response.responseBodyType._type) {
+                switch (endpoint.response.responseBodyType.type) {
                     case "primitive":
                     case "container":
                         this.generatedResponseSchema = new GeneratedEndpointTypeSchemaImpl({
@@ -106,7 +106,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
             return referenceToRawRequest;
         }
 
-        switch (this.endpoint.requestBody.requestBodyType._type) {
+        switch (this.endpoint.requestBody.requestBodyType.type) {
             case "unknown":
                 return referenceToRawRequest;
             case "named":
@@ -152,7 +152,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
             return referenceToParsedResponse;
         }
 
-        switch (this.endpoint.response.responseBodyType._type) {
+        switch (this.endpoint.response.responseBodyType.type) {
             case "unknown":
                 return referenceToParsedResponse;
             case "named":

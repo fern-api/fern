@@ -1,4 +1,4 @@
-import { Name } from "@fern-fern/ir-model/commons";
+import { Name } from "@fern-fern/ir-sdk/api";
 import { ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import { ExpressInlinedRequestBodyContext, GeneratedExpressInlinedRequestBody } from "@fern-typescript/contexts";
 import { ExpressInlinedRequestBodyGenerator } from "@fern-typescript/express-inlined-request-body-generator";

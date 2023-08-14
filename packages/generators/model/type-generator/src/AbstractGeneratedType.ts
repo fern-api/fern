@@ -1,5 +1,4 @@
-import { FernFilepath } from "@fern-fern/ir-model/commons";
-import { ExampleType, ExampleTypeShape } from "@fern-fern/ir-model/types";
+import { ExampleType, ExampleTypeShape, FernFilepath } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts, getTextOfTsNode, Reference } from "@fern-typescript/commons";
 import { BaseGeneratedType } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";

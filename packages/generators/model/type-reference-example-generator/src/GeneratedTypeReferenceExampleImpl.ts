@@ -4,7 +4,7 @@ import {
     ExamplePrimitive,
     ExampleTypeReference,
     ExampleTypeReferenceShape,
-} from "@fern-fern/ir-model/types";
+} from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { GeneratedTypeReferenceExample, ModelContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
@@ -46,10 +46,10 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     uuid: (uuidExample) => ts.factory.createStringLiteral(uuidExample),
                     datetime: (datetimeExample) =>
                         ts.factory.createNewExpression(ts.factory.createIdentifier("Date"), undefined, [
-                            ts.factory.createStringLiteral(datetimeExample),
+                            ts.factory.createStringLiteral(datetimeExample.toISOString()),
                         ]),
                     date: (dateExample) => ts.factory.createStringLiteral(dateExample),
-                    _unknown: () => {
+                    _other: () => {
                         throw new Error("Unknown primitive example: " + primitiveExample.type);
                     },
                 }),
@@ -83,7 +83,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                         exampleItem != null
                             ? this.buildExample({ example: exampleItem, context, opts })
                             : ts.factory.createIdentifier("undefined"),
-                    _unknown: () => {
+                    _other: () => {
                         throw new Error("Unknown example container type: " + exampleContainer.type);
                     },
                 });
@@ -98,7 +98,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                 }
                 return parsed.expression;
             },
-            _unknown: () => {
+            _other: () => {
                 throw new Error("Unknown example type: " + example.shape.type);
             },
         });
@@ -127,7 +127,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                         throw new Error("Cannot convert datetime to property name");
                     },
                     date: (dateExample) => ts.factory.createStringLiteral(dateExample),
-                    _unknown: () => {
+                    _other: () => {
                         throw new Error("Unknown primitive example: " + primitiveExample.type);
                     },
                 }),
@@ -158,7 +158,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
             unknown: () => {
                 throw new Error("Cannot convert unknown to property name");
             },
-            _unknown: () => {
+            _other: () => {
                 throw new Error("Unknown example type: " + example.shape.type);
             },
         });
