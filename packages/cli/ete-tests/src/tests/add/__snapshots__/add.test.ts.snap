@@ -215,7 +215,9 @@ navigation:
   - api: API Reference
 colors:
   accentPrimary: '#ffffff'
-logo: ./logo.png
+logo:
+  dark: ./logo-dark.png
+  light: ./logo-light.png
 ",
                 "name": "docs.yml",
                 "type": "file",

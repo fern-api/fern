@@ -22,16 +22,11 @@ types:
       - ApiSectionConfiguration
 
   LogoConfiguration:
-    discriminated: false
-    union:
-      - string
-      - LogoInfo
-
-  LogoInfo:
     properties:
-      path: string
+      dark: optional<string>
+      light: optional<string>
       height: optional<double>
-      href: string
+      href: optional<string>
 
   DocsTypographyConfig:
     properties:
