@@ -241,6 +241,9 @@ export function getMockRequestBody({
                 return obj;
             }, {});
         },
+        bytes: () => {
+            throw new Error("bytes is not supported");
+        },
         _unknown: () => {
             throw new Error("Unknown HttpRequestBody: " + requestBody.type);
         },
