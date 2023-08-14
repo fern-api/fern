@@ -15,6 +15,7 @@ export async function loggingExeca(
     args: string[] = [],
     { doNotPipeOutput = false, secrets = [], substitutions = {}, ...execaOptions }: loggingExeca.Options = {}
 ): Promise<ExecaReturnValue> {
+    logger?.info("1");
     const allSubstitutions = secrets.reduce(
         (acc, secret) => ({
             ...acc,
@@ -23,16 +24,24 @@ export async function loggingExeca(
         substitutions
     );
 
+    logger?.info("2");
     let logLine = [executable, ...args].join(" ");
+
+    logger?.info("3");
     for (const [substitutionKey, substitutionValue] of Object.entries(allSubstitutions)) {
         logLine = logLine.replaceAll(substitutionKey, substitutionValue);
     }
 
     logger?.debug(`+ ${logLine}`);
+
+    logger?.info("4");
     const command = execa(executable, args, execaOptions);
+
+    logger?.info("5");
     if (!doNotPipeOutput) {
         command.stdout?.pipe(process.stdout);
         command.stderr?.pipe(process.stderr);
     }
+    logger?.info("6");
     return command;
 }
