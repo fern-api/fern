@@ -166,16 +166,19 @@ async function testWithWriteToDisk({
         if (compileCommand != null) {
             const commands = compileCommand.split("&&").map((command) => command.trim());
             for (const command of commands) {
-                taskContext.logger.error(`Running command: ${command}`);
+                taskContext.logger.info(`Running command: ${command}`);
                 const spaceDelimitedCommand = command.split(" ");
-                await loggingExeca(
+                const result = await loggingExeca(
                     taskContext.logger,
                     spaceDelimitedCommand[0] ?? command,
                     spaceDelimitedCommand.slice(1),
                     {
                         cwd: absolutePathToOutput,
+                        doNotPipeOutput: true,
                     }
                 );
+                taskContext.logger.info(result.stdout);
+                taskContext.logger.info(result.stderr);
             }
         }
         return { type: "success", fixture };
