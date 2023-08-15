@@ -68,7 +68,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-go-sdk
-        version: 0.0.14
+        version: 0.1.1
         config:
           importPath: github.com/<YOUR_ORGANIZATION>/<YOUR_REPOSITORY>/generated/go
         output:
@@ -94,7 +94,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-go-sdk
-        version: 0.0.14
+        version: 0.1.1
         config:
           module:
             path: github.com/<YOUR_ORGANIZATION>/<YOUR_REPOSITORY>
@@ -116,7 +116,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-go-sdk
-        version: 0.0.14
+        version: 0.1.1
         config:
           module:
             path: github.com/<YOUR_ORGANIZATION>/<YOUR_REPOSITORY>
