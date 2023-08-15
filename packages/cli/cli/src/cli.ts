@@ -307,6 +307,20 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     ),
                     cliContext,
                 });
+            } else {
+                // default to loading api workspace to preserve legacy behavior
+                await generateAPIWorkspaces({
+                    project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        commandLineApiWorkspace: argv.api,
+                        defaultToAllApiWorkspaces: false,
+                    }),
+                    cliContext,
+                    version: argv.version,
+                    groupName: argv.group,
+                    shouldLogS3Url: argv.printZipUrl,
+                    keepDocker: argv.keepDocker,
+                    useLocalDocker: argv.local,
+                });
             }
         }
     );

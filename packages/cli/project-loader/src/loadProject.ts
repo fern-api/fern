@@ -153,9 +153,6 @@ async function loadApis({
         return apiWorkspaces;
     }
 
-    if (commandLineApiWorkspace != null) {
-        return context.failAndThrow("--api only supported when you have mutliple APIs");
-    }
     const workspace = await loadAPIWorkspace({
         absolutePathToWorkspace: fernDirectory,
         context,

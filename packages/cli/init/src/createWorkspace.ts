@@ -60,7 +60,7 @@ const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
                     version: "0.7.2",
                     output: {
                         location: "local-file-system",
-                        path: "../../generated/typescript",
+                        path: "../generated/typescript",
                     },
                 },
             ],

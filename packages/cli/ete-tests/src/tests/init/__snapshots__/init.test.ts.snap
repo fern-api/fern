@@ -21,7 +21,7 @@ groups:
         version: 0.7.2
         output:
           location: local-file-system
-          path: ../../generated/typescript
+          path: ../generated/typescript
 ",
         "name": "generators.yml",
         "type": "file",
@@ -178,7 +178,7 @@ groups:
         version: 0.7.2
         output:
           location: local-file-system
-          path: ../../generated/typescript
+          path: ../generated/typescript
 ",
         "name": "generators.yml",
         "type": "file",
@@ -1117,7 +1117,7 @@ groups:
         version: 0.7.2
         output:
           location: local-file-system
-          path: ../../generated/typescript
+          path: ../generated/typescript
 ",
     "name": "generators.yml",
     "type": "file",

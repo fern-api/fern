@@ -100,7 +100,7 @@ groups:
         version: 0.7.2
         output:
           location: local-file-system
-          path: ../../generated/typescript
+          path: ../generated/typescript
       - name: fernapi/fern-java-sdk
         version: 0.3.7
       - name: fernapi/fern-postman
@@ -192,52 +192,7 @@ errors:
     status-code: 404
     type: MovieId
 ",
-<<<<<<< HEAD
             "name": "imdb.yml",
-=======
-                "name": "imdb.yml",
-                "type": "file",
-              },
-            ],
-            "name": "definition",
-            "type": "directory",
-          },
-          {
-            "contents": [
-              {
-                "contents": "title: fern
-navigation:
-  - api: API Reference
-colors:
-  accentPrimary: '#ffffff'
-logo:
-  dark: ./logo-dark.png
-  light: ./logo-light.png
-",
-                "name": "docs.yml",
-                "type": "file",
-              },
-            ],
-            "name": "docs",
-            "type": "directory",
-          },
-          {
-            "contents": "default-group: local
-groups:
-  local:
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 0.7.2
-        output:
-          location: local-file-system
-          path: ../../generated/typescript
-  docs-group:
-    generators: []
-    docs:
-      domain: fern.dev.docs.buildwithfern.com
-",
-            "name": "generators.yml",
->>>>>>> c2f02be6fcc6ae16a8a703090fc324e5f04465a6
             "type": "file",
           },
         ],
@@ -261,19 +216,7 @@ groups:
         version: 0.7.2
         output:
           location: local-file-system
-          path: ../../generated/typescript
-<<<<<<< HEAD
-      - name: fernapi/fern-openapi
-        version: 0.0.28
-        output:
-          location: local-file-system
-          path: ../../generated/openapi
-=======
-  docs-group:
-    generators: []
-    docs:
-      domain: fern.dev.docs.buildwithfern.com
->>>>>>> 5bfc21fbf5a7fde480fafb0409ab1f230c843f06
+          path: ../generated/typescript
 ",
         "name": "generators.yml",
         "type": "file",

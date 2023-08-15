@@ -538,6 +538,49 @@ exports[`fdr {"name":"simple"} 1`] = `
                         }
                     ],
                     "examples": []
+                },
+                {
+                    "auth": false,
+                    "method": "POST",
+                    "id": "upload",
+                    "name": "Upload",
+                    "path": {
+                        "pathParameters": [
+                            {
+                                "key": "movieId",
+                                "type": {
+                                    "value": "type_imdb:MovieId",
+                                    "type": "id"
+                                }
+                            }
+                        ],
+                        "parts": [
+                            {
+                                "value": "/movies",
+                                "type": "literal"
+                            },
+                            {
+                                "value": "/upload/",
+                                "type": "literal"
+                            },
+                            {
+                                "value": "movieId",
+                                "type": "pathParameter"
+                            },
+                            {
+                                "value": "",
+                                "type": "literal"
+                            }
+                        ]
+                    },
+                    "queryParameters": [],
+                    "headers": [],
+                    "errors": [
+                        {
+                            "statusCode": 400
+                        }
+                    ],
+                    "examples": []
                 }
             ],
             "types": [
