@@ -1,1 +1,2 @@
-export { initialize } from "./init";
+export { initializeAPI } from "./initializeAPI";
+export { initializeDocs } from "./initializeDocs";

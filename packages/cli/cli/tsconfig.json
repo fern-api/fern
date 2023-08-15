@@ -9,7 +9,6 @@
     { "path": "../auth" },
     { "path": "../config-management/commons" },
     { "path": "../config-management/generators-configuration" },
-    { "path": "../config-management/manage-docs-configuration" },
     { "path": "../config-management/manage-generator" },
     { "path": "../config-management/project-configuration" },
     { "path": "../generation/ir-generator" },

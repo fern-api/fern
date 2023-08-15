@@ -1,6 +1,6 @@
 import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
-import { initialize } from "@fern-api/init";
+import { initializeAPI, initializeDocs } from "@fern-api/init";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
 import {
@@ -169,6 +169,19 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         "Initialize a Fern API",
         (yargs) =>
             yargs
+                .option("api", {
+                    boolean: true,
+                    description: "Initialize an api.",
+                })
+                .option("docs", {
+                    boolean: true,
+                    description: "Initialize a docs website.",
+                })
+                .option("organization", {
+                    alias: "org",
+                    type: "string",
+                    description: "Organization name",
+                })
                 .option("openapi", {
                     type: "string",
                     description: "Filepath or url to an existing OpenAPI spec",
@@ -179,27 +192,39 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Organization name",
                 }),
         async (argv) => {
-            let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
-            if (argv.openapi != null) {
-                if (isURL(argv.openapi)) {
-                    const tmpFilepath = await loadOpenAPIFromUrl({ url: argv.openapi, cliContext });
-                    absoluteOpenApiPath = AbsoluteFilePath.of(tmpFilepath);
-                } else {
-                    absoluteOpenApiPath = AbsoluteFilePath.of(resolve(cwd(), argv.openapi));
-                }
-                const pathExists = await doesPathExist(absoluteOpenApiPath);
-                if (!pathExists) {
-                    cliContext.failAndThrow(`${absoluteOpenApiPath} does not exist`);
-                }
-            }
-            await cliContext.runTask(async (context) => {
-                await initialize({
-                    organization: argv.organization,
-                    versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
-                    context,
-                    openApiPath: absoluteOpenApiPath,
+            if (argv.api != null && argv.docs != null) {
+                return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
+            } else if (argv.docs != null) {
+                await cliContext.runTask(async (context) => {
+                    await initializeDocs({
+                        organization: argv.organization,
+                        versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
+                        taskContext: context,
+                    });
                 });
-            });
+            } else {
+                let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
+                if (argv.openapi != null) {
+                    if (isURL(argv.openapi)) {
+                        const tmpFilepath = await loadOpenAPIFromUrl({ url: argv.openapi, cliContext });
+                        absoluteOpenApiPath = AbsoluteFilePath.of(tmpFilepath);
+                    } else {
+                        absoluteOpenApiPath = AbsoluteFilePath.of(resolve(cwd(), argv.openapi));
+                    }
+                    const pathExists = await doesPathExist(absoluteOpenApiPath);
+                    if (!pathExists) {
+                        cliContext.failAndThrow(`${absoluteOpenApiPath} does not exist`);
+                    }
+                }
+                await cliContext.runTask(async (context) => {
+                    await initializeAPI({
+                        organization: argv.organization,
+                        versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
+                        context,
+                        openApiPath: absoluteOpenApiPath,
+                    });
+                });
+            }
         }
     );
 }
@@ -238,25 +263,25 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 
 function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        ["generate [group]"],
+        ["generate"],
         "Generate all generators in the specified group",
         (yargs) =>
             yargs
-                .positional("group", {
+                .option("api", {
+                    string: true,
+                    description: "If multiple APIs, specify the name with --api <name>. Otherwise, just --api.",
+                })
+                .option("docs", {
+                    boolean: true,
+                    description: "If multiple docs sites, specify the name with --docs <name>. Otherwise just --docs.",
+                })
+                .option("group", {
                     type: "string",
                     description: "The group to generate",
                 })
                 .option("version", {
                     type: "string",
                     description: "The version for the generated packages",
-                })
-                .option("api", {
-                    string: true,
-                    description: "Only run the command on the provided API",
-                })
-                .option("docs", {
-                    boolean: true,
-                    description: "Generate a documentation website",
                 })
                 .option("printZipUrl", {
                     boolean: true,

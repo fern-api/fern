@@ -51,4 +51,14 @@ describe("fern init", () => {
         const pathOfDirectory = await init({ openApiArg: "https://petstore3.swagger.io/api/v3/openapi.json" });
         expect(await getDirectoryContents(pathOfDirectory)).toMatchSnapshot();
     }, 60_000);
+
+    it("init docs", async () => {
+        const pathOfDirectory = await init();
+
+        await runFernCli(["init", "--docs"], {
+            cwd: pathOfDirectory,
+        });
+
+        expect(await getDirectoryContents(pathOfDirectory)).toMatchSnapshot();
+    }, 60_000);
 });
