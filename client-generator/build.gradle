@@ -41,21 +41,3 @@ docker {
 task dockerTagVersion {
     dependsOn ":client-generator:dockerTag${project.version}"
 }
-
-testSets {
-    eteTest
-}
-
-eteTest {
-    useJUnitPlatform()
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
-}
-
-task deleteSnapshot(type: Exec) {
-    commandLine 'rm', '-rf', 'src/eteTest/java/com/fern/java/client/cli/__snapshots__/ClientGeneratorEteTest.snap'
-}
-
-rootProject.tasks.build.dependsOn eteTest
-tasks.eteTest.dependsOn ':client-generator:dockerTagLatest'

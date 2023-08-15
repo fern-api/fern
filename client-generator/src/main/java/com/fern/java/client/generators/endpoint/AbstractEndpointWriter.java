@@ -43,6 +43,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -201,10 +202,17 @@ public abstract class AbstractEndpointWriter {
             httpResponseBuilder.addStatement("return");
         }
         httpResponseBuilder.endControlFlow();
-        httpResponseBuilder.addStatement("throw new $T()", RuntimeException.class);
+        httpResponseBuilder.addStatement(
+                "throw new $T($L.code(), $T.$L.readValue($L.body().string(), $T.class))",
+                clientGeneratorContext.getPoetClassNameFactory().getApiErrorClassName(),
+                RESPONSE_NAME,
+                generatedObjectMapper.getClassName(),
+                generatedObjectMapper.jsonMapperStaticField().name,
+                RESPONSE_NAME,
+                Object.class);
         httpResponseBuilder
                 .endControlFlow()
-                .beginControlFlow("catch ($T e)", Exception.class)
+                .beginControlFlow("catch ($T e)", IOException.class)
                 .addStatement("throw new $T(e)", RuntimeException.class)
                 .endControlFlow()
                 .build();

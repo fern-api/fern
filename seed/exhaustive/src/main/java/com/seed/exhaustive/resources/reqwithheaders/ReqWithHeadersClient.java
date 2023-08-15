@@ -1,9 +1,11 @@
 package com.seed.exhaustive.resources.reqwithheaders;
 
+import com.seed.exhaustive.core.ApiError;
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.resources.reqwithheaders.requests.ReqWithHeaders;
+import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
@@ -49,8 +51,10 @@ public class ReqWithHeadersClient {
             if (_response.isSuccessful()) {
                 return;
             }
-            throw new RuntimeException();
-        } catch (Exception e) {
+            throw new ApiError(
+                    _response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

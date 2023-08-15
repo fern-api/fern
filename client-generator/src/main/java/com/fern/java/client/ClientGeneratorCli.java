@@ -27,6 +27,7 @@ import com.fern.java.AbstractPoetClassNameFactory;
 import com.fern.java.CustomConfig;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.DownloadFilesCustomConfig;
+import com.fern.java.client.generators.ApiErrorGenerator;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.EnvironmentGenerator;
 import com.fern.java.client.generators.RequestOptionsGenerator;
@@ -169,6 +170,10 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
         SuppliersGenerator suppliersGenerator = new SuppliersGenerator(context);
         GeneratedJavaFile generatedSuppliersFile = suppliersGenerator.generateFile();
         this.addGeneratedFile(generatedSuppliersFile);
+
+        ApiErrorGenerator apiErrorGenerator = new ApiErrorGenerator(context);
+        GeneratedJavaFile generatedErrorFile = apiErrorGenerator.generateFile();
+        this.addGeneratedFile(generatedErrorFile);
 
         // types
         TypesGenerator typesGenerator = new TypesGenerator(context, false);

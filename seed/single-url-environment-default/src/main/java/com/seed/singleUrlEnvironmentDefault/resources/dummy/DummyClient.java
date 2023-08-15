@@ -1,8 +1,10 @@
 package com.seed.singleUrlEnvironmentDefault.resources.dummy;
 
+import com.seed.singleUrlEnvironmentDefault.core.ApiError;
 import com.seed.singleUrlEnvironmentDefault.core.ClientOptions;
 import com.seed.singleUrlEnvironmentDefault.core.ObjectMappers;
 import com.seed.singleUrlEnvironmentDefault.core.RequestOptions;
+import java.io.IOException;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
@@ -35,8 +37,10 @@ public class DummyClient {
             if (_response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), String.class);
             }
-            throw new RuntimeException();
-        } catch (Exception e) {
+            throw new ApiError(
+                    _response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

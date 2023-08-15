@@ -51,6 +51,10 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
                 packageName, sdkRequestWrapper.getWrapperName().getPascalCase().getSafeName());
     }
 
+    public ClassName getApiErrorClassName() {
+        return getCoreClassName("ApiError");
+    }
+
     private static String getClientName(FernFilepath fernFilepath) {
         return fernFilepath
                         .getAllParts()

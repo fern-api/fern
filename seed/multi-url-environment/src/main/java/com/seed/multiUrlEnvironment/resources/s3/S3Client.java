@@ -1,9 +1,11 @@
 package com.seed.multiUrlEnvironment.resources.s3;
 
+import com.seed.multiUrlEnvironment.core.ApiError;
 import com.seed.multiUrlEnvironment.core.ClientOptions;
 import com.seed.multiUrlEnvironment.core.ObjectMappers;
 import com.seed.multiUrlEnvironment.core.RequestOptions;
 import com.seed.multiUrlEnvironment.resources.s3.requests.GetPresignedUrlRequest;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import okhttp3.Headers;
@@ -51,8 +53,10 @@ public class S3Client {
             if (_response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), String.class);
             }
-            throw new RuntimeException();
-        } catch (Exception e) {
+            throw new ApiError(
+                    _response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
