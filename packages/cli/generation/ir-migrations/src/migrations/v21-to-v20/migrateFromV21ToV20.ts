@@ -30,6 +30,7 @@ export const V21_TO_V20_MIGRATION: IrMigration<
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
     },
+    jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v21, context): IrVersions.V20.ir.IntermediateRepresentation => {
         return {
             ...v21,

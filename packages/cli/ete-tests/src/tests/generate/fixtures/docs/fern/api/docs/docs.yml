@@ -1,4 +1,5 @@
-logo: ./fern.png
+logo:
+  dark: ./fern.png
 
 navbar-links: []
 

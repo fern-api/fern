@@ -1,5 +1,5 @@
 import { isRawTextType, parseRawFileType, RawSchemas } from "@fern-api/yaml-schema";
-import { HttpResponse, StreamingResponseChunkType } from "@fern-fern/ir-model/http";
+import { HttpResponse, StreamingResponseChunkType } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 
 export function convertHttpResponse({

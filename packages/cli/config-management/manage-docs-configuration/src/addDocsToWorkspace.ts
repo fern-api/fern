@@ -58,6 +58,9 @@ function getDocsConfig(organization: string): RawDocs.DocsConfiguration {
         colors: {
             accentPrimary: "#ffffff",
         },
-        logo: "./logo.png",
+        logo: {
+            dark: "./logo-dark.png",
+            light: "./logo-light.png",
+        },
     };
 }

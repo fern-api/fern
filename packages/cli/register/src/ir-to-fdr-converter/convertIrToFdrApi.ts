@@ -1,5 +1,5 @@
 import { entries } from "@fern-api/core-utils";
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { FernRegistry } from "@fern-fern/registry-node";
 import { convertPackage, convertSubpackageId } from "./convertPackage";
 import { convertTypeId, convertTypeShape } from "./convertTypeShape";

@@ -1,8 +1,16 @@
-import { ErrorId, FernFilepath, ServiceId, SubpackageId, TypeId } from "@fern-fern/ir-model/commons";
-import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
-import { HttpService } from "@fern-fern/ir-model/http";
-import { IntermediateRepresentation, Package, Subpackage } from "@fern-fern/ir-model/ir";
-import { TypeDeclaration } from "@fern-fern/ir-model/types";
+import {
+    ErrorDeclaration,
+    ErrorId,
+    FernFilepath,
+    HttpService,
+    IntermediateRepresentation,
+    Package,
+    ServiceId,
+    Subpackage,
+    SubpackageId,
+    TypeDeclaration,
+    TypeId,
+} from "@fern-fern/ir-sdk/api";
 import { mapValues } from "lodash-es";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
 import { IdGenerator } from "./IdGenerator";
@@ -79,8 +87,8 @@ export class PackageTreeGenerator {
                             subpackage.service != null
                                 ? filteredIr.hasServiceId(subpackage.service)
                                     ? subpackage.service
-                                    : null
-                                : null,
+                                    : undefined
+                                : undefined,
                         subpackages: subpackage.subpackages.filter((subpackageId) =>
                             filteredIr.hasSubpackageId(subpackageId)
                         ),
@@ -96,8 +104,8 @@ export class PackageTreeGenerator {
                     this.rootPackage.service != null
                         ? filteredIr.hasServiceId(this.rootPackage.service)
                             ? this.rootPackage.service
-                            : null
-                        : null,
+                            : undefined
+                        : undefined,
                 subpackages: this.rootPackage.subpackages.filter((subpackageId) =>
                     filteredIr.hasSubpackageId(subpackageId)
                 ),

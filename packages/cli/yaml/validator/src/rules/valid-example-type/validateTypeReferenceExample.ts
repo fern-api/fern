@@ -2,7 +2,7 @@ import { assertNever, isPlainObject } from "@fern-api/core-utils";
 import { ExampleResolver, FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { EXAMPLE_REFERENCE_PREFIX, RawSchemas, visitRawTypeReference } from "@fern-api/yaml-schema";
-import { PrimitiveType } from "@fern-fern/ir-model/types";
+import { PrimitiveType } from "@fern-fern/ir-sdk/api";
 import { RuleViolation } from "../../Rule";
 import { getDuplicates } from "../../utils/getDuplicates";
 import { getRuleViolationsForMisshapenExample } from "./getRuleViolationsForMisshapenExample";
@@ -197,7 +197,7 @@ function validatePrimitiveExample({
         dateTime: () => validateDateTime(example),
         date: () => validateString(example),
         base64: () => validateString(example),
-        _unknown: () => {
+        _other: () => {
             throw new Error("Unknown primitive type: " + primitiveType);
         },
     });

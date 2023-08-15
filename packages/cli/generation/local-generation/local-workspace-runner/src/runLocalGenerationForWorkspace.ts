@@ -205,12 +205,12 @@ async function writeIrToFile({
     });
     const migratedIntermediateRepresentation =
         irVersionOverride != null
-            ? migrateIntermediateRepresentationThroughVersion({
+            ? await migrateIntermediateRepresentationThroughVersion({
                   intermediateRepresentation,
                   context,
                   version: irVersionOverride,
               })
-            : migrateIntermediateRepresentationForGenerator({
+            : await migrateIntermediateRepresentationForGenerator({
                   intermediateRepresentation,
                   context,
                   targetGenerator: {

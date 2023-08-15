@@ -263,7 +263,7 @@ jobs:
           name: Publish ir sdks
           command: |
             export FERN_TOKEN="$FERN_ORG_TOKEN_PROD"
-            npx fern-api generate --api ir-types-v22 --group sdks
+            npx fern-api generate --api ir-types-v23 --group sdks
 
   check-cli-release-is-allowed:
     docker:
