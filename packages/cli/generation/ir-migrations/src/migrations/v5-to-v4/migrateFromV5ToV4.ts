@@ -41,6 +41,7 @@ export const V5_TO_V4_MIGRATION: IrMigration<
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
     },
+    jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v5): IrVersions.V4.ir.IntermediateRepresentation => {
         const typeReferenceResolver = new TypeReferenceResolverImpl(v5);
         const errorResolver = new ErrorResolverImpl(v5);

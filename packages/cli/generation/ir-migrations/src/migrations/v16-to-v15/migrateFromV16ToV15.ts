@@ -33,6 +33,7 @@ export const V16_TO_V15_MIGRATION: IrMigration<
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
     },
+    jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v16, { taskContext, targetGenerator }): IrVersions.V15.ir.IntermediateRepresentation => {
         if (v16.basePath != null) {
             return taskContext.failAndThrow(

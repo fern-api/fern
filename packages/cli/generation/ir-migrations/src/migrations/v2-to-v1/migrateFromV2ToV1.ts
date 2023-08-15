@@ -32,6 +32,7 @@ export const V2_TO_V1_MIGRATION: IrMigration<
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
     },
+    jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v2): IrVersions.V1.ir.IntermediateRepresentation => {
         return {
             apiName: v2.apiName,

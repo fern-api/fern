@@ -34,13 +34,24 @@ export async function convertDocsConfiguration({
         logo:
             logo != null
                 ? {
-                      reference: await convertImageReference({
-                          rawImageReference: typeof logo === "string" ? logo : logo.path,
-                          absolutePathOfConfiguration,
-                          context,
-                      }),
-                      height: typeof logo === "object" ? logo.height : undefined,
-                      href: typeof logo === "object" ? FernRegistry.docs.v1.write.Url(logo.href) : undefined,
+                      dark:
+                          logo.dark != null
+                              ? await convertImageReference({
+                                    rawImageReference: logo.dark,
+                                    absolutePathOfConfiguration,
+                                    context,
+                                })
+                              : undefined,
+                      light:
+                          logo.light != null
+                              ? await convertImageReference({
+                                    rawImageReference: logo.light,
+                                    absolutePathOfConfiguration,
+                                    context,
+                                })
+                              : undefined,
+                      height: logo.height,
+                      href: logo.href != null ? FernRegistry.docs.v1.write.Url(logo.href) : undefined,
                   }
                 : undefined,
         favicon:

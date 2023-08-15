@@ -21,16 +21,16 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "safeName": "Dependent"
         }
     },
+    "apiDisplayName": null,
+    "apiDocs": null,
     "auth": {
         "requirement": "ALL",
-        "schemes": []
+        "schemes": [],
+        "docs": null
     },
     "headers": [],
     "types": {
         "type_imported:RootString": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "RootString",
@@ -93,28 +93,31 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                                 "safeName": "Imported"
                             }
                         }
-                    ]
+                    ],
+                    "file": null
                 },
                 "typeId": "type_imported:RootString"
             },
             "shape": {
+                "_type": "alias",
                 "aliasOf": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
+                    "_type": "primitive",
+                    "primitive": "STRING"
                 },
                 "resolvedType": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
-                },
-                "_type": "alias"
+                    "_type": "primitive",
+                    "primitive": "STRING"
+                }
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": {
+                "status": "GENERAL_AVAILABILITY",
+                "message": null
+            },
+            "docs": null
         },
         "type_y:IntegerAlias": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "IntegerAlias",
@@ -181,23 +184,25 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                 "typeId": "type_y:IntegerAlias"
             },
             "shape": {
+                "_type": "alias",
                 "aliasOf": {
-                    "primitive": "INTEGER",
-                    "_type": "primitive"
+                    "_type": "primitive",
+                    "primitive": "INTEGER"
                 },
                 "resolvedType": {
-                    "primitive": "INTEGER",
-                    "_type": "primitive"
-                },
-                "_type": "alias"
+                    "_type": "primitive",
+                    "primitive": "INTEGER"
+                }
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": {
+                "status": "GENERAL_AVAILABILITY",
+                "message": null
+            },
+            "docs": null
         },
         "type_imported/x:StringAlias": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY"
-            },
             "name": {
                 "name": {
                     "originalName": "StringAlias",
@@ -303,25 +308,31 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                 "typeId": "type_imported/x:StringAlias"
             },
             "shape": {
+                "_type": "alias",
                 "aliasOf": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
+                    "_type": "primitive",
+                    "primitive": "STRING"
                 },
                 "resolvedType": {
-                    "primitive": "STRING",
-                    "_type": "primitive"
-                },
-                "_type": "alias"
+                    "_type": "primitive",
+                    "primitive": "STRING"
+                }
             },
             "referencedTypes": [],
-            "examples": []
+            "examples": [],
+            "availability": {
+                "status": "GENERAL_AVAILABILITY",
+                "message": null
+            },
+            "docs": null
         }
     },
     "errors": {},
     "services": {
         "service_imported": {
             "availability": {
-                "status": "GENERAL_AVAILABILITY"
+                "status": "GENERAL_AVAILABILITY",
+                "message": null
             },
             "name": {
                 "fernFilepath": {
@@ -366,9 +377,11 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                                 "safeName": "Imported"
                             }
                         }
-                    ]
+                    ],
+                    "file": null
                 }
             },
+            "displayName": null,
             "basePath": {
                 "head": "/",
                 "parts": []
@@ -377,9 +390,6 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "pathParameters": [],
             "endpoints": [
                 {
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY"
-                    },
                     "name": {
                         "originalName": "rootEndpoint",
                         "camelCase": {
@@ -399,7 +409,9 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                             "safeName": "RootEndpoint"
                         }
                     },
+                    "displayName": null,
                     "auth": false,
+                    "baseUrl": null,
                     "method": "GET",
                     "path": {
                         "head": "",
@@ -413,8 +425,16 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                     "allPathParameters": [],
                     "queryParameters": [],
                     "headers": [],
+                    "requestBody": null,
+                    "sdkRequest": null,
+                    "response": null,
                     "errors": [],
-                    "examples": []
+                    "examples": [],
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY",
+                        "message": null
+                    },
+                    "docs": null
                 }
             ]
         }
@@ -443,9 +463,11 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "wireValue": "errorInstanceId"
         }
     },
+    "environments": null,
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
+    "basePath": null,
     "pathParameters": [],
     "variables": [],
     "serviceTypeReferenceInfo": {
@@ -458,6 +480,25 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
     },
     "subpackages": {
         "subpackage_imported": {
+            "name": {
+                "originalName": "imported",
+                "camelCase": {
+                    "unsafeName": "imported",
+                    "safeName": "imported"
+                },
+                "snakeCase": {
+                    "unsafeName": "imported",
+                    "safeName": "imported"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMPORTED",
+                    "safeName": "IMPORTED"
+                },
+                "pascalCase": {
+                    "unsafeName": "Imported",
+                    "safeName": "Imported"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -500,26 +541,8 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                             "safeName": "Imported"
                         }
                     }
-                ]
-            },
-            "name": {
-                "originalName": "imported",
-                "camelCase": {
-                    "unsafeName": "imported",
-                    "safeName": "imported"
-                },
-                "snakeCase": {
-                    "unsafeName": "imported",
-                    "safeName": "imported"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "IMPORTED",
-                    "safeName": "IMPORTED"
-                },
-                "pascalCase": {
-                    "unsafeName": "Imported",
-                    "safeName": "Imported"
-                }
+                ],
+                "file": null
             },
             "service": "service_imported",
             "types": [
@@ -529,9 +552,30 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "subpackages": [
                 "subpackage_imported/x"
             ],
-            "hasEndpointsInTree": true
+            "navigationConfig": null,
+            "hasEndpointsInTree": true,
+            "docs": null
         },
         "subpackage_y": {
+            "name": {
+                "originalName": "y",
+                "camelCase": {
+                    "unsafeName": "y",
+                    "safeName": "y"
+                },
+                "snakeCase": {
+                    "unsafeName": "y",
+                    "safeName": "y"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "Y",
+                    "safeName": "Y"
+                },
+                "pascalCase": {
+                    "unsafeName": "Y",
+                    "safeName": "Y"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -575,33 +619,36 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                     }
                 }
             },
-            "name": {
-                "originalName": "y",
-                "camelCase": {
-                    "unsafeName": "y",
-                    "safeName": "y"
-                },
-                "snakeCase": {
-                    "unsafeName": "y",
-                    "safeName": "y"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "Y",
-                    "safeName": "Y"
-                },
-                "pascalCase": {
-                    "unsafeName": "Y",
-                    "safeName": "Y"
-                }
-            },
+            "service": null,
             "types": [
                 "type_y:IntegerAlias"
             ],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": false
+            "navigationConfig": null,
+            "hasEndpointsInTree": false,
+            "docs": null
         },
         "subpackage_imported/x": {
+            "name": {
+                "originalName": "x",
+                "camelCase": {
+                    "unsafeName": "x",
+                    "safeName": "x"
+                },
+                "snakeCase": {
+                    "unsafeName": "x",
+                    "safeName": "x"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "X",
+                    "safeName": "X"
+                },
+                "pascalCase": {
+                    "unsafeName": "X",
+                    "safeName": "X"
+                }
+            },
             "fernFilepath": {
                 "allParts": [
                     {
@@ -684,45 +731,33 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                     }
                 }
             },
-            "name": {
-                "originalName": "x",
-                "camelCase": {
-                    "unsafeName": "x",
-                    "safeName": "x"
-                },
-                "snakeCase": {
-                    "unsafeName": "x",
-                    "safeName": "x"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "X",
-                    "safeName": "X"
-                },
-                "pascalCase": {
-                    "unsafeName": "X",
-                    "safeName": "X"
-                }
-            },
+            "service": null,
             "types": [
                 "type_imported/x:StringAlias"
             ],
             "errors": [],
             "subpackages": [],
-            "hasEndpointsInTree": false
+            "navigationConfig": null,
+            "hasEndpointsInTree": false,
+            "docs": null
         }
     },
     "rootPackage": {
         "fernFilepath": {
             "allParts": [],
-            "packagePath": []
+            "packagePath": [],
+            "file": null
         },
+        "service": null,
         "types": [],
         "errors": [],
         "subpackages": [
             "subpackage_imported",
             "subpackage_y"
         ],
-        "hasEndpointsInTree": true
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "docs": null
     },
     "sdkConfig": {
         "isAuthMandatory": false,
@@ -737,4 +772,4 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `876809`;
+exports[`dependencies file dependencies 1`] = `903158`;

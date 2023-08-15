@@ -3,6 +3,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
+import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { generateIntermediateRepresentation } from "../generateIntermediateRepresentation";
 
 const FIXTURES: Fixture[] = [
@@ -61,7 +62,14 @@ describe("generateIntermediateRepresentation", () => {
                 generationLanguage: fixture.generationLanguage,
                 audiences: fixture.audiences,
             });
-            expect(intermediateRepresentation).toMatchSnapshot();
+
+            const intermediateRepresentationJson = await IrSerialization.IntermediateRepresentation.jsonOrThrow(
+                intermediateRepresentation,
+                {
+                    unrecognizedObjectKeys: "strip",
+                }
+            );
+            expect(intermediateRepresentationJson).toMatchSnapshot();
         });
     }
 });

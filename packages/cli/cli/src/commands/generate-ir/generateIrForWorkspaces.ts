@@ -5,6 +5,7 @@ import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-mi
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext";
@@ -73,7 +74,9 @@ async function getIntermediateRepresentation({
     });
 
     if (version == null) {
-        return intermediateRepresentation;
+        return IrSerialization.IntermediateRepresentation.jsonOrThrow(intermediateRepresentation, {
+            unrecognizedObjectKeys: "strip",
+        });
     }
 
     return migrateIntermediateRepresentationThroughVersion({

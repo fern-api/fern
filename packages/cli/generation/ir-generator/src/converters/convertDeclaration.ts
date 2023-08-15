@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { Availability, AvailabilityStatus, Declaration } from "@fern-fern/ir-model/commons";
+import { Availability, AvailabilityStatus, Declaration } from "@fern-fern/ir-sdk/api";
 
 const DEFAULT_DECLARATION = {
     docs: undefined,

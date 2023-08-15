@@ -1,8 +1,11 @@
-import * as FernIr from "@fern-fern/ir-model";
-import { FernFilepath } from "@fern-fern/ir-model/commons";
-import { DeclaredErrorName } from "@fern-fern/ir-model/errors";
-import { DeclaredServiceName, HttpEndpoint } from "@fern-fern/ir-model/http";
-import { DeclaredTypeName } from "@fern-fern/ir-model/types";
+import { FernIr } from "@fern-fern/ir-sdk";
+import {
+    DeclaredErrorName,
+    DeclaredServiceName,
+    DeclaredTypeName,
+    FernFilepath,
+    HttpEndpoint,
+} from "@fern-fern/ir-sdk/api";
 
 export const IdGenerator = {
     generateTypeId: (typeName: Omit<DeclaredTypeName, "typeId">): FernIr.commons.TypeId => {

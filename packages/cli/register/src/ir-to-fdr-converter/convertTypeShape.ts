@@ -1,8 +1,8 @@
-import * as Ir from "@fern-fern/ir-model";
+import { FernIr as Ir } from "@fern-fern/ir-sdk";
 import { FernRegistry } from "@fern-fern/registry-node";
 
 export function convertTypeShape(irType: Ir.types.Type): FernRegistry.api.v1.register.TypeShape {
-    return Ir.types.Type._visit<FernRegistry.api.v1.register.TypeShape>(irType, {
+    return irType._visit<FernRegistry.api.v1.register.TypeShape>({
         alias: (alias) => {
             return FernRegistry.api.v1.register.TypeShape.alias(convertTypeReference(alias.aliasOf));
         },
@@ -56,8 +56,10 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.api.v1.reg
                                         extends: [],
                                         properties: [],
                                     }),
-                                    _unknown: () => {
-                                        throw new Error("Unknown SingleUnionTypeProperties: " + variant.shape._type);
+                                    _other: () => {
+                                        throw new Error(
+                                            "Unknown SingleUnionTypeProperties: " + variant.shape.propertiesType
+                                        );
                                     },
                                 }
                             ),
@@ -75,8 +77,8 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.api.v1.reg
                 }),
             });
         },
-        _unknown: () => {
-            throw new Error("Unknown Type shape: " + irType._type);
+        _other: () => {
+            throw new Error("Unknown Type shape: " + irType.type);
         },
     });
 }
@@ -84,7 +86,7 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.api.v1.reg
 export function convertTypeReference(
     irTypeReference: Ir.types.TypeReference
 ): FernRegistry.api.v1.register.TypeReference {
-    return Ir.types.TypeReference._visit<FernRegistry.api.v1.register.TypeReference>(irTypeReference, {
+    return irTypeReference._visit<FernRegistry.api.v1.register.TypeReference>({
         container: (container) => {
             return Ir.types.ContainerType._visit<FernRegistry.api.v1.register.TypeReference>(container, {
                 list: (itemType) => {
@@ -114,13 +116,13 @@ export function convertTypeReference(
                             FernRegistry.api.v1.register.TypeReference.literal(
                                 FernRegistry.api.v1.register.LiteralType.stringLiteral(stringLiteral)
                             ),
-                        _unknown: () => {
+                        _other: () => {
                             throw new Error("Unknown literal type: " + literal.type);
                         },
                     });
                 },
-                _unknown: () => {
-                    throw new Error("Unknown container reference: " + container._type);
+                _other: () => {
+                    throw new Error("Unknown container reference: " + container.type);
                 },
             });
         },
@@ -139,7 +141,7 @@ export function convertTypeReference(
                     date: FernRegistry.api.v1.register.PrimitiveType.date,
                     base64: FernRegistry.api.v1.register.PrimitiveType.base64,
                     uuid: FernRegistry.api.v1.register.PrimitiveType.uuid,
-                    _unknown: () => {
+                    _other: () => {
                         throw new Error("Unknown primitive: " + primitive);
                     },
                 })
@@ -148,8 +150,8 @@ export function convertTypeReference(
         unknown: () => {
             return FernRegistry.api.v1.register.TypeReference.unknown();
         },
-        _unknown: () => {
-            throw new Error("Unknown Type reference: " + irTypeReference._type);
+        _other: () => {
+            throw new Error("Unknown Type reference: " + irTypeReference.type);
         },
     });
 }

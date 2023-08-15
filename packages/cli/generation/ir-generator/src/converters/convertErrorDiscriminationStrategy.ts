@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { ErrorDiscriminationStrategy } from "@fern-fern/ir-model/ir";
+import { ErrorDiscriminationStrategy } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../FernFileContext";
 
 const ERROR_CONTENT_PROPERTY_NAME = "content";

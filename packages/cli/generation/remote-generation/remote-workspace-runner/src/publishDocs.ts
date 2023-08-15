@@ -177,15 +177,26 @@ async function convertDocsConfiguration({
 }): Promise<FernRegistry.docs.v1.write.DocsConfig> {
     return {
         title: docsDefinition.config.title,
-        logo:
-            docsDefinition.config.logo != null
-                ? await convertImageReference({
-                      imageReference: docsDefinition.config.logo.reference,
-                      docsDefinition,
-                      uploadUrls,
-                      context,
-                  })
-                : undefined,
+        logoV2: {
+            dark:
+                docsDefinition.config.logo?.dark != null
+                    ? await convertImageReference({
+                          imageReference: docsDefinition.config.logo.dark,
+                          docsDefinition,
+                          uploadUrls,
+                          context,
+                      })
+                    : undefined,
+            light:
+                docsDefinition.config.logo?.light != null
+                    ? await convertImageReference({
+                          imageReference: docsDefinition.config.logo.light,
+                          docsDefinition,
+                          uploadUrls,
+                          context,
+                      })
+                    : undefined,
+        },
         logoHeight: docsDefinition.config.logo?.height,
         logoHref: docsDefinition.config.logo?.href,
         favicon:
@@ -467,8 +478,12 @@ function constructPageId(pathToPage: RelativeFilePath): FernRegistry.docs.v1.wri
 function getFilepathsToUpload(docsDefinition: DocsDefinition): AbsoluteFilePath[] {
     const filepaths: AbsoluteFilePath[] = [];
 
-    if (docsDefinition.config.logo != null) {
-        filepaths.push(docsDefinition.config.logo.reference.filepath);
+    if (docsDefinition.config.logo?.dark != null) {
+        filepaths.push(docsDefinition.config.logo.dark.filepath);
+    }
+
+    if (docsDefinition.config.logo?.light != null) {
+        filepaths.push(docsDefinition.config.logo.light.filepath);
     }
 
     if (docsDefinition.config.favicon != null) {

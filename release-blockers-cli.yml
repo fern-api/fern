@@ -1,3 +1,8 @@
 # if there are any release blockers in this list, releasing will fail on Circle
 release-blockers:
+<<<<<<< HEAD
   - changing docs layout
+=======
+  - Breaking changes in docs config (dark/light mode logos)
+  - New IR types (with zurg)
+>>>>>>> c2f02be6fcc6ae16a8a703090fc324e5f04465a6

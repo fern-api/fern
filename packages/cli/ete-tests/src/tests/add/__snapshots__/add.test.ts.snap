@@ -192,7 +192,52 @@ errors:
     status-code: 404
     type: MovieId
 ",
+<<<<<<< HEAD
             "name": "imdb.yml",
+=======
+                "name": "imdb.yml",
+                "type": "file",
+              },
+            ],
+            "name": "definition",
+            "type": "directory",
+          },
+          {
+            "contents": [
+              {
+                "contents": "title: fern
+navigation:
+  - api: API Reference
+colors:
+  accentPrimary: '#ffffff'
+logo:
+  dark: ./logo-dark.png
+  light: ./logo-light.png
+",
+                "name": "docs.yml",
+                "type": "file",
+              },
+            ],
+            "name": "docs",
+            "type": "directory",
+          },
+          {
+            "contents": "default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.7.2
+        output:
+          location: local-file-system
+          path: ../../generated/typescript
+  docs-group:
+    generators: []
+    docs:
+      domain: fern.dev.docs.buildwithfern.com
+",
+            "name": "generators.yml",
+>>>>>>> c2f02be6fcc6ae16a8a703090fc324e5f04465a6
             "type": "file",
           },
         ],

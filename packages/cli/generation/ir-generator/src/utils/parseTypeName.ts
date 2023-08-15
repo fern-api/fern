@@ -1,4 +1,4 @@
-import { DeclaredTypeName } from "@fern-fern/ir-model/types";
+import { DeclaredTypeName } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../FernFileContext";
 import { IdGenerator } from "../IdGenerator";
 import { convertToFernFilepath } from "./convertToFernFilepath";

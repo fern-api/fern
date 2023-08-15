@@ -1,5 +1,5 @@
 import { GenerationLanguage } from "@fern-api/generators-configuration";
-import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-fern/ir-model/commons";
+import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-fern/ir-sdk/api";
 import { camelCase, snakeCase, upperFirst } from "lodash-es";
 import { RESERVED_KEYWORDS } from "./reserved";
 
@@ -42,7 +42,14 @@ function sanitizeNameForLanguage(name: string, generationLanguage: GenerationLan
     const reservedKeywords = RESERVED_KEYWORDS[generationLanguage];
     if (reservedKeywords.has(name)) {
         return name + "_";
+    } else if (startsWithNumber(name)) {
+        return "_" + name;
     } else {
         return name;
     }
+}
+
+const STARTS_WITH_NUMBER = /^[0-9]/;
+function startsWithNumber(str: string): boolean {
+    return STARTS_WITH_NUMBER.test(str);
 }

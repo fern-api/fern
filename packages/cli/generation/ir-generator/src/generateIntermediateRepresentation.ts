@@ -4,9 +4,15 @@ import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/workspace-loader";
-import { ServiceId, TypeId } from "@fern-fern/ir-model/commons";
-import { HttpEndpoint, PathParameterLocation, ResponseErrors } from "@fern-fern/ir-model/http";
-import { IntermediateRepresentation, ServiceTypeReferenceInfo } from "@fern-fern/ir-model/ir";
+import {
+    HttpEndpoint,
+    IntermediateRepresentation,
+    PathParameterLocation,
+    ResponseErrors,
+    ServiceId,
+    ServiceTypeReferenceInfo,
+    TypeId,
+} from "@fern-fern/ir-sdk/api";
 import { mapValues, pickBy } from "lodash-es";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";
 import { generateFernConstants } from "./converters/constants";

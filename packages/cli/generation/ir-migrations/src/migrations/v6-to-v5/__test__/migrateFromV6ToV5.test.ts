@@ -2,7 +2,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { IrVersions } from "../../../ir-versions";
-import { createMigrationTester } from "../../../__test__/utils/runFixtureThroughMigration";
+import { createMigrationTester } from "../../../__test__/utils/createMigrationTester";
 import { V6_TO_V5_MIGRATION } from "../migrateFromV6ToV5";
 
 const runMigration = createMigrationTester(V6_TO_V5_MIGRATION);

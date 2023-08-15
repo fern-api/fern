@@ -33,6 +33,7 @@ export const V10_TO_V9_MIGRATION: IrMigration<
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
     },
+    jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v10): IrVersions.V9.ir.IntermediateRepresentation => {
         const v9Services: Record<IrVersions.V9.commons.ServiceId, IrVersions.V9.http.HttpService> = mapValues(
             v10.services,

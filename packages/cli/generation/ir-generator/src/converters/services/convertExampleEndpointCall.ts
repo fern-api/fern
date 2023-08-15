@@ -7,7 +7,7 @@ import {
     ExamplePathParameter,
     ExampleRequestBody,
     ExampleResponse,
-} from "@fern-fern/ir-model/http";
+} from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";

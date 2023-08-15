@@ -7,7 +7,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { APIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { Fetcher } from "@fern-fern/fiddle-sdk/core";
-import { IntermediateRepresentation } from "@fern-fern/ir-model/ir";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import axios, { AxiosError } from "axios";
 import FormData from "form-data";
 import urlJoin from "url-join";
@@ -131,7 +131,7 @@ async function startJob({
     job: FernFiddle.remoteGen.CreateJobResponse;
     context: TaskContext;
 }): Promise<void> {
-    const migratedIntermediateRepresentation = migrateIntermediateRepresentationForGenerator({
+    const migratedIntermediateRepresentation = await migrateIntermediateRepresentationForGenerator({
         intermediateRepresentation,
         context,
         targetGenerator: {

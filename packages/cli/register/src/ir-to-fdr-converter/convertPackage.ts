@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import * as Ir from "@fern-fern/ir-model";
+import { FernIr as Ir } from "@fern-fern/ir-sdk";
 import { FernRegistry } from "@fern-fern/registry-node";
 import { startCase } from "lodash-es";
 import { convertTypeId, convertTypeReference } from "./convertTypeShape";
@@ -114,7 +114,7 @@ function convertHttpMethod(method: Ir.http.HttpMethod): FernRegistry.api.v1.regi
         put: () => FernRegistry.api.v1.register.HttpMethod.Put,
         patch: () => FernRegistry.api.v1.register.HttpMethod.Patch,
         delete: () => FernRegistry.api.v1.register.HttpMethod.Delete,
-        _unknown: () => {
+        _other: () => {
             throw new Error("Unknown http method: " + method);
         },
     });
@@ -167,7 +167,7 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FernRegistry.ap
         bytes: () => {
             return undefined;
         },
-        _unknown: () => {
+        _other: () => {
             throw new Error("Unknown HttpRequestBody: " + irRequest.type);
         },
     });
@@ -189,7 +189,7 @@ function convertResponse(irResponse: Ir.http.HttpResponse): FernRegistry.api.v1.
                 }
                 return undefined;
             },
-            _unknown: () => {
+            _other: () => {
                 throw new Error("Unknown HttpResponse: " + irResponse.type);
             },
         }
@@ -255,7 +255,7 @@ function convertExampleEndpointCall(
                 }
                 return error.statusCode;
             },
-            _unknown: () => {
+            _other: () => {
                 throw new Error("Unknown ExampleResponse: " + irExample.response.type);
             },
         }),

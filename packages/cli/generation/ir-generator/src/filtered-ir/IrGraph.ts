@@ -1,17 +1,19 @@
 import { Audiences as ConfigAudiences } from "@fern-api/config-management-commons";
 import { assertNever, noop } from "@fern-api/core-utils";
-import { FernFilepath } from "@fern-fern/ir-model/commons";
-import { ErrorDeclaration } from "@fern-fern/ir-model/errors";
 import {
+    ContainerType,
     DeclaredServiceName,
+    DeclaredTypeName,
+    ErrorDeclaration,
+    FernFilepath,
     FileUploadRequestProperty,
     HttpEndpoint,
     HttpRequestBody,
     HttpResponse,
     HttpService,
     StreamingResponseChunkType,
-} from "@fern-fern/ir-model/http";
-import { ContainerType, DeclaredTypeName, TypeReference } from "@fern-fern/ir-model/types";
+    TypeReference,
+} from "@fern-fern/ir-sdk/api";
 import { IdGenerator } from "../IdGenerator";
 import { FilteredIr, FilteredIrImpl } from "./FilteredIr";
 import {
@@ -119,7 +121,7 @@ export class IrGraph {
                             bodyProperty: ({ valueType }) => {
                                 populateReferencesFromTypeReference(valueType, referencedTypes, referencedSubpackages);
                             },
-                            _unknown: () => {
+                            _other: () => {
                                 throw new Error("Unknown FileUploadRequestProperty: " + property.type);
                             },
                         });
@@ -128,7 +130,7 @@ export class IrGraph {
                 bytes: () => {
                     return;
                 },
-                _unknown: () => {
+                _other: () => {
                     throw new Error("Unknown HttpRequestBody: " + httpEndpoint.requestBody?.type);
                 },
             });
@@ -148,14 +150,14 @@ export class IrGraph {
                         json: (typeReference) =>
                             populateReferencesFromTypeReference(typeReference, referencedTypes, referencedSubpackages),
                         text: noop,
-                        _unknown: () => {
+                        _other: () => {
                             throw new Error(
                                 "Unknown StreamingResponseChunkType: " + streamingResponse.dataEventType.type
                             );
                         },
                     });
                 },
-                _unknown: () => {
+                _other: () => {
                     throw new Error("Unknown HttpResponse: " + httpEndpoint.response?.type);
                 },
             });
@@ -329,7 +331,7 @@ function populateReferencesFromTypeReference(
         },
         primitive: noop,
         unknown: noop,
-        _unknown: noop,
+        _other: noop,
     });
 }
 
@@ -362,6 +364,6 @@ function populateReferencesFromContainer(
             populateReferencesFromTypeReference(setType, referencedTypes, referencedSubpackages);
         },
         literal: noop,
-        _unknown: noop,
+        _other: noop,
     });
 }

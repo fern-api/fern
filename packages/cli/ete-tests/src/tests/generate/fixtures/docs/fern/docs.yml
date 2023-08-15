@@ -1,7 +1,12 @@
+<<<<<<< HEAD:packages/cli/ete-tests/src/tests/generate/fixtures/docs/fern/docs.yml
 instances:
   - url: ferndevtest.docs.dev.buildwithfern.com
 
 logo: ./fern.png
+=======
+logo:
+  dark: ./fern.png
+>>>>>>> c2f02be6fcc6ae16a8a703090fc324e5f04465a6:packages/cli/ete-tests/src/tests/generate/fixtures/docs/fern/api/docs/docs.yml
 
 navbar-links: []
 

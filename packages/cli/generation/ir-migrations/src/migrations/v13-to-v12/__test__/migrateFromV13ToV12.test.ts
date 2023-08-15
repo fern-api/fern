@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { createMigrationTester } from "../../../__test__/utils/runFixtureThroughMigration";
+import { createMigrationTester } from "../../../__test__/utils/createMigrationTester";
 import { V13_TO_V12_MIGRATION } from "../migrateFromV13ToV12";
 
 const runMigration = createMigrationTester(V13_TO_V12_MIGRATION);

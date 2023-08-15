@@ -32,8 +32,8 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/docs-config": "0.0.38",
-    "@fern-fern/registry-node": "0.12.1-1-g4f47174",
+    "@fern-fern/docs-config": "0.0.40",
+    "@fern-fern/registry-node": "0.13.0-1-gd5d23fe",
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {

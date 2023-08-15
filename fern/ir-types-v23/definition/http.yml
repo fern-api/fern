@@ -150,27 +150,10 @@ types:
 
   StreamingResponseChunkType:
     union:
-      json: types.TypeReference
+      json:
+        type: types.TypeReference
+        key: json
       text: {}
-
-  MaybeStreamingResponse:
-    properties:
-      condition: StreamCondition
-      nonStreaming: HttpResponse
-      streaming: StreamingResponse
-
-  StreamCondition:
-    union:
-      queryParameterKey:
-        docs: |
-          The name of a boolean query parameter. If it is true, the response
-          should be streamed. Otherwise, it should not be streamed.
-        type: string
-      requestPropertyKey:
-        docs: |
-          The name of a boolean property on the request. If it is true, the response
-          should be streamed. Otherwise, it should not be streamed.
-        type: string
 
   ResponseErrors: list<ResponseError>
   ResponseError:

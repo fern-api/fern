@@ -33,6 +33,7 @@ export const V15_TO_V14_MIGRATION: IrMigration<
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
     },
+    jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v14): IrVersions.V14.ir.IntermediateRepresentation => {
         const v13Types: Record<string, IrVersions.V14.types.TypeDeclaration> = mapValues(
             v14.types,

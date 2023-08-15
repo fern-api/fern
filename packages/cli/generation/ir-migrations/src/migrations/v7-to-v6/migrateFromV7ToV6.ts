@@ -33,6 +33,7 @@ export const V7_TO_V6_MIGRATION: IrMigration<
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
     },
+    jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v7): IrVersions.V6.ir.IntermediateRepresentation => {
         return {
             ...v7,
