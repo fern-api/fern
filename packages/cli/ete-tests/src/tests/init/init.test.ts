@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, doesPathExist, getDirectoryContents, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { FERN_DIRECTORY } from "@fern-api/project-configuration";
+import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "./init";
 
@@ -17,7 +17,7 @@ describe("fern init", () => {
     }, 60_000);
 
     // eslint-disable-next-line jest/no-disabled-tests
-    it.skip("existing fern directory", async () => {
+    it("existing fern directory", async () => {
         // add existing directory
         const pathOfDirectory = await init();
 
@@ -26,7 +26,14 @@ describe("fern init", () => {
             directory: pathOfDirectory,
         });
         expect(
-            await doesPathExist(join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY), RelativeFilePath.of("api1")))
+            await doesPathExist(
+                join(
+                    pathOfDirectory,
+                    RelativeFilePath.of(FERN_DIRECTORY),
+                    RelativeFilePath.of(APIS_DIRECTORY),
+                    RelativeFilePath.of("api1")
+                )
+            )
         ).toBe(true);
     }, 60_000);
 

@@ -1,5 +1,4 @@
 import { loadRawGeneratorsConfiguration } from "@fern-api/generators-configuration";
-import { addDocsToProject } from "@fern-api/manage-docs-configuration";
 import { addGenerator } from "@fern-api/manage-generator";
 import { Project } from "@fern-api/project-loader";
 import chalk from "chalk";
@@ -18,11 +17,6 @@ export async function addGeneratorToWorkspaces({
     groupName: string | undefined;
     cliContext: CliContext;
 }): Promise<void> {
-    if (generatorName === "docs") {
-        await addDocsToProject();
-        return;
-    }
-
     await Promise.all(
         apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {

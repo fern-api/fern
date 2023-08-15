@@ -4,13 +4,16 @@ import { askToLogin } from "@fern-api/login";
 import {
     APIS_DIRECTORY,
     DEFAULT_API_WORSPACE_FOLDER_NAME,
+    DEFINITION_DIRECTORY,
     FERN_DIRECTORY,
+    GENERATORS_CONFIGURATION_FILENAME,
     ProjectConfigSchema,
     PROJECT_CONFIG_FILENAME,
 } from "@fern-api/project-configuration";
 import { createVenusService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
+import fs from "fs-extra";
 import { mkdir, writeFile } from "fs/promises";
 import { kebabCase } from "lodash-es";
 import path from "path";
@@ -63,7 +66,7 @@ export async function initialize({
         });
     }
 
-    const directoryOfWorkspace = await getDirectoryOfNewAPIWorkspace({ pathToFernDirectory });
+    const directoryOfWorkspace = await getDirectoryOfNewAPIWorkspace({ pathToFernDirectory, taskContext: context });
     if (openApiPath != null) {
         await createOpenAPIWorkspace({ directoryOfWorkspace, openAPIFilePath: openApiPath });
     } else {
@@ -88,26 +91,84 @@ async function writeProjectConfig({
     await writeFile(filepath, JSON.stringify(projectConfig, undefined, 4));
 }
 
-async function getDirectoryOfNewAPIWorkspace({ pathToFernDirectory }: { pathToFernDirectory: AbsoluteFilePath }) {
-    const pathToApisDirectory: AbsoluteFilePath = join(pathToFernDirectory, RelativeFilePath.of(APIS_DIRECTORY));
-    const apisDirectoryExists = await doesPathExist(pathToApisDirectory);
-
-    if (apisDirectoryExists) {
+async function getDirectoryOfNewAPIWorkspace({
+    pathToFernDirectory,
+    taskContext,
+}: {
+    pathToFernDirectory: AbsoluteFilePath;
+    taskContext: TaskContext;
+}) {
+    const workspaces = await hasWorkspaces({ pathToFernDirectory });
+    if (workspaces) {
         let attemptCount = 0;
-        let apiWorkspaceDirectory = join(
-            pathToApisDirectory,
-            RelativeFilePath.of(`${DEFAULT_API_WORSPACE_FOLDER_NAME}`)
-        );
-        while (await doesPathExist(apiWorkspaceDirectory)) {
-            apiWorkspaceDirectory = join(
+        const pathToApisDirectory: AbsoluteFilePath = join(pathToFernDirectory, RelativeFilePath.of(APIS_DIRECTORY));
+        let newApiDirectory = join(pathToApisDirectory, RelativeFilePath.of(`${DEFAULT_API_WORSPACE_FOLDER_NAME}`));
+        while (await doesPathExist(newApiDirectory)) {
+            newApiDirectory = join(
                 pathToApisDirectory,
                 RelativeFilePath.of(`${DEFAULT_API_WORSPACE_FOLDER_NAME}${++attemptCount}`)
             );
         }
-        return apiWorkspaceDirectory;
+        return newApiDirectory;
     }
 
-    return pathToFernDirectory;
+    const inlinedApiDefinition = await hasInlinedAPIDefinitions({ pathToFernDirectory });
+    if (inlinedApiDefinition) {
+        taskContext.logger.info("Creating workspaces to support multiple API Definitions.");
 
-    // TODO(dsinghvi): handle the case where you go from single -> multi workspace
+        const apiWorkspaceDirectory = join(
+            pathToFernDirectory,
+            RelativeFilePath.of(APIS_DIRECTORY),
+            RelativeFilePath.of("api")
+        );
+
+        const inlinedDefinitionDirectory: AbsoluteFilePath = join(
+            pathToFernDirectory,
+            RelativeFilePath.of(DEFINITION_DIRECTORY)
+        );
+        const workspaceDefinitionDirectory: AbsoluteFilePath = join(
+            apiWorkspaceDirectory,
+            RelativeFilePath.of(DEFINITION_DIRECTORY)
+        );
+        await mkdir(apiWorkspaceDirectory, { recursive: true });
+        await fs.move(inlinedDefinitionDirectory, workspaceDefinitionDirectory);
+
+        const inlinedGeneratorsYml: AbsoluteFilePath = join(
+            pathToFernDirectory,
+            RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)
+        );
+        const workspaceGeneratorsYml: AbsoluteFilePath = join(
+            apiWorkspaceDirectory,
+            RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)
+        );
+        await fs.move(inlinedGeneratorsYml, workspaceGeneratorsYml);
+
+        const newApiDirectory = join(
+            pathToFernDirectory,
+            RelativeFilePath.of(APIS_DIRECTORY),
+            RelativeFilePath.of("api1")
+        );
+        await mkdir(workspaceDefinitionDirectory, { recursive: true });
+        return newApiDirectory;
+    }
+
+    // if no apis exist already, create an inlined definition
+    return pathToFernDirectory;
+}
+
+async function hasWorkspaces({ pathToFernDirectory }: { pathToFernDirectory: AbsoluteFilePath }): Promise<boolean> {
+    const pathToApisDirectory: AbsoluteFilePath = join(pathToFernDirectory, RelativeFilePath.of(APIS_DIRECTORY));
+    return await doesPathExist(pathToApisDirectory);
+}
+
+async function hasInlinedAPIDefinitions({
+    pathToFernDirectory,
+}: {
+    pathToFernDirectory: AbsoluteFilePath;
+}): Promise<boolean> {
+    const pathToSingleWorkspaceDefinition: AbsoluteFilePath = join(
+        pathToFernDirectory,
+        RelativeFilePath.of(DEFINITION_DIRECTORY)
+    );
+    return await doesPathExist(pathToSingleWorkspaceDefinition);
 }

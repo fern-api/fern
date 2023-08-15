@@ -1,3 +1,4 @@
+export { isSingleAPIWorkspace } from "./isSingleAPIWorkspace";
 export { loadAPIWorkspace } from "./loadAPIWorkspace";
 export { loadDocsDefinition } from "./loadDocsDefinition";
 export { type FernFile, type ParsedFernFile } from "./types/FernFile";
