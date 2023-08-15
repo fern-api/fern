@@ -55,6 +55,13 @@ function addTestCommand(cli: Argv) {
                 .option("log-level", {
                     default: LogLevel.Info,
                     choices: LOG_LEVELS,
+                })
+                .option("output-directory", {
+                    type: "string",
+                    alias: "output-dir",
+                    description: "The output directory of the generated code, useful for generators with multiple dockers",
+                    demandOption: false,
+                    default: "seed"
                 }),
         async (argv) => {
             const parsedDockerImage = validateAndParseDockerImage(argv.docker);
@@ -65,6 +72,7 @@ function addTestCommand(cli: Argv) {
                 docker: parsedDockerImage,
                 compileCommand: argv["compile-command"],
                 logLevel: argv["log-level"],
+                outputDir: argv.outputDirectory
             });
         }
     );
