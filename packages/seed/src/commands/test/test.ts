@@ -6,10 +6,10 @@ import { FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { loadWorkspace } from "@fern-api/workspace-loader";
 import path from "path";
-import { ParsedDockerName } from "../../cli";
 import { Semaphore } from "../../Semaphore";
-import { runDockerForWorkspace } from "./runDockerForWorkspace";
+import { ParsedDockerName } from "../../cli";
 import { TaskContextFactory } from "./TaskContextFactory";
+import { runDockerForWorkspace } from "./runDockerForWorkspace";
 
 export const FIXTURES = {
     EXHAUSTIVE: "exhaustive",
@@ -20,6 +20,11 @@ export const FIXTURES = {
     NO_ENVIRONMENT: "no-environment",
     SINGLE_URL_ENVIRONMENT: "single-url-environment-default",
     SINGLE_URL_ENVIRONMENT_NO_DEFAULT: "single-url-environment-no-default",
+    FILE_DOWNLOAD: "file-download",
+    FILE_DOWNLOAD_BROWSER: "file-download-browser",
+    FILE_DOWNLOAD_RESPONSE_HEADERS: "file-download-response-headers",
+    FILE_UPLOAD: "file-upload",
+    FILE_UPLOAD_BROWSER: "file-upload-browser",
 } as const;
 
 type TestResult = TestSuccess | TestFailure;
