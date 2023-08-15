@@ -6,10 +6,10 @@ import { FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { loadWorkspace } from "@fern-api/workspace-loader";
 import path from "path";
-import { Semaphore } from "../../Semaphore";
 import { ParsedDockerName } from "../../cli";
-import { TaskContextFactory } from "./TaskContextFactory";
+import { Semaphore } from "../../Semaphore";
 import { runDockerForWorkspace } from "./runDockerForWorkspace";
+import { TaskContextFactory } from "./TaskContextFactory";
 
 export const FIXTURES = {
     EXHAUSTIVE: "exhaustive",
