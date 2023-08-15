@@ -10,9 +10,23 @@ export interface DocsConfiguration {
     logo: Logo | undefined;
     favicon: ImageReference | undefined;
     backgroundImage: ImageReference | undefined;
-    colors: FernRegistry.docs.v1.write.ColorsConfig;
+    colors: DocsColorsConfiguration | undefined;
     navbarLinks: FernRegistry.docs.v1.write.NavbarLink[] | undefined;
     typography: TypographyConfig | undefined;
+}
+
+export interface DocsColorsConfiguration {
+    accentPrimary:
+        | {
+              type: "themed";
+              dark: FernRegistry.docs.v1.write.RgbColor | undefined;
+              light: FernRegistry.docs.v1.write.RgbColor | undefined;
+          }
+        | {
+              type: "unthemed";
+              color: FernRegistry.docs.v1.write.RgbColor | undefined;
+          }
+        | undefined;
 }
 
 export interface Logo {

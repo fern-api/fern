@@ -84,7 +84,18 @@ types:
 
   ColorsConfiguration:
     properties:
-      accentPrimary: optional<string>
+      accentPrimary: optional<AccentPrimaryConfig>
+
+  AccentPrimaryConfig:
+    discriminated: false
+    union:
+      - string
+      - AccentPrimaryThemedConfig
+
+  AccentPrimaryThemedConfig:
+    properties:
+      dark: optional<string>
+      light: optional<string>
 
   NavbarLink:
     union:

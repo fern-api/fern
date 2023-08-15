@@ -23,6 +23,8 @@ export async function convertDocsConfiguration({
 }): Promise<DocsConfiguration> {
     const { instances, navigation, colors, favicon, backgroundImage, logo, navbarLinks, title, typography } =
         rawDocsConfiguration;
+    const convertedColors = convertColorsConfiguration(colors ?? {}, context);
+
     return {
         instances,
         navigation: await convertNavigationConfiguration({
@@ -66,7 +68,26 @@ export async function convertDocsConfiguration({
                       context,
                   })
                 : undefined,
-        colors: convertColorsConfiguration(colors ?? {}, context),
+        colors:
+            convertedColors.accentPrimary != null
+                ? {
+                      accentPrimary:
+                          convertedColors.accentPrimary.type === "themed"
+                              ? {
+                                    type: "themed",
+                                    dark: convertedColors.accentPrimary.dark,
+                                    light: convertedColors.accentPrimary.light,
+                                }
+                              : convertedColors.accentPrimary.type === "unthemed"
+                              ? {
+                                    type: "unthemed",
+                                    color: convertedColors.accentPrimary.color,
+                                }
+                              : undefined,
+                  }
+                : {
+                      accentPrimary: undefined,
+                  },
         navbarLinks: navbarLinks != null ? convertNavbarLinks(navbarLinks) : undefined,
         typography:
             typography != null
@@ -264,29 +285,51 @@ async function convertImageReference({
 function convertColorsConfiguration(
     rawConfig: RawDocs.ColorsConfiguration,
     context: TaskContext
-): FernRegistry.docs.v1.write.ColorsConfig {
+): FernRegistry.docs.v1.write.ColorsConfigV2 {
+    if (rawConfig.accentPrimary == null) {
+        return {};
+    }
+
+    if (typeof rawConfig.accentPrimary === "string") {
+        const rgb = hexToRgb(rawConfig.accentPrimary);
+        if (rgb == null) {
+            context.failAndThrow("'accentPrimary' should be a hex color of the format #FFFFFF");
+        }
+        return {
+            accentPrimary: FernRegistry.docs.v1.write.AccentPrimaryConfig.unthemed({
+                color: rgb,
+            }),
+        };
+    }
+
+    let darkRgb = undefined;
+    let lightRgb = undefined;
+
+    if (rawConfig.accentPrimary.dark != null) {
+        const rgb = hexToRgb(rawConfig.accentPrimary.dark);
+        if (rgb == null) {
+            context.failAndThrow("'accentPrimary.dark' should be a hex color of the format #FFFFFF");
+        }
+        darkRgb = rgb;
+    }
+
+    if (rawConfig.accentPrimary.light != null) {
+        const rgb = hexToRgb(rawConfig.accentPrimary.light);
+        if (rgb == null) {
+            context.failAndThrow("'accentPrimary.light' should be a hex color of the format #FFFFFF");
+        }
+        lightRgb = rgb;
+    }
+
     return {
-        accentPrimary: convertHextoRgb(rawConfig, "accentPrimary", context),
+        accentPrimary: FernRegistry.docs.v1.write.AccentPrimaryConfig.themed({
+            dark: darkRgb,
+            light: lightRgb,
+        }),
     };
 }
 
 const HEX_COLOR_REGEX = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i;
-
-function convertHextoRgb(
-    rawConfig: RawDocs.ColorsConfiguration,
-    key: keyof RawDocs.ColorsConfiguration,
-    context: TaskContext
-): FernRegistry.docs.v1.write.RgbColor | undefined {
-    const color = rawConfig[key];
-    if (color == null) {
-        return undefined;
-    }
-    const rgb = hexToRgb(color);
-    if (rgb != null) {
-        return rgb;
-    }
-    context.failAndThrow(`${key} should be a hex color of the format #FFFFFF`);
-}
 
 // https://stackoverflow.com/a/5624139/4238485
 function hexToRgb(hexString: string): FernRegistry.docs.v1.write.RgbColor | undefined {
