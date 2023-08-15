@@ -46,6 +46,7 @@ export async function runTests({
     docker,
     compileCommand,
     logLevel,
+    outputDir,
 }: {
     irVersion: string | undefined;
     language: GenerationLanguage;
@@ -53,6 +54,7 @@ export async function runTests({
     docker: ParsedDockerName;
     compileCommand: string | undefined;
     logLevel: LogLevel;
+    outputDir: string;
 }): Promise<void> {
     const lock = new Semaphore(MAX_NUM_DOCKERS_RUNNING);
     const taskContextFactory = new TaskContextFactory(logLevel);
@@ -67,6 +69,7 @@ export async function runTests({
                 docker,
                 compileCommand,
                 taskContext: taskContextFactory.create(fixture),
+                outputDir,
             })
         );
     }
@@ -91,6 +94,7 @@ export async function acquireLocksAndRunTest({
     docker,
     compileCommand,
     taskContext,
+    outputDir,
 }: {
     lock: Semaphore;
     irVersion: string | undefined;
@@ -99,6 +103,7 @@ export async function acquireLocksAndRunTest({
     docker: ParsedDockerName;
     compileCommand: string | undefined;
     taskContext: TaskContext;
+    outputDir: string;
 }): Promise<TestResult> {
     taskContext.logger.debug("Acquiring lock...");
     await lock.acquire();
@@ -110,6 +115,7 @@ export async function acquireLocksAndRunTest({
         docker,
         compileCommand,
         taskContext,
+        outputDir,
     });
     taskContext.logger.debug("Releasing lock...");
     lock.release();
@@ -123,6 +129,7 @@ async function testWithWriteToDisk({
     docker,
     compileCommand,
     taskContext,
+    outputDir,
 }: {
     fixture: string;
     irVersion: string | undefined;
@@ -130,6 +137,7 @@ async function testWithWriteToDisk({
     docker: ParsedDockerName;
     compileCommand: string | undefined;
     taskContext: TaskContext;
+    outputDir: string;
 }): Promise<TestResult> {
     try {
         const absolutePathToWorkspace = AbsoluteFilePath.of(path.join(__dirname, FERN_DIRECTORY, fixture));
@@ -156,7 +164,7 @@ async function testWithWriteToDisk({
                 fixture,
             };
         }
-        const absolutePathToOutput = AbsoluteFilePath.of(resolve(cwd(), "seed", fixture));
+        const absolutePathToOutput = AbsoluteFilePath.of(resolve(cwd(), outputDir, fixture));
         await runDockerForWorkspace({
             absolutePathToOutput,
             docker,
