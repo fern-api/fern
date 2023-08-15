@@ -237,7 +237,21 @@ async function convertDocsConfiguration({
                 )
             ),
         },
-        colors: docsDefinition.config.colors,
+        colorsV2: {
+            accentPrimary:
+                docsDefinition.config.colors?.accentPrimary != null
+                    ? docsDefinition.config.colors.accentPrimary.type === "themed"
+                        ? FernRegistry.docs.v1.write.AccentPrimaryConfig.themed({
+                              dark: docsDefinition.config.colors.accentPrimary.dark,
+                              light: docsDefinition.config.colors.accentPrimary.light,
+                          })
+                        : docsDefinition.config.colors.accentPrimary.color != null
+                        ? FernRegistry.docs.v1.write.AccentPrimaryConfig.unthemed({
+                              color: docsDefinition.config.colors.accentPrimary.color,
+                          })
+                        : undefined
+                    : undefined,
+        },
         navbarLinks: docsDefinition.config.navbarLinks,
         typography: convertDocsTypographyConfiguration({
             typographyConfiguration: docsDefinition.config.typography,
