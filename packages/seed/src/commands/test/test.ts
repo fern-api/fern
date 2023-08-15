@@ -24,7 +24,7 @@ export const FIXTURES = {
     FILE_UPLOAD_BROWSER: "file-upload-browser",
     FILE_DOWNLOAD: "file-download",
     FILE_DOWNLOAD_BROWSER: "file-download-browser",
-    FILE_DOWNLOAD_RESPONSE_HEADERS: "file-download-response-headers"
+    FILE_DOWNLOAD_RESPONSE_HEADERS: "file-download-response-headers",
 } as const;
 
 type TestResult = TestSuccess | TestFailure;
@@ -170,7 +170,7 @@ async function testWithWriteToDisk({
         });
         if (compileCommand != null) {
             const commands = compileCommand.split("&&").map((command) => command.trim());
-            for(const command of commands){
+            for (const command of commands) {
                 taskContext.logger.info(`Running command: ${command}`);
                 const spaceDelimitedCommand = command.split(" ");
                 const result = await loggingExeca(
