@@ -52,7 +52,7 @@ export async function runTests({
     docker: ParsedDockerName;
     compileCommand: string | undefined;
     logLevel: LogLevel;
-    outputDir: string
+    outputDir: string;
 }): Promise<void> {
     const lock = new Semaphore(MAX_NUM_DOCKERS_RUNNING);
     const taskContextFactory = new TaskContextFactory(logLevel);
@@ -67,7 +67,7 @@ export async function runTests({
                 docker,
                 compileCommand,
                 taskContext: taskContextFactory.create(fixture),
-                outputDir
+                outputDir,
             })
         );
     }
@@ -101,7 +101,7 @@ export async function acquireLocksAndRunTest({
     docker: ParsedDockerName;
     compileCommand: string | undefined;
     taskContext: TaskContext;
-    outputDir: string
+    outputDir: string;
 }): Promise<TestResult> {
     taskContext.logger.debug("Acquiring lock...");
     await lock.acquire();
@@ -113,7 +113,7 @@ export async function acquireLocksAndRunTest({
         docker,
         compileCommand,
         taskContext,
-        outputDir
+        outputDir,
     });
     taskContext.logger.debug("Releasing lock...");
     lock.release();
@@ -127,7 +127,7 @@ async function testWithWriteToDisk({
     docker,
     compileCommand,
     taskContext,
-    outputDir
+    outputDir,
 }: {
     fixture: string;
     irVersion: string | undefined;
@@ -135,7 +135,7 @@ async function testWithWriteToDisk({
     docker: ParsedDockerName;
     compileCommand: string | undefined;
     taskContext: TaskContext;
-    outputDir: string
+    outputDir: string;
 }): Promise<TestResult> {
     try {
         const absolutePathToWorkspace = AbsoluteFilePath.of(path.join(__dirname, FERN_DIRECTORY, fixture));
