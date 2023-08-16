@@ -12,7 +12,7 @@ export async function formatWorkspaces({
     shouldFix: boolean;
 }): Promise<void> {
     await Promise.all(
-        project.workspaces.map(async (workspace) => {
+        project.apiWorkspaces.map(async (workspace) => {
             if (workspace.type === "openapi") {
                 return;
             }

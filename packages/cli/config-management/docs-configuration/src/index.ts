@@ -1,5 +1,6 @@
 export {
     type DocsConfiguration,
+    type DocsNavigationConfiguration,
     type DocsNavigationItem,
     type FontConfig,
     type ImageReference,

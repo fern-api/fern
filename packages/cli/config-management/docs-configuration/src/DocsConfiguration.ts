@@ -1,16 +1,32 @@
 import { Audiences } from "@fern-api/config-management-commons";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { DocsInstances } from "@fern-fern/docs-config/api";
 import type { FernRegistry } from "@fern-fern/registry-node";
 
 export interface DocsConfiguration {
+    instances: DocsInstances[];
     navigation: DocsNavigationConfiguration;
     title: string | undefined;
     logo: Logo | undefined;
     favicon: ImageReference | undefined;
     backgroundImage: ImageReference | undefined;
-    colors: FernRegistry.docs.v1.write.ColorsConfig;
+    colors: DocsColorsConfiguration | undefined;
     navbarLinks: FernRegistry.docs.v1.write.NavbarLink[] | undefined;
     typography: TypographyConfig | undefined;
+}
+
+export interface DocsColorsConfiguration {
+    accentPrimary:
+        | {
+              type: "themed";
+              dark: FernRegistry.docs.v1.write.RgbColor | undefined;
+              light: FernRegistry.docs.v1.write.RgbColor | undefined;
+          }
+        | {
+              type: "unthemed";
+              color: FernRegistry.docs.v1.write.RgbColor | undefined;
+          }
+        | undefined;
 }
 
 export interface Logo {
@@ -46,9 +62,20 @@ export interface ImageReference {
     filepath: AbsoluteFilePath;
 }
 
-export interface DocsNavigationConfiguration {
+export interface UnversionedDocsNavigation {
+    type: "unversioned";
     items: DocsNavigationItem[];
 }
+
+export interface VersionedDocsNavigation {
+    type: "versioned";
+    versions: {
+        items: DocsNavigationItem[];
+        version: string;
+    }[];
+}
+
+export type DocsNavigationConfiguration = UnversionedDocsNavigation | VersionedDocsNavigation;
 
 export type DocsNavigationItem = DocsNavigationItem.Page | DocsNavigationItem.Section | DocsNavigationItem.ApiSection;
 
@@ -71,6 +98,7 @@ export declare namespace DocsNavigationItem {
     export interface ApiSection {
         type: "apiSection";
         title: string;
+        apiName: string | undefined;
         audiences: Audiences;
     }
 }

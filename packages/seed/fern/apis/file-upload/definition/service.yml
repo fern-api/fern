@@ -1,0 +1,55 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    post:
+      path: ""
+      method: POST
+      request:
+        name: MyRequest
+        body:
+          properties:
+            maybeString: optional<string>
+            integer: integer
+            file: file
+            maybeFile: optional<file>
+            maybeInteger: optional<integer>
+            listOfStrings: list<string>
+            setOfStrings: set<string>
+            optionalListOfStrings: optional<list<string>>
+            optionalSetOfStrings: optional<set<string>>
+            maybeList: MaybeList
+            optionalMaybeList: optional<MaybeList>
+            maybeListOrSet: MaybeListOrSet
+            optionalMaybeListOrSet: optional<MaybeListOrSet>
+            listOfObjects: list<MyObject>
+    justFile:
+      path: /just-file
+      method: POST
+      request:
+        name: JustFileRequet
+        body:
+          properties:
+            file: file
+
+types:
+  MaybeList:
+    discriminated: false
+    union:
+      - string
+      - list<string>
+      - integer
+      - list<integer>
+      - list<list<integer>>
+  MaybeListOrSet:
+    discriminated: false
+    union:
+      - string
+      - list<string>
+      - integer
+      - list<integer>
+      - list<list<integer>>
+      - set<string>
+  MyObject:
+    properties:
+      foo: string

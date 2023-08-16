@@ -2,9 +2,9 @@ import { AbsoluteFilePath, cwd, resolve } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { CONSOLE_LOGGER, LogLevel } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { FERN_DIRECTORY } from "@fern-api/project-configuration";
+import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
-import { loadWorkspace } from "@fern-api/workspace-loader";
+import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import path from "path";
 import { ParsedDockerName } from "../../cli";
 import { Semaphore } from "../../Semaphore";
@@ -20,6 +20,8 @@ export const FIXTURES = {
     NO_ENVIRONMENT: "no-environment",
     SINGLE_URL_ENVIRONMENT: "single-url-environment-default",
     SINGLE_URL_ENVIRONMENT_NO_DEFAULT: "single-url-environment-no-default",
+    FILE_DOWNLOAD: "file-download",
+    FILE_UPLOAD: "file-upload",
 } as const;
 
 type TestResult = TestSuccess | TestFailure;
@@ -52,7 +54,7 @@ export async function runTests({
     docker: ParsedDockerName;
     compileCommand: string | undefined;
     logLevel: LogLevel;
-    outputDir: string
+    outputDir: string;
 }): Promise<void> {
     const lock = new Semaphore(MAX_NUM_DOCKERS_RUNNING);
     const taskContextFactory = new TaskContextFactory(logLevel);
@@ -67,7 +69,7 @@ export async function runTests({
                 docker,
                 compileCommand,
                 taskContext: taskContextFactory.create(fixture),
-                outputDir
+                outputDir,
             })
         );
     }
@@ -101,7 +103,7 @@ export async function acquireLocksAndRunTest({
     docker: ParsedDockerName;
     compileCommand: string | undefined;
     taskContext: TaskContext;
-    outputDir: string
+    outputDir: string;
 }): Promise<TestResult> {
     taskContext.logger.debug("Acquiring lock...");
     await lock.acquire();
@@ -113,7 +115,7 @@ export async function acquireLocksAndRunTest({
         docker,
         compileCommand,
         taskContext,
-        outputDir
+        outputDir,
     });
     taskContext.logger.debug("Releasing lock...");
     lock.release();
@@ -127,7 +129,7 @@ async function testWithWriteToDisk({
     docker,
     compileCommand,
     taskContext,
-    outputDir
+    outputDir,
 }: {
     fixture: string;
     irVersion: string | undefined;
@@ -135,14 +137,17 @@ async function testWithWriteToDisk({
     docker: ParsedDockerName;
     compileCommand: string | undefined;
     taskContext: TaskContext;
-    outputDir: string
+    outputDir: string;
 }): Promise<TestResult> {
     try {
-        const absolutePathToWorkspace = AbsoluteFilePath.of(path.join(__dirname, FERN_DIRECTORY, fixture));
-        const workspace = await loadWorkspace({
+        const absolutePathToWorkspace = AbsoluteFilePath.of(
+            path.join(__dirname, FERN_DIRECTORY, APIS_DIRECTORY, fixture)
+        );
+        const workspace = await loadAPIWorkspace({
             absolutePathToWorkspace,
             context: taskContext,
             cliVersion: "DUMMY",
+            workspaceName: fixture,
         });
         if (!workspace.didSucceed) {
             taskContext.logger.info(`Failed to load workspace for fixture ${fixture}`);

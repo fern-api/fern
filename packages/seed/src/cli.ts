@@ -59,9 +59,16 @@ function addTestCommand(cli: Argv) {
                 .option("output-directory", {
                     type: "string",
                     alias: "output-dir",
+<<<<<<< HEAD
                     description: "The output directory of the generated code, useful for generators with multiple dockers",
                     demandOption: false,
                     default: "seed"
+=======
+                    description:
+                        "The output directory of the generated code, useful for generators with multiple dockers",
+                    demandOption: false,
+                    default: "seed",
+>>>>>>> df40b931ba0959c62ccda2036f866d9ada7acb91
                 }),
         async (argv) => {
             const parsedDockerImage = validateAndParseDockerImage(argv.docker);
@@ -72,7 +79,11 @@ function addTestCommand(cli: Argv) {
                 docker: parsedDockerImage,
                 compileCommand: argv["compile-command"],
                 logLevel: argv["log-level"],
+<<<<<<< HEAD
                 outputDir: argv.outputDirectory
+=======
+                outputDir: argv.outputDirectory,
+>>>>>>> df40b931ba0959c62ccda2036f866d9ada7acb91
             });
         }
     );

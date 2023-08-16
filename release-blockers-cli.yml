@@ -1,4 +1,5 @@
 # if there are any release blockers in this list, releasing will fail on Circle
 release-blockers:
+  - Breaking changes in fern layout (docs workspaces)
   - Breaking changes in docs config (dark/light mode logos)
   - New IR types (with zurg)
