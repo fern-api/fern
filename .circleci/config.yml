@@ -342,15 +342,15 @@ workflows:
 
       - publish-dev:
           filters:
-            tags:
-              only: /.*/
+            branches:
+              only: main
           requires:
             - check
             - organize-imports
             - compile
             - eslint
             - test
-            # - ete-tests
+            - ete-tests
           context:
             - npm
             - auth0-dev
