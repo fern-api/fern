@@ -16,7 +16,6 @@ describe("fern init", () => {
         ).toMatchSnapshot();
     }, 60_000);
 
-    // eslint-disable-next-line jest/no-disabled-tests
     it("existing fern directory", async () => {
         // add existing directory
         const pathOfDirectory = await init();

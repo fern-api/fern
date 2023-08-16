@@ -241,7 +241,7 @@ async function convertNavigationItem({
         return {
             type: "apiSection",
             title: rawConfig.api,
-            apiName: rawConfig.api ?? undefined,
+            apiName: rawConfig.apiName ?? undefined,
             audiences:
                 rawConfig.audiences != null ? { type: "select", audiences: rawConfig.audiences } : { type: "all" },
         };
