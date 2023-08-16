@@ -91,6 +91,7 @@ navigation:
   - api: API Reference
 colors:
   accentPrimary: '#ffffff'
+  background: '#000000'
 ",
         "name": "docs.yml",
         "type": "file",
