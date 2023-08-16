@@ -3164,7 +3164,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
-            ["@fern-fern/docs-config", "npm:0.0.43"],\
+            ["@fern-fern/docs-config", "npm:0.0.45"],\
             ["@fern-fern/registry-node", "npm:0.13.0-4-ge1278e2"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
@@ -3267,7 +3267,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-formatter", "workspace:packages/cli/yaml/formatter"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
-            ["@fern-fern/docs-config", "npm:0.0.43"],\
+            ["@fern-fern/docs-config", "npm:0.0.45"],\
             ["@types/fs-extra", "npm:11.0.1"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
@@ -4034,10 +4034,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/docs-config", [\
-        ["npm:0.0.43", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-docs-config-npm-0.0.43-0c130342aa-a89a6d504b.zip/node_modules/@fern-fern/docs-config/",\
+        ["npm:0.0.45", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-docs-config-npm-0.0.45-530a9c0a4e-7298ad9ddf.zip/node_modules/@fern-fern/docs-config/",\
           "packageDependencies": [\
-            ["@fern-fern/docs-config", "npm:0.0.43"]\
+            ["@fern-fern/docs-config", "npm:0.0.45"]\
           ],\
           "linkType": "HARD"\
         }]\
