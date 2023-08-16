@@ -261,7 +261,7 @@ function isRawSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.Secti
 
 function isRawApiSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.ApiSectionConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as RawDocs.ApiSectionConfiguration).title != null;
+    return (item as RawDocs.ApiSectionConfiguration).api != null;
 }
 
 async function convertImageReference({

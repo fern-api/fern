@@ -76,8 +76,8 @@ types:
 
   ApiSectionConfiguration:
     properties:
-      title: string
-      api:
+      api: string
+      "api-name":
         type: optional<string>
         docs: Name of API that we are referencing
       audiences: optional<list<string>>
