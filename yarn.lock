@@ -1710,7 +1710,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-fern/docs-config": 0.0.45
+    "@fern-fern/docs-config": 0.0.46
     "@fern-fern/registry-node": 0.13.0-4-ge1278e2
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.5
@@ -1805,7 +1805,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-formatter": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/docs-config": 0.0.45
+    "@fern-fern/docs-config": 0.0.46
     "@types/fs-extra": ^11.0.1
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.5
@@ -2519,10 +2519,10 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-fern/docs-config@npm:0.0.45":
-  version: 0.0.45
-  resolution: "@fern-fern/docs-config@npm:0.0.45"
-  checksum: 7298ad9ddfc1c30cec0cc42fffa722986b1375adcc7bf4840b3e7b03e2607ec7f6d0db30bf52786bcb3159e0b2bb8e3f049415fae8b340201faed61eafbdedcf
+"@fern-fern/docs-config@npm:0.0.46":
+  version: 0.0.46
+  resolution: "@fern-fern/docs-config@npm:0.0.46"
+  checksum: b20514377d6643bc0ec20c4d04bb866ce432b470f8ec5713568c44e6952c5f4f1c845591a0807d2a1fc0fe1dd10132c817305d52d9ac5de653b785fdd5a4a6f8
   languageName: node
   linkType: hard
 
