@@ -21,11 +21,12 @@ export async function convertDocsConfiguration({
     absolutePathOfConfiguration: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<DocsConfiguration> {
-    const { navigation, colors, favicon, backgroundImage, logo, navbarLinks, title, typography } = rawDocsConfiguration;
-
+    const { instances, navigation, colors, favicon, backgroundImage, logo, navbarLinks, title, typography } =
+        rawDocsConfiguration;
     const convertedColors = convertColorsConfiguration(colors ?? {}, context);
 
     return {
+        instances,
         navigation: await convertNavigationConfiguration({
             rawConfig: navigation,
             absolutePathOfConfiguration,
@@ -160,15 +161,46 @@ async function convertNavigationConfiguration({
     absolutePathOfConfiguration,
     context,
 }: {
-    rawConfig: RawDocs.NavigationItem[];
+    rawConfig: RawDocs.NavigationConfig;
     absolutePathOfConfiguration: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<DocsNavigationConfiguration> {
-    return {
-        items: await Promise.all(
-            rawConfig.map((item) => convertNavigationItem({ rawConfig: item, absolutePathOfConfiguration, context }))
-        ),
-    };
+    if (rawConfig.length === 0) {
+        return {
+            type: "unversioned",
+            items: [],
+        };
+    } else if (isVersionedNavigationConfig(rawConfig)) {
+        return {
+            type: "versioned",
+            versions: await Promise.all(
+                rawConfig.map(async (config) => {
+                    return {
+                        items: await Promise.all(
+                            config.layout.map(
+                                async (item) =>
+                                    await convertNavigationItem({
+                                        rawConfig: item,
+                                        absolutePathOfConfiguration,
+                                        context,
+                                    })
+                            )
+                        ),
+                        version: config.version,
+                    };
+                })
+            ),
+        };
+    } else {
+        return {
+            type: "unversioned",
+            items: await Promise.all(
+                rawConfig.map((item) =>
+                    convertNavigationItem({ rawConfig: item, absolutePathOfConfiguration, context })
+                )
+            ),
+        };
+    }
 }
 
 async function convertNavigationItem({
@@ -209,6 +241,7 @@ async function convertNavigationItem({
         return {
             type: "apiSection",
             title: rawConfig.api,
+            apiName: rawConfig.apiName ?? undefined,
             audiences:
                 rawConfig.audiences != null ? { type: "select", audiences: rawConfig.audiences } : { type: "all" },
         };
@@ -358,4 +391,15 @@ async function resolveAndValidateFilepath({
         context.failAndThrow("Path does not exist: " + rawUnresolvedFilepath);
     }
     return resolved;
+}
+
+function isVersionedNavigationConfig(
+    navigationConfig: RawDocs.NavigationConfig
+): navigationConfig is RawDocs.VersionedNavigationLayout[] {
+    return (
+        Array.isArray(navigationConfig) &&
+        navigationConfig.length > 0 &&
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        (navigationConfig[0] as RawDocs.VersionedNavigationLayout).version != null
+    );
 }

@@ -2,9 +2,9 @@ import { AbsoluteFilePath, cwd, resolve } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { CONSOLE_LOGGER, LogLevel } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { FERN_DIRECTORY } from "@fern-api/project-configuration";
+import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
-import { loadWorkspace } from "@fern-api/workspace-loader";
+import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import path from "path";
 import { ParsedDockerName } from "../../cli";
 import { Semaphore } from "../../Semaphore";
@@ -140,11 +140,14 @@ async function testWithWriteToDisk({
     outputDir: string;
 }): Promise<TestResult> {
     try {
-        const absolutePathToWorkspace = AbsoluteFilePath.of(path.join(__dirname, FERN_DIRECTORY, fixture));
-        const workspace = await loadWorkspace({
+        const absolutePathToWorkspace = AbsoluteFilePath.of(
+            path.join(__dirname, FERN_DIRECTORY, APIS_DIRECTORY, fixture)
+        );
+        const workspace = await loadAPIWorkspace({
             absolutePathToWorkspace,
             context: taskContext,
             cliVersion: "DUMMY",
+            workspaceName: fixture,
         });
         if (!workspace.didSucceed) {
             taskContext.logger.info(`Failed to load workspace for fixture ${fixture}`);

@@ -1,0 +1,9 @@
+imports:
+  root: __package__.yml
+name: api
+display-name: Swagger Petstore
+error-discrimination:
+  strategy: status-code
+default-environment: default
+environments:
+  default: http://petstore.swagger.io/v1

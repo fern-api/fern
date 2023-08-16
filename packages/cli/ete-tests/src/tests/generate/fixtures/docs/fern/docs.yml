@@ -1,3 +1,6 @@
+instances:
+  - url: ferndevtest.docs.dev.buildwithfern.com
+
 logo:
   dark: ./fern.png
 
@@ -10,7 +13,10 @@ navigation:
     contents:
       - page: Foo
         path: foo.md
-  - api: API Reference
+  - title: API Reference
+    api: "v2.1"
+  - title: API Reference
+    api: "v2.2"
 
 background-image: ./bg-gradient.png
 

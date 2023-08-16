@@ -17,14 +17,4 @@ describe("fern add", () => {
 
         expect(await getDirectoryContents(pathOfDirectory)).toMatchSnapshot();
     }, 60_000);
-
-    it("fern add docs", async () => {
-        const pathOfDirectory = await init();
-
-        await runFernCli(["add", "docs", "--group", "docs-group"], {
-            cwd: pathOfDirectory,
-        });
-
-        expect(await getDirectoryContents(pathOfDirectory)).toMatchSnapshot();
-    }, 60_000);
 });

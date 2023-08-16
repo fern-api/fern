@@ -1,29 +1,27 @@
 import { loadDependenciesConfiguration } from "@fern-api/dependencies-configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loadGeneratorsConfiguration } from "@fern-api/generators-configuration";
-import { DEFINITION_DIRECTORY, DOCS_DIRECTORY, OPENAPI_DIRECTORY } from "@fern-api/project-configuration";
+import { DEFINITION_DIRECTORY, OPENAPI_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { listFiles } from "./listFiles";
 import { loadAndValidateOpenAPIDefinition } from "./loadAndValidateOpenAPIWorkspace";
-import { loadDocsDefinition } from "./loadDocsDefinition";
 import { parseYamlFiles } from "./parseYamlFiles";
 import { processPackageMarkers } from "./processPackageMarkers";
 import { WorkspaceLoader } from "./types/Result";
 import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
 
-export async function loadWorkspace({
+export async function loadAPIWorkspace({
     absolutePathToWorkspace,
     context,
     cliVersion,
+    workspaceName,
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
     cliVersion: string;
+    workspaceName: string | undefined;
 }): Promise<WorkspaceLoader.Result> {
     const generatorsConfiguration = await loadGeneratorsConfiguration({ absolutePathToWorkspace, context });
-
-    const absolutePathToDocsDefinition = join(absolutePathToWorkspace, RelativeFilePath.of(DOCS_DIRECTORY));
-    const docsDefinition = await loadDocsDefinition({ absolutePathToDocsDefinition, context });
 
     const absolutePathToOpenAPIDefinition = join(absolutePathToWorkspace, RelativeFilePath.of(OPENAPI_DIRECTORY));
     const openApiDirectoryExists = await doesPathExist(absolutePathToOpenAPIDefinition);
@@ -35,9 +33,9 @@ export async function loadWorkspace({
             workspace: {
                 type: "openapi",
                 name: "api",
+                workspaceName,
                 absoluteFilepath: absolutePathToWorkspace,
                 generatorsConfiguration,
-                docsDefinition,
                 definition: openApiDefinition,
             },
         };
@@ -79,7 +77,7 @@ export async function loadWorkspace({
             absoluteFilepath: absolutePathToWorkspace,
             generatorsConfiguration,
             dependenciesConfiguration,
-            docsDefinition,
+            workspaceName,
             definition: {
                 absoluteFilepath: absolutePathToDefinition,
                 rootApiFile: structuralValidationResult.rootApiFile,

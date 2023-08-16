@@ -7,17 +7,15 @@ exports[`fern add fern add <generator> 1`] = `
       {
         "contents": [
           {
-            "contents": [
-              {
-                "contents": "name: api
+            "contents": "name: api
 error-discrimination:
   strategy: status-code
 ",
-                "name": "api.yml",
-                "type": "file",
-              },
-              {
-                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+            "name": "api.yml",
+            "type": "file",
+          },
+          {
+            "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 service:
   auth: false
@@ -78,33 +76,11 @@ errors:
     status-code: 404
     type: MovieId
 ",
-                "name": "imdb.yml",
-                "type": "file",
-              },
-            ],
-            "name": "definition",
-            "type": "directory",
-          },
-          {
-            "contents": "default-group: local
-groups:
-  local:
-    generators:
-      - name: fernapi/fern-typescript-node-sdk
-        version: 0.7.2
-        output:
-          location: local-file-system
-          path: ../../generated/typescript
-      - name: fernapi/fern-java-sdk
-        version: 0.3.7
-      - name: fernapi/fern-postman
-        version: 0.0.25
-",
-            "name": "generators.yml",
+            "name": "imdb.yml",
             "type": "file",
           },
         ],
-        "name": "api",
+        "name": "definition",
         "type": "directory",
       },
       {
@@ -115,119 +91,8 @@ groups:
         "name": "fern.config.json",
         "type": "file",
       },
-    ],
-    "name": "fern",
-    "type": "directory",
-  },
-]
-`;
-
-exports[`fern add fern add docs 1`] = `
-[
-  {
-    "contents": [
       {
-        "contents": [
-          {
-            "contents": [
-              {
-                "contents": "name: api
-error-discrimination:
-  strategy: status-code
-",
-                "name": "api.yml",
-                "type": "file",
-              },
-              {
-                "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
-service:
-  auth: false
-  base-path: /movies
-  endpoints:
-    createMovie:
-      docs: Add a movie to the database
-      method: POST
-      path: /create-movie
-      request: CreateMovieRequest
-      response: MovieId
-
-    getMovie:
-      docs: Retrieve a movie from the database based on the ID
-      method: GET
-      path: /{id}
-      path-parameters:
-        id: MovieId
-      response: Movie
-      errors:
-        - MovieDoesNotExistError
-      examples:
-        # Success response
-        - path-parameters:
-            id: tt0111161
-          response:
-            body:
-              id: tt0111161
-              title: The Shawshank Redemption
-              rating: 9.3
-        # Error response
-        - path-parameters:
-            id: tt1234
-          response:
-            error: MovieDoesNotExistError
-            body: tt1234
-
-types:
-  MovieId:
-    type: string
-    docs: The unique identifier for a Movie in the database
-
-  Movie:
-    properties:
-      id: MovieId
-      title: string
-      rating:
-        type: double
-        docs: The rating scale out of ten stars
-
-  CreateMovieRequest:
-    properties:
-      title: string
-      rating: double
-
-errors:
-  MovieDoesNotExistError:
-    status-code: 404
-    type: MovieId
-",
-                "name": "imdb.yml",
-                "type": "file",
-              },
-            ],
-            "name": "definition",
-            "type": "directory",
-          },
-          {
-            "contents": [
-              {
-                "contents": "title: fern
-navigation:
-  - api: API Reference
-colors:
-  accentPrimary: '#ffffff'
-logo:
-  dark: ./logo-dark.png
-  light: ./logo-light.png
-",
-                "name": "docs.yml",
-                "type": "file",
-              },
-            ],
-            "name": "docs",
-            "type": "directory",
-          },
-          {
-            "contents": "default-group: local
+        "contents": "default-group: local
 groups:
   local:
     generators:
@@ -235,25 +100,13 @@ groups:
         version: 0.7.2
         output:
           location: local-file-system
-          path: ../../generated/typescript
-  docs-group:
-    generators: []
-    docs:
-      domain: fern.dev.docs.buildwithfern.com
+          path: ../generated/typescript
+      - name: fernapi/fern-java-sdk
+        version: 0.3.7
+      - name: fernapi/fern-postman
+        version: 0.0.25
 ",
-            "name": "generators.yml",
-            "type": "file",
-          },
-        ],
-        "name": "api",
-        "type": "directory",
-      },
-      {
-        "contents": "{
-    "organization": "fern",
-    "version": "0.0.0"
-}",
-        "name": "fern.config.json",
+        "name": "generators.yml",
         "type": "file",
       },
     ],

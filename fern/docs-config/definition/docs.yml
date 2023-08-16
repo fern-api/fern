@@ -1,7 +1,8 @@
 types:
   DocsConfiguration:
     properties:
-      navigation: list<NavigationItem>
+      instances: list<DocsInstances>
+      navigation: NavigationConfig
       title:
         type: optional<string>
         docs: used as tab bar title, and in the navbar if no logo is defined
@@ -13,6 +14,22 @@ types:
       colors: optional<ColorsConfiguration>
       "navbar-links": optional<list<NavbarLink>>
       typography: optional<DocsTypographyConfig>
+
+  DocsInstances:
+    properties:
+      url: string
+      "custom-domain": optional<string>
+
+  NavigationConfig:
+    discriminated: false
+    union:
+      - list<NavigationItem>
+      - list<VersionedNavigationLayout>
+
+  VersionedNavigationLayout:
+    properties:
+      version: string
+      layout: list<NavigationItem>
 
   NavigationItem:
     discriminated: false
@@ -60,6 +77,9 @@ types:
   ApiSectionConfiguration:
     properties:
       api: string
+      "api-name":
+        type: optional<string>
+        docs: Name of API that we are referencing
       audiences: optional<list<string>>
 
   ColorsConfiguration:

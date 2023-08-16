@@ -3,9 +3,9 @@ import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext";
-import { generateWorkspace } from "./generateWorkspace";
+import { generateWorkspace } from "./generateAPIWorkspace";
 
-export async function generateWorkspaces({
+export async function generateAPIWorkspaces({
     project,
     cliContext,
     version,
@@ -40,7 +40,7 @@ export async function generateWorkspaces({
         orgId: project.config.organization,
         command: "fern generate",
         properties: {
-            workspaces: project.workspaces.map((workspace) => {
+            workspaces: project.apiWorkspaces.map((workspace) => {
                 return {
                     name: workspace.name,
                     group: groupName,
@@ -62,7 +62,7 @@ export async function generateWorkspaces({
     });
 
     await Promise.all(
-        project.workspaces.map(async (workspace) => {
+        project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 const fernWorkspace: FernWorkspace =
                     workspace.type === "fern"

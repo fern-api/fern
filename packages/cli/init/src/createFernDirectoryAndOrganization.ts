@@ -2,8 +2,8 @@ import { createOrganizationIfDoesNotExist, getCurrentUser } from "@fern-api/auth
 import { AbsoluteFilePath, cwd, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import {
-    DEFAULT_WORSPACE_FOLDER_NAME,
     FERN_DIRECTORY,
+    loadProjectConfig,
     ProjectConfigSchema,
     PROJECT_CONFIG_FILENAME,
 } from "@fern-api/project-configuration";
@@ -12,35 +12,31 @@ import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { mkdir, writeFile } from "fs/promises";
 import { kebabCase } from "lodash-es";
-import path from "path";
-import { createFernWorkspace, createOpenAPIWorkspace } from "./createWorkspace";
 
-export async function initialize({
+export async function createFernDirectoryAndWorkspace({
     organization,
+    taskContext,
     versionOfCli,
-    openApiPath,
-    context,
 }: {
     organization: string | undefined;
+    taskContext: TaskContext;
     versionOfCli: string;
-    openApiPath: AbsoluteFilePath | undefined;
-    context: TaskContext;
-}): Promise<void> {
+}): Promise<{ absolutePathToFernDirectory: AbsoluteFilePath; organization: string }> {
     const pathToFernDirectory = join(cwd(), RelativeFilePath.of(FERN_DIRECTORY));
 
     if (!(await doesPathExist(pathToFernDirectory))) {
         if (organization == null) {
-            const token = await askToLogin(context);
+            const token = await askToLogin(taskContext);
             if (token.type === "user") {
-                const user = await getCurrentUser({ token, context });
+                const user = await getCurrentUser({ token, context: taskContext });
                 organization = kebabCase(user.username);
                 const didCreateOrganization = await createOrganizationIfDoesNotExist({
                     organization,
                     token,
-                    context,
+                    context: taskContext,
                 });
                 if (didCreateOrganization) {
-                    context.logger.info(`${chalk.green(`Created organization ${chalk.bold(organization)}`)}`);
+                    taskContext.logger.info(`${chalk.green(`Created organization ${chalk.bold(organization)}`)}`);
                 }
             } else {
                 const venus = createVenusService({ token: token.value });
@@ -48,8 +44,9 @@ export async function initialize({
                 if (response.ok) {
                     organization = response.body.organizationId;
                 } else {
-                    context.failAndThrow("Unathorized. FERN_TOKEN is invalid.");
-                    return;
+                    taskContext.failAndThrow("Unathorized. FERN_TOKEN is invalid.");
+                    // dummy return value to appease the linter. won't actually ever get run.
+                    return { absolutePathToFernDirectory: AbsoluteFilePath.of("/dummy"), organization: "dummy" };
                 }
             }
         }
@@ -60,15 +57,15 @@ export async function initialize({
             organization,
             versionOfCli,
         });
+    } else {
+        const projectConfig = await loadProjectConfig({ directory: pathToFernDirectory, context: taskContext });
+        organization = projectConfig.organization;
     }
 
-    const directoryOfWorkspace = await getDirectoryOfNewWorkspace({ pathToFernDirectory });
-    if (openApiPath != null) {
-        await createOpenAPIWorkspace({ directoryOfWorkspace, openAPIFilePath: openApiPath });
-    } else {
-        await createFernWorkspace({ directoryOfWorkspace });
-    }
-    context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
+    return {
+        absolutePathToFernDirectory: pathToFernDirectory,
+        organization,
+    };
 }
 
 async function writeProjectConfig({
@@ -85,21 +82,4 @@ async function writeProjectConfig({
         version: versionOfCli,
     };
     await writeFile(filepath, JSON.stringify(projectConfig, undefined, 4));
-}
-
-async function getDirectoryOfNewWorkspace({ pathToFernDirectory }: { pathToFernDirectory: AbsoluteFilePath }) {
-    let pathToWorkspaceDirectory: AbsoluteFilePath = join(
-        pathToFernDirectory,
-        RelativeFilePath.of(DEFAULT_WORSPACE_FOLDER_NAME)
-    );
-
-    let attemptCount = 0;
-    while (await doesPathExist(pathToWorkspaceDirectory)) {
-        pathToWorkspaceDirectory = join(
-            pathToFernDirectory,
-            RelativeFilePath.of(`${DEFAULT_WORSPACE_FOLDER_NAME}${++attemptCount}`)
-        );
-    }
-
-    return pathToWorkspaceDirectory;
 }

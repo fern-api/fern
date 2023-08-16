@@ -1,6 +1,6 @@
 import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
-import { initialize } from "@fern-api/init";
+import { initializeAPI, initializeDocs } from "@fern-api/init";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
 import {
@@ -20,7 +20,8 @@ import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorT
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
 import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
-import { generateWorkspaces } from "./commands/generate/generateWorkspaces";
+import { generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
+import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
 import { upgrade } from "./commands/upgrade/upgrade";
@@ -168,6 +169,19 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         "Initialize a Fern API",
         (yargs) =>
             yargs
+                .option("api", {
+                    boolean: true,
+                    description: "Initialize an api.",
+                })
+                .option("docs", {
+                    boolean: true,
+                    description: "Initialize a docs website.",
+                })
+                .option("organization", {
+                    alias: "org",
+                    type: "string",
+                    description: "Organization name",
+                })
                 .option("openapi", {
                     type: "string",
                     description: "Filepath or url to an existing OpenAPI spec",
@@ -178,27 +192,39 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     description: "Organization name",
                 }),
         async (argv) => {
-            let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
-            if (argv.openapi != null) {
-                if (isURL(argv.openapi)) {
-                    const tmpFilepath = await loadOpenAPIFromUrl({ url: argv.openapi, cliContext });
-                    absoluteOpenApiPath = AbsoluteFilePath.of(tmpFilepath);
-                } else {
-                    absoluteOpenApiPath = AbsoluteFilePath.of(resolve(cwd(), argv.openapi));
-                }
-                const pathExists = await doesPathExist(absoluteOpenApiPath);
-                if (!pathExists) {
-                    cliContext.failAndThrow(`${absoluteOpenApiPath} does not exist`);
-                }
-            }
-            await cliContext.runTask(async (context) => {
-                await initialize({
-                    organization: argv.organization,
-                    versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
-                    context,
-                    openApiPath: absoluteOpenApiPath,
+            if (argv.api != null && argv.docs != null) {
+                return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
+            } else if (argv.docs != null) {
+                await cliContext.runTask(async (context) => {
+                    await initializeDocs({
+                        organization: argv.organization,
+                        versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
+                        taskContext: context,
+                    });
                 });
-            });
+            } else {
+                let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
+                if (argv.openapi != null) {
+                    if (isURL(argv.openapi)) {
+                        const tmpFilepath = await loadOpenAPIFromUrl({ url: argv.openapi, cliContext });
+                        absoluteOpenApiPath = AbsoluteFilePath.of(tmpFilepath);
+                    } else {
+                        absoluteOpenApiPath = AbsoluteFilePath.of(resolve(cwd(), argv.openapi));
+                    }
+                    const pathExists = await doesPathExist(absoluteOpenApiPath);
+                    if (!pathExists) {
+                        cliContext.failAndThrow(`${absoluteOpenApiPath} does not exist`);
+                    }
+                }
+                await cliContext.runTask(async (context) => {
+                    await initializeAPI({
+                        organization: argv.organization,
+                        versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
+                        context,
+                        openApiPath: absoluteOpenApiPath,
+                    });
+                });
+            }
         }
     );
 }
@@ -224,8 +250,8 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         async (argv) => {
             await addGeneratorToWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineWorkspace: argv.api,
-                    defaultToAllWorkspaces: false,
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false,
                 }),
                 generatorName: argv.generator,
                 groupName: argv.group,
@@ -237,21 +263,25 @@ function addAddCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 
 function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        ["generate [group]"],
+        ["generate"],
         "Generate all generators in the specified group",
         (yargs) =>
             yargs
-                .positional("group", {
+                .option("api", {
+                    string: true,
+                    description: "If multiple APIs, specify the name with --api <name>. Otherwise, just --api.",
+                })
+                .option("docs", {
+                    boolean: true,
+                    description: "If multiple docs sites, specify the name with --docs <name>. Otherwise just --docs.",
+                })
+                .option("group", {
                     type: "string",
                     description: "The group to generate",
                 })
                 .option("version", {
                     type: "string",
                     description: "The version for the generated packages",
-                })
-                .option("api", {
-                    string: true,
-                    description: "Only run the command on the provided API",
                 })
                 .option("printZipUrl", {
                     boolean: true,
@@ -269,18 +299,54 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description: "Prevent auto-deletion of the Docker containers.",
                 }),
         async (argv) => {
-            await generateWorkspaces({
-                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineWorkspace: argv.api,
-                    defaultToAllWorkspaces: false,
-                }),
-                cliContext,
-                version: argv.version,
-                groupName: argv.group,
-                shouldLogS3Url: argv.printZipUrl,
-                keepDocker: argv.keepDocker,
-                useLocalDocker: argv.local,
-            });
+            if (argv.api != null && argv.docs != null) {
+                return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
+            } else if (argv.api != null) {
+                await generateAPIWorkspaces({
+                    project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        commandLineApiWorkspace: argv.api,
+                        defaultToAllApiWorkspaces: false,
+                    }),
+                    cliContext,
+                    version: argv.version,
+                    groupName: argv.group,
+                    shouldLogS3Url: argv.printZipUrl,
+                    keepDocker: argv.keepDocker,
+                    useLocalDocker: argv.local,
+                });
+            } else if (argv.docs != null) {
+                if (argv.group != null) {
+                    cliContext.logger.warn("--group is ignored when generating docs");
+                }
+                if (argv.version != null) {
+                    cliContext.logger.warn("--version is ignored when generating docs");
+                }
+                await generateDocsWorkspace({
+                    project: await loadProjectAndRegisterWorkspacesWithContext(
+                        cliContext,
+                        {
+                            commandLineApiWorkspace: undefined,
+                            defaultToAllApiWorkspaces: true,
+                        },
+                        true
+                    ),
+                    cliContext,
+                });
+            } else {
+                // default to loading api workspace to preserve legacy behavior
+                await generateAPIWorkspaces({
+                    project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                        commandLineApiWorkspace: argv.api,
+                        defaultToAllApiWorkspaces: false,
+                    }),
+                    cliContext,
+                    version: argv.version,
+                    groupName: argv.group,
+                    shouldLogS3Url: argv.printZipUrl,
+                    keepDocker: argv.keepDocker,
+                    useLocalDocker: argv.local,
+                });
+            }
         }
     );
 }
@@ -317,8 +383,8 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         async (argv) => {
             await generateIrForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineWorkspace: argv.api,
-                    defaultToAllWorkspaces: false,
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false,
                 }),
                 irFilepath: resolve(cwd(), argv.pathToOutput),
                 cliContext,
@@ -354,8 +420,8 @@ function addFdrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         async (argv) => {
             await generateFdrApiDefinitionForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineWorkspace: argv.api,
-                    defaultToAllWorkspaces: false,
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false,
                 }),
                 outputFilepath: resolve(cwd(), argv.pathToOutput),
                 cliContext,
@@ -381,8 +447,8 @@ function addRegisterCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 }),
         async (argv) => {
             const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                commandLineWorkspace: argv.api,
-                defaultToAllWorkspaces: false,
+                commandLineApiWorkspace: argv.api,
+                defaultToAllApiWorkspaces: false,
             });
 
             const token = await cliContext.runTask((context) => {
@@ -409,8 +475,8 @@ function addRegisterV2Command(cli: Argv<GlobalCliOptions>, cliContext: CliContex
             }),
         async (argv) => {
             const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                commandLineWorkspace: argv.api,
-                defaultToAllWorkspaces: false,
+                commandLineApiWorkspace: argv.api,
+                defaultToAllApiWorkspaces: false,
             });
 
             const token = await cliContext.runTask((context) => {
@@ -437,8 +503,8 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
         async (argv) => {
             await validateWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineWorkspace: argv.api,
-                    defaultToAllWorkspaces: true,
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: true,
                 }),
                 cliContext,
             });
@@ -522,8 +588,8 @@ function addFormatCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             });
             await formatWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineWorkspace: argv.api,
-                    defaultToAllWorkspaces: true,
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: true,
                 }),
                 cliContext,
                 shouldFix: !argv.ci,
@@ -544,8 +610,8 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
         async (argv) => {
             await writeDefinitionForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineWorkspace: argv.api,
-                    defaultToAllWorkspaces: true,
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: true,
                 }),
                 cliContext,
             });
@@ -555,7 +621,8 @@ function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
 
 async function loadProjectAndRegisterWorkspacesWithContext(
     cliContext: CliContext,
-    args: Omit<loadProject.Args, "context" | "cliName" | "cliVersion">
+    args: Omit<loadProject.Args, "context" | "cliName" | "cliVersion">,
+    registerDocsWorkspace = false
 ): Promise<Project> {
     const context = cliContext.addTask().start();
     const project = await loadProject({
@@ -566,6 +633,11 @@ async function loadProjectAndRegisterWorkspacesWithContext(
     });
     context.finish();
 
-    cliContext.registerWorkspaces(project.workspaces);
+    if (registerDocsWorkspace && project.docsWorkspaces != null) {
+        cliContext.registerWorkspaces([...project.apiWorkspaces, project.docsWorkspaces]);
+    } else {
+        cliContext.registerWorkspaces(project.apiWorkspaces);
+    }
+
     return project;
 }

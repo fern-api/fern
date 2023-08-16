@@ -2,14 +2,15 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import assert from "assert";
-import { loadWorkspace } from "../loadWorkspace";
+import { loadAPIWorkspace } from "../loadAPIWorkspace";
 
 describe("loadWorkspace", () => {
     it("loads workspace", async () => {
-        const workspace = await loadWorkspace({
+        const workspace = await loadAPIWorkspace({
             absolutePathToWorkspace: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures/simple")),
             context: createMockTaskContext(),
             cliVersion: "0.0.0",
+            workspaceName: undefined,
         });
         expect(workspace.didSucceed).toBe(true);
         assert(workspace.didSucceed);

@@ -19,7 +19,7 @@ import path from "path";
 import { pipeline } from "stream/promises";
 import tar from "tar";
 import tmp from "tmp-promise";
-import { loadWorkspace } from "./loadWorkspace";
+import { loadAPIWorkspace } from "./loadAPIWorkspace";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
 import { FernDefinition, FernWorkspace } from "./types/Workspace";
 import { convertOpenApiWorkspaceToFernWorkspace } from "./utils/convertOpenApiWorkspaceToFernWorkspace";
@@ -114,10 +114,11 @@ async function validateLocalDependencyAndGetDefinition({
 }): Promise<FernDefinition | undefined> {
     // parse workspace
     context.logger.info("Parsing...");
-    const loadDependencyWorkspaceResult = await loadWorkspace({
+    const loadDependencyWorkspaceResult = await loadAPIWorkspace({
         absolutePathToWorkspace: dependency.absoluteFilepath,
         context,
         cliVersion,
+        workspaceName: undefined,
     });
     if (!loadDependencyWorkspaceResult.didSucceed) {
         context.failWithoutThrowing("Failed to load api definition", loadDependencyWorkspaceResult.failures);
@@ -225,10 +226,11 @@ async function validateVersionedDependencyAndGetDefinition({
 
     // parse workspace
     context.logger.info("Parsing...");
-    const loadDependencyWorkspaceResult = await loadWorkspace({
+    const loadDependencyWorkspaceResult = await loadAPIWorkspace({
         absolutePathToWorkspace: pathToDependency,
         context,
         cliVersion: response.body.cliVersion,
+        workspaceName: undefined,
     });
     if (!loadDependencyWorkspaceResult.didSucceed) {
         context.failWithoutThrowing(

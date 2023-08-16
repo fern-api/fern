@@ -21,7 +21,7 @@ describe("fern generate", () => {
     (isOnMainOrTagOnCircle() ? it : it.skip)(
         "docs",
         async () => {
-            await runFernCli(["generate"], {
+            await runFernCli(["generate", "--docs"], {
                 cwd: join(fixturesDir, RelativeFilePath.of("docs")),
             });
         },
@@ -29,7 +29,7 @@ describe("fern generate", () => {
     );
 
     it("missing docs page", async () => {
-        const { stdout } = await runFernCli(["generate"], {
+        const { stdout } = await runFernCli(["generate", "--docs"], {
             cwd: join(fixturesDir, RelativeFilePath.of("docs-missing-page")),
             reject: false,
         });
