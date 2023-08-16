@@ -13,10 +13,10 @@ navigation:
     contents:
       - page: Foo
         path: foo.md
-  - title: API Reference
-    api: "v2.1"
-  - title: API Reference
-    api: "v2.2"
+  - api: V2.1 API Reference
+    api-name: "v2.1"
+  - api: V2.2 API Reference
+    api-name: "v2.2"
 
 background-image: ./bg-gradient.png
 
