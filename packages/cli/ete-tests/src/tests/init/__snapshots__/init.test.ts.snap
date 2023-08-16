@@ -88,7 +88,7 @@ errors:
   - url: https://fern.dev.docs.buildwithfern.com
 title: fern | Documentation
 navigation:
-  - title: API Reference
+  - api: API Reference
 colors:
   accentPrimary: '#ffffff'
 ",
