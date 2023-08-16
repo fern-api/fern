@@ -46,6 +46,8 @@ class SdkGenerator(AbstractGenerator):
         ir: ir_types.IntermediateRepresentation,
     ) -> Tuple[str, ...]:
         custom_config = SDKCustomConfig.parse_obj(generator_config.custom_config or {})
+        if custom_config.package_name is not None: 
+            return (custom_config.package_name,)
         return (
             (
                 generator_config.organization,

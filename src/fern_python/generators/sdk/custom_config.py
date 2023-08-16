@@ -10,4 +10,5 @@ class SDKCustomConfig(pydantic.BaseModel):
     client_filename: str = "client.py"
     include_union_utils: bool = False
     use_api_name_in_package: bool = False
+    package_name: Optional[str] = None
     timeout_in_seconds: Union[Literal["infinity"], int] = 60
