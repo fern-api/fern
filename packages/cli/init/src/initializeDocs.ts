@@ -35,7 +35,7 @@ function getDocsConfig(organization: string): RawDocs.DocsConfiguration {
             },
         ],
         title: `${organization} | Documentation`,
-        navigation: [{ title: "API Reference" }],
+        navigation: [{ api: "API Reference" }],
         colors: {
             accentPrimary: "#ffffff",
         },
