@@ -156,3 +156,10 @@ class FastApiGenerator(AbstractGenerator):
 
     def get_sorted_modules(self) -> None:
         return None
+
+    def is_flat_layout(
+        self,
+        *,
+        generator_config: GeneratorConfig,
+    ) -> bool:
+        return False

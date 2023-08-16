@@ -15,7 +15,7 @@ from fern_python.codegen.dependency_manager import DependencyManager
 @dataclass(frozen=True)
 class PyProjectTomlPackageConfig:
     include: str
-    _from: str
+    _from: Optional[str] = None
 
 
 class PyProjectToml:
@@ -65,12 +65,20 @@ class PyProjectToml:
 name = "{self.name}"'''
             if self.version is not None:
                 s += "\n" + f'version = "{self.version}"'
-            s += f"""
+            s += """
 description = ""
 readme = "README.md"
-authors = []
+authors = []"""
+            if self.package._from is not None:
+                s += f"""
 packages = [
     {{ include = "{self.package.include}", from = "{self.package._from}"}}
+]
+"""
+            else:
+                s += f"""
+packages = [
+    {{ include = "{self.package.include}"}}
 ]
 """
             return s

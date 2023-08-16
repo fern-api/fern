@@ -230,3 +230,11 @@ class SdkGenerator(AbstractGenerator):
         # always import types/errors before resources (nested packages)
         # to avoid issues with circular imports
         return [".types", ".errors", ".resources"]
+
+    def is_flat_layout(
+        self,
+        *,
+        generator_config: GeneratorConfig,
+    ) -> bool:
+        custom_config = SDKCustomConfig.parse_obj(generator_config.custom_config or {})
+        return custom_config.flat_layout

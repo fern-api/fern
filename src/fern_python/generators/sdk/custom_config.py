@@ -12,3 +12,4 @@ class SDKCustomConfig(pydantic.BaseModel):
     use_api_name_in_package: bool = False
     package_name: Optional[str] = None
     timeout_in_seconds: Union[Literal["infinity"], int] = 60
+    flat_layout: bool = False
