@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports: 
+  objects: "./types.yml"
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    getDummy:
+      auth: false
+      path: /dummy
+      method: GET
+      response: objects.ObjectLiteralWithPropertiesOfSameName
