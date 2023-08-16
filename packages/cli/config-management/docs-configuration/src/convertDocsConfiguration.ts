@@ -240,7 +240,7 @@ async function convertNavigationItem({
     if (isRawApiSectionConfig(rawConfig)) {
         return {
             type: "apiSection",
-            title: rawConfig.title,
+            title: rawConfig.api,
             apiName: rawConfig.api ?? undefined,
             audiences:
                 rawConfig.audiences != null ? { type: "select", audiences: rawConfig.audiences } : { type: "all" },
