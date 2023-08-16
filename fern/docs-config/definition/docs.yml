@@ -84,15 +84,16 @@ types:
 
   ColorsConfiguration:
     properties:
-      accentPrimary: optional<AccentPrimaryConfig>
+      accentPrimary: optional<ColorConfig>
+      background: optional<ColorConfig>
 
-  AccentPrimaryConfig:
+  ColorConfig:
     discriminated: false
     union:
       - string
-      - AccentPrimaryThemedConfig
+      - ColorThemedConfig
 
-  AccentPrimaryThemedConfig:
+  ColorThemedConfig:
     properties:
       dark: optional<string>
       light: optional<string>
