@@ -21,7 +21,7 @@ navigation:
 background-image: ./bg-gradient.png
 
 colors:
-  accentPrimary: "#ffffFF"
+  accentPrimary: "#FFFFFF"
 
 typography:
   headingsFont:

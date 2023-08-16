@@ -1711,7 +1711,7 @@ __metadata:
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-fern/docs-config": 0.0.46
-    "@fern-fern/registry-node": 0.13.0-4-ge1278e2
+    "@fern-fern/registry-node": 0.13.0-5-g92d91db
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.5
     "@types/node": ^18.7.18
@@ -2199,7 +2199,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/ir-sdk": 0.0.2828
-    "@fern-fern/registry-node": 0.13.0-4-ge1278e2
+    "@fern-fern/registry-node": 0.13.0-5-g92d91db
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -2232,7 +2232,7 @@ __metadata:
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.290
     "@fern-fern/ir-sdk": 0.0.2828
-    "@fern-fern/registry-node": 0.13.0-4-ge1278e2
+    "@fern-fern/registry-node": 0.13.0-5-g92d91db
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
@@ -2341,7 +2341,7 @@ __metadata:
   dependencies:
     "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
     "@fern-fern/fiddle-sdk": ^0.0.290
-    "@fern-fern/registry-node": 0.13.0-4-ge1278e2
+    "@fern-fern/registry-node": 0.13.0-5-g92d91db
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
@@ -2720,16 +2720,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/registry-node@npm:0.13.0-4-ge1278e2":
-  version: 0.13.0-4-ge1278e2
-  resolution: "@fern-fern/registry-node@npm:0.13.0-4-ge1278e2"
+"@fern-fern/registry-node@npm:0.13.0-5-g92d91db":
+  version: 0.13.0-5-g92d91db
+  resolution: "@fern-fern/registry-node@npm:0.13.0-5-g92d91db"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: f9f78c5f12925509e8486cc07080c77cba7f92a58acd5f5a328b3d2a5d90056a07c3c4d5328b011e2f7240f4a9116b5593436f253c8a522ada7192c9bed6a5fd
+  checksum: a29fcc20da75af6fb019d17a8d1ac397a2675c14f2cf04b0f3597b0532ba6e6535de80b5991ab3d8bd2c3158225b5abe1902de9f3108dff2d70e507851d3585b
   languageName: node
   linkType: hard
 
