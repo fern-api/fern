@@ -68,26 +68,38 @@ export async function convertDocsConfiguration({
                       context,
                   })
                 : undefined,
-        colors:
-            convertedColors.accentPrimary != null
-                ? {
-                      accentPrimary:
-                          convertedColors.accentPrimary.type === "themed"
-                              ? {
-                                    type: "themed",
-                                    dark: convertedColors.accentPrimary.dark,
-                                    light: convertedColors.accentPrimary.light,
-                                }
-                              : convertedColors.accentPrimary.type === "unthemed"
-                              ? {
-                                    type: "unthemed",
-                                    color: convertedColors.accentPrimary.color,
-                                }
-                              : undefined,
-                  }
-                : {
-                      accentPrimary: undefined,
-                  },
+        colors: {
+            accentPrimary:
+                convertedColors.accentPrimary != null
+                    ? convertedColors.accentPrimary.type === "themed"
+                        ? {
+                              type: "themed",
+                              dark: convertedColors.accentPrimary.dark,
+                              light: convertedColors.accentPrimary.light,
+                          }
+                        : convertedColors.accentPrimary.type === "unthemed"
+                        ? {
+                              type: "unthemed",
+                              color: convertedColors.accentPrimary.color,
+                          }
+                        : undefined
+                    : undefined,
+            background:
+                convertedColors.background != null
+                    ? convertedColors.background.type === "themed"
+                        ? {
+                              type: "themed",
+                              dark: convertedColors.background.dark,
+                              light: convertedColors.background.light,
+                          }
+                        : convertedColors.background.type === "unthemed"
+                        ? {
+                              type: "unthemed",
+                              color: convertedColors.background.color,
+                          }
+                        : undefined
+                    : undefined,
+        },
         navbarLinks: navbarLinks != null ? convertNavbarLinks(navbarLinks) : undefined,
         typography:
             typography != null
@@ -286,47 +298,56 @@ function convertColorsConfiguration(
     rawConfig: RawDocs.ColorsConfiguration,
     context: TaskContext
 ): FernRegistry.docs.v1.write.ColorsConfigV2 {
-    if (rawConfig.accentPrimary == null) {
-        return {};
-    }
-
-    if (typeof rawConfig.accentPrimary === "string") {
-        const rgb = hexToRgb(rawConfig.accentPrimary);
-        if (rgb == null) {
-            context.failAndThrow("'accentPrimary' should be a hex color of the format #FFFFFF");
-        }
-        return {
-            accentPrimary: FernRegistry.docs.v1.write.AccentPrimaryConfig.unthemed({
-                color: rgb,
-            }),
-        };
-    }
-
-    let darkRgb = undefined;
-    let lightRgb = undefined;
-
-    if (rawConfig.accentPrimary.dark != null) {
-        const rgb = hexToRgb(rawConfig.accentPrimary.dark);
-        if (rgb == null) {
-            context.failAndThrow("'accentPrimary.dark' should be a hex color of the format #FFFFFF");
-        }
-        darkRgb = rgb;
-    }
-
-    if (rawConfig.accentPrimary.light != null) {
-        const rgb = hexToRgb(rawConfig.accentPrimary.light);
-        if (rgb == null) {
-            context.failAndThrow("'accentPrimary.light' should be a hex color of the format #FFFFFF");
-        }
-        lightRgb = rgb;
-    }
-
     return {
-        accentPrimary: FernRegistry.docs.v1.write.AccentPrimaryConfig.themed({
-            dark: darkRgb,
-            light: lightRgb,
-        }),
+        accentPrimary:
+            rawConfig.accentPrimary != null
+                ? convertColorConfiguration(rawConfig.accentPrimary, context, "accentPrimary")
+                : undefined,
+        background:
+            rawConfig.background != null
+                ? convertColorConfiguration(rawConfig.background, context, "background")
+                : undefined,
     };
+}
+
+function convertColorConfiguration(
+    raw: RawDocs.ColorConfig,
+    context: TaskContext,
+    key: string
+): FernRegistry.docs.v1.write.ColorConfig {
+    if (typeof raw === "string") {
+        const rgb = hexToRgb(raw);
+        if (rgb == null) {
+            context.failAndThrow(`'${key}' should be a hex color of the format #FFFFFF`);
+        }
+        return FernRegistry.docs.v1.write.ColorConfig.unthemed({
+            color: rgb,
+        });
+    }
+
+    let rgbDark = undefined;
+    let rgbLight = undefined;
+
+    if (raw.dark != null) {
+        const rgb = hexToRgb(raw.dark);
+        if (rgb == null) {
+            context.failAndThrow(`'${key}.dark' should be a hex color of the format #FFFFFF`);
+        }
+        rgbDark = rgb;
+    }
+
+    if (raw.light != null) {
+        const rgb = hexToRgb(raw.light);
+        if (rgb == null) {
+            context.failAndThrow(`'${key}.light' should be a hex color of the format #FFFFFF`);
+        }
+        rgbLight = rgb;
+    }
+
+    return FernRegistry.docs.v1.write.ColorConfig.themed({
+        dark: rgbDark,
+        light: rgbLight,
+    });
 }
 
 const HEX_COLOR_REGEX = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i;

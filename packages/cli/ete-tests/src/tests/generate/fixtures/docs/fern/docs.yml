@@ -22,6 +22,7 @@ background-image: ./bg-gradient.png
 
 colors:
   accentPrimary: "#FFFFFF"
+  background: "#000000"
 
 typography:
   headingsFont:

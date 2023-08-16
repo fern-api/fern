@@ -38,6 +38,7 @@ function getDocsConfig(organization: string): RawDocs.DocsConfiguration {
         navigation: [{ api: "API Reference" }],
         colors: {
             accentPrimary: "#ffffff",
+            background: "#000000",
         },
     };
 }
