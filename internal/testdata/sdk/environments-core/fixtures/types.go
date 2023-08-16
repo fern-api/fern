@@ -3,45 +3,27 @@
 package api
 
 import (
-	json "encoding/json"
 	fmt "fmt"
-	strconv "strconv"
 )
 
-type Environments uint
+type Environments string
 
 const (
-	EnvironmentsInside Environments = iota + 1
-	EnvironmentsOutside
+	EnvironmentsInside  Environments = "Inside"
+	EnvironmentsOutside Environments = "Outside"
 )
 
-func (e Environments) String() string {
-	switch e {
-	default:
-		return strconv.Itoa(int(e))
-	case EnvironmentsInside:
-		return "Inside"
-	case EnvironmentsOutside:
-		return "Outside"
-	}
-}
-
-func (e Environments) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%q", e.String())), nil
-}
-
-func (e *Environments) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
+func NewEnvironmentsFromString(s string) (Environments, error) {
+	switch s {
 	case "Inside":
-		value := EnvironmentsInside
-		*e = value
+		return EnvironmentsInside, nil
 	case "Outside":
-		value := EnvironmentsOutside
-		*e = value
+		return EnvironmentsOutside, nil
 	}
-	return nil
+	var t Environments
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e Environments) Ptr() *Environments {
+	return &e
 }

@@ -40,7 +40,7 @@ func (t *typeVisitor) VisitAlias(alias *ir.AliasTypeDeclaration) error {
 
 func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 	// Write the enum type definition.
-	t.writer.P("type ", t.typeName, " uint")
+	t.writer.P("type ", t.typeName, " string")
 	t.writer.P()
 
 	// We first need to determine whether or not this enum requires us to
@@ -68,67 +68,39 @@ func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 
 	// Write all of the supported enum values in a single const block.
 	t.writer.P("const (")
-	for i, enumValue := range enum.Values {
+	for _, enumValue := range enum.Values {
 		t.writer.WriteDocs(enumValue.Docs)
 		enumName := t.typeName + enumValue.Name.Name.PascalCase.UnsafeName
 		if useEnumWireValue {
 			enumName = t.typeName + enumValue.Name.WireValue
 		}
-		if i == 0 {
-			t.writer.P(enumName, " ", t.typeName, " = iota + 1")
-			continue
-		}
-		t.writer.P(enumName)
+		t.writer.P(enumName, " ", t.typeName, fmt.Sprintf(" = %q", enumValue.Name.WireValue))
 	}
 	t.writer.P(")")
 	t.writer.P()
 
-	receiver := typeNameToReceiver(t.typeName)
-
-	// Implement the fmt.Stringer interface.
-	t.writer.P("func (", receiver, " ", t.typeName, ") String() string {")
-	t.writer.P("switch ", receiver, " {")
-	for i, enumValue := range enum.Values {
-		if i == 0 {
-			// Implement the default case first.
-			t.writer.P("default:")
-			t.writer.P("return strconv.Itoa(int(", receiver, "))")
-		}
-		enumName := t.typeName + enumValue.Name.Name.PascalCase.UnsafeName
-		if useEnumWireValue {
-			enumName = t.typeName + enumValue.Name.WireValue
-		}
-		t.writer.P("case ", enumName, ":")
-		t.writer.P("return \"", enumValue.Name.WireValue, "\"")
-	}
-	t.writer.P("}")
-	t.writer.P("}")
-	t.writer.P()
-
-	// Implement the json.Marshaler interface.
-	t.writer.P("func (", receiver, " ", t.typeName, ") MarshalJSON() ([]byte, error) {")
-	t.writer.P("return []byte(fmt.Sprintf(\"%q\", ", receiver, ".String())), nil")
-	t.writer.P("}")
-	t.writer.P()
-
-	// Implement the json.Unmarshaler interface.
-	t.writer.P("func (", receiver, " *", t.typeName, ") UnmarshalJSON(data []byte) error {")
-	t.writer.P("var raw string")
-	t.writer.P("if err := json.Unmarshal(data, &raw); err != nil {")
-	t.writer.P("return err")
-	t.writer.P("}")
-	t.writer.P("switch raw {")
+	// Generate a constructor that can be used to validate the string value.
+	t.writer.P("func New", t.typeName, "FromString(s string) (", t.typeName, ", error) {")
+	t.writer.P("switch s {")
 	for _, enumValue := range enum.Values {
 		enumName := t.typeName + enumValue.Name.Name.PascalCase.UnsafeName
 		if useEnumWireValue {
 			enumName = t.typeName + enumValue.Name.WireValue
 		}
 		t.writer.P("case \"", enumValue.Name.WireValue, "\":")
-		t.writer.P("value := ", enumName)
-		t.writer.P("*", receiver, " = value")
+		t.writer.P("return ", enumName, ", nil")
 	}
 	t.writer.P("}")
-	t.writer.P("return nil")
+	t.writer.P("var t ", t.typeName)
+	t.writer.P(`return "", fmt.Errorf("%s is not a valid %T", s, t)`)
+	t.writer.P("}")
+	t.writer.P()
+
+	// Generate a pointer method so that it's easier to use the enum as
+	// an optional value.
+	receiver := typeNameToReceiver(t.typeName)
+	t.writer.P("func (", receiver, " ", t.typeName, ") Ptr() *", t.typeName, " {")
+	t.writer.P("return &", receiver)
 	t.writer.P("}")
 	t.writer.P()
 

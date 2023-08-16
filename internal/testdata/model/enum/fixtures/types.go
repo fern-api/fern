@@ -3,102 +3,59 @@
 package api
 
 import (
-	json "encoding/json"
 	fmt "fmt"
-	strconv "strconv"
 )
 
-type Enum uint
+type Enum string
 
 const (
 	// The first enum value.
-	EnumOne Enum = iota + 1
-	EnumTwo
-	EnumThree
+	EnumOne   Enum = "ONE"
+	EnumTwo   Enum = "TWO"
+	EnumThree Enum = "THREE"
 )
 
-func (e Enum) String() string {
-	switch e {
-	default:
-		return strconv.Itoa(int(e))
-	case EnumOne:
-		return "ONE"
-	case EnumTwo:
-		return "TWO"
-	case EnumThree:
-		return "THREE"
-	}
-}
-
-func (e Enum) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%q", e.String())), nil
-}
-
-func (e *Enum) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
+func NewEnumFromString(s string) (Enum, error) {
+	switch s {
 	case "ONE":
-		value := EnumOne
-		*e = value
+		return EnumOne, nil
 	case "TWO":
-		value := EnumTwo
-		*e = value
+		return EnumTwo, nil
 	case "THREE":
-		value := EnumThree
-		*e = value
+		return EnumThree, nil
 	}
-	return nil
+	var t Enum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
 }
 
-type Something uint
+func (e Enum) Ptr() *Enum {
+	return &e
+}
+
+type Something string
 
 const (
-	Somethingone Something = iota + 1
-	SomethingOne
-	SomethingONe
-	SomethingONE
+	Somethingone Something = "one"
+	SomethingOne Something = "One"
+	SomethingONe Something = "ONe"
+	SomethingONE Something = "ONE"
 )
 
-func (s Something) String() string {
+func NewSomethingFromString(s string) (Something, error) {
 	switch s {
-	default:
-		return strconv.Itoa(int(s))
-	case Somethingone:
-		return "one"
-	case SomethingOne:
-		return "One"
-	case SomethingONe:
-		return "ONe"
-	case SomethingONE:
-		return "ONE"
-	}
-}
-
-func (s Something) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%q", s.String())), nil
-}
-
-func (s *Something) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
 	case "one":
-		value := Somethingone
-		*s = value
+		return Somethingone, nil
 	case "One":
-		value := SomethingOne
-		*s = value
+		return SomethingOne, nil
 	case "ONe":
-		value := SomethingONe
-		*s = value
+		return SomethingONe, nil
 	case "ONE":
-		value := SomethingONE
-		*s = value
+		return SomethingONE, nil
 	}
-	return nil
+	var t Something
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s Something) Ptr() *Something {
+	return &s
 }

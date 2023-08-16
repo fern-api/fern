@@ -3,9 +3,7 @@
 package api
 
 import (
-	json "encoding/json"
 	fmt "fmt"
-	strconv "strconv"
 )
 
 type Bar struct {
@@ -42,54 +40,32 @@ type Foo struct {
 	Delay   *string  `json:"delay,omitempty"`
 }
 
-type FooType uint
+type FooType string
 
 const (
-	FooTypeOne FooType = iota + 1
-	FooTypeTwo
-	FooTypeThree
-	FooTypeFour
+	FooTypeOne   FooType = "one"
+	FooTypeTwo   FooType = "two"
+	FooTypeThree FooType = "three"
+	FooTypeFour  FooType = "four"
 )
 
-func (f FooType) String() string {
-	switch f {
-	default:
-		return strconv.Itoa(int(f))
-	case FooTypeOne:
-		return "one"
-	case FooTypeTwo:
-		return "two"
-	case FooTypeThree:
-		return "three"
-	case FooTypeFour:
-		return "four"
-	}
-}
-
-func (f FooType) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%q", f.String())), nil
-}
-
-func (f *FooType) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
+func NewFooTypeFromString(s string) (FooType, error) {
+	switch s {
 	case "one":
-		value := FooTypeOne
-		*f = value
+		return FooTypeOne, nil
 	case "two":
-		value := FooTypeTwo
-		*f = value
+		return FooTypeTwo, nil
 	case "three":
-		value := FooTypeThree
-		*f = value
+		return FooTypeThree, nil
 	case "four":
-		value := FooTypeFour
-		*f = value
+		return FooTypeFour, nil
 	}
-	return nil
+	var t FooType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FooType) Ptr() *FooType {
+	return &f
 }
 
 type Request struct {

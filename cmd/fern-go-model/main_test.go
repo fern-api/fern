@@ -116,12 +116,19 @@ func TestEnum(t *testing.T) {
 	require.NoError(t, json.Unmarshal([]byte(`"ONE"`), &one))
 
 	assert.Equal(t, enum.EnumOne, one)
-	assert.Equal(t, "ONE", one.String())
+	assert.Equal(t, "ONE", string(one))
 
 	bytes, err := json.Marshal(one)
 	require.NoError(t, err)
-
 	assert.Equal(t, []byte(`"ONE"`), bytes)
+
+	two, err := enum.NewEnumFromString("TWO")
+	require.NoError(t, err)
+	assert.Equal(t, enum.EnumTwo, two)
+	assert.Equal(t, two.Ptr(), two.Ptr())
+
+	_, err = enum.NewEnumFromString("FOUR")
+	assert.EqualError(t, err, "FOUR is not a valid api.Enum")
 }
 
 // TestLiteral verifies that any type with a literal has

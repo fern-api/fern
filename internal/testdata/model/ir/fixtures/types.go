@@ -6,7 +6,6 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	uuid "github.com/gofrs/uuid/v5"
-	strconv "strconv"
 	time "time"
 )
 
@@ -119,42 +118,26 @@ func (a *AuthScheme) Accept(visitor AuthSchemeVisitor) error {
 	}
 }
 
-type AuthSchemesRequirement uint
+type AuthSchemesRequirement string
 
 const (
-	AuthSchemesRequirementAll AuthSchemesRequirement = iota + 1
-	AuthSchemesRequirementAny
+	AuthSchemesRequirementAll AuthSchemesRequirement = "ALL"
+	AuthSchemesRequirementAny AuthSchemesRequirement = "ANY"
 )
 
-func (a AuthSchemesRequirement) String() string {
-	switch a {
-	default:
-		return strconv.Itoa(int(a))
-	case AuthSchemesRequirementAll:
-		return "ALL"
-	case AuthSchemesRequirementAny:
-		return "ANY"
-	}
-}
-
-func (a AuthSchemesRequirement) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%q", a.String())), nil
-}
-
-func (a *AuthSchemesRequirement) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
+func NewAuthSchemesRequirementFromString(s string) (AuthSchemesRequirement, error) {
+	switch s {
 	case "ALL":
-		value := AuthSchemesRequirementAll
-		*a = value
+		return AuthSchemesRequirementAll, nil
 	case "ANY":
-		value := AuthSchemesRequirementAny
-		*a = value
+		return AuthSchemesRequirementAny, nil
 	}
-	return nil
+	var t AuthSchemesRequirement
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (a AuthSchemesRequirement) Ptr() *AuthSchemesRequirement {
+	return &a
 }
 
 type BasicAuthScheme struct {
@@ -180,54 +163,32 @@ type Availability struct {
 	Message *string            `json:"message,omitempty"`
 }
 
-type AvailabilityStatus uint
+type AvailabilityStatus string
 
 const (
-	AvailabilityStatusInDevelopment AvailabilityStatus = iota + 1
-	AvailabilityStatusPreRelease
-	AvailabilityStatusGeneralAvailability
-	AvailabilityStatusDeprecated
+	AvailabilityStatusInDevelopment       AvailabilityStatus = "IN_DEVELOPMENT"
+	AvailabilityStatusPreRelease          AvailabilityStatus = "PRE_RELEASE"
+	AvailabilityStatusGeneralAvailability AvailabilityStatus = "GENERAL_AVAILABILITY"
+	AvailabilityStatusDeprecated          AvailabilityStatus = "DEPRECATED"
 )
 
-func (a AvailabilityStatus) String() string {
-	switch a {
-	default:
-		return strconv.Itoa(int(a))
-	case AvailabilityStatusInDevelopment:
-		return "IN_DEVELOPMENT"
-	case AvailabilityStatusPreRelease:
-		return "PRE_RELEASE"
-	case AvailabilityStatusGeneralAvailability:
-		return "GENERAL_AVAILABILITY"
-	case AvailabilityStatusDeprecated:
-		return "DEPRECATED"
-	}
-}
-
-func (a AvailabilityStatus) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%q", a.String())), nil
-}
-
-func (a *AvailabilityStatus) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
+func NewAvailabilityStatusFromString(s string) (AvailabilityStatus, error) {
+	switch s {
 	case "IN_DEVELOPMENT":
-		value := AvailabilityStatusInDevelopment
-		*a = value
+		return AvailabilityStatusInDevelopment, nil
 	case "PRE_RELEASE":
-		value := AvailabilityStatusPreRelease
-		*a = value
+		return AvailabilityStatusPreRelease, nil
 	case "GENERAL_AVAILABILITY":
-		value := AvailabilityStatusGeneralAvailability
-		*a = value
+		return AvailabilityStatusGeneralAvailability, nil
 	case "DEPRECATED":
-		value := AvailabilityStatusDeprecated
-		*a = value
+		return AvailabilityStatusDeprecated, nil
 	}
-	return nil
+	var t AvailabilityStatus
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (a AvailabilityStatus) Ptr() *AvailabilityStatus {
+	return &a
 }
 
 type Declaration struct {
@@ -835,60 +796,35 @@ type HttpHeader struct {
 	ValueType    *TypeReference    `json:"valueType,omitempty"`
 }
 
-type HttpMethod uint
+type HttpMethod string
 
 const (
-	HttpMethodGet HttpMethod = iota + 1
-	HttpMethodPost
-	HttpMethodPut
-	HttpMethodPatch
-	HttpMethodDelete
+	HttpMethodGet    HttpMethod = "GET"
+	HttpMethodPost   HttpMethod = "POST"
+	HttpMethodPut    HttpMethod = "PUT"
+	HttpMethodPatch  HttpMethod = "PATCH"
+	HttpMethodDelete HttpMethod = "DELETE"
 )
 
-func (h HttpMethod) String() string {
-	switch h {
-	default:
-		return strconv.Itoa(int(h))
-	case HttpMethodGet:
-		return "GET"
-	case HttpMethodPost:
-		return "POST"
-	case HttpMethodPut:
-		return "PUT"
-	case HttpMethodPatch:
-		return "PATCH"
-	case HttpMethodDelete:
-		return "DELETE"
-	}
-}
-
-func (h HttpMethod) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%q", h.String())), nil
-}
-
-func (h *HttpMethod) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
+func NewHttpMethodFromString(s string) (HttpMethod, error) {
+	switch s {
 	case "GET":
-		value := HttpMethodGet
-		*h = value
+		return HttpMethodGet, nil
 	case "POST":
-		value := HttpMethodPost
-		*h = value
+		return HttpMethodPost, nil
 	case "PUT":
-		value := HttpMethodPut
-		*h = value
+		return HttpMethodPut, nil
 	case "PATCH":
-		value := HttpMethodPatch
-		*h = value
+		return HttpMethodPatch, nil
 	case "DELETE":
-		value := HttpMethodDelete
-		*h = value
+		return HttpMethodDelete, nil
 	}
-	return nil
+	var t HttpMethod
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (h HttpMethod) Ptr() *HttpMethod {
+	return &h
 }
 
 type HttpPath struct {
@@ -1130,48 +1066,29 @@ type PathParameter struct {
 	Variable  *VariableId           `json:"variable,omitempty"`
 }
 
-type PathParameterLocation uint
+type PathParameterLocation string
 
 const (
-	PathParameterLocationRoot PathParameterLocation = iota + 1
-	PathParameterLocationService
-	PathParameterLocationEndpoint
+	PathParameterLocationRoot     PathParameterLocation = "ROOT"
+	PathParameterLocationService  PathParameterLocation = "SERVICE"
+	PathParameterLocationEndpoint PathParameterLocation = "ENDPOINT"
 )
 
-func (p PathParameterLocation) String() string {
-	switch p {
-	default:
-		return strconv.Itoa(int(p))
-	case PathParameterLocationRoot:
-		return "ROOT"
-	case PathParameterLocationService:
-		return "SERVICE"
-	case PathParameterLocationEndpoint:
-		return "ENDPOINT"
-	}
-}
-
-func (p PathParameterLocation) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%q", p.String())), nil
-}
-
-func (p *PathParameterLocation) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
+func NewPathParameterLocationFromString(s string) (PathParameterLocation, error) {
+	switch s {
 	case "ROOT":
-		value := PathParameterLocationRoot
-		*p = value
+		return PathParameterLocationRoot, nil
 	case "SERVICE":
-		value := PathParameterLocationService
-		*p = value
+		return PathParameterLocationService, nil
 	case "ENDPOINT":
-		value := PathParameterLocationEndpoint
-		*p = value
+		return PathParameterLocationEndpoint, nil
 	}
-	return nil
+	var t PathParameterLocation
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PathParameterLocation) Ptr() *PathParameterLocation {
+	return &p
 }
 
 type QueryParameter struct {
@@ -2672,85 +2589,48 @@ type ObjectTypeDeclaration struct {
 	Properties []*ObjectProperty   `json:"properties,omitempty"`
 }
 
-type PrimitiveType uint
+type PrimitiveType string
 
 const (
-	PrimitiveTypeInteger PrimitiveType = iota + 1
-	PrimitiveTypeDouble
-	PrimitiveTypeString
-	PrimitiveTypeBoolean
+	PrimitiveTypeInteger PrimitiveType = "INTEGER"
+	PrimitiveTypeDouble  PrimitiveType = "DOUBLE"
+	PrimitiveTypeString  PrimitiveType = "STRING"
+	PrimitiveTypeBoolean PrimitiveType = "BOOLEAN"
 	// Within the range -2^53 to 2^53
-	PrimitiveTypeLong
-	PrimitiveTypeDateTime
-	PrimitiveTypeDate
-	PrimitiveTypeUuid
-	PrimitiveTypeBase64
+	PrimitiveTypeLong     PrimitiveType = "LONG"
+	PrimitiveTypeDateTime PrimitiveType = "DATE_TIME"
+	PrimitiveTypeDate     PrimitiveType = "DATE"
+	PrimitiveTypeUuid     PrimitiveType = "UUID"
+	PrimitiveTypeBase64   PrimitiveType = "BASE_64"
 )
 
-func (p PrimitiveType) String() string {
-	switch p {
-	default:
-		return strconv.Itoa(int(p))
-	case PrimitiveTypeInteger:
-		return "INTEGER"
-	case PrimitiveTypeDouble:
-		return "DOUBLE"
-	case PrimitiveTypeString:
-		return "STRING"
-	case PrimitiveTypeBoolean:
-		return "BOOLEAN"
-	case PrimitiveTypeLong:
-		return "LONG"
-	case PrimitiveTypeDateTime:
-		return "DATE_TIME"
-	case PrimitiveTypeDate:
-		return "DATE"
-	case PrimitiveTypeUuid:
-		return "UUID"
-	case PrimitiveTypeBase64:
-		return "BASE_64"
-	}
-}
-
-func (p PrimitiveType) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%q", p.String())), nil
-}
-
-func (p *PrimitiveType) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
+func NewPrimitiveTypeFromString(s string) (PrimitiveType, error) {
+	switch s {
 	case "INTEGER":
-		value := PrimitiveTypeInteger
-		*p = value
+		return PrimitiveTypeInteger, nil
 	case "DOUBLE":
-		value := PrimitiveTypeDouble
-		*p = value
+		return PrimitiveTypeDouble, nil
 	case "STRING":
-		value := PrimitiveTypeString
-		*p = value
+		return PrimitiveTypeString, nil
 	case "BOOLEAN":
-		value := PrimitiveTypeBoolean
-		*p = value
+		return PrimitiveTypeBoolean, nil
 	case "LONG":
-		value := PrimitiveTypeLong
-		*p = value
+		return PrimitiveTypeLong, nil
 	case "DATE_TIME":
-		value := PrimitiveTypeDateTime
-		*p = value
+		return PrimitiveTypeDateTime, nil
 	case "DATE":
-		value := PrimitiveTypeDate
-		*p = value
+		return PrimitiveTypeDate, nil
 	case "UUID":
-		value := PrimitiveTypeUuid
-		*p = value
+		return PrimitiveTypeUuid, nil
 	case "BASE_64":
-		value := PrimitiveTypeBase64
-		*p = value
+		return PrimitiveTypeBase64, nil
 	}
-	return nil
+	var t PrimitiveType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PrimitiveType) Ptr() *PrimitiveType {
+	return &p
 }
 
 type ResolvedNamedType struct {
@@ -2888,54 +2768,32 @@ func (r *ResolvedTypeReference) Accept(visitor ResolvedTypeReferenceVisitor) err
 	}
 }
 
-type ShapeType uint
+type ShapeType string
 
 const (
-	ShapeTypeEnum ShapeType = iota + 1
-	ShapeTypeObject
-	ShapeTypeUnion
-	ShapeTypeUndiscriminatedUnion
+	ShapeTypeEnum                 ShapeType = "ENUM"
+	ShapeTypeObject               ShapeType = "OBJECT"
+	ShapeTypeUnion                ShapeType = "UNION"
+	ShapeTypeUndiscriminatedUnion ShapeType = "UNDISCRIMINATED_UNION"
 )
 
-func (s ShapeType) String() string {
+func NewShapeTypeFromString(s string) (ShapeType, error) {
 	switch s {
-	default:
-		return strconv.Itoa(int(s))
-	case ShapeTypeEnum:
-		return "ENUM"
-	case ShapeTypeObject:
-		return "OBJECT"
-	case ShapeTypeUnion:
-		return "UNION"
-	case ShapeTypeUndiscriminatedUnion:
-		return "UNDISCRIMINATED_UNION"
-	}
-}
-
-func (s ShapeType) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%q", s.String())), nil
-}
-
-func (s *ShapeType) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
 	case "ENUM":
-		value := ShapeTypeEnum
-		*s = value
+		return ShapeTypeEnum, nil
 	case "OBJECT":
-		value := ShapeTypeObject
-		*s = value
+		return ShapeTypeObject, nil
 	case "UNION":
-		value := ShapeTypeUnion
-		*s = value
+		return ShapeTypeUnion, nil
 	case "UNDISCRIMINATED_UNION":
-		value := ShapeTypeUndiscriminatedUnion
-		*s = value
+		return ShapeTypeUndiscriminatedUnion, nil
 	}
-	return nil
+	var t ShapeType
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s ShapeType) Ptr() *ShapeType {
+	return &s
 }
 
 type SingleUnionType struct {

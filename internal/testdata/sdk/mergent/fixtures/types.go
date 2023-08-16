@@ -3,9 +3,7 @@
 package api
 
 import (
-	json "encoding/json"
 	fmt "fmt"
-	strconv "strconv"
 )
 
 type ScheduleNew struct {
@@ -112,54 +110,32 @@ type TaskNew struct {
 }
 
 // The status of this Task.
-type TaskStatus uint
+type TaskStatus string
 
 const (
-	TaskStatusQueued TaskStatus = iota + 1
-	TaskStatusWorking
-	TaskStatusSuccess
-	TaskStatusFailure
+	TaskStatusQueued  TaskStatus = "queued"
+	TaskStatusWorking TaskStatus = "working"
+	TaskStatusSuccess TaskStatus = "success"
+	TaskStatusFailure TaskStatus = "failure"
 )
 
-func (t TaskStatus) String() string {
-	switch t {
-	default:
-		return strconv.Itoa(int(t))
-	case TaskStatusQueued:
-		return "queued"
-	case TaskStatusWorking:
-		return "working"
-	case TaskStatusSuccess:
-		return "success"
-	case TaskStatusFailure:
-		return "failure"
-	}
-}
-
-func (t TaskStatus) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%q", t.String())), nil
-}
-
-func (t *TaskStatus) UnmarshalJSON(data []byte) error {
-	var raw string
-	if err := json.Unmarshal(data, &raw); err != nil {
-		return err
-	}
-	switch raw {
+func NewTaskStatusFromString(s string) (TaskStatus, error) {
+	switch s {
 	case "queued":
-		value := TaskStatusQueued
-		*t = value
+		return TaskStatusQueued, nil
 	case "working":
-		value := TaskStatusWorking
-		*t = value
+		return TaskStatusWorking, nil
 	case "success":
-		value := TaskStatusSuccess
-		*t = value
+		return TaskStatusSuccess, nil
 	case "failure":
-		value := TaskStatusFailure
-		*t = value
+		return TaskStatusFailure, nil
 	}
-	return nil
+	var t TaskStatus
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (t TaskStatus) Ptr() *TaskStatus {
+	return &t
 }
 
 // The [ISO 8601 timestamp](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) representing when the object was created.
