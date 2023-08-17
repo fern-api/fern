@@ -9,3 +9,8 @@ service:
       path: ""
       method: GET
       response: objects.ObjectWithOptionalField
+
+    postWithNoRequestBody:
+      path: ""
+      method: POST
+      response: string
