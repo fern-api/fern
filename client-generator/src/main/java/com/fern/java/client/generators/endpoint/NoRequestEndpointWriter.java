@@ -17,6 +17,7 @@
 package com.fern.java.client.generators.endpoint;
 
 import com.fern.irV20.model.http.HttpEndpoint;
+import com.fern.irV20.model.http.HttpMethod;
 import com.fern.irV20.model.http.HttpService;
 import com.fern.irV20.model.http.SdkRequest;
 import com.fern.java.client.ClientGeneratorContext;
@@ -33,6 +34,7 @@ import java.util.List;
 import java.util.Optional;
 import okhttp3.Headers;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 
 public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
 
@@ -84,14 +86,22 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
                 .indent()
                 .add(".url(")
                 .add(inlineableHttpUrl)
-                .add(")\n")
-                .add(".method($S, null)\n", httpEndpoint.getMethod().toString())
-                .add(
-                        ".headers($T.of($L.$N($L)))\n",
-                        Headers.class,
-                        clientOptionsMember.name,
-                        clientOptions.headers(),
-                        REQUEST_OPTIONS_PARAMETER_NAME);
+                .add(")\n");
+        if (httpEndpoint.getMethod().equals(HttpMethod.POST)) {
+            builder.add(
+                    ".method($S, $T.create($S, null))\n",
+                    httpEndpoint.getMethod().toString(),
+                    RequestBody.class,
+                    "");
+        } else {
+            builder.add(".method($S, null)\n", httpEndpoint.getMethod().toString());
+        }
+        builder.add(
+                ".headers($T.of($L.$N($L)))\n",
+                Headers.class,
+                clientOptionsMember.name,
+                clientOptions.headers(),
+                REQUEST_OPTIONS_PARAMETER_NAME);
         if (sendContentType) {
             builder.add(
                     ".addHeader($S, $S)\n",

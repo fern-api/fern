@@ -18,6 +18,7 @@ package com.fern.java.client.generators.endpoint;
 
 import com.fern.irV20.model.http.FileProperty;
 import com.fern.irV20.model.http.HttpEndpoint;
+import com.fern.irV20.model.http.HttpMethod;
 import com.fern.irV20.model.http.HttpService;
 import com.fern.irV20.model.http.SdkRequest;
 import com.fern.java.client.ClientGeneratorContext;
@@ -156,8 +157,17 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         MULTIPART_BODY_PROPERTIES_NAME);
             }
         } else {
-            requestBodyCodeBlock.addStatement(
-                    "$T $L = null", RequestBody.class, AbstractEndpointWriter.REQUEST_BODY_NAME);
+            if (httpEndpoint.getMethod().equals(HttpMethod.POST)) {
+                requestBodyCodeBlock.addStatement(
+                        "$T $L = $T.create($S, null)",
+                        RequestBody.class,
+                        AbstractEndpointWriter.REQUEST_BODY_NAME,
+                        RequestBody.class,
+                        "");
+            } else {
+                requestBodyCodeBlock.addStatement(
+                        "$T $L = null", RequestBody.class, AbstractEndpointWriter.REQUEST_BODY_NAME);
+            }
         }
         requestBodyCodeBlock
                 .add(
