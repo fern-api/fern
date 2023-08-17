@@ -15,6 +15,7 @@ class CreateProblemError_Generic(GenericCreateProblemError):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 

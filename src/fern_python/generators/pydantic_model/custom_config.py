@@ -9,3 +9,4 @@ class PydanticModelCustomConfig(pydantic.BaseModel):
     include_union_utils: bool = False
     frozen: bool = False
     orm_mode: bool = False
+    smart_union: bool = False

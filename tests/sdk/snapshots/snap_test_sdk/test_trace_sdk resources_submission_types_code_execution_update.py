@@ -27,6 +27,7 @@ class CodeExecutionUpdate_BuildingExecutor(BuildingExecutorResponse):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 
@@ -35,6 +36,7 @@ class CodeExecutionUpdate_Running(RunningResponse):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 
@@ -43,6 +45,7 @@ class CodeExecutionUpdate_Errored(ErroredResponse):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 
@@ -51,6 +54,7 @@ class CodeExecutionUpdate_Stopped(StoppedResponse):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 
@@ -59,6 +63,7 @@ class CodeExecutionUpdate_Graded(GradedResponse):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 
@@ -67,6 +72,7 @@ class CodeExecutionUpdate_GradedV2(GradedResponseV2):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 
@@ -75,6 +81,7 @@ class CodeExecutionUpdate_WorkspaceRan(WorkspaceRanResponse):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 
@@ -83,6 +90,7 @@ class CodeExecutionUpdate_Recording(RecordingResponseNotification):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 
@@ -91,6 +99,7 @@ class CodeExecutionUpdate_Recorded(RecordedResponseNotification):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 
@@ -99,6 +108,7 @@ class CodeExecutionUpdate_InvalidRequest(InvalidRequestResponse):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 
@@ -107,6 +117,7 @@ class CodeExecutionUpdate_Finished(FinishedResponse):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 

@@ -16,6 +16,7 @@ class InvalidRequestCause_SubmissionIdNotFound(SubmissionIdNotFound):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 
@@ -24,6 +25,7 @@ class InvalidRequestCause_CustomTestCasesUnsupported(CustomTestCasesUnsupported)
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 
@@ -32,6 +34,7 @@ class InvalidRequestCause_UnexpectedLanguage(UnexpectedLanguageError):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 

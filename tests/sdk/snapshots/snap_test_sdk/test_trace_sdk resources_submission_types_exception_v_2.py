@@ -15,6 +15,7 @@ class ExceptionV2_Generic(ExceptionInfo):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 
@@ -23,6 +24,7 @@ class ExceptionV2_Timeout(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        smart_union = True
 
 
 ExceptionV2 = typing.Union[ExceptionV2_Generic, ExceptionV2_Timeout]

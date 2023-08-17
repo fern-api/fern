@@ -16,6 +16,7 @@ class ErrorInfo_CompileError(CompileError):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 
@@ -24,6 +25,7 @@ class ErrorInfo_RuntimeError(RuntimeError):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 
@@ -32,6 +34,7 @@ class ErrorInfo_InternalError(InternalError):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 

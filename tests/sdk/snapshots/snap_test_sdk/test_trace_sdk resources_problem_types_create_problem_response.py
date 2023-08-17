@@ -17,6 +17,7 @@ class CreateProblemResponse_Success(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        smart_union = True
 
 
 class CreateProblemResponse_Error(pydantic.BaseModel):
@@ -25,6 +26,7 @@ class CreateProblemResponse_Error(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        smart_union = True
 
 
 CreateProblemResponse = typing.Union[CreateProblemResponse_Success, CreateProblemResponse_Error]

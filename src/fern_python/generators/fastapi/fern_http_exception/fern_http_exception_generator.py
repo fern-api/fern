@@ -95,6 +95,7 @@ class FernHTTPExceptionGenerator:
             name=FernHTTPExceptionGenerator._BODY_CLASS_NAME,
             frozen=self._custom_config.pydantic_config.frozen,
             orm_mode=False,
+            smart_union=False,
         ) as body_pydantic_model:
             body_pydantic_model.add_field(
                 PydanticField(

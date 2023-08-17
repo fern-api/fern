@@ -70,6 +70,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     parent=internal_union,
                     frozen=self._custom_config.frozen,
                     orm_mode=self._custom_config.orm_mode,
+                    smart_union=self._custom_config.smart_union,
                 ) as internal_pydantic_model_for_single_union_type:
 
                     internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()

@@ -14,6 +14,7 @@ class Test_And(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        smart_union = True
 
 
 class Test_Or(pydantic.BaseModel):
@@ -22,6 +23,7 @@ class Test_Or(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        smart_union = True
 
 
 Test = typing.Union[Test_And, Test_Or]

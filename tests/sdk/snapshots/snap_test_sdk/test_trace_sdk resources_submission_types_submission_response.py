@@ -18,6 +18,7 @@ class SubmissionResponse_ServerInitialized(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        smart_union = True
 
 
 class SubmissionResponse_ProblemInitialized(pydantic.BaseModel):
@@ -26,6 +27,7 @@ class SubmissionResponse_ProblemInitialized(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        smart_union = True
 
 
 class SubmissionResponse_WorkspaceInitialized(pydantic.BaseModel):
@@ -33,6 +35,7 @@ class SubmissionResponse_WorkspaceInitialized(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        smart_union = True
 
 
 class SubmissionResponse_ServerErrored(ExceptionInfo):
@@ -40,6 +43,7 @@ class SubmissionResponse_ServerErrored(ExceptionInfo):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 
@@ -49,6 +53,7 @@ class SubmissionResponse_CodeExecutionUpdate(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        smart_union = True
 
 
 class SubmissionResponse_Terminated(TerminatedResponse):
@@ -56,6 +61,7 @@ class SubmissionResponse_Terminated(TerminatedResponse):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 

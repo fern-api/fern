@@ -18,6 +18,7 @@ class TestCaseFunction_WithActualResult(TestCaseWithActualResultImplementation):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 
@@ -26,6 +27,7 @@ class TestCaseFunction_Custom(VoidFunctionDefinition):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 

@@ -18,6 +18,7 @@ class SubmissionTypeState_Test(TestSubmissionState):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 
@@ -26,6 +27,7 @@ class SubmissionTypeState_Workspace(WorkspaceSubmissionState):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 

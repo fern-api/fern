@@ -16,6 +16,7 @@ class ProblemDescriptionBoard_Html(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        smart_union = True
 
 
 class ProblemDescriptionBoard_Variable(pydantic.BaseModel):
@@ -24,6 +25,7 @@ class ProblemDescriptionBoard_Variable(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        smart_union = True
 
 
 class ProblemDescriptionBoard_TestCaseId(pydantic.BaseModel):
@@ -32,6 +34,7 @@ class ProblemDescriptionBoard_TestCaseId(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        smart_union = True
 
 
 ProblemDescriptionBoard = typing.Union[

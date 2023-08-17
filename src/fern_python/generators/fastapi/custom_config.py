@@ -4,6 +4,7 @@ import pydantic
 class PydanticConfig(pydantic.BaseModel):
     frozen: bool = False
     orm_mode: bool = False
+    smart_union: bool = False
 
 
 class FastAPICustomConfig(pydantic.BaseModel):

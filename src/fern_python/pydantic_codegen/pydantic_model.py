@@ -27,6 +27,7 @@ class PydanticModel:
         name: str,
         frozen: bool,
         orm_mode: bool,
+        smart_union: bool,
         should_export: bool = None,
         base_models: Sequence[AST.ClassReference] = None,
         parent: ClassParent = None,
@@ -49,6 +50,7 @@ class PydanticModel:
         self._forbid_extra_fields = forbid_extra_fields
         self._frozen = frozen
         self._orm_mode = orm_mode
+        self._smart_union = smart_union
         self.name = name
         self.json_encoders: List[Tuple[AST.Expression, AST.Expression]] = []
 
@@ -281,6 +283,14 @@ class PydanticModel:
             config.add_class_var(
                 AST.VariableDeclaration(
                     name="orm_mode",
+                    initializer=AST.Expression("True"),
+                )
+            )
+
+        if self._smart_union:
+            config.add_class_var(
+                AST.VariableDeclaration(
+                    name="smart_union",
                     initializer=AST.Expression("True"),
                 )
             )

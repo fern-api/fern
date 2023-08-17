@@ -19,6 +19,7 @@ class FunctionSignature_Void(VoidFunctionSignature):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 
@@ -27,6 +28,7 @@ class FunctionSignature_NonVoid(NonVoidFunctionSignature):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 
@@ -35,6 +37,7 @@ class FunctionSignature_VoidThatTakesActualResult(VoidFunctionSignatureThatTakes
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 

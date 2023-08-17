@@ -19,6 +19,7 @@ class WorkspaceSubmissionUpdateInfo_Running(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        smart_union = True
 
 
 class WorkspaceSubmissionUpdateInfo_Ran(WorkspaceRunDetails):
@@ -26,6 +27,7 @@ class WorkspaceSubmissionUpdateInfo_Ran(WorkspaceRunDetails):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 
@@ -34,6 +36,7 @@ class WorkspaceSubmissionUpdateInfo_Stopped(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        smart_union = True
 
 
 class WorkspaceSubmissionUpdateInfo_Traced(pydantic.BaseModel):
@@ -41,6 +44,7 @@ class WorkspaceSubmissionUpdateInfo_Traced(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        smart_union = True
 
 
 class WorkspaceSubmissionUpdateInfo_TracedV2(WorkspaceTracedUpdate):
@@ -48,6 +52,7 @@ class WorkspaceSubmissionUpdateInfo_TracedV2(WorkspaceTracedUpdate):
 
     class Config:
         frozen = True
+        smart_union = True
         allow_population_by_field_name = True
 
 
@@ -57,6 +62,7 @@ class WorkspaceSubmissionUpdateInfo_Errored(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        smart_union = True
 
 
 class WorkspaceSubmissionUpdateInfo_Finished(pydantic.BaseModel):
@@ -64,6 +70,7 @@ class WorkspaceSubmissionUpdateInfo_Finished(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        smart_union = True
 
 
 WorkspaceSubmissionUpdateInfo = typing.Union[

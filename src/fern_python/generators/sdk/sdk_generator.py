@@ -76,6 +76,7 @@ class SdkGenerator(AbstractGenerator):
             include_union_utils=custom_config.include_union_utils,
             orm_mode=False,
             frozen=True,
+            smart_union=True,
         )
 
         context = SdkGeneratorContextImpl(

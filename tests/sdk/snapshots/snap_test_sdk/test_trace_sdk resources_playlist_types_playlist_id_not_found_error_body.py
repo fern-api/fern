@@ -16,6 +16,7 @@ class PlaylistIdNotFoundErrorBody_PlaylistId(pydantic.BaseModel):
 
     class Config:
         frozen = True
+        smart_union = True
 
 
 PlaylistIdNotFoundErrorBody = typing.Union[PlaylistIdNotFoundErrorBody_PlaylistId]
