@@ -27,6 +27,10 @@ func (n *NotImplementedError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(n.Body)
 }
 
+func (n *NotImplementedError) Unwrap() error {
+	return n.APIError
+}
+
 type OptionalStringError struct {
 	*core.APIError
 	Body *string
@@ -53,6 +57,10 @@ func (o *OptionalStringError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(o.Body)
 }
 
+func (o *OptionalStringError) Unwrap() error {
+	return o.APIError
+}
+
 type TeapotError struct {
 	*core.APIError
 	Body []string
@@ -70,6 +78,10 @@ func (t *TeapotError) UnmarshalJSON(data []byte) error {
 
 func (t *TeapotError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(t.Body)
+}
+
+func (t *TeapotError) Unwrap() error {
+	return t.APIError
 }
 
 type UntypedError struct {
@@ -107,6 +119,10 @@ func (u *UpgradeError) MarshalJSON() ([]byte, error) {
 	return json.Marshal("upgrade")
 }
 
+func (u *UpgradeError) Unwrap() error {
+	return u.APIError
+}
+
 type UserNotFoundError struct {
 	*core.APIError
 	Body *UserNotFoundErrorBody
@@ -124,4 +140,8 @@ func (u *UserNotFoundError) UnmarshalJSON(data []byte) error {
 
 func (u *UserNotFoundError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(u.Body)
+}
+
+func (u *UserNotFoundError) Unwrap() error {
+	return u.APIError
 }

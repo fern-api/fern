@@ -26,6 +26,10 @@ func (c *ConflictError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(c.Body)
 }
 
+func (c *ConflictError) Unwrap() error {
+	return c.APIError
+}
+
 type UnprocessableEntityError struct {
 	*core.APIError
 	Body *Error
@@ -43,4 +47,8 @@ func (u *UnprocessableEntityError) UnmarshalJSON(data []byte) error {
 
 func (u *UnprocessableEntityError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(u.Body)
+}
+
+func (u *UnprocessableEntityError) Unwrap() error {
+	return u.APIError
 }

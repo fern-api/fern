@@ -915,6 +915,13 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	}
 	f.P("}")
 	f.P()
+
+	// Implement the error unwrapper interface.
+	f.P("func (", receiver, "*", typeName, ") Unwrap() error {")
+	f.P("return ", receiver, ".APIError")
+	f.P("}")
+	f.P()
+
 	return nil
 }
 

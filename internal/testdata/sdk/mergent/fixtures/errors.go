@@ -26,6 +26,10 @@ func (c *ConflictError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(c.Body)
 }
 
+func (c *ConflictError) Unwrap() error {
+	return c.APIError
+}
+
 type ContentTooLargeError struct {
 	*core.APIError
 	Body *Error
@@ -43,6 +47,10 @@ func (c *ContentTooLargeError) UnmarshalJSON(data []byte) error {
 
 func (c *ContentTooLargeError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(c.Body)
+}
+
+func (c *ContentTooLargeError) Unwrap() error {
+	return c.APIError
 }
 
 type NotFoundError struct {
@@ -64,6 +72,10 @@ func (n *NotFoundError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(n.Body)
 }
 
+func (n *NotFoundError) Unwrap() error {
+	return n.APIError
+}
+
 type UnprocessableEntityError struct {
 	*core.APIError
 	Body *Error
@@ -81,4 +93,8 @@ func (u *UnprocessableEntityError) UnmarshalJSON(data []byte) error {
 
 func (u *UnprocessableEntityError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(u.Body)
+}
+
+func (u *UnprocessableEntityError) Unwrap() error {
+	return u.APIError
 }

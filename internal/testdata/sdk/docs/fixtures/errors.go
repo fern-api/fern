@@ -26,3 +26,7 @@ func (u *UserNotFoundError) UnmarshalJSON(data []byte) error {
 func (u *UserNotFoundError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(u.Body)
 }
+
+func (u *UserNotFoundError) Unwrap() error {
+	return u.APIError
+}

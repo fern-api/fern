@@ -26,6 +26,10 @@ func (n *NotFoundError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(n.Body)
 }
 
+func (n *NotFoundError) Unwrap() error {
+	return n.APIError
+}
+
 type OrganizationNotFoundError struct {
 	*core.APIError
 	Body *OrganizationNotFoundErrorBody
@@ -43,6 +47,10 @@ func (o *OrganizationNotFoundError) UnmarshalJSON(data []byte) error {
 
 func (o *OrganizationNotFoundError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(o.Body)
+}
+
+func (o *OrganizationNotFoundError) Unwrap() error {
+	return o.APIError
 }
 
 type UntypedNotFoundError struct {
@@ -75,4 +83,8 @@ func (u *UserNotFoundError) UnmarshalJSON(data []byte) error {
 
 func (u *UserNotFoundError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(u.Body)
+}
+
+func (u *UserNotFoundError) Unwrap() error {
+	return u.APIError
 }
