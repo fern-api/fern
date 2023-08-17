@@ -8,30 +8,23 @@ import (
 	file "sdk/file"
 )
 
-type Client interface {
-	File() file.Client
+type Client struct {
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
+
+	File *file.Client
 }
 
-func NewClient(opts ...core.ClientOption) Client {
+func NewClient(opts ...core.ClientOption) *Client {
 	options := core.NewClientOptions()
 	for _, opt := range opts {
 		opt(options)
 	}
-	return &client{
+	return &Client{
 		baseURL:    options.BaseURL,
 		httpClient: options.HTTPClient,
 		header:     options.ToHeader(),
-		fileClient: file.NewClient(opts...),
+		File:       file.NewClient(opts...),
 	}
-}
-
-type client struct {
-	baseURL    string
-	httpClient core.HTTPClient
-	header     http.Header
-	fileClient file.Client
-}
-
-func (c *client) File() file.Client {
-	return c.fileClient
 }

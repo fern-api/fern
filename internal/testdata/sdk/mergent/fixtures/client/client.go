@@ -14,42 +14,25 @@ import (
 	http "net/http"
 )
 
-type Client interface {
-	GetTasks(ctx context.Context) ([]*fixtures.Task, error)
-	PostTasks(ctx context.Context, request *fixtures.TaskNew) (*fixtures.Task, error)
-	GetTasksTaskId(ctx context.Context, taskId fixtures.Id) (*fixtures.Task, error)
-	PatchTasksTaskId(ctx context.Context, taskId fixtures.Id, request *fixtures.Task) (*fixtures.Task, error)
-	DeleteTasksTaskId(ctx context.Context, taskId fixtures.Id) error
-	PostTasksTaskIdRun(ctx context.Context, taskId fixtures.Id) (*fixtures.Task, error)
-	PostTasksBatchCreate(ctx context.Context, request []*fixtures.TaskNew) ([]*fixtures.Task, error)
-	PostTasksBatchDelete(ctx context.Context, request []fixtures.Id) error
-	GetSchedules(ctx context.Context) ([]*fixtures.Schedule, error)
-	PostSchedules(ctx context.Context, request *fixtures.ScheduleNew) (*fixtures.Schedule, error)
-	GetSchedulesScheduleId(ctx context.Context, scheduleId fixtures.Id) (*fixtures.Schedule, error)
-	PatchSchedulesScheduleId(ctx context.Context, scheduleId fixtures.Id, request *fixtures.Schedule) (*fixtures.Schedule, error)
-	DeleteSchedulesScheduleId(ctx context.Context, scheduleId fixtures.Id) error
-	GetSchedulesScheduleIdTasks(ctx context.Context, scheduleId fixtures.Id) ([]*fixtures.Task, error)
+type Client struct {
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
-func NewClient(opts ...core.ClientOption) Client {
+func NewClient(opts ...core.ClientOption) *Client {
 	options := core.NewClientOptions()
 	for _, opt := range opts {
 		opt(options)
 	}
-	return &client{
+	return &Client{
 		baseURL:    options.BaseURL,
 		httpClient: options.HTTPClient,
 		header:     options.ToHeader(),
 	}
 }
 
-type client struct {
-	baseURL    string
-	httpClient core.HTTPClient
-	header     http.Header
-}
-
-func (c *client) GetTasks(ctx context.Context) ([]*fixtures.Task, error) {
+func (c *Client) GetTasks(ctx context.Context) ([]*fixtures.Task, error) {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -73,7 +56,7 @@ func (c *client) GetTasks(ctx context.Context) ([]*fixtures.Task, error) {
 	return response, nil
 }
 
-func (c *client) PostTasks(ctx context.Context, request *fixtures.TaskNew) (*fixtures.Task, error) {
+func (c *Client) PostTasks(ctx context.Context, request *fixtures.TaskNew) (*fixtures.Task, error) {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -124,7 +107,7 @@ func (c *client) PostTasks(ctx context.Context, request *fixtures.TaskNew) (*fix
 }
 
 // Task ID
-func (c *client) GetTasksTaskId(ctx context.Context, taskId fixtures.Id) (*fixtures.Task, error) {
+func (c *Client) GetTasksTaskId(ctx context.Context, taskId fixtures.Id) (*fixtures.Task, error) {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -168,7 +151,7 @@ func (c *client) GetTasksTaskId(ctx context.Context, taskId fixtures.Id) (*fixtu
 }
 
 // Task ID
-func (c *client) PatchTasksTaskId(ctx context.Context, taskId fixtures.Id, request *fixtures.Task) (*fixtures.Task, error) {
+func (c *Client) PatchTasksTaskId(ctx context.Context, taskId fixtures.Id, request *fixtures.Task) (*fixtures.Task, error) {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -226,7 +209,7 @@ func (c *client) PatchTasksTaskId(ctx context.Context, taskId fixtures.Id, reque
 }
 
 // Task ID
-func (c *client) DeleteTasksTaskId(ctx context.Context, taskId fixtures.Id) error {
+func (c *Client) DeleteTasksTaskId(ctx context.Context, taskId fixtures.Id) error {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -271,7 +254,7 @@ func (c *client) DeleteTasksTaskId(ctx context.Context, taskId fixtures.Id) erro
 // Reschedules a queued Task to be run immediately.
 //
 // Task ID
-func (c *client) PostTasksTaskIdRun(ctx context.Context, taskId fixtures.Id) (*fixtures.Task, error) {
+func (c *Client) PostTasksTaskIdRun(ctx context.Context, taskId fixtures.Id) (*fixtures.Task, error) {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -325,7 +308,7 @@ func (c *client) PostTasksTaskIdRun(ctx context.Context, taskId fixtures.Id) (*f
 // This operation is atomic: it will succeed for all Tasks or fail for all
 // Tasks; there is no partial success.
 // This endpoint is in beta and may change at any time without notice.
-func (c *client) PostTasksBatchCreate(ctx context.Context, request []*fixtures.TaskNew) ([]*fixtures.Task, error) {
+func (c *Client) PostTasksBatchCreate(ctx context.Context, request []*fixtures.TaskNew) ([]*fixtures.Task, error) {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -393,7 +376,7 @@ func (c *client) PostTasksBatchCreate(ctx context.Context, request []*fixtures.T
 // This operation is atomic: it will succeed for all Tasks or fail for all
 // Tasks; there is no partial success.
 // This endpoint is in beta and may change at any time without notice.
-func (c *client) PostTasksBatchDelete(ctx context.Context, request []fixtures.Id) error {
+func (c *Client) PostTasksBatchDelete(ctx context.Context, request []fixtures.Id) error {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -442,7 +425,7 @@ func (c *client) PostTasksBatchDelete(ctx context.Context, request []fixtures.Id
 	return nil
 }
 
-func (c *client) GetSchedules(ctx context.Context) ([]*fixtures.Schedule, error) {
+func (c *Client) GetSchedules(ctx context.Context) ([]*fixtures.Schedule, error) {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -466,7 +449,7 @@ func (c *client) GetSchedules(ctx context.Context) ([]*fixtures.Schedule, error)
 	return response, nil
 }
 
-func (c *client) PostSchedules(ctx context.Context, request *fixtures.ScheduleNew) (*fixtures.Schedule, error) {
+func (c *Client) PostSchedules(ctx context.Context, request *fixtures.ScheduleNew) (*fixtures.Schedule, error) {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -510,7 +493,7 @@ func (c *client) PostSchedules(ctx context.Context, request *fixtures.ScheduleNe
 }
 
 // Schedule ID
-func (c *client) GetSchedulesScheduleId(ctx context.Context, scheduleId fixtures.Id) (*fixtures.Schedule, error) {
+func (c *Client) GetSchedulesScheduleId(ctx context.Context, scheduleId fixtures.Id) (*fixtures.Schedule, error) {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -554,7 +537,7 @@ func (c *client) GetSchedulesScheduleId(ctx context.Context, scheduleId fixtures
 }
 
 // Schedule ID
-func (c *client) PatchSchedulesScheduleId(ctx context.Context, scheduleId fixtures.Id, request *fixtures.Schedule) (*fixtures.Schedule, error) {
+func (c *Client) PatchSchedulesScheduleId(ctx context.Context, scheduleId fixtures.Id, request *fixtures.Schedule) (*fixtures.Schedule, error) {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -605,7 +588,7 @@ func (c *client) PatchSchedulesScheduleId(ctx context.Context, scheduleId fixtur
 }
 
 // Schedule ID
-func (c *client) DeleteSchedulesScheduleId(ctx context.Context, scheduleId fixtures.Id) error {
+func (c *Client) DeleteSchedulesScheduleId(ctx context.Context, scheduleId fixtures.Id) error {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -648,7 +631,7 @@ func (c *client) DeleteSchedulesScheduleId(ctx context.Context, scheduleId fixtu
 }
 
 // Schedule ID
-func (c *client) GetSchedulesScheduleIdTasks(ctx context.Context, scheduleId fixtures.Id) ([]*fixtures.Task, error) {
+func (c *Client) GetSchedulesScheduleIdTasks(ctx context.Context, scheduleId fixtures.Id) ([]*fixtures.Task, error) {
 	baseURL := "https://api.mergent.co/v2"
 	if c.baseURL != "" {
 		baseURL = c.baseURL

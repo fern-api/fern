@@ -9,37 +9,25 @@ import (
 	http "net/http"
 )
 
-type Client interface {
-	Auth() auth.Client
-	Plant() plant.Client
+type Client struct {
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
+
+	Auth  *auth.Client
+	Plant *plant.Client
 }
 
-func NewClient(opts ...core.ClientOption) Client {
+func NewClient(opts ...core.ClientOption) *Client {
 	options := core.NewClientOptions()
 	for _, opt := range opts {
 		opt(options)
 	}
-	return &client{
-		baseURL:     options.BaseURL,
-		httpClient:  options.HTTPClient,
-		header:      options.ToHeader(),
-		authClient:  auth.NewClient(opts...),
-		plantClient: plant.NewClient(opts...),
+	return &Client{
+		baseURL:    options.BaseURL,
+		httpClient: options.HTTPClient,
+		header:     options.ToHeader(),
+		Auth:       auth.NewClient(opts...),
+		Plant:      plant.NewClient(opts...),
 	}
-}
-
-type client struct {
-	baseURL     string
-	httpClient  core.HTTPClient
-	header      http.Header
-	authClient  auth.Client
-	plantClient plant.Client
-}
-
-func (c *client) Auth() auth.Client {
-	return c.authClient
-}
-
-func (c *client) Plant() plant.Client {
-	return c.plantClient
 }

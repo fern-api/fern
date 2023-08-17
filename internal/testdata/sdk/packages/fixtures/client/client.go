@@ -14,33 +14,28 @@ import (
 	http "net/http"
 )
 
-type Client interface {
-	GetFoo(ctx context.Context) ([]*fixtures.Foo, error)
-	PostFoo(ctx context.Context, request *fixtures.Foo) (*fixtures.Foo, error)
-	User() userclient.Client
+type Client struct {
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
+
+	User *userclient.Client
 }
 
-func NewClient(opts ...core.ClientOption) Client {
+func NewClient(opts ...core.ClientOption) *Client {
 	options := core.NewClientOptions()
 	for _, opt := range opts {
 		opt(options)
 	}
-	return &client{
+	return &Client{
 		baseURL:    options.BaseURL,
 		httpClient: options.HTTPClient,
 		header:     options.ToHeader(),
-		userClient: userclient.NewClient(opts...),
+		User:       userclient.NewClient(opts...),
 	}
 }
 
-type client struct {
-	baseURL    string
-	httpClient core.HTTPClient
-	header     http.Header
-	userClient userclient.Client
-}
-
-func (c *client) GetFoo(ctx context.Context) ([]*fixtures.Foo, error) {
+func (c *Client) GetFoo(ctx context.Context) ([]*fixtures.Foo, error) {
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -64,7 +59,7 @@ func (c *client) GetFoo(ctx context.Context) ([]*fixtures.Foo, error) {
 	return response, nil
 }
 
-func (c *client) PostFoo(ctx context.Context, request *fixtures.Foo) (*fixtures.Foo, error) {
+func (c *Client) PostFoo(ctx context.Context, request *fixtures.Foo) (*fixtures.Foo, error) {
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -112,8 +107,4 @@ func (c *client) PostFoo(ctx context.Context, request *fixtures.Foo) (*fixtures.
 		return response, err
 	}
 	return response, nil
-}
-
-func (c *client) User() userclient.Client {
-	return c.userClient
 }

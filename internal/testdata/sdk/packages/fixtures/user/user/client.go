@@ -9,29 +9,25 @@ import (
 	http "net/http"
 )
 
-type Client interface {
-	List(ctx context.Context) ([]*user.User, error)
+type Client struct {
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
-func NewClient(opts ...core.ClientOption) Client {
+func NewClient(opts ...core.ClientOption) *Client {
 	options := core.NewClientOptions()
 	for _, opt := range opts {
 		opt(options)
 	}
-	return &client{
+	return &Client{
 		baseURL:    options.BaseURL,
 		httpClient: options.HTTPClient,
 		header:     options.ToHeader(),
 	}
 }
 
-type client struct {
-	baseURL    string
-	httpClient core.HTTPClient
-	header     http.Header
-}
-
-func (c *client) List(ctx context.Context) ([]*user.User, error) {
+func (c *Client) List(ctx context.Context) ([]*user.User, error) {
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL

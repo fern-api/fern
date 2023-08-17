@@ -9,31 +9,25 @@ import (
 	http "net/http"
 )
 
-type Client interface {
-	GetUser(ctx context.Context, userId string) (string, error)
-	GetUserV2(ctx context.Context, userId string) (string, error)
-	GetUserV3(ctx context.Context, userId string, infoId string) (string, error)
+type Client struct {
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
-func NewClient(opts ...core.ClientOption) Client {
+func NewClient(opts ...core.ClientOption) *Client {
 	options := core.NewClientOptions()
 	for _, opt := range opts {
 		opt(options)
 	}
-	return &client{
+	return &Client{
 		baseURL:    options.BaseURL,
 		httpClient: options.HTTPClient,
 		header:     options.ToHeader(),
 	}
 }
 
-type client struct {
-	baseURL    string
-	httpClient core.HTTPClient
-	header     http.Header
-}
-
-func (c *client) GetUser(ctx context.Context, userId string) (string, error) {
+func (c *Client) GetUser(ctx context.Context, userId string) (string, error) {
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -57,7 +51,7 @@ func (c *client) GetUser(ctx context.Context, userId string) (string, error) {
 	return response, nil
 }
 
-func (c *client) GetUserV2(ctx context.Context, userId string) (string, error) {
+func (c *Client) GetUserV2(ctx context.Context, userId string) (string, error) {
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -81,7 +75,7 @@ func (c *client) GetUserV2(ctx context.Context, userId string) (string, error) {
 	return response, nil
 }
 
-func (c *client) GetUserV3(ctx context.Context, userId string, infoId string) (string, error) {
+func (c *Client) GetUserV3(ctx context.Context, userId string, infoId string) (string, error) {
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL

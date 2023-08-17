@@ -11,22 +11,20 @@ import (
 // the client_test.go template can actually run as a real test file in this repository.
 // ---
 
-type Client interface{}
+type Client struct {
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
+}
 
-func NewClient(opts ...core.ClientOption) Client {
+func NewClient(opts ...core.ClientOption) *Client {
 	options := core.NewClientOptions()
 	for _, opt := range opts {
 		opt(options)
 	}
-	return &client{
+	return &Client{
 		baseURL:    options.BaseURL,
 		httpClient: options.HTTPClient,
 		header:     options.ToHeader(),
 	}
-}
-
-type client struct {
-	baseURL    string
-	httpClient core.HTTPClient
-	header     http.Header
 }

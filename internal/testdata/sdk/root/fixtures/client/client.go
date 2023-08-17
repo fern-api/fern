@@ -14,36 +14,25 @@ import (
 	http "net/http"
 )
 
-type Client interface {
-	GetFoo(ctx context.Context) ([]*fixtures.Foo, error)
-	PostFoo(ctx context.Context, request *fixtures.Bar) (*fixtures.Foo, error)
-	GetFooFooId(ctx context.Context, fooId fixtures.Id) (*fixtures.Foo, error)
-	PatchFooFooId(ctx context.Context, fooId fixtures.Id, request *fixtures.Foo) (*fixtures.Foo, error)
-	DeleteFooFooId(ctx context.Context, fooId fixtures.Id) error
-	PostFooFooIdRun(ctx context.Context, fooId fixtures.Id) (*fixtures.Foo, error)
-	PostFooBatchCreate(ctx context.Context, request []*fixtures.Bar) ([]*fixtures.Foo, error)
-	PostFooBatchDelete(ctx context.Context, request []fixtures.Id) error
+type Client struct {
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
-func NewClient(opts ...core.ClientOption) Client {
+func NewClient(opts ...core.ClientOption) *Client {
 	options := core.NewClientOptions()
 	for _, opt := range opts {
 		opt(options)
 	}
-	return &client{
+	return &Client{
 		baseURL:    options.BaseURL,
 		httpClient: options.HTTPClient,
 		header:     options.ToHeader(),
 	}
 }
 
-type client struct {
-	baseURL    string
-	httpClient core.HTTPClient
-	header     http.Header
-}
-
-func (c *client) GetFoo(ctx context.Context) ([]*fixtures.Foo, error) {
+func (c *Client) GetFoo(ctx context.Context) ([]*fixtures.Foo, error) {
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -67,7 +56,7 @@ func (c *client) GetFoo(ctx context.Context) ([]*fixtures.Foo, error) {
 	return response, nil
 }
 
-func (c *client) PostFoo(ctx context.Context, request *fixtures.Bar) (*fixtures.Foo, error) {
+func (c *Client) PostFoo(ctx context.Context, request *fixtures.Bar) (*fixtures.Foo, error) {
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -117,7 +106,7 @@ func (c *client) PostFoo(ctx context.Context, request *fixtures.Bar) (*fixtures.
 	return response, nil
 }
 
-func (c *client) GetFooFooId(ctx context.Context, fooId fixtures.Id) (*fixtures.Foo, error) {
+func (c *Client) GetFooFooId(ctx context.Context, fooId fixtures.Id) (*fixtures.Foo, error) {
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -160,7 +149,7 @@ func (c *client) GetFooFooId(ctx context.Context, fooId fixtures.Id) (*fixtures.
 	return response, nil
 }
 
-func (c *client) PatchFooFooId(ctx context.Context, fooId fixtures.Id, request *fixtures.Foo) (*fixtures.Foo, error) {
+func (c *Client) PatchFooFooId(ctx context.Context, fooId fixtures.Id, request *fixtures.Foo) (*fixtures.Foo, error) {
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -217,7 +206,7 @@ func (c *client) PatchFooFooId(ctx context.Context, fooId fixtures.Id, request *
 	return response, nil
 }
 
-func (c *client) DeleteFooFooId(ctx context.Context, fooId fixtures.Id) error {
+func (c *Client) DeleteFooFooId(ctx context.Context, fooId fixtures.Id) error {
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -259,7 +248,7 @@ func (c *client) DeleteFooFooId(ctx context.Context, fooId fixtures.Id) error {
 	return nil
 }
 
-func (c *client) PostFooFooIdRun(ctx context.Context, fooId fixtures.Id) (*fixtures.Foo, error) {
+func (c *Client) PostFooFooIdRun(ctx context.Context, fooId fixtures.Id) (*fixtures.Foo, error) {
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -309,7 +298,7 @@ func (c *client) PostFooFooIdRun(ctx context.Context, fooId fixtures.Id) (*fixtu
 	return response, nil
 }
 
-func (c *client) PostFooBatchCreate(ctx context.Context, request []*fixtures.Bar) ([]*fixtures.Foo, error) {
+func (c *Client) PostFooBatchCreate(ctx context.Context, request []*fixtures.Bar) ([]*fixtures.Foo, error) {
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -373,7 +362,7 @@ func (c *client) PostFooBatchCreate(ctx context.Context, request []*fixtures.Bar
 	return response, nil
 }
 
-func (c *client) PostFooBatchDelete(ctx context.Context, request []fixtures.Id) error {
+func (c *Client) PostFooBatchDelete(ctx context.Context, request []fixtures.Id) error {
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL

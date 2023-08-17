@@ -10,34 +10,25 @@ import (
 	http "net/http"
 )
 
-type Client interface {
-	SetName(ctx context.Context, userId string, request string) (string, error)
-	SetNameV2(ctx context.Context, userId string, request *fixtures.SetNameRequest) (string, error)
-	SetNameV3(ctx context.Context, userId string, request *fixtures.SetNameRequestV3) (*fixtures.SetNameRequestV3Body, error)
-	SetNameV3Optional(ctx context.Context, userId string, request *fixtures.SetNameRequestV3Optional) (*fixtures.SetNameRequestV3Body, error)
-	SetNameV4(ctx context.Context, userId string, request *fixtures.SetNameRequestV4) (string, error)
-	SetNameV5(ctx context.Context, userId string, request *fixtures.SetNameRequestV5) (string, error)
+type Client struct {
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
-func NewClient(opts ...core.ClientOption) Client {
+func NewClient(opts ...core.ClientOption) *Client {
 	options := core.NewClientOptions()
 	for _, opt := range opts {
 		opt(options)
 	}
-	return &client{
+	return &Client{
 		baseURL:    options.BaseURL,
 		httpClient: options.HTTPClient,
 		header:     options.ToHeader(),
 	}
 }
 
-type client struct {
-	baseURL    string
-	httpClient core.HTTPClient
-	header     http.Header
-}
-
-func (c *client) SetName(ctx context.Context, userId string, request string) (string, error) {
+func (c *Client) SetName(ctx context.Context, userId string, request string) (string, error) {
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -61,7 +52,7 @@ func (c *client) SetName(ctx context.Context, userId string, request string) (st
 	return response, nil
 }
 
-func (c *client) SetNameV2(ctx context.Context, userId string, request *fixtures.SetNameRequest) (string, error) {
+func (c *Client) SetNameV2(ctx context.Context, userId string, request *fixtures.SetNameRequest) (string, error) {
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -85,7 +76,7 @@ func (c *client) SetNameV2(ctx context.Context, userId string, request *fixtures
 	return response, nil
 }
 
-func (c *client) SetNameV3(ctx context.Context, userId string, request *fixtures.SetNameRequestV3) (*fixtures.SetNameRequestV3Body, error) {
+func (c *Client) SetNameV3(ctx context.Context, userId string, request *fixtures.SetNameRequestV3) (*fixtures.SetNameRequestV3Body, error) {
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -112,7 +103,7 @@ func (c *client) SetNameV3(ctx context.Context, userId string, request *fixtures
 	return response, nil
 }
 
-func (c *client) SetNameV3Optional(ctx context.Context, userId string, request *fixtures.SetNameRequestV3Optional) (*fixtures.SetNameRequestV3Body, error) {
+func (c *Client) SetNameV3Optional(ctx context.Context, userId string, request *fixtures.SetNameRequestV3Optional) (*fixtures.SetNameRequestV3Body, error) {
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -139,7 +130,7 @@ func (c *client) SetNameV3Optional(ctx context.Context, userId string, request *
 	return response, nil
 }
 
-func (c *client) SetNameV4(ctx context.Context, userId string, request *fixtures.SetNameRequestV4) (string, error) {
+func (c *Client) SetNameV4(ctx context.Context, userId string, request *fixtures.SetNameRequestV4) (string, error) {
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -166,7 +157,7 @@ func (c *client) SetNameV4(ctx context.Context, userId string, request *fixtures
 	return response, nil
 }
 
-func (c *client) SetNameV5(ctx context.Context, userId string, request *fixtures.SetNameRequestV5) (string, error) {
+func (c *Client) SetNameV5(ctx context.Context, userId string, request *fixtures.SetNameRequestV5) (string, error) {
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL

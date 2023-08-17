@@ -11,16 +11,16 @@ import (
 func TestNewClient(t *testing.T) {
 	t.Run("default", func(t *testing.T) {
 		c := NewClient()
-		assert.Empty(t, c.(*client).baseURL)
-		assert.Equal(t, http.DefaultClient, c.(*client).httpClient)
+		assert.Empty(t, c.baseURL)
+		assert.Equal(t, http.DefaultClient, c.httpClient)
 	})
 
 	t.Run("base url", func(t *testing.T) {
 		c := NewClient(
 			ClientWithBaseURL("test.co"),
 		)
-		assert.Equal(t, "test.co", c.(*client).baseURL)
-		assert.Equal(t, http.DefaultClient, c.(*client).httpClient)
+		assert.Equal(t, "test.co", c.baseURL)
+		assert.Equal(t, http.DefaultClient, c.httpClient)
 	})
 
 	t.Run("http client", func(t *testing.T) {
@@ -30,8 +30,8 @@ func TestNewClient(t *testing.T) {
 		c := NewClient(
 			ClientWithHTTPClient(httpClient),
 		)
-		assert.Empty(t, c.(*client).baseURL)
-		assert.Equal(t, httpClient, c.(*client).httpClient)
+		assert.Empty(t, c.baseURL)
+		assert.Equal(t, httpClient, c.httpClient)
 	})
 
 	t.Run("http header", func(t *testing.T) {
@@ -40,8 +40,8 @@ func TestNewClient(t *testing.T) {
 		c := NewClient(
 			ClientWithHTTPHeader(header),
 		)
-		assert.Empty(t, c.(*client).baseURL)
-		assert.Equal(t, http.DefaultClient, c.(*client).httpClient)
-		assert.Equal(t, "test", c.(*client).header.Get("X-API-Tenancy"))
+		assert.Empty(t, c.baseURL)
+		assert.Equal(t, http.DefaultClient, c.httpClient)
+		assert.Equal(t, "test", c.header.Get("X-API-Tenancy"))
 	})
 }

@@ -325,9 +325,8 @@ func (f *fileWriter) WriteClient(
 	fernFilepath *ir.FernFilepath,
 ) error {
 	var (
-		clientName     = "Client"
-		clientImplName = "client"
-		receiver       = "c"
+		clientName = "Client"
+		receiver   = "c"
 	)
 	var errorDiscriminationByPropertyStrategy *ir.ErrorDiscriminationByPropertyStrategy
 	if errorDiscriminationStrategy != nil && errorDiscriminationStrategy.Property != nil {
@@ -342,34 +341,30 @@ func (f *fileWriter) WriteClient(
 		}
 		endpoints = append(endpoints, endpoint)
 	}
-	// Generate the service interface definition.
-	if len(endpoints) == 0 && len(subpackages) == 0 {
-		f.P("type ", clientName, " interface {}")
-	} else {
-		f.P("type ", clientName, " interface {")
-	}
-	for _, endpoint := range endpoints {
-		f.P(fmt.Sprintf("%s(%s) %s", endpoint.Name.PascalCase.UnsafeName, endpoint.SignatureParameters, endpoint.ReturnValues))
-	}
+
+	// Generate the client implementation.
+	f.P("type ", clientName, " struct {")
+	f.P("baseURL string")
+	f.P("httpClient core.HTTPClient")
+	f.P("header http.Header")
+	f.P()
 	for _, subpackage := range subpackages {
 		var (
 			importPath     = packagePathToImportPath(f.baseImportPath, packagePathForClient(subpackage.FernFilepath))
-			clientTypeName = f.imports.Add(importPath) + ".Client"
+			clientTypeName = f.imports.Add(importPath) + "." + clientName
 		)
-		f.P(subpackage.Name.PascalCase.UnsafeName, "()", clientTypeName)
+		f.P(subpackage.Name.PascalCase.UnsafeName, " *", clientTypeName)
 	}
-	if len(endpoints) > 0 || len(subpackages) > 0 {
-		f.P("}")
-	}
+	f.P("}")
 	f.P()
 
 	// Generate the client constructor.
-	f.P("func New", clientName, "(opts ...core.ClientOption) ", clientName, " {")
+	f.P("func New", clientName, "(opts ...core.ClientOption) *", clientName, " {")
 	f.P("options := core.NewClientOptions()")
 	f.P("for _, opt := range opts {")
 	f.P("opt(options)")
 	f.P("}")
-	f.P("return &", clientImplName, "{")
+	f.P("return &", clientName, "{")
 	f.P(`baseURL: options.BaseURL,`)
 	f.P("httpClient: options.HTTPClient,")
 	f.P("header: options.ToHeader(),")
@@ -378,24 +373,9 @@ func (f *fileWriter) WriteClient(
 			importPath        = packagePathToImportPath(f.baseImportPath, packagePathForClient(subpackage.FernFilepath))
 			clientConstructor = f.imports.Add(importPath) + ".NewClient(opts...),"
 		)
-		f.P(subpackage.Name.CamelCase.UnsafeName, "Client: ", clientConstructor)
+		f.P(subpackage.Name.PascalCase.UnsafeName, ": ", clientConstructor)
 	}
 	f.P("}")
-	f.P("}")
-	f.P()
-
-	// Generate the client implementation.
-	f.P("type ", clientImplName, " struct {")
-	f.P("baseURL string")
-	f.P("httpClient core.HTTPClient")
-	f.P("header http.Header")
-	for _, subpackage := range subpackages {
-		var (
-			importPath     = packagePathToImportPath(f.baseImportPath, packagePathForClient(subpackage.FernFilepath))
-			clientTypeName = f.imports.Add(importPath) + "." + clientName
-		)
-		f.P(subpackage.Name.CamelCase.UnsafeName, "Client ", clientTypeName)
-	}
 	f.P("}")
 	f.P()
 
@@ -412,7 +392,7 @@ func (f *fileWriter) WriteClient(
 				f.WriteDocs(pathParameterDoc)
 			}
 		}
-		f.P("func (", receiver, " *", clientImplName, ") ", endpoint.Name.PascalCase.UnsafeName, "(", endpoint.SignatureParameters, ") ", endpoint.ReturnValues, " {")
+		f.P("func (", receiver, " *", clientName, ") ", endpoint.Name.PascalCase.UnsafeName, "(", endpoint.SignatureParameters, ") ", endpoint.ReturnValues, " {")
 		// Compose the URL, including any query parameters.
 		f.P(fmt.Sprintf("baseURL := %q", endpoint.BaseURL))
 		f.P("if ", fmt.Sprintf("%s.baseURL", receiver), ` != "" {`)
@@ -612,18 +592,6 @@ func (f *fileWriter) WriteClient(
 		f.P("return ", endpoint.ErrorReturnValues)
 		f.P("}")
 		f.P("return ", endpoint.SuccessfulReturnValues)
-		f.P("}")
-		f.P()
-	}
-
-	// Implement the getter methods to nested clients, if any.
-	for _, subpackage := range subpackages {
-		var (
-			importPath     = packagePathToImportPath(f.baseImportPath, packagePathForClient(subpackage.FernFilepath))
-			clientTypeName = f.imports.Add(importPath) + ".Client"
-		)
-		f.P("func (", receiver, " *", clientImplName, ") ", subpackage.Name.PascalCase.UnsafeName, "() ", clientTypeName, " {")
-		f.P("return ", receiver, ".", subpackage.Name.CamelCase.UnsafeName, "Client")
 		f.P("}")
 		f.P()
 	}

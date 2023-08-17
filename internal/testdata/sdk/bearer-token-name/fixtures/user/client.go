@@ -8,29 +8,25 @@ import (
 	http "net/http"
 )
 
-type Client interface {
-	Get(ctx context.Context) (string, error)
+type Client struct {
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
-func NewClient(opts ...core.ClientOption) Client {
+func NewClient(opts ...core.ClientOption) *Client {
 	options := core.NewClientOptions()
 	for _, opt := range opts {
 		opt(options)
 	}
-	return &client{
+	return &Client{
 		baseURL:    options.BaseURL,
 		httpClient: options.HTTPClient,
 		header:     options.ToHeader(),
 	}
 }
 
-type client struct {
-	baseURL    string
-	httpClient core.HTTPClient
-	header     http.Header
-}
-
-func (c *client) Get(ctx context.Context) (string, error) {
+func (c *Client) Get(ctx context.Context) (string, error) {
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL

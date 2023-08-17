@@ -13,31 +13,25 @@ import (
 	http "net/http"
 )
 
-type Client interface {
-	Upload(ctx context.Context, file io.Reader, request *fixtures.UploadRequest) (string, error)
-	UploadSimple(ctx context.Context, file io.Reader) (string, error)
-	UploadMultiple(ctx context.Context, file io.Reader, optionalFile io.Reader, request *fixtures.UploadMultiRequest) (string, error)
+type Client struct {
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
-func NewClient(opts ...core.ClientOption) Client {
+func NewClient(opts ...core.ClientOption) *Client {
 	options := core.NewClientOptions()
 	for _, opt := range opts {
 		opt(options)
 	}
-	return &client{
+	return &Client{
 		baseURL:    options.BaseURL,
 		httpClient: options.HTTPClient,
 		header:     options.ToHeader(),
 	}
 }
 
-type client struct {
-	baseURL    string
-	httpClient core.HTTPClient
-	header     http.Header
-}
-
-func (c *client) Upload(ctx context.Context, file io.Reader, request *fixtures.UploadRequest) (string, error) {
+func (c *Client) Upload(ctx context.Context, file io.Reader, request *fixtures.UploadRequest) (string, error) {
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -85,7 +79,7 @@ func (c *client) Upload(ctx context.Context, file io.Reader, request *fixtures.U
 	return response, nil
 }
 
-func (c *client) UploadSimple(ctx context.Context, file io.Reader) (string, error) {
+func (c *Client) UploadSimple(ctx context.Context, file io.Reader) (string, error) {
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -127,7 +121,7 @@ func (c *client) UploadSimple(ctx context.Context, file io.Reader) (string, erro
 	return response, nil
 }
 
-func (c *client) UploadMultiple(ctx context.Context, file io.Reader, optionalFile io.Reader, request *fixtures.UploadMultiRequest) (string, error) {
+func (c *Client) UploadMultiple(ctx context.Context, file io.Reader, optionalFile io.Reader, request *fixtures.UploadMultiRequest) (string, error) {
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL

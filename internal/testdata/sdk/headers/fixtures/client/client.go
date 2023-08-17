@@ -8,30 +8,23 @@ import (
 	http "net/http"
 )
 
-type Client interface {
-	User() user.Client
+type Client struct {
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
+
+	User *user.Client
 }
 
-func NewClient(opts ...core.ClientOption) Client {
+func NewClient(opts ...core.ClientOption) *Client {
 	options := core.NewClientOptions()
 	for _, opt := range opts {
 		opt(options)
 	}
-	return &client{
+	return &Client{
 		baseURL:    options.BaseURL,
 		httpClient: options.HTTPClient,
 		header:     options.ToHeader(),
-		userClient: user.NewClient(opts...),
+		User:       user.NewClient(opts...),
 	}
-}
-
-type client struct {
-	baseURL    string
-	httpClient core.HTTPClient
-	header     http.Header
-	userClient user.Client
-}
-
-func (c *client) User() user.Client {
-	return c.userClient
 }

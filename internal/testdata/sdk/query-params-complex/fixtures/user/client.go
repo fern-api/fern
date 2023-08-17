@@ -13,29 +13,25 @@ import (
 	time "time"
 )
 
-type Client interface {
-	GetUsername(ctx context.Context, request *fixtures.GetUsersRequest) (*fixtures.User, error)
+type Client struct {
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
 }
 
-func NewClient(opts ...core.ClientOption) Client {
+func NewClient(opts ...core.ClientOption) *Client {
 	options := core.NewClientOptions()
 	for _, opt := range opts {
 		opt(options)
 	}
-	return &client{
+	return &Client{
 		baseURL:    options.BaseURL,
 		httpClient: options.HTTPClient,
 		header:     options.ToHeader(),
 	}
 }
 
-type client struct {
-	baseURL    string
-	httpClient core.HTTPClient
-	header     http.Header
-}
-
-func (c *client) GetUsername(ctx context.Context, request *fixtures.GetUsersRequest) (*fixtures.User, error) {
+func (c *Client) GetUsername(ctx context.Context, request *fixtures.GetUsersRequest) (*fixtures.User, error) {
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL

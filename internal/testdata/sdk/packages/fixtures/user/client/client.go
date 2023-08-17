@@ -12,35 +12,30 @@ import (
 	http "net/http"
 )
 
-type Client interface {
-	GetUser(ctx context.Context, userId string) (*user.User, error)
-	Notification() notificationclient.Client
-	User() useruser.Client
+type Client struct {
+	baseURL    string
+	httpClient core.HTTPClient
+	header     http.Header
+
+	Notification *notificationclient.Client
+	User         *useruser.Client
 }
 
-func NewClient(opts ...core.ClientOption) Client {
+func NewClient(opts ...core.ClientOption) *Client {
 	options := core.NewClientOptions()
 	for _, opt := range opts {
 		opt(options)
 	}
-	return &client{
-		baseURL:            options.BaseURL,
-		httpClient:         options.HTTPClient,
-		header:             options.ToHeader(),
-		notificationClient: notificationclient.NewClient(opts...),
-		userClient:         useruser.NewClient(opts...),
+	return &Client{
+		baseURL:      options.BaseURL,
+		httpClient:   options.HTTPClient,
+		header:       options.ToHeader(),
+		Notification: notificationclient.NewClient(opts...),
+		User:         useruser.NewClient(opts...),
 	}
 }
 
-type client struct {
-	baseURL            string
-	httpClient         core.HTTPClient
-	header             http.Header
-	notificationClient notificationclient.Client
-	userClient         useruser.Client
-}
-
-func (c *client) GetUser(ctx context.Context, userId string) (*user.User, error) {
+func (c *Client) GetUser(ctx context.Context, userId string) (*user.User, error) {
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
@@ -62,12 +57,4 @@ func (c *client) GetUser(ctx context.Context, userId string) (*user.User, error)
 		return response, err
 	}
 	return response, nil
-}
-
-func (c *client) Notification() notificationclient.Client {
-	return c.notificationClient
-}
-
-func (c *client) User() useruser.Client {
-	return c.userClient
 }
