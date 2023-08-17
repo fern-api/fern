@@ -1,3 +1,8 @@
-from .dependency import Dependency, DependencyName, DependencyVersion
+from .dependency import (
+    Dependency,
+    DependencyCompatibility,
+    DependencyName,
+    DependencyVersion,
+)
 
-__all__ = ["Dependency", "DependencyName", "DependencyVersion"]
+__all__ = ["Dependency", "DependencyName", "DependencyVersion", "DependencyCompatibility"]

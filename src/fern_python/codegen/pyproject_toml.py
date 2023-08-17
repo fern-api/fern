@@ -93,10 +93,13 @@ packages = [
             for dep in sorted(self.dependencies, key=lambda dep: dep.name):
                 compatiblity = dep.compatibility
                 # TODO(dsinghvi): assert all enum cases are visited
-                if compatiblity is DependencyCompatibility.EXACT:
+                print(dep.compatibility)
+                if compatiblity == DependencyCompatibility.EXACT:
+                    print(f"{dep.name} is exact")
                     deps += f'{dep.name.replace(".", "-")} = "{dep.version}"\n'
-                elif compatiblity is DependencyCompatibility.GREATER_THAN_OR_EQUAL:
-                    deps += f'{dep.name.replace(".", "-")} >= "{dep.version}"\n'
+                elif compatiblity == DependencyCompatibility.GREATER_THAN_OR_EQUAL:
+                    print(f"{dep.name} is greater than or equal")
+                    deps += f'{dep.name.replace(".", "-")} = ">={dep.version}"\n'
             self.dependencies
             return f"""
 [tool.poetry.dependencies]

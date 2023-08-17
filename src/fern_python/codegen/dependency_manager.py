@@ -5,10 +5,10 @@ from . import AST
 
 class DependencyManager:
     def __init__(self) -> None:
-        self._dependencies: Dict[AST.DependencyName, AST.DependencyVersion] = {}
+        self._dependencies: Dict[AST.DependencyName, AST.Dependency] = {}
 
     def add_dependency(self, dependency: AST.Dependency) -> None:
-        self._dependencies[dependency.name] = dependency.version
+        self._dependencies[dependency.name] = dependency
 
     def get_dependencies(self) -> Set[AST.Dependency]:
-        return {AST.Dependency(name=name, version=version) for (name, version) in self._dependencies.items()}
+        return {dep for (name, dep) in self._dependencies.items()}

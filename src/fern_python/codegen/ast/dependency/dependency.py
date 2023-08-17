@@ -5,7 +5,6 @@ DependencyName = str
 DependencyVersion = str
 
 
-@dataclass(frozen=True)
 class DependencyCompatibility(Enum):
     EXACT = "="
     GREATER_THAN_OR_EQUAL = ">="

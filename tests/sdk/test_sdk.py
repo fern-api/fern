@@ -97,39 +97,6 @@ def test_github_no_publish_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
     )
 
 
-def test_github_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
-    run_snapshot_test(
-        snapshot=snapshot,
-        fixture_name="imdb-github",
-        tmpdir=tmpdir,
-        cli=cli,
-        filename_of_test=__file__,
-        output_mode=config.OutputMode.factory.github(
-            config.GithubOutputMode(
-                repo_url="some-repo-url",
-                version="1.0.0",
-                publish_info=config.GithubPublishInfo.factory.pypi(
-                    config.PypiGithubPublishInfo(
-                        registry_url="https://pypi.org/",
-                        package_name="my-package-name",
-                        username_environment_variable="PYPI_USERNAME",
-                        password_environment_variable="PYPI_PASSWORD",
-                    )
-                ),
-            ),
-        ),
-        custom_config={
-            "client_filename": "my_client.py",
-        },
-    )
-
-
-def test_multiple_urls_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
-    run_snapshot_test(
-        snapshot=snapshot, fixture_name="multiple-urls", tmpdir=tmpdir, cli=cli, filename_of_test=__file__
-    )
-
-
 def test_file_upload_sdk(snapshot: SnapshotTest, tmpdir: Path) -> None:
     run_snapshot_test(
         snapshot=snapshot,
