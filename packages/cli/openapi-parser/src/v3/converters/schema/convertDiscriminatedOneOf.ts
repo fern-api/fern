@@ -1,6 +1,7 @@
 import { CommonProperty, Schema } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertReferenceObject, convertSchema, convertSchemaObject } from "../convertSchemas";
 
 export function convertDiscriminatedOneOf({
@@ -38,7 +39,8 @@ export function convertDiscriminatedOneOf({
                 {
                     $ref: schema,
                 },
-                discriminant
+                discriminant,
+                1
             );
             return [discriminantValue, subtypeReference];
         })
@@ -86,19 +88,25 @@ export function convertDiscriminatedOneOfWithVariants({
     required: string[] | undefined;
     wrapAsNullable: boolean;
     discriminant: string;
-    variants: Record<string, OpenAPIV3.SchemaObject>;
+    variants: Record<string, OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>;
     context: AbstractOpenAPIV3ParserContext;
 }): Schema {
     const unionSubTypes = Object.fromEntries(
         Object.entries(variants).map(([discriminantValue, schema]) => {
-            const variantSchema = convertSchemaObject(
-                schema,
-                false,
-                context,
-                [...breadcrumbs, discriminantValue],
-                new Set([discriminant])
-            );
-            return [discriminantValue, variantSchema];
+            if (isReferenceObject(schema)) {
+                const subtypeReference = convertReferenceObject(schema, false, [schema.$ref]);
+                context.markReferencedByDiscriminatedUnion(schema, discriminant, 1);
+                return [discriminantValue, subtypeReference];
+            } else {
+                const variantSchema = convertSchemaObject(
+                    schema,
+                    false,
+                    context,
+                    [...breadcrumbs, discriminantValue],
+                    new Set([discriminant])
+                );
+                return [discriminantValue, variantSchema];
+            }
         })
     );
     const convertedProperties = Object.entries(properties)

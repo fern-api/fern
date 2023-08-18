@@ -457,10 +457,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "docs": "Beneficiary name of the account",
               "type": "optional<string>",
             },
-            "method": {
-              "docs": undefined,
-              "type": "ACHPaymentMethod",
-            },
             "name": {
               "docs": "Name of the account holder",
               "type": "optional<string>",
@@ -689,46 +685,47 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         "BusinessOptionalSavedPaymentDetailsItem": {
-          "discriminated": false,
+          "base-properties": {},
+          "discriminant": "method",
           "docs": undefined,
-          "union": [
-            {
-              "docs": undefined,
-              "type": "CardDetails",
-            },
-            {
-              "docs": undefined,
-              "type": "GenericBankAccountDetails",
-            },
-            {
-              "docs": undefined,
-              "type": "IbanDetails",
-            },
-            {
+          "union": {
+            "ACH": {
               "docs": undefined,
               "type": "AchDetails",
             },
-            {
+            "CARD": {
               "docs": undefined,
-              "type": "SwiftDetails",
+              "type": "CardDetails",
             },
-            {
-              "docs": undefined,
-              "type": "MpesaDetails",
-            },
-            {
-              "docs": undefined,
-              "type": "UpiDetails",
-            },
-            {
-              "docs": undefined,
-              "type": "WalletDetails",
-            },
-            {
+            "CHECK": {
               "docs": undefined,
               "type": "CheckDetails",
             },
-          ],
+            "GENERIC_BANK_ACCOUNT": {
+              "docs": undefined,
+              "type": "GenericBankAccountDetails",
+            },
+            "IBAN": {
+              "docs": undefined,
+              "type": "IbanDetails",
+            },
+            "MPESA": {
+              "docs": undefined,
+              "type": "MpesaDetails",
+            },
+            "SWIFT": {
+              "docs": undefined,
+              "type": "SwiftDetails",
+            },
+            "UPI": {
+              "docs": undefined,
+              "type": "UpiDetails",
+            },
+            "WALLET": {
+              "docs": undefined,
+              "type": "WalletDetails",
+            },
+          },
         },
         "BusinessUsersResponse": {
           "docs": "Model for business user risk score response",
@@ -798,10 +795,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "merchantDetails": {
               "docs": undefined,
               "type": "optional<CardMerchantDetails>",
-            },
-            "method": {
-              "docs": undefined,
-              "type": "CardPaymentMethod",
             },
             "nameOnCard": {
               "docs": undefined,
@@ -1063,10 +1056,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "etaTimestamp": {
               "docs": undefined,
               "type": "optional<double>",
-            },
-            "method": {
-              "docs": undefined,
-              "type": "CheckPaymentMethod",
             },
             "name": {
               "docs": undefined,
@@ -4050,10 +4039,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "docs": "Name of the bank <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
-            "method": {
-              "docs": undefined,
-              "type": "GeneralBankAccountPaymentMethod",
-            },
             "name": {
               "docs": "Name of the account holder",
               "type": "optional<string>",
@@ -4132,10 +4117,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "country": {
               "docs": undefined,
               "type": "optional<CountryCode>",
-            },
-            "method": {
-              "docs": undefined,
-              "type": "IBANPaymentMethod",
             },
             "name": {
               "docs": "Name of the bank account holder",
@@ -4448,10 +4429,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "businessShortCode": {
               "docs": "Business code <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "string",
-            },
-            "method": {
-              "docs": undefined,
-              "type": "MpesaPaymentMethod",
             },
             "phoneNumber": {
               "docs": "Contact Number of the account holder",
@@ -4928,10 +4905,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "docs": "Name of the bank <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
             },
-            "method": {
-              "docs": undefined,
-              "type": "SWIFTPaymentMethod",
-            },
             "name": {
               "docs": "Name of the account holder",
               "type": "optional<string>",
@@ -5309,88 +5282,90 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
         "TransactionUpdatableDestinationPaymentDetails": {
-          "discriminated": false,
+          "base-properties": {},
+          "discriminant": "method",
           "docs": "Payment details of the destination. It can be a bank account number, wallet ID, card fingerprint etc.",
-          "union": [
-            {
-              "docs": undefined,
-              "type": "CardDetails",
-            },
-            {
-              "docs": undefined,
-              "type": "GenericBankAccountDetails",
-            },
-            {
-              "docs": undefined,
-              "type": "IbanDetails",
-            },
-            {
+          "union": {
+            "ACH": {
               "docs": undefined,
               "type": "AchDetails",
             },
-            {
+            "CARD": {
               "docs": undefined,
-              "type": "UpiDetails",
+              "type": "CardDetails",
             },
-            {
-              "docs": undefined,
-              "type": "WalletDetails",
-            },
-            {
-              "docs": undefined,
-              "type": "SwiftDetails",
-            },
-            {
-              "docs": undefined,
-              "type": "MpesaDetails",
-            },
-            {
+            "CHECK": {
               "docs": undefined,
               "type": "CheckDetails",
             },
-          ],
+            "GENERIC_BANK_ACCOUNT": {
+              "docs": undefined,
+              "type": "GenericBankAccountDetails",
+            },
+            "IBAN": {
+              "docs": undefined,
+              "type": "IbanDetails",
+            },
+            "MPESA": {
+              "docs": undefined,
+              "type": "MpesaDetails",
+            },
+            "SWIFT": {
+              "docs": undefined,
+              "type": "SwiftDetails",
+            },
+            "UPI": {
+              "docs": undefined,
+              "type": "UpiDetails",
+            },
+            "WALLET": {
+              "docs": undefined,
+              "type": "WalletDetails",
+            },
+          },
         },
         "TransactionUpdatableOriginPaymentDetails": {
-          "discriminated": false,
+          "base-properties": {},
+          "discriminant": "method",
           "docs": "Payment details of the origin. It can be a bank account number, wallet ID, card fingerprint etc.",
-          "union": [
-            {
-              "docs": undefined,
-              "type": "CardDetails",
-            },
-            {
-              "docs": undefined,
-              "type": "GenericBankAccountDetails",
-            },
-            {
-              "docs": undefined,
-              "type": "IbanDetails",
-            },
-            {
+          "union": {
+            "ACH": {
               "docs": undefined,
               "type": "AchDetails",
             },
-            {
+            "CARD": {
               "docs": undefined,
-              "type": "SwiftDetails",
+              "type": "CardDetails",
             },
-            {
-              "docs": undefined,
-              "type": "MpesaDetails",
-            },
-            {
-              "docs": undefined,
-              "type": "UpiDetails",
-            },
-            {
-              "docs": undefined,
-              "type": "WalletDetails",
-            },
-            {
+            "CHECK": {
               "docs": undefined,
               "type": "CheckDetails",
             },
-          ],
+            "GENERIC_BANK_ACCOUNT": {
+              "docs": undefined,
+              "type": "GenericBankAccountDetails",
+            },
+            "IBAN": {
+              "docs": undefined,
+              "type": "IbanDetails",
+            },
+            "MPESA": {
+              "docs": undefined,
+              "type": "MpesaDetails",
+            },
+            "SWIFT": {
+              "docs": undefined,
+              "type": "SwiftDetails",
+            },
+            "UPI": {
+              "docs": undefined,
+              "type": "UpiDetails",
+            },
+            "WALLET": {
+              "docs": undefined,
+              "type": "WalletDetails",
+            },
+          },
         },
         "TransactionWithRulesResult": {
           "docs": "Model for transaction payload with rules result",
@@ -5419,10 +5394,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "interfaceProvider": {
               "docs": "Interface provider name <span style="white-space: nowrap">\`non-empty\`</span> ",
               "type": "optional<string>",
-            },
-            "method": {
-              "docs": undefined,
-              "type": "UPIPaymentMethod",
             },
             "name": {
               "docs": "Name of the account holder",
@@ -5686,10 +5657,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "WalletDetails": {
           "docs": "Standardized model for a Generic wallet transaction",
           "properties": {
-            "method": {
-              "docs": undefined,
-              "type": "WalletPaymentMethod",
-            },
             "name": {
               "docs": "Name of the account holder for a specific wallet",
               "type": "optional<string>",

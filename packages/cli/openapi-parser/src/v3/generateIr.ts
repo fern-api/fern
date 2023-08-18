@@ -85,7 +85,7 @@ function maybeRemoveDiscriminantsFromSchemas(
             }
             const allReferences = context.getNumberOfOccurrencesForRef(referenceToSchema);
 
-            if (allReferences !== discriminatedUnionReference.numReferences * 2) {
+            if (allReferences === discriminatedUnionReference.numReferences * 2) {
                 return [schemaId, schema];
             }
 

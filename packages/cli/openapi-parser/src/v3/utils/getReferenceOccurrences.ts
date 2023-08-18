@@ -31,6 +31,7 @@ function getReferenceOccurrencesHelper({
                 breadcrumbs,
             });
         }
+        return;
     }
 
     if (typeof obj !== "object") {
@@ -44,6 +45,7 @@ function getReferenceOccurrencesHelper({
         } else {
             occurrences[refProperty] += 1;
         }
+        return;
     }
     for (const key in obj) {
         getReferenceOccurrencesHelper({

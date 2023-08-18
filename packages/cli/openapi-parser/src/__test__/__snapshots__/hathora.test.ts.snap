@@ -3474,8 +3474,6 @@ exports[`open api parser hathora parse open api 1`] = `
         "RoomAllocation",
         "Pick_Room.Exclude_keyofRoom.allocations__",
         "Omit_Room.allocations_",
-        "StartingConnectionInfo",
-        "ActiveConnectionInfo",
       ],
       "schemas": {
         "ActiveConnectionInfo": {
@@ -3485,16 +3483,6 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "ActiveConnectionInfo",
           "nameOverride": undefined,
           "properties": [
-            {
-              "conflict": {},
-              "generatedName": "activeConnectionInfoStatus",
-              "key": "status",
-              "schema": {
-                "description": undefined,
-                "type": "literal",
-                "value": "active",
-              },
-            },
             {
               "conflict": {},
               "generatedName": "activeConnectionInfoTransportType",
@@ -4012,28 +4000,30 @@ exports[`open api parser hathora parse open api 1`] = `
         },
         "ConnectionInfo": {
           "oneOf": {
+            "commonProperties": [],
             "description": undefined,
+            "discriminantProperty": "status",
             "generatedName": "ConnectionInfo",
             "nameOverride": undefined,
-            "schemas": [
-              {
+            "schemas": {
+              "active": {
                 "description": undefined,
                 "file": undefined,
-                "generatedName": "ConnectionInfoZero",
-                "nameOverride": undefined,
-                "schema": "StartingConnectionInfo",
-                "type": "reference",
-              },
-              {
-                "description": undefined,
-                "file": undefined,
-                "generatedName": "ConnectionInfoOne",
+                "generatedName": "ComponentsSchemasActiveConnectionInfo",
                 "nameOverride": undefined,
                 "schema": "ActiveConnectionInfo",
                 "type": "reference",
               },
-            ],
-            "type": "undisciminated",
+              "starting": {
+                "description": undefined,
+                "file": undefined,
+                "generatedName": "ComponentsSchemasStartingConnectionInfo",
+                "nameOverride": undefined,
+                "schema": "StartingConnectionInfo",
+                "type": "reference",
+              },
+            },
+            "type": "discriminated",
           },
           "type": "oneOf",
         },
@@ -5321,16 +5311,6 @@ exports[`open api parser hathora parse open api 1`] = `
           "generatedName": "StartingConnectionInfo",
           "nameOverride": undefined,
           "properties": [
-            {
-              "conflict": {},
-              "generatedName": "startingConnectionInfoStatus",
-              "key": "status",
-              "schema": {
-                "description": undefined,
-                "type": "literal",
-                "value": "starting",
-              },
-            },
             {
               "conflict": {},
               "generatedName": "startingConnectionInfoRoomId",

@@ -3906,9 +3906,7 @@ exports[`open api parser deel simple 1`] = `
           "extends": [
             "HrisContractBase",
           ],
-          "properties": {
-            "employment_type": "literal<"FULL_TIME">",
-          },
+          "properties": {},
         },
         "HrisContractPartTime": {
           "docs": undefined,
@@ -3916,7 +3914,6 @@ exports[`open api parser deel simple 1`] = `
             "HrisContractBase",
           ],
           "properties": {
-            "employment_type": "literal<"PART_TIME">",
             "part_time_percentage": {
               "docs": "required if employmentType is "PART_TIME"",
               "type": "double",
@@ -3962,18 +3959,19 @@ exports[`open api parser deel simple 1`] = `
           },
         },
         "HrisDirectEmployeeContract": {
-          "discriminated": false,
+          "base-properties": {},
+          "discriminant": "employment_type",
           "docs": undefined,
-          "union": [
-            {
-              "docs": undefined,
-              "type": "HrisContractPartTime",
-            },
-            {
+          "union": {
+            "FULL_TIME": {
               "docs": undefined,
               "type": "HrisContractFullTime",
             },
-          ],
+            "PART_TIME": {
+              "docs": undefined,
+              "type": "HrisContractPartTime",
+            },
+          },
         },
         "HrisDirectEmployeeDetails": {
           "docs": undefined,
