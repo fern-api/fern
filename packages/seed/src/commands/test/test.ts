@@ -1,6 +1,6 @@
 import { AbsoluteFilePath, cwd, resolve } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
-import { CONSOLE_LOGGER, LogLevel } from "@fern-api/logger";
+import { CONSOLE_LOGGER, Logger, LogLevel } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
@@ -48,6 +48,7 @@ export async function runTests({
     compileCommand,
     logLevel,
     outputDir,
+    buildDockerCommands
 }: {
     irVersion: string | undefined;
     language: GenerationLanguage;
@@ -56,7 +57,16 @@ export async function runTests({
     compileCommand: string | undefined;
     logLevel: LogLevel;
     outputDir: string;
+    buildDockerCommands: string[] | undefined;
 }): Promise<void> {
+    if(buildDockerCommands != null)
+    {
+        await runCommands({
+            commands: buildDockerCommands,
+            absolutePathToOutput: null,
+            logger: CONSOLE_LOGGER
+        });
+    }
     const lock = new Semaphore(MAX_NUM_DOCKERS_RUNNING);
     const taskContextFactory = new TaskContextFactory(logLevel);
     const testCases = [];
@@ -179,21 +189,26 @@ async function testWithWriteToDisk({
         });
         if (compileCommand != null) {
             const commands = compileCommand.split("&&").map((command) => command.trim());
-            for (const command of commands) {
-                taskContext.logger.info(`Running command: ${command}`);
-                const spaceDelimitedCommand = command.split(" ");
-                const result = await loggingExeca(
-                    taskContext.logger,
-                    spaceDelimitedCommand[0] ?? command,
-                    spaceDelimitedCommand.slice(1),
-                    {
-                        cwd: absolutePathToOutput,
-                        doNotPipeOutput: true,
-                    }
-                );
-                taskContext.logger.info(result.stdout);
-                taskContext.logger.info(result.stderr);
-            }
+            // for (const command of commands) {
+            //     taskContext.logger.info(`Running command: ${command}`);
+            //     const spaceDelimitedCommand = command.split(" ");
+            //     const result = await loggingExeca(
+            //         taskContext.logger,
+            //         spaceDelimitedCommand[0] ?? command,
+            //         spaceDelimitedCommand.slice(1),
+            //         {
+            //             cwd: absolutePathToOutput,
+            //             doNotPipeOutput: true,
+            //         }
+            //     );
+            //     taskContext.logger.info(result.stdout);
+            //     taskContext.logger.info(result.stderr);
+            // }
+            await runCommands({
+                commands,
+                absolutePathToOutput,
+                logger: taskContext.logger
+            });
         }
         return { type: "success", fixture };
     } catch (err) {
@@ -202,5 +217,30 @@ async function testWithWriteToDisk({
             reason: (err as Error).message,
             fixture,
         };
+    }
+}
+
+async function runCommands({
+    commands,
+    logger,
+    absolutePathToOutput
+} : {
+    commands: string[],
+    logger: Logger
+    absolutePathToOutput: AbsoluteFilePath | null
+}) : Promise<void>
+{
+    const objectToPassToExeca = absolutePathToOutput == null ? { doNotPipeOutput : true } : { doNotPipeOutput : true, cwd: absolutePathToOutput };
+    for (const command of commands) {
+        logger.info(`Running command: ${command}`);
+        const spaceDelimitedCommand = command.split(" ");
+        const result = await loggingExeca(
+            logger,
+            spaceDelimitedCommand[0] ?? command,
+            spaceDelimitedCommand.slice(1),
+            objectToPassToExeca
+        );
+        logger.info(result.stdout);
+        logger.info(result.stderr); 
     }
 }
