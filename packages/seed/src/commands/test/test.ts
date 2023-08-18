@@ -22,7 +22,7 @@ export const FIXTURES = {
     SINGLE_URL_ENVIRONMENT_NO_DEFAULT: "single-url-environment-no-default",
     FILE_DOWNLOAD: "file-download",
     FILE_UPLOAD: "file-upload",
-    TEST: "test"
+    TEST: "test",
 } as const;
 
 type TestResult = TestSuccess | TestFailure;
@@ -48,7 +48,7 @@ export async function runTests({
     compileCommand,
     logLevel,
     outputDir,
-    buildDockerCommands
+    buildDockerCommands,
 }: {
     irVersion: string | undefined;
     language: GenerationLanguage;
@@ -59,12 +59,11 @@ export async function runTests({
     outputDir: string;
     buildDockerCommands: string[] | undefined;
 }): Promise<void> {
-    if(buildDockerCommands != null)
-    {
+    if (buildDockerCommands != null) {
         await runCommands({
             commands: buildDockerCommands,
             absolutePathToOutput: null,
-            logger: CONSOLE_LOGGER
+            logger: CONSOLE_LOGGER,
         });
     }
     const lock = new Semaphore(MAX_NUM_DOCKERS_RUNNING);
@@ -207,7 +206,7 @@ async function testWithWriteToDisk({
             await runCommands({
                 commands,
                 absolutePathToOutput,
-                logger: taskContext.logger
+                logger: taskContext.logger,
             });
         }
         return { type: "success", fixture };
@@ -223,14 +222,14 @@ async function testWithWriteToDisk({
 async function runCommands({
     commands,
     logger,
-    absolutePathToOutput
-} : {
-    commands: string[],
-    logger: Logger
-    absolutePathToOutput: AbsoluteFilePath | null
-}) : Promise<void>
-{
-    const objectToPassToExeca = absolutePathToOutput == null ? { doNotPipeOutput : true } : { doNotPipeOutput : true, cwd: absolutePathToOutput };
+    absolutePathToOutput,
+}: {
+    commands: string[];
+    logger: Logger;
+    absolutePathToOutput: AbsoluteFilePath | null;
+}): Promise<void> {
+    const objectToPassToExeca =
+        absolutePathToOutput == null ? { doNotPipeOutput: true } : { doNotPipeOutput: true, cwd: absolutePathToOutput };
     for (const command of commands) {
         logger.info(`Running command: ${command}`);
         const spaceDelimitedCommand = command.split(" ");
@@ -241,6 +240,6 @@ async function runCommands({
             objectToPassToExeca
         );
         logger.info(result.stdout);
-        logger.info(result.stderr); 
+        logger.info(result.stderr);
     }
 }

@@ -44,14 +44,12 @@ function addTestCommand(cli: Argv) {
                 .options("compile-command", {
                     type: "string",
                     demandOption: false,
-                    description:
-                        "User inputted command to compile generated code with",
+                    description: "User inputted command to compile generated code with",
                 })
                 .option("update", {
                     type: "boolean",
                     alias: "u",
-                    description: 
-                        "Determines whether or not snapshots are written to disk",
+                    description: "Determines whether or not snapshots are written to disk",
                     default: false,
                 })
                 .option("log-level", {
@@ -68,10 +66,9 @@ function addTestCommand(cli: Argv) {
                 })
                 .option("build-docker", {
                     type: "string",
-                    description: 
-                        "Command with which to build the docker",
+                    description: "Command with which to build the docker",
                     demandOption: false,
-                    default: ""
+                    default: "",
                 }),
         async (argv) => {
             const parsedDockerImage = validateAndParseDockerImage(argv.docker);
@@ -84,7 +81,7 @@ function addTestCommand(cli: Argv) {
                 compileCommand: argv["compile-command"],
                 logLevel: argv["log-level"],
                 outputDir: argv.outputDirectory,
-                buildDockerCommands: parsedDockerBuildCommands
+                buildDockerCommands: parsedDockerBuildCommands,
             });
         }
     );
@@ -106,8 +103,10 @@ function validateAndParseDockerImage(docker: string): ParsedDockerName {
     throw new Error(`Received invalid docker name ${docker}. Must be formatted as <name>:<version>`);
 }
 
-function validateAndParseDockerBuildCommand(dockerBuildCommands: string) : string[] | undefined {
-    if(dockerBuildCommands === "") {return;}
+function validateAndParseDockerBuildCommand(dockerBuildCommands: string): string[] | undefined {
+    if (dockerBuildCommands === "") {
+        return;
+    }
     const dockerBuildCommandArray: string[] = dockerBuildCommands.split("&&");
     return dockerBuildCommandArray;
 }
