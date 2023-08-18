@@ -129,7 +129,11 @@ export abstract class AbstractOpenAPIV3ParserContext {
         schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject
     ): void;
 
-    public abstract markReferencedByDiscriminatedUnion(schema: OpenAPIV3.ReferenceObject, discrminant: string): void;
+    public abstract markReferencedByDiscriminatedUnion(
+        schema: OpenAPIV3.ReferenceObject,
+        discrminant: string,
+        times: number
+    ): void;
 
     public abstract getReferencesFromDiscriminatedUnion(
         schema: OpenAPIV3.ReferenceObject

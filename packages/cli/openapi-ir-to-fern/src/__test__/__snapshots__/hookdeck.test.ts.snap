@@ -1798,7 +1798,6 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "ID of the workspace",
               "type": "string",
             },
-            "type": "literal<"delivery">",
             "updated_at": {
               "docs": "ISO timestamp for when the issue was last updated",
               "type": "string",
@@ -1907,7 +1906,6 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "ID of the workspace",
               "type": "string",
             },
-            "type": "literal<"delivery">",
             "updated_at": {
               "docs": "ISO timestamp for when the issue was last updated",
               "type": "string",
@@ -3299,18 +3297,19 @@ exports[`open api parser hookdeck simple 1`] = `
           ],
         },
         "Issue": {
-          "discriminated": false,
+          "base-properties": {},
+          "discriminant": "type",
           "docs": "Issue",
-          "union": [
-            {
+          "union": {
+            "delivery": {
               "docs": undefined,
               "type": "DeliveryIssue",
             },
-            {
+            "transformation": {
               "docs": undefined,
               "type": "TransformationIssue",
             },
-          ],
+          },
         },
         "IssueCount": {
           "docs": undefined,
@@ -3581,18 +3580,19 @@ exports[`open api parser hookdeck simple 1`] = `
           ],
         },
         "IssueWithData": {
-          "discriminated": false,
+          "base-properties": {},
+          "discriminant": "type",
           "docs": undefined,
-          "union": [
-            {
+          "union": {
+            "delivery": {
               "docs": undefined,
               "type": "DeliveryIssueWithData",
             },
-            {
+            "transformation": {
               "docs": undefined,
               "type": "TransformationIssueWithData",
             },
-          ],
+          },
         },
         "IssueWithDataPaginatedResult": {
           "docs": undefined,
@@ -4760,7 +4760,6 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "ID of the workspace",
               "type": "string",
             },
-            "type": "literal<"transformation">",
             "updated_at": {
               "docs": "ISO timestamp for when the issue was last updated",
               "type": "string",
@@ -4865,7 +4864,6 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "ID of the workspace",
               "type": "string",
             },
-            "type": "literal<"transformation">",
             "updated_at": {
               "docs": "ISO timestamp for when the issue was last updated",
               "type": "string",

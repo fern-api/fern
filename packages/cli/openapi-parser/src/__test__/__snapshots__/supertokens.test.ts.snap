@@ -4072,37 +4072,22 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
             "description": "signin response",
             "schema": {
               "oneOf": {
+                "commonProperties": [],
                 "description": undefined,
+                "discriminantProperty": "status",
                 "generatedName": "EmailPasswordSigninResponse",
                 "nameOverride": undefined,
-                "schemas": [
-                  {
+                "schemas": {
+                  "OK": {
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": undefined,
-                    "generatedName": "EmailPasswordSigninResponseStatus",
+                    "generatedName": "EmailPasswordSigninResponseOk",
                     "nameOverride": undefined,
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "emailPasswordSigninResponseStatusStatus",
-                        "key": "status",
-                        "schema": {
-                          "description": undefined,
-                          "type": "optional",
-                          "value": {
-                            "description": undefined,
-                            "file": undefined,
-                            "generatedName": "EmailPasswordSigninResponseStatusStatus",
-                            "nameOverride": undefined,
-                            "schema": "statusOK",
-                            "type": "reference",
-                          },
-                        },
-                      },
-                      {
-                        "conflict": {},
-                        "generatedName": "emailPasswordSigninResponseStatusUser",
+                        "generatedName": "emailPasswordSigninResponseOkUser",
                         "key": "user",
                         "schema": {
                           "description": undefined,
@@ -4110,7 +4095,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "EmailPasswordSigninResponseStatusUser",
+                            "generatedName": "EmailPasswordSigninResponseOkUser",
                             "nameOverride": undefined,
                             "schema": "user",
                             "type": "reference",
@@ -4120,16 +4105,16 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     ],
                     "type": "object",
                   },
-                  {
+                  "WRONG_CREDENTIALS_ERROR": {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "EmailPasswordSigninResponseOne",
+                    "generatedName": "ComponentsSchemasWrongCredentialsResponse",
                     "nameOverride": undefined,
                     "schema": "wrongCredentialsResponse",
                     "type": "reference",
                   },
-                ],
-                "type": "undisciminated",
+                },
+                "type": "discriminated",
               },
               "type": "oneOf",
             },
@@ -4840,37 +4825,22 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
             "description": "Generate a new reset password token for this user",
             "schema": {
               "oneOf": {
+                "commonProperties": [],
                 "description": undefined,
+                "discriminantProperty": "status",
                 "generatedName": "EmailPasswordGetPasswordResetTokenResponse",
                 "nameOverride": undefined,
-                "schemas": [
-                  {
+                "schemas": {
+                  "OK": {
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": undefined,
-                    "generatedName": "EmailPasswordGetPasswordResetTokenResponseStatus",
+                    "generatedName": "EmailPasswordGetPasswordResetTokenResponseOk",
                     "nameOverride": undefined,
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "emailPasswordGetPasswordResetTokenResponseStatusStatus",
-                        "key": "status",
-                        "schema": {
-                          "description": undefined,
-                          "type": "optional",
-                          "value": {
-                            "description": undefined,
-                            "file": undefined,
-                            "generatedName": "EmailPasswordGetPasswordResetTokenResponseStatusStatus",
-                            "nameOverride": undefined,
-                            "schema": "statusOK",
-                            "type": "reference",
-                          },
-                        },
-                      },
-                      {
-                        "conflict": {},
-                        "generatedName": "emailPasswordGetPasswordResetTokenResponseStatusToken",
+                        "generatedName": "emailPasswordGetPasswordResetTokenResponseOkToken",
                         "key": "token",
                         "schema": {
                           "description": undefined,
@@ -4878,7 +4848,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "EmailPasswordGetPasswordResetTokenResponseStatusToken",
+                            "generatedName": "EmailPasswordGetPasswordResetTokenResponseOkToken",
                             "nameOverride": undefined,
                             "schema": "token",
                             "type": "reference",
@@ -4888,16 +4858,16 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     ],
                     "type": "object",
                   },
-                  {
+                  "UNKNOWN_USER_ID_ERROR": {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "EmailPasswordGetPasswordResetTokenResponseOne",
+                    "generatedName": "ComponentsSchemasUnknownUserIdResponse",
                     "nameOverride": undefined,
                     "schema": "unknownUserIdResponse",
                     "type": "reference",
                   },
-                ],
-                "type": "undisciminated",
+                },
+                "type": "discriminated",
               },
               "type": "oneOf",
             },
@@ -7939,37 +7909,22 @@ e.g.:
             "description": "The operation was successful",
             "schema": {
               "oneOf": {
+                "commonProperties": [],
                 "description": undefined,
+                "discriminantProperty": "status",
                 "generatedName": "AddUserRoleResponse",
                 "nameOverride": undefined,
-                "schemas": [
-                  {
+                "schemas": {
+                  "OK": {
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": undefined,
-                    "generatedName": "AddUserRoleResponseDidUserAlreadyHaveRole",
+                    "generatedName": "AddUserRoleResponseOk",
                     "nameOverride": undefined,
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "addUserRoleResponseDidUserAlreadyHaveRoleStatus",
-                        "key": "status",
-                        "schema": {
-                          "description": undefined,
-                          "type": "optional",
-                          "value": {
-                            "description": undefined,
-                            "file": undefined,
-                            "generatedName": "AddUserRoleResponseDidUserAlreadyHaveRoleStatus",
-                            "nameOverride": undefined,
-                            "schema": "statusOK",
-                            "type": "reference",
-                          },
-                        },
-                      },
-                      {
-                        "conflict": {},
-                        "generatedName": "addUserRoleResponseDidUserAlreadyHaveRoleDidUserAlreadyHaveRole",
+                        "generatedName": "addUserRoleResponseOkDidUserAlreadyHaveRole",
                         "key": "didUserAlreadyHaveRole",
                         "schema": {
                           "description": undefined,
@@ -7986,16 +7941,16 @@ e.g.:
                     ],
                     "type": "object",
                   },
-                  {
+                  "UNKNOWN_ROLE_ERROR": {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "AddUserRoleResponseOne",
+                    "generatedName": "ComponentsSchemasUnknownRoleResponse",
                     "nameOverride": undefined,
                     "schema": "unknownRoleResponse",
                     "type": "reference",
                   },
-                ],
-                "type": "undisciminated",
+                },
+                "type": "discriminated",
               },
               "type": "oneOf",
             },
@@ -8126,37 +8081,22 @@ e.g.:
             "description": "The operation was successful",
             "schema": {
               "oneOf": {
+                "commonProperties": [],
                 "description": undefined,
+                "discriminantProperty": "status",
                 "generatedName": "RemoveUserRoleResponse",
                 "nameOverride": undefined,
-                "schemas": [
-                  {
+                "schemas": {
+                  "OK": {
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": undefined,
-                    "generatedName": "RemoveUserRoleResponseDidUserHaveRole",
+                    "generatedName": "RemoveUserRoleResponseOk",
                     "nameOverride": undefined,
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "removeUserRoleResponseDidUserHaveRoleStatus",
-                        "key": "status",
-                        "schema": {
-                          "description": undefined,
-                          "type": "optional",
-                          "value": {
-                            "description": undefined,
-                            "file": undefined,
-                            "generatedName": "RemoveUserRoleResponseDidUserHaveRoleStatus",
-                            "nameOverride": undefined,
-                            "schema": "statusOK",
-                            "type": "reference",
-                          },
-                        },
-                      },
-                      {
-                        "conflict": {},
-                        "generatedName": "removeUserRoleResponseDidUserHaveRoleDidUserHaveRole",
+                        "generatedName": "removeUserRoleResponseOkDidUserHaveRole",
                         "key": "didUserHaveRole",
                         "schema": {
                           "description": undefined,
@@ -8173,16 +8113,16 @@ e.g.:
                     ],
                     "type": "object",
                   },
-                  {
+                  "UNKNOWN_ROLE_ERROR": {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "RemoveUserRoleResponseOne",
+                    "generatedName": "ComponentsSchemasUnknownRoleResponse",
                     "nameOverride": undefined,
                     "schema": "unknownRoleResponse",
                     "type": "reference",
                   },
-                ],
-                "type": "undisciminated",
+                },
+                "type": "discriminated",
               },
               "type": "oneOf",
             },
@@ -8434,37 +8374,22 @@ e.g.:
             "description": "The operation was successful",
             "schema": {
               "oneOf": {
+                "commonProperties": [],
                 "description": undefined,
+                "discriminantProperty": "status",
                 "generatedName": "GetRoleUsersResponse",
                 "nameOverride": undefined,
-                "schemas": [
-                  {
+                "schemas": {
+                  "OK": {
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": undefined,
-                    "generatedName": "GetRoleUsersResponseStatus",
+                    "generatedName": "GetRoleUsersResponseOk",
                     "nameOverride": undefined,
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "getRoleUsersResponseStatusStatus",
-                        "key": "status",
-                        "schema": {
-                          "description": undefined,
-                          "type": "optional",
-                          "value": {
-                            "description": undefined,
-                            "file": undefined,
-                            "generatedName": "GetRoleUsersResponseStatusStatus",
-                            "nameOverride": undefined,
-                            "schema": "statusOK",
-                            "type": "reference",
-                          },
-                        },
-                      },
-                      {
-                        "conflict": {},
-                        "generatedName": "getRoleUsersResponseStatusUsers",
+                        "generatedName": "getRoleUsersResponseOkUsers",
                         "key": "users",
                         "schema": {
                           "description": undefined,
@@ -8475,7 +8400,7 @@ e.g.:
                             "value": {
                               "description": undefined,
                               "file": undefined,
-                              "generatedName": "GetRoleUsersResponseStatusUsersItem",
+                              "generatedName": "GetRoleUsersResponseOkUsersItem",
                               "nameOverride": undefined,
                               "schema": "userId",
                               "type": "reference",
@@ -8486,16 +8411,16 @@ e.g.:
                     ],
                     "type": "object",
                   },
-                  {
+                  "UNKNOWN_ROLE_ERROR": {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "GetRoleUsersResponseOne",
+                    "generatedName": "ComponentsSchemasUnknownRoleResponse",
                     "nameOverride": undefined,
                     "schema": "unknownRoleResponse",
                     "type": "reference",
                   },
-                ],
-                "type": "undisciminated",
+                },
+                "type": "discriminated",
               },
               "type": "oneOf",
             },
@@ -8777,37 +8702,22 @@ e.g.:
             "description": "The operation was successful",
             "schema": {
               "oneOf": {
+                "commonProperties": [],
                 "description": undefined,
+                "discriminantProperty": "status",
                 "generatedName": "GetRolePermissionsResponse",
                 "nameOverride": undefined,
-                "schemas": [
-                  {
+                "schemas": {
+                  "OK": {
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": undefined,
-                    "generatedName": "GetRolePermissionsResponsePermissions",
+                    "generatedName": "GetRolePermissionsResponseOk",
                     "nameOverride": undefined,
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "getRolePermissionsResponsePermissionsStatus",
-                        "key": "status",
-                        "schema": {
-                          "description": undefined,
-                          "type": "optional",
-                          "value": {
-                            "description": undefined,
-                            "file": undefined,
-                            "generatedName": "GetRolePermissionsResponsePermissionsStatus",
-                            "nameOverride": undefined,
-                            "schema": "statusOK",
-                            "type": "reference",
-                          },
-                        },
-                      },
-                      {
-                        "conflict": {},
-                        "generatedName": "getRolePermissionsResponsePermissionsPermissions",
+                        "generatedName": "getRolePermissionsResponseOkPermissions",
                         "key": "permissions",
                         "schema": {
                           "description": undefined,
@@ -8830,16 +8740,16 @@ e.g.:
                     ],
                     "type": "object",
                   },
-                  {
+                  "UNKNOWN_ROLE_ERROR": {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "GetRolePermissionsResponseOne",
+                    "generatedName": "ComponentsSchemasUnknownRoleResponse",
                     "nameOverride": undefined,
                     "schema": "unknownRoleResponse",
                     "type": "reference",
                   },
-                ],
-                "type": "undisciminated",
+                },
+                "type": "discriminated",
               },
               "type": "oneOf",
             },
@@ -8979,47 +8889,31 @@ e.g.:
             "description": "The operation was successful",
             "schema": {
               "oneOf": {
+                "commonProperties": [],
                 "description": undefined,
+                "discriminantProperty": "status",
                 "generatedName": "RemoveRolePermissionsResponse",
                 "nameOverride": undefined,
-                "schemas": [
-                  {
+                "schemas": {
+                  "OK": {
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": undefined,
-                    "generatedName": "RemoveRolePermissionsResponseStatus",
+                    "generatedName": "RemoveRolePermissionsResponseOk",
                     "nameOverride": undefined,
-                    "properties": [
-                      {
-                        "conflict": {},
-                        "generatedName": "removeRolePermissionsResponseStatusStatus",
-                        "key": "status",
-                        "schema": {
-                          "description": undefined,
-                          "type": "optional",
-                          "value": {
-                            "description": undefined,
-                            "file": undefined,
-                            "generatedName": "RemoveRolePermissionsResponseStatusStatus",
-                            "nameOverride": undefined,
-                            "schema": "statusOK",
-                            "type": "reference",
-                          },
-                        },
-                      },
-                    ],
+                    "properties": [],
                     "type": "object",
                   },
-                  {
+                  "UNKNOWN_ROLE_ERROR": {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "RemoveRolePermissionsResponseOne",
+                    "generatedName": "ComponentsSchemasUnknownRoleResponse",
                     "nameOverride": undefined,
                     "schema": "unknownRoleResponse",
                     "type": "reference",
                   },
-                ],
-                "type": "undisciminated",
+                },
+                "type": "discriminated",
               },
               "type": "oneOf",
             },
@@ -9564,37 +9458,22 @@ e.g.:
             "description": "Get user and session information for a given session handle",
             "schema": {
               "oneOf": {
+                "commonProperties": [],
                 "description": undefined,
+                "discriminantProperty": "status",
                 "generatedName": "GetSessionInfoResponse",
                 "nameOverride": undefined,
-                "schemas": [
-                  {
+                "schemas": {
+                  "OK": {
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": undefined,
-                    "generatedName": "GetSessionInfoResponseExpiry",
+                    "generatedName": "GetSessionInfoResponseOk",
                     "nameOverride": undefined,
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "getSessionInfoResponseExpiryStatus",
-                        "key": "status",
-                        "schema": {
-                          "description": undefined,
-                          "type": "optional",
-                          "value": {
-                            "description": undefined,
-                            "file": undefined,
-                            "generatedName": "GetSessionInfoResponseExpiryStatus",
-                            "nameOverride": undefined,
-                            "schema": "statusOK",
-                            "type": "reference",
-                          },
-                        },
-                      },
-                      {
-                        "conflict": {},
-                        "generatedName": "getSessionInfoResponseExpiryUserDataInDatabase",
+                        "generatedName": "getSessionInfoResponseOkUserDataInDatabase",
                         "key": "userDataInDatabase",
                         "schema": {
                           "description": undefined,
@@ -9602,7 +9481,7 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "GetSessionInfoResponseExpiryUserDataInDatabase",
+                            "generatedName": "GetSessionInfoResponseOkUserDataInDatabase",
                             "nameOverride": undefined,
                             "schema": "userDataInDatabase",
                             "type": "reference",
@@ -9611,7 +9490,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
-                        "generatedName": "getSessionInfoResponseExpiryUserDataInJwt",
+                        "generatedName": "getSessionInfoResponseOkUserDataInJwt",
                         "key": "userDataInJWT",
                         "schema": {
                           "description": undefined,
@@ -9619,7 +9498,7 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "GetSessionInfoResponseExpiryUserDataInJwt",
+                            "generatedName": "GetSessionInfoResponseOkUserDataInJwt",
                             "nameOverride": undefined,
                             "schema": "userDataInJWT",
                             "type": "reference",
@@ -9628,7 +9507,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
-                        "generatedName": "getSessionInfoResponseExpiryUserId",
+                        "generatedName": "getSessionInfoResponseOkUserId",
                         "key": "userId",
                         "schema": {
                           "description": undefined,
@@ -9636,7 +9515,7 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "GetSessionInfoResponseExpiryUserId",
+                            "generatedName": "GetSessionInfoResponseOkUserId",
                             "nameOverride": undefined,
                             "schema": "userId",
                             "type": "reference",
@@ -9645,7 +9524,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
-                        "generatedName": "getSessionInfoResponseExpiryExpiry",
+                        "generatedName": "getSessionInfoResponseOkExpiry",
                         "key": "expiry",
                         "schema": {
                           "description": undefined,
@@ -9653,7 +9532,7 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "GetSessionInfoResponseExpiryExpiry",
+                            "generatedName": "GetSessionInfoResponseOkExpiry",
                             "nameOverride": undefined,
                             "schema": "expiry",
                             "type": "reference",
@@ -9662,7 +9541,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
-                        "generatedName": "getSessionInfoResponseExpiryTimeCreated",
+                        "generatedName": "getSessionInfoResponseOkTimeCreated",
                         "key": "timeCreated",
                         "schema": {
                           "description": undefined,
@@ -9670,7 +9549,7 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "GetSessionInfoResponseExpiryTimeCreated",
+                            "generatedName": "GetSessionInfoResponseOkTimeCreated",
                             "nameOverride": undefined,
                             "schema": "timeCreated",
                             "type": "reference",
@@ -9679,7 +9558,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
-                        "generatedName": "getSessionInfoResponseExpirySessionHandle",
+                        "generatedName": "getSessionInfoResponseOkSessionHandle",
                         "key": "sessionHandle",
                         "schema": {
                           "description": undefined,
@@ -9687,7 +9566,7 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "GetSessionInfoResponseExpirySessionHandle",
+                            "generatedName": "GetSessionInfoResponseOkSessionHandle",
                             "nameOverride": undefined,
                             "schema": "handle",
                             "type": "reference",
@@ -9697,16 +9576,16 @@ e.g.:
                     ],
                     "type": "object",
                   },
-                  {
+                  "UNAUTHORISED": {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "GetSessionInfoResponseOne",
+                    "generatedName": "ComponentsSchemasUnauthorisedMessageResponse",
                     "nameOverride": undefined,
                     "schema": "unauthorisedMessageResponse",
                     "type": "reference",
                   },
-                ],
-                "type": "undisciminated",
+                },
+                "type": "discriminated",
               },
               "type": "oneOf",
             },
@@ -10370,37 +10249,22 @@ e.g.:
             "description": "Verify a session",
             "schema": {
               "oneOf": {
+                "commonProperties": [],
                 "description": undefined,
+                "discriminantProperty": "status",
                 "generatedName": "VerifySessionResponse",
                 "nameOverride": undefined,
-                "schemas": [
-                  {
+                "schemas": {
+                  "OK": {
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": undefined,
-                    "generatedName": "VerifySessionResponseAccessToken",
+                    "generatedName": "VerifySessionResponseOk",
                     "nameOverride": undefined,
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "verifySessionResponseAccessTokenStatus",
-                        "key": "status",
-                        "schema": {
-                          "description": undefined,
-                          "type": "optional",
-                          "value": {
-                            "description": undefined,
-                            "file": undefined,
-                            "generatedName": "VerifySessionResponseAccessTokenStatus",
-                            "nameOverride": undefined,
-                            "schema": "statusOK",
-                            "type": "reference",
-                          },
-                        },
-                      },
-                      {
-                        "conflict": {},
-                        "generatedName": "verifySessionResponseAccessTokenSession",
+                        "generatedName": "verifySessionResponseOkSession",
                         "key": "session",
                         "schema": {
                           "description": undefined,
@@ -10408,7 +10272,7 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "VerifySessionResponseAccessTokenSession",
+                            "generatedName": "VerifySessionResponseOkSession",
                             "nameOverride": undefined,
                             "schema": "session",
                             "type": "reference",
@@ -10417,7 +10281,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
-                        "generatedName": "verifySessionResponseAccessTokenAccessToken",
+                        "generatedName": "verifySessionResponseOkAccessToken",
                         "key": "accessToken",
                         "schema": {
                           "description": undefined,
@@ -10425,7 +10289,7 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "VerifySessionResponseAccessTokenAccessToken",
+                            "generatedName": "VerifySessionResponseOkAccessToken",
                             "nameOverride": undefined,
                             "schema": "cookieInfo",
                             "type": "reference",
@@ -10435,41 +10299,16 @@ e.g.:
                     ],
                     "type": "object",
                   },
-                  {
-                    "description": undefined,
-                    "file": undefined,
-                    "generatedName": "VerifySessionResponseOne",
-                    "nameOverride": undefined,
-                    "schema": "unauthorisedMessageResponse",
-                    "type": "reference",
-                  },
-                  {
+                  "TRY_REFRESH_TOKEN": {
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": undefined,
-                    "generatedName": "VerifySessionResponseMessage",
+                    "generatedName": "VerifySessionResponseTryRefreshToken",
                     "nameOverride": undefined,
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "verifySessionResponseMessageStatus",
-                        "key": "status",
-                        "schema": {
-                          "description": undefined,
-                          "type": "optional",
-                          "value": {
-                            "description": undefined,
-                            "file": undefined,
-                            "generatedName": "VerifySessionResponseMessageStatus",
-                            "nameOverride": undefined,
-                            "schema": "tryRefreshTokenResponse",
-                            "type": "reference",
-                          },
-                        },
-                      },
-                      {
-                        "conflict": {},
-                        "generatedName": "verifySessionResponseMessageMessage",
+                        "generatedName": "verifySessionResponseTryRefreshTokenMessage",
                         "key": "message",
                         "schema": {
                           "description": undefined,
@@ -10477,7 +10316,7 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "VerifySessionResponseMessageMessage",
+                            "generatedName": "VerifySessionResponseTryRefreshTokenMessage",
                             "nameOverride": undefined,
                             "schema": "message",
                             "type": "reference",
@@ -10487,8 +10326,16 @@ e.g.:
                     ],
                     "type": "object",
                   },
-                ],
-                "type": "undisciminated",
+                  "UNAUTHORISED": {
+                    "description": undefined,
+                    "file": undefined,
+                    "generatedName": "ComponentsSchemasUnauthorisedMessageResponse",
+                    "nameOverride": undefined,
+                    "schema": "unauthorisedMessageResponse",
+                    "type": "reference",
+                  },
+                },
+                "type": "discriminated",
               },
               "type": "oneOf",
             },
@@ -10636,37 +10483,22 @@ e.g.:
             "description": "Refresh a session",
             "schema": {
               "oneOf": {
+                "commonProperties": [],
                 "description": undefined,
+                "discriminantProperty": "status",
                 "generatedName": "RefreshSessionResponse",
                 "nameOverride": undefined,
-                "schemas": [
-                  {
+                "schemas": {
+                  "OK": {
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": undefined,
-                    "generatedName": "RefreshSessionResponseAccessToken",
+                    "generatedName": "RefreshSessionResponseOk",
                     "nameOverride": undefined,
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "refreshSessionResponseAccessTokenStatus",
-                        "key": "status",
-                        "schema": {
-                          "description": undefined,
-                          "type": "optional",
-                          "value": {
-                            "description": undefined,
-                            "file": undefined,
-                            "generatedName": "RefreshSessionResponseAccessTokenStatus",
-                            "nameOverride": undefined,
-                            "schema": "statusOK",
-                            "type": "reference",
-                          },
-                        },
-                      },
-                      {
-                        "conflict": {},
-                        "generatedName": "refreshSessionResponseAccessTokenSession",
+                        "generatedName": "refreshSessionResponseOkSession",
                         "key": "session",
                         "schema": {
                           "description": undefined,
@@ -10674,7 +10506,7 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "RefreshSessionResponseAccessTokenSession",
+                            "generatedName": "RefreshSessionResponseOkSession",
                             "nameOverride": undefined,
                             "schema": "session",
                             "type": "reference",
@@ -10683,7 +10515,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
-                        "generatedName": "refreshSessionResponseAccessTokenAccessToken",
+                        "generatedName": "refreshSessionResponseOkAccessToken",
                         "key": "accessToken",
                         "schema": {
                           "description": undefined,
@@ -10691,7 +10523,7 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "RefreshSessionResponseAccessTokenAccessToken",
+                            "generatedName": "RefreshSessionResponseOkAccessToken",
                             "nameOverride": undefined,
                             "schema": "cookieInfo",
                             "type": "reference",
@@ -10700,7 +10532,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
-                        "generatedName": "refreshSessionResponseAccessTokenRefreshToken",
+                        "generatedName": "refreshSessionResponseOkRefreshToken",
                         "key": "refreshToken",
                         "schema": {
                           "description": undefined,
@@ -10708,7 +10540,7 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "RefreshSessionResponseAccessTokenRefreshToken",
+                            "generatedName": "RefreshSessionResponseOkRefreshToken",
                             "nameOverride": undefined,
                             "schema": "cookieInfo",
                             "type": "reference",
@@ -10717,7 +10549,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
-                        "generatedName": "refreshSessionResponseAccessTokenAntiCsrfToken",
+                        "generatedName": "refreshSessionResponseOkAntiCsrfToken",
                         "key": "antiCsrfToken",
                         "schema": {
                           "description": undefined,
@@ -10725,7 +10557,7 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "RefreshSessionResponseAccessTokenAntiCsrfToken",
+                            "generatedName": "RefreshSessionResponseOkAntiCsrfToken",
                             "nameOverride": undefined,
                             "schema": "token",
                             "type": "reference",
@@ -10735,33 +10567,16 @@ e.g.:
                     ],
                     "type": "object",
                   },
-                  {
+                  "TOKEN_THEFT_DETECTED": {
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": undefined,
-                    "generatedName": "RefreshSessionResponseOne",
+                    "generatedName": "RefreshSessionResponseTokenTheftDetected",
                     "nameOverride": undefined,
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "refreshSessionResponseOneStatus",
-                        "key": "status",
-                        "schema": {
-                          "description": undefined,
-                          "type": "optional",
-                          "value": {
-                            "description": undefined,
-                            "file": undefined,
-                            "generatedName": "RefreshSessionResponseOneStatus",
-                            "nameOverride": undefined,
-                            "schema": "tokenTheftResponse",
-                            "type": "reference",
-                          },
-                        },
-                      },
-                      {
-                        "conflict": {},
-                        "generatedName": "refreshSessionResponseOneSession",
+                        "generatedName": "refreshSessionResponseTokenTheftDetectedSession",
                         "key": "session",
                         "schema": {
                           "description": undefined,
@@ -10770,12 +10585,12 @@ e.g.:
                             "allOf": [],
                             "allOfPropertyConflicts": [],
                             "description": undefined,
-                            "generatedName": "RefreshSessionResponseOneSession",
+                            "generatedName": "RefreshSessionResponseTokenTheftDetectedSession",
                             "nameOverride": undefined,
                             "properties": [
                               {
                                 "conflict": {},
-                                "generatedName": "refreshSessionResponseOneSessionHandle",
+                                "generatedName": "refreshSessionResponseTokenTheftDetectedSessionHandle",
                                 "key": "handle",
                                 "schema": {
                                   "description": undefined,
@@ -10783,7 +10598,7 @@ e.g.:
                                   "value": {
                                     "description": undefined,
                                     "file": undefined,
-                                    "generatedName": "RefreshSessionResponseOneSessionHandle",
+                                    "generatedName": "RefreshSessionResponseTokenTheftDetectedSessionHandle",
                                     "nameOverride": undefined,
                                     "schema": "handle",
                                     "type": "reference",
@@ -10792,7 +10607,7 @@ e.g.:
                               },
                               {
                                 "conflict": {},
-                                "generatedName": "refreshSessionResponseOneSessionUserId",
+                                "generatedName": "refreshSessionResponseTokenTheftDetectedSessionUserId",
                                 "key": "userId",
                                 "schema": {
                                   "description": undefined,
@@ -10800,7 +10615,7 @@ e.g.:
                                   "value": {
                                     "description": undefined,
                                     "file": undefined,
-                                    "generatedName": "RefreshSessionResponseOneSessionUserId",
+                                    "generatedName": "RefreshSessionResponseTokenTheftDetectedSessionUserId",
                                     "nameOverride": undefined,
                                     "schema": "userId",
                                     "type": "reference",
@@ -10815,16 +10630,16 @@ e.g.:
                     ],
                     "type": "object",
                   },
-                  {
+                  "UNAUTHORISED": {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "RefreshSessionResponseTwo",
+                    "generatedName": "ComponentsSchemasUnauthorisedMessageResponse",
                     "nameOverride": undefined,
                     "schema": "unauthorisedMessageResponse",
                     "type": "reference",
                   },
-                ],
-                "type": "undisciminated",
+                },
+                "type": "discriminated",
               },
               "type": "oneOf",
             },
@@ -11110,37 +10925,22 @@ e.g.:
             "description": "Regenerate user session",
             "schema": {
               "oneOf": {
+                "commonProperties": [],
                 "description": undefined,
+                "discriminantProperty": "status",
                 "generatedName": "RegenerateSessionResponse",
                 "nameOverride": undefined,
-                "schemas": [
-                  {
+                "schemas": {
+                  "OK": {
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": undefined,
-                    "generatedName": "RegenerateSessionResponseAccessToken",
+                    "generatedName": "RegenerateSessionResponseOk",
                     "nameOverride": undefined,
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "regenerateSessionResponseAccessTokenStatus",
-                        "key": "status",
-                        "schema": {
-                          "description": undefined,
-                          "type": "optional",
-                          "value": {
-                            "description": undefined,
-                            "file": undefined,
-                            "generatedName": "RegenerateSessionResponseAccessTokenStatus",
-                            "nameOverride": undefined,
-                            "schema": "statusOK",
-                            "type": "reference",
-                          },
-                        },
-                      },
-                      {
-                        "conflict": {},
-                        "generatedName": "regenerateSessionResponseAccessTokenSession",
+                        "generatedName": "regenerateSessionResponseOkSession",
                         "key": "session",
                         "schema": {
                           "description": undefined,
@@ -11148,7 +10948,7 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "RegenerateSessionResponseAccessTokenSession",
+                            "generatedName": "RegenerateSessionResponseOkSession",
                             "nameOverride": undefined,
                             "schema": "session",
                             "type": "reference",
@@ -11157,7 +10957,7 @@ e.g.:
                       },
                       {
                         "conflict": {},
-                        "generatedName": "regenerateSessionResponseAccessTokenAccessToken",
+                        "generatedName": "regenerateSessionResponseOkAccessToken",
                         "key": "accessToken",
                         "schema": {
                           "description": undefined,
@@ -11165,7 +10965,7 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "RegenerateSessionResponseAccessTokenAccessToken",
+                            "generatedName": "RegenerateSessionResponseOkAccessToken",
                             "nameOverride": undefined,
                             "schema": "cookieInfo",
                             "type": "reference",
@@ -11175,16 +10975,16 @@ e.g.:
                     ],
                     "type": "object",
                   },
-                  {
+                  "UNAUTHORISED": {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "RegenerateSessionResponseOne",
+                    "generatedName": "ComponentsSchemasUnauthorisedMessageResponse",
                     "nameOverride": undefined,
                     "schema": "unauthorisedMessageResponse",
                     "type": "reference",
                   },
-                ],
-                "type": "undisciminated",
+                },
+                "type": "discriminated",
               },
               "type": "oneOf",
             },
@@ -11292,37 +11092,22 @@ e.g.:
             "description": "Get Session Data",
             "schema": {
               "oneOf": {
+                "commonProperties": [],
                 "description": undefined,
+                "discriminantProperty": "status",
                 "generatedName": "GetSessionDataResponse",
                 "nameOverride": undefined,
-                "schemas": [
-                  {
+                "schemas": {
+                  "OK": {
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": undefined,
-                    "generatedName": "GetSessionDataResponseStatus",
+                    "generatedName": "GetSessionDataResponseOk",
                     "nameOverride": undefined,
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "getSessionDataResponseStatusStatus",
-                        "key": "status",
-                        "schema": {
-                          "description": undefined,
-                          "type": "optional",
-                          "value": {
-                            "description": undefined,
-                            "file": undefined,
-                            "generatedName": "GetSessionDataResponseStatusStatus",
-                            "nameOverride": undefined,
-                            "schema": "statusOK",
-                            "type": "reference",
-                          },
-                        },
-                      },
-                      {
-                        "conflict": {},
-                        "generatedName": "getSessionDataResponseStatusUserDataInDatabase",
+                        "generatedName": "getSessionDataResponseOkUserDataInDatabase",
                         "key": "userDataInDatabase",
                         "schema": {
                           "description": undefined,
@@ -11330,7 +11115,7 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "GetSessionDataResponseStatusUserDataInDatabase",
+                            "generatedName": "GetSessionDataResponseOkUserDataInDatabase",
                             "nameOverride": undefined,
                             "schema": "userDataInDatabase",
                             "type": "reference",
@@ -11340,16 +11125,16 @@ e.g.:
                     ],
                     "type": "object",
                   },
-                  {
+                  "UNAUTHORISED": {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "GetSessionDataResponseOne",
+                    "generatedName": "ComponentsSchemasUnauthorisedMessageResponse",
                     "nameOverride": undefined,
                     "schema": "unauthorisedMessageResponse",
                     "type": "reference",
                   },
-                ],
-                "type": "undisciminated",
+                },
+                "type": "discriminated",
               },
               "type": "oneOf",
             },
@@ -11488,28 +11273,30 @@ e.g.:
             "description": "Change Session Data",
             "schema": {
               "oneOf": {
+                "commonProperties": [],
                 "description": undefined,
+                "discriminantProperty": "status",
                 "generatedName": "PutSessionDataResponse",
                 "nameOverride": undefined,
-                "schemas": [
-                  {
+                "schemas": {
+                  "OK": {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "PutSessionDataResponseZero",
+                    "generatedName": "ComponentsSchemasStatusOkResponse",
                     "nameOverride": undefined,
                     "schema": "statusOKResponse",
                     "type": "reference",
                   },
-                  {
+                  "UNAUTHORISED": {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "PutSessionDataResponseOne",
+                    "generatedName": "ComponentsSchemasUnauthorisedMessageResponse",
                     "nameOverride": undefined,
                     "schema": "unauthorisedMessageResponse",
                     "type": "reference",
                   },
-                ],
-                "type": "undisciminated",
+                },
+                "type": "discriminated",
               },
               "type": "oneOf",
             },
@@ -11912,37 +11699,22 @@ e.g.:
             "description": "Get JWT Data",
             "schema": {
               "oneOf": {
+                "commonProperties": [],
                 "description": undefined,
+                "discriminantProperty": "status",
                 "generatedName": "GetJwtDataResponse",
                 "nameOverride": undefined,
-                "schemas": [
-                  {
+                "schemas": {
+                  "OK": {
                     "allOf": [],
                     "allOfPropertyConflicts": [],
                     "description": undefined,
-                    "generatedName": "GetJwtDataResponseStatus",
+                    "generatedName": "GetJwtDataResponseOk",
                     "nameOverride": undefined,
                     "properties": [
                       {
                         "conflict": {},
-                        "generatedName": "getJwtDataResponseStatusStatus",
-                        "key": "status",
-                        "schema": {
-                          "description": undefined,
-                          "type": "optional",
-                          "value": {
-                            "description": undefined,
-                            "file": undefined,
-                            "generatedName": "GetJwtDataResponseStatusStatus",
-                            "nameOverride": undefined,
-                            "schema": "statusOK",
-                            "type": "reference",
-                          },
-                        },
-                      },
-                      {
-                        "conflict": {},
-                        "generatedName": "getJwtDataResponseStatusUserDataInJwt",
+                        "generatedName": "getJwtDataResponseOkUserDataInJwt",
                         "key": "userDataInJWT",
                         "schema": {
                           "description": undefined,
@@ -11950,7 +11722,7 @@ e.g.:
                           "value": {
                             "description": undefined,
                             "file": undefined,
-                            "generatedName": "GetJwtDataResponseStatusUserDataInJwt",
+                            "generatedName": "GetJwtDataResponseOkUserDataInJwt",
                             "nameOverride": undefined,
                             "schema": "userDataInJWT",
                             "type": "reference",
@@ -11960,16 +11732,16 @@ e.g.:
                     ],
                     "type": "object",
                   },
-                  {
+                  "UNAUTHORISED": {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "GetJwtDataResponseOne",
+                    "generatedName": "ComponentsSchemasUnauthorisedMessageResponse",
                     "nameOverride": undefined,
                     "schema": "unauthorisedMessageResponse",
                     "type": "reference",
                   },
-                ],
-                "type": "undisciminated",
+                },
+                "type": "discriminated",
               },
               "type": "oneOf",
             },
@@ -12108,28 +11880,30 @@ e.g.:
             "description": "Change JWT Data for a session",
             "schema": {
               "oneOf": {
+                "commonProperties": [],
                 "description": undefined,
+                "discriminantProperty": "status",
                 "generatedName": "PutJwtDataResponse",
                 "nameOverride": undefined,
-                "schemas": [
-                  {
+                "schemas": {
+                  "OK": {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "PutJwtDataResponseZero",
+                    "generatedName": "ComponentsSchemasStatusOkResponse",
                     "nameOverride": undefined,
                     "schema": "statusOKResponse",
                     "type": "reference",
                   },
-                  {
+                  "UNAUTHORISED": {
                     "description": undefined,
                     "file": undefined,
-                    "generatedName": "PutJwtDataResponseOne",
+                    "generatedName": "ComponentsSchemasUnauthorisedMessageResponse",
                     "nameOverride": undefined,
                     "schema": "unauthorisedMessageResponse",
                     "type": "reference",
                   },
-                ],
-                "type": "undisciminated",
+                },
+                "type": "discriminated",
               },
               "type": "oneOf",
             },
@@ -15824,9 +15598,7 @@ e.g.:
         "codeLifetime",
         "password",
         "user",
-        "wrongCredentialsResponse",
         "token",
-        "unknownUserIdResponse",
         "paginationToken",
         "thirdPartyId",
         "thirdPartyUserId",
@@ -15836,12 +15608,10 @@ e.g.:
         "userMetadata",
         "userMetadataUpdate",
         "role",
-        "unknownRoleResponse",
         "handle",
         "userDataInDatabase",
         "userDataInJWT",
         "expiry",
-        "unauthorisedMessageResponse",
         "enableAntiCsrf",
         "session",
         "cookieInfo",
@@ -15849,7 +15619,6 @@ e.g.:
         "tryRefreshTokenResponse",
         "message",
         "tokenTheftResponse",
-        "statusOKResponse",
         "createJWTPayload",
         "createJWTAlgorithm",
         "jwksDomain",
@@ -16425,22 +16194,7 @@ e.g.:
           "description": undefined,
           "generatedName": "StatusOkResponse",
           "nameOverride": undefined,
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "statusOkResponseStatus",
-              "key": "status",
-              "schema": {
-                "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "type": "literal",
-                  "value": "OK",
-                },
-              },
-            },
-          ],
+          "properties": [],
           "type": "object",
         },
         "thirdPartyEmail": {
@@ -16644,23 +16398,6 @@ e.g.:
           "properties": [
             {
               "conflict": {},
-              "generatedName": "unauthorisedMessageResponseStatus",
-              "key": "status",
-              "schema": {
-                "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "file": undefined,
-                  "generatedName": "UnauthorisedMessageResponseStatus",
-                  "nameOverride": undefined,
-                  "schema": "unauthorisedResponse",
-                  "type": "reference",
-                },
-              },
-            },
-            {
-              "conflict": {},
               "generatedName": "unauthorisedMessageResponseMessage",
               "key": "message",
               "schema": {
@@ -16690,22 +16427,7 @@ e.g.:
           "description": undefined,
           "generatedName": "UnknownRoleResponse",
           "nameOverride": undefined,
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "unknownRoleResponseStatus",
-              "key": "status",
-              "schema": {
-                "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "type": "literal",
-                  "value": "UNKNOWN_ROLE_ERROR",
-                },
-              },
-            },
-          ],
+          "properties": [],
           "type": "object",
         },
         "unknownUserIdResponse": {
@@ -16714,22 +16436,7 @@ e.g.:
           "description": undefined,
           "generatedName": "UnknownUserIdResponse",
           "nameOverride": undefined,
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "unknownUserIdResponseStatus",
-              "key": "status",
-              "schema": {
-                "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "type": "literal",
-                  "value": "UNKNOWN_USER_ID_ERROR",
-                },
-              },
-            },
-          ],
+          "properties": [],
           "type": "object",
         },
         "user": {
@@ -16865,22 +16572,7 @@ e.g.:
           "description": undefined,
           "generatedName": "WrongCredentialsResponse",
           "nameOverride": undefined,
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "wrongCredentialsResponseStatus",
-              "key": "status",
-              "schema": {
-                "description": undefined,
-                "type": "optional",
-                "value": {
-                  "description": undefined,
-                  "type": "literal",
-                  "value": "WRONG_CREDENTIALS_ERROR",
-                },
-              },
-            },
-          ],
+          "properties": [],
           "type": "object",
         },
       },
