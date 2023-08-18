@@ -1,3 +1,0 @@
-name: test
-error-discrimination:
-  strategy: status-code

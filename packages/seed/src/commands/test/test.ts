@@ -22,6 +22,7 @@ export const FIXTURES = {
     SINGLE_URL_ENVIRONMENT_NO_DEFAULT: "single-url-environment-no-default",
     FILE_DOWNLOAD: "file-download",
     FILE_UPLOAD: "file-upload",
+    TEST: "test"
 } as const;
 
 type TestResult = TestSuccess | TestFailure;

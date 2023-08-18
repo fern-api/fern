@@ -1,9 +1,0 @@
-types:
-  ObjectLiteralWithPropertiesOfSameName:
-    properties:
-      message: string
-      message: integer
-
-
-
-
