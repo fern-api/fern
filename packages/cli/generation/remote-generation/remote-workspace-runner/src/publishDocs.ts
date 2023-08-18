@@ -230,13 +230,26 @@ async function convertDocsConfiguration({
             accentPrimary:
                 docsDefinition.config.colors?.accentPrimary != null
                     ? docsDefinition.config.colors.accentPrimary.type === "themed"
-                        ? FernRegistry.docs.v1.write.AccentPrimaryConfig.themed({
+                        ? FernRegistry.docs.v1.write.ColorConfig.themed({
                               dark: docsDefinition.config.colors.accentPrimary.dark,
                               light: docsDefinition.config.colors.accentPrimary.light,
                           })
                         : docsDefinition.config.colors.accentPrimary.color != null
-                        ? FernRegistry.docs.v1.write.AccentPrimaryConfig.unthemed({
+                        ? FernRegistry.docs.v1.write.ColorConfig.unthemed({
                               color: docsDefinition.config.colors.accentPrimary.color,
+                          })
+                        : undefined
+                    : undefined,
+            background:
+                docsDefinition.config.colors?.background != null
+                    ? docsDefinition.config.colors.background.type === "themed"
+                        ? FernRegistry.docs.v1.write.ColorConfig.themed({
+                              dark: docsDefinition.config.colors.background.dark,
+                              light: docsDefinition.config.colors.background.light,
+                          })
+                        : docsDefinition.config.colors.background.color != null
+                        ? FernRegistry.docs.v1.write.ColorConfig.unthemed({
+                              color: docsDefinition.config.colors.background.color,
                           })
                         : undefined
                     : undefined,
