@@ -80,7 +80,7 @@ SDK. It can publish the SDK to pypi.org (or any other pypi repository).
 
 ```yaml generators.yml
 - name: fernapi/fern-python-sdk
-  version: 0.3.7
+  version: 0.4.0
   output:
     location: pypi
     package-name: fern-plantstore
@@ -98,7 +98,7 @@ SDK. It can publish the SDK to Maven Central (or any other Maven repository).
 
 ```yaml generators.yml
 - name: fernapi/fern-java-sdk
-  version: 0.3.7
+  version: 0.4.3
   output:
     location: maven
     coordinate: io.github.fern-api:plantstore
@@ -117,7 +117,7 @@ SDK. It can publish the SDK to GitHub.
 
 ```yaml generators.yml
 - name: fernapi/fern-go-sdk
-  version: 0.0.14
+  version: 0.2.0
   github:
     repository: fern-api/plantstore-go
 ```
@@ -158,7 +158,7 @@ The FastAPI generator outputs lots of helpful code for implementing your FastAPI
 
 ```yaml generators.yml
 - name: fernapi/fern-fastapi-server
-  version: 0.3.7
+  version: 0.4.0
   output:
     location: local-file-system
     path: ../../src/venus/generated/server
@@ -173,7 +173,7 @@ API. This saves you time and ensures your backend types align with your SDKs.
 
 ```yaml generators.yml
 - name: fernapi/fern-pydantic-model
-  version: 0.3.7
+  version: 0.4.0
   output:
     location: local-file-system
     path: ../../src/venus/generated/server
