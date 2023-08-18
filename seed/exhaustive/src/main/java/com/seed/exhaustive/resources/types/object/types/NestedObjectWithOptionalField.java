@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.exhaustive.core.ObjectMappers;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -48,7 +49,7 @@ public final class NestedObjectWithOptionalField {
 
     @Override
     public String toString() {
-        return "NestedObjectWithOptionalField{" + "string: " + string + ", nestedObject: " + nestedObject + "}";
+        return ObjectMappers.stringify(this);
     }
 
     public static Builder builder() {

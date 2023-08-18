@@ -15,6 +15,7 @@
  */
 package com.fern.java.generators;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
@@ -26,12 +27,16 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
+import java.io.IOException;
 import javax.lang.model.element.Modifier;
 
 public final class ObjectMappersGenerator extends AbstractFileGenerator {
 
     public static final String JSON_MAPPER_STATIC_FIELD_NAME = "JSON_MAPPER";
+
+    public static final String STRINGIFY_METHOD_NAME = "stringify";
 
     public ObjectMappersGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
         super(generatorContext.getPoetClassNameFactory().getObjectMapperClassName(), generatorContext);
@@ -60,6 +65,7 @@ public final class ObjectMappersGenerator extends AbstractFileGenerator {
                 .addMethod(MethodSpec.constructorBuilder()
                         .addModifiers(Modifier.PRIVATE)
                         .build())
+                .addMethod(getStringifyMethod())
                 .build();
         JavaFile enumFile =
                 JavaFile.builder(className.packageName(), enumTypeSpec).build();
@@ -67,6 +73,27 @@ public final class ObjectMappersGenerator extends AbstractFileGenerator {
                 .className(className)
                 .javaFile(enumFile)
                 .jsonMapperStaticField(jsonMapperField)
+                .build();
+    }
+
+    private static MethodSpec getStringifyMethod() {
+        return MethodSpec.methodBuilder(STRINGIFY_METHOD_NAME)
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .returns(String.class)
+                .addParameter(ParameterSpec.builder(Object.class, "o").build())
+                .beginControlFlow("try")
+                .addStatement(CodeBlock.builder()
+                        .add(
+                                "return $L.setSerializationInclusion($T.Include.ALWAYS)\n",
+                                JSON_MAPPER_STATIC_FIELD_NAME,
+                                JsonInclude.class)
+                        .add(".writerWithDefaultPrettyPrinter()\n")
+                        .add(".writeValueAsString(o)")
+                        .build())
+                .endControlFlow()
+                .beginControlFlow("catch ($T e)", IOException.class)
+                .addStatement("return o.getClass().getName() + $S + $T.toHexString(o.hashCode())", "@", Integer.class)
+                .endControlFlow()
                 .build();
     }
 }

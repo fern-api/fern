@@ -86,11 +86,16 @@ public final class ErrorBody<T> {
 basic[core/ObjectMappers.java]=[
 package com.fern.core;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.io.IOException;
+import java.lang.Integer;
+import java.lang.Object;
+import java.lang.String;
 
 public final class ObjectMappers {
   public static final ObjectMapper JSON_MAPPER = JsonMapper.builder()
@@ -100,6 +105,17 @@ public final class ObjectMappers {
     .build();
 
     private ObjectMappers() {
+    }
+
+    public static String stringify(Object o) {
+      try {
+        return JSON_MAPPER.setSerializationInclusion(JsonInclude.Include.ALWAYS)
+            .writerWithDefaultPrettyPrinter()
+            .writeValueAsString(o);
+      }
+      catch (IOException e) {
+        return o.getClass().getName() + "@" + Integer.toHexString(o.hashCode());
+      }
     }
   }
 
@@ -318,6 +334,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.core.ObjectMappers;
 import com.fern.resources.blog.types.Author;
 import com.fern.resources.blog.types.PostType;
 import java.lang.Object;
@@ -391,7 +408,7 @@ public final class CreatePostRequest {
 
   @Override
   public String toString() {
-    return "CreatePostRequest{" + "title: " + title + ", author: " + author + ", content: " + content + ", postType: " + postType + ", switch_: " + switch_ + "}";
+    return ObjectMappers.stringify(this);
   }
 
   public static TitleStage builder() {
@@ -755,6 +772,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.core.ObjectMappers;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -825,7 +843,7 @@ public final class BlogPost {
 
   @Override
   public String toString() {
-    return "BlogPost{" + "id: " + id + ", type: " + type + ", title: " + title + ", author: " + author + ", content: " + content + "}";
+    return ObjectMappers.stringify(this);
   }
 
   public static IdStage builder() {
@@ -938,6 +956,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.core.ObjectMappers;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -984,7 +1003,7 @@ public final class GeneratorIdAndVersion {
 
   @Override
   public String toString() {
-    return "GeneratorIdAndVersion{" + "id: " + id + ", version: " + version + "}";
+    return ObjectMappers.stringify(this);
   }
 
   public static IdStage builder() {
@@ -1106,6 +1125,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.core.ObjectMappers;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -1144,7 +1164,7 @@ public final class PostNotFoundErrorBody {
 
   @Override
   public String toString() {
-    return "PostNotFoundErrorBody{" + "id: " + id + "}";
+    return ObjectMappers.stringify(this);
   }
 
   public static IdStage builder() {
@@ -1231,6 +1251,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.core.ObjectMappers;
 import java.lang.Object;
 import java.lang.Override;
 import java.lang.String;
@@ -1269,7 +1290,7 @@ public final class UnauthorizedErrorBody {
 
   @Override
   public String toString() {
-    return "UnauthorizedErrorBody{" + "reason: " + reason + "}";
+    return ObjectMappers.stringify(this);
   }
 
   public static ReasonStage builder() {

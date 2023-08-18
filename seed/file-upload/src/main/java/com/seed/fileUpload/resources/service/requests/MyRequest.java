@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.fileUpload.core.ObjectMappers;
 import com.seed.fileUpload.resources.service.types.MaybeList;
 import com.seed.fileUpload.resources.service.types.MaybeListOrSet;
 import com.seed.fileUpload.resources.service.types.MyObject;
@@ -170,12 +171,7 @@ public final class MyRequest {
 
     @Override
     public String toString() {
-        return "MyRequest{" + "maybeString: " + maybeString + ", integer: " + integer + ", maybeInteger: "
-                + maybeInteger + ", listOfStrings: " + listOfStrings + ", setOfStrings: " + setOfStrings
-                + ", optionalListOfStrings: " + optionalListOfStrings + ", optionalSetOfStrings: "
-                + optionalSetOfStrings + ", maybeList: " + maybeList + ", optionalMaybeList: " + optionalMaybeList
-                + ", maybeListOrSet: " + maybeListOrSet + ", optionalMaybeListOrSet: " + optionalMaybeListOrSet
-                + ", listOfObjects: " + listOfObjects + "}";
+        return ObjectMappers.stringify(this);
     }
 
     public static IntegerStage builder() {

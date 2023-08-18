@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.multiUrlEnvironment.core.ObjectMappers;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -38,7 +39,7 @@ public final class BootInstanceRequest {
 
     @Override
     public String toString() {
-        return "BootInstanceRequest{" + "size: " + size + "}";
+        return ObjectMappers.stringify(this);
     }
 
     public static SizeStage builder() {

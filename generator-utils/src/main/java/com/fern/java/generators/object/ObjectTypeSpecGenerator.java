@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.java.ObjectMethodFactory;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
 import com.fern.java.PoetTypeWithClassName;
+import com.fern.java.generators.ObjectMappersGenerator;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
@@ -34,6 +35,7 @@ import javax.lang.model.element.Modifier;
 
 public final class ObjectTypeSpecGenerator {
     private final ClassName objectClassName;
+    private final ClassName generatedObjectMapperClassName;
     private final List<EnrichedObjectProperty> allEnrichedProperties = new ArrayList<>();
     private final List<ImplementsInterface> interfaces;
     private final boolean isSerialized;
@@ -41,11 +43,13 @@ public final class ObjectTypeSpecGenerator {
 
     public ObjectTypeSpecGenerator(
             ClassName objectClassName,
+            ClassName generatedObjectMapperClassName,
             List<EnrichedObjectProperty> enrichedObjectProperties,
             List<ImplementsInterface> interfaces,
             boolean isSerialized,
             boolean publicConstructorsEnabled) {
         this.objectClassName = objectClassName;
+        this.generatedObjectMapperClassName = generatedObjectMapperClassName;
         this.interfaces = interfaces;
         for (ImplementsInterface implementsInterface : interfaces) {
             allEnrichedProperties.addAll(implementsInterface.interfaceProperties());
@@ -128,6 +132,17 @@ public final class ObjectTypeSpecGenerator {
     }
 
     private MethodSpec generateToString() {
+        if (isSerialized) {
+            return MethodSpec.methodBuilder("toString")
+                    .addAnnotation(Override.class)
+                    .addModifiers(Modifier.PUBLIC)
+                    .returns(String.class)
+                    .addStatement(
+                            "return $T.$L(this)",
+                            generatedObjectMapperClassName,
+                            ObjectMappersGenerator.STRINGIFY_METHOD_NAME)
+                    .build();
+        }
         return ObjectMethodFactory.createToStringMethod(
                 objectClassName,
                 allEnrichedProperties.stream()

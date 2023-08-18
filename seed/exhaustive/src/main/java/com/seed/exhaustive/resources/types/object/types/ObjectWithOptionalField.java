@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.exhaustive.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
@@ -168,10 +169,7 @@ public final class ObjectWithOptionalField {
 
     @Override
     public String toString() {
-        return "ObjectWithOptionalField{" + "string: " + string + ", integer: " + integer + ", long_: " + long_
-                + ", double_: " + double_ + ", bool: " + bool + ", datetime: " + datetime + ", date: " + date
-                + ", uuid: " + uuid + ", base64: " + base64 + ", list: " + list + ", set: " + set + ", map: " + map
-                + "}";
+        return ObjectMappers.stringify(this);
     }
 
     public static Builder builder() {

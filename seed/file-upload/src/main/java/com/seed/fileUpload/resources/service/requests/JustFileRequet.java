@@ -1,5 +1,7 @@
 package com.seed.fileUpload.resources.service.requests;
 
+import com.seed.fileUpload.core.ObjectMappers;
+
 public final class JustFileRequet {
     private JustFileRequet() {}
 
@@ -11,6 +13,6 @@ public final class JustFileRequet {
 
     @Override
     public String toString() {
-        return "JustFileRequet{" + "}";
+        return ObjectMappers.stringify(this);
     }
 }

@@ -108,7 +108,12 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                 })
                 .forEach(implementsInterfaces::add);
         ObjectTypeSpecGenerator genericObjectGenerator = new ObjectTypeSpecGenerator(
-                className, enrichedObjectProperties, implementsInterfaces, true, publicConstructorsEnabled);
+                className,
+                generatorContext.getPoetClassNameFactory().getObjectMapperClassName(),
+                enrichedObjectProperties,
+                implementsInterfaces,
+                true,
+                publicConstructorsEnabled);
         TypeSpec objectTypeSpec = genericObjectGenerator.generate();
         JavaFile javaFile =
                 JavaFile.builder(className.packageName(), objectTypeSpec).build();
