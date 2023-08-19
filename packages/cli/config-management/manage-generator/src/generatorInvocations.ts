@@ -12,13 +12,13 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         },
     },
     [GeneratorName.JAVA_MODEL]: {
-        version: "0.3.7",
+        version: "0.4.3",
     },
     [GeneratorName.JAVA_SDK]: {
-        version: "0.3.7",
+        version: "0.4.3",
     },
     [GeneratorName.JAVA_SPRING]: {
-        version: "0.3.7",
+        version: "0.4.3",
         output: {
             location: "local-file-system",
             path: "../../src/main/java/com/fern",
@@ -40,23 +40,23 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.7.2",
     },
     [GeneratorName.PYTHON_PYDANTIC]: {
-        version: "0.3.7",
+        version: "0.4.0",
     },
     [GeneratorName.PYTHON_FASTAPI]: {
-        version: "0.3.7",
+        version: "0.4.0",
         output: {
             location: "local-file-system",
             path: "../../src/fern",
         },
     },
     [GeneratorName.PYTHON_SDK]: {
-        version: "0.3.7",
+        version: "0.4.0",
     },
     [GeneratorName.GO_MODEL]: {
-        version: "0.0.14",
+        version: "0.2.0",
     },
     [GeneratorName.GO_SDK]: {
-        version: "0.0.14",
+        version: "0.2.0",
         output: {
             location: "local-file-system",
             path: "../../generated/go",

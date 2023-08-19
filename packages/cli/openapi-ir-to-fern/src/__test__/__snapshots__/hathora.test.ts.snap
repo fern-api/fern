@@ -47,7 +47,6 @@ exports[`open api parser hathora simple 1`] = `
               "docs": undefined,
               "type": "RoomId",
             },
-            "status": "literal<"active">",
             "transportType": {
               "docs": undefined,
               "type": "TransportType",
@@ -264,18 +263,19 @@ exports[`open api parser hathora simple 1`] = `
           ],
         },
         "ConnectionInfo": {
-          "discriminated": false,
+          "base-properties": {},
+          "discriminant": "status",
           "docs": undefined,
-          "union": [
-            {
-              "docs": undefined,
-              "type": "StartingConnectionInfo",
-            },
-            {
+          "union": {
+            "active": {
               "docs": undefined,
               "type": "ActiveConnectionInfo",
             },
-          ],
+            "starting": {
+              "docs": undefined,
+              "type": "StartingConnectionInfo",
+            },
+          },
         },
         "CreateLobbyRequestVisibility": {
           "docs": undefined,
@@ -839,7 +839,6 @@ exports[`open api parser hathora simple 1`] = `
               "docs": undefined,
               "type": "RoomId",
             },
-            "status": "literal<"starting">",
           },
         },
         "TailLines": {
