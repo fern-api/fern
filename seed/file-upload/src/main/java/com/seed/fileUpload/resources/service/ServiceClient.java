@@ -64,8 +64,7 @@ public class ServiceClient {
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(_httpUrl)
                 .method("POST", _requestBody)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
+                .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request _request = _requestBuilder.build();
         try {
             Response _response = clientOptions.httpClient().newCall(_request).execute();
@@ -95,8 +94,7 @@ public class ServiceClient {
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(_httpUrl)
                 .method("POST", _requestBody)
-                .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
+                .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request _request = _requestBuilder.build();
         try {
             Response _response = clientOptions.httpClient().newCall(_request).execute();

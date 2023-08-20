@@ -183,7 +183,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         ".method($S, $L)\n",
                         httpEndpoint.getMethod().toString(),
                         AbstractEndpointWriter.REQUEST_BODY_NAME);
-        if (sendContentType) {
+        if (sendContentType
+                && !(generatedWrappedRequest.requestBodyGetter().get() instanceof FileUploadRequestBodyGetters)) {
             requestBodyCodeBlock
                     .add(
                             ".headers($T.of($L.$N($L)))\n",
