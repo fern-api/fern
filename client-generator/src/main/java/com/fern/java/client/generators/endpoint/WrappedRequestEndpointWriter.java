@@ -131,6 +131,8 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             CodeBlock inlineableHttpUrl,
             boolean sendContentType) {
         CodeBlock.Builder requestBodyCodeBlock = CodeBlock.builder();
+        boolean isFileUpload = generatedWrappedRequest.requestBodyGetter().isPresent()
+                & generatedWrappedRequest.requestBodyGetter().get() instanceof FileUploadRequestBodyGetters;
         if (generatedWrappedRequest.requestBodyGetter().isPresent()) {
             if (generatedWrappedRequest.requestBodyGetter().get() instanceof ReferencedRequestBodyGetter) {
                 String jsonRequestBodyArgument = requestParameterName + "."
@@ -183,8 +185,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         ".method($S, $L)\n",
                         httpEndpoint.getMethod().toString(),
                         AbstractEndpointWriter.REQUEST_BODY_NAME);
-        if (sendContentType
-                && !(generatedWrappedRequest.requestBodyGetter().get() instanceof FileUploadRequestBodyGetters)) {
+        if (sendContentType && !isFileUpload) {
             requestBodyCodeBlock
                     .add(
                             ".headers($T.of($L.$N($L)))\n",
