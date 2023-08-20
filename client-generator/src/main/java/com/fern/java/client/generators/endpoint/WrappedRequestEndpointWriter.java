@@ -132,7 +132,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             boolean sendContentType) {
         CodeBlock.Builder requestBodyCodeBlock = CodeBlock.builder();
         boolean isFileUpload = generatedWrappedRequest.requestBodyGetter().isPresent()
-                & generatedWrappedRequest.requestBodyGetter().get() instanceof FileUploadRequestBodyGetters;
+                && generatedWrappedRequest.requestBodyGetter().get() instanceof FileUploadRequestBodyGetters;
         if (generatedWrappedRequest.requestBodyGetter().isPresent()) {
             if (generatedWrappedRequest.requestBodyGetter().get() instanceof ReferencedRequestBodyGetter) {
                 String jsonRequestBodyArgument = requestParameterName + "."
