@@ -122,6 +122,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         return parameterSpecs;
     }
 
+    @SuppressWarnings("checkstyle:CyclomaticComplexity")
     @Override
     public CodeBlock getInitializeRequestCodeBlock(
             FieldSpec clientOptionsMember,
@@ -151,7 +152,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             } else if (generatedWrappedRequest.requestBodyGetter().get() instanceof FileUploadRequestBodyGetters) {
                 FileUploadRequestBodyGetters fileUploadRequestBodyGetter = ((FileUploadRequestBodyGetters)
                         generatedWrappedRequest.requestBodyGetter().get());
-                initializeMultipartBody(fileUploadRequestBodyGetter, requestBodyCodeBlock);
+                initializeMultipartBody(fileUploadRequestBodyGetter, requestBodyCodeBlock, generatedObjectMapper);
                 requestBodyCodeBlock.addStatement(
                         "$T $L = $L.build()",
                         RequestBody.class,
@@ -285,13 +286,16 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
     }
 
     private void initializeMultipartBody(
-            FileUploadRequestBodyGetters fileUploadRequest, CodeBlock.Builder requestBodyCodeBlock) {
+            FileUploadRequestBodyGetters fileUploadRequest,
+            CodeBlock.Builder requestBodyCodeBlock,
+            GeneratedObjectMapper generatedObjectMapper) {
         requestBodyCodeBlock.addStatement(
                 "$T.Builder $L = new $T.Builder().setType($T.FORM)",
                 MultipartBody.class,
                 MULTIPART_BODY_PROPERTIES_NAME,
                 MultipartBody.class,
                 MultipartBody.class);
+        requestBodyCodeBlock.beginControlFlow("try");
         for (FileUploadProperty fileUploadProperty : fileUploadRequest.properties()) {
             if (fileUploadProperty instanceof JsonFileUploadProperty) {
                 EnrichedObjectProperty jsonProperty = ((JsonFileUploadProperty) fileUploadProperty).objectProperty();
@@ -300,28 +304,29 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                             .beginControlFlow(
                                     "if ($L.$N().isPresent())", requestParameterName, jsonProperty.getterProperty())
                             .addStatement(
-                                    "$L.addFormDataPart($S, $L)",
+                                    "$L.addFormDataPart($S, $T.$L.writeValueAsString($L))",
                                     MULTIPART_BODY_PROPERTIES_NAME,
                                     jsonProperty.wireKey().get(),
+                                    generatedObjectMapper.getClassName(),
+                                    generatedObjectMapper.jsonMapperStaticField().name,
                                     requestParameterName + "." + jsonProperty.getterProperty().name + "()")
                             .endControlFlow();
                 } else {
                     requestBodyCodeBlock.addStatement(
-                            "$L.addFormDataPart($S, $L)",
+                            "$L.addFormDataPart($S, $T.$L.writeValueAsString($L))",
                             MULTIPART_BODY_PROPERTIES_NAME,
                             jsonProperty.wireKey().get(),
+                            generatedObjectMapper.getClassName(),
+                            generatedObjectMapper.jsonMapperStaticField().name,
                             requestParameterName + "." + jsonProperty.getterProperty().name + "()");
                 }
             } else if (fileUploadProperty instanceof FilePropertyContainer) {
                 FileProperty fileProperty = ((FilePropertyContainer) fileUploadProperty).fileProperty();
                 if (fileProperty.getIsOptional()) {
                     requestBodyCodeBlock
-                            .beginControlFlow(
-                                    "if ($L.$N().isPresent())",
-                                    requestParameterName,
-                                    getFilePropertyParameterName(fileProperty))
+                            .beginControlFlow("if ($N.isPresent())", getFilePropertyParameterName(fileProperty))
                             .addStatement(
-                                    "$L.addFormDataPart($S, null, $T.create(null, $L))",
+                                    "$L.addFormDataPart($S, null, $T.create(null, $L.get()))",
                                     MULTIPART_BODY_PROPERTIES_NAME,
                                     fileProperty.getKey().getWireValue(),
                                     RequestBody.class,
@@ -337,6 +342,11 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 }
             }
         }
+        requestBodyCodeBlock
+                .endControlFlow()
+                .beginControlFlow("catch($T e)", Exception.class)
+                .addStatement("throw new $T(e)", RuntimeException.class)
+                .endControlFlow();
     }
 
     private static boolean typeNameIsOptional(TypeName typeName) {
