@@ -1,4 +1,4 @@
-name: ir-v23
+name: ir
 docs: |
   Changes in this version of IR include: 
   - Binary request bodies 

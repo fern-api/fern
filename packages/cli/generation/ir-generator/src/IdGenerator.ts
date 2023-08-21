@@ -29,6 +29,10 @@ export const IdGenerator = {
         const endpointId = httpEndpoint.name.originalName;
         return `endpoint_${joinedFernFilePath}.${endpointId}`;
     },
+    generateWebhookGroupId: (fernFilepath: FernFilepath): string => {
+        const joinedFernFilePath = stringifyFernFilepath(fernFilepath);
+        return `webhooks_${joinedFernFilePath}`;
+    },
 };
 
 function stringifyFernFilepath(fernFilepath: FernFilepath): string {

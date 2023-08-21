@@ -47,6 +47,8 @@ export { TypeDeclarationSchema } from "./TypeDeclarationSchema";
 export { TypeReferenceSchema, TypeReferenceWithDocsSchema } from "./TypeReferenceSchema";
 export { UndiscriminatedUnionSchema } from "./UndiscriminatedUnionSchema";
 export { VariableDeclarationSchema } from "./VariableDeclarationSchema";
+export { WebhookPayloadSchema } from "./WebhookPayloadSchema";
+export { WebhookSchema } from "./WebhookSchema";
 export { WithDocsSchema } from "./WithDocsSchema";
 export { WithNameAndDocsSchema } from "./WithNameAndDocsSchema";
 export { WithNameSchema } from "./WithNameSchema";

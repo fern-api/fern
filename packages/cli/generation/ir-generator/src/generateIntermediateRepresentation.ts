@@ -221,7 +221,11 @@ export async function generateIntermediateRepresentation({
                     }
                 });
             },
-            webhooks: noop,
+            webhooks: (webhooks) => {
+                const webhookGroupId = IdGenerator.generateWebhookGroupId(file.fernFilepath);
+
+                intermediateRepresentation.webhookGroups[webhookGroupId] = convertedErrorDeclaration;
+            },
         });
     };
 
