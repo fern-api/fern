@@ -554,6 +554,27 @@
           "required": ["auth", "base-path", "endpoints"],
           "additionalProperties": false
         },
+        "webhooks": {
+          "type": "object",
+          "properties": {
+            "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+            "availability": {
+              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+            },
+            "audiences": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences" },
+            "method": { "type": "string", "enum": ["GET", "POST"] },
+            "display-name": { "type": "string" },
+            "path": { "type": "string" },
+            "payload": {
+              "anyOf": [
+                { "type": "string" },
+                { "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/request/anyOf/1" }
+              ]
+            }
+          },
+          "required": ["path"],
+          "additionalProperties": false
+        },
         "errors": {
           "type": "object",
           "additionalProperties": {
