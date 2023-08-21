@@ -121,7 +121,7 @@ poetry.toml
 on: [push]
 jobs:
   compile:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -131,13 +131,13 @@ jobs:
           python-version: 3.7
       - name: Bootstrap poetry
         run: |
-          curl -sSL https://install.python-poetry.org | python - -y
+          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
       - name: Install dependencies
         run: poetry install
       - name: Compile
         run: poetry run mypy .
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -147,7 +147,7 @@ jobs:
           python-version: 3.7
       - name: Bootstrap poetry
         run: |
-          curl -sSL https://install.python-poetry.org | python - -y
+          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
       - name: Install dependencies
         run: poetry install
       - name: Test
@@ -162,7 +162,7 @@ jobs:
   publish:
     needs: [compile, test]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -172,7 +172,7 @@ jobs:
           python-version: 3.7
       - name: Bootstrap poetry
         run: |
-          curl -sSL https://install.python-poetry.org | python - -y
+          curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
       - name: Install dependencies
         run: poetry install
       - name: Publish to pypi
