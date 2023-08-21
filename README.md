@@ -25,6 +25,13 @@ The generator is written in Go and produces idiomatic code that feels hand-writt
 
 Fern handles transforming an API definition -- either an OpenAPI or Fern specification -- into Fern _intermediate representation_. IR is a normalized, Fern-specific definition of an API containing its endpoints, models, errors, authentication scheme, version, and more. Then the Go generator takes over and turns the IR into production-ready code.
 
+## Highlights
+
+- **Fully typed.** Your users will get great autocomplete and compile-time safety.
+- **Dependency free.** Built with the standard library, compatible with any `net/http`-flavored library.
+- **Idiomatic.** Incorporates an intuitive, Stripe-like package structure.
+- **Open source.** [Star Fern on GitHub](https://github.com/fern-api/fern) ⭐
+
 ## What is Fern?
 
 Fern is an open source toolkit for designing, building, and consuming REST APIs. With Fern, you can generate client libraries, API documentation, and boilerplate for your backend server.
