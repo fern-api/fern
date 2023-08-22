@@ -567,31 +567,66 @@
               "method": { "type": "string", "enum": ["GET", "POST"] },
               "display-name": { "type": "string" },
               "path": { "type": "string" },
+              "headers": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                }
+              },
               "payload": {
                 "anyOf": [
                   { "type": "string" },
                   {
                     "type": "object",
                     "properties": {
-                      "name": {
-                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
-                      },
-                      "headers": {
-                        "type": "object",
-                        "additionalProperties": {
-                          "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
-                        }
-                      },
-                      "body": {
-                        "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/request/anyOf/1/properties/body"
-                      }
+                      "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                      "type": { "type": "string" }
                     },
+                    "required": ["type"],
                     "additionalProperties": false
+                  },
+                  {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string" },
+                          "extends": {
+                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
+                          },
+                          "properties": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                            }
+                          }
+                        },
+                        "required": ["name", "extends"],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "name": { "type": "string" },
+                          "extends": {
+                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
+                          },
+                          "properties": {
+                            "type": "object",
+                            "additionalProperties": {
+                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                            }
+                          }
+                        },
+                        "required": ["name", "properties"],
+                        "additionalProperties": false
+                      }
+                    ]
                   }
                 ]
               }
             },
-            "required": ["path"],
+            "required": ["method", "path"],
             "additionalProperties": false
           }
         },
