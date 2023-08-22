@@ -76,7 +76,7 @@ export async function publishDocs({
             } else {
                 await axios.put(uploadUrl.uploadUrl, await readFile(filepathToUpload), {
                     headers: {
-                        "Content-Type": "application/octet-stream",
+                        "Content-Type": filepathToUpload.endsWith("svg") ? "image/svg+xml" : "application/octet-stream",
                     },
                 });
             }
