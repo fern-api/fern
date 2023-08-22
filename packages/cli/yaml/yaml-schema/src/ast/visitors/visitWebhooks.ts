@@ -1,7 +1,7 @@
 import { noop, visitObject } from "@fern-api/core-utils";
-import { HttpHeaderSchema } from "../../schemas";
+import { HttpHeaderSchema, WebhookPayloadSchema } from "../../schemas";
+import { WebhookReferencedPayloadSchema } from "../../schemas/WebhookReferencedPayloadSchema";
 import { WebhookSchema } from "../../schemas/WebhookSchema";
-import { isInlineRequestBody } from "../../utils/isInlineRequestBody";
 import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../DefinitionFileAstVisitor";
 import { NodePath } from "../NodePath";
 import { createDocsVisitor } from "./utils/createDocsVisitor";
@@ -22,6 +22,13 @@ export async function visitWebhooks({
         "display-name": noop,
         path: noop,
         method: noop,
+        headers: async (headers) => {
+            await visitHeaders({
+                headers,
+                visitor,
+                nodePath: [...nodePathForWebhook, "headers"],
+            });
+        },
         payload: async (payload) => {
             if (payload == null) {
                 return;
@@ -33,70 +40,55 @@ export async function visitWebhooks({
                 });
                 return;
             }
+
+            if (isRawDiscriminatedUnionDefinition(payload)) {
+                await visitTypeReference(payload.type, [...nodePathForPayload, "type"], {
+                    location: "requestReference",
+                });
+                return;
+            }
+
+            const nodePathForInlinedPayload = [...nodePathForPayload];
+            await visitor.typeDeclaration?.(
+                { typeName: { isInlined: true, location: "inlinedRequest" }, declaration: payload },
+                nodePathForInlinedPayload
+            );
             await visitObject(payload, {
                 name: noop,
-                headers: async (headers) => {
-                    await visitHeaders({
-                        headers,
-                        visitor,
-                        nodePath: [...nodePathForPayload, "headers"],
-                    });
-                },
-                body: async (body) => {
-                    if (body == null) {
+                extends: async (_extends) => {
+                    if (_extends == null) {
                         return;
                     }
-                    const nodePathForRequestBody = [...nodePathForPayload, "body"];
-                    if (typeof body === "string") {
-                        await visitTypeReference(body, nodePathForRequestBody, {
-                            location: "requestReference",
-                        });
-                    } else if (isInlineRequestBody(body)) {
-                        await visitor.typeDeclaration?.(
-                            { typeName: { isInlined: true, location: "inlinedRequest" }, declaration: body },
-                            nodePathForRequestBody
-                        );
-                        await visitObject(body, {
-                            extends: async (_extends) => {
-                                if (_extends == null) {
-                                    return;
-                                }
-                                const extendsList: string[] = typeof _extends === "string" ? [_extends] : _extends;
-                                for (const extendedType of extendsList) {
-                                    const nodePathForExtension = [...nodePathForRequestBody, "extends", extendedType];
-                                    await visitor.extension?.(extendedType, nodePathForExtension);
-                                    await visitTypeReference(extendedType, nodePathForExtension);
-                                }
-                            },
-                            properties: async (properties) => {
-                                if (properties == null) {
-                                    return;
-                                }
-                                for (const [propertyKey, property] of Object.entries(properties)) {
-                                    const nodePathForProperty = [...nodePathForRequestBody, "properties", propertyKey];
-                                    if (typeof property === "string") {
-                                        await visitTypeReference(property, nodePathForProperty, {
-                                            location: TypeReferenceLocation.InlinedRequestProperty,
-                                        });
-                                    } else {
-                                        await visitObject(property, {
-                                            name: noop,
-                                            docs: createDocsVisitor(visitor, nodePathForProperty),
-                                            availability: noop,
-                                            type: async (type) => {
-                                                await visitTypeReference(type, [...nodePathForProperty, "type"], {
-                                                    location: TypeReferenceLocation.InlinedRequestProperty,
-                                                });
-                                            },
-                                            audiences: noop,
-                                        });
-                                    }
-                                }
-                            },
-                        });
-                    } else {
-                        await createDocsVisitor(visitor, nodePathForRequestBody)(body.docs);
-                        await visitTypeReference(body.type, nodePathForRequestBody);
+                    const extendsList: string[] = typeof _extends === "string" ? [_extends] : _extends;
+                    for (const extendedType of extendsList) {
+                        const nodePathForExtension = [...nodePathForInlinedPayload, "extends", extendedType];
+                        await visitor.extension?.(extendedType, nodePathForExtension);
+                        await visitTypeReference(extendedType, nodePathForExtension);
+                    }
+                },
+                properties: async (properties) => {
+                    if (properties == null) {
+                        return;
+                    }
+                    for (const [propertyKey, property] of Object.entries(properties)) {
+                        const nodePathForProperty = [...nodePathForInlinedPayload, "properties", propertyKey];
+                        if (typeof property === "string") {
+                            await visitTypeReference(property, nodePathForProperty, {
+                                location: TypeReferenceLocation.InlinedRequestProperty,
+                            });
+                        } else {
+                            await visitObject(property, {
+                                name: noop,
+                                docs: createDocsVisitor(visitor, nodePathForProperty),
+                                availability: noop,
+                                type: async (type) => {
+                                    await visitTypeReference(type, [...nodePathForProperty, "type"], {
+                                        location: TypeReferenceLocation.InlinedRequestProperty,
+                                    });
+                                },
+                                audiences: noop,
+                            });
+                        }
                     }
                 },
             });
@@ -141,4 +133,13 @@ async function visitHeaders({
             });
         }
     }
+}
+
+export function isRawDiscriminatedUnionDefinition(
+    payload: WebhookPayloadSchema
+): payload is WebhookReferencedPayloadSchema {
+    return (
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        (payload as WebhookReferencedPayloadSchema).type != null
+    );
 }

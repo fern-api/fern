@@ -10,6 +10,7 @@ import {
     SubpackageId,
     TypeDeclaration,
     TypeId,
+    WebhookGroupId,
 } from "@fern-fern/ir-sdk/api";
 import { mapValues } from "lodash-es";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
@@ -31,6 +32,7 @@ export class PackageTreeGenerator {
         types: [],
         errors: [],
         subpackages: [],
+        webhooks: undefined,
         navigationConfig: undefined,
     };
 
@@ -72,6 +74,14 @@ export class PackageTreeGenerator {
         package_.service = serviceId;
     }
 
+    public addWebhookGroup(webhookGroupId: WebhookGroupId, fernFilepath: FernFilepath): void {
+        const package_ = this.getPackageForFernFilepath(fernFilepath);
+        if (package_.webhooks != null) {
+            throw new Error("Found duplicate webhook group for " + webhookGroupId);
+        }
+        package_.webhooks = webhookGroupId;
+    }
+
     public build(filteredIr: FilteredIr | undefined): Pick<IntermediateRepresentation, "subpackages" | "rootPackage"> {
         if (filteredIr != null) {
             Object.entries(this.subpackages).forEach(([subpackageId, subpackage]) => {
@@ -109,6 +119,7 @@ export class PackageTreeGenerator {
                 subpackages: this.rootPackage.subpackages.filter((subpackageId) =>
                     filteredIr.hasSubpackageId(subpackageId)
                 ),
+                webhooks: this.rootPackage.webhooks != null ? this.rootPackage.webhooks : undefined,
             };
         }
         const allSubpackagesWithEndpoints = new Set(this.getAllChildrenWithEndpoints(this.rootPackage));
@@ -199,6 +210,7 @@ export class PackageTreeGenerator {
                 errors: [],
                 subpackages: [],
                 navigationConfig: undefined,
+                webhooks: undefined,
             };
             this.subpackages[newParentId] = newParent;
             parent.subpackages.push(newParentId);

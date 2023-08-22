@@ -19,6 +19,7 @@ import { V20_TO_V19_MIGRATION } from "./migrations/v20-to-v19/migrateFromV20ToV1
 import { V21_TO_V20_MIGRATION } from "./migrations/v21-to-v20/migrateFromV21ToV20";
 import { V22_TO_V21_MIGRATION } from "./migrations/v22-to-v21/migrateFromV22ToV21";
 import { V23_TO_V22_MIGRATION } from "./migrations/v23-to-v22/migrateFromV23ToV22";
+import { V24_TO_V23_MIGRATION } from "./migrations/v24-to-v23/migrateFromV24ToV23";
 import { V3_TO_V2_MIGRATION } from "./migrations/v3-to-v2/migrateFromV3ToV2";
 import { V4_TO_V3_MIGRATION } from "./migrations/v4-to-v3/migrateFromV4ToV3";
 import { V5_TO_V4_MIGRATION } from "./migrations/v5-to-v4/migrateFromV5ToV4";
@@ -238,6 +239,7 @@ const IntermediateRepresentationMigrator = {
 
 const INTERMEDIATE_REPRESENTATION_MIGRATOR = IntermediateRepresentationMigrator.Builder
     // put new migrations here
+    .withMigration(V24_TO_V23_MIGRATION)
     .withMigration(V23_TO_V22_MIGRATION)
     .withMigration(V22_TO_V21_MIGRATION)
     .withMigration(V21_TO_V20_MIGRATION)

@@ -6,7 +6,7 @@ import { IrMigrationContext } from "../../IrMigrationContext";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
 
 export const V23_TO_V22_MIGRATION: IrMigration<
-    IrVersions.V23.ir.IntermediateRepresentation,
+    IrVersions.V23.IntermediateRepresentation,
     IrVersions.V22.ir.IntermediateRepresentation
 > = {
     laterVersion: "v23",
@@ -65,7 +65,7 @@ export const V23_TO_V22_MIGRATION: IrMigration<
 };
 
 function convertEndpoint(
-    endpoint: IrVersions.V23.http.HttpEndpoint,
+    endpoint: IrVersions.V23.HttpEndpoint,
     context: IrMigrationContext
 ): IrVersions.V22.http.HttpEndpoint {
     return {
