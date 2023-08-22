@@ -9,9 +9,6 @@ import pydantic
 import typing_extensions
 
 from ....core.datetime_utils import serialize_datetime
-from ...commons.types.key_value_pair import KeyValuePair
-from ...commons.types.map_value import MapValue
-from ...commons.types.variable_value import VariableValue
 from .test_submission_state import TestSubmissionState
 from .workspace_submission_state import WorkspaceSubmissionState
 
@@ -112,5 +109,4 @@ class _SubmissionTypeState:
             allow_population_by_field_name = True
 
 
-_SubmissionTypeState.Test.update_forward_refs(KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue)
 SubmissionTypeState.update_forward_refs()

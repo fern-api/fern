@@ -6,12 +6,6 @@ import typing
 
 import typing_extensions
 
-from ...commons.types.key_value_pair import KeyValuePair
-from ...commons.types.list_type import ListType
-from ...commons.types.map_type import MapType
-from ...commons.types.map_value import MapValue
-from ...commons.types.variable_type import VariableType
-from ...commons.types.variable_value import VariableValue
 from .test_submission_status_v_2 import TestSubmissionStatusV2
 from .workspace_submission_status_v_2 import WorkspaceSubmissionStatusV2
 
@@ -35,11 +29,3 @@ class SubmissionStatusV2_Workspace(WorkspaceSubmissionStatusV2):
 
 
 SubmissionStatusV2 = typing.Union[SubmissionStatusV2_Test, SubmissionStatusV2_Workspace]
-SubmissionStatusV2_Test.update_forward_refs(
-    KeyValuePair=KeyValuePair,
-    ListType=ListType,
-    MapType=MapType,
-    MapValue=MapValue,
-    VariableType=VariableType,
-    VariableValue=VariableValue,
-)

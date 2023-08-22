@@ -52,7 +52,15 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         )
 
     def does_circularly_reference_itself(self, type_name: ir_types.DeclaredTypeName) -> bool:
-        return HashableDeclaredTypeName.of(type_name) in self.get_referenced_types(type_name)
+        return self.does_type_reference_other_type(type_name, type_name)
+
+    def do_types_reference_each_other(self, a: ir_types.DeclaredTypeName, b: ir_types.DeclaredTypeName) -> bool:
+        return self.does_type_reference_other_type(a, b) and self.does_type_reference_other_type(b, a)
+
+    def does_type_reference_other_type(
+        self, type: ir_types.DeclaredTypeName, other_type: ir_types.DeclaredTypeName
+    ) -> bool:
+        return HashableDeclaredTypeName.of(other_type) in self.get_referenced_types(type)
 
     def get_referenced_types(self, type_name: ir_types.DeclaredTypeName) -> Set[HashableDeclaredTypeName]:
         declaration = self.get_declaration_for_type_name(type_name)
@@ -83,3 +91,41 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             properties.extend(self.get_all_properties_including_extensions(extension))
 
         return properties
+
+    def get_referenced_types_of_type_reference(
+        self, type_reference: ir_types.TypeReference
+    ) -> List[ir_types.DeclaredTypeName]:
+        return type_reference.visit(
+            container=lambda container: container.visit(
+                list=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
+                set=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
+                optional=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
+                map=lambda map_type: (
+                    self.get_referenced_types_of_type_reference(map_type.key_type)
+                    + self.get_referenced_types_of_type_reference(map_type.value_type)
+                ),
+                literal=lambda literal: [],
+            ),
+            primitive=lambda primitive: [],
+            named=lambda type_name: self.get_declaration_for_type_name(type_name).referenced_types,
+            unknown=lambda: [],
+        )
+
+    def get_type_names_in_type_reference(
+        self, type_reference: ir_types.TypeReference
+    ) -> List[ir_types.DeclaredTypeName]:
+        return type_reference.visit(
+            container=lambda container: container.visit(
+                list=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
+                set=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
+                optional=lambda item_type: self.get_referenced_types_of_type_reference(item_type),
+                map=lambda map_type: (
+                    self.get_referenced_types_of_type_reference(map_type.key_type)
+                    + self.get_referenced_types_of_type_reference(map_type.value_type)
+                ),
+                literal=lambda literal: [],
+            ),
+            primitive=lambda primitive: [],
+            named=lambda type_name: [type_name],
+            unknown=lambda: [],
+        )

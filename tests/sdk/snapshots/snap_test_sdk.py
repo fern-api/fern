@@ -21,6 +21,12 @@ snapshots['test_circular_imports filepaths'] = [
     'src/my_org/resources/a/__init__.py',
     'src/my_org/resources/a/types/__init__.py',
     'src/my_org/resources/a/types/a.py',
+    'src/my_org/resources/ast/__init__.py',
+    'src/my_org/resources/ast/types/__init__.py',
+    'src/my_org/resources/ast/types/container_value.py',
+    'src/my_org/resources/ast/types/field_value.py',
+    'src/my_org/resources/ast/types/object_value.py',
+    'src/my_org/resources/ast/types/primitive_value.py',
     'src/my_org/types/__init__.py',
     'src/my_org/types/importing_a.py',
     'src/my_org/types/root_type.py',
@@ -52,6 +58,18 @@ snapshots['test_circular_imports src_my_org_resources_a_types___init__'] = FileS
 
 snapshots['test_circular_imports src_my_org_resources_a_types_a'] = FileSnapshot('snap_test_sdk/test_circular_imports src_my_org_resources_a_types_a.py')
 
+snapshots['test_circular_imports src_my_org_resources_ast___init__'] = FileSnapshot('snap_test_sdk/test_circular_imports src_my_org_resources_ast___init__.py')
+
+snapshots['test_circular_imports src_my_org_resources_ast_types___init__'] = FileSnapshot('snap_test_sdk/test_circular_imports src_my_org_resources_ast_types___init__.py')
+
+snapshots['test_circular_imports src_my_org_resources_ast_types_container_value'] = FileSnapshot('snap_test_sdk/test_circular_imports src_my_org_resources_ast_types_container_value.py')
+
+snapshots['test_circular_imports src_my_org_resources_ast_types_field_value'] = FileSnapshot('snap_test_sdk/test_circular_imports src_my_org_resources_ast_types_field_value.py')
+
+snapshots['test_circular_imports src_my_org_resources_ast_types_object_value'] = FileSnapshot('snap_test_sdk/test_circular_imports src_my_org_resources_ast_types_object_value.py')
+
+snapshots['test_circular_imports src_my_org_resources_ast_types_primitive_value'] = FileSnapshot('snap_test_sdk/test_circular_imports src_my_org_resources_ast_types_primitive_value.py')
+
 snapshots['test_circular_imports src_my_org_types___init__'] = FileSnapshot('snap_test_sdk/test_circular_imports src_my_org_types___init__.py')
 
 snapshots['test_circular_imports src_my_org_types_importing_a'] = FileSnapshot('snap_test_sdk/test_circular_imports src_my_org_types_importing_a.py')
@@ -61,6 +79,78 @@ snapshots['test_circular_imports src_my_org_types_root_type'] = FileSnapshot('sn
 snapshots['test_circular_imports tests___init__'] = FileSnapshot('snap_test_sdk/test_circular_imports tests___init__.py')
 
 snapshots['test_circular_imports tests_test_client'] = FileSnapshot('snap_test_sdk/test_circular_imports tests_test_client.py')
+
+snapshots['test_circular_imports_with_union_utils filepaths'] = [
+    'src/my_org/__init__.py',
+    'src/my_org/client.py',
+    'src/my_org/core/__init__.py',
+    'src/my_org/core/api_error.py',
+    'src/my_org/core/client_wrapper.py',
+    'src/my_org/core/datetime_utils.py',
+    'src/my_org/core/jsonable_encoder.py',
+    'src/my_org/core/remove_none_from_dict.py',
+    'src/my_org/resources/__init__.py',
+    'src/my_org/resources/a/__init__.py',
+    'src/my_org/resources/a/types/__init__.py',
+    'src/my_org/resources/a/types/a.py',
+    'src/my_org/resources/ast/__init__.py',
+    'src/my_org/resources/ast/types/__init__.py',
+    'src/my_org/resources/ast/types/container_value.py',
+    'src/my_org/resources/ast/types/field_value.py',
+    'src/my_org/resources/ast/types/object_value.py',
+    'src/my_org/resources/ast/types/primitive_value.py',
+    'src/my_org/types/__init__.py',
+    'src/my_org/types/importing_a.py',
+    'src/my_org/types/root_type.py',
+    'tests/__init__.py',
+    'tests/test_client.py'
+]
+
+snapshots['test_circular_imports_with_union_utils src_my_org___init__'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils src_my_org___init__.py')
+
+snapshots['test_circular_imports_with_union_utils src_my_org_client'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils src_my_org_client.py')
+
+snapshots['test_circular_imports_with_union_utils src_my_org_core___init__'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils src_my_org_core___init__.py')
+
+snapshots['test_circular_imports_with_union_utils src_my_org_core_api_error'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils src_my_org_core_api_error.py')
+
+snapshots['test_circular_imports_with_union_utils src_my_org_core_client_wrapper'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils src_my_org_core_client_wrapper.py')
+
+snapshots['test_circular_imports_with_union_utils src_my_org_core_datetime_utils'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils src_my_org_core_datetime_utils.py')
+
+snapshots['test_circular_imports_with_union_utils src_my_org_core_jsonable_encoder'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils src_my_org_core_jsonable_encoder.py')
+
+snapshots['test_circular_imports_with_union_utils src_my_org_core_remove_none_from_dict'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils src_my_org_core_remove_none_from_dict.py')
+
+snapshots['test_circular_imports_with_union_utils src_my_org_resources___init__'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils src_my_org_resources___init__.py')
+
+snapshots['test_circular_imports_with_union_utils src_my_org_resources_a___init__'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils src_my_org_resources_a___init__.py')
+
+snapshots['test_circular_imports_with_union_utils src_my_org_resources_a_types___init__'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils src_my_org_resources_a_types___init__.py')
+
+snapshots['test_circular_imports_with_union_utils src_my_org_resources_a_types_a'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils src_my_org_resources_a_types_a.py')
+
+snapshots['test_circular_imports_with_union_utils src_my_org_resources_ast___init__'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils src_my_org_resources_ast___init__.py')
+
+snapshots['test_circular_imports_with_union_utils src_my_org_resources_ast_types___init__'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils src_my_org_resources_ast_types___init__.py')
+
+snapshots['test_circular_imports_with_union_utils src_my_org_resources_ast_types_container_value'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils src_my_org_resources_ast_types_container_value.py')
+
+snapshots['test_circular_imports_with_union_utils src_my_org_resources_ast_types_field_value'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils src_my_org_resources_ast_types_field_value.py')
+
+snapshots['test_circular_imports_with_union_utils src_my_org_resources_ast_types_object_value'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils src_my_org_resources_ast_types_object_value.py')
+
+snapshots['test_circular_imports_with_union_utils src_my_org_resources_ast_types_primitive_value'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils src_my_org_resources_ast_types_primitive_value.py')
+
+snapshots['test_circular_imports_with_union_utils src_my_org_types___init__'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils src_my_org_types___init__.py')
+
+snapshots['test_circular_imports_with_union_utils src_my_org_types_importing_a'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils src_my_org_types_importing_a.py')
+
+snapshots['test_circular_imports_with_union_utils src_my_org_types_root_type'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils src_my_org_types_root_type.py')
+
+snapshots['test_circular_imports_with_union_utils tests___init__'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils tests___init__.py')
+
+snapshots['test_circular_imports_with_union_utils tests_test_client'] = FileSnapshot('snap_test_sdk/test_circular_imports_with_union_utils tests_test_client.py')
 
 snapshots['test_file_upload_sdk __init__'] = FileSnapshot('snap_test_sdk/test_file_upload_sdk __init__.py')
 

@@ -9,9 +9,6 @@ import pydantic
 import typing_extensions
 
 from ....core.datetime_utils import serialize_datetime
-from ...commons.types.key_value_pair import KeyValuePair
-from ...commons.types.map_value import MapValue
-from ...commons.types.variable_value import VariableValue
 from .error_info import ErrorInfo
 from .graded_test_case_update import GradedTestCaseUpdate
 from .recorded_test_case_update import RecordedTestCaseUpdate
@@ -215,7 +212,4 @@ class _TestSubmissionUpdateInfo:
         type: typing_extensions.Literal["finished"]
 
 
-_TestSubmissionUpdateInfo.GradedTestCase.update_forward_refs(
-    KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue
-)
 TestSubmissionUpdateInfo.update_forward_refs()

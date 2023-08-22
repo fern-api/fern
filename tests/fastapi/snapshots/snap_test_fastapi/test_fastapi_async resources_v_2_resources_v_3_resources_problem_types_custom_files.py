@@ -10,9 +10,6 @@ import typing_extensions
 
 from ........core.datetime_utils import serialize_datetime
 from .......commons.types.language import Language
-from .......commons.types.list_type import ListType
-from .......commons.types.map_type import MapType
-from .......commons.types.variable_type import VariableType
 from .basic_custom_files import BasicCustomFiles
 from .files import Files
 
@@ -107,5 +104,4 @@ class _CustomFiles:
         value: typing.Dict[Language, Files]
 
 
-_CustomFiles.Basic.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)
 CustomFiles.update_forward_refs()

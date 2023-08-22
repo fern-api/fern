@@ -44,6 +44,16 @@ class PydanticGeneratorContext(ABC):
         ...
 
     @abstractmethod
+    def do_types_reference_each_other(self, a: ir_types.DeclaredTypeName, b: ir_types.DeclaredTypeName) -> bool:
+        ...
+
+    @abstractmethod
+    def does_type_reference_other_type(
+        self, type: ir_types.DeclaredTypeName, other_type: ir_types.DeclaredTypeName
+    ) -> bool:
+        ...
+
+    @abstractmethod
     def get_referenced_types(self, type_name: ir_types.DeclaredTypeName) -> Set[HashableDeclaredTypeName]:
         ...
 
@@ -53,6 +63,18 @@ class PydanticGeneratorContext(ABC):
 
     @abstractmethod
     def get_declaration_for_type_name(self, type_name: ir_types.DeclaredTypeName) -> ir_types.TypeDeclaration:
+        ...
+
+    @abstractmethod
+    def get_referenced_types_of_type_reference(
+        self, type_reference: ir_types.TypeReference
+    ) -> List[ir_types.DeclaredTypeName]:
+        ...
+
+    @abstractmethod
+    def get_type_names_in_type_reference(
+        self, type_reference: ir_types.TypeReference
+    ) -> List[ir_types.DeclaredTypeName]:
         ...
 
     @abstractmethod

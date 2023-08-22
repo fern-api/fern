@@ -9,9 +9,6 @@ import pydantic
 import typing_extensions
 
 from ........core.datetime_utils import serialize_datetime
-from .......commons.types.list_type import ListType
-from .......commons.types.map_type import MapType
-from .......commons.types.variable_type import VariableType
 from .non_void_function_signature import NonVoidFunctionSignature
 from .void_function_signature import VoidFunctionSignature
 from .void_function_signature_that_takes_actual_result import VoidFunctionSignatureThatTakesActualResult
@@ -155,9 +152,4 @@ class _FunctionSignature:
             allow_population_by_field_name = True
 
 
-_FunctionSignature.Void.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)
-_FunctionSignature.NonVoid.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)
-_FunctionSignature.VoidThatTakesActualResult.update_forward_refs(
-    ListType=ListType, MapType=MapType, VariableType=VariableType
-)
 FunctionSignature.update_forward_refs()

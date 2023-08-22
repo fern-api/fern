@@ -7,10 +7,12 @@ import typing
 import pydantic
 import typing_extensions
 
+from .binary_tree_node_value import BinaryTreeNodeValue
 from .binary_tree_value import BinaryTreeValue
+from .doubly_linked_list_node_value import DoublyLinkedListNodeValue
 from .doubly_linked_list_value import DoublyLinkedListValue
-from .key_value_pair import KeyValuePair
-from .map_value import MapValue
+from .node_id import NodeId
+from .singly_linked_list_node_value import SinglyLinkedListNodeValue
 from .singly_linked_list_value import SinglyLinkedListValue
 
 
@@ -89,4 +91,8 @@ VariableValue = typing.Union[
     VariableValue_DoublyLinkedListValue,
     VariableValue_NullValue,
 ]
+from .key_value_pair import KeyValuePair  # noqa: E402
+from .map_value import MapValue  # noqa: E402
+
 VariableValue_MapValue.update_forward_refs(KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue)
+VariableValue_ListValue.update_forward_refs(KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue)

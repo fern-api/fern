@@ -9,9 +9,6 @@ import pydantic
 import typing_extensions
 
 from ........core.datetime_utils import serialize_datetime
-from .......commons.types.list_type import ListType
-from .......commons.types.map_type import MapType
-from .......commons.types.variable_type import VariableType
 from .test_case_implementation import TestCaseImplementation
 from .test_case_template_id import TestCaseTemplateId
 
@@ -130,7 +127,4 @@ class _TestCaseImplementationReference:
             allow_population_by_field_name = True
 
 
-_TestCaseImplementationReference.Implementation.update_forward_refs(
-    ListType=ListType, MapType=MapType, VariableType=VariableType
-)
 TestCaseImplementationReference.update_forward_refs()

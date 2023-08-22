@@ -9,9 +9,6 @@ import pydantic
 import typing_extensions
 
 from ....core.datetime_utils import serialize_datetime
-from ...commons.types.key_value_pair import KeyValuePair
-from ...commons.types.map_value import MapValue
-from ...commons.types.variable_value import VariableValue
 from .building_executor_response import BuildingExecutorResponse
 from .errored_response import ErroredResponse
 from .finished_response import FinishedResponse
@@ -343,10 +340,4 @@ class _CodeExecutionUpdate:
             allow_population_by_field_name = True
 
 
-_CodeExecutionUpdate.Graded.update_forward_refs(
-    KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue
-)
-_CodeExecutionUpdate.GradedV2.update_forward_refs(
-    KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue
-)
 CodeExecutionUpdate.update_forward_refs()

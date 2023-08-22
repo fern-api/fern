@@ -9,9 +9,6 @@ import pydantic
 import typing_extensions
 
 from ....core.datetime_utils import serialize_datetime
-from ...commons.types.key_value_pair import KeyValuePair
-from ...commons.types.map_value import MapValue
-from ...commons.types.variable_value import VariableValue
 from .test_case_hidden_grade import TestCaseHiddenGrade
 from .test_case_non_hidden_grade import TestCaseNonHiddenGrade
 
@@ -108,5 +105,4 @@ class _TestCaseGrade:
             allow_population_by_field_name = True
 
 
-_TestCaseGrade.NonHidden.update_forward_refs(KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue)
 TestCaseGrade.update_forward_refs()

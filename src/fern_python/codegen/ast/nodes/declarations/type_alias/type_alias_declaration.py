@@ -1,4 +1,7 @@
+from typing import Set
+
 from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
+from ....references import Reference
 from ...type_hint import TypeHint
 
 
@@ -6,12 +9,17 @@ class TypeAliasDeclaration(AstNode):
     def __init__(self, name: str, type_hint: TypeHint):
         self.name = name
         self.type_hint = type_hint
+        self.ghost_references: Set[Reference] = set()
 
     def get_metadata(self) -> AstNodeMetadata:
         metadata = AstNodeMetadata()
         metadata.declarations.add(self.name)
         metadata.update(self.type_hint.get_metadata())
+        metadata.references.update(self.ghost_references)
         return metadata
+
+    def add_ghost_reference(self, reference: Reference) -> None:
+        self.ghost_references.add(reference)
 
     def write(self, writer: NodeWriter) -> None:
         writer.write(f"{self.name} = ")
