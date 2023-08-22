@@ -3,6 +3,19 @@ types:
   SetNameRequestV3Body:
     properties:
       userName: string
+  Filter:
+    properties:
+      tag: string
+  Foo:
+    properties:
+      id: string
+  Bar:
+    properties:
+      id: string
+  Union:
+    union:
+      foo: Foo
+      bar: Bar
 service:
   base-path: /users
   auth: false
@@ -73,4 +86,22 @@ service:
         headers:
           X-Endpoint-Header: string
         body: literal<"fern">
+      response: string
+
+    update:
+      method: POST
+      path: /{userId}/update
+      path-parameters:
+        userId: string
+      request:
+        name: UpdateRequest
+        query-parameters:
+          tag: string
+          extra: optional<string>
+        body:
+          properties:
+            union: Union
+            filter: Filter
+            optionalUnion: optional<Union>
+            optionalFilter: optional<Filter>
       response: string

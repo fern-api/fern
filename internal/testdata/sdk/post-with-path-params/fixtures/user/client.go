@@ -8,6 +8,7 @@ import (
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/post-with-path-params/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/post-with-path-params/fixtures/core"
 	http "net/http"
+	url "net/url"
 )
 
 type Client struct {
@@ -177,6 +178,39 @@ func (c *Client) SetNameV5(ctx context.Context, userId string, request *fixtures
 		&response,
 		false,
 		headers,
+		nil,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
+}
+
+func (c *Client) Update(ctx context.Context, userId string, request *fixtures.UpdateRequest) (string, error) {
+	baseURL := ""
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/update", userId)
+
+	queryParams := make(url.Values)
+	queryParams.Add("tag", fmt.Sprintf("%v", request.Tag))
+	if request.Extra != nil {
+		queryParams.Add("extra", fmt.Sprintf("%v", *request.Extra))
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
+
+	var response string
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodPost,
+		request,
+		&response,
+		false,
+		c.header,
 		nil,
 	); err != nil {
 		return response, err

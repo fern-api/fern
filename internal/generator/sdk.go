@@ -24,9 +24,47 @@ var (
 	//go:embed sdk/core/core_test.go
 	coreTestFile string
 
+	//go:embed sdk/core/optional.go
+	optionalFile string
+
+	//go:embed sdk/core/optional_test.go
+	optionalTestFile string
+
 	//go:embed sdk/core/pointer.go
 	pointerFile string
 )
+
+// WriteOptionalHelpers writes the Optional[T] helper functions.
+// The name of the helpers will change if the functions are
+// generated in the core package (to avoid naming collisions).
+func (f *fileWriter) WriteOptionalHelpers(useCore bool) error {
+	var (
+		typeName        = "core.Optional"
+		constructorName = "Optional"
+	)
+	if useCore {
+		typeName = "Optional"
+		constructorName = "NewOptional"
+	}
+	f.P("// ", constructorName, " initializes an optional field.")
+	f.P("func ", constructorName, "[T any](value T) *", typeName, "[T] {")
+	f.P("return &", typeName, "[T]{")
+	f.P("Value: value,")
+	f.P("}")
+	f.P("}")
+	f.P()
+
+	f.P("// Null initializes an optional field that will be sent as")
+	f.P("// an explicit null value.")
+	f.P("func Null[T any]() *", typeName, "[T] {")
+	f.P("return &", typeName, "[T]{")
+	f.P("Null: true,")
+	f.P("}")
+	f.P("}")
+	f.P()
+
+	return nil
+}
 
 // WriteClientOptionsDefinition writes the ClientOption interface and
 // *ClientOptions type. These types are always deposited in the core
@@ -68,7 +106,7 @@ func (f *fileWriter) WriteClientOptionsDefinition(
 			f.P(
 				authScheme.Header.Name.Name.PascalCase.UnsafeName,
 				" ",
-				typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.imports, f.baseImportPath, importPath),
+				typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.imports, f.baseImportPath, importPath, false),
 			)
 		}
 	}
@@ -80,7 +118,7 @@ func (f *fileWriter) WriteClientOptionsDefinition(
 		f.P(
 			header.Name.Name.PascalCase.UnsafeName,
 			" ",
-			typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, importPath),
+			typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, importPath, false),
 		)
 	}
 	f.P("}")
@@ -271,7 +309,7 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 				optionName = fmt.Sprintf("ClientWithAuth%s", authScheme.Header.Name.Name.PascalCase.UnsafeName)
 				field      = authScheme.Header.Name.Name.PascalCase.UnsafeName
 				param      = authScheme.Header.Name.Name.CamelCase.SafeName
-				value      = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.imports, f.baseImportPath, importPath)
+				value      = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.imports, f.baseImportPath, importPath, false)
 			)
 			f.P("// ", optionName, " sets the ", param, " auth header on every request.")
 			if includeCustomAuthDocs {
@@ -296,7 +334,7 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 			optionName = fmt.Sprintf("ClientWithHeader%s", header.Name.Name.PascalCase.UnsafeName)
 			field      = header.Name.Name.PascalCase.UnsafeName
 			param      = header.Name.Name.CamelCase.SafeName
-			value      = typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, importPath)
+			value      = typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, importPath, false)
 		)
 		f.P("// ", optionName, " sets the ", param, " header on every request.")
 		if header.Docs != nil && len(*header.Docs) > 0 {
@@ -644,7 +682,7 @@ func (f *fileWriter) endpointFromIR(
 	var pathParameterNames []string
 	for _, pathParameter := range irEndpoint.AllPathParameters {
 		pathParameterName := pathParameter.Name.CamelCase.SafeName
-		parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, f.imports, f.baseImportPath, "" /* The type is always imported */)
+		parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, f.imports, f.baseImportPath, "" /* The type is always imported */, false)
 		signatureParameters += fmt.Sprintf(", %s %s", pathParameterName, parameterType)
 		pathParameterNames = append(pathParameterNames, pathParameterName)
 	}
@@ -677,7 +715,7 @@ func (f *fileWriter) endpointFromIR(
 		if needsRequestParameter(irEndpoint) {
 			var requestType string
 			if requestBody := irEndpoint.SdkRequest.Shape.JustRequestBody; requestBody != nil {
-				requestType = typeReferenceToGoType(requestBody.RequestBodyType, f.types, f.imports, f.baseImportPath, "" /* The type is always imported */)
+				requestType = typeReferenceToGoType(requestBody.RequestBodyType, f.types, f.imports, f.baseImportPath, "" /* The type is always imported */, false)
 			}
 			if irEndpoint.SdkRequest.Shape.Wrapper != nil {
 				requestImportPath := fernFilepathToImportPath(f.baseImportPath, fernFilepath)
@@ -706,7 +744,7 @@ func (f *fileWriter) endpointFromIR(
 	var responseIsOptionalParameter bool
 	if irEndpoint.Response != nil {
 		if irEndpoint.Response.Json != nil {
-			responseType = typeReferenceToGoType(irEndpoint.Response.Json.ResponseBodyType, f.types, f.imports, f.baseImportPath, "" /* The type is always imported */)
+			responseType = typeReferenceToGoType(irEndpoint.Response.Json.ResponseBodyType, f.types, f.imports, f.baseImportPath, "" /* The type is always imported */, false)
 			responseInitializerFormat = "var response %s"
 			responseIsOptionalParameter = irEndpoint.Response.Json.ResponseBodyType.Container != nil && irEndpoint.Response.Json.ResponseBodyType.Container.Optional != nil
 			responseParameterName = "&response"
@@ -834,7 +872,7 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	}
 	var (
 		importPath = fernFilepathToImportPath(f.baseImportPath, errorDeclaration.Name.FernFilepath)
-		value      = typeReferenceToGoType(errorDeclaration.Type, f.types, f.imports, f.baseImportPath, importPath)
+		value      = typeReferenceToGoType(errorDeclaration.Type, f.types, f.imports, f.baseImportPath, importPath, false)
 	)
 	var literal string
 	if errorDeclaration.Type.Container != nil && errorDeclaration.Type.Container.Literal != nil {
@@ -918,10 +956,11 @@ func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *i
 			)
 			continue
 		}
-		f.P(header.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, importPath), " `json:\"-\"`")
+		goType := typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, importPath, false)
+		f.P(header.Name.Name.PascalCase.UnsafeName, " ", goType, " `json:\"-\"`")
 	}
 	for _, queryParam := range endpoint.QueryParameters {
-		value := typeReferenceToGoType(queryParam.ValueType, f.types, f.imports, f.baseImportPath, importPath)
+		value := typeReferenceToGoType(queryParam.ValueType, f.types, f.imports, f.baseImportPath, importPath, false)
 		if queryParam.AllowMultiple {
 			value = fmt.Sprintf("[]%s", value)
 		}
@@ -978,7 +1017,7 @@ func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *i
 	)
 	if reference := endpoint.RequestBody.Reference; reference != nil {
 		referenceType = strings.TrimPrefix(
-			typeReferenceToGoType(reference.RequestBodyType, f.types, f.imports, f.baseImportPath, importPath),
+			typeReferenceToGoType(reference.RequestBodyType, f.types, f.imports, f.baseImportPath, importPath, false),
 			"*",
 		)
 		referenceIsPointer = reference.RequestBodyType.Named != nil && isPointer(f.types[reference.RequestBodyType.Named.TypeId])
@@ -1244,7 +1283,7 @@ func (r *requestBodyVisitor) VisitInlinedRequestBody(inlinedRequestBody *ir.Inli
 		writer:         r.writer,
 	}
 	objectTypeDeclaration := inlinedRequestBodyToObjectTypeDeclaration(inlinedRequestBody)
-	_, literals := typeVisitor.visitObjectProperties(objectTypeDeclaration, true /* includeTags */)
+	_, literals := typeVisitor.visitObjectProperties(objectTypeDeclaration, true /* includeTags */, true /* includeOptionals */)
 	r.literals = literals
 	return nil
 }
@@ -1254,7 +1293,7 @@ func (r *requestBodyVisitor) VisitReference(reference *ir.HttpRequestBodyReferen
 	r.writer.P(
 		r.bodyField,
 		" ",
-		typeReferenceToGoType(reference.RequestBodyType, r.types, r.imports, r.baseImportPath, r.importPath),
+		typeReferenceToGoType(reference.RequestBodyType, r.types, r.imports, r.baseImportPath, r.importPath, false),
 		" `json:\"-\"`",
 	)
 	return nil
@@ -1280,7 +1319,7 @@ func (r *requestBodyVisitor) VisitFileUpload(fileUpload *ir.FileUploadRequest) e
 		writer:         r.writer,
 	}
 	objectTypeDeclaration := inlinedRequestBodyPropertiesToObjectTypeDeclaration(bodyProperties)
-	_, literals := typeVisitor.visitObjectProperties(objectTypeDeclaration, true /* includeTags */)
+	_, literals := typeVisitor.visitObjectProperties(objectTypeDeclaration, true /* includeTags */, true /* includeOptionals */)
 	r.literals = literals
 	return nil
 }

@@ -33,7 +33,7 @@ type typeVisitor struct {
 var _ ir.TypeVisitor = (*typeVisitor)(nil)
 
 func (t *typeVisitor) VisitAlias(alias *ir.AliasTypeDeclaration) error {
-	t.writer.P("type ", t.typeName, " = ", typeReferenceToGoType(alias.AliasOf, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath))
+	t.writer.P("type ", t.typeName, " = ", typeReferenceToGoType(alias.AliasOf, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath, false))
 	t.writer.P()
 	return nil
 }
@@ -109,7 +109,7 @@ func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 
 func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	t.writer.P("type ", t.typeName, " struct {")
-	_, literals := t.visitObjectProperties(object, true /* includeTags */)
+	_, literals := t.visitObjectProperties(object, true /* includeTags */, false /* includeOptionals */)
 
 	if len(literals) == 0 {
 		t.writer.P("}")
@@ -181,7 +181,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	t.writer.P(discriminantName, " string")
 	var literals []*literal
 	for _, extend := range union.Extends {
-		_, extendedLiterals := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, false /* includeTags */)
+		_, extendedLiterals := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, false /* includeTags */, false /* includeOptionals */)
 		literals = append(literals, extendedLiterals...)
 	}
 	for _, property := range union.BaseProperties {
@@ -189,7 +189,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			literals = append(literals, &literal{Name: property.Name.Name, Value: property.ValueType.Container.Literal})
 			continue
 		}
-		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath))
+		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath, false))
 	}
 	// We handle the union's literals separate from the extended and base
 	// literals because we only want to set them if they were actually
@@ -257,7 +257,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	t.writer.P(discriminantName, " string `json:\"", union.Discriminant.WireValue, "\"`")
 	var propertyNames []string
 	for _, extend := range union.Extends {
-		extendedProperties, _ := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, true /* includeTags */)
+		extendedProperties, _ := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, true /* includeTags */, false /* includeOptionals */)
 		propertyNames = append(propertyNames, extendedProperties...)
 	}
 	for _, property := range union.BaseProperties {
@@ -265,7 +265,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			continue
 		}
 		propertyNames = append(propertyNames, property.Name.Name.PascalCase.UnsafeName)
-		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath), jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types))
+		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath, false), jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types))
 	}
 	t.writer.P("}")
 	t.writer.P("if err := json.Unmarshal(data, &unmarshaler); err != nil {")
@@ -336,13 +336,13 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		t.writer.P(discriminantName, " string `json:\"", union.Discriminant.WireValue, "\"`")
 		// Include all of the extended and base properties.
 		for _, extend := range union.Extends {
-			_, _ = t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, true /* includeTags */)
+			_, _ = t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, true /* includeTags */, false /* includeOptionals */)
 		}
 		for _, property := range union.BaseProperties {
 			if property.ValueType.Container != nil && property.ValueType.Container.Literal != nil {
 				continue
 			}
-			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath), jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types))
+			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath, false), jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types))
 		}
 		for _, literal := range literals {
 			t.writer.P(literal.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.OriginalName, "\"`")
@@ -453,7 +453,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 				field:     field,
 				variable:  fmt.Sprintf("value%s", strings.Title(field)),
 				caseName:  firstLetterToLower(field),
-				value:     typeReferenceToGoType(unionMember.Type, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath),
+				value:     typeReferenceToGoType(unionMember.Type, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath, false),
 				docs:      unionMember.Docs,
 				literal:   literal,
 				isLiteral: isLiteral,
@@ -656,12 +656,16 @@ type literal struct {
 //
 // A slice of all the transitive property names, as well as a sentinel value that signals whether
 // any of the properties are a literal value, are returned.
-func (t *typeVisitor) visitObjectProperties(object *ir.ObjectTypeDeclaration, includeTags bool) ([]string, []*literal) {
+func (t *typeVisitor) visitObjectProperties(
+	object *ir.ObjectTypeDeclaration,
+	includeTags bool,
+	includeOptionals bool,
+) ([]string, []*literal) {
 	var names []string
 	var literals []*literal
 	for _, extend := range object.Extends {
 		// You can only extend other objects.
-		extendedNames, extendedLiterals := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, includeTags)
+		extendedNames, extendedLiterals := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, includeTags, includeOptionals)
 		names = append(names, extendedNames...)
 		literals = append(literals, extendedLiterals...)
 	}
@@ -672,11 +676,12 @@ func (t *typeVisitor) visitObjectProperties(object *ir.ObjectTypeDeclaration, in
 			continue
 		}
 		names = append(names, property.Name.Name.PascalCase.UnsafeName)
+		goType := typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath, includeOptionals)
 		if includeTags {
-			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath), jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types))
+			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", goType, jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types))
 			continue
 		}
-		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.imports, t.baseImportPath, t.importPath))
+		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", goType)
 	}
 	return names, literals
 }
@@ -684,18 +689,19 @@ func (t *typeVisitor) visitObjectProperties(object *ir.ObjectTypeDeclaration, in
 // typeReferenceVisitor retrieves the string representation of type references
 // (e.g. containers, primitives, etc).
 type typeReferenceVisitor struct {
-	value          string
-	baseImportPath string
-	importPath     string
-	imports        imports
-	types          map[ir.TypeId]*ir.TypeDeclaration
+	value            string
+	baseImportPath   string
+	importPath       string
+	imports          imports
+	types            map[ir.TypeId]*ir.TypeDeclaration
+	includeOptionals bool
 }
 
 // Compile-time assertion.
 var _ ir.TypeReferenceVisitor = (*typeReferenceVisitor)(nil)
 
 func (t *typeReferenceVisitor) VisitContainer(container *ir.ContainerType) error {
-	t.value = containerTypeToGoType(container, t.types, t.imports, t.baseImportPath, t.importPath)
+	t.value = containerTypeToGoType(container, t.types, t.imports, t.baseImportPath, t.importPath, t.includeOptionals)
 	return nil
 }
 
@@ -725,23 +731,24 @@ func (t *typeReferenceVisitor) VisitUnknown(unknown any) error {
 // containerTypeVisitor retrieves the string representation of container types
 // (e.g. lists, maps, etc).
 type containerTypeVisitor struct {
-	value          string
-	baseImportPath string
-	importPath     string
-	imports        imports
-	types          map[ir.TypeId]*ir.TypeDeclaration
+	value            string
+	baseImportPath   string
+	importPath       string
+	imports          imports
+	types            map[ir.TypeId]*ir.TypeDeclaration
+	includeOptionals bool
 }
 
 // Compile-time assertion.
 var _ ir.ContainerTypeVisitor = (*containerTypeVisitor)(nil)
 
 func (c *containerTypeVisitor) VisitList(list *ir.TypeReference) error {
-	c.value = fmt.Sprintf("[]%s", typeReferenceToGoType(list, c.types, c.imports, c.baseImportPath, c.importPath))
+	c.value = fmt.Sprintf("[]%s", typeReferenceToGoType(list, c.types, c.imports, c.baseImportPath, c.importPath, false))
 	return nil
 }
 
 func (c *containerTypeVisitor) VisitMap(mapType *ir.MapType) error {
-	c.value = fmt.Sprintf("map[%s]%s", typeReferenceToGoType(mapType.KeyType, c.types, c.imports, c.baseImportPath, c.importPath), typeReferenceToGoType(mapType.ValueType, c.types, c.imports, c.baseImportPath, c.importPath))
+	c.value = fmt.Sprintf("map[%s]%s", typeReferenceToGoType(mapType.KeyType, c.types, c.imports, c.baseImportPath, c.importPath, false), typeReferenceToGoType(mapType.ValueType, c.types, c.imports, c.baseImportPath, c.importPath, false))
 	return nil
 }
 
@@ -751,9 +758,13 @@ func (c *containerTypeVisitor) VisitOptional(optional *ir.TypeReference) error {
 	//
 	// We also don't want to specify pointers for any container types because those
 	// values are already nil-able.
-	value := strings.TrimLeft(typeReferenceToGoType(optional, c.types, c.imports, c.baseImportPath, c.importPath), "*")
+	value := strings.TrimLeft(typeReferenceToGoType(optional, c.types, c.imports, c.baseImportPath, c.importPath, c.includeOptionals), "*")
 	if optional.Container != nil && optional.Container.Literal == nil {
 		c.value = value
+		return nil
+	}
+	if c.includeOptionals {
+		c.value = fmt.Sprintf("*core.Optional[%s]", value)
 		return nil
 	}
 	c.value = fmt.Sprintf("*%s", value)
@@ -761,7 +772,7 @@ func (c *containerTypeVisitor) VisitOptional(optional *ir.TypeReference) error {
 }
 
 func (c *containerTypeVisitor) VisitSet(set *ir.TypeReference) error {
-	c.value = fmt.Sprintf("[]%s", typeReferenceToGoType(set, c.types, c.imports, c.baseImportPath, c.importPath))
+	c.value = fmt.Sprintf("[]%s", typeReferenceToGoType(set, c.types, c.imports, c.baseImportPath, c.importPath, false))
 	return nil
 }
 
@@ -797,7 +808,7 @@ func (c *singleUnionTypePropertiesVisitor) VisitSamePropertiesAsObject(named *ir
 }
 
 func (c *singleUnionTypePropertiesVisitor) VisitSingleProperty(property *ir.SingleUnionTypeProperty) error {
-	c.value = typeReferenceToGoType(property.Type, c.types, c.imports, c.baseImportPath, c.importPath)
+	c.value = typeReferenceToGoType(property.Type, c.types, c.imports, c.baseImportPath, c.importPath, false)
 	return nil
 }
 
@@ -882,12 +893,14 @@ func typeReferenceToGoType(
 	imports imports,
 	baseImportPath string,
 	importPath string,
+	includeOptionals bool,
 ) string {
 	visitor := &typeReferenceVisitor{
-		baseImportPath: baseImportPath,
-		importPath:     importPath,
-		imports:        imports,
-		types:          types,
+		baseImportPath:   baseImportPath,
+		importPath:       importPath,
+		imports:          imports,
+		types:            types,
+		includeOptionals: includeOptionals,
 	}
 	_ = typeReference.Accept(visitor)
 	return visitor.value
@@ -900,12 +913,14 @@ func containerTypeToGoType(
 	imports imports,
 	baseImportPath string,
 	importPath string,
+	includeOptionals bool,
 ) string {
 	visitor := &containerTypeVisitor{
-		baseImportPath: baseImportPath,
-		importPath:     importPath,
-		imports:        imports,
-		types:          types,
+		baseImportPath:   baseImportPath,
+		importPath:       importPath,
+		imports:          imports,
+		types:            types,
+		includeOptionals: includeOptionals,
 	}
 	_ = containerType.Accept(visitor)
 	return visitor.value

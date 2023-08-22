@@ -203,9 +203,29 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			return nil, err
 		}
 		files = append(files, file)
+		// Generate the Optional[T] constructors.
+		fileInfo, useCore := fileInfoForOptionalHelpers(ir.ApiName, generatedNames, generatedPackages)
+		writer = newFileWriter(
+			fileInfo.filename,
+			fileInfo.packageName,
+			g.config.ImportPath,
+			ir.Types,
+			ir.Errors,
+			g.coordinator,
+		)
+		if err := writer.WriteOptionalHelpers(useCore); err != nil {
+			return nil, err
+		}
+		file, err = writer.File()
+		if err != nil {
+			return nil, err
+		}
+		files = append(files, file)
 		files = append(files, newClientTestFile(g.coordinator))
 		files = append(files, newCoreFile(g.coordinator))
 		files = append(files, newCoreTestFile(g.coordinator))
+		files = append(files, newOptionalFile(g.coordinator))
+		files = append(files, newOptionalTestFile(g.coordinator))
 		files = append(files, newPointerFile(g.coordinator, ir.ApiName, generatedNames))
 
 		// Generate the error types, if any.
@@ -218,8 +238,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				ir.Errors,
 				g.coordinator,
 			)
-			// TODO: We need to sort these for deterministic results.
-			// Do this based on the ErrorId.
 			for _, irError := range irErrors {
 				if err := writer.WriteError(irError); err != nil {
 					return nil, err
@@ -478,6 +496,22 @@ func newCoreTestFile(coordinator *coordinator.Client) *File {
 	)
 }
 
+func newOptionalFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/optional.go",
+		[]byte(optionalFile),
+	)
+}
+
+func newOptionalTestFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/optional_test.go",
+		[]byte(optionalTestFile),
+	)
+}
+
 type fileInfo struct {
 	filename    string
 	packageName string
@@ -505,6 +539,27 @@ func fileInfoForCoreClientOptions() *fileInfo {
 		filename:    "core/client_options.go",
 		packageName: "core",
 	}
+}
+
+func fileInfoForOptionalHelpers(apiName *ir.Name, generatedNames map[string]struct{}, generatedPackages map[string]struct{}) (*fileInfo, bool) {
+	_, hasOptional := generatedNames["Optional"]
+	_, hasNull := generatedNames["Null"]
+	if hasOptional || hasNull {
+		return &fileInfo{
+			filename:    "core/_optional.go",
+			packageName: "core",
+		}, true
+	}
+	if _, ok := generatedPackages["optional"]; ok {
+		return &fileInfo{
+			filename:    "_optional.go",
+			packageName: strings.ToLower(apiName.CamelCase.SafeName),
+		}, false
+	}
+	return &fileInfo{
+		filename:    "optional.go",
+		packageName: strings.ToLower(apiName.CamelCase.SafeName),
+	}, false
 }
 
 func fileInfoForEnvironments(apiName *ir.Name, generatedNames map[string]struct{}, generatedPackages map[string]struct{}) *fileInfo {

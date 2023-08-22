@@ -5,6 +5,7 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
+	core "github.com/fern-api/fern-go/internal/testdata/sdk/post-with-path-params/fixtures/core"
 )
 
 type SetNameRequest struct {
@@ -86,6 +87,99 @@ func (s *SetNameRequestV5) MarshalJSON() ([]byte, error) {
 	return json.Marshal("fern")
 }
 
+type Filter struct {
+	Tag string `json:"tag"`
+}
+
 type SetNameRequestV3Body struct {
 	UserName string `json:"userName"`
+}
+
+type Union struct {
+	Type string
+	Foo  *Foo
+	Bar  *Bar
+}
+
+func NewUnionFromFoo(value *Foo) *Union {
+	return &Union{Type: "foo", Foo: value}
+}
+
+func NewUnionFromBar(value *Bar) *Union {
+	return &Union{Type: "bar", Bar: value}
+}
+
+func (u *Union) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	u.Type = unmarshaler.Type
+	switch unmarshaler.Type {
+	case "foo":
+		value := new(Foo)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		u.Foo = value
+	case "bar":
+		value := new(Bar)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		u.Bar = value
+	}
+	return nil
+}
+
+func (u Union) MarshalJSON() ([]byte, error) {
+	switch u.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
+	case "foo":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*Foo
+		}{
+			Type: u.Type,
+			Foo:  u.Foo,
+		}
+		return json.Marshal(marshaler)
+	case "bar":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*Bar
+		}{
+			Type: u.Type,
+			Bar:  u.Bar,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
+type UnionVisitor interface {
+	VisitFoo(*Foo) error
+	VisitBar(*Bar) error
+}
+
+func (u *Union) Accept(visitor UnionVisitor) error {
+	switch u.Type {
+	default:
+		return fmt.Errorf("invalid type %s in %T", u.Type, u)
+	case "foo":
+		return visitor.VisitFoo(u.Foo)
+	case "bar":
+		return visitor.VisitBar(u.Bar)
+	}
+}
+
+type UpdateRequest struct {
+	Tag            string                 `json:"-"`
+	Extra          *string                `json:"-"`
+	Union          *Union                 `json:"union,omitempty"`
+	Filter         *Filter                `json:"filter,omitempty"`
+	OptionalUnion  *core.Optional[Union]  `json:"optionalUnion,omitempty"`
+	OptionalFilter *core.Optional[Filter] `json:"optionalFilter,omitempty"`
 }
