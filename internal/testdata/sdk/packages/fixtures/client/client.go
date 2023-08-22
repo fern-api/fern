@@ -78,14 +78,14 @@ func (c *Client) PostFoo(ctx context.Context, request *fixtures.Foo) (*fixtures.
 			value := new(fixtures.ConflictError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 422:
 			value := new(fixtures.UnprocessableEntityError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}

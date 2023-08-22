@@ -542,7 +542,7 @@ func (f *fileWriter) WriteClient(
 				} else {
 					f.P("if err := decoder.Decode(value); err != nil {")
 				}
-				f.P("return err")
+				f.P("return apiError")
 				f.P("}")
 				f.P("return value")
 			}

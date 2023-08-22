@@ -58,28 +58,28 @@ func (c *Client) Get(ctx context.Context, id string) (string, error) {
 			value := new(fixtures.OrganizationNotFoundError)
 			value.APIError = apiError
 			if err := json.Unmarshal(discriminant.Content, value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case "UserNotFoundError":
 			value := new(fixtures.UserNotFoundError)
 			value.APIError = apiError
 			if err := json.Unmarshal(discriminant.Content, value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case "NotFoundError":
 			value := new(fixtures.NotFoundError)
 			value.APIError = apiError
 			if err := json.Unmarshal(discriminant.Content, value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case "UntypedNotFoundError":
 			value := new(fixtures.UntypedNotFoundError)
 			value.APIError = apiError
 			if err := json.Unmarshal(discriminant.Content, value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}

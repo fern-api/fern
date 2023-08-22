@@ -51,35 +51,35 @@ func (c *Client) Get(ctx context.Context, id string) (string, error) {
 			value := new(fixtures.UserNotFoundError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 501:
 			value := new(fixtures.NotImplementedError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 418:
 			value := new(fixtures.TeapotError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 426:
 			value := new(fixtures.UpgradeError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 400:
 			value := new(fixtures.UntypedError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}
@@ -122,14 +122,14 @@ func (c *Client) Update(ctx context.Context, id string, request string) (string,
 			value := new(fixtures.UpgradeError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 400:
 			value := new(fixtures.UntypedError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}

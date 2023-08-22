@@ -75,14 +75,14 @@ func (c *Client) PostTasks(ctx context.Context, request *fixtures.TaskNew) (*fix
 			value := new(fixtures.ConflictError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 422:
 			value := new(fixtures.UnprocessableEntityError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}
@@ -126,7 +126,7 @@ func (c *Client) GetTasksTaskId(ctx context.Context, taskId fixtures.Id) (*fixtu
 			value := new(fixtures.NotFoundError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}
@@ -170,21 +170,21 @@ func (c *Client) PatchTasksTaskId(ctx context.Context, taskId fixtures.Id, reque
 			value := new(fixtures.NotFoundError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 409:
 			value := new(fixtures.ConflictError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 422:
 			value := new(fixtures.UnprocessableEntityError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}
@@ -228,7 +228,7 @@ func (c *Client) DeleteTasksTaskId(ctx context.Context, taskId fixtures.Id) erro
 			value := new(fixtures.NotFoundError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}
@@ -273,14 +273,14 @@ func (c *Client) PostTasksTaskIdRun(ctx context.Context, taskId fixtures.Id) (*f
 			value := new(fixtures.NotFoundError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 409:
 			value := new(fixtures.ConflictError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}
@@ -327,28 +327,28 @@ func (c *Client) PostTasksBatchCreate(ctx context.Context, request []*fixtures.T
 			value := new(fixtures.NotFoundError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 409:
 			value := new(fixtures.ConflictError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 413:
 			value := new(fixtures.ContentTooLargeError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 422:
 			value := new(fixtures.UnprocessableEntityError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}
@@ -395,14 +395,14 @@ func (c *Client) PostTasksBatchDelete(ctx context.Context, request []fixtures.Id
 			value := new(fixtures.NotFoundError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 413:
 			value := new(fixtures.ContentTooLargeError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}
@@ -468,7 +468,7 @@ func (c *Client) PostSchedules(ctx context.Context, request *fixtures.ScheduleNe
 			value := new(fixtures.UnprocessableEntityError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}
@@ -512,7 +512,7 @@ func (c *Client) GetSchedulesScheduleId(ctx context.Context, scheduleId fixtures
 			value := new(fixtures.NotFoundError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}
@@ -556,14 +556,14 @@ func (c *Client) PatchSchedulesScheduleId(ctx context.Context, scheduleId fixtur
 			value := new(fixtures.NotFoundError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 422:
 			value := new(fixtures.UnprocessableEntityError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}
@@ -607,7 +607,7 @@ func (c *Client) DeleteSchedulesScheduleId(ctx context.Context, scheduleId fixtu
 			value := new(fixtures.NotFoundError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}
@@ -650,7 +650,7 @@ func (c *Client) GetSchedulesScheduleIdTasks(ctx context.Context, scheduleId fix
 			value := new(fixtures.NotFoundError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}

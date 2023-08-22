@@ -75,14 +75,14 @@ func (c *Client) PostFoo(ctx context.Context, request *fixtures.Bar) (*fixtures.
 			value := new(fixtures.ConflictError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 422:
 			value := new(fixtures.UnprocessableEntityError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}
@@ -125,7 +125,7 @@ func (c *Client) GetFooFooId(ctx context.Context, fooId fixtures.Id) (*fixtures.
 			value := new(fixtures.NotFoundError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}
@@ -168,21 +168,21 @@ func (c *Client) PatchFooFooId(ctx context.Context, fooId fixtures.Id, request *
 			value := new(fixtures.NotFoundError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 409:
 			value := new(fixtures.ConflictError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 422:
 			value := new(fixtures.UnprocessableEntityError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}
@@ -225,7 +225,7 @@ func (c *Client) DeleteFooFooId(ctx context.Context, fooId fixtures.Id) error {
 			value := new(fixtures.NotFoundError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}
@@ -267,14 +267,14 @@ func (c *Client) PostFooFooIdRun(ctx context.Context, fooId fixtures.Id) (*fixtu
 			value := new(fixtures.NotFoundError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 409:
 			value := new(fixtures.ConflictError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}
@@ -317,28 +317,28 @@ func (c *Client) PostFooBatchCreate(ctx context.Context, request []*fixtures.Bar
 			value := new(fixtures.NotFoundError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 409:
 			value := new(fixtures.ConflictError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 413:
 			value := new(fixtures.ContentTooLargeError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 422:
 			value := new(fixtures.UnprocessableEntityError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}
@@ -381,14 +381,14 @@ func (c *Client) PostFooBatchDelete(ctx context.Context, request []fixtures.Id) 
 			value := new(fixtures.NotFoundError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		case 413:
 			value := new(fixtures.ContentTooLargeError)
 			value.APIError = apiError
 			if err := decoder.Decode(value); err != nil {
-				return err
+				return apiError
 			}
 			return value
 		}
