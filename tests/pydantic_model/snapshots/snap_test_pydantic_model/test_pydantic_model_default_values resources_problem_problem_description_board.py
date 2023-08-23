@@ -7,8 +7,6 @@ import typing
 import pydantic
 import typing_extensions
 
-from ..commons.variable_value import VariableValue
-
 
 class ProblemDescriptionBoard_Html(pydantic.BaseModel):
     type: typing_extensions.Literal["html"]
@@ -28,3 +26,4 @@ class ProblemDescriptionBoard_TestCaseId(pydantic.BaseModel):
 ProblemDescriptionBoard = typing.Union[
     ProblemDescriptionBoard_Html, ProblemDescriptionBoard_Variable, ProblemDescriptionBoard_TestCaseId
 ]
+from ..commons.variable_value import VariableValue  # noqa: E402

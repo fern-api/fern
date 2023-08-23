@@ -6,9 +6,6 @@ import typing
 
 import typing_extensions
 
-from ..commons.key_value_pair import KeyValuePair
-from ..commons.map_value import MapValue
-from ..commons.variable_value import VariableValue
 from .building_executor_response import BuildingExecutorResponse
 from .errored_response import ErroredResponse
 from .finished_response import FinishedResponse
@@ -112,9 +109,3 @@ CodeExecutionUpdate = typing.Union[
     CodeExecutionUpdate_InvalidRequest,
     CodeExecutionUpdate_Finished,
 ]
-CodeExecutionUpdate_Graded.update_forward_refs(
-    KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue
-)
-CodeExecutionUpdate_GradedV2.update_forward_refs(
-    KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue
-)

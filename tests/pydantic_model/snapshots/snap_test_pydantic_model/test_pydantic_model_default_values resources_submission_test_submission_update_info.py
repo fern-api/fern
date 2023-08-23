@@ -7,9 +7,6 @@ import typing
 import pydantic
 import typing_extensions
 
-from ..commons.key_value_pair import KeyValuePair
-from ..commons.map_value import MapValue
-from ..commons.variable_value import VariableValue
 from .error_info import ErrorInfo
 from .graded_test_case_update import GradedTestCaseUpdate
 from .recorded_test_case_update import RecordedTestCaseUpdate
@@ -56,6 +53,3 @@ TestSubmissionUpdateInfo = typing.Union[
     TestSubmissionUpdateInfo_RecordedTestCase,
     TestSubmissionUpdateInfo_Finished,
 ]
-TestSubmissionUpdateInfo_GradedTestCase.update_forward_refs(
-    KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue
-)

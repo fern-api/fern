@@ -8,10 +8,8 @@ import pydantic
 import typing_extensions
 
 from ....commons.language import Language
-from ....commons.list_type import ListType
-from ....commons.map_type import MapType
-from ....commons.variable_type import VariableType
 from .basic_custom_files import BasicCustomFiles
+from .file_info_v_2 import FileInfoV2
 from .files import Files
 
 
@@ -28,4 +26,3 @@ class CustomFiles_Custom(pydantic.BaseModel):
 
 
 CustomFiles = typing.Union[CustomFiles_Basic, CustomFiles_Custom]
-CustomFiles_Basic.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)
