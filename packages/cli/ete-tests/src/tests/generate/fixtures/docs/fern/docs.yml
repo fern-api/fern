@@ -18,7 +18,7 @@ navigation:
   - api: V2.2 API Reference
     api-name: "v2.2"
 
-background-image: ./bg-gradient.png
+background-image: ./bg-gradient.svg
 
 colors:
   accentPrimary: "#FFFFFF"
