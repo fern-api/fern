@@ -16,6 +16,7 @@ import { FernRegistry } from "@fern-fern/registry-node";
 import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
+import * as mime from "mime-types";
 
 export async function publishDocs({
     token,
@@ -74,9 +75,10 @@ export async function publishDocs({
             if (uploadUrl == null) {
                 context.failAndThrow(`Failed to upload ${filepathToUpload}`, "Upload URL is missing");
             } else {
+                const mimeType = mime.lookup(filepathToUpload);
                 await axios.put(uploadUrl.uploadUrl, await readFile(filepathToUpload), {
                     headers: {
-                        "Content-Type": filepathToUpload.endsWith("svg") ? "image/svg+xml" : "application/octet-stream",
+                        "Content-Type": mimeType === false ? "application/octet-stream" : mimeType,
                     },
                 });
             }
