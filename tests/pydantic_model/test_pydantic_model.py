@@ -19,6 +19,21 @@ def test_pydantic_model(snapshot: SnapshotTest, tmpdir: Path) -> None:
     )
 
 
+def test_pydantic_model_default_values(snapshot: SnapshotTest, tmpdir: Path) -> None:
+    run_snapshot_test(
+        snapshot=snapshot,
+        fixture_name="trace",
+        tmpdir=tmpdir,
+        cli=cli,
+        filename_of_test=__file__,
+        custom_config={
+            "include_validators": True,
+            # add default values for optional fields
+            "require_optional_fields": False,
+        },
+    )
+
+
 def test_publish_pydantic_model(snapshot: SnapshotTest, tmpdir: Path) -> None:
     run_snapshot_test(
         snapshot=snapshot,

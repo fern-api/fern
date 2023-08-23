@@ -10,3 +10,4 @@ class PydanticModelCustomConfig(pydantic.BaseModel):
     frozen: bool = False
     orm_mode: bool = False
     smart_union: bool = False
+    require_optional_fields: bool = True
