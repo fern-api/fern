@@ -14,6 +14,7 @@ import { TaskContextFactory } from "./TaskContextFactory";
 export const FIXTURES = {
     EXHAUSTIVE: "exhaustive",
     BASIC_AUTH: "basic-auth",
+    CIRCULAR_REFERENCES: "circular-references",
     CUSTOM_AUTH: "custom-auth",
     ERROR_PROPERTY: "error-property",
     MULTI_URL_ENVIRONMENT: "multi-url-environment",
