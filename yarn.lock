@@ -2237,6 +2237,7 @@ __metadata:
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
+    "@types/mime-types": ^2.1.1
     "@types/node": ^18.7.18
     "@types/terminal-link": ^1.2.0
     axios: ^0.27.2
@@ -2247,6 +2248,7 @@ __metadata:
     form-data: ^4.0.0
     jest: ^29.4.0
     lodash-es: ^4.17.21
+    mime-types: ^2.1.35
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     terminal-link: ^3.0.0
@@ -3628,6 +3630,13 @@ __metadata:
   version: 4.14.182
   resolution: "@types/lodash@npm:4.14.182"
   checksum: 7dd137aa9dbabd632408bd37009d984655164fa1ecc3f2b6eb94afe35bf0a5852cbab6183148d883e9c73a958b7fec9a9bcf7c8e45d41195add6a18c34958209
+  languageName: node
+  linkType: hard
+
+"@types/mime-types@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "@types/mime-types@npm:2.1.1"
+  checksum: 106b5d556add46446a579ad25ff15d6b421851790d887edcad558c90c1e64b1defc72bfbaf4b08f208916e21d9cc45cdb951d77be51268b18221544cfe054a3c
   languageName: node
   linkType: hard
 
@@ -9485,7 +9494,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"mime-types@npm:^2.1.12":
+"mime-types@npm:^2.1.12, mime-types@npm:^2.1.35":
   version: 2.1.35
   resolution: "mime-types@npm:2.1.35"
   dependencies:
