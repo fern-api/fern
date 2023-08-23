@@ -1,0 +1,8 @@
+1. Clone repo (git clone `repo url`)
+2. Create a new branch (git checkout -b `branch name`)
+3. You modify files
+4. Push changes
+5. Create PR (octokit) 
+
+Step 1: publish seed
+Step 2: get current git version and make PRs (seed upgrade run --version {})

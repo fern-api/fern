@@ -3,6 +3,7 @@ import { CONSOLE_LOGGER, LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import { FIXTURES, runTests } from "./commands/test/test";
+import { bumpGeneratorSeedVersions } from "./commands/upgrade/upgrade";
 
 void tryRunCli();
 
@@ -10,10 +11,28 @@ export async function tryRunCli(): Promise<void> {
     const cli: Argv = yargs(hideBin(process.argv));
 
     addTestCommand(cli);
+    addUpgradeCommand(cli);
 
     await cli.parse();
 
     CONSOLE_LOGGER.info("Seed has finished...");
+}
+
+function addUpgradeCommand(cli: Argv) {
+    cli.command(
+        "upgrade",
+        "Upgrade Seed CLI version within SDK Generators",
+        (yargs) =>
+            yargs.option("seedVersion", {
+                type: "string",
+                demandOption: true,
+            }),
+        async (argv) => {
+            await bumpGeneratorSeedVersions({
+                version: argv.seedVersion,
+            });
+        }
+    );
 }
 
 function addTestCommand(cli: Argv) {
@@ -59,16 +78,10 @@ function addTestCommand(cli: Argv) {
                 .option("output-directory", {
                     type: "string",
                     alias: "output-dir",
-<<<<<<< HEAD
-                    description: "The output directory of the generated code, useful for generators with multiple dockers",
-                    demandOption: false,
-                    default: "seed"
-=======
                     description:
                         "The output directory of the generated code, useful for generators with multiple dockers",
                     demandOption: false,
                     default: "seed",
->>>>>>> df40b931ba0959c62ccda2036f866d9ada7acb91
                 }),
         async (argv) => {
             const parsedDockerImage = validateAndParseDockerImage(argv.docker);
@@ -79,11 +92,7 @@ function addTestCommand(cli: Argv) {
                 docker: parsedDockerImage,
                 compileCommand: argv["compile-command"],
                 logLevel: argv["log-level"],
-<<<<<<< HEAD
-                outputDir: argv.outputDirectory
-=======
                 outputDir: argv.outputDirectory,
->>>>>>> df40b931ba0959c62ccda2036f866d9ada7acb91
             });
         }
     );

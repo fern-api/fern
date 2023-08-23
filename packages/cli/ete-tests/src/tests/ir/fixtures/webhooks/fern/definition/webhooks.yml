@@ -1,0 +1,12 @@
+webhooks:
+  sendNotification:
+    path: /notify
+    method: POST
+    docs: This is a webhook to receive notifications.
+    payload:
+      name: NotificationPayload
+      properties:
+        name: string
+        urgent:
+          type: boolean
+          docs: Some docs about urgency

@@ -21,6 +21,7 @@ import { getAudiences } from "./converters/convertDeclaration";
 import { convertEnvironments } from "./converters/convertEnvironments";
 import { convertErrorDeclaration } from "./converters/convertErrorDeclaration";
 import { convertErrorDiscriminationStrategy } from "./converters/convertErrorDiscriminationStrategy";
+import { convertWebhookGroup } from "./converters/convertWebhookGroup";
 import { constructHttpPath } from "./converters/services/constructHttpPath";
 import { convertHttpHeader, convertHttpService, convertPathParameters } from "./converters/services/convertHttpService";
 import { convertTypeDeclaration } from "./converters/type-declarations/convertTypeDeclaration";
@@ -117,6 +118,7 @@ export async function generateIntermediateRepresentation({
             typesReferencedOnlyByService: {},
             sharedTypes: [],
         },
+        webhookGroups: {},
     };
 
     const packageTreeGenerator = new PackageTreeGenerator();
@@ -220,6 +222,15 @@ export async function generateIntermediateRepresentation({
                         );
                     }
                 });
+            },
+            webhooks: (webhooks) => {
+                if (webhooks == null) {
+                    return;
+                }
+                const webhookGroupId = IdGenerator.generateWebhookGroupId(file.fernFilepath);
+                const convertedWebhookGroup = convertWebhookGroup({ webhooks, file });
+                intermediateRepresentation.webhookGroups[webhookGroupId] = convertedWebhookGroup;
+                packageTreeGenerator.addWebhookGroup(webhookGroupId, file.fernFilepath);
             },
         });
     };

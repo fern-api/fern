@@ -27923,10 +27923,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
         "TransformationIssueAggregationKeys",
         "TransformationIssueReference",
         "TransformationIssueData",
-        "DeliveryIssueWithData",
-        "TransformationIssueWithData",
-        "DeliveryIssue",
-        "TransformationIssue",
         "IgnoredEventCause",
         "FilteredMeta",
         "TransformationFailedMeta",
@@ -29762,16 +29758,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
             },
             {
               "conflict": {},
-              "generatedName": "deliveryIssueType",
-              "key": "type",
-              "schema": {
-                "description": undefined,
-                "type": "literal",
-                "value": "delivery",
-              },
-            },
-            {
-              "conflict": {},
               "generatedName": "deliveryIssueAggregationKeys",
               "key": "aggregation_keys",
               "schema": {
@@ -30140,16 +30126,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-            },
-            {
-              "conflict": {},
-              "generatedName": "deliveryIssueWithDataType",
-              "key": "type",
-              "schema": {
-                "description": undefined,
-                "type": "literal",
-                "value": "delivery",
               },
             },
             {
@@ -32503,28 +32479,30 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "Issue": {
           "oneOf": {
+            "commonProperties": [],
             "description": "Issue",
+            "discriminantProperty": "type",
             "generatedName": "Issue",
             "nameOverride": undefined,
-            "schemas": [
-              {
+            "schemas": {
+              "delivery": {
                 "description": undefined,
                 "file": undefined,
-                "generatedName": "IssueZero",
+                "generatedName": "ComponentsSchemasDeliveryIssue",
                 "nameOverride": undefined,
                 "schema": "DeliveryIssue",
                 "type": "reference",
               },
-              {
+              "transformation": {
                 "description": undefined,
                 "file": undefined,
-                "generatedName": "IssueOne",
+                "generatedName": "ComponentsSchemasTransformationIssue",
                 "nameOverride": undefined,
                 "schema": "TransformationIssue",
                 "type": "reference",
               },
-            ],
-            "type": "undisciminated",
+            },
+            "type": "discriminated",
           },
           "type": "oneOf",
         },
@@ -33201,28 +33179,30 @@ exports[`open api parser hookdeck parse open api 1`] = `
         },
         "IssueWithData": {
           "oneOf": {
+            "commonProperties": [],
             "description": undefined,
+            "discriminantProperty": "type",
             "generatedName": "IssueWithData",
             "nameOverride": undefined,
-            "schemas": [
-              {
+            "schemas": {
+              "delivery": {
                 "description": undefined,
                 "file": undefined,
-                "generatedName": "IssueWithDataZero",
+                "generatedName": "ComponentsSchemasDeliveryIssueWithData",
                 "nameOverride": undefined,
                 "schema": "DeliveryIssueWithData",
                 "type": "reference",
               },
-              {
+              "transformation": {
                 "description": undefined,
                 "file": undefined,
-                "generatedName": "IssueWithDataOne",
+                "generatedName": "ComponentsSchemasTransformationIssueWithData",
                 "nameOverride": undefined,
                 "schema": "TransformationIssueWithData",
                 "type": "reference",
               },
-            ],
-            "type": "undisciminated",
+            },
+            "type": "discriminated",
           },
           "type": "oneOf",
         },
@@ -36523,16 +36503,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
             },
             {
               "conflict": {},
-              "generatedName": "transformationIssueType",
-              "key": "type",
-              "schema": {
-                "description": undefined,
-                "type": "literal",
-                "value": "transformation",
-              },
-            },
-            {
-              "conflict": {},
               "generatedName": "transformationIssueAggregationKeys",
               "key": "aggregation_keys",
               "schema": {
@@ -36885,16 +36855,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-            },
-            {
-              "conflict": {},
-              "generatedName": "transformationIssueWithDataType",
-              "key": "type",
-              "schema": {
-                "description": undefined,
-                "type": "literal",
-                "value": "transformation",
               },
             },
             {

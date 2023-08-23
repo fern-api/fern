@@ -14,6 +14,7 @@ import { TaskContextFactory } from "./TaskContextFactory";
 export const FIXTURES = {
     EXHAUSTIVE: "exhaustive",
     BASIC_AUTH: "basic-auth",
+    CIRCULAR_REFERENCES: "circular-references",
     CUSTOM_AUTH: "custom-auth",
     ERROR_PROPERTY: "error-property",
     MULTI_URL_ENVIRONMENT: "multi-url-environment",
@@ -22,6 +23,7 @@ export const FIXTURES = {
     SINGLE_URL_ENVIRONMENT_NO_DEFAULT: "single-url-environment-no-default",
     FILE_DOWNLOAD: "file-download",
     FILE_UPLOAD: "file-upload",
+    TEST: "test",
 } as const;
 
 type TestResult = TestSuccess | TestFailure;

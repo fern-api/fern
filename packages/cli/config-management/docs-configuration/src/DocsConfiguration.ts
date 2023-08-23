@@ -16,18 +16,20 @@ export interface DocsConfiguration {
 }
 
 export interface DocsColorsConfiguration {
-    accentPrimary:
-        | {
-              type: "themed";
-              dark: FernRegistry.docs.v1.write.RgbColor | undefined;
-              light: FernRegistry.docs.v1.write.RgbColor | undefined;
-          }
-        | {
-              type: "unthemed";
-              color: FernRegistry.docs.v1.write.RgbColor | undefined;
-          }
-        | undefined;
+    accentPrimary: ColorConfiguration | undefined;
+    background: ColorConfiguration | undefined;
 }
+
+export type ColorConfiguration =
+    | {
+          type: "themed";
+          dark: FernRegistry.docs.v1.write.RgbColor | undefined;
+          light: FernRegistry.docs.v1.write.RgbColor | undefined;
+      }
+    | {
+          type: "unthemed";
+          color: FernRegistry.docs.v1.write.RgbColor | undefined;
+      };
 
 export interface Logo {
     dark: ImageReference | undefined;

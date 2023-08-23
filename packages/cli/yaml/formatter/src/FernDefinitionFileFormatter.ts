@@ -7,7 +7,13 @@ const LANG_SERVER_BANNER =
 
 const YAML_KEY_REGEX = /^(\s*)(\S+):.*$/;
 
-type FernFileCursorLocation = keyof RawSchemas.DefinitionFileSchema | "endpoint" | "type" | "error" | "unknown";
+type FernFileCursorLocation =
+    | keyof RawSchemas.DefinitionFileSchema
+    | "endpoint"
+    | "webhook"
+    | "type"
+    | "error"
+    | "unknown";
 
 export class FernDefinitionFileFormatter {
     private tabWidth: number | undefined;
@@ -117,6 +123,7 @@ export class FernDefinitionFileFormatter {
                 case "types":
                 case "service":
                 case "errors":
+                case "webhooks":
                     return castedKey;
                 default:
                     assertNeverNoThrow(castedKey);
@@ -148,6 +155,12 @@ export class FernDefinitionFileFormatter {
             case "error":
                 if (indent === 1) {
                     return "error";
+                }
+                return undefined;
+            case "webhooks":
+            case "webhook":
+                if (indent === 1) {
+                    return "webhook";
                 }
                 return undefined;
             default:

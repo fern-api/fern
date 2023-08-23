@@ -16,6 +16,7 @@ import { FernRegistry } from "@fern-fern/registry-node";
 import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
+import * as mime from "mime-types";
 
 export async function publishDocs({
     token,
@@ -74,9 +75,10 @@ export async function publishDocs({
             if (uploadUrl == null) {
                 context.failAndThrow(`Failed to upload ${filepathToUpload}`, "Upload URL is missing");
             } else {
+                const mimeType = mime.lookup(filepathToUpload);
                 await axios.put(uploadUrl.uploadUrl, await readFile(filepathToUpload), {
                     headers: {
-                        "Content-Type": "application/octet-stream",
+                        "Content-Type": mimeType === false ? "application/octet-stream" : mimeType,
                     },
                 });
             }
@@ -230,13 +232,26 @@ async function convertDocsConfiguration({
             accentPrimary:
                 docsDefinition.config.colors?.accentPrimary != null
                     ? docsDefinition.config.colors.accentPrimary.type === "themed"
-                        ? FernRegistry.docs.v1.write.AccentPrimaryConfig.themed({
+                        ? FernRegistry.docs.v1.write.ColorConfig.themed({
                               dark: docsDefinition.config.colors.accentPrimary.dark,
                               light: docsDefinition.config.colors.accentPrimary.light,
                           })
                         : docsDefinition.config.colors.accentPrimary.color != null
-                        ? FernRegistry.docs.v1.write.AccentPrimaryConfig.unthemed({
+                        ? FernRegistry.docs.v1.write.ColorConfig.unthemed({
                               color: docsDefinition.config.colors.accentPrimary.color,
+                          })
+                        : undefined
+                    : undefined,
+            background:
+                docsDefinition.config.colors?.background != null
+                    ? docsDefinition.config.colors.background.type === "themed"
+                        ? FernRegistry.docs.v1.write.ColorConfig.themed({
+                              dark: docsDefinition.config.colors.background.dark,
+                              light: docsDefinition.config.colors.background.light,
+                          })
+                        : docsDefinition.config.colors.background.color != null
+                        ? FernRegistry.docs.v1.write.ColorConfig.unthemed({
+                              color: docsDefinition.config.colors.background.color,
                           })
                         : undefined
                     : undefined,

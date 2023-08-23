@@ -6,6 +6,7 @@ import { createDocsVisitor } from "./visitors/utils/createDocsVisitor";
 import { visitErrorDeclarations } from "./visitors/visitErrorDeclarations";
 import { visitImports } from "./visitors/visitImports";
 import { visitTypeDeclarations } from "./visitors/visitTypeDeclarations";
+import { visitWebhooks } from "./visitors/visitWebhooks";
 
 export async function visitDefinitionFileYamlAst(
     contents: DefinitionFileSchema,
@@ -22,6 +23,11 @@ export async function visitDefinitionFileYamlAst(
         service: async (service) => {
             if (service != null) {
                 await visitHttpService({ service, visitor, nodePath: ["service"] });
+            }
+        },
+        webhooks: async (webhooks) => {
+            for (const [webhookId, webhook] of Object.entries(webhooks ?? {})) {
+                await visitWebhooks({ webhook, visitor, nodePathForWebhook: ["webhooks", webhookId] });
             }
         },
         errors: async (errors) => {
