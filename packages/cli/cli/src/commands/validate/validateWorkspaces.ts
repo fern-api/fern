@@ -11,7 +11,7 @@ export async function validateWorkspaces({
     cliContext: CliContext;
 }): Promise<void> {
     await Promise.all(
-        project.workspaces.map(async (workspace) => {
+        project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 if (workspace.type === "openapi") {
                     const fernWorkspace = await convertOpenApiWorkspaceToFernWorkspace(workspace, context);

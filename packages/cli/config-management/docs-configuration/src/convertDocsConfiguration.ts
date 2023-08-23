@@ -21,8 +21,12 @@ export async function convertDocsConfiguration({
     absolutePathOfConfiguration: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<DocsConfiguration> {
-    const { navigation, colors, favicon, backgroundImage, logo, navbarLinks, title, typography } = rawDocsConfiguration;
+    const { instances, navigation, colors, favicon, backgroundImage, logo, navbarLinks, title, typography } =
+        rawDocsConfiguration;
+    const convertedColors = convertColorsConfiguration(colors ?? {}, context);
+
     return {
+        instances,
         navigation: await convertNavigationConfiguration({
             rawConfig: navigation,
             absolutePathOfConfiguration,
@@ -64,7 +68,38 @@ export async function convertDocsConfiguration({
                       context,
                   })
                 : undefined,
-        colors: convertColorsConfiguration(colors ?? {}, context),
+        colors: {
+            accentPrimary:
+                convertedColors.accentPrimary != null
+                    ? convertedColors.accentPrimary.type === "themed"
+                        ? {
+                              type: "themed",
+                              dark: convertedColors.accentPrimary.dark,
+                              light: convertedColors.accentPrimary.light,
+                          }
+                        : convertedColors.accentPrimary.type === "unthemed"
+                        ? {
+                              type: "unthemed",
+                              color: convertedColors.accentPrimary.color,
+                          }
+                        : undefined
+                    : undefined,
+            background:
+                convertedColors.background != null
+                    ? convertedColors.background.type === "themed"
+                        ? {
+                              type: "themed",
+                              dark: convertedColors.background.dark,
+                              light: convertedColors.background.light,
+                          }
+                        : convertedColors.background.type === "unthemed"
+                        ? {
+                              type: "unthemed",
+                              color: convertedColors.background.color,
+                          }
+                        : undefined
+                    : undefined,
+        },
         navbarLinks: navbarLinks != null ? convertNavbarLinks(navbarLinks) : undefined,
         typography:
             typography != null
@@ -138,15 +173,46 @@ async function convertNavigationConfiguration({
     absolutePathOfConfiguration,
     context,
 }: {
-    rawConfig: RawDocs.NavigationItem[];
+    rawConfig: RawDocs.NavigationConfig;
     absolutePathOfConfiguration: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<DocsNavigationConfiguration> {
-    return {
-        items: await Promise.all(
-            rawConfig.map((item) => convertNavigationItem({ rawConfig: item, absolutePathOfConfiguration, context }))
-        ),
-    };
+    if (rawConfig.length === 0) {
+        return {
+            type: "unversioned",
+            items: [],
+        };
+    } else if (isVersionedNavigationConfig(rawConfig)) {
+        return {
+            type: "versioned",
+            versions: await Promise.all(
+                rawConfig.map(async (config) => {
+                    return {
+                        items: await Promise.all(
+                            config.layout.map(
+                                async (item) =>
+                                    await convertNavigationItem({
+                                        rawConfig: item,
+                                        absolutePathOfConfiguration,
+                                        context,
+                                    })
+                            )
+                        ),
+                        version: config.version,
+                    };
+                })
+            ),
+        };
+    } else {
+        return {
+            type: "unversioned",
+            items: await Promise.all(
+                rawConfig.map((item) =>
+                    convertNavigationItem({ rawConfig: item, absolutePathOfConfiguration, context })
+                )
+            ),
+        };
+    }
 }
 
 async function convertNavigationItem({
@@ -187,6 +253,7 @@ async function convertNavigationItem({
         return {
             type: "apiSection",
             title: rawConfig.api,
+            apiName: rawConfig.apiName ?? undefined,
             audiences:
                 rawConfig.audiences != null ? { type: "select", audiences: rawConfig.audiences } : { type: "all" },
         };
@@ -230,29 +297,60 @@ async function convertImageReference({
 function convertColorsConfiguration(
     rawConfig: RawDocs.ColorsConfiguration,
     context: TaskContext
-): FernRegistry.docs.v1.write.ColorsConfig {
+): FernRegistry.docs.v1.write.ColorsConfigV2 {
     return {
-        accentPrimary: convertHextoRgb(rawConfig, "accentPrimary", context),
+        accentPrimary:
+            rawConfig.accentPrimary != null
+                ? convertColorConfiguration(rawConfig.accentPrimary, context, "accentPrimary")
+                : undefined,
+        background:
+            rawConfig.background != null
+                ? convertColorConfiguration(rawConfig.background, context, "background")
+                : undefined,
     };
 }
 
-const HEX_COLOR_REGEX = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i;
+function convertColorConfiguration(
+    raw: RawDocs.ColorConfig,
+    context: TaskContext,
+    key: string
+): FernRegistry.docs.v1.write.ColorConfig {
+    if (typeof raw === "string") {
+        const rgb = hexToRgb(raw);
+        if (rgb == null) {
+            context.failAndThrow(`'${key}' should be a hex color of the format #FFFFFF`);
+        }
+        return FernRegistry.docs.v1.write.ColorConfig.unthemed({
+            color: rgb,
+        });
+    }
 
-function convertHextoRgb(
-    rawConfig: RawDocs.ColorsConfiguration,
-    key: keyof RawDocs.ColorsConfiguration,
-    context: TaskContext
-): FernRegistry.docs.v1.write.RgbColor | undefined {
-    const color = rawConfig[key];
-    if (color == null) {
-        return undefined;
+    let rgbDark = undefined;
+    let rgbLight = undefined;
+
+    if (raw.dark != null) {
+        const rgb = hexToRgb(raw.dark);
+        if (rgb == null) {
+            context.failAndThrow(`'${key}.dark' should be a hex color of the format #FFFFFF`);
+        }
+        rgbDark = rgb;
     }
-    const rgb = hexToRgb(color);
-    if (rgb != null) {
-        return rgb;
+
+    if (raw.light != null) {
+        const rgb = hexToRgb(raw.light);
+        if (rgb == null) {
+            context.failAndThrow(`'${key}.light' should be a hex color of the format #FFFFFF`);
+        }
+        rgbLight = rgb;
     }
-    context.failAndThrow(`${key} should be a hex color of the format #FFFFFF`);
+
+    return FernRegistry.docs.v1.write.ColorConfig.themed({
+        dark: rgbDark,
+        light: rgbLight,
+    });
 }
+
+const HEX_COLOR_REGEX = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i;
 
 // https://stackoverflow.com/a/5624139/4238485
 function hexToRgb(hexString: string): FernRegistry.docs.v1.write.RgbColor | undefined {
@@ -314,4 +412,15 @@ async function resolveAndValidateFilepath({
         context.failAndThrow("Path does not exist: " + rawUnresolvedFilepath);
     }
     return resolved;
+}
+
+function isVersionedNavigationConfig(
+    navigationConfig: RawDocs.NavigationConfig
+): navigationConfig is RawDocs.VersionedNavigationLayout[] {
+    return (
+        Array.isArray(navigationConfig) &&
+        navigationConfig.length > 0 &&
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        (navigationConfig[0] as RawDocs.VersionedNavigationLayout).version != null
+    );
 }

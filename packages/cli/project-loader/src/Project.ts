@@ -1,7 +1,8 @@
 import { ProjectConfig } from "@fern-api/project-configuration";
-import { Workspace } from "@fern-api/workspace-loader";
+import { APIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 
 export interface Project {
     config: ProjectConfig;
-    workspaces: Workspace[];
+    apiWorkspaces: APIWorkspace[];
+    docsWorkspaces: DocsWorkspace | undefined;
 }

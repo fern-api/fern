@@ -15,7 +15,6 @@ export interface GeneratorGroup {
     groupName: string;
     audiences: Audiences;
     generators: GeneratorInvocation[];
-    docs: GeneratorGroupDocsConfiguration | undefined;
 }
 
 export interface GeneratorInvocation {
@@ -35,8 +34,3 @@ export const GenerationLanguage = {
 } as const;
 
 export type GenerationLanguage = Values<typeof GenerationLanguage>;
-
-export interface GeneratorGroupDocsConfiguration {
-    domain: string;
-    customDomains: string[];
-}

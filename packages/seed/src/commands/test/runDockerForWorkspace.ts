@@ -46,7 +46,6 @@ export async function runDockerForWorkspace({
                 language,
             },
         ],
-        docs: undefined,
     };
     await runLocalGenerationForSeed({
         organization: DUMMY_ORGANIZATION,

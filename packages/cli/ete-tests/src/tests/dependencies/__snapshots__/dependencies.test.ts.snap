@@ -478,6 +478,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "type_imported/x:StringAlias"
         ]
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_imported": {
             "name": {
@@ -553,6 +554,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                 "subpackage_imported/x"
             ],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": true,
             "docs": null
         },
@@ -626,6 +628,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -738,6 +741,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": false,
             "docs": null
         }
@@ -755,6 +759,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "subpackage_imported",
             "subpackage_y"
         ],
+        "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
         "docs": null
@@ -772,4 +777,4 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `903158`;
+exports[`dependencies file dependencies 1`] = `901855`;

@@ -44,6 +44,9 @@ const FIXTURES: Fixture[] = [
     {
         name: "navigation-points-to",
     },
+    {
+        name: "webhooks",
+    },
 ];
 
 interface Fixture {

@@ -15,7 +15,7 @@ function itFixture(fixtureName: string) {
         fixtureName,
         async () => {
             const fixturePath = path.join(FIXTURES_DIR, fixtureName);
-            const definitionOutputPath = path.join(fixturePath, "fern", "api", "definition");
+            const definitionOutputPath = path.join(fixturePath, "fern", "definition");
             if (await doesPathExist(AbsoluteFilePath.of(definitionOutputPath))) {
                 await rm(definitionOutputPath, { force: true, recursive: true });
             }

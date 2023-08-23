@@ -56,15 +56,19 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
         }
     }
 
-    public markReferencedByDiscriminatedUnion(schema: OpenAPIV3.ReferenceObject, discrminant: string): void {
+    public markReferencedByDiscriminatedUnion(
+        schema: OpenAPIV3.ReferenceObject,
+        discrminant: string,
+        times: number
+    ): void {
         const existingReference = this.discrminatedUnionReferences[schema.$ref];
         if (existingReference != null) {
             existingReference.discriminants.add(discrminant);
-            existingReference.numReferences += 1;
+            existingReference.numReferences += times;
         } else {
             this.discrminatedUnionReferences[schema.$ref] = {
                 discriminants: new Set([discrminant]),
-                numReferences: 1,
+                numReferences: times,
             };
         }
     }

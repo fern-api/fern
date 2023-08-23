@@ -4,7 +4,7 @@ import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { migrateIntermediateRepresentationForGenerator } from "@fern-api/ir-migrations";
 import { createFiddleService, getFiddleOrigin } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
-import { Workspace } from "@fern-api/workspace-loader";
+import { APIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { Fetcher } from "@fern-fern/fiddle-sdk/core";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
@@ -23,7 +23,7 @@ export async function createAndStartJob({
     shouldLogS3Url,
     token,
 }: {
-    workspace: Workspace;
+    workspace: APIWorkspace;
     organization: string;
     intermediateRepresentation: IntermediateRepresentation;
     generatorInvocation: GeneratorInvocation;
@@ -54,7 +54,7 @@ async function createJob({
     shouldLogS3Url,
     token,
 }: {
-    workspace: Workspace;
+    workspace: APIWorkspace;
     organization: string;
     generatorInvocation: GeneratorInvocation;
     version: string | undefined;

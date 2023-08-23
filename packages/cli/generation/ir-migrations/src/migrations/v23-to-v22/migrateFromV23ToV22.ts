@@ -6,7 +6,7 @@ import { IrMigrationContext } from "../../IrMigrationContext";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
 
 export const V23_TO_V22_MIGRATION: IrMigration<
-    IrVersions.V23.ir.IntermediateRepresentation,
+    IrVersions.V23.IntermediateRepresentation,
     IrVersions.V22.ir.IntermediateRepresentation
 > = {
     laterVersion: "v23",
@@ -24,8 +24,8 @@ export const V23_TO_V22_MIGRATION: IrMigration<
         [GeneratorName.PYTHON_FASTAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_PYDANTIC]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.OPENAPI]: "0.0.28-3-g112d3dd",
+        [GeneratorName.STOPLIGHT]: "0.0.28-3-g112d3dd",
         [GeneratorName.POSTMAN]: "0.0.44-4-gddab2ae",
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
@@ -65,7 +65,7 @@ export const V23_TO_V22_MIGRATION: IrMigration<
 };
 
 function convertEndpoint(
-    endpoint: IrVersions.V23.http.HttpEndpoint,
+    endpoint: IrVersions.V23.HttpEndpoint,
     context: IrMigrationContext
 ): IrVersions.V22.http.HttpEndpoint {
     return {

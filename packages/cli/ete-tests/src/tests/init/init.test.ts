@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, doesPathExist, getDirectoryContents, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { FERN_DIRECTORY } from "@fern-api/project-configuration";
+import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { runFernCli } from "../../utils/runFernCli";
 import { init } from "./init";
 
@@ -25,7 +25,14 @@ describe("fern init", () => {
             directory: pathOfDirectory,
         });
         expect(
-            await doesPathExist(join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY), RelativeFilePath.of("api1")))
+            await doesPathExist(
+                join(
+                    pathOfDirectory,
+                    RelativeFilePath.of(FERN_DIRECTORY),
+                    RelativeFilePath.of(APIS_DIRECTORY),
+                    RelativeFilePath.of("api1")
+                )
+            )
         ).toBe(true);
     }, 60_000);
 
@@ -41,6 +48,16 @@ describe("fern init", () => {
 
     it("init openapi url", async () => {
         const pathOfDirectory = await init({ openApiArg: "https://petstore3.swagger.io/api/v3/openapi.json" });
+        expect(await getDirectoryContents(pathOfDirectory)).toMatchSnapshot();
+    }, 60_000);
+
+    it("init docs", async () => {
+        const pathOfDirectory = await init();
+
+        await runFernCli(["init", "--docs"], {
+            cwd: pathOfDirectory,
+        });
+
         expect(await getDirectoryContents(pathOfDirectory)).toMatchSnapshot();
     }, 60_000);
 });

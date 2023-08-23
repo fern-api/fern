@@ -296,6 +296,22 @@ export function convertSchemaObject(
             }
         }
 
+        const maybeDiscriminant = getDiscriminant({ schemas: schema.anyOf, context });
+        if (maybeDiscriminant != null) {
+            return convertDiscriminatedOneOfWithVariants({
+                nameOverride,
+                generatedName,
+                breadcrumbs,
+                properties: schema.properties ?? {},
+                required: schema.required,
+                description,
+                wrapAsNullable,
+                discriminant: maybeDiscriminant.discriminant,
+                variants: maybeDiscriminant.schemas,
+                context,
+            });
+        }
+
         return convertUndiscriminatedOneOf({
             nameOverride,
             generatedName,
@@ -472,7 +488,7 @@ export function wrapPrimitive({
 
 interface DiscriminantProperty {
     discriminant: string;
-    schemas: Record<string, OpenAPIV3.SchemaObject>;
+    schemas: Record<string, OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>;
 }
 
 function getMaybeAllEnumValues({
@@ -501,12 +517,13 @@ function getDiscriminant({
     schemas: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[];
     context: AbstractOpenAPIV3ParserContext;
 }): undefined | DiscriminantProperty {
-    const discriminantToVariants: Record<string, Record<string, OpenAPIV3.SchemaObject>> = {};
+    const discriminantToVariants: Record<
+        string,
+        Record<string, OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>
+    > = {};
     for (const schema of schemas) {
-        if (isReferenceObject(schema)) {
-            return undefined;
-        }
-        const possibleDiscriminants = getPossibleDiscriminants({ schema, context });
+        const resolvedSchema = isReferenceObject(schema) ? context.resolveSchemaReference(schema) : schema;
+        const possibleDiscriminants = getPossibleDiscriminants({ schema: resolvedSchema, context });
         for (const [property, value] of Object.entries(possibleDiscriminants)) {
             const variants = discriminantToVariants[property];
             if (variants != null) {

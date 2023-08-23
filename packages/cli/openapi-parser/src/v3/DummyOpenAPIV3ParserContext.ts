@@ -27,7 +27,11 @@ export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext 
         return;
     }
 
-    public markReferencedByDiscriminatedUnion(_schema: OpenAPIV3.ReferenceObject, _discrminant: string): void {
+    public markReferencedByDiscriminatedUnion(
+        _schema: OpenAPIV3.ReferenceObject,
+        _discrminant: string,
+        _times: number
+    ): void {
         return;
     }
 

@@ -1,19 +1,20 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { loadWorkspace } from "@fern-api/workspace-loader";
+import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import { constructCasingsGenerator } from "../../../casings/CasingsGenerator";
 import { constructFernFileContext } from "../../../FernFileContext";
 import { TypeResolverImpl } from "../../TypeResolver";
 
 describe("TypeResolver", () => {
     it("illogical self-referencing types", async () => {
-        const parseResult = await loadWorkspace({
+        const parseResult = await loadAPIWorkspace({
             absolutePathToWorkspace: join(
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures/illogical-self-referencing/fern/api")
             ),
             context: createMockTaskContext(),
             cliVersion: "0.0.0",
+            workspaceName: undefined,
         });
         if (!parseResult.didSucceed) {
             throw new Error("Failed to parse workspace: " + JSON.stringify(parseResult));

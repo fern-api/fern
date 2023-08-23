@@ -56,18 +56,6 @@ async function convertGroup({
         generators: await Promise.all(
             group.generators.map((generator) => convertGenerator({ absolutePathToGeneratorsConfiguration, generator }))
         ),
-        docs:
-            group.docs != null
-                ? {
-                      domain: group.docs.domain,
-                      customDomains:
-                          group.docs["custom-domains"] == null
-                              ? []
-                              : typeof group.docs["custom-domains"] === "string"
-                              ? [group.docs["custom-domains"]]
-                              : group.docs["custom-domains"],
-                  }
-                : undefined,
     };
 }
 

@@ -2,7 +2,7 @@ import { Audiences } from "@fern-api/config-management-commons";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { loadWorkspace } from "@fern-api/workspace-loader";
+import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { generateIntermediateRepresentation } from "../generateIntermediateRepresentation";
 
@@ -39,7 +39,7 @@ describe("generateIntermediateRepresentation", () => {
     for (const fixture of FIXTURES) {
         // eslint-disable-next-line jest/valid-title
         it(fixture.name, async () => {
-            const workspace = await loadWorkspace({
+            const workspace = await loadAPIWorkspace({
                 absolutePathToWorkspace: join(
                     AbsoluteFilePath.of(__dirname),
                     RelativeFilePath.of("fixtures/fern"),
@@ -47,6 +47,7 @@ describe("generateIntermediateRepresentation", () => {
                 ),
                 context: createMockTaskContext(),
                 cliVersion: "0.0.0",
+                workspaceName: undefined,
             });
             if (!workspace.didSucceed) {
                 throw new Error("Failed to load workspace: " + JSON.stringify(workspace.failures, undefined, 4));

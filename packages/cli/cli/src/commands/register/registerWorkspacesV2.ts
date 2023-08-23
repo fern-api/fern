@@ -14,7 +14,7 @@ export async function registerWorkspacesV2({
     token: FernToken;
 }): Promise<void> {
     await Promise.all(
-        project.workspaces.map(async (workspace) => {
+        project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 if (workspace.type === "openapi") {
                     context.failWithoutThrowing("Cannot register OpenAPI workspace");

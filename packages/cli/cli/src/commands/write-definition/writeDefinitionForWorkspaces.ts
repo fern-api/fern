@@ -16,7 +16,7 @@ export async function writeDefinitionForWorkspaces({
     cliContext: CliContext;
 }): Promise<void> {
     await Promise.all(
-        project.workspaces.map(async (workspace) => {
+        project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 if (workspace.type !== "openapi") {
                     context.failAndThrow("Cannot write definition for non-OpenAPI workspace.");

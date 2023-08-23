@@ -99,6 +99,7 @@ exports[`ir {"name":"auth-header-prefix"} 1`] = `
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
     },
+    "webhookGroups": {},
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {
@@ -110,6 +111,7 @@ exports[`ir {"name":"auth-header-prefix"} 1`] = `
         "types": [],
         "errors": [],
         "subpackages": [],
+        "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": false,
         "docs": null
@@ -1158,6 +1160,7 @@ exports[`ir {"name":"extended-examples"} 1`] = `
             "type_commons:Deployment"
         ]
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_app": {
             "name": {
@@ -1229,6 +1232,7 @@ exports[`ir {"name":"extended-examples"} 1`] = `
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -1303,6 +1307,7 @@ exports[`ir {"name":"extended-examples"} 1`] = `
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": false,
             "docs": null
         }
@@ -1320,6 +1325,7 @@ exports[`ir {"name":"extended-examples"} 1`] = `
             "subpackage_app",
             "subpackage_commons"
         ],
+        "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": false,
         "docs": null
@@ -1708,6 +1714,7 @@ exports[`ir {"name":"file-upload"} 1`] = `
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_file-upload": {
             "name": {
@@ -1777,6 +1784,7 @@ exports[`ir {"name":"file-upload"} 1`] = `
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -1793,6 +1801,7 @@ exports[`ir {"name":"file-upload"} 1`] = `
         "subpackages": [
             "subpackage_file-upload"
         ],
+        "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
         "docs": null
@@ -8313,6 +8322,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_endpoint-urls": {
             "name": {
@@ -8382,6 +8392,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": true,
             "docs": null
         },
@@ -8453,6 +8464,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -8470,6 +8482,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
             "subpackage_endpoint-urls",
             "subpackage_service-url"
         ],
+        "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
         "docs": null
@@ -8554,6 +8567,7 @@ exports[`ir {"name":"navigation-points-to"} 1`] = `
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_subpackage": {
             "name": {
@@ -8627,6 +8641,7 @@ exports[`ir {"name":"navigation-points-to"} 1`] = `
                 "subpackage_subpackage/x"
             ],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -8737,6 +8752,7 @@ exports[`ir {"name":"navigation-points-to"} 1`] = `
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": false,
             "docs": null
         }
@@ -8753,6 +8769,7 @@ exports[`ir {"name":"navigation-points-to"} 1`] = `
         "subpackages": [
             "subpackage_subpackage"
         ],
+        "webhooks": null,
         "navigationConfig": {
             "pointsTo": "subpackage_subpackage"
         },
@@ -9967,6 +9984,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
             "type_nested:StringAlias"
         ]
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_nested": {
             "name": {
@@ -10040,6 +10058,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -10056,6 +10075,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
         "subpackages": [
             "subpackage_nested"
         ],
+        "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
         "docs": null
@@ -10864,6 +10884,7 @@ exports[`ir {"name":"packages"} 1`] = `
             "type_package/a:A"
         ]
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_package": {
             "name": {
@@ -10940,6 +10961,7 @@ exports[`ir {"name":"packages"} 1`] = `
                 "subpackage_package/a"
             ],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": true,
             "docs": null
         },
@@ -11013,6 +11035,7 @@ exports[`ir {"name":"packages"} 1`] = `
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": false,
             "docs": "I'm an importer!"
         },
@@ -11125,6 +11148,7 @@ exports[`ir {"name":"packages"} 1`] = `
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -11235,6 +11259,7 @@ exports[`ir {"name":"packages"} 1`] = `
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": false,
             "docs": null
         }
@@ -11254,6 +11279,7 @@ exports[`ir {"name":"packages"} 1`] = `
             "subpackage_package",
             "subpackage_importer"
         ],
+        "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
         "docs": null
@@ -13298,6 +13324,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
             "type_imdb:RecursiveType"
         ]
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_commons": {
             "name": {
@@ -13369,6 +13396,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
             ],
             "subpackages": [],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -13443,6 +13471,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -13460,6 +13489,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
             "subpackage_commons",
             "subpackage_imdb"
         ],
+        "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
         "docs": null
@@ -22145,440 +22175,6 @@ exports[`ir {"name":"simple"} 1`] = `
                         "message": null
                     },
                     "docs": null
-                },
-                {
-                    "name": {
-                        "originalName": "upload",
-                        "camelCase": {
-                            "unsafeName": "upload",
-                            "safeName": "upload"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "upload",
-                            "safeName": "upload"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "UPLOAD",
-                            "safeName": "UPLOAD"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Upload",
-                            "safeName": "Upload"
-                        }
-                    },
-                    "displayName": null,
-                    "auth": false,
-                    "baseUrl": null,
-                    "method": "POST",
-                    "path": {
-                        "head": "/upload/",
-                        "parts": [
-                            {
-                                "pathParameter": "movieId",
-                                "tail": ""
-                            }
-                        ]
-                    },
-                    "fullPath": {
-                        "head": "/test/",
-                        "parts": [
-                            {
-                                "pathParameter": "rootPathParam",
-                                "tail": "/movies/upload/"
-                            },
-                            {
-                                "pathParameter": "movieId",
-                                "tail": ""
-                            }
-                        ]
-                    },
-                    "pathParameters": [
-                        {
-                            "name": {
-                                "originalName": "movieId",
-                                "camelCase": {
-                                    "unsafeName": "movieId",
-                                    "safeName": "movieId"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "movie_id",
-                                    "safeName": "movie_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "MOVIE_ID",
-                                    "safeName": "MOVIE_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "MovieId",
-                                    "safeName": "MovieId"
-                                }
-                            },
-                            "valueType": {
-                                "_type": "named",
-                                "name": {
-                                    "originalName": "MovieId",
-                                    "camelCase": {
-                                        "unsafeName": "movieId",
-                                        "safeName": "movieId"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "movie_id",
-                                        "safeName": "movie_id"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "MOVIE_ID",
-                                        "safeName": "MOVIE_ID"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "MovieId",
-                                        "safeName": "MovieId"
-                                    }
-                                },
-                                "fernFilepath": {
-                                    "allParts": [
-                                        {
-                                            "originalName": "imdb",
-                                            "camelCase": {
-                                                "unsafeName": "imdb",
-                                                "safeName": "imdb"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "imdb",
-                                                "safeName": "imdb"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "IMDB",
-                                                "safeName": "IMDB"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Imdb",
-                                                "safeName": "Imdb"
-                                            }
-                                        }
-                                    ],
-                                    "packagePath": [],
-                                    "file": {
-                                        "originalName": "imdb",
-                                        "camelCase": {
-                                            "unsafeName": "imdb",
-                                            "safeName": "imdb"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "imdb",
-                                            "safeName": "imdb"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "IMDB",
-                                            "safeName": "IMDB"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Imdb",
-                                            "safeName": "Imdb"
-                                        }
-                                    }
-                                },
-                                "typeId": "type_imdb:MovieId"
-                            },
-                            "location": "ENDPOINT",
-                            "variable": null,
-                            "docs": null
-                        }
-                    ],
-                    "allPathParameters": [
-                        {
-                            "name": {
-                                "originalName": "rootPathParam",
-                                "camelCase": {
-                                    "unsafeName": "rootPathParam",
-                                    "safeName": "rootPathParam"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "root_path_param",
-                                    "safeName": "root_path_param"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ROOT_PATH_PARAM",
-                                    "safeName": "ROOT_PATH_PARAM"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "RootPathParam",
-                                    "safeName": "RootPathParam"
-                                }
-                            },
-                            "valueType": {
-                                "_type": "primitive",
-                                "primitive": "STRING"
-                            },
-                            "location": "ROOT",
-                            "variable": null,
-                            "docs": null
-                        },
-                        {
-                            "name": {
-                                "originalName": "movieId",
-                                "camelCase": {
-                                    "unsafeName": "movieId",
-                                    "safeName": "movieId"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "movie_id",
-                                    "safeName": "movie_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "MOVIE_ID",
-                                    "safeName": "MOVIE_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "MovieId",
-                                    "safeName": "MovieId"
-                                }
-                            },
-                            "valueType": {
-                                "_type": "named",
-                                "name": {
-                                    "originalName": "MovieId",
-                                    "camelCase": {
-                                        "unsafeName": "movieId",
-                                        "safeName": "movieId"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "movie_id",
-                                        "safeName": "movie_id"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "MOVIE_ID",
-                                        "safeName": "MOVIE_ID"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "MovieId",
-                                        "safeName": "MovieId"
-                                    }
-                                },
-                                "fernFilepath": {
-                                    "allParts": [
-                                        {
-                                            "originalName": "imdb",
-                                            "camelCase": {
-                                                "unsafeName": "imdb",
-                                                "safeName": "imdb"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "imdb",
-                                                "safeName": "imdb"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "IMDB",
-                                                "safeName": "IMDB"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Imdb",
-                                                "safeName": "Imdb"
-                                            }
-                                        }
-                                    ],
-                                    "packagePath": [],
-                                    "file": {
-                                        "originalName": "imdb",
-                                        "camelCase": {
-                                            "unsafeName": "imdb",
-                                            "safeName": "imdb"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "imdb",
-                                            "safeName": "imdb"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "IMDB",
-                                            "safeName": "IMDB"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Imdb",
-                                            "safeName": "Imdb"
-                                        }
-                                    }
-                                },
-                                "typeId": "type_imdb:MovieId"
-                            },
-                            "location": "ENDPOINT",
-                            "variable": null,
-                            "docs": null
-                        }
-                    ],
-                    "queryParameters": [],
-                    "headers": [],
-                    "requestBody": {
-                        "type": "bytes",
-                        "isOptional": false
-                    },
-                    "sdkRequest": {
-                        "shape": {
-                            "type": "justRequestBody",
-                            "requestBodyType": {
-                                "_type": "named",
-                                "name": {
-                                    "originalName": "bytes",
-                                    "camelCase": {
-                                        "unsafeName": "bytes",
-                                        "safeName": "bytes"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "bytes",
-                                        "safeName": "bytes"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "BYTES",
-                                        "safeName": "BYTES"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Bytes",
-                                        "safeName": "Bytes"
-                                    }
-                                },
-                                "fernFilepath": {
-                                    "allParts": [
-                                        {
-                                            "originalName": "imdb",
-                                            "camelCase": {
-                                                "unsafeName": "imdb",
-                                                "safeName": "imdb"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "imdb",
-                                                "safeName": "imdb"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "IMDB",
-                                                "safeName": "IMDB"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Imdb",
-                                                "safeName": "Imdb"
-                                            }
-                                        }
-                                    ],
-                                    "packagePath": [],
-                                    "file": {
-                                        "originalName": "imdb",
-                                        "camelCase": {
-                                            "unsafeName": "imdb",
-                                            "safeName": "imdb"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "imdb",
-                                            "safeName": "imdb"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "IMDB",
-                                            "safeName": "IMDB"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Imdb",
-                                            "safeName": "Imdb"
-                                        }
-                                    }
-                                },
-                                "typeId": "type_imdb:bytes"
-                            },
-                            "contentType": null,
-                            "docs": null
-                        },
-                        "requestParameterName": {
-                            "originalName": "request",
-                            "camelCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REQUEST",
-                                "safeName": "REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Request",
-                                "safeName": "Request"
-                            }
-                        }
-                    },
-                    "response": null,
-                    "errors": [
-                        {
-                            "error": {
-                                "name": {
-                                    "originalName": "BadRequestError",
-                                    "camelCase": {
-                                        "unsafeName": "badRequestError",
-                                        "safeName": "badRequestError"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "bad_request_error",
-                                        "safeName": "bad_request_error"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "BAD_REQUEST_ERROR",
-                                        "safeName": "BAD_REQUEST_ERROR"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "BadRequestError",
-                                        "safeName": "BadRequestError"
-                                    }
-                                },
-                                "fernFilepath": {
-                                    "allParts": [
-                                        {
-                                            "originalName": "commons",
-                                            "camelCase": {
-                                                "unsafeName": "commons",
-                                                "safeName": "commons"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "commons",
-                                                "safeName": "commons"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "COMMONS",
-                                                "safeName": "COMMONS"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Commons",
-                                                "safeName": "Commons"
-                                            }
-                                        }
-                                    ],
-                                    "packagePath": [],
-                                    "file": {
-                                        "originalName": "commons",
-                                        "camelCase": {
-                                            "unsafeName": "commons",
-                                            "safeName": "commons"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "commons",
-                                            "safeName": "commons"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "COMMONS",
-                                            "safeName": "COMMONS"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Commons",
-                                            "safeName": "Commons"
-                                        }
-                                    }
-                                },
-                                "errorId": "error_commons:BadRequestError"
-                            },
-                            "docs": null
-                        }
-                    ],
-                    "examples": [],
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY",
-                        "message": null
-                    },
-                    "docs": null
                 }
             ]
         }
@@ -22715,6 +22311,7 @@ exports[`ir {"name":"simple"} 1`] = `
             "type_imdb:RecursiveType"
         ]
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_commons": {
             "name": {
@@ -22788,6 +22385,7 @@ exports[`ir {"name":"simple"} 1`] = `
             ],
             "subpackages": [],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -22863,6 +22461,7 @@ exports[`ir {"name":"simple"} 1`] = `
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -22945,6 +22544,7 @@ exports[`ir {"name":"simple"} 1`] = `
             ],
             "subpackages": [],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -22963,6 +22563,7 @@ exports[`ir {"name":"simple"} 1`] = `
             "subpackage_director",
             "subpackage_imdb"
         ],
+        "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
         "docs": null
@@ -23339,6 +22940,7 @@ exports[`ir {"name":"streaming"} 1`] = `
         "typesReferencedOnlyByService": {},
         "sharedTypes": []
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_streaming": {
             "name": {
@@ -23408,6 +23010,7 @@ exports[`ir {"name":"streaming"} 1`] = `
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -23424,6 +23027,7 @@ exports[`ir {"name":"streaming"} 1`] = `
         "subpackages": [
             "subpackage_streaming"
         ],
+        "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
         "docs": null
@@ -24181,6 +23785,7 @@ exports[`ir {"name":"variables"} 1`] = `
         },
         "sharedTypes": []
     },
+    "webhookGroups": {},
     "subpackages": {
         "subpackage_commons": {
             "name": {
@@ -24252,6 +23857,7 @@ exports[`ir {"name":"variables"} 1`] = `
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -24323,6 +23929,7 @@ exports[`ir {"name":"variables"} 1`] = `
             "errors": [],
             "subpackages": [],
             "navigationConfig": null,
+            "webhooks": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -24340,8 +23947,300 @@ exports[`ir {"name":"variables"} 1`] = `
             "subpackage_commons",
             "subpackage_service"
         ],
+        "webhooks": null,
         "navigationConfig": null,
         "hasEndpointsInTree": true,
+        "docs": null
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false,
+        "hasFileDownloadEndpoints": false,
+        "platformHeaders": {
+            "language": "X-Fern-Language",
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version"
+        }
+    }
+}"
+`;
+
+exports[`ir {"name":"webhooks"} 1`] = `
+"{
+    "apiName": {
+        "originalName": "my-api",
+        "camelCase": {
+            "unsafeName": "myApi",
+            "safeName": "myApi"
+        },
+        "snakeCase": {
+            "unsafeName": "my_api",
+            "safeName": "my_api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "MY_API",
+            "safeName": "MY_API"
+        },
+        "pascalCase": {
+            "unsafeName": "MyApi",
+            "safeName": "MyApi"
+        }
+    },
+    "apiDisplayName": null,
+    "apiDocs": null,
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [],
+        "docs": null
+    },
+    "headers": [],
+    "types": {},
+    "errors": {},
+    "services": {},
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceId",
+                    "safeName": "errorInstanceId"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceId",
+                    "safeName": "ErrorInstanceId"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "environments": null,
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "basePath": null,
+    "pathParameters": [],
+    "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": []
+    },
+    "webhookGroups": {
+        "webhooks_webhooks": [
+            {
+                "displayName": null,
+                "method": "POST",
+                "path": {
+                    "head": "/notify",
+                    "parts": []
+                },
+                "name": {
+                    "originalName": "sendNotification",
+                    "camelCase": {
+                        "unsafeName": "sendNotification",
+                        "safeName": "sendNotification"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "send_notification",
+                        "safeName": "send_notification"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SEND_NOTIFICATION",
+                        "safeName": "SEND_NOTIFICATION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "SendNotification",
+                        "safeName": "SendNotification"
+                    }
+                },
+                "headers": [],
+                "payload": {
+                    "type": "inlinedPayload",
+                    "name": {
+                        "originalName": "NotificationPayload",
+                        "camelCase": {
+                            "unsafeName": "notificationPayload",
+                            "safeName": "notificationPayload"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "notification_payload",
+                            "safeName": "notification_payload"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "NOTIFICATION_PAYLOAD",
+                            "safeName": "NOTIFICATION_PAYLOAD"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "NotificationPayload",
+                            "safeName": "NotificationPayload"
+                        }
+                    },
+                    "extends": [],
+                    "properties": [
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "name",
+                                    "camelCase": {
+                                        "unsafeName": "name",
+                                        "safeName": "name"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "name",
+                                        "safeName": "name"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "NAME",
+                                        "safeName": "NAME"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Name",
+                                        "safeName": "Name"
+                                    }
+                                },
+                                "wireValue": "name"
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "docs": null
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "urgent",
+                                    "camelCase": {
+                                        "unsafeName": "urgent",
+                                        "safeName": "urgent"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "urgent",
+                                        "safeName": "urgent"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "URGENT",
+                                        "safeName": "URGENT"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Urgent",
+                                        "safeName": "Urgent"
+                                    }
+                                },
+                                "wireValue": "urgent"
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": "BOOLEAN"
+                            },
+                            "docs": "Some docs about urgency"
+                        }
+                    ]
+                },
+                "availability": {
+                    "status": "GENERAL_AVAILABILITY",
+                    "message": null
+                },
+                "docs": "This is a webhook to receive notifications."
+            }
+        ]
+    },
+    "subpackages": {
+        "subpackage_webhooks": {
+            "name": {
+                "originalName": "webhooks",
+                "camelCase": {
+                    "unsafeName": "webhooks",
+                    "safeName": "webhooks"
+                },
+                "snakeCase": {
+                    "unsafeName": "webhooks",
+                    "safeName": "webhooks"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "WEBHOOKS",
+                    "safeName": "WEBHOOKS"
+                },
+                "pascalCase": {
+                    "unsafeName": "Webhooks",
+                    "safeName": "Webhooks"
+                }
+            },
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "webhooks",
+                        "camelCase": {
+                            "unsafeName": "webhooks",
+                            "safeName": "webhooks"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "webhooks",
+                            "safeName": "webhooks"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "WEBHOOKS",
+                            "safeName": "WEBHOOKS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Webhooks",
+                            "safeName": "Webhooks"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "webhooks",
+                    "camelCase": {
+                        "unsafeName": "webhooks",
+                        "safeName": "webhooks"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "webhooks",
+                        "safeName": "webhooks"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "WEBHOOKS",
+                        "safeName": "WEBHOOKS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Webhooks",
+                        "safeName": "Webhooks"
+                    }
+                }
+            },
+            "service": null,
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": "webhooks_webhooks",
+            "hasEndpointsInTree": false,
+            "docs": null
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": [],
+            "file": null
+        },
+        "service": null,
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "subpackage_webhooks"
+        ],
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": false,
         "docs": null
     },
     "sdkConfig": {

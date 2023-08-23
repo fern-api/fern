@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { DEFAULT_GROUP_NAME, GeneratorsConfigurationSchema } from "@fern-api/generators-configuration";
 import {
     DEFINITION_DIRECTORY,
@@ -18,7 +18,9 @@ export async function createFernWorkspace({
 }: {
     directoryOfWorkspace: AbsoluteFilePath;
 }): Promise<void> {
-    await mkdir(directoryOfWorkspace);
+    if (!(await doesPathExist(directoryOfWorkspace))) {
+        await mkdir(directoryOfWorkspace);
+    }
     await writeGeneratorsConfiguration({
         filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
     });
@@ -35,7 +37,9 @@ export async function createOpenAPIWorkspace({
     directoryOfWorkspace: AbsoluteFilePath;
     openAPIFilePath: AbsoluteFilePath;
 }): Promise<void> {
-    await mkdir(directoryOfWorkspace);
+    if (!(await doesPathExist(directoryOfWorkspace))) {
+        await mkdir(directoryOfWorkspace);
+    }
     await writeGeneratorsConfiguration({
         filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
     });
@@ -56,7 +60,7 @@ const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
                     version: "0.7.2",
                     output: {
                         location: "local-file-system",
-                        path: "../../generated/typescript",
+                        path: "../generated/typescript",
                     },
                 },
             ],

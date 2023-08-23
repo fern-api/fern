@@ -6377,8 +6377,6 @@ exports[`open api parser deel parse open api 1`] = `
         "HrisJobInformationTitleId",
         "HrisJobInformationTitleName",
         "HrisCompensation",
-        "HrisContractPartTime",
-        "HrisContractFullTime",
         "HrisDirectEmployee",
         "HrisDirectEmployeeResponse",
         "Team",
@@ -18188,18 +18186,7 @@ exports[`open api parser deel parse open api 1`] = `
           "description": undefined,
           "generatedName": "HrisContractFullTime",
           "nameOverride": undefined,
-          "properties": [
-            {
-              "conflict": {},
-              "generatedName": "hrisContractFullTimeEmploymentType",
-              "key": "employment_type",
-              "schema": {
-                "description": undefined,
-                "type": "literal",
-                "value": "FULL_TIME",
-              },
-            },
-          ],
+          "properties": [],
           "type": "object",
         },
         "HrisContractPartTime": {
@@ -18218,16 +18205,6 @@ exports[`open api parser deel parse open api 1`] = `
           "generatedName": "HrisContractPartTime",
           "nameOverride": undefined,
           "properties": [
-            {
-              "conflict": {},
-              "generatedName": "hrisContractPartTimeEmploymentType",
-              "key": "employment_type",
-              "schema": {
-                "description": undefined,
-                "type": "literal",
-                "value": "PART_TIME",
-              },
-            },
             {
               "conflict": {},
               "generatedName": "hrisContractPartTimePartTimePercentage",
@@ -18327,28 +18304,30 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "contract",
               "schema": {
                 "oneOf": {
+                  "commonProperties": [],
                   "description": undefined,
+                  "discriminantProperty": "employment_type",
                   "generatedName": "HrisDirectEmployeeContract",
                   "nameOverride": undefined,
-                  "schemas": [
-                    {
+                  "schemas": {
+                    "FULL_TIME": {
                       "description": undefined,
                       "file": undefined,
-                      "generatedName": "HrisDirectEmployeeContractZero",
-                      "nameOverride": undefined,
-                      "schema": "HrisContractPartTime",
-                      "type": "reference",
-                    },
-                    {
-                      "description": undefined,
-                      "file": undefined,
-                      "generatedName": "HrisDirectEmployeeContractOne",
+                      "generatedName": "ComponentsSchemasHrisContractFullTime",
                       "nameOverride": undefined,
                       "schema": "HrisContractFullTime",
                       "type": "reference",
                     },
-                  ],
-                  "type": "undisciminated",
+                    "PART_TIME": {
+                      "description": undefined,
+                      "file": undefined,
+                      "generatedName": "ComponentsSchemasHrisContractPartTime",
+                      "nameOverride": undefined,
+                      "schema": "HrisContractPartTime",
+                      "type": "reference",
+                    },
+                  },
+                  "type": "discriminated",
                 },
                 "type": "oneOf",
               },
