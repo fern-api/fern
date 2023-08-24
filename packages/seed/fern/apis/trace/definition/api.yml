@@ -1,4 +1,4 @@
-name: my-api
+name: trace
 auth: bearer
 headers:
   X-Random-Header: optional<string>
