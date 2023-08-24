@@ -566,7 +566,6 @@
               "audiences": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences" },
               "method": { "type": "string", "enum": ["GET", "POST"] },
               "display-name": { "type": "string" },
-              "path": { "type": "string" },
               "headers": {
                 "type": "object",
                 "additionalProperties": {
@@ -626,7 +625,7 @@
                 ]
               }
             },
-            "required": ["method", "path"],
+            "required": ["method", "payload"],
             "additionalProperties": false
           }
         },
