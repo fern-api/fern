@@ -54,12 +54,13 @@ class FastApiGenerator(AbstractGenerator):
         self._pydantic_model_custom_config = PydanticModelCustomConfig(
             forbid_extra_fields=True,
             wrapped_aliases=True,
+            include_union_utils=True,
             include_validators=custom_config.include_validators,
             skip_formatting=custom_config.skip_formatting,
-            include_union_utils=True,
-            frozen=custom_config.pydantic_config.frozen,
-            orm_mode=custom_config.pydantic_config.orm_mode,
-            smart_union=custom_config.pydantic_config.smart_union,
+            # FastAPI generator config only exposes base pydantic settings.
+            # To merge the base config into the final pydantic config, we need to
+            # cast BasePydanticModelCustomConfig to dict and unpack into kwargs
+            **custom_config.pydantic_config.dict(),
         )
 
         context = FastApiGeneratorContextImpl(ir=ir, generator_config=generator_config)

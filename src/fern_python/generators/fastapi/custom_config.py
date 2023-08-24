@@ -1,14 +1,10 @@
 import pydantic
 
-
-class PydanticConfig(pydantic.BaseModel):
-    frozen: bool = False
-    orm_mode: bool = False
-    smart_union: bool = False
+from ..pydantic_model.custom_config import BasePydanticModelCustomConfig
 
 
 class FastAPICustomConfig(pydantic.BaseModel):
     include_validators: bool = False
     skip_formatting: bool = False
     async_handlers: bool = False
-    pydantic_config: PydanticConfig = PydanticConfig()
+    pydantic_config: BasePydanticModelCustomConfig = BasePydanticModelCustomConfig()
