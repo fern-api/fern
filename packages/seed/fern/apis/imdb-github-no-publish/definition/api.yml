@@ -1,3 +1,3 @@
-name: api
+name: imdb-github-no-publish
 error-discrimination:
   strategy: status-code
