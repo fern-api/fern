@@ -1,6 +1,5 @@
 webhooks:
   sendNotification:
-    path: /notify
     method: POST
     docs: This is a webhook to receive notifications.
     payload:

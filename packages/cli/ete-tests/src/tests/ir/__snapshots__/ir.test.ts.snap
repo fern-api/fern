@@ -24037,10 +24037,6 @@ exports[`ir {"name":"webhooks"} 1`] = `
             {
                 "displayName": null,
                 "method": "POST",
-                "path": {
-                    "head": "/notify",
-                    "parts": []
-                },
                 "name": {
                     "originalName": "sendNotification",
                     "camelCase": {
