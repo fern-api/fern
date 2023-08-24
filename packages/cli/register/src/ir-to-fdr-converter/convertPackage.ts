@@ -9,13 +9,35 @@ export function convertPackage(
     ir: Ir.ir.IntermediateRepresentation
 ): FernRegistry.api.v1.register.ApiDefinitionPackage {
     const service = irPackage.service != null ? ir.services[irPackage.service] : undefined;
+    const webhooks = irPackage.webhooks != null ? ir.webhookGroups[irPackage.webhooks] : undefined;
     return {
         endpoints: service != null ? convertService(service, ir) : [],
+        webhooks: webhooks != null ? convertWebhookGroup(webhooks) : [],
         types: irPackage.types.map((typeId) => convertTypeId(typeId)),
         subpackages: irPackage.subpackages.map((subpackageId) => convertSubpackageId(subpackageId)),
         pointsTo:
             irPackage.navigationConfig != null ? convertSubpackageId(irPackage.navigationConfig.pointsTo) : undefined,
     };
+}
+
+function convertWebhookGroup(webhookGroup: Ir.webhooks.WebhookGroup): FernRegistry.api.v1.register.WebhookDefinition[] {
+    return webhookGroup.map((webhook) => {
+        return {
+            description: webhook.docs ?? undefined,
+            id: FernRegistry.api.v1.register.WebhookId(webhook.name.originalName),
+            path: [],
+            method: webhook.method,
+            headers: webhook.headers.map(
+                (header): FernRegistry.api.v1.register.Header => ({
+                    description: header.docs ?? undefined,
+                    key: header.name.wireValue,
+                    type: convertTypeReference(header.valueType),
+                })
+            ),
+            payload: convertWebhookPayload(webhook.payload),
+            examples: [],
+        };
+    });
 }
 
 function convertService(
@@ -267,4 +289,32 @@ export function convertSubpackageId(
     irSubpackageId: Ir.commons.SubpackageId
 ): FernRegistry.api.v1.register.SubpackageId {
     return FernRegistry.api.v1.register.SubpackageId(irSubpackageId);
+}
+
+function convertWebhookPayload(
+    irWebhookPayload: Ir.webhooks.WebhookPayload
+): FernRegistry.api.v1.register.WebhookPayload {
+    switch (irWebhookPayload.type) {
+        case "inlinedPayload":
+            return {
+                type: FernRegistry.api.v1.register.WebhookPayloadShape.object({
+                    extends: irWebhookPayload.extends.map((extension) => convertTypeId(extension.typeId)),
+                    properties: irWebhookPayload.properties.map(
+                        (property): FernRegistry.api.v1.register.ObjectProperty => ({
+                            description: property.docs ?? undefined,
+                            key: property.name.wireValue,
+                            valueType: convertTypeReference(property.valueType),
+                        })
+                    ),
+                }),
+            };
+        case "reference":
+            return {
+                type: FernRegistry.api.v1.register.WebhookPayloadShape.reference(
+                    convertTypeReference(irWebhookPayload.payloadType)
+                ),
+            };
+        default:
+            assertNever(irWebhookPayload);
+    }
 }

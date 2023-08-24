@@ -293,6 +293,7 @@ exports[`fdr {"name":"simple"} 1`] = `
             "subpackageId": "subpackage_commons",
             "name": "commons",
             "endpoints": [],
+            "webhooks": [],
             "types": [
                 "type_commons:UndiscriminatedUnion"
             ],
@@ -302,6 +303,7 @@ exports[`fdr {"name":"simple"} 1`] = `
             "subpackageId": "subpackage_director",
             "name": "director",
             "endpoints": [],
+            "webhooks": [],
             "types": [
                 "type_director:Director",
                 "type_director:Age",
@@ -583,6 +585,7 @@ exports[`fdr {"name":"simple"} 1`] = `
                     "examples": []
                 }
             ],
+            "webhooks": [],
             "types": [
                 "type_imdb:CurrencyAmount",
                 "type_imdb:MovieId",
@@ -598,6 +601,7 @@ exports[`fdr {"name":"simple"} 1`] = `
     },
     "rootPackage": {
         "endpoints": [],
+        "webhooks": [],
         "types": [],
         "subpackages": [
             "subpackage_commons",
