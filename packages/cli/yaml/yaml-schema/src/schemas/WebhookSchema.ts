@@ -6,9 +6,8 @@ import { WebhookPayloadSchema } from "./WebhookPayloadSchema";
 export const WebhookSchema = DeclarationSchema.extend({
     method: z.enum(["GET", "POST"]),
     "display-name": z.optional(z.string()),
-    path: z.string(),
     headers: z.optional(z.record(HttpHeaderSchema)),
-    payload: z.optional(WebhookPayloadSchema),
+    payload: WebhookPayloadSchema,
 });
 
 export type WebhookSchema = z.infer<typeof WebhookSchema>;

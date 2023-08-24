@@ -3,7 +3,6 @@ import { InlinedWebhookPayloadProperty, Webhook, WebhookGroup, WebhookPayload } 
 import { FernFileContext } from "../FernFileContext";
 import { parseTypeName } from "../utils/parseTypeName";
 import { convertAvailability } from "./convertDeclaration";
-import { constructHttpPath } from "./services/constructHttpPath";
 import { convertHttpHeader } from "./services/convertHttpService";
 import { getExtensionsAsList, getPropertyName } from "./type-declarations/convertObjectTypeDeclaration";
 
@@ -21,7 +20,6 @@ export function convertWebhookGroup({
             displayName: webhook["display-name"],
             docs: webhook.docs,
             method: webhook.method,
-            path: constructHttpPath(webhook.path),
             name: file.casingsGenerator.generateName(webhookId),
             headers:
                 webhook.headers != null
@@ -29,8 +27,7 @@ export function convertWebhookGroup({
                           convertHttpHeader({ headerKey, header, file })
                       )
                     : [],
-            payload:
-                webhook.payload != null ? convertWebhookPayloadSchema({ payload: webhook.payload, file }) : undefined,
+            payload: convertWebhookPayloadSchema({ payload: webhook.payload, file }),
         });
     }
     return webhookGroup;

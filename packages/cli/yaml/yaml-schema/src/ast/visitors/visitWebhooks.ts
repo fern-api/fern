@@ -20,7 +20,6 @@ export async function visitWebhooks({
 
     await visitObject(webhook, {
         "display-name": noop,
-        path: noop,
         method: noop,
         headers: async (headers) => {
             await visitHeaders({
@@ -30,9 +29,6 @@ export async function visitWebhooks({
             });
         },
         payload: async (payload) => {
-            if (payload == null) {
-                return;
-            }
             const nodePathForPayload = [...nodePathForWebhook, "payload"];
             if (typeof payload === "string") {
                 await visitTypeReference(payload, nodePathForPayload, {

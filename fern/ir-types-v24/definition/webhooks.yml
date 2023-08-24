@@ -12,8 +12,7 @@ types:
       displayName: optional<string>
       method: WebhookHttpMethod
       headers: list<http.HttpHeader>
-      path: http.HttpPath
-      payload: optional<WebhookPayload>
+      payload: WebhookPayload
 
   WebhookName: commons.Name
 
