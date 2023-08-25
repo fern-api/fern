@@ -27,7 +27,7 @@ function convertWebhookGroup(webhookGroup: Ir.webhooks.WebhookGroup): FernRegist
             id: FernRegistry.api.v1.register.WebhookId(webhook.name.originalName),
             path: [],
             method: webhook.method,
-            name: webhook.displayName,
+            name: webhook.displayName ?? startCase(webhook.name.originalName),
             headers: webhook.headers.map(
                 (header): FernRegistry.api.v1.register.Header => ({
                     description: header.docs ?? undefined,
