@@ -5375,6 +5375,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "tags": {},
       "title": "Hathora Cloud API",
       "variables": {},
+      "webhooks": [],
     },
   },
   "rootPackage": {

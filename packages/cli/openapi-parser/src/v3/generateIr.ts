@@ -1,5 +1,5 @@
 import { TaskContext } from "@fern-api/task-context";
-import { OpenAPIFile, Schema, SecurityScheme } from "@fern-fern/openapi-ir-model/ir/_types";
+import { Endpoint, OpenAPIFile, Schema, SecurityScheme, Webhook } from "@fern-fern/openapi-ir-model/ir/_types";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext";
 import { convertPathItem } from "./converters/convertPathItem";
@@ -31,13 +31,18 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
     );
     const context = new OpenAPIV3ParserContext({ document: openApi, taskContext, authHeaders });
     const variables = getVariableDefinitions(openApi);
-    const endpoints = Object.entries(openApi.paths).flatMap(([path, pathItem]) => {
+
+    const endpoints: Endpoint[] = [];
+    const webhooks: Webhook[] = [];
+    Object.entries(openApi.paths).forEach(([path, pathItem]) => {
         if (pathItem == null) {
-            return [];
+            return;
         }
         taskContext.logger.debug(`Converting path ${path}`);
         const pathWithoutTrailingSlash = path.replace(/\/$/, "");
-        return convertPathItem(pathWithoutTrailingSlash, pathItem, openApi, context);
+        const convertedPathItem = convertPathItem(pathWithoutTrailingSlash, pathItem, openApi, context);
+        endpoints.push(...convertedPathItem.endpoints);
+        webhooks.push(...convertedPathItem.webhooks);
     });
 
     const schemas = Object.fromEntries(
@@ -57,6 +62,7 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
             })
         ),
         endpoints,
+        webhooks,
         schemas: maybeRemoveDiscriminantsFromSchemas(schemas, context),
         securitySchemes,
         hasEndpointsMarkedInternal: endpoints.some((endpoint) => endpoint.internal),

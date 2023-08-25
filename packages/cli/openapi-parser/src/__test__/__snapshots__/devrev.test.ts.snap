@@ -12821,6 +12821,7 @@ empty.
       },
       "title": "DevRev REST API",
       "variables": {},
+      "webhooks": [],
     },
   },
   "rootPackage": {

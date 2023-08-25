@@ -34726,6 +34726,7 @@ exports[`open api parser aries parse open api 1`] = `
       },
       "title": "Aries Cloud Agent",
       "variables": {},
+      "webhooks": [],
     },
   },
   "rootPackage": {

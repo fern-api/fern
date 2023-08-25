@@ -6,9 +6,11 @@ import { convertSecuritySchemes } from "./converters/convertSecuritySchemes";
 import { ConvertedServices, convertToServices } from "./converters/convertToServices";
 import { convertToTypeDeclaration } from "./converters/convertToTypeDeclaration";
 import { convertPrimitiveToTypeReference, convertToTypeReference } from "./converters/convertToTypeReference";
+import { convertWebhooks } from "./converters/convertWebhooks";
 import { getTypeFromTypeReference } from "./converters/utils/getTypeFromTypeReference";
 import { Environments, getEnvironments } from "./getEnvironments";
 import { getGlobalHeaders } from "./getGlobalHeaders";
+import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 
 export const ROOT_PREFIX = "root";
 
@@ -21,7 +23,13 @@ export interface ConvertedPackage {
     definitionFiles: Record<RelativeFilePath, DefinitionFileSchema>;
 }
 
-export function convertPackage({ openApiFile }: { openApiFile: OpenAPIFile }): ConvertedPackage {
+export function convertPackage({
+    openApiFile,
+    context,
+}: {
+    openApiFile: OpenAPIFile;
+    context: OpenApiIrConverterContext;
+}): ConvertedPackage {
     const environments = getEnvironments(openApiFile);
     const rootApiFile = getRootApiFile(openApiFile, environments);
     const convertedServices = convertToServices({
@@ -29,31 +37,59 @@ export function convertPackage({ openApiFile }: { openApiFile: OpenAPIFile }): C
         environments,
         globalHeaderNames: new Set(Object.keys(rootApiFile.headers ?? {})),
     });
+    const convertedWebhooks = convertWebhooks({
+        openApiFile,
+        context,
+    });
+    const onlyWebhookFiles = Object.fromEntries(
+        Object.entries(convertedWebhooks?.webhooks ?? {}).filter(([file, _webhook]) => {
+            return !(file in convertedServices.services);
+        })
+    );
     return {
         rootApiFile,
         definitionFiles: {
             ...Object.fromEntries(
                 Object.entries(convertedServices.services).map(([file, service]) => {
-                    const numDirectoriesNested = file.split("/").length - 1;
-                    let importPrefix = "";
-                    for (let i = 0; i < numDirectoriesNested; ++i) {
-                        importPrefix += "../";
-                    }
                     const definitionFile: DefinitionFileSchema = {
                         imports: {
-                            [ROOT_PREFIX]: `${importPrefix}${FERN_PACKAGE_MARKER_FILENAME}`,
+                            [ROOT_PREFIX]: getRootImportPrefixFromFile(file),
                         },
                         service: service.value,
                     };
+                    const maybeWebhooks = convertedWebhooks?.webhooks[RelativeFilePath.of(file)];
+                    if (maybeWebhooks != null) {
+                        definitionFile.webhooks = maybeWebhooks;
+                    }
                     if (service.docs != null) {
                         definitionFile.docs = service.docs;
                     }
                     return [file, definitionFile];
                 })
             ),
+            ...Object.fromEntries(
+                Object.entries(onlyWebhookFiles).map(([file, webhooks]) => {
+                    const definitionFile: DefinitionFileSchema = {
+                        imports: {
+                            [ROOT_PREFIX]: getRootImportPrefixFromFile(file),
+                        },
+                        webhooks,
+                    };
+                    return [file, definitionFile];
+                })
+            ),
             [RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)]: getPackageYml(openApiFile, convertedServices),
         },
     };
+}
+
+function getRootImportPrefixFromFile(file: string): string {
+    const numDirectoriesNested = file.split("/").length - 1;
+    let importPrefix = "";
+    for (let i = 0; i < numDirectoriesNested; ++i) {
+        importPrefix += "../";
+    }
+    return `${importPrefix}${FERN_PACKAGE_MARKER_FILENAME}`;
 }
 
 function getRootApiFile(openApiFile: OpenAPIFile, environment: Environments | undefined): RootApiFileSchema {

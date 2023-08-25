@@ -30,6 +30,7 @@ types:
       tags: map<TagId, Tag>
       hasEndpointsMarkedInternal: boolean
       endpoints: list<Endpoint>
+      webhooks: list<Webhook>
       schemas: map<SchemaId, Schema>
       errors: map<StatusCode, HttpError>
       variables: map<string, PrimitiveSchema>
@@ -119,6 +120,25 @@ types:
   QuerySecurityScheme:
     properties:
       queryParameterName: string
+
+  Webhook:
+    extends: WithDescription
+    properties:
+      method: WebhookHttpMethod
+      summary: optional<string>
+      operationId: string
+      tags: list<TagId>
+      headers: list<Header>
+      generatedPayloadName:
+        type: string
+        docs: |
+          Populated as ${operationId}Payload
+      payload: Schema
+
+  WebhookHttpMethod:
+    enum:
+      - GET
+      - POST
 
   Endpoint:
     extends: WithDescription

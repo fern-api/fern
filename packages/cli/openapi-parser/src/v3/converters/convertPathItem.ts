@@ -1,4 +1,4 @@
-import { Endpoint, EndpointSdkName, HttpMethod, Schema } from "@fern-fern/openapi-ir-model/ir";
+import { Endpoint, EndpointSdkName, HttpMethod, Schema, Webhook } from "@fern-fern/openapi-ir-model/ir";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
@@ -21,38 +21,72 @@ interface FernAsyncConfig {
     "response-status-code": number;
 }
 
+export interface ConvertedPathItems {
+    endpoints: Endpoint[];
+    webhooks: Webhook[];
+}
+
 export function convertPathItem(
     path: string,
     pathItemObject: OpenAPIV3.PathItemObject,
     document: OpenAPIV3.Document,
     context: AbstractOpenAPIV3ParserContext
-): Endpoint[] {
+): ConvertedPathItems {
     const endpoints: Endpoint[] = [];
+    const webhooks: Webhook[] = [];
 
     if (pathItemObject.get != null) {
-        endpoints.push(
-            ...convertSyncAndAsyncEndpoints({
+        const isWebhook = getExtension<boolean>(pathItemObject.get, [FernOpenAPIExtension.WEBHOOK]);
+        if (isWebhook != null && isWebhook) {
+            const webhook = convertWebhook({
                 httpMethod: HttpMethod.Get,
                 path,
                 operation: pathItemObject.get,
-                pathItemParameters: pathItemObject.parameters,
                 document,
                 context,
-            })
-        );
+            });
+            if (webhook != null) {
+                webhooks.push(webhook);
+            }
+        } else {
+            endpoints.push(
+                ...convertSyncAndAsyncEndpoints({
+                    httpMethod: HttpMethod.Get,
+                    path,
+                    operation: pathItemObject.get,
+                    pathItemParameters: pathItemObject.parameters,
+                    document,
+                    context,
+                })
+            );
+        }
     }
 
     if (pathItemObject.post != null) {
-        endpoints.push(
-            ...convertSyncAndAsyncEndpoints({
+        const isWebhook = getExtension<boolean>(pathItemObject.post, [FernOpenAPIExtension.WEBHOOK]);
+        if (isWebhook != null && isWebhook) {
+            const webhook = convertWebhook({
                 httpMethod: HttpMethod.Post,
                 path,
                 operation: pathItemObject.post,
-                pathItemParameters: pathItemObject.parameters,
                 document,
                 context,
-            })
-        );
+            });
+            if (webhook != null) {
+                webhooks.push(webhook);
+            }
+        } else {
+            endpoints.push(
+                ...convertSyncAndAsyncEndpoints({
+                    httpMethod: HttpMethod.Post,
+                    path,
+                    operation: pathItemObject.post,
+                    pathItemParameters: pathItemObject.parameters,
+                    document,
+                    context,
+                })
+            );
+        }
     }
 
     if (pathItemObject.put != null) {
@@ -94,7 +128,70 @@ export function convertPathItem(
         );
     }
 
-    return endpoints;
+    return {
+        endpoints,
+        webhooks,
+    };
+}
+
+function convertWebhook({
+    path,
+    httpMethod,
+    operation,
+    context,
+    document,
+}: {
+    path: string;
+    httpMethod: HttpMethod.Get | HttpMethod.Post;
+    operation: OpenAPIV3.OperationObject;
+    context: AbstractOpenAPIV3ParserContext;
+    document: OpenAPIV3.Document;
+}): Webhook | undefined {
+    const sdkName = getSdkName({ operation });
+    const baseBreadcrumbs = getBaseBreadcrumbs({ sdkName, operation, httpMethod, path });
+
+    const payloadBreadcrumbs = [...baseBreadcrumbs, "Payload"];
+
+    const convertedParameters = convertParameters({
+        parameters: operation.parameters ?? [],
+        context,
+        requestBreadcrumbs: payloadBreadcrumbs,
+        path,
+        httpMethod,
+    });
+
+    if (operation.requestBody == null) {
+        context.logger.error(`Skipping webhook ${path} because no request body`);
+        return undefined;
+    }
+
+    const convertedPayload = convertRequest({
+        requestBody: operation.requestBody,
+        document,
+        context,
+        requestBreadcrumbs: [...baseBreadcrumbs, "Payload"],
+    });
+
+    if (convertedPayload == null || convertedPayload.type === "multipart") {
+        context.logger.error(`Skipping webhook ${path} because non-json request body`);
+        return undefined;
+    }
+
+    if (operation.operationId == null) {
+        context.logger.error(`Skipping webhook ${path} because no operation id present`);
+        return undefined;
+    }
+
+    return {
+        summary: operation.summary,
+        method: httpMethod,
+        operationId: operation.operationId,
+        tags: operation.tags ?? [],
+        headers: convertedParameters.headers,
+        generatedPayloadName: getGeneratedTypeName(payloadBreadcrumbs),
+        payload: convertedPayload.schema,
+        description: operation.description,
+    };
 }
 
 function convertSyncAndAsyncEndpoints({
@@ -213,6 +310,40 @@ function getSdkName({ operation }: { operation: OpenAPIV3.OperationObject }): En
     return undefined;
 }
 
+function getBaseBreadcrumbs({
+    sdkName,
+    operation,
+    suffix,
+    httpMethod,
+    path,
+}: {
+    sdkName?: EndpointSdkName;
+    operation: OpenAPIV3.OperationObject;
+    suffix?: string;
+    httpMethod: HttpMethod;
+    path: string;
+}) {
+    const baseBreadcrumbs: string[] = [];
+    if (sdkName != null) {
+        if (sdkName.groupName.length > 0) {
+            const lastGroupName = sdkName.groupName[sdkName.groupName.length - 1];
+            if (lastGroupName != null) {
+                baseBreadcrumbs.push(lastGroupName);
+            }
+        }
+        baseBreadcrumbs.push(sdkName.methodName);
+    } else if (operation.operationId != null) {
+        baseBreadcrumbs.push(operation.operationId);
+    } else {
+        baseBreadcrumbs.push(camelCase(`${httpMethod}_${path.split("/").join("_")}`));
+    }
+
+    if (suffix != null) {
+        baseBreadcrumbs.push(suffix);
+    }
+    return baseBreadcrumbs;
+}
+
 function convertToEndpoint({
     sdkName,
     operation,
@@ -234,24 +365,7 @@ function convertToEndpoint({
     path: string;
     httpMethod: HttpMethod;
 }): Omit<Endpoint, "path" | "method"> {
-    const baseBreadcrumbs: string[] = [];
-    if (sdkName != null) {
-        if (sdkName.groupName.length > 0) {
-            const lastGroupName = sdkName.groupName[sdkName.groupName.length - 1];
-            if (lastGroupName != null) {
-                baseBreadcrumbs.push(lastGroupName);
-            }
-        }
-        baseBreadcrumbs.push(sdkName.methodName);
-    } else if (operation.operationId != null) {
-        baseBreadcrumbs.push(operation.operationId);
-    } else {
-        baseBreadcrumbs.push(camelCase(`${httpMethod}_${path.split("/").join("_")}`));
-    }
-
-    if (suffix != null) {
-        baseBreadcrumbs.push(suffix);
-    }
+    const baseBreadcrumbs = getBaseBreadcrumbs({ sdkName, operation, suffix, httpMethod, path });
 
     const isStreaming = getExtension<boolean>(operation, FernOpenAPIExtension.STREAMING);
     const requestNameOverride = getExtension<string>(operation, [

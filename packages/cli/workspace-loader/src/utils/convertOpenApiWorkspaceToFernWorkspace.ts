@@ -15,6 +15,7 @@ export async function convertOpenApiWorkspaceToFernWorkspace(
         taskContext: context,
     });
     const definition = convert({
+        taskContext: context,
         openApiIr,
     });
 

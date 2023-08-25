@@ -16626,6 +16626,7 @@ e.g.:
       },
       "title": "Core Driver Interface",
       "variables": {},
+      "webhooks": [],
     },
   },
   "rootPackage": {
