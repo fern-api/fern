@@ -8250,6 +8250,7 @@ Upload a document to be indexed and used for search.
       "tags": {},
       "title": "Vellum Client API",
       "variables": {},
+      "webhooks": [],
     },
   },
   "rootPackage": {

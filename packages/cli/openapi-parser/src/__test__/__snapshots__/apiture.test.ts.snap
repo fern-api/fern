@@ -7251,6 +7251,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       },
       "title": "Apiture Digital Banking",
       "variables": {},
+      "webhooks": [],
     },
   },
   "rootPackage": {

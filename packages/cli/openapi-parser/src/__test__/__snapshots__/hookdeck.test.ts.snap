@@ -37054,6 +37054,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       },
       "title": "Hookdeck Admin REST API",
       "variables": {},
+      "webhooks": [],
     },
   },
   "rootPackage": {

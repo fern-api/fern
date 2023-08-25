@@ -3746,6 +3746,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       },
       "title": "Hume AI Batch API",
       "variables": {},
+      "webhooks": [],
     },
   },
   "rootPackage": {

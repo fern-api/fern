@@ -1872,6 +1872,7 @@ exports[`open api parser dopt parse open api 1`] = `
       },
       "title": "Dopt Blocks API",
       "variables": {},
+      "webhooks": [],
     },
   },
   "rootPackage": {

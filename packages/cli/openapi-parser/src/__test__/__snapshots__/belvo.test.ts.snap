@@ -51871,6 +51871,7 @@ client.transactions.list(params: {
       },
       "title": "Belvo API Docs",
       "variables": {},
+      "webhooks": [],
     },
   },
   "rootPackage": {

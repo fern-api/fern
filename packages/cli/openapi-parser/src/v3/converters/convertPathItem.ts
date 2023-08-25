@@ -36,48 +36,56 @@ export function convertPathItem(
     const webhooks: Webhook[] = [];
 
     if (pathItemObject.get != null) {
-        endpoints.push(
-            ...convertSyncAndAsyncEndpoints({
+        const isWebhook = getExtension<boolean>(pathItemObject.get, [FernOpenAPIExtension.WEBHOOK]);
+        if (isWebhook != null && isWebhook) {
+            const webhook = convertWebhook({
                 httpMethod: HttpMethod.Get,
                 path,
                 operation: pathItemObject.get,
-                pathItemParameters: pathItemObject.parameters,
                 document,
                 context,
-            })
-        );
-        const webhook = convertWebhook({
-            httpMethod: HttpMethod.Get,
-            path,
-            operation: pathItemObject.get,
-            document,
-            context,
-        });
-        if (webhook != null) {
-            webhooks.push(webhook);
+            });
+            if (webhook != null) {
+                webhooks.push(webhook);
+            }
+        } else {
+            endpoints.push(
+                ...convertSyncAndAsyncEndpoints({
+                    httpMethod: HttpMethod.Get,
+                    path,
+                    operation: pathItemObject.get,
+                    pathItemParameters: pathItemObject.parameters,
+                    document,
+                    context,
+                })
+            );
         }
     }
 
     if (pathItemObject.post != null) {
-        endpoints.push(
-            ...convertSyncAndAsyncEndpoints({
+        const isWebhook = getExtension<boolean>(pathItemObject.post, [FernOpenAPIExtension.WEBHOOK]);
+        if (isWebhook != null && isWebhook) {
+            const webhook = convertWebhook({
                 httpMethod: HttpMethod.Post,
                 path,
                 operation: pathItemObject.post,
-                pathItemParameters: pathItemObject.parameters,
                 document,
                 context,
-            })
-        );
-        const webhook = convertWebhook({
-            httpMethod: HttpMethod.Post,
-            path,
-            operation: pathItemObject.post,
-            document,
-            context,
-        });
-        if (webhook != null) {
-            webhooks.push(webhook);
+            });
+            if (webhook != null) {
+                webhooks.push(webhook);
+            }
+        } else {
+            endpoints.push(
+                ...convertSyncAndAsyncEndpoints({
+                    httpMethod: HttpMethod.Post,
+                    path,
+                    operation: pathItemObject.post,
+                    pathItemParameters: pathItemObject.parameters,
+                    document,
+                    context,
+                })
+            );
         }
     }
 

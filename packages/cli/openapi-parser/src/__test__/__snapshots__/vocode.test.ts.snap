@@ -6832,6 +6832,7 @@ exports[`open api parser vocode parse open api 1`] = `
       },
       "title": "Vocode Hosted API",
       "variables": {},
+      "webhooks": [],
     },
   },
   "rootPackage": {

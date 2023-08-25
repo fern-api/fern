@@ -25381,6 +25381,7 @@ the same customer, dimension, and time, but a different quantity.",
       "tags": {},
       "title": "Suger API",
       "variables": {},
+      "webhooks": [],
     },
   },
   "rootPackage": {

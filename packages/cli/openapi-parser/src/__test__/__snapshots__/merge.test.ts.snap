@@ -28151,6 +28151,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
       "tags": {},
       "title": "Merge HRIS API",
       "variables": {},
+      "webhooks": [],
     },
   },
   "rootPackage": {

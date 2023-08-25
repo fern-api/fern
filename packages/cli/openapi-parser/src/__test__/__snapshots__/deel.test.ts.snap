@@ -28197,6 +28197,7 @@ exports[`open api parser deel parse open api 1`] = `
       },
       "title": "Deel REST API",
       "variables": {},
+      "webhooks": [],
     },
   },
   "rootPackage": {
