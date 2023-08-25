@@ -42,7 +42,7 @@ export function convertPackage({
         context,
     });
     const onlyWebhookFiles = Object.fromEntries(
-        Object.entries(convertedWebhooks?.webhooks ?? {}).filter(([file, webhook]) => {
+        Object.entries(convertedWebhooks?.webhooks ?? {}).filter(([file, _webhook]) => {
             return !(file in convertedServices.services);
         })
     );

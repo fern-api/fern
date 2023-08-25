@@ -140,7 +140,7 @@ function convertWebhook({
     document: OpenAPIV3.Document;
 }): Webhook | undefined {
     const sdkName = getSdkName({ operation });
-    const baseBreadcrumbs = getBaseBreadcrumbs({ sdkName, operation, httpMethod });
+    const baseBreadcrumbs = getBaseBreadcrumbs({ sdkName, operation, httpMethod, path });
 
     const payloadBreadcrumbs = [...baseBreadcrumbs, "Payload"];
 
@@ -307,11 +307,13 @@ function getBaseBreadcrumbs({
     operation,
     suffix,
     httpMethod,
+    path,
 }: {
     sdkName?: EndpointSdkName;
     operation: OpenAPIV3.OperationObject;
     suffix?: string;
     httpMethod: HttpMethod;
+    path: string;
 }) {
     const baseBreadcrumbs: string[] = [];
     if (sdkName != null) {
@@ -355,7 +357,7 @@ function convertToEndpoint({
     path: string;
     httpMethod: HttpMethod;
 }): Omit<Endpoint, "path" | "method"> {
-    const baseBreadcrumbs = getBaseBreadcrumbs({ sdkName, operation, suffix, httpMethod });
+    const baseBreadcrumbs = getBaseBreadcrumbs({ sdkName, operation, suffix, httpMethod, path });
 
     const isStreaming = getExtension<boolean>(operation, FernOpenAPIExtension.STREAMING);
     const requestNameOverride = getExtension<string>(operation, [

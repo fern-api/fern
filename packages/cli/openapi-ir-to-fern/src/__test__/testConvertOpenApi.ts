@@ -13,6 +13,7 @@ export function testConvertOpenAPI(fixtureName: string, filename: string): void 
     describe(fixtureName, () => {
         it("simple", async () => {
             const openApiPath = path.join(FIXTURES_PATH, fixtureName, filename);
+            const mockTaskContext = createMockTaskContext({ logger: CONSOLE_LOGGER });
             const openApiIr = await parse({
                 root: {
                     file: {
@@ -22,9 +23,9 @@ export function testConvertOpenAPI(fixtureName: string, filename: string): void 
                     },
                     subDirectories: [],
                 },
-                taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER }),
+                taskContext: mockTaskContext,
             });
-            const fernDefinition = convert({ openApiIr });
+            const fernDefinition = convert({ openApiIr, taskContext: mockTaskContext });
             expect(fernDefinition).toMatchSnapshot();
         });
     });
