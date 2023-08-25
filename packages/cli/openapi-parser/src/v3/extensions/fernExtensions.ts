@@ -12,6 +12,16 @@ export const FernOpenAPIExtension = {
     SERVER_NAME_V2: "x-fern-server-name",
 
     /**
+     * Used to specify if an endpoint is actually
+     * representing a webhook
+     * Example usage:
+     *   paths:
+     *     /path/to/my/endpoint:
+     *       x-fern-webhook: true
+     */
+    WEBHOOK: "x-fern-webhook",
+
+    /**
      * Used to detect if an endpoint has an async version of it
      * Example usage:
      *   paths:

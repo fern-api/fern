@@ -90,7 +90,7 @@ export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
     };
 }
 
-function tokenizeString(input: string): string[] {
+export function tokenizeString(input: string): string[] {
     let tokens: string[];
 
     // Check if the string is in camel case or Pascal case
