@@ -20,13 +20,31 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fern.irV20.model.commons.TypeId;
 import com.fern.irV20.model.environment.EnvironmentBaseUrlId;
 import com.fern.irV20.model.http.FileDownloadResponse;
+import com.fern.irV20.model.http.FileProperty;
+import com.fern.irV20.model.http.FileUploadRequest;
+import com.fern.irV20.model.http.FileUploadRequestProperty;
 import com.fern.irV20.model.http.HttpEndpoint;
+import com.fern.irV20.model.http.HttpRequestBody;
+import com.fern.irV20.model.http.HttpRequestBodyReference;
 import com.fern.irV20.model.http.HttpResponse;
 import com.fern.irV20.model.http.HttpService;
+import com.fern.irV20.model.http.InlinedRequestBody;
+import com.fern.irV20.model.http.InlinedRequestBodyProperty;
 import com.fern.irV20.model.http.JsonResponse;
 import com.fern.irV20.model.http.PathParameter;
 import com.fern.irV20.model.http.SdkRequest;
+import com.fern.irV20.model.http.SdkRequestShape;
+import com.fern.irV20.model.http.SdkRequestWrapper;
+import com.fern.irV20.model.types.AliasTypeDeclaration;
+import com.fern.irV20.model.types.ContainerType;
+import com.fern.irV20.model.types.DeclaredTypeName;
+import com.fern.irV20.model.types.EnumTypeDeclaration;
+import com.fern.irV20.model.types.ObjectTypeDeclaration;
+import com.fern.irV20.model.types.PrimitiveType;
+import com.fern.irV20.model.types.Type;
 import com.fern.irV20.model.types.TypeDeclaration;
+import com.fern.irV20.model.types.UndiscriminatedUnionTypeDeclaration;
+import com.fern.irV20.model.types.UnionTypeDeclaration;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
@@ -50,6 +68,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.lang.model.element.Modifier;
 import okhttp3.Response;
 
@@ -100,10 +119,11 @@ public abstract class AbstractEndpointWriter {
         List<ParameterSpec> pathParameters = getPathParameters();
 
         // Step 2: Add additional parameters
-        pathParameters.addAll(additionalParameters());
+        List<ParameterSpec> additionalParameters = additionalParameters();
 
         // Step 3: Add path parameters
         endpointMethodBuilder.addParameters(pathParameters);
+        endpointMethodBuilder.addParameters(additionalParameters);
         endpointMethodBuilder.addParameter(
                 ParameterSpec.builder(requestOptionsFile.getClassName(), REQUEST_OPTIONS_PARAMETER_NAME)
                         .build());
@@ -149,12 +169,14 @@ public abstract class AbstractEndpointWriter {
 
         MethodSpec endpointWithRequestOptions = endpointMethodBuilder.build();
 
-        List<String> paramNames =
-                pathParameters.stream().map(parameterSpec -> parameterSpec.name).collect(Collectors.toList());
+        List<String> paramNames = Stream.concat(pathParameters.stream(), additionalParameters.stream())
+                .map(parameterSpec -> parameterSpec.name)
+                .collect(Collectors.toList());
         paramNames.add("null");
         MethodSpec endpointWithoutRequestOptions = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
                 .addModifiers(Modifier.PUBLIC)
                 .addParameters(pathParameters)
+                .addParameters(additionalParameters)
                 .addStatement(
                         endpointWithRequestOptions.returnType.equals(TypeName.VOID)
                                 ? endpointWithRequestOptions.name + "(" + String.join(",", paramNames) + ")"
@@ -164,7 +186,48 @@ public abstract class AbstractEndpointWriter {
                 .returns(endpointWithRequestOptions.returnType)
                 .build();
 
-        return new HttpEndpointMethodSpecs(endpointWithRequestOptions, endpointWithoutRequestOptions);
+        MethodSpec endpointWithoutRequest = null;
+        if (sdkRequest().isPresent() && sdkRequest().get().getShape().visit(new SdkRequestIsOptional())) {
+            MethodSpec.Builder endpointWithoutRequestBldr = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addParameters(pathParameters)
+                    .returns(endpointWithoutRequestOptions.returnType);
+            List<ParameterSpec> additionalParamsWithoutBody = additionalParameters.stream()
+                    .filter(parameterSpec -> !parameterSpec.name.equals(sdkRequest()
+                            .get()
+                            .getRequestParameterName()
+                            .getCamelCase()
+                            .getUnsafeName()))
+                    .collect(Collectors.toList());
+            endpointWithoutRequestBldr.addParameters(additionalParamsWithoutBody);
+            List<String> paramNamesWoBody = Stream.concat(pathParameters.stream(), additionalParamsWithoutBody.stream())
+                    .map(parameterSpec -> parameterSpec.name)
+                    .collect(Collectors.toList());
+            ParameterSpec bodyParameterSpec = additionalParameters.stream()
+                    .filter(parameterSpec -> parameterSpec.name.equals(sdkRequest()
+                            .get()
+                            .getRequestParameterName()
+                            .getCamelCase()
+                            .getUnsafeName()))
+                    .collect(Collectors.toList())
+                    .get(0);
+            if (typeNameIsOptional(bodyParameterSpec.type)) {
+                paramNamesWoBody.add("Optional.empty()");
+            } else {
+                paramNamesWoBody.add("$T.builder().build()");
+            }
+            endpointWithoutRequest = endpointWithoutRequestBldr
+                    .addStatement(
+                            endpointWithRequestOptions.returnType.equals(TypeName.VOID)
+                                    ? endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")"
+                                    : "return " + endpointWithRequestOptions.name + "("
+                                            + String.join(",", paramNamesWoBody) + ")",
+                            bodyParameterSpec.type)
+                    .build();
+        }
+
+        return new HttpEndpointMethodSpecs(
+                endpointWithRequestOptions, endpointWithoutRequestOptions, endpointWithoutRequest);
     }
 
     public abstract Optional<SdkRequest> sdkRequest();
@@ -283,6 +346,11 @@ public abstract class AbstractEndpointWriter {
         }
     }
 
+    private static boolean typeNameIsOptional(TypeName typeName) {
+        return typeName instanceof ParameterizedTypeName
+                && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class));
+    }
+
     private static final class SuccessResponseWriter implements HttpResponse.Visitor<Void> {
 
         private final CodeBlock.Builder httpResponseBuilder;
@@ -349,6 +417,158 @@ public abstract class AbstractEndpointWriter {
                                 .getResolvedType()
                                 .isContainer();
             }
+            return false;
+        }
+    }
+
+    private class SdkRequestIsOptional implements SdkRequestShape.Visitor<Boolean> {
+
+        @Override
+        public Boolean visitJustRequestBody(HttpRequestBodyReference justRequestBody) {
+            return justRequestBody.getRequestBodyType().visit(new TypeReferenceIsOptional());
+        }
+
+        @Override
+        public Boolean visitWrapper(SdkRequestWrapper wrapper) {
+            boolean isOptional = true;
+            if (httpEndpoint.getRequestBody().isPresent()) {
+                isOptional = httpEndpoint.getRequestBody().get().visit(new HttpRequestBodyIsOptional());
+            }
+            if (!httpEndpoint.getHeaders().isEmpty() && isOptional) {
+                isOptional = httpEndpoint.getHeaders().stream()
+                        .allMatch(httpHeader -> httpHeader.getValueType().visit(new TypeReferenceIsOptional()));
+            }
+            if (!httpEndpoint.getQueryParameters().isEmpty() && isOptional) {
+                isOptional = httpEndpoint.getQueryParameters().stream()
+                        .allMatch(
+                                queryParameter -> queryParameter.getValueType().visit(new TypeReferenceIsOptional()));
+            }
+            return isOptional;
+        }
+
+        @Override
+        public Boolean _visitUnknown(Object unknownType) {
+            return false;
+        }
+    }
+
+    private class TypeReferenceIsOptional implements com.fern.irV20.model.types.TypeReference.Visitor<Boolean> {
+
+        @Override
+        public Boolean visitContainer(ContainerType container) {
+            return container.isOptional();
+        }
+
+        @Override
+        public Boolean visitNamed(DeclaredTypeName named) {
+            TypeDeclaration typeDeclaration =
+                    clientGeneratorContext.getTypeDeclarations().get(named.getTypeId());
+            return typeDeclaration.getShape().visit(new TypeDeclarationIsOptional());
+        }
+
+        @Override
+        public Boolean visitPrimitive(PrimitiveType primitive) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitUnknown() {
+            return false;
+        }
+
+        @Override
+        public Boolean _visitUnknown(Object unknownType) {
+            return false;
+        }
+    }
+
+    private class TypeDeclarationIsOptional implements Type.Visitor<Boolean> {
+
+        @Override
+        public Boolean visitAlias(AliasTypeDeclaration alias) {
+            return alias.getAliasOf().visit(new TypeReferenceIsOptional());
+        }
+
+        @Override
+        public Boolean visitEnum(EnumTypeDeclaration _enum) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitObject(ObjectTypeDeclaration object) {
+            boolean allPropertiesOptional = object.getProperties().stream()
+                    .allMatch(objectProperty -> objectProperty.getValueType().visit(new TypeReferenceIsOptional()));
+            boolean allExtendsAreOptional = object.getExtends().stream().allMatch(declaredTypeName -> {
+                TypeDeclaration typeDeclaration =
+                        clientGeneratorContext.getTypeDeclarations().get(declaredTypeName.getTypeId());
+                return typeDeclaration.getShape().visit(new TypeDeclarationIsOptional());
+            });
+            return allPropertiesOptional && allExtendsAreOptional;
+        }
+
+        @Override
+        public Boolean visitUnion(UnionTypeDeclaration union) {
+            return false;
+        }
+
+        @Override
+        public Boolean visitUndiscriminatedUnion(UndiscriminatedUnionTypeDeclaration undiscriminatedUnion) {
+            return false;
+        }
+
+        @Override
+        public Boolean _visitUnknown(Object unknownType) {
+            return false;
+        }
+    }
+
+    private class HttpRequestBodyIsOptional implements HttpRequestBody.Visitor<Boolean> {
+
+        @Override
+        public Boolean visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
+            boolean allPropertiesOptional = inlinedRequestBody.getProperties().stream()
+                    .allMatch(objectProperty -> objectProperty.getValueType().visit(new TypeReferenceIsOptional()));
+            boolean allExtendsAreOptional = inlinedRequestBody.getExtends().stream()
+                    .allMatch(declaredTypeName -> {
+                        TypeDeclaration typeDeclaration =
+                                clientGeneratorContext.getTypeDeclarations().get(declaredTypeName.getTypeId());
+                        return typeDeclaration.getShape().visit(new TypeDeclarationIsOptional());
+                    });
+            return allPropertiesOptional && allExtendsAreOptional;
+        }
+
+        @Override
+        public Boolean visitReference(HttpRequestBodyReference reference) {
+            return reference.getRequestBodyType().visit(new TypeReferenceIsOptional());
+        }
+
+        @Override
+        public Boolean visitFileUpload(FileUploadRequest fileUpload) {
+            return fileUpload.getProperties().stream()
+                    .allMatch(fileUploadRequestProperty ->
+                            fileUploadRequestProperty.visit(new FileUploadRequestPropertyIsOptional()));
+        }
+
+        @Override
+        public Boolean _visitUnknown(Object unknownType) {
+            return false;
+        }
+    }
+
+    private class FileUploadRequestPropertyIsOptional implements FileUploadRequestProperty.Visitor<Boolean> {
+
+        @Override
+        public Boolean visitFile(FileProperty file) {
+            return file.getIsOptional();
+        }
+
+        @Override
+        public Boolean visitBodyProperty(InlinedRequestBodyProperty bodyProperty) {
+            return bodyProperty.getValueType().visit(new TypeReferenceIsOptional());
+        }
+
+        @Override
+        public Boolean _visitUnknown(Object unknownType) {
             return false;
         }
     }

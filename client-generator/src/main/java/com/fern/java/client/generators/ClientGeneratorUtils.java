@@ -110,6 +110,10 @@ public final class ClientGeneratorUtils {
                 HttpEndpointMethodSpecs httpEndpointMethodSpecs = httpEndpointMethodSpecFactory.create();
                 implBuilder.addMethod(httpEndpointMethodSpecs.getRequestOptionsMethodSpec());
                 implBuilder.addMethod(httpEndpointMethodSpecs.getNonRequestOptionsMethodSpec());
+                if (httpEndpointMethodSpecs.getNoRequestBodyMethodSpec().isPresent()) {
+                    implBuilder.addMethod(
+                            httpEndpointMethodSpecs.getNoRequestBodyMethodSpec().get());
+                }
                 generatedWrappedRequests.addAll(httpEndpointMethodSpecFactory.getGeneratedWrappedRequests());
             }
         }

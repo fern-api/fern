@@ -158,6 +158,10 @@ public class HttpMethodsClient {
         }
     }
 
+    public ObjectWithOptionalField testPatch(String id) {
+        return testPatch(id, ObjectWithOptionalField.builder().build());
+    }
+
     public boolean testDelete(String id) {
         return testDelete(id, null);
     }

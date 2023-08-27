@@ -84,7 +84,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                         clientGeneratorContext
                                 .getPoetTypeNameMapper()
                                 .convertToTypeName(true, httpRequestBodyReference.getRequestBodyType()),
-                        "request")
+                        sdkRequest.getRequestParameterName().getCamelCase().getSafeName())
                 .build());
     }
 

@@ -17,15 +17,21 @@
 package com.fern.java.client.generators.endpoint;
 
 import com.squareup.javapoet.MethodSpec;
+import java.util.Optional;
 
 public final class HttpEndpointMethodSpecs {
 
     private final MethodSpec nonRequestOptionsMethodSpec;
     private final MethodSpec requestOptionsMethodSpec;
+    private final MethodSpec noRequestBodyMethodSpec;
 
-    public HttpEndpointMethodSpecs(MethodSpec nonRequestOptionsMethodSpec, MethodSpec requestOptionsMethodSpec) {
+    public HttpEndpointMethodSpecs(
+            MethodSpec nonRequestOptionsMethodSpec,
+            MethodSpec requestOptionsMethodSpec,
+            MethodSpec noRequestBodyMethodSpec) {
         this.nonRequestOptionsMethodSpec = nonRequestOptionsMethodSpec;
         this.requestOptionsMethodSpec = requestOptionsMethodSpec;
+        this.noRequestBodyMethodSpec = noRequestBodyMethodSpec;
     }
 
     public MethodSpec getNonRequestOptionsMethodSpec() {
@@ -34,5 +40,9 @@ public final class HttpEndpointMethodSpecs {
 
     public MethodSpec getRequestOptionsMethodSpec() {
         return requestOptionsMethodSpec;
+    }
+
+    public Optional<MethodSpec> getNoRequestBodyMethodSpec() {
+        return Optional.ofNullable(noRequestBodyMethodSpec);
     }
 }

@@ -60,6 +60,10 @@ public class ObjectClient {
         }
     }
 
+    public ObjectWithOptionalField getAndReturnWithOptionalField() {
+        return getAndReturnWithOptionalField(ObjectWithOptionalField.builder().build());
+    }
+
     public ObjectWithRequiredField getAndReturnWithRequiredField(ObjectWithRequiredField request) {
         return getAndReturnWithRequiredField(request, null);
     }
@@ -133,6 +137,11 @@ public class ObjectClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public NestedObjectWithOptionalField getAndReturnNestedWithOptionalField() {
+        return getAndReturnNestedWithOptionalField(
+                NestedObjectWithOptionalField.builder().build());
     }
 
     public NestedObjectWithRequiredField getAndReturnNestedWithRequiredField(NestedObjectWithRequiredField request) {
