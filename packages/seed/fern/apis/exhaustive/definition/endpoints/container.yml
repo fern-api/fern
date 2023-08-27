@@ -40,3 +40,9 @@ service:
       method: POST
       request: map<string, objects.ObjectWithRequiredField>
       response: map<string, objects.ObjectWithRequiredField>
+
+    getAndReturnOptional:
+      path: /opt-objects
+      method: POST
+      request: optional<objects.ObjectWithRequiredField>
+      response: optional<objects.ObjectWithRequiredField>
