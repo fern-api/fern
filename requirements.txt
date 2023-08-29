@@ -18,9 +18,9 @@ colorama==0.4.6 ; python_version >= "3.8" and python_version < "4.0" \
 commonmark==0.9.1 ; python_version >= "3.8" and python_version < "4.0" \
     --hash=sha256:452f9dc859be7f06631ddcb328b6919c67984aca654e5fefb3914d54691aed60 \
     --hash=sha256:da2f38c92590f83de410ba1a3cbceafbc74fee9def35f9251ba9a971d6d66fd9
-fern-fern-generator-exec-sdk==0.0.195 ; python_version >= "3.8" and python_version < "4.0" \
-    --hash=sha256:76027ba3200e11cba90e31f7a20054772a8cf6f5315ffcb214e3fa6cf72ed43b \
-    --hash=sha256:d70fe89872dc03a896a5b324c65f3898c3869e411af223a227d1d990cbc4a9df
+fern-fern-generator-exec-sdk==0.0.281 ; python_version >= "3.8" and python_version < "4.0" \
+    --hash=sha256:1cfee07d89d08eb96f4540e37cc23087f0346281ba3958fb9483d7cac815e6d0 \
+    --hash=sha256:77adfea612a2a3e145419e47232701c2853054e33c762a4bdf41a6f8654e045d
 fern-fern-ir-model==0.0.1841 ; python_version >= "3.8" and python_version < "4.0" \
     --hash=sha256:26348732582f539f49e10372d2846cc9af121625afc85fbc3fced602d4bdc1a5 \
     --hash=sha256:fdda0f232e7981643e926c6661735b237257a1a1cc0bbd253d0a4a9aad4e5db8

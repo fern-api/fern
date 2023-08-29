@@ -6,6 +6,7 @@ from fern.generator_exec.resources.config import (
     RemoteGeneratorEnvironment,
 )
 from fern.generator_exec.resources.logging import GeneratorUpdate, TaskId
+from fern.generator_exec.resources.readme import GenerateReadmeRequest
 
 
 class GeneratorExecWrapper:
@@ -24,3 +25,7 @@ class GeneratorExecWrapper:
     def send_updates(self, generator_updates: typing.List[GeneratorUpdate]) -> None:
         if self.generator_exec_client is not None and self.task_id is not None:
             self.generator_exec_client.logging.send_update(task_id=self.task_id, request=generator_updates)
+
+    def generate_readme(self, generate_readme_request: GenerateReadmeRequest) -> None:
+        if self.generator_exec_client is not None and self.task_id is not None:
+            self.generator_exec_client.readme.generate_readme(task_id=self.task_id, request=generate_readme_request)
