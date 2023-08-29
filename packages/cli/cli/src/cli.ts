@@ -54,10 +54,7 @@ async function runCli() {
         if (cwd != null) {
             process.chdir(cwd);
         }
-        const versionOfCliToRun =
-            process.env.FERN_NO_VERSION_REDIRECTION === "true"
-                ? cliContext.environment.packageVersion
-                : await getIntendedVersionOfCli(cliContext);
+        const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
         if (cliContext.environment.packageVersion === versionOfCliToRun) {
             await tryRunCli(cliContext);
         } else {
@@ -153,11 +150,17 @@ async function tryRunCli(cliContext: CliContext) {
 }
 
 async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> {
+    if (process.env.FERN_NO_VERSION_REDIRECTION === "true") {
+        return cliContext.environment.packageVersion;
+    }
     const fernDirectory = await getFernDirectory();
     if (fernDirectory != null) {
         const projectConfig = await cliContext.runTask((context) =>
             loadProjectConfig({ directory: fernDirectory, context })
         );
+        if (projectConfig.version === "*") {
+            return cliContext.environment.packageVersion;
+        }
         return projectConfig.version;
     }
     return getLatestVersionOfCli({ cliEnvironment: cliContext.environment });

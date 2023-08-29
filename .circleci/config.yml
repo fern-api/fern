@@ -28,7 +28,7 @@ jobs:
       - run:
           name: fern check seed definitons
           command: |
-            yarn workspace @fern-api/cli dist:cli:dev && FERN_NO_VERSION_REDIRECTION=true 
+            yarn workspace @fern-api/cli dist:cli:dev
             cd packages/seed
             node $(yarn workspace @fern-api/cli bin fern:dev) check
       - run:
