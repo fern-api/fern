@@ -144,7 +144,7 @@ class SdkGenerator(AbstractGenerator):
             request_sent = generator_exec_wrapper.generate_readme(
                 GenerateReadmeRequest(
                     title=f"{capitalized_org_name} Python Library",
-                    summary=f"The {capitalized_org_name} Python Library provides convenient access to the {capitalized_org_name} from applications written in Python.",
+                    summary=f"The {capitalized_org_name} Python Library provides convenient access to the {capitalized_org_name} API from applications written in Python.",
                     usage="",
                     requirements=[],
                 )
