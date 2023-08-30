@@ -26,6 +26,9 @@ class GeneratorExecWrapper:
         if self.generator_exec_client is not None and self.task_id is not None:
             self.generator_exec_client.logging.send_update(task_id=self.task_id, request=generator_updates)
 
-    def generate_readme(self, generate_readme_request: GenerateReadmeRequest) -> None:
+    # Returns if the request was actually sent
+    def generate_readme(self, generate_readme_request: GenerateReadmeRequest) -> bool:
         if self.generator_exec_client is not None and self.task_id is not None:
             self.generator_exec_client.readme.generate_readme(task_id=self.task_id, request=generate_readme_request)
+            return True
+        return False

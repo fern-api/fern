@@ -47,6 +47,7 @@ class Project:
             self._project_filepath = (
                 filepath if project_config is None else os.path.join(filepath, "src", relative_path_to_project)
             )
+        self._generate_readme = True
         self._root_filepath = filepath
         self._relative_path_to_project = relative_path_to_project
         self._project_config = project_config
@@ -54,6 +55,9 @@ class Project:
         self._python_version = python_version
         self._dependency_manager = DependencyManager()
         self._should_format_files = should_format_files
+
+    def set_generate_readme(self, generate_readme: bool) -> None:
+        self._generate_readme = generate_readme
 
     def source_file(self, filepath: Filepath) -> SourceFile:
         """
@@ -119,8 +123,9 @@ class Project:
                 f.write("")
 
             # generate empty README so poetry doesn't fail
-            with open(os.path.join(self._root_filepath, "README.md"), "w") as f:
-                f.write("")
+            if self._generate_readme:
+                with open(os.path.join(self._root_filepath, "README.md"), "w") as f:
+                    f.write("")
 
     def __enter__(self) -> Project:
         return self

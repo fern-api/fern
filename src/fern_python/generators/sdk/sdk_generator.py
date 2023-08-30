@@ -140,8 +140,8 @@ class SdkGenerator(AbstractGenerator):
 
         output_mode = generator_config.output.mode.get_as_union()
         if output_mode.type == "github":
-            capitalized_org_name = {generator_config.organization.capitalize()}
-            generator_exec_wrapper.generate_readme(
+            capitalized_org_name = generator_config.organization.capitalize()
+            request_sent = generator_exec_wrapper.generate_readme(
                 GenerateReadmeRequest(
                     title=f"{capitalized_org_name} Python Library",
                     summary=f"The {capitalized_org_name} Python Library provides convenient access to the {capitalized_org_name} from applications written in Python.",
@@ -149,6 +149,8 @@ class SdkGenerator(AbstractGenerator):
                     requirements=[],
                 )
             )
+            if request_sent:
+                project.set_generate_readme(False)
 
     def _generate_environments(
         self,
