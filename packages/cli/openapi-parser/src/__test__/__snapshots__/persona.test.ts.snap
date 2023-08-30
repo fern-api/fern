@@ -3260,16 +3260,8 @@ Note that this will only delete the report -- it does not delete associated acco
               "name": "Persona-Version",
               "schema": {
                 "description": undefined,
-                "type": "nullable",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
-                  },
-                  "type": "primitive",
-                },
+                "type": "literal",
+                "value": "2020-01-13",
               },
             },
           ],
@@ -5564,16 +5556,8 @@ Note: An account is still updatable after redaction. If you want to delete data 
               "name": "Persona-Version",
               "schema": {
                 "description": undefined,
-                "type": "nullable",
-                "value": {
-                  "description": undefined,
-                  "schema": {
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "type": "string",
-                  },
-                  "type": "primitive",
-                },
+                "type": "literal",
+                "value": "2020-01-13",
               },
             },
           ],
