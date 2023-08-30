@@ -16,6 +16,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from ..environment_generators import (
+    GeneratedEnvironment,
     MultipleBaseUrlsEnvironmentGenerator,
     SingleBaseUrlEnvironmentGenerator,
 )
@@ -30,6 +31,12 @@ class RootClientConstructorParameter:
     private_member_name: typing.Optional[str] = None
     initializer: Optional[AST.Expression] = None
     exclude_from_wrapper_construction: Optional[bool] = False
+
+
+@dataclass
+class GeneratedRootClient:
+    usage: str
+    async_usage: str
 
 
 class RootClientGenerator:
@@ -49,6 +56,7 @@ class RootClientGenerator:
         *,
         context: SdkGeneratorContext,
         package: ir_types.Package,
+        generated_environment: Optional[GeneratedEnvironment],
         class_name: str,
         async_class_name: str,
     ):
@@ -58,17 +66,22 @@ class RootClientGenerator:
         self._async_class_name = async_class_name
         self._is_default_body_parameter_used = False
         self._environments_config = self._context.ir.environments
+        self._generated_environment = generated_environment
 
-        client_wrapper_generator = ClientWrapperGenerator(context=self._context)
+        client_wrapper_generator = ClientWrapperGenerator(
+            context=self._context,
+            generated_environment=generated_environment,
+        )
         self._client_wrapper_constructor_params = (
             client_wrapper_generator._get_constructor_info().constructor_parameters
         )
+        self._constructor_info = client_wrapper_generator._get_constructor_info()
 
         self._timeout_constructor_parameter_name = self._get_timeout_constructor_parameter_name(
             [param.constructor_parameter_name for param in self._client_wrapper_constructor_params]
         )
 
-    def generate(self, source_file: SourceFile) -> None:
+    def generate(self, source_file: SourceFile) -> GeneratedRootClient:
         class_declaration = self._create_class_declaration(is_async=False)
         if self._is_default_body_parameter_used:
             source_file.add_arbitrary_code(AST.CodeWriter(self._write_default_param))
@@ -107,6 +120,47 @@ class RootClientGenerator:
                     ),
                     should_export=False,
                 )
+        return self._new_generated_root_client(
+            module_path=".".join(self._context.get_filepath_for_root_client().to_module().path),
+        )
+
+    def _new_generated_root_client(
+        self,
+        module_path: str,
+    ) -> GeneratedRootClient:
+        filtered_constructor_params = [
+            param.instantiation for param in self._client_wrapper_constructor_params if param.instantiation is not None
+        ]
+        instantiation = "()"
+        if len(filtered_constructor_params) > 0:
+            instantiation = "(\n"
+            instantiation += "".join([f"    {param.parameter},\n" for param in filtered_constructor_params])
+            instantiation += ")\n"
+
+        base_imports: List[str] = []
+        for param in filtered_constructor_params:
+            if param.imports is not None and len(param.imports) > 0:
+                base_imports.extend(param.imports)
+
+        imports = "".join(
+            [f"{statement}\n" for statement in base_imports + [f"from {module_path} import {self._class_name}"]]
+        )
+        async_imports = "".join(
+            [f"{statement}\n" for statement in base_imports + [f"from {module_path} import {self._async_class_name}"]]
+        )
+
+        return GeneratedRootClient(
+            usage=f"""```python
+{imports}
+
+client = {self._class_name}{instantiation}
+```""",
+            async_usage=f"""```python
+{async_imports}
+
+client = {self._async_class_name}{instantiation}
+```""",
+        )
 
     def _create_class_declaration(self, *, is_async: bool) -> AST.ClassDeclaration:
         constructor_parameters = self._get_constructor_parameters(is_async=is_async)
@@ -221,7 +275,10 @@ class RootClientGenerator:
                 ),
             )
 
-        client_wrapper_generator = ClientWrapperGenerator(context=self._context)
+        client_wrapper_generator = ClientWrapperGenerator(
+            context=self._context,
+            generated_environment=self._generated_environment,
+        )
         for param in client_wrapper_generator._get_constructor_info().constructor_parameters:
             parameters.append(
                 RootClientConstructorParameter(
@@ -246,7 +303,10 @@ class RootClientGenerator:
 
     def _get_write_constructor_body(self, *, is_async: bool) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
-            client_wrapper_generator = ClientWrapperGenerator(context=self._context)
+            client_wrapper_generator = ClientWrapperGenerator(
+                context=self._context,
+                generated_environment=self._generated_environment,
+            )
             client_wrapper_constructor_kwargs = []
 
             environments_config = self._context.ir.environments

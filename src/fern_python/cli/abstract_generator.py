@@ -30,7 +30,8 @@ class AbstractGenerator(ABC):
         project_config = generator_config.output.mode.visit(
             download_files=lambda: None,
             publish=lambda publish: ProjectConfig(
-                package_name=publish.registries_v_2.pypi.package_name, package_version=publish.version
+                package_name=publish.registries_v_2.pypi.package_name,
+                package_version=publish.version,
             ),
             github=lambda github_output_mode: self._get_github_publish_config(generator_config, github_output_mode),
         )
@@ -83,7 +84,7 @@ class AbstractGenerator(ABC):
             )
         publish_info_union = output_mode.publish_info.get_as_union()
         if publish_info_union.type != "pypi":
-            raise RuntimeError("Github publishi info is not pypi")
+            raise RuntimeError("Github publish info is not pypi")
         return ProjectConfig(
             package_name=publish_info_union.package_name,
             package_version=output_mode.version,

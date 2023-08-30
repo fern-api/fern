@@ -3,6 +3,7 @@ import fern.ir.resources as ir_types
 from fern_python.codegen import AST, SourceFile
 
 from ..context.sdk_generator_context import SdkGeneratorContext
+from .generated_environment import GeneratedEnvironment
 
 
 class MultipleBaseUrlsEnvironmentGenerator:
@@ -13,14 +14,19 @@ class MultipleBaseUrlsEnvironmentGenerator:
     def generate(
         self,
         source_file: SourceFile,
-    ) -> None:
+    ) -> GeneratedEnvironment:
         class_name = self._context.get_class_name_of_environments()
         environment_class = AST.ClassDeclaration(name=class_name)
 
-        for environment in self._environments.environments:
+        example_environment = ""
+        for i, environment in enumerate(self._environments.environments):
+            class_var_name = self._get_class_var_name(environment)
+            if i == 0:
+                example_environment = f"{class_name}.{class_var_name}"
+
             environment_class.add_class_var(
                 AST.VariableDeclaration(
-                    name=self._get_class_var_name(environment),
+                    name=class_var_name,
                     type_hint=AST.TypeHint(
                         AST.ClassReference(qualified_name_excluding_import=(class_name,), is_forward_reference=True)
                     ),
@@ -44,6 +50,12 @@ class MultipleBaseUrlsEnvironmentGenerator:
         source_file.add_class_declaration(environment_class)
         source_file.add_arbitrary_code(AST.CodeWriter("\n"))
         source_file.add_arbitrary_code(AST.CodeWriter(self._write_bottom_statements))
+
+        return GeneratedEnvironment(
+            module_path=".".join(self._context.get_filepath_for_environments_enum().to_module().path),
+            class_name=class_name,
+            example_environment=example_environment,
+        )
 
     def get_reference_to_default_environment(self) -> AST.Expression:
         if self._context.ir.environments is None or self._context.ir.environments.default_environment is None:

@@ -11,6 +11,13 @@ from fern_python.external_dependencies import httpx
 from fern_python.generators.sdk.core_utilities.core_utilities import CoreUtilities
 
 from ..context.sdk_generator_context import SdkGeneratorContext
+from ..environment_generators import GeneratedEnvironment
+
+
+@dataclass
+class ConstructorInstantiation:
+    parameter: str
+    imports: Optional[List[str]] = None
 
 
 @dataclass
@@ -18,6 +25,7 @@ class ConstructorParameter:
     constructor_parameter_name: str
     type_hint: AST.TypeHint
     private_member_name: str
+    instantiation: typing.Optional[ConstructorInstantiation] = None
     getter_method: typing.Optional[AST.FunctionDeclaration] = None
     header_key: typing.Optional[str] = None
     header_prefix: typing.Optional[str] = None
@@ -58,8 +66,10 @@ class ClientWrapperGenerator:
         self,
         *,
         context: SdkGeneratorContext,
+        generated_environment: Optional[GeneratedEnvironment],
     ):
         self._context = context
+        self._generated_environment = generated_environment
 
     def generate(self, source_file: SourceFile, project: Project) -> None:
         constructor_info = self._get_constructor_info()
@@ -93,6 +103,9 @@ class ClientWrapperGenerator:
                 constructor_parameter_name=ClientWrapperGenerator.BASE_URL_PARAMETER_NAME,
                 type_hint=AST.TypeHint.str_(),
                 private_member_name=f"_{ClientWrapperGenerator.BASE_URL_PARAMETER_NAME}",
+                instantiation=ConstructorInstantiation(
+                    parameter=f'{ClientWrapperGenerator.BASE_URL_PARAMETER_NAME}=<"YOUR_BASE_URL">',
+                ),
                 getter_method=AST.FunctionDeclaration(
                     name=ClientWrapperGenerator.GET_BASE_URL_METHOD_NAME,
                     signature=AST.FunctionSignature(return_type=AST.TypeHint.str_()),
@@ -104,6 +117,9 @@ class ClientWrapperGenerator:
                 constructor_parameter_name=ClientWrapperGenerator.ENVIRONMENT_PARAMETER_NAME,
                 type_hint=AST.TypeHint(self._context.get_reference_to_environments_class()),
                 private_member_name=f"_{ClientWrapperGenerator.ENVIRONMENT_PARAMETER_NAME}",
+                instantiation=self._get_environment_instantiation(
+                    self._generated_environment,
+                ),
                 getter_method=AST.FunctionDeclaration(
                     name=ClientWrapperGenerator.GET_ENVIRONMENT_METHOD_NAME,
                     signature=AST.FunctionSignature(
@@ -361,12 +377,16 @@ class ClientWrapperGenerator:
 
         # TODO(dsinghvi): Support suppliers for global headers
         for header in self._context.ir.headers:
+            constructor_parameter_name = self._get_header_constructor_parameter_name(header)
             parameters.append(
                 ConstructorParameter(
-                    constructor_parameter_name=self._get_header_constructor_parameter_name(header),
+                    constructor_parameter_name=constructor_parameter_name,
                     private_member_name=self._get_header_private_member_name(header),
                     type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                         header.value_type
+                    ),
+                    instantiation=ConstructorInstantiation(
+                        parameter=f'{constructor_parameter_name}=<"YOUR_{header.name.name.screaming_snake_case.safe_name}">',
                     ),
                     header_key=header.name.wire_value,
                 )
@@ -374,12 +394,16 @@ class ClientWrapperGenerator:
 
         # TODO(dsinghvi): Support suppliers for header auth schemes
         for header_auth_scheme in self._get_header_auth_schemes():
+            constructor_parameter_name = self._get_auth_scheme_header_constructor_parameter_name(header_auth_scheme)
             parameters.append(
                 ConstructorParameter(
-                    constructor_parameter_name=self._get_auth_scheme_header_private_member_name(header_auth_scheme),
+                    constructor_parameter_name=constructor_parameter_name,
                     private_member_name=self._get_auth_scheme_header_private_member_name(header_auth_scheme),
                     type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                         header_auth_scheme.value_type
+                    ),
+                    instantiation=ConstructorInstantiation(
+                        parameter=f'{constructor_parameter_name}=<"YOUR_{header_auth_scheme.name.name.screaming_snake_case.safe_name}">',
                     ),
                     header_key=header_auth_scheme.name.wire_value,
                     header_prefix=header_auth_scheme.prefix,
@@ -388,13 +412,17 @@ class ClientWrapperGenerator:
 
         bearer_auth_scheme = self._get_bearer_auth_scheme()
         if bearer_auth_scheme is not None:
+            constructor_parameter_name = self._get_token_constructor_parameter_name(bearer_auth_scheme)
             parameters.append(
                 ConstructorParameter(
-                    constructor_parameter_name=self._get_token_constructor_parameter_name(bearer_auth_scheme),
+                    constructor_parameter_name=constructor_parameter_name,
                     private_member_name=self._get_token_member_name(bearer_auth_scheme),
                     type_hint=ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
                     if self._context.ir.sdk_config.is_auth_mandatory
                     else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT),
+                    instantiation=ConstructorInstantiation(
+                        parameter=f'{constructor_parameter_name}=<"YOUR_{bearer_auth_scheme.token.screaming_snake_case.safe_name}">',
+                    ),
                     getter_method=AST.FunctionDeclaration(
                         name=self._get_token_getter_name(bearer_auth_scheme),
                         signature=AST.FunctionSignature(
@@ -420,12 +448,16 @@ class ClientWrapperGenerator:
 
         basic_auth_scheme = self._get_basic_auth_scheme()
         if basic_auth_scheme is not None:
+            username_constructor_parameter_name = self._get_username_constructor_parameter_name(basic_auth_scheme)
             username_constructor_parameter = ConstructorParameter(
-                constructor_parameter_name=self._get_username_constructor_parameter_name(basic_auth_scheme),
+                constructor_parameter_name=username_constructor_parameter_name,
                 private_member_name=self._get_username_member_name(basic_auth_scheme),
                 type_hint=ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
                 if self._context.ir.sdk_config.is_auth_mandatory
                 else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT),
+                instantiation=ConstructorInstantiation(
+                    parameter=f'{username_constructor_parameter_name}=<"YOUR_{basic_auth_scheme.username.screaming_snake_case.safe_name}">',
+                ),
                 getter_method=AST.FunctionDeclaration(
                     name=self._get_username_getter_name(basic_auth_scheme),
                     signature=AST.FunctionSignature(
@@ -446,12 +478,16 @@ class ClientWrapperGenerator:
                 ),
                 is_basic=True,
             )
+            password_constructor_parameter_name = self._get_password_constructor_parameter_name(basic_auth_scheme)
             password_constructor_parameter = ConstructorParameter(
-                constructor_parameter_name=self._get_password_constructor_parameter_name(basic_auth_scheme),
+                constructor_parameter_name=password_constructor_parameter_name,
                 private_member_name=self._get_password_member_name(basic_auth_scheme),
                 type_hint=ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
                 if self._context.ir.sdk_config.is_auth_mandatory
                 else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT),
+                instantiation=ConstructorInstantiation(
+                    parameter=f'{password_constructor_parameter_name}=<"YOUR_{basic_auth_scheme.password.screaming_snake_case.safe_name}">',
+                ),
                 getter_method=AST.FunctionDeclaration(
                     name=self._get_password_getter_name(basic_auth_scheme),
                     signature=AST.FunctionSignature(
@@ -479,7 +515,9 @@ class ClientWrapperGenerator:
                 ]
             )
 
-        return ConstructorInfo(constructor_parameters=parameters)
+        return ConstructorInfo(
+            constructor_parameters=parameters,
+        )
 
     def _get_optional_getter_body_writer(self, *, member_name: str) -> AST.CodeWriterFunction:
         def _write_optional_getter_body(writer: AST.NodeWriter) -> None:
@@ -569,6 +607,17 @@ class ClientWrapperGenerator:
 
     def _get_auth_scheme_header_private_member_name(self, header: ir_types.HeaderAuthScheme) -> str:
         return header.name.name.snake_case.unsafe_name
+
+    def _get_environment_instantiation(
+        self,
+        generated_environment: Optional[GeneratedEnvironment],
+    ) -> Optional[ConstructorInstantiation]:
+        if generated_environment is None:
+            return None
+        return ConstructorInstantiation(
+            imports=[f"from {generated_environment.module_path} import {generated_environment.class_name}"],
+            parameter=f"{ClientWrapperGenerator.ENVIRONMENT_PARAMETER_NAME}={generated_environment.example_environment}",
+        )
 
 
 class ClientWrapperUrlStorage(Enum):
