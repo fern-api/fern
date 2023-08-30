@@ -42,7 +42,8 @@ export function convertParameters({
             : parameter;
 
         const isRequired = resolvedParameter.required ?? false;
-        const schema =
+
+        let schema =
             resolvedParameter.schema != null
                 ? convertSchema(resolvedParameter.schema, !isRequired, context, [
                       ...requestBreadcrumbs,
@@ -66,6 +67,22 @@ export function convertParameters({
                       }),
                       description: undefined,
                   });
+        if (
+            resolvedParameter.in === "header" &&
+            resolvedParameter.schema != null &&
+            !isReferenceObject(resolvedParameter.schema) &&
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (resolvedParameter.schema as any).default != null
+        ) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const defaultValue = (resolvedParameter.schema as any).default;
+            if (typeof defaultValue === "string" && defaultValue.length > 0) {
+                schema = Schema.literal({
+                    value: defaultValue,
+                    description: undefined,
+                });
+            }
+        }
 
         const convertedParameter = {
             name: resolvedParameter.name,
