@@ -150,34 +150,6 @@ exports[`open api parser permit simple 1`] = `
             },
           },
         },
-        "ConditionSetCreateParentId": {
-          "discriminated": false,
-          "docs": "Parent Condition Set",
-          "union": [
-            {
-              "docs": undefined,
-              "type": "string",
-            },
-            {
-              "docs": undefined,
-              "type": "string",
-            },
-          ],
-        },
-        "ConditionSetCreateResourceId": {
-          "discriminated": false,
-          "docs": "For ResourceSets, the id of the base resource.",
-          "union": [
-            {
-              "docs": undefined,
-              "type": "string",
-            },
-            {
-              "docs": undefined,
-              "type": "string",
-            },
-          ],
-        },
         "ConditionSetRead": {
           "docs": undefined,
           "properties": {
@@ -218,8 +190,8 @@ exports[`open api parser permit simple 1`] = `
               "type": "string",
             },
             "parent_id": {
-              "docs": "Parent Condition Set",
-              "type": "optional<ConditionSetReadParentId>",
+              "docs": undefined,
+              "type": "optional<string>",
             },
             "project_id": {
               "docs": "Unique id of the project that the condition set belongs to.",
@@ -230,8 +202,8 @@ exports[`open api parser permit simple 1`] = `
               "type": "optional<ResourceRead>",
             },
             "resource_id": {
-              "docs": "For ResourceSets, the id of the base resource.",
-              "type": "optional<ConditionSetReadResourceId>",
+              "docs": undefined,
+              "type": "optional<string>",
             },
             "type": {
               "docs": "the type of the set: UserSet or ResourceSet",
@@ -242,34 +214,6 @@ exports[`open api parser permit simple 1`] = `
               "type": "datetime",
             },
           },
-        },
-        "ConditionSetReadParentId": {
-          "discriminated": false,
-          "docs": "Parent Condition Set",
-          "union": [
-            {
-              "docs": undefined,
-              "type": "string",
-            },
-            {
-              "docs": undefined,
-              "type": "string",
-            },
-          ],
-        },
-        "ConditionSetReadResourceId": {
-          "discriminated": false,
-          "docs": "For ResourceSets, the id of the base resource.",
-          "union": [
-            {
-              "docs": undefined,
-              "type": "string",
-            },
-            {
-              "docs": undefined,
-              "type": "string",
-            },
-          ],
         },
         "ConditionSetRuleRead": {
           "docs": undefined,
@@ -328,20 +272,6 @@ exports[`open api parser permit simple 1`] = `
               "docs": undefined,
               "name": "resourceset",
               "value": "resourceset",
-            },
-          ],
-        },
-        "ConditionSetUpdateParentId": {
-          "discriminated": false,
-          "docs": "Parent Condition Set",
-          "union": [
-            {
-              "docs": undefined,
-              "type": "string",
-            },
-            {
-              "docs": undefined,
-              "type": "string",
             },
           ],
         },
@@ -2480,12 +2410,12 @@ If we check the checkbox where \`us_based_employees\` and \`private_repos->clone
                     "type": "string",
                   },
                   "parent_id": {
-                    "docs": "Parent Condition Set",
-                    "type": "optional<root.ConditionSetCreateParentId>",
+                    "docs": undefined,
+                    "type": "optional<string>",
                   },
                   "resource_id": {
-                    "docs": "For ResourceSets, the id of the base resource.",
-                    "type": "optional<root.ConditionSetCreateResourceId>",
+                    "docs": undefined,
+                    "type": "optional<string>",
                   },
                   "type": {
                     "docs": "the type of the set: UserSet or ResourceSet",
@@ -2735,8 +2665,8 @@ Fields that will be provided will be completely overwritten.",
                     "type": "optional<string>",
                   },
                   "parent_id": {
-                    "docs": "Parent Condition Set",
-                    "type": "optional<root.ConditionSetUpdateParentId>",
+                    "docs": undefined,
+                    "type": "optional<string>",
                   },
                 },
               },
