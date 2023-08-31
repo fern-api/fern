@@ -1,0 +1,21 @@
+{
+    "irFilepath": "ir.json",
+    "output": {
+        "mode": {
+            "type": "downloadFiles"
+        },
+        "path": "temp"
+    },
+    "customConfig": {
+      "enableExplicitNull": true,
+      "module": {
+        "path": "acme.io/sdk"
+      }
+    },
+    "workspaceName": "test",
+    "organization": "fernbot",
+    "environment": {
+        "_type": "local"
+    },
+    "dryRun": false
+}

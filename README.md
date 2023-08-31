@@ -44,7 +44,7 @@ This generator is used via the [Fern CLI](https://github.com/fern-api/fern), by 
 
 ```yml
 - name: fernapi/fern-go-sdk
-  version: 0.0.14
+  version: 0.4.0
   output:
     location: local-file-system
     path: ../../generated/go
@@ -75,7 +75,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-go-sdk
-        version: 0.1.1
+        version: 0.4.0
         config:
           importPath: github.com/<YOUR_ORGANIZATION>/<YOUR_REPOSITORY>/generated/go
         output:
@@ -101,7 +101,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-go-sdk
-        version: 0.1.1
+        version: 0.4.0
         config:
           module:
             path: github.com/<YOUR_ORGANIZATION>/<YOUR_REPOSITORY>
@@ -114,8 +114,8 @@ This configuration will generate a `go.mod` alongside the rest of the Go SDK cod
 location. With this, import statements within the generated Go SDK are all resolved from the configured
 module path.
 
-By default, the generated `go.mod` will include a `go` version equivalent to the version of the `go` binary
-available on your local machine. You can override this behavior by specifying the `version` key like so:
+By default, the generated `go.mod` will be set to `1.13`. You can override this behavior by specifying
+the `version` key like so:
 
 ```yaml
 default-group: local
@@ -123,7 +123,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-go-sdk
-        version: 0.1.1
+        version: 0.4.0
         config:
           module:
             path: github.com/<YOUR_ORGANIZATION>/<YOUR_REPOSITORY>
@@ -147,11 +147,29 @@ replace "github.com/your/sdk" v0.0.0 => "path/to/generated/sdk"
 If you only plan to use the generated SDK within your own Go module, we recommend using the `importPath` configuration
 option described above.
 
-## Releases
+## Explicit Null
 
-All generator releases are published in the [Releases section of the GitHub repository](https://github.com/fern-api/fern-go/releases). You can directly use these version numbers in your generator configuration files.
+By default, it's impossible to send an explicit JSON `null` for optional parameters. You can opt-in to 
+generating a generic `Optional[T]` type that can be used to distinguish between a `nil` value (nothing
+is sent), a non-`nil` value (the value is sent), and an explicit null (a `null` value is sent). This is
+particularly useful for `PATCH` endpoints.
 
-For instance, if you want to use version `0.0.13` of the Go generator:
+The `Optional` and `Null` constructor functions will be included at the root of your module and can be
+used like so:
+
+```go
+client := acmeclient.NewClient()
+updatedFoo, err := client.Foo.Update(
+  context.TODO(),
+  &acme.UpdateFooRequest{
+    Name: acme.Optional("example"),
+    Tag:  acme.Null[string](),
+  },
+  // Serialized as {"name":"example","tag":null}
+)
+```
+
+An example configuration is shown below:
 
 ```yaml
 default-group: local
@@ -159,7 +177,29 @@ groups:
   local:
     generators:
       - name: fernapi/fern-go-sdk
-        version: 0.0.13
+        version: 0.4.0
+        config:
+          enableExplicitNull: true
+        output:
+          location: local-file-system
+          path: ../../generated/go
+```
+
+Note that this feature requires generics, so the generated `go.mod` will be upgraded to `1.18` (as opposed to `1.13`).
+
+## Releases
+
+All generator releases are published in the [Releases section of the GitHub repository](https://github.com/fern-api/fern-go/releases). You can directly use these version numbers in your generator configuration files.
+
+For instance, if you want to use version `0.3.0` of the Go generator:
+
+```yaml
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-go-sdk
+        version: 0.3.0
         output:
           location: local-file-system
           path: ../../generated/go

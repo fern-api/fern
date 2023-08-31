@@ -7,11 +7,6 @@
             "repoUrl": "https://github.com/example/repository"
         }
     },
-    "customConfig": {
-        "module": {
-            "version": "1.19"
-        }
-    },
     "workspaceName": "test",
     "organization": "fernbot",
     "environment": {

@@ -5,8 +5,19 @@ import (
 	"fmt"
 )
 
-// modFilename is the default name of a Go module file.
-const modFilename = "go.mod"
+const (
+	// minimumGoVersion specifies the minimum Go version required to
+	// use this library. We require at least 1.13, which is when
+	// modules were officially introduced.
+	minimumGoVersion = "1.13"
+
+	// minimumGoGenericsVersion specifies the minimum Go version if
+	// the user requires generics (i.e. *Optional[T]).
+	minimumGoGenericsVersion = "1.18"
+
+	// modFilename is the default name of a Go module file.
+	modFilename = "go.mod"
+)
 
 // NewModFile returns a new *File for a go.mod.
 //
@@ -14,10 +25,10 @@ const modFilename = "go.mod"
 //
 // module github.com/fern-api/fern-go
 //
-// go 1.19
+// go 1.13
 //
 // require github.com/google/uuid v1.3.1
-func NewModFile(c *ModuleConfig) (*File, error) {
+func NewModFile(c *ModuleConfig, enableExplicitNull bool) (*File, error) {
 	if c.Path == "" {
 		return nil, fmt.Errorf("module path is required")
 	}
@@ -29,10 +40,16 @@ func NewModFile(c *ModuleConfig) (*File, error) {
 	fmt.Fprintln(buffer)
 
 	// Write the go version.
-	if c.Version != "" {
-		fmt.Fprintf(buffer, "go %s\n", c.Version)
-		fmt.Fprintln(buffer)
+	version := c.Version
+	if version == "" {
+		if enableExplicitNull {
+			version = minimumGoGenericsVersion
+		} else {
+			version = minimumGoVersion
+		}
 	}
+	fmt.Fprintf(buffer, "go %s\n", version)
+	fmt.Fprintln(buffer)
 
 	// Write all of the imports in a single require block.
 	fmt.Fprint(buffer, "require (\n")

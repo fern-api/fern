@@ -2,10 +2,11 @@ package generator
 
 // Config represents the Fern generator configuration.
 type Config struct {
-	DryRun     bool
-	Version    string
-	IRFilepath string
-	ImportPath string
+	DryRun             bool
+	EnableExplicitNull bool
+	Version            string
+	IRFilepath         string
+	ImportPath         string
 
 	// If not specified, a go.mod and go.sum will not be generated.
 	ModuleConfig *ModuleConfig
@@ -29,16 +30,18 @@ type ModuleConfig struct {
 // NewConfig returns a new *Config for the given values.
 func NewConfig(
 	dryRun bool,
+	enableExplicitNull bool,
 	version string,
 	irFilepath string,
 	importPath string,
 	moduleConfig *ModuleConfig,
 ) (*Config, error) {
 	return &Config{
-		DryRun:       dryRun,
-		Version:      version,
-		IRFilepath:   irFilepath,
-		ImportPath:   importPath,
-		ModuleConfig: moduleConfig,
+		DryRun:             dryRun,
+		EnableExplicitNull: enableExplicitNull,
+		Version:            version,
+		IRFilepath:         irFilepath,
+		ImportPath:         importPath,
+		ModuleConfig:       moduleConfig,
 	}, nil
 }

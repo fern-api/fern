@@ -28,9 +28,9 @@ type fileWriter struct {
 	imports        imports
 	types          map[ir.TypeId]*ir.TypeDeclaration
 	errors         map[ir.ErrorId]*ir.ErrorDeclaration
-	buffer         *bytes.Buffer
+	coordinator    *coordinator.Client
 
-	coordinator *coordinator.Client
+	buffer *bytes.Buffer
 }
 
 func newFileWriter(
@@ -71,8 +71,8 @@ func newFileWriter(
 		imports:        imports,
 		types:          types,
 		errors:         errors,
-		buffer:         new(bytes.Buffer),
 		coordinator:    coordinator,
+		buffer:         new(bytes.Buffer),
 	}
 }
 

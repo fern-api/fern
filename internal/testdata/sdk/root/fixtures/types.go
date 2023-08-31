@@ -69,10 +69,10 @@ func (f FooType) Ptr() *FooType {
 }
 
 type Request struct {
-	Url      string         `json:"url"`
-	Headers  map[string]any `json:"headers,omitempty"`
-	Body     *string        `json:"body,omitempty"`
-	Platform *string        `json:"platform,omitempty"`
+	Url      string                 `json:"url"`
+	Headers  map[string]interface{} `json:"headers,omitempty"`
+	Body     *string                `json:"body,omitempty"`
+	Platform *string                `json:"platform,omitempty"`
 }
 
 type Id = string

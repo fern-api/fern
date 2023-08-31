@@ -22,6 +22,7 @@ func main() {
 func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File, error) {
 	generatorConfig, err := generator.NewConfig(
 		config.DryRun,
+		config.EnableExplicitNull,
 		config.Version,
 		config.IrFilepath,
 		config.ImportPath,

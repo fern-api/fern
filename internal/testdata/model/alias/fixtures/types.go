@@ -160,6 +160,6 @@ func (u *Union) Accept(visitor UnionVisitor) error {
 	}
 }
 
-type Unknown = any
+type Unknown = interface{}
 
 type Uuid = uuid.UUID

@@ -235,7 +235,7 @@ type WithDocs struct {
 }
 
 type WithJsonExample struct {
-	JsonExample any `json:"jsonExample,omitempty"`
+	JsonExample interface{} `json:"jsonExample,omitempty"`
 }
 
 type Constants struct {
@@ -490,7 +490,7 @@ type ExampleHeader struct {
 }
 
 type ExampleInlinedRequestBody struct {
-	JsonExample any                                  `json:"jsonExample,omitempty"`
+	JsonExample interface{}                          `json:"jsonExample,omitempty"`
 	Properties  []*ExampleInlinedRequestBodyProperty `json:"properties,omitempty"`
 }
 
@@ -2243,14 +2243,14 @@ func (e *ExampleSingleUnionTypeProperties) Accept(visitor ExampleSingleUnionType
 }
 
 type ExampleType struct {
-	JsonExample any               `json:"jsonExample,omitempty"`
+	JsonExample interface{}       `json:"jsonExample,omitempty"`
 	Docs        *string           `json:"docs,omitempty"`
 	Name        *Name             `json:"name,omitempty"`
 	Shape       *ExampleTypeShape `json:"shape,omitempty"`
 }
 
 type ExampleTypeReference struct {
-	JsonExample any                        `json:"jsonExample,omitempty"`
+	JsonExample interface{}                `json:"jsonExample,omitempty"`
 	Shape       *ExampleTypeReferenceShape `json:"shape,omitempty"`
 }
 
@@ -2258,7 +2258,7 @@ type ExampleTypeReferenceShape struct {
 	Type      string
 	Primitive *ExamplePrimitive
 	Container *ExampleContainer
-	Unknown   any
+	Unknown   interface{}
 	Named     *ExampleNamedType
 }
 
@@ -2270,7 +2270,7 @@ func NewExampleTypeReferenceShapeFromContainer(value *ExampleContainer) *Example
 	return &ExampleTypeReferenceShape{Type: "container", Container: value}
 }
 
-func NewExampleTypeReferenceShapeFromUnknown(value any) *ExampleTypeReferenceShape {
+func NewExampleTypeReferenceShapeFromUnknown(value interface{}) *ExampleTypeReferenceShape {
 	return &ExampleTypeReferenceShape{Type: "unknown", Unknown: value}
 }
 
@@ -2305,7 +2305,7 @@ func (e *ExampleTypeReferenceShape) UnmarshalJSON(data []byte) error {
 		e.Container = valueUnmarshaler.Container
 	case "unknown":
 		var valueUnmarshaler struct {
-			Unknown any `json:"unknown,omitempty"`
+			Unknown interface{} `json:"unknown,omitempty"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -2345,8 +2345,8 @@ func (e ExampleTypeReferenceShape) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "unknown":
 		var marshaler = struct {
-			Type    string `json:"type"`
-			Unknown any    `json:"unknown,omitempty"`
+			Type    string      `json:"type"`
+			Unknown interface{} `json:"unknown,omitempty"`
 		}{
 			Type:    e.Type,
 			Unknown: e.Unknown,
@@ -2367,7 +2367,7 @@ func (e ExampleTypeReferenceShape) MarshalJSON() ([]byte, error) {
 type ExampleTypeReferenceShapeVisitor interface {
 	VisitPrimitive(*ExamplePrimitive) error
 	VisitContainer(*ExampleContainer) error
-	VisitUnknown(any) error
+	VisitUnknown(interface{}) error
 	VisitNamed(*ExampleNamedType) error
 }
 

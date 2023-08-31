@@ -5,7 +5,6 @@ package api
 import (
 	json "encoding/json"
 	fmt "fmt"
-	core "github.com/fern-api/fern-go/internal/testdata/sdk/post-with-path-params/fixtures/core"
 )
 
 type SetNameRequest struct {
@@ -176,10 +175,10 @@ func (u *Union) Accept(visitor UnionVisitor) error {
 }
 
 type UpdateRequest struct {
-	Tag            string                 `json:"-"`
-	Extra          *string                `json:"-"`
-	Union          *Union                 `json:"union,omitempty"`
-	Filter         *Filter                `json:"filter,omitempty"`
-	OptionalUnion  *core.Optional[Union]  `json:"optionalUnion,omitempty"`
-	OptionalFilter *core.Optional[Filter] `json:"optionalFilter,omitempty"`
+	Tag            string  `json:"-"`
+	Extra          *string `json:"-"`
+	Union          *Union  `json:"union,omitempty"`
+	Filter         *Filter `json:"filter,omitempty"`
+	OptionalUnion  *Union  `json:"optionalUnion,omitempty"`
+	OptionalFilter *Filter `json:"optionalFilter,omitempty"`
 }

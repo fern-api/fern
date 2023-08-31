@@ -4,31 +4,30 @@ package api
 
 import (
 	fmt "fmt"
-	core "github.com/fern-api/fern-go/internal/testdata/sdk/mergent/fixtures/core"
 )
 
 type ScheduleNew struct {
-	Id *core.Optional[Id] `json:"id,omitempty"`
+	Id *Id `json:"id,omitempty"`
 	// An optional name of the Schedule. This string must not contain more than 100 characters.
-	Name *core.Optional[string] `json:"name,omitempty"`
+	Name *string `json:"name,omitempty"`
 	// The name of the of the queue to schedule the Task on. This string must not contain more than 100 characters.
-	Queue *core.Optional[string] `json:"queue,omitempty"`
+	Queue *string `json:"queue,omitempty"`
 	// An optional description of the Schedule. This string must not contain more than 500 characters.
-	Description *core.Optional[string] `json:"description,omitempty"`
+	Description *string `json:"description,omitempty"`
 	// A [cron expression](https://crontab.guru/examples.html) describing the
 	// Schedule on which Tasks will run (UTC).
 	// Note: execution n + 1 of a Task will not begin until execution n has
 	// completed successfully.
 	// You must pass either `cron` or `rrule` when creating a new Schedule.
-	Cron *core.Optional[string] `json:"cron,omitempty"`
+	Cron *string `json:"cron,omitempty"`
 	// An [iCal RRule expression](https://icalendar.org/iCalendar-RFC-5545/3-8-5-3-recurrence-rule.html) describing the Schedule on which Tasks will run (UTC). The time of Schedule creation will be used as the start of the recurrence interval (i.e. `DTSTART`). Note: execution n + 1 of a Task will not begin until execution n has completed successfully. You must pass either `cron` or `rrule` when creating a new Schedule.
-	Rrule *core.Optional[string] `json:"rrule,omitempty"`
+	Rrule *string `json:"rrule,omitempty"`
 	// The [ISO 8601 timestamp](https://en.wikipedia.org/wiki/ISO_8601#Combined_date_and_time_representations) denoting the start of an RRULE schedule. Example: "2021-10-01T15:53:05Z". When not set, it will be set to the current time, and the first Task will be scheduled immediately. Ignored for `cron`-type Schedules.
-	Dtstart *core.Optional[string] `json:"dtstart,omitempty"`
+	Dtstart *string `json:"dtstart,omitempty"`
 	// If `true`, the Schedule will be paused immediately. If `false`, a paused Schedule will be resumed.
-	Paused    *core.Optional[bool]      `json:"paused,omitempty"`
-	Request   *core.Optional[Request]   `json:"request,omitempty"`
-	CreatedAt *core.Optional[CreatedAt] `json:"created_at,omitempty"`
+	Paused    *bool      `json:"paused,omitempty"`
+	Request   *Request   `json:"request,omitempty"`
+	CreatedAt *CreatedAt `json:"created_at,omitempty"`
 }
 
 type Error struct {
@@ -49,7 +48,7 @@ type Request struct {
 	// The headers that will accompany any Task's HTTP request. For
 	// example, you can use this to set Content-Type to "application/json"
 	// or "application/octet-stream".
-	Headers map[string]any `json:"headers,omitempty"`
+	Headers map[string]interface{} `json:"headers,omitempty"`
 	// The HTTP request body as a string.
 	Body *string `json:"body,omitempty"`
 }

@@ -134,7 +134,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 					return nil, err
 				}
 			case typeToGenerate.Endpoint != nil:
-				if err := writer.WriteRequestType(typeToGenerate.FernFilepath, typeToGenerate.Endpoint); err != nil {
+				if err := writer.WriteRequestType(typeToGenerate.FernFilepath, typeToGenerate.Endpoint, g.config.EnableExplicitNull); err != nil {
 					return nil, err
 				}
 			}
@@ -213,19 +213,21 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			ir.Errors,
 			g.coordinator,
 		)
-		if err := writer.WriteOptionalHelpers(useCore); err != nil {
-			return nil, err
+		if g.config.EnableExplicitNull {
+			if err := writer.WriteOptionalHelpers(useCore); err != nil {
+				return nil, err
+			}
+			file, err = writer.File()
+			if err != nil {
+				return nil, err
+			}
+			files = append(files, file)
+			files = append(files, newOptionalFile(g.coordinator))
+			files = append(files, newOptionalTestFile(g.coordinator))
 		}
-		file, err = writer.File()
-		if err != nil {
-			return nil, err
-		}
-		files = append(files, file)
 		files = append(files, newClientTestFile(g.coordinator))
 		files = append(files, newCoreFile(g.coordinator))
 		files = append(files, newCoreTestFile(g.coordinator))
-		files = append(files, newOptionalFile(g.coordinator))
-		files = append(files, newOptionalTestFile(g.coordinator))
 		files = append(files, newPointerFile(g.coordinator, ir.ApiName, generatedNames))
 
 		// Generate the error types, if any.
@@ -314,7 +316,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	// The go.sum file will be generated after the
 	// go.mod file is written to disk.
 	if g.config.ModuleConfig != nil {
-		file, err := NewModFile(g.config.ModuleConfig)
+		file, err := NewModFile(g.config.ModuleConfig, g.config.EnableExplicitNull)
 		if err != nil {
 			return nil, err
 		}

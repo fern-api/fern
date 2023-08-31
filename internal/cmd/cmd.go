@@ -48,14 +48,15 @@ var (
 // Config represents the common configuration required from all of
 // the commands (e.g. fern-go-{client,model}).
 type Config struct {
-	DryRun            bool
-	CoordinatorURL    string
-	CoordinatorTaskID string
-	Version           string
-	IrFilepath        string
-	ImportPath        string
-	Module            *generator.ModuleConfig
-	Writer            *writer.Config
+	DryRun             bool
+	EnableExplicitNull bool
+	CoordinatorURL     string
+	CoordinatorTaskID  string
+	Version            string
+	IrFilepath         string
+	ImportPath         string
+	Module             *generator.ModuleConfig
+	Writer             *writer.Config
 }
 
 // GeneratorFunc is a function that generates files.
@@ -177,14 +178,15 @@ func newConfig(configFilename string) (*Config, error) {
 		version = config.Publish.Version
 	}
 	return &Config{
-		DryRun:            config.DryRun,
-		CoordinatorURL:    coordinatorURL,
-		CoordinatorTaskID: coordinatorTaskID,
-		Version:           version,
-		IrFilepath:        config.IrFilepath,
-		ImportPath:        customConfig.ImportPath,
-		Module:            moduleConfig,
-		Writer:            writerConfig,
+		DryRun:             config.DryRun,
+		EnableExplicitNull: customConfig.EnableExplicitNull,
+		CoordinatorURL:     coordinatorURL,
+		CoordinatorTaskID:  coordinatorTaskID,
+		Version:            version,
+		IrFilepath:         config.IrFilepath,
+		ImportPath:         customConfig.ImportPath,
+		Module:             moduleConfig,
+		Writer:             writerConfig,
 	}, nil
 }
 
@@ -223,8 +225,9 @@ func readConfig(configFilename string) (*generatorexec.GeneratorConfig, error) {
 }
 
 type customConfig struct {
-	ImportPath string        `json:"importPath,omitempty"`
-	Module     *moduleConfig `json:"module,omitempty"`
+	EnableExplicitNull bool          `json:"enableExplicitNull,omitempty"`
+	ImportPath         string        `json:"importPath,omitempty"`
+	Module             *moduleConfig `json:"module,omitempty"`
 }
 
 type moduleConfig struct {

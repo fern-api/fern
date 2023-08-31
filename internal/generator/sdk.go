@@ -932,7 +932,7 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 }
 
 // WriteRequestType writes a type dedicated to the in-lined request (if any).
-func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *ir.HttpEndpoint) error {
+func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *ir.HttpEndpoint, includeGenericOptionals bool) error {
 	var (
 		// At this point, we've already verified that the given endpoint's request
 		// is a wrapper, so we can safely access it without any nil-checks.
@@ -992,7 +992,7 @@ func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *i
 		}
 		return nil
 	}
-	fieldLiterals, err := requestBodyToFieldDeclaration(endpoint.RequestBody, f, importPath, bodyField)
+	fieldLiterals, err := requestBodyToFieldDeclaration(endpoint.RequestBody, f, importPath, bodyField, includeGenericOptionals)
 	if err != nil {
 		return err
 	}
@@ -1250,14 +1250,16 @@ func requestBodyToFieldDeclaration(
 	writer *fileWriter,
 	importPath string,
 	bodyField string,
+	includeGenericOptionals bool,
 ) ([]*literal, error) {
 	visitor := &requestBodyVisitor{
-		bodyField:      bodyField,
-		baseImportPath: writer.baseImportPath,
-		importPath:     importPath,
-		imports:        writer.imports,
-		types:          writer.types,
-		writer:         writer,
+		bodyField:               bodyField,
+		baseImportPath:          writer.baseImportPath,
+		importPath:              importPath,
+		imports:                 writer.imports,
+		types:                   writer.types,
+		writer:                  writer,
+		includeGenericOptionals: includeGenericOptionals,
 	}
 	if err := requestBody.Accept(visitor); err != nil {
 		return nil, err
@@ -1273,6 +1275,9 @@ type requestBodyVisitor struct {
 	imports        imports
 	types          map[ir.TypeId]*ir.TypeDeclaration
 	writer         *fileWriter
+
+	// Configurable
+	includeGenericOptionals bool
 }
 
 func (r *requestBodyVisitor) VisitInlinedRequestBody(inlinedRequestBody *ir.InlinedRequestBody) error {
@@ -1283,7 +1288,7 @@ func (r *requestBodyVisitor) VisitInlinedRequestBody(inlinedRequestBody *ir.Inli
 		writer:         r.writer,
 	}
 	objectTypeDeclaration := inlinedRequestBodyToObjectTypeDeclaration(inlinedRequestBody)
-	_, literals := typeVisitor.visitObjectProperties(objectTypeDeclaration, true /* includeTags */, true /* includeOptionals */)
+	_, literals := typeVisitor.visitObjectProperties(objectTypeDeclaration, true /* includeTags */, r.includeGenericOptionals)
 	r.literals = literals
 	return nil
 }
@@ -1319,7 +1324,7 @@ func (r *requestBodyVisitor) VisitFileUpload(fileUpload *ir.FileUploadRequest) e
 		writer:         r.writer,
 	}
 	objectTypeDeclaration := inlinedRequestBodyPropertiesToObjectTypeDeclaration(bodyProperties)
-	_, literals := typeVisitor.visitObjectProperties(objectTypeDeclaration, true /* includeTags */, true /* includeOptionals */)
+	_, literals := typeVisitor.visitObjectProperties(objectTypeDeclaration, true /* includeTags */, r.includeGenericOptionals)
 	r.literals = literals
 	return nil
 }

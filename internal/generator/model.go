@@ -1074,7 +1074,7 @@ func jsonTagForType(wireValue string, valueType *ir.TypeReference, types map[ir.
 
 // unknownToGoType maps the given unknown into its Go-equivalent.
 func unknownToGoType(_ any) string {
-	return "any"
+	return "interface{}"
 }
 
 // literalToUndiscriminatedUnionField maps Fern's literal types to the field name used in an
@@ -1110,7 +1110,7 @@ func primitiveToGoType(primitive ir.PrimitiveType) string {
 	case ir.PrimitiveTypeBase64:
 		return "[]byte"
 	default:
-		return "any"
+		return "interface{}"
 	}
 }
 

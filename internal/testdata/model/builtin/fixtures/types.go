@@ -22,7 +22,7 @@ type Type struct {
 	Eleven    []float64        `json:"eleven,omitempty"`
 	Twelve    map[string]bool  `json:"twelve,omitempty"`
 	Thirteen  *int64           `json:"thirteen,omitempty"`
-	Fourteen  any              `json:"fourteen,omitempty"`
+	Fourteen  interface{}      `json:"fourteen,omitempty"`
 	Fifteen   [][]int          `json:"fifteen,omitempty"`
 	Sixteen   []map[string]int `json:"sixteen,omitempty"`
 	Seventeen []*uuid.UUID     `json:"seventeen,omitempty"`
