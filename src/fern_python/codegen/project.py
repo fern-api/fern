@@ -73,7 +73,6 @@ class Project:
 
         module = filepath.to_module()
         source_file = SourceFileImpl(
-            filepath=self._get_source_file_filepath(filepath),
             module_path=module.path,
             completion_listener=on_finish,
             reference_resolver=ReferenceResolverImpl(
@@ -84,14 +83,17 @@ class Project:
         )
         return source_file
 
-    def _get_source_file_filepath(self, filepath: Filepath) -> str:
+    def write_source_file(self, *, source_file: SourceFile, filepath: Filepath) -> None:
+        source_file.write_to_file(filepath=self.get_source_file_filepath(filepath))
+
+    def get_source_file_filepath(self, filepath: Filepath) -> str:
         return os.path.join(self._project_filepath, str(filepath))
 
     def add_source_file_from_disk(self, *, path_on_disk: str, filepath_in_project: Filepath, exports: Set[str]) -> None:
         with open(path_on_disk, "r") as existing_file:
             writer = WriterImpl(should_format=self._should_format_files)
             writer.write(existing_file.read())
-            writer.write_to_file(filepath=self._get_source_file_filepath(filepath_in_project))
+            writer.write_to_file(filepath=self.get_source_file_filepath(filepath_in_project))
         self._module_manager.register_exports(
             filepath=filepath_in_project,
             exports=exports,

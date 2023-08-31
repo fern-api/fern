@@ -1,8 +1,7 @@
 from __future__ import annotations
 
 from abc import abstractmethod
-from types import TracebackType
-from typing import Callable, List, Optional, Set, Type, TypeVar
+from typing import Callable, List, Set, TypeVar
 
 from fern_python.codegen.dependency_manager import DependencyManager
 
@@ -31,20 +30,11 @@ class SourceFile(ClassParent):
         ...
 
     @abstractmethod
-    def finish(self) -> None:
+    def to_str(self) -> str:
         ...
 
     @abstractmethod
-    def __enter__(self) -> SourceFile:
-        ...
-
-    @abstractmethod
-    def __exit__(
-        self,
-        exctype: Optional[Type[BaseException]],
-        excinst: Optional[BaseException],
-        exctb: Optional[TracebackType],
-    ) -> None:
+    def write_to_file(self, *, filepath: str) -> None:
         ...
 
 
@@ -52,14 +42,12 @@ class SourceFileImpl(SourceFile):
     def __init__(
         self,
         *,
-        filepath: str,
         module_path: AST.ModulePath,
         reference_resolver: ReferenceResolverImpl,
         dependency_manager: DependencyManager,
         completion_listener: Callable[[SourceFileImpl], None] = None,
         should_format: bool,
     ):
-        self._filepath = filepath
         self._module_path = module_path
         self._reference_resolver = reference_resolver
         self._imports_manager = ImportsManager(module_path=module_path)
@@ -121,33 +109,18 @@ class SourceFileImpl(SourceFile):
     def add_footer_expression(self, expression: AST.Expression) -> None:
         self._footer_statements.append(TopLevelStatement(node=expression))
 
-    def finish(self) -> None:
-        self._prepare_for_writing()
-        writer = NodeWriterImpl(
-            reference_resolver=self._reference_resolver,
-            should_format=self._should_format,
-        )
-        self._imports_manager.write_top_imports_for_file(writer=writer, reference_resolver=self._reference_resolver)
-        for statement in self._statements:
-            self._imports_manager.write_top_imports_for_statement(
-                statement_id=statement.id,
-                writer=writer,
-                reference_resolver=self._reference_resolver,
-            )
-            writer.write_node(statement.node)
-        self._imports_manager.write_remaining_imports(
-            writer=writer,
-            reference_resolver=self._reference_resolver,
-        )
-        for statement in self._footer_statements:
-            writer.write_node(node=statement.node)
-            writer.write_newline_if_last_line_not()
-        writer.write_to_file(self._filepath)
+    def to_str(self) -> str:
+        writer = self._prepare_for_writing()
+        return writer.to_str()
+
+    def write_to_file(self, *, filepath: str) -> None:
+        writer = self._prepare_for_writing()
+        writer.write_to_file(filepath=filepath)
 
         if self._completion_listener is not None:
             self._completion_listener(self)
 
-    def _prepare_for_writing(self) -> None:
+    def _prepare_for_writing(self) -> NodeWriterImpl:
         # metadata about the whole file's AST
         ast_metadata = AST.AstNodeMetadata()
 
@@ -192,6 +165,27 @@ class SourceFileImpl(SourceFile):
         # resolve references
         self._reference_resolver.resolve_references()
 
+        writer = NodeWriterImpl(
+            reference_resolver=self._reference_resolver,
+            should_format=self._should_format,
+        )
+        self._imports_manager.write_top_imports_for_file(writer=writer, reference_resolver=self._reference_resolver)
+        for statement in self._statements:
+            self._imports_manager.write_top_imports_for_statement(
+                statement_id=statement.id,
+                writer=writer,
+                reference_resolver=self._reference_resolver,
+            )
+            writer.write_node(statement.node)
+        self._imports_manager.write_remaining_imports(
+            writer=writer,
+            reference_resolver=self._reference_resolver,
+        )
+        for statement in self._footer_statements:
+            writer.write_node(node=statement.node)
+            writer.write_newline_if_last_line_not()
+        return writer
+
     def get_exports(self) -> Set[str]:
         return self._exports
 
@@ -217,14 +211,3 @@ class SourceFileImpl(SourceFile):
             )
             for generic in generics
         ]
-
-    def __enter__(self) -> SourceFile:
-        return self
-
-    def __exit__(
-        self,
-        exctype: Optional[Type[BaseException]],
-        excinst: Optional[BaseException],
-        exctb: Optional[TracebackType],
-    ) -> None:
-        self.finish()

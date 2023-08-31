@@ -10,7 +10,7 @@ from fern_python.generators.pydantic_model import (
     PydanticModelCustomConfig,
     PydanticModelGenerator,
 )
-from fern_python.source_file_generator import SourceFileGenerator
+from fern_python.source_file_factory import SourceFileFactory
 
 from .auth import SecurityFileGenerator
 from .context import FastApiGeneratorContext, FastApiGeneratorContextImpl
@@ -117,30 +117,35 @@ class FastApiGenerator(AbstractGenerator):
         project: Project,
     ) -> None:
         filepath = context.get_filepath_for_service(service.name)
-        with SourceFileGenerator.generate(
+        service_file = SourceFileFactory.create(
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
-        ) as source_file:
-            ServiceGenerator(context=context, service=service).generate(source_file=source_file)
+        )
+        ServiceGenerator(context=context, service=service).generate(source_file=service_file)
+        project.write_source_file(source_file=service_file, filepath=filepath)
 
         for endpoint in service.endpoints:
             if endpoint.request_body is not None:
                 request_body = endpoint.request_body.get_as_union()
                 if request_body.type == "inlinedRequestBody":
-                    with SourceFileGenerator.generate(
+                    inlined_request_filepath = context.get_filepath_for_inlined_request(
+                        service_name=service.name, request=request_body
+                    )
+                    inlined_request_source_file = SourceFileFactory.create(
                         project=project,
-                        filepath=context.get_filepath_for_inlined_request(
-                            service_name=service.name, request=request_body
-                        ),
+                        filepath=inlined_request_filepath,
                         generator_exec_wrapper=generator_exec_wrapper,
-                    ) as source_file:
-                        InlinedRequestGenerator(
-                            context=context,
-                            service=service,
-                            request=request_body,
-                            pydantic_model_custom_config=self._pydantic_model_custom_config,
-                        ).generate(
-                            source_file=source_file,
-                        )
+                    )
+                    InlinedRequestGenerator(
+                        context=context,
+                        service=service,
+                        request=request_body,
+                        pydantic_model_custom_config=self._pydantic_model_custom_config,
+                    ).generate(
+                        source_file=inlined_request_source_file,
+                    )
+                    project.write_source_file(
+                        source_file=inlined_request_source_file, filepath=inlined_request_filepath
+                    )
 
     def _generate_error(
         self,
@@ -151,10 +156,11 @@ class FastApiGenerator(AbstractGenerator):
         project: Project,
     ) -> None:
         filepath = context.get_filepath_for_error(error.name)
-        with SourceFileGenerator.generate(
+        source_file = SourceFileFactory.create(
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
-        ) as source_file:
-            ErrorGenerator(context=context, error=error).generate(source_file=source_file)
+        )
+        ErrorGenerator(context=context, error=error).generate(source_file=source_file)
+        project.write_source_file(source_file=source_file, filepath=filepath)
 
     def get_sorted_modules(self) -> None:
         return None

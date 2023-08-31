@@ -5,7 +5,7 @@ from fern_python.external_dependencies import FastAPI
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.fastapi.custom_config import FastAPICustomConfig
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
-from fern_python.source_file_generator import SourceFileGenerator
+from fern_python.source_file_factory import SourceFileFactory
 
 from ..context import FastApiGeneratorContext
 
@@ -19,42 +19,43 @@ class FernHTTPExceptionGenerator:
         self.FernHTTPException = context.core_utilities.exceptions.FernHTTPException
 
     def generate(self, project: Project, generator_exec_wrapper: GeneratorExecWrapper) -> None:
-        with SourceFileGenerator.generate(
+        source_file = SourceFileFactory.create(
             project=project,
             generator_exec_wrapper=generator_exec_wrapper,
             filepath=self.FernHTTPException.filepath,
-        ) as source_file:
-            class_declaration = AST.ClassDeclaration(
-                name=self.FernHTTPException.CLASS_NAME,
-                is_abstract=True,
-                extends=[FastAPI.HTTPException],
-                constructor=self._get_constructor(),
+        )
+        class_declaration = AST.ClassDeclaration(
+            name=self.FernHTTPException.CLASS_NAME,
+            is_abstract=True,
+            extends=[FastAPI.HTTPException],
+            constructor=self._get_constructor(),
+        )
+        reference_to_class = source_file.add_class_declaration(class_declaration)
+        error_discrimination_strategy = self._context.ir.error_discrimination_strategy.get_as_union()
+        if error_discrimination_strategy.type == "property":
+            reference_to_body = self._construct_pydantic_model(
+                source_file=source_file,
+                error_discriminant=error_discrimination_strategy.discriminant,
+                exception_class=reference_to_class,
             )
-            reference_to_class = source_file.add_class_declaration(class_declaration)
-            error_discrimination_strategy = self._context.ir.error_discrimination_strategy.get_as_union()
-            if error_discrimination_strategy.type == "property":
-                reference_to_body = self._construct_pydantic_model(
-                    source_file=source_file,
-                    error_discriminant=error_discrimination_strategy.discriminant,
-                    exception_class=reference_to_class,
+            class_declaration.add_method(
+                declaration=AST.FunctionDeclaration(
+                    name="to_json_response",
+                    signature=AST.FunctionSignature(return_type=AST.TypeHint(FastAPI.JSONResponse.REFERENCE)),
+                    body=self._create_json_response_body_writer(
+                        error_discrimination_strategy.discriminant, reference_to_body=reference_to_body
+                    ),
                 )
-                class_declaration.add_method(
-                    declaration=AST.FunctionDeclaration(
-                        name="to_json_response",
-                        signature=AST.FunctionSignature(return_type=AST.TypeHint(FastAPI.JSONResponse.REFERENCE)),
-                        body=self._create_json_response_body_writer(
-                            error_discrimination_strategy.discriminant, reference_to_body=reference_to_body
-                        ),
-                    )
+            )
+        else:
+            class_declaration.add_method(
+                declaration=AST.FunctionDeclaration(
+                    name="to_json_response",
+                    signature=AST.FunctionSignature(return_type=AST.TypeHint(FastAPI.JSONResponse.REFERENCE)),
+                    body=self._create_json_response_body_writer_status_code(),
                 )
-            else:
-                class_declaration.add_method(
-                    declaration=AST.FunctionDeclaration(
-                        name="to_json_response",
-                        signature=AST.FunctionSignature(return_type=AST.TypeHint(FastAPI.JSONResponse.REFERENCE)),
-                        body=self._create_json_response_body_writer_status_code(),
-                    )
-                )
+            )
+        project.write_source_file(source_file=source_file, filepath=self.FernHTTPException.filepath)
 
     def _get_constructor(self) -> AST.ClassConstructor:
         return AST.ClassConstructor(

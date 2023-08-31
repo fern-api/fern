@@ -2,7 +2,7 @@ import os
 from typing import List, Optional, Set, Tuple
 
 from fern_python.codegen import AST, ExportStrategy, Filepath, Project
-from fern_python.source_file_generator import SourceFileGenerator
+from fern_python.source_file_factory import SourceFileFactory
 
 
 class FernHTTPException:
@@ -167,7 +167,7 @@ class CoreUtilities:
             if "PYTEST_CURRENT_TEST" in os.environ
             else "/assets/core_utilities"
         )
-        SourceFileGenerator.add_source_file_from_disk(
+        SourceFileFactory.add_source_file_from_disk(
             project=project,
             path_on_disk=os.path.join(source, relative_filepath_on_disk),
             filepath_in_project=filepath_in_project,

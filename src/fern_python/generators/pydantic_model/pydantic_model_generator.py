@@ -6,7 +6,7 @@ from fern.generator_exec.resources.config import GeneratorConfig
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import Project
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
-from fern_python.source_file_generator import SourceFileGenerator
+from fern_python.source_file_factory import SourceFileFactory
 
 from .context import PydanticGeneratorContext, PydanticGeneratorContextImpl
 from .custom_config import PydanticModelCustomConfig
@@ -86,16 +86,17 @@ class PydanticModelGenerator(AbstractGenerator):
         context: PydanticGeneratorContext,
     ) -> None:
         filepath = context.get_filepath_for_type_name(type_name=type.name)
-        with SourceFileGenerator.generate(
+        source_file = SourceFileFactory.create(
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
-        ) as source_file:
-            type_declaration_handler = TypeDeclarationHandler(
-                declaration=type,
-                context=context,
-                custom_config=custom_config,
-                source_file=source_file,
-            )
-            type_declaration_handler.run()
+        )
+        type_declaration_handler = TypeDeclarationHandler(
+            declaration=type,
+            context=context,
+            custom_config=custom_config,
+            source_file=source_file,
+        )
+        type_declaration_handler.run()
+        project.write_source_file(source_file=source_file, filepath=filepath)
 
     def get_sorted_modules(self) -> None:
         return None

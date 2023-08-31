@@ -3,7 +3,7 @@ import fern.ir.resources as ir_types
 from fern_python.codegen import AST, Filepath, Project
 from fern_python.external_dependencies import FastAPI, Starlette
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
-from fern_python.source_file_generator import SourceFileGenerator
+from fern_python.source_file_factory import SourceFileFactory
 
 from ..context import FastApiGeneratorContext
 from .service_initializer import ServiceInitializer
@@ -30,17 +30,17 @@ class RegisterFileGenerator:
         ]
 
     def generate_registry_file(self, project: Project, generator_exec_wrapper: GeneratorExecWrapper) -> None:
-        with SourceFileGenerator.generate(
-            project=project,
-            generator_exec_wrapper=generator_exec_wrapper,
-            filepath=Filepath(
-                directories=(),
-                file=Filepath.FilepathPart(module_name=RegisterFileGenerator._MODULE_NAME),
-            ),
-        ) as source_file:
-            source_file.add_declaration(declaration=self._get_register_method(), should_export=False)
-            source_file.add_declaration(declaration=self._get_register_service_method(), should_export=False)
-            source_file.add_declaration(declaration=self._get_register_validators_method(), should_export=False)
+        filepath = Filepath(
+            directories=(),
+            file=Filepath.FilepathPart(module_name=RegisterFileGenerator._MODULE_NAME),
+        )
+        source_file = SourceFileFactory.create(
+            project=project, generator_exec_wrapper=generator_exec_wrapper, filepath=filepath
+        )
+        source_file.add_declaration(declaration=self._get_register_method(), should_export=False)
+        source_file.add_declaration(declaration=self._get_register_service_method(), should_export=False)
+        source_file.add_declaration(declaration=self._get_register_validators_method(), should_export=False)
+        project.write_source_file(source_file=source_file, filepath=filepath)
 
     def _get_register_method(self) -> AST.FunctionDeclaration:
         return AST.FunctionDeclaration(

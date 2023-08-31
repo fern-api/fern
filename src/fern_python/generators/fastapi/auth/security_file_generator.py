@@ -1,7 +1,7 @@
 from fern_python.codegen import AST, Filepath, Project
 from fern_python.external_dependencies import FastAPI
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
-from fern_python.source_file_generator import SourceFileGenerator
+from fern_python.source_file_factory import SourceFileFactory
 
 from ..context import FastApiGeneratorContext
 from .basic_auth_generator import BasicAuthGenerator
@@ -66,35 +66,37 @@ class SecurityFileGenerator:
         )
         parsed_auth_type = auth_generator.get_parsed_auth_type()
 
-        with SourceFileGenerator.generate(
+        security_filepath = SecurityFileGenerator._get_filepath(context=self._context)
+        source_file = SourceFileFactory.create(
             project=project,
             generator_exec_wrapper=generator_exec_wrapper,
-            filepath=SecurityFileGenerator._get_filepath(context=self._context),
-        ) as source_file:
-            source_file.add_declaration(
-                declaration=AST.VariableDeclaration(
-                    name=SecurityFileGenerator._API_AUTH_TYPE,
-                    initializer=AST.Expression(parsed_auth_type),
+            filepath=security_filepath,
+        )
+        source_file.add_declaration(
+            declaration=AST.VariableDeclaration(
+                name=SecurityFileGenerator._API_AUTH_TYPE,
+                initializer=AST.Expression(parsed_auth_type),
+            ),
+            should_export=True,
+        )
+        source_file.add_declaration(
+            should_export=False,
+            declaration=AST.FunctionDeclaration(
+                name=SecurityFileGenerator._METHOD_NAME,
+                signature=AST.FunctionSignature(
+                    parameters=[
+                        AST.FunctionParameter(
+                            name=SecurityFileGenerator._AUTH_PARAMETER_NAME,
+                            type_hint=parsed_auth_type,
+                            initializer=auth_generator.get_dependency(),
+                        )
+                    ],
+                    return_type=parsed_auth_type,
                 ),
-                should_export=True,
-            )
-            source_file.add_declaration(
-                should_export=False,
-                declaration=AST.FunctionDeclaration(
-                    name=SecurityFileGenerator._METHOD_NAME,
-                    signature=AST.FunctionSignature(
-                        parameters=[
-                            AST.FunctionParameter(
-                                name=SecurityFileGenerator._AUTH_PARAMETER_NAME,
-                                type_hint=parsed_auth_type,
-                                initializer=auth_generator.get_dependency(),
-                            )
-                        ],
-                        return_type=parsed_auth_type,
-                    ),
-                    body=AST.CodeWriter(self._write_fern_auth_body),
-                ),
-            )
+                body=AST.CodeWriter(self._write_fern_auth_body),
+            ),
+        )
+        project.write_source_file(source_file=source_file, filepath=security_filepath)
 
     def _write_fern_auth_body(self, writer: AST.NodeWriter) -> None:
         writer.write_line(f"return {SecurityFileGenerator._AUTH_PARAMETER_NAME}")

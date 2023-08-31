@@ -19,7 +19,7 @@ from fern_python.generators.sdk.context.sdk_generator_context_impl import (
 from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
 )
-from fern_python.source_file_generator import SourceFileGenerator
+from fern_python.source_file_factory import SourceFileFactory
 
 from .client_generator.client_generator import ClientGenerator
 from .client_generator.root_client_generator import (
@@ -164,17 +164,19 @@ class SdkGenerator(AbstractGenerator):
         project: Project,
     ) -> GeneratedEnvironment:
         filepath = context.get_filepath_for_environments_enum()
-        with SourceFileGenerator.generate(
+        source_file = SourceFileFactory.create(
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
-        ) as source_file:
-            return environments.visit(
-                single_base_url=lambda single_base_url_environments: SingleBaseUrlEnvironmentGenerator(
-                    context=context, environments=single_base_url_environments
-                ).generate(source_file=source_file),
-                multiple_base_urls=lambda multiple_base_urls_environments: MultipleBaseUrlsEnvironmentGenerator(
-                    context=context, environments=multiple_base_urls_environments
-                ).generate(source_file=source_file),
-            )
+        )
+        generated_environment = environments.visit(
+            single_base_url=lambda single_base_url_environments: SingleBaseUrlEnvironmentGenerator(
+                context=context, environments=single_base_url_environments
+            ).generate(source_file=source_file),
+            multiple_base_urls=lambda multiple_base_urls_environments: MultipleBaseUrlsEnvironmentGenerator(
+                context=context, environments=multiple_base_urls_environments
+            ).generate(source_file=source_file),
+        )
+        project.write_source_file(source_file=source_file, filepath=filepath)
+        return generated_environment
 
     def _generate_client_wrapper(
         self,
@@ -187,15 +189,14 @@ class SdkGenerator(AbstractGenerator):
             directories=context.core_utilities.filepath,
             file=Filepath.FilepathPart(module_name="client_wrapper"),
         )
-        with SourceFileGenerator.generate(
-            project=project,
-            filepath=filepath,
-            generator_exec_wrapper=generator_exec_wrapper,
-        ) as source_file:
-            ClientWrapperGenerator(
-                context=context,
-                generated_environment=generated_environment,
-            ).generate(source_file=source_file, project=project)
+        source_file = SourceFileFactory.create(
+            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+        )
+        ClientWrapperGenerator(
+            context=context,
+            generated_environment=generated_environment,
+        ).generate(source_file=source_file, project=project)
+        project.write_source_file(source_file=source_file, filepath=filepath)
 
     def _generate_root_client(
         self,
@@ -205,18 +206,19 @@ class SdkGenerator(AbstractGenerator):
         generator_exec_wrapper: GeneratorExecWrapper,
         project: Project,
     ) -> GeneratedRootClient:
-        with SourceFileGenerator.generate(
-            project=project,
-            filepath=context.get_filepath_for_root_client(),
-            generator_exec_wrapper=generator_exec_wrapper,
-        ) as source_file:
-            return RootClientGenerator(
-                context=context,
-                package=ir.root_package,
-                generated_environment=generated_environment,
-                class_name=context.get_class_name_for_root_client(),
-                async_class_name="Async" + context.get_class_name_for_root_client(),
-            ).generate(source_file=source_file)
+        filepath = context.get_filepath_for_root_client()
+        source_file = SourceFileFactory.create(
+            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+        )
+        generated_root_client = RootClientGenerator(
+            context=context,
+            package=ir.root_package,
+            generated_environment=generated_environment,
+            class_name=context.get_class_name_for_root_client(),
+            async_class_name="Async" + context.get_class_name_for_root_client(),
+        ).generate(source_file=source_file)
+        project.write_source_file(source_file=source_file, filepath=filepath)
+        return generated_root_client
 
     def _generate_subpackage_client(
         self,
@@ -228,15 +230,16 @@ class SdkGenerator(AbstractGenerator):
         project: Project,
     ) -> None:
         filepath = context.get_filepath_for_subpackage_service(subpackage_id)
-        with SourceFileGenerator.generate(
+        source_file = SourceFileFactory.create(
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
-        ) as source_file:
-            ClientGenerator(
-                context=context,
-                package=subpackage,
-                class_name=context.get_class_name_of_subpackage_service(subpackage_id),
-                async_class_name=context.get_class_name_of_async_subpackage_service(subpackage_id),
-            ).generate(source_file=source_file)
+        )
+        ClientGenerator(
+            context=context,
+            package=subpackage,
+            class_name=context.get_class_name_of_subpackage_service(subpackage_id),
+            async_class_name=context.get_class_name_of_async_subpackage_service(subpackage_id),
+        ).generate(source_file=source_file)
+        project.write_source_file(source_file=source_file, filepath=filepath)
 
     def _generate_error(
         self,
@@ -247,10 +250,11 @@ class SdkGenerator(AbstractGenerator):
         project: Project,
     ) -> None:
         filepath = context.get_filepath_for_error(error.name)
-        with SourceFileGenerator.generate(
+        source_file = SourceFileFactory.create(
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
-        ) as source_file:
-            ErrorGenerator(context=context, error=error).generate(source_file=source_file)
+        )
+        ErrorGenerator(context=context, error=error).generate(source_file=source_file)
+        project.write_source_file(source_file=source_file, filepath=filepath)
 
     def _generate_readme(
         self,
