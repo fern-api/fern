@@ -89,11 +89,9 @@ class Project:
 
     def add_source_file_from_disk(self, *, path_on_disk: str, filepath_in_project: Filepath, exports: Set[str]) -> None:
         with open(path_on_disk, "r") as existing_file:
-            with WriterImpl(
-                filepath=self._get_source_file_filepath(filepath_in_project),
-                should_format=self._should_format_files,
-            ) as writer:
-                writer.write(existing_file.read())
+            writer = WriterImpl(should_format=self._should_format_files)
+            writer.write(existing_file.read())
+            writer.write_to_file(filepath=self._get_source_file_filepath(filepath_in_project))
         self._module_manager.register_exports(
             filepath=filepath_in_project,
             exports=exports,

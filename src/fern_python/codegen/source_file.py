@@ -123,26 +123,26 @@ class SourceFileImpl(SourceFile):
 
     def finish(self) -> None:
         self._prepare_for_writing()
-        with NodeWriterImpl(
-            filepath=self._filepath,
+        writer = NodeWriterImpl(
             reference_resolver=self._reference_resolver,
             should_format=self._should_format,
-        ) as writer:
-            self._imports_manager.write_top_imports_for_file(writer=writer, reference_resolver=self._reference_resolver)
-            for statement in self._statements:
-                self._imports_manager.write_top_imports_for_statement(
-                    statement_id=statement.id,
-                    writer=writer,
-                    reference_resolver=self._reference_resolver,
-                )
-                writer.write_node(statement.node)
-            self._imports_manager.write_remaining_imports(
+        )
+        self._imports_manager.write_top_imports_for_file(writer=writer, reference_resolver=self._reference_resolver)
+        for statement in self._statements:
+            self._imports_manager.write_top_imports_for_statement(
+                statement_id=statement.id,
                 writer=writer,
                 reference_resolver=self._reference_resolver,
             )
-            for statement in self._footer_statements:
-                writer.write_node(node=statement.node)
-                writer.write_newline_if_last_line_not()
+            writer.write_node(statement.node)
+        self._imports_manager.write_remaining_imports(
+            writer=writer,
+            reference_resolver=self._reference_resolver,
+        )
+        for statement in self._footer_statements:
+            writer.write_node(node=statement.node)
+            writer.write_newline_if_last_line_not()
+        writer.write_to_file(self._filepath)
 
         if self._completion_listener is not None:
             self._completion_listener(self)

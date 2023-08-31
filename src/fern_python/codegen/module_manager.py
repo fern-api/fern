@@ -74,18 +74,22 @@ class ModuleManager:
 
     def write_modules(self, filepath: str) -> None:
         for module, module_info in self._module_infos.items():
-            with WriterImpl(
-                filepath=os.path.join(filepath, *module, "__init__.py"), should_format=self._should_format
-            ) as writer:
-                all_exports: Set[str] = set()
-                for module_exports_line in self._build_sorted_exports(module_info):
-                    if len(module_exports_line.exports) > 0:
-                        writer.write_line(
-                            f"from {module_exports_line.exported_from} import {', '.join(module_exports_line.exports)}"
-                        )
-                        all_exports.update(module_exports_line.exports)
-                if len(all_exports) > 0:
-                    writer.write_line("__all__ = [" + ", ".join(f'"{export}"' for export in sorted(all_exports)) + "]")
+            writer = WriterImpl(
+                should_format=self._should_format,
+                # don't sort imports in __init__.py because the import order is
+                # controlled to avoid issues with circular imports
+                should_sort_imports=False,
+            )
+            all_exports: Set[str] = set()
+            for module_exports_line in self._build_sorted_exports(module_info):
+                if len(module_exports_line.exports) > 0:
+                    writer.write_line(
+                        f"from {module_exports_line.exported_from} import {', '.join(module_exports_line.exports)}"
+                    )
+                    all_exports.update(module_exports_line.exports)
+            if len(all_exports) > 0:
+                writer.write_line("__all__ = [" + ", ".join(f'"{export}"' for export in sorted(all_exports)) + "]")
+            writer.write_to_file(os.path.join(filepath, *module, "__init__.py"))
 
     def _build_sorted_exports(self, module_info: ModuleInfo) -> List[ModuleExportsLine]:
         modules = [
