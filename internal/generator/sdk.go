@@ -241,24 +241,24 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 		clientOptionsType = "*core.ClientOptions"
 	)
 	// Generate the options for setting the base URL and HTTP client.
-	f.P("// ClientWithBaseURL sets the client's base URL, overriding the")
+	f.P("// WithBaseURL sets the client's base URL, overriding the")
 	f.P("// default environment, if any.")
-	f.P("func ClientWithBaseURL(baseURL string) ", clientOptionType, " {")
+	f.P("func WithBaseURL(baseURL string) ", clientOptionType, " {")
 	f.P("return func(opts ", clientOptionsType, ") {")
 	f.P("opts.BaseURL = baseURL")
 	f.P("}")
 	f.P("}")
 	f.P()
-	f.P("// ClientWithHTTPClient uses the given HTTPClient to issue all HTTP requests.")
-	f.P("func ClientWithHTTPClient(httpClient ", httpClientType, ") ", clientOptionType, " {")
+	f.P("// WithHTTPClient uses the given HTTPClient to issue all HTTP requests.")
+	f.P("func WithHTTPClient(httpClient ", httpClientType, ") ", clientOptionType, " {")
 	f.P("return func(opts ", clientOptionsType, ") {")
 	f.P("opts.HTTPClient = httpClient")
 	f.P("}")
 	f.P("}")
 	f.P()
-	f.P("// ClientWithHTTPHeader adds the given http.Header to all requests")
+	f.P("// WithHTTPHeader adds the given http.Header to all requests")
 	f.P("// issued by the client.")
-	f.P("func ClientWithHTTPHeader(httpHeader http.Header) ", clientOptionType, " {")
+	f.P("func WithHTTPHeader(httpHeader http.Header) ", clientOptionType, " {")
 	f.P("return func(opts ", clientOptionsType, ") {")
 	f.P("// Clone the headers so they can't be modified after the option call.")
 	f.P("opts.HTTPHeader = httpHeader.Clone()")
@@ -274,12 +274,12 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 				pascalCase = authScheme.Bearer.Token.PascalCase.UnsafeName
 				camelCase  = authScheme.Bearer.Token.CamelCase.SafeName
 			)
-			f.P("// ClientWithAuth", pascalCase, " sets the 'Authorization: Bearer <", camelCase, ">' header on every request.")
+			f.P("// WithAuth", pascalCase, " sets the 'Authorization: Bearer <", camelCase, ">' header on every request.")
 			if includeCustomAuthDocs {
 				f.P("//")
 				f.WriteDocs(auth.Docs)
 			}
-			f.P("func ClientWithAuth", pascalCase, "(", camelCase, " string) ", clientOptionType, " {")
+			f.P("func WithAuth", pascalCase, "(", camelCase, " string) ", clientOptionType, " {")
 			f.P("return func(opts ", clientOptionsType, ") {")
 			f.P("opts.", pascalCase, " = ", camelCase)
 			f.P("}")
@@ -287,12 +287,12 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 			f.P()
 		}
 		if authScheme.Basic != nil {
-			f.P("// ClientWithAuthBasic sets the 'Authorization: Basic <base64>' header on every request.")
+			f.P("// WithAuthBasic sets the 'Authorization: Basic <base64>' header on every request.")
 			if includeCustomAuthDocs {
 				f.P("//")
 				f.WriteDocs(auth.Docs)
 			}
-			f.P("func ClientWithAuthBasic(username, password string) ", clientOptionType, " {")
+			f.P("func WithAuthBasic(username, password string) ", clientOptionType, " {")
 			f.P("return func(opts ", clientOptionsType, ") {")
 			f.P("opts.Username = username")
 			f.P("opts.Password = password")
@@ -306,7 +306,7 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 				continue
 			}
 			var (
-				optionName = fmt.Sprintf("ClientWithAuth%s", authScheme.Header.Name.Name.PascalCase.UnsafeName)
+				optionName = fmt.Sprintf("WithAuth%s", authScheme.Header.Name.Name.PascalCase.UnsafeName)
 				field      = authScheme.Header.Name.Name.PascalCase.UnsafeName
 				param      = authScheme.Header.Name.Name.CamelCase.SafeName
 				value      = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.imports, f.baseImportPath, importPath, false)
@@ -331,7 +331,7 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 			continue
 		}
 		var (
-			optionName = fmt.Sprintf("ClientWithHeader%s", header.Name.Name.PascalCase.UnsafeName)
+			optionName = fmt.Sprintf("WithHeader%s", header.Name.Name.PascalCase.UnsafeName)
 			field      = header.Name.Name.PascalCase.UnsafeName
 			param      = header.Name.Name.CamelCase.SafeName
 			value      = typeReferenceToGoType(header.ValueType, f.types, f.imports, f.baseImportPath, importPath, false)
@@ -1099,7 +1099,7 @@ func environmentsToEnvironmentsVariable(
 	writer *fileWriter,
 ) error {
 	writer.P("// Environments defines all of the API environments.")
-	writer.P("// These values can be used with the ClientWithBaseURL")
+	writer.P("// These values can be used with the WithBaseURL")
 	writer.P("// ClientOption to override the client's default environment,")
 	writer.P("// if any.")
 	writer.P("var Environments = struct {")

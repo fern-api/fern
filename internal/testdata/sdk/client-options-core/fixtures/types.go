@@ -2,6 +2,6 @@
 
 package api
 
-type ClientWithAuthToken struct {
+type WithAuthToken struct {
 	Value string `json:"value"`
 }

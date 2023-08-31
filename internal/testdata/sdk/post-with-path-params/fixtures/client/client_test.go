@@ -17,7 +17,7 @@ func TestNewClient(t *testing.T) {
 
 	t.Run("base url", func(t *testing.T) {
 		c := NewClient(
-			ClientWithBaseURL("test.co"),
+			WithBaseURL("test.co"),
 		)
 		assert.Equal(t, "test.co", c.baseURL)
 		assert.Equal(t, http.DefaultClient, c.httpClient)
@@ -28,7 +28,7 @@ func TestNewClient(t *testing.T) {
 			Timeout: 5 * time.Second,
 		}
 		c := NewClient(
-			ClientWithHTTPClient(httpClient),
+			WithHTTPClient(httpClient),
 		)
 		assert.Empty(t, c.baseURL)
 		assert.Equal(t, httpClient, c.httpClient)
@@ -38,7 +38,7 @@ func TestNewClient(t *testing.T) {
 		header := make(http.Header)
 		header.Set("X-API-Tenancy", "test")
 		c := NewClient(
-			ClientWithHTTPHeader(header),
+			WithHTTPHeader(header),
 		)
 		assert.Empty(t, c.baseURL)
 		assert.Equal(t, http.DefaultClient, c.httpClient)

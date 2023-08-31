@@ -9,102 +9,102 @@ import (
 	time "time"
 )
 
-// ClientWithBaseURL sets the client's base URL, overriding the
+// WithBaseURL sets the client's base URL, overriding the
 // default environment, if any.
-func ClientWithBaseURL(baseURL string) core.ClientOption {
+func WithBaseURL(baseURL string) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.BaseURL = baseURL
 	}
 }
 
-// ClientWithHTTPClient uses the given HTTPClient to issue all HTTP requests.
-func ClientWithHTTPClient(httpClient core.HTTPClient) core.ClientOption {
+// WithHTTPClient uses the given HTTPClient to issue all HTTP requests.
+func WithHTTPClient(httpClient core.HTTPClient) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.HTTPClient = httpClient
 	}
 }
 
-// ClientWithHTTPHeader adds the given http.Header to all requests
+// WithHTTPHeader adds the given http.Header to all requests
 // issued by the client.
-func ClientWithHTTPHeader(httpHeader http.Header) core.ClientOption {
+func WithHTTPHeader(httpHeader http.Header) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		// Clone the headers so they can't be modified after the option call.
 		opts.HTTPHeader = httpHeader.Clone()
 	}
 }
 
-// ClientWithAuthCustom sets the custom auth header on every request.
-func ClientWithAuthCustom(custom *[]byte) core.ClientOption {
+// WithAuthCustom sets the custom auth header on every request.
+func WithAuthCustom(custom *[]byte) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.Custom = custom
 	}
 }
 
-// ClientWithHeaderXApiName sets the xApiName header on every request.
-func ClientWithHeaderXApiName(xApiName string) core.ClientOption {
+// WithHeaderXApiName sets the xApiName header on every request.
+func WithHeaderXApiName(xApiName string) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.XApiName = xApiName
 	}
 }
 
-// ClientWithHeaderXApiId sets the xApiId header on every request.
-func ClientWithHeaderXApiId(xApiId uuid.UUID) core.ClientOption {
+// WithHeaderXApiId sets the xApiId header on every request.
+func WithHeaderXApiId(xApiId uuid.UUID) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.XApiId = xApiId
 	}
 }
 
-// ClientWithHeaderXApiDatetime sets the xApiDatetime header on every request.
-func ClientWithHeaderXApiDatetime(xApiDatetime time.Time) core.ClientOption {
+// WithHeaderXApiDatetime sets the xApiDatetime header on every request.
+func WithHeaderXApiDatetime(xApiDatetime time.Time) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.XApiDatetime = xApiDatetime
 	}
 }
 
-// ClientWithHeaderXApiDate sets the xApiDate header on every request.
-func ClientWithHeaderXApiDate(xApiDate time.Time) core.ClientOption {
+// WithHeaderXApiDate sets the xApiDate header on every request.
+func WithHeaderXApiDate(xApiDate time.Time) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.XApiDate = xApiDate
 	}
 }
 
-// ClientWithHeaderXApiBytes sets the xApiBytes header on every request.
-func ClientWithHeaderXApiBytes(xApiBytes []byte) core.ClientOption {
+// WithHeaderXApiBytes sets the xApiBytes header on every request.
+func WithHeaderXApiBytes(xApiBytes []byte) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.XApiBytes = xApiBytes
 	}
 }
 
-// ClientWithHeaderXApiOptionalName sets the xApiOptionalName header on every request.
-func ClientWithHeaderXApiOptionalName(xApiOptionalName *string) core.ClientOption {
+// WithHeaderXApiOptionalName sets the xApiOptionalName header on every request.
+func WithHeaderXApiOptionalName(xApiOptionalName *string) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.XApiOptionalName = xApiOptionalName
 	}
 }
 
-// ClientWithHeaderXApiOptionalId sets the xApiOptionalId header on every request.
-func ClientWithHeaderXApiOptionalId(xApiOptionalId *uuid.UUID) core.ClientOption {
+// WithHeaderXApiOptionalId sets the xApiOptionalId header on every request.
+func WithHeaderXApiOptionalId(xApiOptionalId *uuid.UUID) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.XApiOptionalId = xApiOptionalId
 	}
 }
 
-// ClientWithHeaderXApiOptionalDatetime sets the xApiOptionalDatetime header on every request.
-func ClientWithHeaderXApiOptionalDatetime(xApiOptionalDatetime *time.Time) core.ClientOption {
+// WithHeaderXApiOptionalDatetime sets the xApiOptionalDatetime header on every request.
+func WithHeaderXApiOptionalDatetime(xApiOptionalDatetime *time.Time) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.XApiOptionalDatetime = xApiOptionalDatetime
 	}
 }
 
-// ClientWithHeaderXApiOptionalDate sets the xApiOptionalDate header on every request.
-func ClientWithHeaderXApiOptionalDate(xApiOptionalDate *time.Time) core.ClientOption {
+// WithHeaderXApiOptionalDate sets the xApiOptionalDate header on every request.
+func WithHeaderXApiOptionalDate(xApiOptionalDate *time.Time) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.XApiOptionalDate = xApiOptionalDate
 	}
 }
 
-// ClientWithHeaderXApiOptionalBytes sets the xApiOptionalBytes header on every request.
-func ClientWithHeaderXApiOptionalBytes(xApiOptionalBytes *[]byte) core.ClientOption {
+// WithHeaderXApiOptionalBytes sets the xApiOptionalBytes header on every request.
+func WithHeaderXApiOptionalBytes(xApiOptionalBytes *[]byte) core.ClientOption {
 	return func(opts *core.ClientOptions) {
 		opts.XApiOptionalBytes = xApiOptionalBytes
 	}

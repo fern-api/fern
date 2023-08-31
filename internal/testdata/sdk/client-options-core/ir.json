@@ -47,13 +47,13 @@
     },
     "headers": [],
     "types": {
-        "type_types:ClientWithAuthToken": {
+        "type_types:WithAuthToken": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
             },
             "name": {
                 "name": {
-                    "originalName": "ClientWithAuthToken",
+                    "originalName": "WithAuthToken",
                     "camelCase": {
                         "unsafeName": "clientWithAuthToken",
                         "safeName": "clientWithAuthToken"
@@ -67,8 +67,8 @@
                         "safeName": "CLIENT_WITH_AUTH_TOKEN"
                     },
                     "pascalCase": {
-                        "unsafeName": "ClientWithAuthToken",
-                        "safeName": "ClientWithAuthToken"
+                        "unsafeName": "WithAuthToken",
+                        "safeName": "WithAuthToken"
                     }
                 },
                 "fernFilepath": {
@@ -114,7 +114,7 @@
                         }
                     }
                 },
-                "typeId": "type_types:ClientWithAuthToken"
+                "typeId": "type_types:WithAuthToken"
             },
             "shape": {
                 "extends": [],
@@ -191,7 +191,7 @@
     "serviceTypeReferenceInfo": {
         "typesReferencedOnlyByService": {},
         "sharedTypes": [
-            "type_types:ClientWithAuthToken"
+            "type_types:WithAuthToken"
         ]
     },
     "subpackages": {
@@ -259,7 +259,7 @@
                 }
             },
             "types": [
-                "type_types:ClientWithAuthToken"
+                "type_types:WithAuthToken"
             ],
             "errors": [],
             "subpackages": [],

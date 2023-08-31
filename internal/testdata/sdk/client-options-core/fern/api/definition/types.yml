@@ -1,4 +1,4 @@
 types:
-  ClientWithAuthToken:
+  WithAuthToken:
     properties:
       value: string
