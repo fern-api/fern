@@ -3,6 +3,7 @@ import { difference } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { isReferenceObject } from "../../utils/isReferenceObject";
+import { isSchemaEqual } from "../../utils/isSchemaEqual";
 import { convertSchema } from "../convertSchemas";
 import { convertEnum, convertNumberToSnakeCase } from "./convertEnum";
 
@@ -29,13 +30,29 @@ export function convertUndiscriminatedOneOf({
         return convertSchema(schema, false, context, [...breadcrumbs, subtypePrefixes[index] ?? `${index}`]);
     });
 
-    const everySubTypeIsLiteral = Object.entries(convertedSubtypes).every(([_, schema]) => {
+    const uniqueSubtypes: Schema[] = [];
+    for (let i = 0; i < convertedSubtypes.length; ++i) {
+        const a = convertedSubtypes[i];
+        let isDuplicate = false;
+        for (let j = i + 1; j < convertedSubtypes.length; ++j) {
+            const b = convertedSubtypes[j];
+            if (a != null && b != null && isSchemaEqual(a, b)) {
+                isDuplicate = true;
+                break;
+            }
+        }
+        if (a != null && !isDuplicate) {
+            uniqueSubtypes.push(a);
+        }
+    }
+
+    const everySubTypeIsLiteral = Object.entries(uniqueSubtypes).every(([_, schema]) => {
         return schema.type === "literal";
     });
     if (everySubTypeIsLiteral) {
         const enumDescriptions: Record<string, { description: string }> = {};
         const enumValues: string[] = [];
-        Object.entries(convertedSubtypes).forEach(([_, schema]) => {
+        Object.entries(uniqueSubtypes).forEach(([_, schema]) => {
             if (schema.type === "literal") {
                 enumValues.push(schema.value);
                 if (schema.description != null) {
@@ -56,12 +73,16 @@ export function convertUndiscriminatedOneOf({
         });
     }
 
+    if (uniqueSubtypes.length === 1 && uniqueSubtypes[0] != null) {
+        return uniqueSubtypes[0];
+    }
+
     return wrapUndiscriminantedOneOf({
         nameOverride,
         generatedName,
         wrapAsNullable,
         description,
-        subtypes: convertedSubtypes,
+        subtypes: uniqueSubtypes,
     });
 }
 
