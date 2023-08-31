@@ -58,14 +58,11 @@ func newFileWriter(
 	imports.Add("strconv")
 	imports.Add("strings")
 	imports.Add("time")
+	imports.Add("github.com/google/uuid")
 
 	// Add an import to the core utilities package generated for
 	// the SDK.
 	imports.Add(path.Join(baseImportPath, "core"))
-
-	// Manually specify the UUID path so that we can use
-	// the uuid alias.
-	imports["github.com/gofrs/uuid/v5"] = "uuid"
 
 	return &fileWriter{
 		filename:       filename,

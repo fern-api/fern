@@ -32,8 +32,8 @@ var (
 	// defaultImports specify the default imports used in the generated
 	// go.mod (if any).
 	defaultImports = map[string]string{
-		"github.com/gofrs/uuid/v5":    "v5.0.0",
-		"github.com/stretchr/testify": "v1.8.4",
+		"github.com/google/uuid":      "v1.3.1",
+		"github.com/stretchr/testify": "v1.7.0",
 	}
 
 	// defaultModuleConfig is used whenever an import path or module is not

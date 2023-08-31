@@ -11,7 +11,7 @@ import (
 	enum "github.com/fern-api/fern-go/internal/testdata/model/enum/fixtures"
 	undiscriminated "github.com/fern-api/fern-go/internal/testdata/model/undiscriminated/fixtures"
 	union "github.com/fern-api/fern-go/internal/testdata/model/union/fixtures"
-	"github.com/gofrs/uuid/v5"
+	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -198,7 +198,7 @@ func TestUndiscriminatedUnion(t *testing.T) {
 }
 
 func newUUID(t *testing.T) uuid.UUID {
-	u, err := uuid.NewV4()
+	u, err := uuid.NewRandom()
 	require.NoError(t, err)
 	return u
 }

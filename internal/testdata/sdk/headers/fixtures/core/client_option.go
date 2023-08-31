@@ -5,7 +5,7 @@ package core
 import (
 	base64 "encoding/base64"
 	fmt "fmt"
-	uuid "github.com/gofrs/uuid/v5"
+	uuid "github.com/google/uuid"
 	http "net/http"
 	time "time"
 )

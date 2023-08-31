@@ -3,7 +3,7 @@
 package api
 
 import (
-	uuid "github.com/gofrs/uuid/v5"
+	uuid "github.com/google/uuid"
 )
 
 type Bar struct {

@@ -2,4 +2,4 @@ module github.com/example/repository
 
 go 1.19
 
-require github.com/gofrs/uuid/v5 v5.0.0
+require github.com/google/uuid v1.3.1

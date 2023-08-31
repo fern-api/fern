@@ -4,7 +4,7 @@ package api
 
 import (
 	bar "github.com/example/organization/bar"
-	uuid "github.com/gofrs/uuid/v5"
+	uuid "github.com/google/uuid"
 )
 
 type Foo struct {

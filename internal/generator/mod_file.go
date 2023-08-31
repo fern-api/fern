@@ -16,7 +16,7 @@ const modFilename = "go.mod"
 //
 // go 1.19
 //
-// require github.com/gofrs/uuid/v5 v5.0.0
+// require github.com/google/uuid v1.3.1
 func NewModFile(c *ModuleConfig) (*File, error) {
 	if c.Path == "" {
 		return nil, fmt.Errorf("module path is required")

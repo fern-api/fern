@@ -5,8 +5,9 @@ package ir
 import (
 	json "encoding/json"
 	fmt "fmt"
-	uuid "github.com/gofrs/uuid/v5"
 	time "time"
+
+	uuid "github.com/google/uuid"
 )
 
 type ExamplePrimitive struct {

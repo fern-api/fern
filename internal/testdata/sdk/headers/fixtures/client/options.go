@@ -4,7 +4,7 @@ package client
 
 import (
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/headers/fixtures/core"
-	uuid "github.com/gofrs/uuid/v5"
+	uuid "github.com/google/uuid"
 	http "net/http"
 	time "time"
 )
