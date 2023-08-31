@@ -364,5 +364,29 @@ function filterIntermediateRepresentationForAudiences(
                 ),
             })
         ),
+        serviceTypeReferenceInfo: filterServiceTypeReferenceInfoForAudiences(
+            intermediateRepresentation.serviceTypeReferenceInfo,
+            filteredIr
+        ),
+    };
+}
+
+function filterServiceTypeReferenceInfoForAudiences(
+    serviceTypeReferenceInfo: ServiceTypeReferenceInfo,
+    filteredIr: FilteredIr | undefined
+): ServiceTypeReferenceInfo {
+    if (filteredIr == null) {
+        return serviceTypeReferenceInfo;
+    }
+    const filteredTypesReferencedOnlyByService: Record<ServiceId, TypeId[]> = {};
+    Object.entries(serviceTypeReferenceInfo.typesReferencedOnlyByService).forEach(([key, values]) => {
+        if (filteredIr.hasServiceId(key)) {
+            filteredTypesReferencedOnlyByService[key] = values.filter((value) => filteredIr.hasTypeId(value));
+        }
+    });
+
+    return {
+        sharedTypes: serviceTypeReferenceInfo.sharedTypes.filter((typeId) => filteredIr.hasTypeId(typeId)),
+        typesReferencedOnlyByService: filteredTypesReferencedOnlyByService,
     };
 }

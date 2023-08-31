@@ -11297,6 +11297,1082 @@ exports[`ir {"name":"packages"} 1`] = `
 }"
 `;
 
+exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
+"{
+    "apiName": {
+        "originalName": "my-api",
+        "camelCase": {
+            "unsafeName": "myApi",
+            "safeName": "myApi"
+        },
+        "snakeCase": {
+            "unsafeName": "my_api",
+            "safeName": "my_api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "MY_API",
+            "safeName": "MY_API"
+        },
+        "pascalCase": {
+            "unsafeName": "MyApi",
+            "safeName": "MyApi"
+        }
+    },
+    "apiDisplayName": null,
+    "apiDocs": "foo bar baz",
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [],
+        "docs": null
+    },
+    "headers": [
+        {
+            "name": {
+                "name": {
+                    "originalName": "apiVersion",
+                    "camelCase": {
+                        "unsafeName": "apiVersion",
+                        "safeName": "apiVersion"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "api_version",
+                        "safeName": "api_version"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "API_VERSION",
+                        "safeName": "API_VERSION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ApiVersion",
+                        "safeName": "ApiVersion"
+                    }
+                },
+                "wireValue": "X-API-VERSION"
+            },
+            "valueType": {
+                "_type": "container",
+                "container": {
+                    "_type": "optional",
+                    "optional": {
+                        "_type": "primitive",
+                        "primitive": "STRING"
+                    }
+                }
+            },
+            "availability": {
+                "status": "GENERAL_AVAILABILITY",
+                "message": null
+            },
+            "docs": null
+        }
+    ],
+    "types": {
+        "type_commons:Internal": {
+            "name": {
+                "name": {
+                    "originalName": "Internal",
+                    "camelCase": {
+                        "unsafeName": "internal",
+                        "safeName": "internal"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "internal",
+                        "safeName": "internal"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "INTERNAL",
+                        "safeName": "INTERNAL"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Internal",
+                        "safeName": "Internal"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "commons",
+                            "camelCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMMONS",
+                                "safeName": "COMMONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Commons",
+                                "safeName": "Commons"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "commons",
+                        "camelCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMMONS",
+                            "safeName": "COMMONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Commons",
+                            "safeName": "Commons"
+                        }
+                    }
+                },
+                "typeId": "type_commons:Internal"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "name",
+                                "camelCase": {
+                                    "unsafeName": "name",
+                                    "safeName": "name"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "name",
+                                    "safeName": "name"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "NAME",
+                                    "safeName": "NAME"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Name",
+                                    "safeName": "Name"
+                                }
+                            },
+                            "wireValue": "name"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY",
+                            "message": null
+                        },
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [],
+            "examples": [],
+            "availability": {
+                "status": "GENERAL_AVAILABILITY",
+                "message": null
+            },
+            "docs": null
+        },
+        "type_imdb:UnknownRequest": {
+            "name": {
+                "name": {
+                    "originalName": "UnknownRequest",
+                    "camelCase": {
+                        "unsafeName": "unknownRequest",
+                        "safeName": "unknownRequest"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "unknown_request",
+                        "safeName": "unknown_request"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNKNOWN_REQUEST",
+                        "safeName": "UNKNOWN_REQUEST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UnknownRequest",
+                        "safeName": "UnknownRequest"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "imdb",
+                            "camelCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IMDB",
+                                "safeName": "IMDB"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Imdb",
+                                "safeName": "Imdb"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "imdb",
+                        "camelCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMDB",
+                            "safeName": "IMDB"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imdb",
+                            "safeName": "Imdb"
+                        }
+                    }
+                },
+                "typeId": "type_imdb:UnknownRequest"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "unknown",
+                                "camelCase": {
+                                    "unsafeName": "unknown",
+                                    "safeName": "unknown"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "unknown",
+                                    "safeName": "unknown"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UNKNOWN",
+                                    "safeName": "UNKNOWN"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Unknown",
+                                    "safeName": "Unknown"
+                                }
+                            },
+                            "wireValue": "unknown"
+                        },
+                        "valueType": {
+                            "_type": "unknown"
+                        },
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY",
+                            "message": null
+                        },
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [],
+            "examples": [],
+            "availability": {
+                "status": "GENERAL_AVAILABILITY",
+                "message": null
+            },
+            "docs": null
+        }
+    },
+    "errors": {
+        "error_commons:BadRequestError": {
+            "name": {
+                "name": {
+                    "originalName": "BadRequestError",
+                    "camelCase": {
+                        "unsafeName": "badRequestError",
+                        "safeName": "badRequestError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "bad_request_error",
+                        "safeName": "bad_request_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BAD_REQUEST_ERROR",
+                        "safeName": "BAD_REQUEST_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "BadRequestError",
+                        "safeName": "BadRequestError"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "commons",
+                            "camelCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMMONS",
+                                "safeName": "COMMONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Commons",
+                                "safeName": "Commons"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "commons",
+                        "camelCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMMONS",
+                            "safeName": "COMMONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Commons",
+                            "safeName": "Commons"
+                        }
+                    }
+                },
+                "errorId": "error_commons:BadRequestError"
+            },
+            "discriminantValue": {
+                "name": {
+                    "originalName": "BadRequestError",
+                    "camelCase": {
+                        "unsafeName": "badRequestError",
+                        "safeName": "badRequestError"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "bad_request_error",
+                        "safeName": "bad_request_error"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BAD_REQUEST_ERROR",
+                        "safeName": "BAD_REQUEST_ERROR"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "BadRequestError",
+                        "safeName": "BadRequestError"
+                    }
+                },
+                "wireValue": "BadRequestError"
+            },
+            "statusCode": 400,
+            "type": null,
+            "docs": null
+        }
+    },
+    "services": {
+        "service_imdb": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY",
+                "message": null
+            },
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "imdb",
+                            "camelCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IMDB",
+                                "safeName": "IMDB"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Imdb",
+                                "safeName": "Imdb"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "imdb",
+                        "camelCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMDB",
+                            "safeName": "IMDB"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imdb",
+                            "safeName": "Imdb"
+                        }
+                    }
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "/movies",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "endpoints": [
+                {
+                    "name": {
+                        "originalName": "internalEndpoint",
+                        "camelCase": {
+                            "unsafeName": "internalEndpoint",
+                            "safeName": "internalEndpoint"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "internal_endpoint",
+                            "safeName": "internal_endpoint"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "INTERNAL_ENDPOINT",
+                            "safeName": "INTERNAL_ENDPOINT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "InternalEndpoint",
+                            "safeName": "InternalEndpoint"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": false,
+                    "baseUrl": null,
+                    "method": "POST",
+                    "path": {
+                        "head": "",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/test/",
+                        "parts": [
+                            {
+                                "pathParameter": "rootPathParam",
+                                "tail": "/movies"
+                            }
+                        ]
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [
+                        {
+                            "name": {
+                                "originalName": "rootPathParam",
+                                "camelCase": {
+                                    "unsafeName": "rootPathParam",
+                                    "safeName": "rootPathParam"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "root_path_param",
+                                    "safeName": "root_path_param"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ROOT_PATH_PARAM",
+                                    "safeName": "ROOT_PATH_PARAM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "RootPathParam",
+                                    "safeName": "RootPathParam"
+                                }
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "location": "ROOT",
+                            "variable": null,
+                            "docs": null
+                        }
+                    ],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "type": "reference",
+                        "requestBodyType": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "UnknownRequest",
+                                "camelCase": {
+                                    "unsafeName": "unknownRequest",
+                                    "safeName": "unknownRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "unknown_request",
+                                    "safeName": "unknown_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UNKNOWN_REQUEST",
+                                    "safeName": "UNKNOWN_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "UnknownRequest",
+                                    "safeName": "UnknownRequest"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [
+                                    {
+                                        "originalName": "imdb",
+                                        "camelCase": {
+                                            "unsafeName": "imdb",
+                                            "safeName": "imdb"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "imdb",
+                                            "safeName": "imdb"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "IMDB",
+                                            "safeName": "IMDB"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Imdb",
+                                            "safeName": "Imdb"
+                                        }
+                                    }
+                                ],
+                                "packagePath": [],
+                                "file": {
+                                    "originalName": "imdb",
+                                    "camelCase": {
+                                        "unsafeName": "imdb",
+                                        "safeName": "imdb"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "imdb",
+                                        "safeName": "imdb"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "IMDB",
+                                        "safeName": "IMDB"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Imdb",
+                                        "safeName": "Imdb"
+                                    }
+                                }
+                            },
+                            "typeId": "type_imdb:UnknownRequest"
+                        },
+                        "contentType": null,
+                        "docs": null
+                    },
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "justRequestBody",
+                            "requestBodyType": {
+                                "_type": "named",
+                                "name": {
+                                    "originalName": "UnknownRequest",
+                                    "camelCase": {
+                                        "unsafeName": "unknownRequest",
+                                        "safeName": "unknownRequest"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "unknown_request",
+                                        "safeName": "unknown_request"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "UNKNOWN_REQUEST",
+                                        "safeName": "UNKNOWN_REQUEST"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "UnknownRequest",
+                                        "safeName": "UnknownRequest"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "imdb",
+                                            "camelCase": {
+                                                "unsafeName": "imdb",
+                                                "safeName": "imdb"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "imdb",
+                                                "safeName": "imdb"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "IMDB",
+                                                "safeName": "IMDB"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Imdb",
+                                                "safeName": "Imdb"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
+                                        "originalName": "imdb",
+                                        "camelCase": {
+                                            "unsafeName": "imdb",
+                                            "safeName": "imdb"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "imdb",
+                                            "safeName": "imdb"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "IMDB",
+                                            "safeName": "IMDB"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Imdb",
+                                            "safeName": "Imdb"
+                                        }
+                                    }
+                                },
+                                "typeId": "type_imdb:UnknownRequest"
+                            },
+                            "contentType": null,
+                            "docs": null
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        }
+                    },
+                    "response": {
+                        "type": "json",
+                        "responseBodyType": {
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "docs": null
+                    },
+                    "errors": [
+                        {
+                            "error": {
+                                "name": {
+                                    "originalName": "BadRequestError",
+                                    "camelCase": {
+                                        "unsafeName": "badRequestError",
+                                        "safeName": "badRequestError"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "bad_request_error",
+                                        "safeName": "bad_request_error"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "BAD_REQUEST_ERROR",
+                                        "safeName": "BAD_REQUEST_ERROR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "BadRequestError",
+                                        "safeName": "BadRequestError"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "commons",
+                                            "camelCase": {
+                                                "unsafeName": "commons",
+                                                "safeName": "commons"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "commons",
+                                                "safeName": "commons"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "COMMONS",
+                                                "safeName": "COMMONS"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Commons",
+                                                "safeName": "Commons"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
+                                        "originalName": "commons",
+                                        "camelCase": {
+                                            "unsafeName": "commons",
+                                            "safeName": "commons"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "commons",
+                                            "safeName": "commons"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "COMMONS",
+                                            "safeName": "COMMONS"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Commons",
+                                            "safeName": "Commons"
+                                        }
+                                    }
+                                },
+                                "errorId": "error_commons:BadRequestError"
+                            },
+                            "docs": null
+                        }
+                    ],
+                    "examples": [],
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY",
+                        "message": null
+                    },
+                    "docs": null
+                }
+            ]
+        }
+    },
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceId",
+                    "safeName": "errorInstanceId"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceId",
+                    "safeName": "ErrorInstanceId"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "environments": null,
+    "errorDiscriminationStrategy": {
+        "type": "property",
+        "discriminant": {
+            "name": {
+                "originalName": "error",
+                "camelCase": {
+                    "unsafeName": "error",
+                    "safeName": "error"
+                },
+                "snakeCase": {
+                    "unsafeName": "error",
+                    "safeName": "error"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR",
+                    "safeName": "ERROR"
+                },
+                "pascalCase": {
+                    "unsafeName": "Error",
+                    "safeName": "Error"
+                }
+            },
+            "wireValue": "error"
+        },
+        "contentProperty": {
+            "name": {
+                "originalName": "content",
+                "camelCase": {
+                    "unsafeName": "content",
+                    "safeName": "content"
+                },
+                "snakeCase": {
+                    "unsafeName": "content",
+                    "safeName": "content"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "CONTENT",
+                    "safeName": "CONTENT"
+                },
+                "pascalCase": {
+                    "unsafeName": "Content",
+                    "safeName": "Content"
+                }
+            },
+            "wireValue": "content"
+        }
+    },
+    "basePath": {
+        "head": "/test/",
+        "parts": [
+            {
+                "pathParameter": "rootPathParam",
+                "tail": ""
+            }
+        ]
+    },
+    "pathParameters": [
+        {
+            "name": {
+                "originalName": "rootPathParam",
+                "camelCase": {
+                    "unsafeName": "rootPathParam",
+                    "safeName": "rootPathParam"
+                },
+                "snakeCase": {
+                    "unsafeName": "root_path_param",
+                    "safeName": "root_path_param"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ROOT_PATH_PARAM",
+                    "safeName": "ROOT_PATH_PARAM"
+                },
+                "pascalCase": {
+                    "unsafeName": "RootPathParam",
+                    "safeName": "RootPathParam"
+                }
+            },
+            "valueType": {
+                "_type": "primitive",
+                "primitive": "STRING"
+            },
+            "location": "ROOT",
+            "variable": null,
+            "docs": null
+        }
+    ],
+    "variables": [],
+    "serviceTypeReferenceInfo": {
+        "sharedTypes": [
+            "type_commons:Internal"
+        ],
+        "typesReferencedOnlyByService": {
+            "service_imdb": [
+                "type_imdb:UnknownRequest"
+            ]
+        }
+    },
+    "webhookGroups": {},
+    "subpackages": {
+        "subpackage_commons": {
+            "name": {
+                "originalName": "commons",
+                "camelCase": {
+                    "unsafeName": "commons",
+                    "safeName": "commons"
+                },
+                "snakeCase": {
+                    "unsafeName": "commons",
+                    "safeName": "commons"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "COMMONS",
+                    "safeName": "COMMONS"
+                },
+                "pascalCase": {
+                    "unsafeName": "Commons",
+                    "safeName": "Commons"
+                }
+            },
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "commons",
+                        "camelCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMMONS",
+                            "safeName": "COMMONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Commons",
+                            "safeName": "Commons"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "commons",
+                    "camelCase": {
+                        "unsafeName": "commons",
+                        "safeName": "commons"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "commons",
+                        "safeName": "commons"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "COMMONS",
+                        "safeName": "COMMONS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Commons",
+                        "safeName": "Commons"
+                    }
+                }
+            },
+            "service": null,
+            "types": [
+                "type_commons:Internal"
+            ],
+            "errors": [
+                "error_commons:BadRequestError"
+            ],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": false,
+            "docs": null
+        },
+        "subpackage_imdb": {
+            "name": {
+                "originalName": "imdb",
+                "camelCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "snakeCase": {
+                    "unsafeName": "imdb",
+                    "safeName": "imdb"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "IMDB",
+                    "safeName": "IMDB"
+                },
+                "pascalCase": {
+                    "unsafeName": "Imdb",
+                    "safeName": "Imdb"
+                }
+            },
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "imdb",
+                        "camelCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMDB",
+                            "safeName": "IMDB"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imdb",
+                            "safeName": "Imdb"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "imdb",
+                    "camelCase": {
+                        "unsafeName": "imdb",
+                        "safeName": "imdb"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "imdb",
+                        "safeName": "imdb"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "IMDB",
+                        "safeName": "IMDB"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Imdb",
+                        "safeName": "Imdb"
+                    }
+                }
+            },
+            "service": "service_imdb",
+            "types": [
+                "type_imdb:UnknownRequest"
+            ],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": [],
+            "file": null
+        },
+        "service": null,
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "subpackage_commons",
+            "subpackage_imdb"
+        ],
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "docs": null
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false,
+        "hasFileDownloadEndpoints": false,
+        "platformHeaders": {
+            "language": "X-Fern-Language",
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version"
+        }
+    }
+}"
+`;
+
 exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
 "{
     "apiName": {
@@ -11367,6 +12443,119 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
         }
     ],
     "types": {
+        "type_commons:Type": {
+            "name": {
+                "name": {
+                    "originalName": "Type",
+                    "camelCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TYPE",
+                        "safeName": "TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Type",
+                        "safeName": "Type"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "commons",
+                            "camelCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMMONS",
+                                "safeName": "COMMONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Commons",
+                                "safeName": "Commons"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "commons",
+                        "camelCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMMONS",
+                            "safeName": "COMMONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Commons",
+                            "safeName": "Commons"
+                        }
+                    }
+                },
+                "typeId": "type_commons:Type"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "name",
+                                "camelCase": {
+                                    "unsafeName": "name",
+                                    "safeName": "name"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "name",
+                                    "safeName": "name"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "NAME",
+                                    "safeName": "NAME"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Name",
+                                    "safeName": "Name"
+                                }
+                            },
+                            "wireValue": "name"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY",
+                            "message": null
+                        },
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [],
+            "examples": [],
+            "availability": {
+                "status": "GENERAL_AVAILABILITY",
+                "message": null
+            },
+            "docs": null
+        },
         "type_imdb:MovieId": {
             "name": {
                 "name": {
@@ -13305,24 +14494,15 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
     ],
     "variables": [],
     "serviceTypeReferenceInfo": {
+        "sharedTypes": [
+            "type_commons:Type"
+        ],
         "typesReferencedOnlyByService": {
             "service_imdb": [
                 "type_imdb:MovieId",
-                "type_imdb:Movie",
                 "type_imdb:CreateMovieRequest"
             ]
-        },
-        "sharedTypes": [
-            "type_commons:UndiscriminatedUnion",
-            "type_director:Director",
-            "type_director:Age",
-            "type_director:LiteralString",
-            "type_imdb:CurrencyAmount",
-            "type_imdb:ActorId",
-            "type_imdb:DirectorWrapper",
-            "type_imdb:Person",
-            "type_imdb:RecursiveType"
-        ]
+        }
     },
     "webhookGroups": {},
     "subpackages": {
@@ -13390,7 +14570,9 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                 }
             },
             "service": null,
-            "types": [],
+            "types": [
+                "type_commons:Type"
+            ],
             "errors": [
                 "error_commons:BadRequestError"
             ],
@@ -13577,6 +14759,232 @@ exports[`ir {"name":"simple"} 1`] = `
         }
     ],
     "types": {
+        "type_commons:Internal": {
+            "name": {
+                "name": {
+                    "originalName": "Internal",
+                    "camelCase": {
+                        "unsafeName": "internal",
+                        "safeName": "internal"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "internal",
+                        "safeName": "internal"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "INTERNAL",
+                        "safeName": "INTERNAL"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Internal",
+                        "safeName": "Internal"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "commons",
+                            "camelCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMMONS",
+                                "safeName": "COMMONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Commons",
+                                "safeName": "Commons"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "commons",
+                        "camelCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMMONS",
+                            "safeName": "COMMONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Commons",
+                            "safeName": "Commons"
+                        }
+                    }
+                },
+                "typeId": "type_commons:Internal"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "name",
+                                "camelCase": {
+                                    "unsafeName": "name",
+                                    "safeName": "name"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "name",
+                                    "safeName": "name"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "NAME",
+                                    "safeName": "NAME"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Name",
+                                    "safeName": "Name"
+                                }
+                            },
+                            "wireValue": "name"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY",
+                            "message": null
+                        },
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [],
+            "examples": [],
+            "availability": {
+                "status": "GENERAL_AVAILABILITY",
+                "message": null
+            },
+            "docs": null
+        },
+        "type_commons:Type": {
+            "name": {
+                "name": {
+                    "originalName": "Type",
+                    "camelCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TYPE",
+                        "safeName": "TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Type",
+                        "safeName": "Type"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "commons",
+                            "camelCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "commons",
+                                "safeName": "commons"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "COMMONS",
+                                "safeName": "COMMONS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Commons",
+                                "safeName": "Commons"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "commons",
+                        "camelCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "commons",
+                            "safeName": "commons"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "COMMONS",
+                            "safeName": "COMMONS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Commons",
+                            "safeName": "Commons"
+                        }
+                    }
+                },
+                "typeId": "type_commons:Type"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "name",
+                                "camelCase": {
+                                    "unsafeName": "name",
+                                    "safeName": "name"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "name",
+                                    "safeName": "name"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "NAME",
+                                    "safeName": "NAME"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Name",
+                                    "safeName": "Name"
+                                }
+                            },
+                            "wireValue": "name"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY",
+                            "message": null
+                        },
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [],
+            "examples": [],
+            "availability": {
+                "status": "GENERAL_AVAILABILITY",
+                "message": null
+            },
+            "docs": null
+        },
         "type_commons:UndiscriminatedUnion": {
             "name": {
                 "name": {
@@ -17484,6 +18892,118 @@ exports[`ir {"name":"simple"} 1`] = `
             },
             "docs": null
         },
+        "type_imdb:UnknownRequest": {
+            "name": {
+                "name": {
+                    "originalName": "UnknownRequest",
+                    "camelCase": {
+                        "unsafeName": "unknownRequest",
+                        "safeName": "unknownRequest"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "unknown_request",
+                        "safeName": "unknown_request"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNKNOWN_REQUEST",
+                        "safeName": "UNKNOWN_REQUEST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UnknownRequest",
+                        "safeName": "UnknownRequest"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "imdb",
+                            "camelCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IMDB",
+                                "safeName": "IMDB"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Imdb",
+                                "safeName": "Imdb"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "imdb",
+                        "camelCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMDB",
+                            "safeName": "IMDB"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imdb",
+                            "safeName": "Imdb"
+                        }
+                    }
+                },
+                "typeId": "type_imdb:UnknownRequest"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "unknown",
+                                "camelCase": {
+                                    "unsafeName": "unknown",
+                                    "safeName": "unknown"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "unknown",
+                                    "safeName": "unknown"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UNKNOWN",
+                                    "safeName": "UNKNOWN"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Unknown",
+                                    "safeName": "Unknown"
+                                }
+                            },
+                            "wireValue": "unknown"
+                        },
+                        "valueType": {
+                            "_type": "unknown"
+                        },
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY",
+                            "message": null
+                        },
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [],
+            "examples": [],
+            "availability": {
+                "status": "GENERAL_AVAILABILITY",
+                "message": null
+            },
+            "docs": null
+        },
         "type_imdb:RecursiveType": {
             "name": {
                 "name": {
@@ -19370,6 +20890,324 @@ exports[`ir {"name":"simple"} 1`] = `
             "headers": [],
             "pathParameters": [],
             "endpoints": [
+                {
+                    "name": {
+                        "originalName": "internalEndpoint",
+                        "camelCase": {
+                            "unsafeName": "internalEndpoint",
+                            "safeName": "internalEndpoint"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "internal_endpoint",
+                            "safeName": "internal_endpoint"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "INTERNAL_ENDPOINT",
+                            "safeName": "INTERNAL_ENDPOINT"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "InternalEndpoint",
+                            "safeName": "InternalEndpoint"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": false,
+                    "baseUrl": null,
+                    "method": "POST",
+                    "path": {
+                        "head": "",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/test/",
+                        "parts": [
+                            {
+                                "pathParameter": "rootPathParam",
+                                "tail": "/movies"
+                            }
+                        ]
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [
+                        {
+                            "name": {
+                                "originalName": "rootPathParam",
+                                "camelCase": {
+                                    "unsafeName": "rootPathParam",
+                                    "safeName": "rootPathParam"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "root_path_param",
+                                    "safeName": "root_path_param"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ROOT_PATH_PARAM",
+                                    "safeName": "ROOT_PATH_PARAM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "RootPathParam",
+                                    "safeName": "RootPathParam"
+                                }
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "location": "ROOT",
+                            "variable": null,
+                            "docs": null
+                        }
+                    ],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "type": "reference",
+                        "requestBodyType": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "UnknownRequest",
+                                "camelCase": {
+                                    "unsafeName": "unknownRequest",
+                                    "safeName": "unknownRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "unknown_request",
+                                    "safeName": "unknown_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UNKNOWN_REQUEST",
+                                    "safeName": "UNKNOWN_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "UnknownRequest",
+                                    "safeName": "UnknownRequest"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [
+                                    {
+                                        "originalName": "imdb",
+                                        "camelCase": {
+                                            "unsafeName": "imdb",
+                                            "safeName": "imdb"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "imdb",
+                                            "safeName": "imdb"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "IMDB",
+                                            "safeName": "IMDB"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Imdb",
+                                            "safeName": "Imdb"
+                                        }
+                                    }
+                                ],
+                                "packagePath": [],
+                                "file": {
+                                    "originalName": "imdb",
+                                    "camelCase": {
+                                        "unsafeName": "imdb",
+                                        "safeName": "imdb"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "imdb",
+                                        "safeName": "imdb"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "IMDB",
+                                        "safeName": "IMDB"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Imdb",
+                                        "safeName": "Imdb"
+                                    }
+                                }
+                            },
+                            "typeId": "type_imdb:UnknownRequest"
+                        },
+                        "contentType": null,
+                        "docs": null
+                    },
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "justRequestBody",
+                            "requestBodyType": {
+                                "_type": "named",
+                                "name": {
+                                    "originalName": "UnknownRequest",
+                                    "camelCase": {
+                                        "unsafeName": "unknownRequest",
+                                        "safeName": "unknownRequest"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "unknown_request",
+                                        "safeName": "unknown_request"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "UNKNOWN_REQUEST",
+                                        "safeName": "UNKNOWN_REQUEST"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "UnknownRequest",
+                                        "safeName": "UnknownRequest"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "imdb",
+                                            "camelCase": {
+                                                "unsafeName": "imdb",
+                                                "safeName": "imdb"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "imdb",
+                                                "safeName": "imdb"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "IMDB",
+                                                "safeName": "IMDB"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Imdb",
+                                                "safeName": "Imdb"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
+                                        "originalName": "imdb",
+                                        "camelCase": {
+                                            "unsafeName": "imdb",
+                                            "safeName": "imdb"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "imdb",
+                                            "safeName": "imdb"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "IMDB",
+                                            "safeName": "IMDB"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Imdb",
+                                            "safeName": "Imdb"
+                                        }
+                                    }
+                                },
+                                "typeId": "type_imdb:UnknownRequest"
+                            },
+                            "contentType": null,
+                            "docs": null
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        }
+                    },
+                    "response": {
+                        "type": "json",
+                        "responseBodyType": {
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "docs": null
+                    },
+                    "errors": [
+                        {
+                            "error": {
+                                "name": {
+                                    "originalName": "BadRequestError",
+                                    "camelCase": {
+                                        "unsafeName": "badRequestError",
+                                        "safeName": "badRequestError"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "bad_request_error",
+                                        "safeName": "bad_request_error"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "BAD_REQUEST_ERROR",
+                                        "safeName": "BAD_REQUEST_ERROR"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "BadRequestError",
+                                        "safeName": "BadRequestError"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "commons",
+                                            "camelCase": {
+                                                "unsafeName": "commons",
+                                                "safeName": "commons"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "commons",
+                                                "safeName": "commons"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "COMMONS",
+                                                "safeName": "COMMONS"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Commons",
+                                                "safeName": "Commons"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
+                                        "originalName": "commons",
+                                        "camelCase": {
+                                            "unsafeName": "commons",
+                                            "safeName": "commons"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "commons",
+                                            "safeName": "commons"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "COMMONS",
+                                            "safeName": "COMMONS"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Commons",
+                                            "safeName": "Commons"
+                                        }
+                                    }
+                                },
+                                "errorId": "error_commons:BadRequestError"
+                            },
+                            "docs": null
+                        }
+                    ],
+                    "examples": [],
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY",
+                        "message": null
+                    },
+                    "docs": null
+                },
                 {
                     "name": {
                         "originalName": "createMovie",
@@ -22296,10 +24134,13 @@ exports[`ir {"name":"simple"} 1`] = `
             "service_imdb": [
                 "type_imdb:MovieId",
                 "type_imdb:Movie",
-                "type_imdb:CreateMovieRequest"
+                "type_imdb:CreateMovieRequest",
+                "type_imdb:UnknownRequest"
             ]
         },
         "sharedTypes": [
+            "type_commons:Internal",
+            "type_commons:Type",
             "type_commons:UndiscriminatedUnion",
             "type_director:Director",
             "type_director:Age",
@@ -22378,6 +24219,8 @@ exports[`ir {"name":"simple"} 1`] = `
             },
             "service": null,
             "types": [
+                "type_commons:Internal",
+                "type_commons:Type",
                 "type_commons:UndiscriminatedUnion"
             ],
             "errors": [
@@ -22537,6 +24380,7 @@ exports[`ir {"name":"simple"} 1`] = `
                 "type_imdb:CreateMovieRequest",
                 "type_imdb:DirectorWrapper",
                 "type_imdb:Person",
+                "type_imdb:UnknownRequest",
                 "type_imdb:RecursiveType"
             ],
             "errors": [
