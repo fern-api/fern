@@ -26,6 +26,10 @@ const FIXTURES: Fixture[] = [
         audiences: ["test"],
     },
     {
+        name: "simple",
+        audiences: ["internal"],
+    },
+    {
         name: "migration",
         version: "v1",
     },

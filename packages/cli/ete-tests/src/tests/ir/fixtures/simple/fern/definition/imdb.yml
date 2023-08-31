@@ -56,6 +56,9 @@ types:
           age: 100
       - value:
           type: producer
+  UnknownRequest:
+    properties:
+      unknown: unknown
   RecursiveType:
     extends: CreateMovieRequest
     properties:
@@ -83,6 +86,13 @@ service:
   auth: false
   base-path: /movies
   endpoints:
+    internalEndpoint:
+      method: POST
+      path: ""
+      request: UnknownRequest
+      response: string
+      audiences:
+        - internal
     createMovie:
       method: POST
       path: ""
