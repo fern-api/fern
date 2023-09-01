@@ -88,6 +88,10 @@ class SdkGenerator(AbstractGenerator):
             ir=ir,
             generator_config=generator_config,
             custom_config=custom_config,
+            project_module_path=self.get_relative_path_to_project_for_publish(
+                generator_config=generator_config,
+                ir=ir,
+            ),
         )
 
         PydanticModelGenerator().generate_types(
@@ -282,16 +286,24 @@ class SdkGenerator(AbstractGenerator):
         if project._project_config is not None:
             badge = BadgeType.PYPI
             installation = f"""```sh
-pip install --upgrade {project._project_config.package_name}"
+pip install --upgrade {project._project_config.package_name}
 ```"""
+
+        usage_snippet = SourceFileFactory.create_snippet()
+        usage_snippet.add_expression(generated_root_client.sync_instantiation)
+        usage = "```python\n" + usage_snippet.to_str() + "```\n"
+
+        async_usage_snippet = SourceFileFactory.create_snippet()
+        async_usage_snippet.add_expression(generated_root_client.async_instantiation)
+        async_usage = "```python\n" + async_usage_snippet.to_str() + "```\n"
 
         return GenerateReadmeRequest(
             title=f"{capitalized_org_name} Python Library",
             badge=badge,
             summary=f"The {capitalized_org_name} Python Library provides convenient access to the {capitalized_org_name} API from applications written in Python.",
             installation=installation,
-            usage=generated_root_client.usage,
-            async_usage=generated_root_client.async_usage,
+            usage=usage,
+            async_usage=async_usage,
             requirements=[],
         )
 

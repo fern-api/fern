@@ -33,6 +33,10 @@ class SdkGeneratorContext(ABC):
         self.custom_config = custom_config
 
     @abstractmethod
+    def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:
+        ...
+
+    @abstractmethod
     def get_filepath_for_error(self, error_name: ir_types.DeclaredErrorName) -> Filepath:
         ...
 

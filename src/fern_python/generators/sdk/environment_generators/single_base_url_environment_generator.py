@@ -41,9 +41,20 @@ class SingleBaseUrlEnvironmentGenerator:
 
         source_file.add_class_declaration(enum_class)
 
+        class_reference = AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.snippet(
+                    module_path=self._context.get_module_path_in_project(
+                        self._context.get_filepath_for_environments_enum().to_module().path
+                    ),
+                ),
+                named_import=class_name,
+            ),
+        )
+
         return GeneratedEnvironment(
-            module_path=".".join(self._context.get_filepath_for_environments_enum().to_module().path),
-            class_name=class_name,
+            class_reference=class_reference,
             example_environment=example_environment,
         )
 

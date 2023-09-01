@@ -1,8 +1,9 @@
 from dataclasses import dataclass
 
+from fern_python.codegen import AST
+
 
 @dataclass
 class GeneratedEnvironment:
-    module_path: str
-    class_name: str
-    example_environment: str
+    class_reference: AST.ClassReference
+    example_environment: str  # e.g. PRODUCTION in AcmeEnvironment.PRODUCTION

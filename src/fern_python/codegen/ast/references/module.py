@@ -20,7 +20,7 @@ class LocalModule:
 @dataclass(frozen=True)
 class Module:
     path: ModulePath
-    source: Union[Dependency, BuiltInModule, LocalModule]
+    source: Optional[Union[Dependency, BuiltInModule, LocalModule]] = None
     types_package: Optional[Dependency] = None
 
     def get_dependencies(self) -> List[Dependency]:
@@ -39,6 +39,12 @@ class Module:
         module_path: ModulePath, *, dependency: Dependency, types_package: Optional[Dependency] = None
     ) -> Module:
         return Module(path=module_path, source=dependency, types_package=types_package)
+
+    @staticmethod
+    def snippet(
+        module_path: ModulePath,
+    ) -> Module:
+        return Module(path=module_path)
 
     @staticmethod
     def built_in(module_path: ModulePath, *, types_package: Optional[Dependency] = None) -> Module:

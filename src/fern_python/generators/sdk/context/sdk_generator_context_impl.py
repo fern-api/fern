@@ -23,6 +23,7 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
         custom_config: SDKCustomConfig,
+        project_module_path: AST.ModulePath,
     ):
         super().__init__(ir=ir, generator_config=generator_config, custom_config=custom_config)
         client_class_name = custom_config.client_class_name or (
@@ -39,6 +40,10 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
             root_client_filename=custom_config.client_filename,
         )
         self._custom_config = custom_config
+        self._project_module_path = project_module_path
+
+    def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:
+        return self._project_module_path + module_path
 
     def get_filepath_for_error(self, error_name: ir_types.DeclaredErrorName) -> Filepath:
         return self._error_declaration_referencer.get_filepath(name=error_name)

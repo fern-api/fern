@@ -22,6 +22,10 @@ class SourceFile(ClassParent):
         ...
 
     @abstractmethod
+    def add_expression(self, expr: AST.Expression) -> None:
+        ...
+
+    @abstractmethod
     def add_arbitrary_code(self, code: AST.CodeWriter) -> None:
         ...
 
@@ -47,6 +51,7 @@ class SourceFileImpl(SourceFile):
         dependency_manager: DependencyManager,
         completion_listener: Callable[[SourceFileImpl], None] = None,
         should_format: bool,
+        should_include_header: bool = True,
     ):
         self._module_path = module_path
         self._reference_resolver = reference_resolver
@@ -57,6 +62,7 @@ class SourceFileImpl(SourceFile):
         self._footer_statements: List[TopLevelStatement] = []
         self._dependency_manager = dependency_manager
         self._should_format = should_format
+        self._should_include_header = should_include_header
 
     def add_declaration(
         self,
@@ -102,6 +108,9 @@ class SourceFileImpl(SourceFile):
                 named_import=declaration.name,
             ),
         )
+
+    def add_expression(self, code: AST.Expression) -> None:
+        self._statements.append(TopLevelStatement(node=code))
 
     def add_arbitrary_code(self, code: AST.CodeWriter) -> None:
         self._statements.append(TopLevelStatement(node=code))
@@ -168,6 +177,7 @@ class SourceFileImpl(SourceFile):
         writer = NodeWriterImpl(
             reference_resolver=self._reference_resolver,
             should_format=self._should_format,
+            should_include_header=self._should_include_header,
         )
         self._imports_manager.write_top_imports_for_file(writer=writer, reference_resolver=self._reference_resolver)
         for statement in self._statements:

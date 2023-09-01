@@ -6,8 +6,14 @@ from .writer_impl import WriterImpl
 
 
 class NodeWriterImpl(AST.NodeWriter, WriterImpl):
-    def __init__(self, *, should_format: bool, reference_resolver: ReferenceResolver):
-        super().__init__(should_format=should_format)
+    def __init__(
+        self,
+        *,
+        should_format: bool,
+        should_include_header: bool = True,
+        reference_resolver: ReferenceResolver,
+    ):
+        super().__init__(should_format=should_format, should_include_header=should_include_header)
         self._reference_resolver = reference_resolver
 
     def write_node(self, node: AST.AstNode) -> None:

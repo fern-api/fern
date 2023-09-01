@@ -12,6 +12,7 @@ from fern_python.generators.sdk.client_generator.endpoint_response_code_writer i
 )
 from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
+    ConstructorParameter,
 )
 
 from ..context.sdk_generator_context import SdkGeneratorContext
@@ -35,8 +36,8 @@ class RootClientConstructorParameter:
 
 @dataclass
 class GeneratedRootClient:
-    usage: str
-    async_usage: str
+    async_instantiation: AST.Expression
+    sync_instantiation: AST.Expression
 
 
 class RootClientGenerator:
@@ -120,47 +121,16 @@ class RootClientGenerator:
                     ),
                     should_export=False,
                 )
-        return self._new_generated_root_client(
-            module_path=".".join(self._context.get_filepath_for_root_client().to_module().path),
+
+        builder = RootClientGenerator.GeneratedRootClientBuilder(
+            module_path=self._context.get_module_path_in_project(
+                self._context.get_filepath_for_root_client().to_module().path
+            ),
+            class_name=self._class_name,
+            async_class_name=self._async_class_name,
+            constructor_parameters=self._client_wrapper_constructor_params,
         )
-
-    def _new_generated_root_client(
-        self,
-        module_path: str,
-    ) -> GeneratedRootClient:
-        filtered_constructor_params = [
-            param.instantiation for param in self._client_wrapper_constructor_params if param.instantiation is not None
-        ]
-        instantiation = "()"
-        if len(filtered_constructor_params) > 0:
-            instantiation = "(\n"
-            instantiation += "".join([f"    {param.parameter},\n" for param in filtered_constructor_params])
-            instantiation += ")\n"
-
-        base_imports: List[str] = []
-        for param in filtered_constructor_params:
-            if param.imports is not None and len(param.imports) > 0:
-                base_imports.extend(param.imports)
-
-        imports = "".join(
-            [f"{statement}\n" for statement in base_imports + [f"from {module_path} import {self._class_name}"]]
-        )
-        async_imports = "".join(
-            [f"{statement}\n" for statement in base_imports + [f"from {module_path} import {self._async_class_name}"]]
-        )
-
-        return GeneratedRootClient(
-            usage=f"""```python
-{imports}
-
-client = {self._class_name}{instantiation}
-```""",
-            async_usage=f"""```python
-{async_imports}
-
-client = {self._async_class_name}{instantiation}
-```""",
-        )
+        return builder.build()
 
     def _create_class_declaration(self, *, is_async: bool) -> AST.ClassDeclaration:
         constructor_parameters = self._get_constructor_parameters(is_async=is_async)
@@ -436,3 +406,48 @@ client = {self._async_class_name}{instantiation}
             if param == "timeout":
                 return "_timeout"
         return "timeout"
+
+    class GeneratedRootClientBuilder:
+        def __init__(
+            self,
+            module_path: AST.ModulePath,
+            class_name: str,
+            async_class_name: str,
+            constructor_parameters: List[ConstructorParameter],
+        ):
+            self._module_path = module_path
+            self._class_name = class_name
+            self._async_class_name = async_class_name
+            self._consrtructor_parameters = constructor_parameters
+
+        def build(self) -> GeneratedRootClient:
+            def client_snippet_writer(class_name: str) -> CodeWriterFunction:
+                def write_client_snippet(writer: AST.NodeWriter) -> None:
+                    client_class_reference = AST.ClassReference(
+                        qualified_name_excluding_import=(),
+                        import_=AST.ReferenceImport(
+                            module=AST.Module.snippet(
+                                module_path=self._module_path,
+                            ),
+                            named_import=class_name,
+                        ),
+                    )
+                    client_instantiation = AST.ClassInstantiation(
+                        class_=client_class_reference,
+                        args=[
+                            param.instantiation
+                            for param in self._consrtructor_parameters
+                            if param.instantiation is not None
+                        ],
+                    )
+
+                    writer.write("client = ")
+                    writer.write_node(AST.Expression(client_instantiation))
+                    writer.write_newline_if_last_line_not()
+
+                return write_client_snippet
+
+            return GeneratedRootClient(
+                async_instantiation=AST.Expression(AST.CodeWriter(client_snippet_writer(self._async_class_name))),
+                sync_instantiation=AST.Expression(AST.CodeWriter(client_snippet_writer(self._class_name))),
+            )

@@ -15,17 +15,11 @@ from ..environment_generators import GeneratedEnvironment
 
 
 @dataclass
-class ConstructorInstantiation:
-    parameter: str
-    imports: Optional[List[str]] = None
-
-
-@dataclass
 class ConstructorParameter:
     constructor_parameter_name: str
     type_hint: AST.TypeHint
     private_member_name: str
-    instantiation: typing.Optional[ConstructorInstantiation] = None
+    instantiation: typing.Optional[AST.Expression] = None
     getter_method: typing.Optional[AST.FunctionDeclaration] = None
     header_key: typing.Optional[str] = None
     header_prefix: typing.Optional[str] = None
@@ -103,8 +97,8 @@ class ClientWrapperGenerator:
                 constructor_parameter_name=ClientWrapperGenerator.BASE_URL_PARAMETER_NAME,
                 type_hint=AST.TypeHint.str_(),
                 private_member_name=f"_{ClientWrapperGenerator.BASE_URL_PARAMETER_NAME}",
-                instantiation=ConstructorInstantiation(
-                    parameter=f'{ClientWrapperGenerator.BASE_URL_PARAMETER_NAME}=<"YOUR_BASE_URL">',
+                instantiation=AST.Expression(
+                    f'{ClientWrapperGenerator.BASE_URL_PARAMETER_NAME}="https://yourhost.com/path/to/api"',
                 ),
                 getter_method=AST.FunctionDeclaration(
                     name=ClientWrapperGenerator.GET_BASE_URL_METHOD_NAME,
@@ -385,8 +379,8 @@ class ClientWrapperGenerator:
                     type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                         header.value_type
                     ),
-                    instantiation=ConstructorInstantiation(
-                        parameter=f'{constructor_parameter_name}=<"YOUR_{header.name.name.screaming_snake_case.safe_name}">',
+                    instantiation=AST.Expression(
+                        f'{constructor_parameter_name}=<"YOUR_{header.name.name.screaming_snake_case.safe_name}">',
                     ),
                     header_key=header.name.wire_value,
                 )
@@ -402,8 +396,8 @@ class ClientWrapperGenerator:
                     type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                         header_auth_scheme.value_type
                     ),
-                    instantiation=ConstructorInstantiation(
-                        parameter=f'{constructor_parameter_name}=<"YOUR_{header_auth_scheme.name.name.screaming_snake_case.safe_name}">',
+                    instantiation=AST.Expression(
+                        f'{constructor_parameter_name}=<"YOUR_{header_auth_scheme.name.name.screaming_snake_case.safe_name}">',
                     ),
                     header_key=header_auth_scheme.name.wire_value,
                     header_prefix=header_auth_scheme.prefix,
@@ -420,8 +414,8 @@ class ClientWrapperGenerator:
                     type_hint=ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
                     if self._context.ir.sdk_config.is_auth_mandatory
                     else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT),
-                    instantiation=ConstructorInstantiation(
-                        parameter=f'{constructor_parameter_name}=<"YOUR_{bearer_auth_scheme.token.screaming_snake_case.safe_name}">',
+                    instantiation=AST.Expression(
+                        f'{constructor_parameter_name}=<"YOUR_{bearer_auth_scheme.token.screaming_snake_case.safe_name}">',
                     ),
                     getter_method=AST.FunctionDeclaration(
                         name=self._get_token_getter_name(bearer_auth_scheme),
@@ -455,8 +449,8 @@ class ClientWrapperGenerator:
                 type_hint=ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
                 if self._context.ir.sdk_config.is_auth_mandatory
                 else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT),
-                instantiation=ConstructorInstantiation(
-                    parameter=f'{username_constructor_parameter_name}=<"YOUR_{basic_auth_scheme.username.screaming_snake_case.safe_name}">',
+                instantiation=AST.Expression(
+                    f'{username_constructor_parameter_name}=<"YOUR_{basic_auth_scheme.username.screaming_snake_case.safe_name}">',
                 ),
                 getter_method=AST.FunctionDeclaration(
                     name=self._get_username_getter_name(basic_auth_scheme),
@@ -485,8 +479,8 @@ class ClientWrapperGenerator:
                 type_hint=ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
                 if self._context.ir.sdk_config.is_auth_mandatory
                 else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT),
-                instantiation=ConstructorInstantiation(
-                    parameter=f'{password_constructor_parameter_name}=<"YOUR_{basic_auth_scheme.password.screaming_snake_case.safe_name}">',
+                instantiation=AST.Expression(
+                    f'{password_constructor_parameter_name}=<"YOUR_{basic_auth_scheme.password.screaming_snake_case.safe_name}">',
                 ),
                 getter_method=AST.FunctionDeclaration(
                     name=self._get_password_getter_name(basic_auth_scheme),
@@ -611,13 +605,19 @@ class ClientWrapperGenerator:
     def _get_environment_instantiation(
         self,
         generated_environment: Optional[GeneratedEnvironment],
-    ) -> Optional[ConstructorInstantiation]:
+    ) -> Optional[AST.Expression]:
         if generated_environment is None:
             return None
-        return ConstructorInstantiation(
-            imports=[f"from {generated_environment.module_path} import {generated_environment.class_name}"],
-            parameter=f"{ClientWrapperGenerator.ENVIRONMENT_PARAMETER_NAME}={generated_environment.example_environment}",
-        )
+
+        def write_environment_parameter(writer: AST.NodeWriter) -> None:
+            if generated_environment is None:
+                return
+
+            writer.write(f"{ClientWrapperGenerator.ENVIRONMENT_PARAMETER_NAME}=")
+            writer.write_node(AST.Expression(generated_environment.class_reference))
+            writer.write(f".{generated_environment.example_environment}")
+
+        return AST.Expression(AST.CodeWriter(write_environment_parameter))
 
 
 class ClientWrapperUrlStorage(Enum):
