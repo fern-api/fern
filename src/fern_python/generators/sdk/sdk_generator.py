@@ -281,10 +281,8 @@ class SdkGenerator(AbstractGenerator):
         capitalized_org_name: str,
         project: Project,
     ) -> GenerateReadmeRequest:
-        badge: Optional[BadgeType] = None
         installation: Optional[str] = None
         if project._project_config is not None:
-            badge = BadgeType.PYPI
             installation = f"""```sh
 pip install --upgrade {project._project_config.package_name}
 ```"""
@@ -299,7 +297,7 @@ pip install --upgrade {project._project_config.package_name}
 
         return GenerateReadmeRequest(
             title=f"{capitalized_org_name} Python Library",
-            badge=badge,
+            badge=BadgeType.PYPI,
             summary=f"The {capitalized_org_name} Python Library provides convenient access to the {capitalized_org_name} API from applications written in Python.",
             installation=installation,
             usage=usage,
