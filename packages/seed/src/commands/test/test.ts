@@ -26,6 +26,7 @@ export const FIXTURES = {
     TRACE: "trace",
     STREAMING: "streaming",
     PLAIN_TEXT: "plain-text",
+    BYTES: "bytes",
 } as const;
 
 type TestResult = TestSuccess | TestFailure;

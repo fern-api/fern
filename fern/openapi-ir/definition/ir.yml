@@ -213,8 +213,13 @@ types:
 
   Request:
     union:
+      octetStream: OctetStremRequest
       multipart: MultipartRequest
       json: JsonRequest
+
+  OctetStremRequest:
+    extends: WithDescription
+    properties: {}
 
   JsonRequest:
     extends: WithDescription

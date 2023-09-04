@@ -1,0 +1,9 @@
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    upload:
+      path: /upload-content
+      method: POST
+      request: bytes
+      content-type: "application/octet-stream"
