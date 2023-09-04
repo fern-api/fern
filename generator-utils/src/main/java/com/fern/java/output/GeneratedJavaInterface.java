@@ -16,8 +16,8 @@
 
 package com.fern.java.output;
 
-import com.fern.irV20.model.types.DeclaredTypeName;
-import com.fern.irV20.model.types.ObjectProperty;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.ObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.squareup.javapoet.MethodSpec;
 import java.util.List;

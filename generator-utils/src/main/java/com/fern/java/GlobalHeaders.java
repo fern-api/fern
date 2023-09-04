@@ -16,9 +16,9 @@
 
 package com.fern.java;
 
-import com.fern.irV20.model.http.HttpHeader;
-import com.fern.irV20.model.ir.IntermediateRepresentation;
-import com.fern.irV20.model.types.ContainerType;
+import com.fern.ir.model.http.HttpHeader;
+import com.fern.ir.model.ir.IntermediateRepresentation;
+import com.fern.ir.model.types.ContainerType;
 import com.squareup.javapoet.ParameterSpec;
 import java.util.ArrayList;
 import java.util.List;

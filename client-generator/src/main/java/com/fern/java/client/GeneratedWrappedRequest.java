@@ -16,7 +16,7 @@
 
 package com.fern.java.client;
 
-import com.fern.irV20.model.http.FileProperty;
+import com.fern.ir.model.http.FileProperty;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.output.AbstractGeneratedJavaFile;

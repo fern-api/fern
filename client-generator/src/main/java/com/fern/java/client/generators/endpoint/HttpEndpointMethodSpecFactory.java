@@ -16,12 +16,12 @@
 
 package com.fern.java.client.generators.endpoint;
 
-import com.fern.irV20.model.commons.TypeId;
-import com.fern.irV20.model.http.HttpEndpoint;
-import com.fern.irV20.model.http.HttpRequestBodyReference;
-import com.fern.irV20.model.http.HttpService;
-import com.fern.irV20.model.http.SdkRequestShape;
-import com.fern.irV20.model.http.SdkRequestWrapper;
+import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.HttpService;
+import com.fern.ir.model.http.SdkRequestBodyType;
+import com.fern.ir.model.http.SdkRequestShape;
+import com.fern.ir.model.http.SdkRequestWrapper;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
@@ -74,7 +74,7 @@ public final class HttpEndpointMethodSpecFactory {
         if (httpEndpoint.getSdkRequest().isPresent()) {
             return httpEndpoint.getSdkRequest().get().getShape().visit(new SdkRequestShape.Visitor<>() {
                 @Override
-                public HttpEndpointMethodSpecs visitJustRequestBody(HttpRequestBodyReference justRequestBody) {
+                public HttpEndpointMethodSpecs visitJustRequestBody(SdkRequestBodyType sdkRequestBodyType) {
                     OnlyRequestEndpointWriter onlyRequestEndpointWriter = new OnlyRequestEndpointWriter(
                             httpService,
                             httpEndpoint,
@@ -83,7 +83,7 @@ public final class HttpEndpointMethodSpecFactory {
                             clientOptionsField,
                             generatedClientOptions,
                             generatedEnvironmentsClass,
-                            justRequestBody,
+                            sdkRequestBodyType,
                             httpEndpoint.getSdkRequest().get(),
                             requestOptionsFile);
                     return onlyRequestEndpointWriter.generate();

@@ -15,18 +15,21 @@
  */
 package com.fern.java.spring.generators;
 
-import com.fern.irV20.model.commons.ErrorId;
-import com.fern.irV20.model.commons.TypeId;
-import com.fern.irV20.model.http.EndpointName;
-import com.fern.irV20.model.http.FileDownloadResponse;
-import com.fern.irV20.model.http.FileUploadRequest;
-import com.fern.irV20.model.http.HttpEndpoint;
-import com.fern.irV20.model.http.HttpRequestBody;
-import com.fern.irV20.model.http.HttpRequestBodyReference;
-import com.fern.irV20.model.http.HttpResponse;
-import com.fern.irV20.model.http.HttpService;
-import com.fern.irV20.model.http.InlinedRequestBody;
-import com.fern.irV20.model.http.JsonResponse;
+import com.fern.ir.model.commons.ErrorId;
+import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.http.BytesRequest;
+import com.fern.ir.model.http.EndpointName;
+import com.fern.ir.model.http.FileDownloadResponse;
+import com.fern.ir.model.http.FileUploadRequest;
+import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.HttpRequestBody;
+import com.fern.ir.model.http.HttpRequestBodyReference;
+import com.fern.ir.model.http.HttpResponse;
+import com.fern.ir.model.http.HttpService;
+import com.fern.ir.model.http.InlinedRequestBody;
+import com.fern.ir.model.http.JsonResponse;
+import com.fern.ir.model.http.StreamingResponse;
+import com.fern.ir.model.http.TextResponse;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.AbstractGeneratedJavaFile;
 import com.fern.java.output.GeneratedAuthFiles;
@@ -131,6 +134,16 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
                 }
 
                 @Override
+                public Void visitText(TextResponse text) {
+                    throw new RuntimeException("Text plain responses are not supported in spring server generator");
+                }
+
+                @Override
+                public Void visitStreaming(StreamingResponse streaming) {
+                    throw new RuntimeException("Streaming responses are not supported in spring server generator");
+                }
+
+                @Override
                 public Void _visitUnknown(Object unknownType) {
                     return null;
                 }
@@ -226,6 +239,11 @@ public final class SpringServerInterfaceGenerator extends AbstractFileGenerator 
                 @Override
                 public TypeName visitFileUpload(FileUploadRequest fileUpload) {
                     throw new UnsupportedOperationException("File upload not supported");
+                }
+
+                @Override
+                public TypeName visitBytes(BytesRequest bytes) {
+                    throw new UnsupportedOperationException("Bytes request is not supported");
                 }
 
                 @Override

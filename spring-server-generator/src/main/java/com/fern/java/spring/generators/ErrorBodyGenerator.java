@@ -16,8 +16,8 @@
 package com.fern.java.spring.generators;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fern.irV20.model.commons.NameAndWireValue;
-import com.fern.irV20.model.ir.ErrorDiscriminationByPropertyStrategy;
+import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.ir.ErrorDiscriminationByPropertyStrategy;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;

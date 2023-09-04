@@ -34,7 +34,7 @@ public final class ObjectWithOptionalField {
 
     private final Optional<UUID> uuid;
 
-    private final Optional<String> base64;
+    private final Optional<byte[]> base64;
 
     private final Optional<List<String>> list;
 
@@ -51,7 +51,7 @@ public final class ObjectWithOptionalField {
             Optional<OffsetDateTime> datetime,
             Optional<String> date,
             Optional<UUID> uuid,
-            Optional<String> base64,
+            Optional<byte[]> base64,
             Optional<List<String>> list,
             Optional<Set<String>> set,
             Optional<Map<Integer, String>> map) {
@@ -110,7 +110,7 @@ public final class ObjectWithOptionalField {
     }
 
     @JsonProperty("base64")
-    public Optional<String> getBase64() {
+    public Optional<byte[]> getBase64() {
         return base64;
     }
 
@@ -194,7 +194,7 @@ public final class ObjectWithOptionalField {
 
         private Optional<UUID> uuid = Optional.empty();
 
-        private Optional<String> base64 = Optional.empty();
+        private Optional<byte[]> base64 = Optional.empty();
 
         private Optional<List<String>> list = Optional.empty();
 
@@ -309,12 +309,12 @@ public final class ObjectWithOptionalField {
         }
 
         @JsonSetter(value = "base64", nulls = Nulls.SKIP)
-        public Builder base64(Optional<String> base64) {
+        public Builder base64(Optional<byte[]> base64) {
             this.base64 = base64;
             return this;
         }
 
-        public Builder base64(String base64) {
+        public Builder base64(byte[] base64) {
             this.base64 = Optional.of(base64);
             return this;
         }

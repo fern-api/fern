@@ -16,22 +16,26 @@
 
 package com.fern.java.client.generators;
 
-import com.fern.irV20.model.commons.Availability;
-import com.fern.irV20.model.commons.AvailabilityStatus;
-import com.fern.irV20.model.commons.Name;
-import com.fern.irV20.model.commons.NameAndWireValue;
-import com.fern.irV20.model.commons.TypeId;
-import com.fern.irV20.model.http.FileUploadRequest;
-import com.fern.irV20.model.http.FileUploadRequestProperty;
-import com.fern.irV20.model.http.HttpEndpoint;
-import com.fern.irV20.model.http.HttpRequestBody;
-import com.fern.irV20.model.http.HttpRequestBodyReference;
-import com.fern.irV20.model.http.HttpService;
-import com.fern.irV20.model.http.InlinedRequestBody;
-import com.fern.irV20.model.http.SdkRequestWrapper;
-import com.fern.irV20.model.types.DeclaredTypeName;
-import com.fern.irV20.model.types.ObjectProperty;
-import com.fern.irV20.model.types.ObjectTypeDeclaration;
+import com.fern.ir.model.commons.Availability;
+import com.fern.ir.model.commons.AvailabilityStatus;
+import com.fern.ir.model.commons.Name;
+import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.http.BytesRequest;
+import com.fern.ir.model.http.FileUploadRequest;
+import com.fern.ir.model.http.FileUploadRequestProperty;
+import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.HttpRequestBody;
+import com.fern.ir.model.http.HttpRequestBodyReference;
+import com.fern.ir.model.http.HttpService;
+import com.fern.ir.model.http.InlinedRequestBody;
+import com.fern.ir.model.http.SdkRequestWrapper;
+import com.fern.ir.model.types.ContainerType;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
+import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.TypeReference;
 import com.fern.java.RequestBodyUtils;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedWrappedRequest;
@@ -211,6 +215,16 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
         }
 
         @Override
+        public RequestBodyGetter visitBytes(BytesRequest bytes) {
+            return ReferencedRequestBodyGetter.builder()
+                    .requestBodyGetter(generatedObject
+                            .objectPropertyGetters()
+                            .get(requestBodyProperties.get(0))
+                            .getterProperty())
+                    .build();
+        }
+
+        @Override
         public RequestBodyGetter _visitUnknown(Object unknownType) {
             throw new RuntimeException("Encountered unknown http requeset body: " + unknownType);
         }
@@ -259,6 +273,31 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
             List<ObjectProperty> inlinedObjectProperties = new ArrayList<>();
             inlinedObjectProperties.addAll(RequestBodyUtils.convertToObjectProperties(fileUpload));
             return inlinedObjectProperties;
+        }
+
+        @Override
+        public List<ObjectProperty> visitBytes(BytesRequest bytes) {
+            return List.of(ObjectProperty.builder()
+                    .availability(Availability.builder()
+                            .status(AvailabilityStatus.GENERAL_AVAILABILITY)
+                            .build())
+                    .name(NameAndWireValue.builder()
+                            .wireValue(sdkRequestWrapper.getBodyKey().getOriginalName())
+                            .name(Name.builder()
+                                    .originalName(sdkRequestWrapper.getBodyKey().getOriginalName())
+                                    .camelCase(sdkRequestWrapper.getBodyKey().getCamelCase())
+                                    .pascalCase(sdkRequestWrapper.getBodyKey().getPascalCase())
+                                    .snakeCase(sdkRequestWrapper.getBodyKey().getSnakeCase())
+                                    .screamingSnakeCase(
+                                            sdkRequestWrapper.getBodyKey().getScreamingSnakeCase())
+                                    .build())
+                            .build())
+                    .valueType(
+                            bytes.getIsOptional()
+                                    ? TypeReference.container(
+                                            ContainerType.optional(TypeReference.primitive(PrimitiveType.BASE_64)))
+                                    : TypeReference.primitive(PrimitiveType.BASE_64))
+                    .build());
         }
 
         @Override

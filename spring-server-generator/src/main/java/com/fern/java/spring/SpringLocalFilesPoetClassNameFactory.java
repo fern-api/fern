@@ -16,10 +16,10 @@
 
 package com.fern.java.spring;
 
-import com.fern.irV20.model.commons.FernFilepath;
-import com.fern.irV20.model.errors.DeclaredErrorName;
-import com.fern.irV20.model.http.HttpService;
-import com.fern.irV20.model.http.InlinedRequestBody;
+import com.fern.ir.model.commons.FernFilepath;
+import com.fern.ir.model.errors.DeclaredErrorName;
+import com.fern.ir.model.http.HttpService;
+import com.fern.ir.model.http.InlinedRequestBody;
 import com.fern.java.AbstractNonModelPoetClassNameFactory;
 import com.squareup.javapoet.ClassName;
 import java.util.Collections;

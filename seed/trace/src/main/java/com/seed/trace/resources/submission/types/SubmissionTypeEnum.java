@@ -1,0 +1,19 @@
+package com.seed.trace.resources.submission.types;
+
+import com.fasterxml.jackson.annotation.JsonValue;
+
+public enum SubmissionTypeEnum {
+    TEST("TEST");
+
+    private final String value;
+
+    SubmissionTypeEnum(String value) {
+        this.value = value;
+    }
+
+    @JsonValue
+    @Override
+    public String toString() {
+        return this.value;
+    }
+}

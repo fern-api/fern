@@ -16,19 +16,25 @@
 
 package com.fern.java.client.generators.endpoint;
 
-import com.fern.irV20.model.http.HttpEndpoint;
-import com.fern.irV20.model.http.HttpRequestBodyReference;
-import com.fern.irV20.model.http.HttpService;
-import com.fern.irV20.model.http.SdkRequest;
+import com.fern.ir.model.http.BytesRequest;
+import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.HttpRequestBodyReference;
+import com.fern.ir.model.http.HttpService;
+import com.fern.ir.model.http.SdkRequest;
+import com.fern.ir.model.http.SdkRequestBodyType;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.squareup.javapoet.ArrayTypeName;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
+import com.squareup.javapoet.TypeName;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +45,7 @@ import okhttp3.RequestBody;
 public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
     private final ClientGeneratorContext clientGeneratorContext;
     private final HttpEndpoint httpEndpoint;
-    private final HttpRequestBodyReference httpRequestBodyReference;
+    private final SdkRequestBodyType sdkRequestBodyType;
     private final SdkRequest sdkRequest;
 
     public OnlyRequestEndpointWriter(
@@ -50,7 +56,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             FieldSpec clientOptionsField,
             GeneratedClientOptions generatedClientOptions,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
-            HttpRequestBodyReference httpRequestBodyReference,
+            SdkRequestBodyType sdkRequestBodyType,
             SdkRequest sdkRequest,
             GeneratedJavaFile requestOptionsFile) {
         super(
@@ -64,7 +70,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                 requestOptionsFile);
         this.clientGeneratorContext = clientGeneratorContext;
         this.httpEndpoint = httpEndpoint;
-        this.httpRequestBodyReference = httpRequestBodyReference;
+        this.sdkRequestBodyType = sdkRequestBodyType;
         this.sdkRequest = sdkRequest;
     }
 
@@ -80,12 +86,42 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
 
     @Override
     public List<ParameterSpec> additionalParameters() {
-        return List.of(ParameterSpec.builder(
-                        clientGeneratorContext
-                                .getPoetTypeNameMapper()
-                                .convertToTypeName(true, httpRequestBodyReference.getRequestBodyType()),
-                        sdkRequest.getRequestParameterName().getCamelCase().getSafeName())
-                .build());
+        ParameterSpec parameterSpec = sdkRequestBodyType.visit(new SdkRequestBodyType.Visitor<ParameterSpec>() {
+
+            @Override
+            public ParameterSpec visitTypeReference(HttpRequestBodyReference typeReference) {
+                return ParameterSpec.builder(
+                                clientGeneratorContext
+                                        .getPoetTypeNameMapper()
+                                        .convertToTypeName(true, typeReference.getRequestBodyType()),
+                                sdkRequest
+                                        .getRequestParameterName()
+                                        .getCamelCase()
+                                        .getSafeName())
+                        .build();
+            }
+
+            @Override
+            public ParameterSpec visitBytes(BytesRequest bytes) {
+                TypeName typeName = ArrayTypeName.of(byte.class);
+                if (bytes.getIsOptional()) {
+                    typeName = ParameterizedTypeName.get(ClassName.get(Optional.class), typeName);
+                }
+                return ParameterSpec.builder(
+                                typeName,
+                                sdkRequest
+                                        .getRequestParameterName()
+                                        .getCamelCase()
+                                        .getSafeName())
+                        .build();
+            }
+
+            @Override
+            public ParameterSpec _visitUnknown(Object unknownType) {
+                throw new RuntimeException("Encountered unknown sdk request body type: " + unknownType);
+            }
+        });
+        return Collections.singletonList(parameterSpec);
     }
 
     @Override
@@ -96,23 +132,11 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             GeneratedObjectMapper generatedObjectMapper,
             CodeBlock inlineableHttpUrl,
             boolean sendContentType) {
-        CodeBlock.Builder builder = CodeBlock.builder()
-                .addStatement("$T $L", RequestBody.class, AbstractEndpointWriter.REQUEST_BODY_NAME)
-                .beginControlFlow("try")
-                .addStatement(
-                        "$L = $T.create($T.$L.writeValueAsBytes($L), $T.parse($S))",
-                        AbstractEndpointWriter.REQUEST_BODY_NAME,
-                        RequestBody.class,
-                        generatedObjectMapper.getClassName(),
-                        generatedObjectMapper.jsonMapperStaticField().name,
-                        "request",
-                        okhttp3.MediaType.class,
-                        "application/json")
-                .endControlFlow()
-                .beginControlFlow("catch($T e)", Exception.class)
-                .addStatement("throw new $T(e)", RuntimeException.class)
-                .endControlFlow()
-                .add("$T $L = new $T.Builder()\n", Request.class, AbstractEndpointWriter.REQUEST_NAME, Request.class)
+        CodeBlock.Builder builder = CodeBlock.builder();
+
+        sdkRequestBodyType.visit(new RequestBodyInitializer(builder, generatedObjectMapper));
+
+        builder.add("$T $L = new $T.Builder()\n", Request.class, AbstractEndpointWriter.REQUEST_NAME, Request.class)
                 .indent()
                 .add(".url(")
                 .add(inlineableHttpUrl)
@@ -125,11 +149,80 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                         clientOptions.headers(),
                         REQUEST_OPTIONS_PARAMETER_NAME);
         if (sendContentType) {
-            builder.add(
-                    ".addHeader($S, $S)\n",
-                    AbstractEndpointWriter.CONTENT_TYPE_HEADER,
-                    AbstractEndpointWriter.APPLICATION_JSON_HEADER);
+            sdkRequestBodyType.visit(new SdkRequestBodyType.Visitor<Void>() {
+
+                @Override
+                public Void visitTypeReference(HttpRequestBodyReference typeReference) {
+                    builder.add(
+                            ".addHeader($S, $S)\n",
+                            AbstractEndpointWriter.CONTENT_TYPE_HEADER,
+                            AbstractEndpointWriter.APPLICATION_JSON_HEADER);
+                    return null;
+                }
+
+                @Override
+                public Void visitBytes(BytesRequest bytes) {
+                    builder.add(
+                            ".addHeader($S, $S)\n",
+                            AbstractEndpointWriter.CONTENT_TYPE_HEADER,
+                            bytes.getContentType().orElse(AbstractEndpointWriter.APPLICATION_OCTET_STREAM));
+                    return null;
+                }
+
+                @Override
+                public Void _visitUnknown(Object unknownType) {
+                    return null;
+                }
+            });
         }
         return builder.add(".build();\n").unindent().build();
+    }
+
+    private final class RequestBodyInitializer implements SdkRequestBodyType.Visitor<Void> {
+
+        private final CodeBlock.Builder codeBlock;
+        private final GeneratedObjectMapper generatedObjectMapper;
+
+        private RequestBodyInitializer(CodeBlock.Builder codeBlock, GeneratedObjectMapper generatedObjectMapper) {
+            this.codeBlock = codeBlock;
+            this.generatedObjectMapper = generatedObjectMapper;
+        }
+
+        @Override
+        public Void visitTypeReference(HttpRequestBodyReference typeReference) {
+            codeBlock
+                    .addStatement("$T $L", RequestBody.class, AbstractEndpointWriter.REQUEST_BODY_NAME)
+                    .beginControlFlow("try")
+                    .addStatement(
+                            "$L = $T.create($T.$L.writeValueAsBytes($L), $T.parse($S))",
+                            AbstractEndpointWriter.REQUEST_BODY_NAME,
+                            RequestBody.class,
+                            generatedObjectMapper.getClassName(),
+                            generatedObjectMapper.jsonMapperStaticField().name,
+                            "request",
+                            okhttp3.MediaType.class,
+                            "application/json")
+                    .endControlFlow()
+                    .beginControlFlow("catch($T e)", Exception.class)
+                    .addStatement("throw new $T(e)", RuntimeException.class)
+                    .endControlFlow();
+            return null;
+        }
+
+        @Override
+        public Void visitBytes(BytesRequest bytes) {
+            codeBlock.addStatement(
+                    "$T $L = $T.create($L)",
+                    RequestBody.class,
+                    AbstractEndpointWriter.REQUEST_BODY_NAME,
+                    RequestBody.class,
+                    sdkRequest.getRequestParameterName().getCamelCase().getSafeName());
+            return null;
+        }
+
+        @Override
+        public Void _visitUnknown(Object unknownType) {
+            return null;
+        }
     }
 }

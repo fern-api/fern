@@ -16,12 +16,12 @@
 
 package com.fern.java.client.generators.endpoint;
 
-import com.fern.irV20.model.http.HttpEndpoint;
-import com.fern.irV20.model.http.HttpPath;
-import com.fern.irV20.model.http.HttpPathPart;
-import com.fern.irV20.model.http.HttpService;
-import com.fern.irV20.model.http.PathParameter;
-import com.fern.irV20.model.variables.VariableId;
+import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.HttpPath;
+import com.fern.ir.model.http.HttpPathPart;
+import com.fern.ir.model.http.HttpService;
+import com.fern.ir.model.http.PathParameter;
+import com.fern.ir.model.variables.VariableId;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;

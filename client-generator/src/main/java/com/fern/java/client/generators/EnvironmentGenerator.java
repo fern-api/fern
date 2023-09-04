@@ -16,15 +16,15 @@
 
 package com.fern.java.client.generators;
 
-import com.fern.irV20.model.environment.EnvironmentBaseUrlId;
-import com.fern.irV20.model.environment.EnvironmentId;
-import com.fern.irV20.model.environment.EnvironmentUrl;
-import com.fern.irV20.model.environment.Environments;
-import com.fern.irV20.model.environment.EnvironmentsConfig;
-import com.fern.irV20.model.environment.MultipleBaseUrlsEnvironment;
-import com.fern.irV20.model.environment.MultipleBaseUrlsEnvironments;
-import com.fern.irV20.model.environment.SingleBaseUrlEnvironment;
-import com.fern.irV20.model.environment.SingleBaseUrlEnvironments;
+import com.fern.ir.model.environment.EnvironmentBaseUrlId;
+import com.fern.ir.model.environment.EnvironmentId;
+import com.fern.ir.model.environment.EnvironmentUrl;
+import com.fern.ir.model.environment.Environments;
+import com.fern.ir.model.environment.EnvironmentsConfig;
+import com.fern.ir.model.environment.MultipleBaseUrlsEnvironment;
+import com.fern.ir.model.environment.MultipleBaseUrlsEnvironments;
+import com.fern.ir.model.environment.SingleBaseUrlEnvironment;
+import com.fern.ir.model.environment.SingleBaseUrlEnvironments;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.GeneratedEnvironmentsClass.EnvironmentClassInfo;

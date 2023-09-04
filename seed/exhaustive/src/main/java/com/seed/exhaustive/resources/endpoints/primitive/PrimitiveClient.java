@@ -309,11 +309,11 @@ public class PrimitiveClient {
         }
     }
 
-    public String getAndReturnBase64(String request) {
+    public byte[] getAndReturnBase64(byte[] request) {
         return getAndReturnBase64(request, null);
     }
 
-    public String getAndReturnBase64(String request, RequestOptions requestOptions) {
+    public byte[] getAndReturnBase64(byte[] request, RequestOptions requestOptions) {
         HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
@@ -335,7 +335,7 @@ public class PrimitiveClient {
         try {
             Response _response = clientOptions.httpClient().newCall(_request).execute();
             if (_response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), String.class);
+                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), byte[].class);
             }
             throw new ApiError(
                     _response.code(),

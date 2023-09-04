@@ -17,10 +17,10 @@
 package com.fern.java.generators.object;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fern.irV20.model.commons.Name;
-import com.fern.irV20.model.types.ContainerType;
-import com.fern.irV20.model.types.Literal;
-import com.fern.irV20.model.types.ObjectProperty;
+import com.fern.ir.model.commons.Name;
+import com.fern.ir.model.types.ContainerType;
+import com.fern.ir.model.types.Literal;
+import com.fern.ir.model.types.ObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.utils.JavaDocUtils;
 import com.fern.java.utils.KeyWordUtils;

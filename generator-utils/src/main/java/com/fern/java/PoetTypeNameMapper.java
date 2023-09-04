@@ -17,17 +17,18 @@
 package com.fern.java;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fern.irV20.model.commons.TypeId;
-import com.fern.irV20.model.types.AliasTypeDeclaration;
-import com.fern.irV20.model.types.ContainerType;
-import com.fern.irV20.model.types.DeclaredTypeName;
-import com.fern.irV20.model.types.Literal;
-import com.fern.irV20.model.types.MapType;
-import com.fern.irV20.model.types.PrimitiveType;
-import com.fern.irV20.model.types.ResolvedNamedType;
-import com.fern.irV20.model.types.ResolvedTypeReference;
-import com.fern.irV20.model.types.TypeDeclaration;
-import com.fern.irV20.model.types.TypeReference;
+import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.types.AliasTypeDeclaration;
+import com.fern.ir.model.types.ContainerType;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.Literal;
+import com.fern.ir.model.types.MapType;
+import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.ResolvedNamedType;
+import com.fern.ir.model.types.ResolvedTypeReference;
+import com.fern.ir.model.types.TypeDeclaration;
+import com.fern.ir.model.types.TypeReference;
+import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
@@ -169,7 +170,7 @@ public final class PoetTypeNameMapper {
 
         @Override
         public TypeName visitBase64() {
-            return ClassName.get(String.class);
+            return ArrayTypeName.of(byte.class);
         }
 
         @Override
