@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/fern-api/fern-go/internal/fern/ir"
+	"github.com/fern-api/fern-go/internal/gospec"
 )
 
 // goLanguageHeader is the identifier used for the X-Fern-Language platform header.
@@ -1272,7 +1273,7 @@ type requestBodyVisitor struct {
 	bodyField      string
 	baseImportPath string
 	importPath     string
-	imports        imports
+	imports        gospec.Imports
 	types          map[ir.TypeId]*ir.TypeDeclaration
 	writer         *fileWriter
 

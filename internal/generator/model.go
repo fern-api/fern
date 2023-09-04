@@ -7,6 +7,7 @@ import (
 	"unicode"
 
 	"github.com/fern-api/fern-go/internal/fern/ir"
+	"github.com/fern-api/fern-go/internal/gospec"
 )
 
 // WriteType writes a complete type, including all of its properties.
@@ -692,7 +693,7 @@ type typeReferenceVisitor struct {
 	value            string
 	baseImportPath   string
 	importPath       string
-	imports          imports
+	imports          gospec.Imports
 	types            map[ir.TypeId]*ir.TypeDeclaration
 	includeOptionals bool
 }
@@ -734,7 +735,7 @@ type containerTypeVisitor struct {
 	value            string
 	baseImportPath   string
 	importPath       string
-	imports          imports
+	imports          gospec.Imports
 	types            map[ir.TypeId]*ir.TypeDeclaration
 	includeOptionals bool
 }
@@ -787,7 +788,7 @@ type singleUnionTypePropertiesVisitor struct {
 	value          string
 	baseImportPath string
 	importPath     string
-	imports        imports
+	imports        gospec.Imports
 	types          map[ir.TypeId]*ir.TypeDeclaration
 }
 
@@ -828,7 +829,7 @@ type singleUnionTypePropertiesInitializerVisitor struct {
 	receiver         string
 	baseImportPath   string
 	importPath       string
-	imports          imports
+	imports          gospec.Imports
 	types            map[ir.TypeId]*ir.TypeDeclaration
 }
 
@@ -890,7 +891,7 @@ func (l *literalTypeVisitor) VisitString(value string) error {
 func typeReferenceToGoType(
 	typeReference *ir.TypeReference,
 	types map[ir.TypeId]*ir.TypeDeclaration,
-	imports imports,
+	imports gospec.Imports,
 	baseImportPath string,
 	importPath string,
 	includeOptionals bool,
@@ -910,7 +911,7 @@ func typeReferenceToGoType(
 func containerTypeToGoType(
 	containerType *ir.ContainerType,
 	types map[ir.TypeId]*ir.TypeDeclaration,
-	imports imports,
+	imports gospec.Imports,
 	baseImportPath string,
 	importPath string,
 	includeOptionals bool,
@@ -930,7 +931,7 @@ func containerTypeToGoType(
 func singleUnionTypePropertiesToGoType(
 	singleUnionTypeProperties *ir.SingleUnionTypeProperties,
 	types map[ir.TypeId]*ir.TypeDeclaration,
-	imports imports,
+	imports gospec.Imports,
 	baseImportPath string,
 	importPath string,
 ) string {
@@ -951,7 +952,7 @@ func singleUnionTypePropertiesToGoType(
 func singleUnionTypePropertiesToInitializer(
 	singleUnionTypeProperties *ir.SingleUnionTypeProperties,
 	types map[ir.TypeId]*ir.TypeDeclaration,
-	imports imports,
+	imports gospec.Imports,
 	baseImportPath string,
 	importPath string,
 	discriminantName string,

@@ -12,6 +12,7 @@ import (
 
 	"github.com/fern-api/fern-go/internal/coordinator"
 	"github.com/fern-api/fern-go/internal/fern/ir"
+	"github.com/fern-api/fern-go/internal/gospec"
 	"golang.org/x/tools/go/ast/astutil"
 )
 
@@ -25,7 +26,7 @@ type fileWriter struct {
 	filename       string
 	packageName    string
 	baseImportPath string
-	imports        imports
+	imports        gospec.Imports
 	types          map[ir.TypeId]*ir.TypeDeclaration
 	errors         map[ir.ErrorId]*ir.ErrorDeclaration
 	coordinator    *coordinator.Client
@@ -44,7 +45,7 @@ func newFileWriter(
 	// The default set of imports used in the generated output.
 	// These imports are removed from the generated output if
 	// they aren't used.
-	imports := make(imports)
+	imports := make(gospec.Imports)
 	imports.Add("bytes")
 	imports.Add("context")
 	imports.Add("encoding/base64")
