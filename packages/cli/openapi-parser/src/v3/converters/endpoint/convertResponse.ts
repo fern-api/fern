@@ -26,7 +26,9 @@ export function convertResponse({
     context,
     responseBreadcrumbs,
     responseStatusCode,
+    isStreaming,
 }: {
+    isStreaming: boolean;
     responses: OpenAPIV3.ResponsesObject;
     context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
@@ -43,16 +45,18 @@ export function convertResponse({
             continue;
         }
 
-        const convertedResponse = convertResolvedResponse({ response, context, responseBreadcrumbs });
+        const convertedResponse = convertResolvedResponse({ response, context, responseBreadcrumbs, isStreaming });
         if (convertedResponse != null) {
             switch (convertedResponse.type) {
                 case "json":
+                case "streamingJson":
                     return {
                         value: convertedResponse,
                         errorStatusCodes,
                     };
                 case "file":
                 case "text":
+                case "streamingText":
                     return {
                         value: convertedResponse,
                         errorStatusCodes: [],
@@ -70,10 +74,12 @@ export function convertResponse({
 }
 
 function convertResolvedResponse({
+    isStreaming,
     response,
     context,
     responseBreadcrumbs,
 }: {
+    isStreaming: boolean;
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.ResponseObject;
     context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
@@ -84,6 +90,13 @@ function convertResolvedResponse({
         resolvedResponse.content?.[APPLICATION_JSON_UTF_8_CONTENT]?.schema ??
         resolvedResponse.content?.[APPLICATION_VND_JSON]?.schema;
     if (responseSchema != null) {
+        if (isStreaming) {
+            return {
+                type: "streamingJson",
+                description: resolvedResponse.description,
+                schema: convertSchema(responseSchema, false, context, responseBreadcrumbs),
+            };
+        }
         return {
             type: "json",
             description: resolvedResponse.description,
@@ -99,6 +112,22 @@ function convertResolvedResponse({
     }
 
     if (resolvedResponse.content?.[TEXT_PLAIN_CONTENT]?.schema != null) {
+        const textPlainSchema = resolvedResponse.content[TEXT_PLAIN_CONTENT]?.schema;
+        if (textPlainSchema == null) {
+            return {
+                type: "text",
+                description: resolvedResponse.description,
+            };
+        }
+        const resolvedTextPlainSchema = isReferenceObject(textPlainSchema)
+            ? context.resolveSchemaReference(textPlainSchema)
+            : textPlainSchema;
+        if (resolvedTextPlainSchema.type === "string" && resolvedTextPlainSchema.format === "byte") {
+            return {
+                type: "streamingText",
+                description: resolvedResponse.description,
+            };
+        }
         return {
             type: "text",
             description: resolvedResponse.description,

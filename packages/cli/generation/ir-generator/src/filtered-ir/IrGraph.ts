@@ -157,6 +157,7 @@ export class IrGraph {
                         },
                     });
                 },
+                text: noop,
                 _other: () => {
                     throw new Error("Unknown HttpResponse: " + httpEndpoint.response?.type);
                 },
