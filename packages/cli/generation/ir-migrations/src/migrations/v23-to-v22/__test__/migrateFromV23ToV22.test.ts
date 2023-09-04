@@ -17,7 +17,7 @@ describe("migrateFromV23ToV22", () => {
         expect(migrated).toMatchObject(expected);
     });
 
-    it("throws when definition contains bytes", async () => {
+    it("skips when definition contains bytes", async () => {
         let output = "";
         const context = createMockTaskContext({
             logger: createLogger((_logLevel, ...logs) => {

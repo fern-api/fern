@@ -20,6 +20,7 @@ export function convertHttpRequestBody({
     if (bytesRequest != null) {
         return HttpRequestBody.bytes({
             isOptional: bytesRequest.isOptional,
+            contentType: typeof request === "string" ? undefined : request?.["content-type"],
         });
     }
 
