@@ -5,5 +5,6 @@ service:
     upload:
       path: /upload-content
       method: POST
-      request: bytes
-      content-type: "application/octet-stream"
+      request:
+        content-type: "application/octet-stream"
+        body: bytes
