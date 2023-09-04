@@ -153,7 +153,12 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         if (versionIsLatest) {
             return {
                 ir: intermediateRepresentation as unknown as Migrated,
-                jsonify: () => Promise.resolve().then(() => intermediateRepresentation),
+                jsonify: () =>
+                    Promise.resolve().then(() =>
+                        IrSerialization.IntermediateRepresentation.jsonOrThrow(intermediateRepresentation, {
+                            unrecognizedObjectKeys: "strip",
+                        })
+                    ),
             };
         }
 

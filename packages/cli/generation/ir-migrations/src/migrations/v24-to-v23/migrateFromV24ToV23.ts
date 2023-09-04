@@ -1,4 +1,5 @@
 import { GeneratorName } from "@fern-api/generators-configuration";
+import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
 
@@ -28,7 +29,10 @@ export const V24_TO_V23_MIGRATION: IrMigration<
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
     },
-    jsonifyEarlierVersion: (ir) => ir,
+    jsonifyEarlierVersion: (ir) =>
+        IrSerialization.V23.IntermediateRepresentation.jsonOrThrow(ir, {
+            unrecognizedObjectKeys: "strip",
+        }),
     migrateBackwards: (v24): IrVersions.V23.ir.IntermediateRepresentation => {
         return {
             ...v24,
