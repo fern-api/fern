@@ -1,5 +1,5 @@
-import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
-import { SdkRequest, SdkRequestShape } from "@fern-fern/ir-sdk/api";
+import { isInlineRequestBody, parseRawBytesType, RawSchemas } from "@fern-api/yaml-schema";
+import { SdkRequest, SdkRequestBodyType, SdkRequestShape } from "@fern-fern/ir-sdk/api";
 import { size } from "lodash-es";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
@@ -59,7 +59,7 @@ function convertHttpSdkRequestShape({
     }
 
     if (typeof request === "string") {
-        return SdkRequestShape.justRequestBody(convertReferenceHttpRequestBody({ requestBody: request, file }));
+        return SdkRequestShape.justRequestBody(getSdkJustRequestBodyType({ requestBody: request, file }));
     }
 
     const { body } = request;
@@ -74,7 +74,33 @@ function convertHttpSdkRequestShape({
         return undefined;
     }
 
-    return SdkRequestShape.justRequestBody(convertReferenceHttpRequestBody({ requestBody: body, file }));
+    return SdkRequestShape.justRequestBody(getSdkJustRequestBodyType({ requestBody: body, file }));
+}
+
+export function getSdkJustRequestBodyType({
+    requestBody,
+    file,
+    contentType,
+}: {
+    requestBody: RawSchemas.HttpReferencedRequestBodySchema | string;
+    file: FernFileContext;
+    contentType?: string;
+}): SdkRequestBodyType {
+    const rawBytes =
+        typeof requestBody === "string" ? parseRawBytesType(requestBody) : parseRawBytesType(requestBody.type);
+    if (rawBytes != null) {
+        return SdkRequestBodyType.bytes({
+            isOptional: rawBytes.isOptional,
+            contentType,
+        });
+    }
+    return SdkRequestBodyType.typeReference(
+        convertReferenceHttpRequestBody({
+            requestBody,
+            file,
+            contentType,
+        })
+    );
 }
 
 export function doesRequestHaveNonBodyProperties({

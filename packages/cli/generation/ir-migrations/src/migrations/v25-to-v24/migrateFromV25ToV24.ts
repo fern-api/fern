@@ -34,11 +34,21 @@ export const V25_TO_V24_MIGRATION: IrMigration<
             unrecognizedObjectKeys: "strip",
         }),
     migrateBackwards: (v25, context): IrVersions.V24.ir.IntermediateRepresentation => {
+        const bytesEndpoints: IrVersions.V25.HttpEndpoint[] = [];
         const textHttpEndpoints: IrVersions.V25.HttpEndpoint[] = [];
         const v24CompatibleServices: Record<IrVersions.V24.ServiceId, IrVersions.V24.HttpService> = {};
         for (const [serviceId, httpService] of Object.entries(v25.services)) {
             const v24CompatibleEndpoints: IrVersions.V24.HttpEndpoint[] = [];
             for (const endpoint of httpService.endpoints) {
+                let v24SdkRequest: IrVersions.V24.SdkRequest | undefined = undefined;
+                if (endpoint.sdkRequest != null) {
+                    v24SdkRequest = getV24SDKRequest(endpoint.sdkRequest);
+                    if (v24SdkRequest == null) {
+                        bytesEndpoints.push(endpoint);
+                        continue;
+                    }
+                }
+
                 if (endpoint.response != null) {
                     const v24Response = endpoint.response._visit<IrVersions.V24.HttpResponse>({
                         fileDownload: (fileDownload) => IrVersions.V24.HttpResponse.fileDownload(fileDownload),
@@ -57,11 +67,13 @@ export const V25_TO_V24_MIGRATION: IrMigration<
                     });
                     v24CompatibleEndpoints.push({
                         ...endpoint,
+                        sdkRequest: v24SdkRequest,
                         response: v24Response,
                     });
                 } else {
                     v24CompatibleEndpoints.push({
                         ...endpoint,
+                        sdkRequest: v24SdkRequest,
                         response: undefined,
                     });
                 }
@@ -88,9 +100,47 @@ export const V25_TO_V24_MIGRATION: IrMigration<
                 );
             }
         }
+        if (bytesEndpoints.length > 0) {
+            context.taskContext.logger.warn(
+                `Generator ${context.targetGenerator?.name}@${context.targetGenerator?.version}` +
+                    " does not support byte-stream requests. "
+            );
+            if (bytesEndpoints.length === 1 && bytesEndpoints[0] != null) {
+                context.taskContext.logger.warn(
+                    `Therefore, endpoint ${bytesEndpoints[0].name.originalName} will be skipped.`
+                );
+            } else {
+                context.taskContext.logger.warn(
+                    `Therefore, endpoints ${bytesEndpoints
+                        .map((endpoint) => endpoint.name.originalName)
+                        .join(", ")} will be skipped.`
+                );
+            }
+        }
         return {
             ...v25,
             services: v24CompatibleServices,
         };
     },
 };
+
+function getV24SDKRequest(sdkRequest: IrVersions.V25.SdkRequest): IrVersions.V24.SdkRequest | undefined {
+    const shape = sdkRequest.shape;
+    if (shape.type === "wrapper") {
+        return {
+            shape: IrVersions.V24.SdkRequestShape.wrapper({
+                ...shape,
+            }),
+            requestParameterName: sdkRequest.requestParameterName,
+        };
+    }
+    if (shape.value.type === "typeReference") {
+        return {
+            shape: IrVersions.V24.SdkRequestShape.justRequestBody({
+                ...shape.value,
+            }),
+            requestParameterName: sdkRequest.requestParameterName,
+        };
+    }
+    return undefined;
+}
