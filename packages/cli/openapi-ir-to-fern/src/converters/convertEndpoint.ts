@@ -143,17 +143,25 @@ export function convertEndpoint({
                     ...additionalTypeDeclarations,
                     ...responseTypeReference.additionalTypeDeclarations,
                 };
-                if (endpoint.responseIsStreaming) {
-                    convertedEndpoint["response-stream"] = {
-                        docs: jsonResponse.description ?? undefined,
-                        type: getTypeFromTypeReference(responseTypeReference.typeReference),
-                    };
-                } else {
-                    convertedEndpoint.response = {
-                        docs: jsonResponse.description ?? undefined,
-                        type: getTypeFromTypeReference(responseTypeReference.typeReference),
-                    };
-                }
+                convertedEndpoint.response = {
+                    docs: jsonResponse.description ?? undefined,
+                    type: getTypeFromTypeReference(responseTypeReference.typeReference),
+                };
+            },
+            streamingJson: (jsonResponse) => {
+                const responseTypeReference = convertToTypeReference({
+                    schema: jsonResponse.schema,
+                    prefix: isPackageYml ? undefined : ROOT_PREFIX,
+                    schemas,
+                });
+                additionalTypeDeclarations = {
+                    ...additionalTypeDeclarations,
+                    ...responseTypeReference.additionalTypeDeclarations,
+                };
+                convertedEndpoint["response-stream"] = {
+                    docs: jsonResponse.description ?? undefined,
+                    type: getTypeFromTypeReference(responseTypeReference.typeReference),
+                };
             },
             file: (fileResponse) => {
                 convertedEndpoint.response = {
@@ -161,8 +169,14 @@ export function convertEndpoint({
                     type: "file",
                 };
             },
-            text: (textResponse) => {
+            streamingText: (textResponse) => {
                 convertedEndpoint["response-stream"] = {
+                    docs: textResponse.description ?? undefined,
+                    type: "text",
+                };
+            },
+            text: (textResponse) => {
+                convertedEndpoint.response = {
                     docs: textResponse.description ?? undefined,
                     type: "text",
                 };

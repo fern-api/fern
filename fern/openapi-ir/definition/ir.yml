@@ -168,9 +168,6 @@ types:
         docs: |
           Populated by `x-request-name` on a path object.
       request: optional<Request>
-      responseIsStreaming:
-        type: boolean
-        docs: Checks if `x-fern-streaming` is present and is true.
       response: optional<Response>
       errorStatusCode: list<StatusCode>
       server: list<Server>
@@ -249,6 +246,10 @@ types:
       file: FileResponse
       json: JsonResponse
       text: TextResponse
+      streamingText: TextResponse
+      streamingJson:
+        type: JsonResponse
+        docs: Checks if `x-fern-streaming` is present and is true.
 
   FileResponse:
     extends: WithDescription

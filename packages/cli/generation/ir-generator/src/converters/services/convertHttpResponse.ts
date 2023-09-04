@@ -1,4 +1,4 @@
-import { isRawTextType, parseRawFileType, RawSchemas } from "@fern-api/yaml-schema";
+import { isRawTextType, parseRawFileType, parseRawTextType, RawSchemas } from "@fern-api/yaml-schema";
 import { HttpResponse, StreamingResponseChunkType } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 
@@ -17,6 +17,10 @@ export function convertHttpResponse({
 
         if (parseRawFileType(responseType) != null) {
             return HttpResponse.fileDownload({
+                docs,
+            });
+        } else if (parseRawTextType(responseType) != null) {
+            return HttpResponse.text({
                 docs,
             });
         } else {

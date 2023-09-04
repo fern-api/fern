@@ -194,7 +194,6 @@ Transfers support recurring schedules, such as repeating every week or every mon
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "accounts",
@@ -252,7 +251,6 @@ Transfers support recurring schedules, such as repeating every week or every mon
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "accounts",
@@ -332,7 +330,6 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "accounts",
@@ -391,7 +388,6 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "accountJointOwners",
@@ -515,7 +511,6 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "accounts",
@@ -612,7 +607,6 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "overdraftProtection",
@@ -670,7 +664,6 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "overdraftProtection",
@@ -744,7 +737,6 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "overdraftProtection",
@@ -818,7 +810,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "jointOwners",
@@ -917,7 +908,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "institutions",
@@ -1047,7 +1037,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "institutions",
@@ -1145,7 +1134,6 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "institutions",
@@ -1274,7 +1262,6 @@ This information provides hints to clients, allowing bank customers to select tr
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "institutions",
@@ -1544,7 +1531,6 @@ The default response lists only recent transactions. Normally, this is transacti
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "transactions",
@@ -1609,7 +1595,6 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "transactionCategories",
@@ -1750,7 +1735,6 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "transfers",
@@ -1826,7 +1810,6 @@ Note: This operation requires an identity challenge if the financial institution
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "transfers",
@@ -1884,7 +1867,6 @@ Note: This operation requires an identity challenge if the financial institution
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "transfers",
@@ -1975,7 +1957,6 @@ Note: This operation requires an identity challenge if the financial institution
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "transfers",
@@ -2023,7 +2004,6 @@ Note: This operation requires an identity challenge if the financial institution
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "transfers",

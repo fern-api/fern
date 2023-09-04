@@ -29,6 +29,7 @@ export { parseBytesRequest, type BytesRequest } from "./utils/parseBytesRequest"
 export { parseFileUploadRequest, type RawFileUploadRequest } from "./utils/parseFileUploadRequest";
 export { parseRawBytesType, type RawBytesType } from "./utils/parseRawBytesType";
 export { parseRawFileType, type RawFileType } from "./utils/parseRawFileType";
+export { parseRawTextType, type RawTextType } from "./utils/parseRawTextType";
 export { RawPrimitiveType } from "./utils/RawPrimitiveType";
 export { recursivelyVisitRawTypeReference } from "./utils/recursivelyVisitRawTypeReference";
 export { isAnyAuthSchemes, isSingleAuthScheme, visitRawApiAuth, type RawApiAuthVisitor } from "./utils/visitRawApiAuth";

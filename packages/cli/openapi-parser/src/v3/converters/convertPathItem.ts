@@ -419,6 +419,7 @@ function convertToEndpoint({
 
     const responseBreadcrumbs = [...baseBreadcrumbs, "Response"];
     const convertedResponse = convertResponse({
+        isStreaming: isStreaming ?? false,
         responses: operation.responses,
         context,
         responseBreadcrumbs,
@@ -444,7 +445,6 @@ function convertToEndpoint({
         errorStatusCode: convertedResponse.errorStatusCodes,
         server: (operation.servers ?? []).map((server) => convertServer(server)),
         description: operation.description,
-        responseIsStreaming: isStreaming ?? false,
         authed: isEndpointAuthed(operation, document),
     };
 }

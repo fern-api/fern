@@ -1826,7 +1826,7 @@ exports[`open api parser hathora simple 1`] = `
                 },
               },
             },
-            "response-stream": {
+            "response": {
               "docs": "Ok",
               "type": "text",
             },

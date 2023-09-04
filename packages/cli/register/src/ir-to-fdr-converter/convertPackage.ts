@@ -206,6 +206,7 @@ function convertResponse(irResponse: Ir.http.HttpResponse): FernRegistry.api.v1.
                 FernRegistry.api.v1.register.HttpResponseBodyShape.reference(
                     convertTypeReference(jsonResponse.responseBodyType)
                 ),
+            text: () => undefined, // TODO: support text/plain in FDR
             streaming: (streamingResponse) => {
                 if (streamingResponse.dataEventType.type === "text") {
                     return FernRegistry.api.v1.register.HttpResponseBodyShape.streamingText();

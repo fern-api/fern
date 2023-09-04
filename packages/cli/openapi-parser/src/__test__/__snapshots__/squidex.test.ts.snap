@@ -84,7 +84,6 @@ exports[`open api parser squidex parse open api 1`] = `
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "userManagement",
@@ -139,7 +138,6 @@ exports[`open api parser squidex parse open api 1`] = `
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "userManagement",
@@ -197,7 +195,6 @@ exports[`open api parser squidex parse open api 1`] = `
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "userManagement",
@@ -268,7 +265,6 @@ exports[`open api parser squidex parse open api 1`] = `
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "userManagement",
@@ -317,7 +313,6 @@ exports[`open api parser squidex parse open api 1`] = `
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "userManagement",
@@ -377,7 +372,6 @@ exports[`open api parser squidex parse open api 1`] = `
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "userManagement",
@@ -437,7 +431,6 @@ exports[`open api parser squidex parse open api 1`] = `
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "userManagement",
@@ -479,7 +472,6 @@ exports[`open api parser squidex parse open api 1`] = `
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "users",
@@ -543,7 +535,6 @@ exports[`open api parser squidex parse open api 1`] = `
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "users",
@@ -601,7 +592,6 @@ exports[`open api parser squidex parse open api 1`] = `
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "users",
@@ -648,7 +638,6 @@ exports[`open api parser squidex parse open api 1`] = `
             "description": "User found and image or fallback returned.",
             "type": "file",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "users",
@@ -718,7 +707,6 @@ exports[`open api parser squidex parse open api 1`] = `
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "translations",
@@ -760,7 +748,6 @@ exports[`open api parser squidex parse open api 1`] = `
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "templates",
@@ -818,7 +805,6 @@ exports[`open api parser squidex parse open api 1`] = `
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "templates",
@@ -876,7 +862,6 @@ exports[`open api parser squidex parse open api 1`] = `
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "teams",
@@ -947,7 +932,6 @@ exports[`open api parser squidex parse open api 1`] = `
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "teams",
@@ -1006,7 +990,6 @@ exports[`open api parser squidex parse open api 1`] = `
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "teams",
@@ -1079,7 +1062,6 @@ exports[`open api parser squidex parse open api 1`] = `
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "teams",
@@ -1126,7 +1108,6 @@ You will retrieve all teams, where you are assigned as a contributor.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "teams",
@@ -1183,7 +1164,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "teams",
@@ -1241,7 +1221,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "teams",
@@ -1312,7 +1291,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "teams",
@@ -1370,7 +1348,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "statistics",
@@ -1456,7 +1433,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "statistics",
@@ -1542,7 +1518,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "statistics",
@@ -1600,7 +1575,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "statistics",
@@ -1658,7 +1632,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "statistics",
@@ -1748,7 +1721,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "statistics",
@@ -1838,7 +1810,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "statistics",
@@ -1918,7 +1889,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "search",
@@ -2004,7 +1974,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -2102,7 +2071,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -2187,7 +2155,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -2272,7 +2239,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -2369,7 +2335,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -2466,7 +2431,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -2551,7 +2515,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -2660,7 +2623,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -2757,7 +2719,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -2842,7 +2803,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -2939,7 +2899,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -3024,7 +2983,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -3121,7 +3079,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -3206,7 +3163,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -3303,7 +3259,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -3388,7 +3343,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -3485,7 +3439,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -3570,7 +3523,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -3667,7 +3619,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -3725,7 +3676,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -3796,7 +3746,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -3868,7 +3817,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -3953,7 +3901,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -4015,7 +3962,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -4100,7 +4046,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -4185,7 +4130,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -4270,7 +4214,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -4355,7 +4298,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -4440,7 +4382,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -4513,7 +4454,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -4586,7 +4526,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "schemas",
@@ -4637,7 +4576,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "rules",
@@ -4695,7 +4633,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "rules",
@@ -4766,7 +4703,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "rules",
@@ -4813,7 +4749,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "rules",
@@ -4898,7 +4833,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "rules",
@@ -4960,7 +4894,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "rules",
@@ -5033,7 +4966,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "rules",
@@ -5106,7 +5038,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "rules",
@@ -5168,7 +5099,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "rules",
@@ -5245,7 +5175,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "rules",
@@ -5306,7 +5235,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "rules",
@@ -5377,7 +5305,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "rules",
@@ -5449,7 +5376,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "rules",
@@ -5555,7 +5481,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "rules",
@@ -5602,7 +5527,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "rules",
@@ -5664,7 +5588,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "rules",
@@ -5726,7 +5649,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "rules",
@@ -5773,7 +5695,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "rules",
@@ -5826,7 +5747,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "rules",
@@ -5884,7 +5804,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "plans",
@@ -5955,7 +5874,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "plans",
@@ -6013,7 +5931,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "plans",
@@ -6084,7 +6001,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "plans",
@@ -6126,7 +6042,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "ping",
@@ -6157,7 +6072,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "ping",
@@ -6203,7 +6117,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "ping",
@@ -6261,7 +6174,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "news",
@@ -6307,7 +6219,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "languages",
@@ -6387,7 +6298,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "history",
@@ -6467,7 +6377,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "history",
@@ -6509,7 +6418,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "eventConsumers",
@@ -6568,7 +6476,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "eventConsumers",
@@ -6627,7 +6534,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "eventConsumers",
@@ -6686,7 +6592,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "eventConsumers",
@@ -6718,7 +6623,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "diagnostics",
@@ -6750,7 +6654,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "diagnostics",
@@ -6857,7 +6760,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "contents",
@@ -6992,7 +6894,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "contents",
@@ -7077,7 +6978,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "contents",
@@ -7179,7 +7079,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "contents",
@@ -7326,7 +7225,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "contents",
@@ -7425,7 +7323,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "contents",
@@ -7524,7 +7421,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "contents",
@@ -7631,7 +7527,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "contents",
@@ -7707,7 +7602,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "contents",
@@ -7811,7 +7705,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "contents",
@@ -7915,7 +7808,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "contents",
@@ -8002,7 +7894,6 @@ You will be assigned as owner of the new team automatically.",
             "description": "Content version returned.",
             "type": "file",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "contents",
@@ -8091,7 +7982,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "contents",
@@ -8180,7 +8070,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "contents",
@@ -8279,7 +8168,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "contents",
@@ -8366,7 +8254,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "contents",
@@ -8453,7 +8340,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "contents",
@@ -8540,7 +8426,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "contents",
@@ -8621,7 +8506,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "comments",
@@ -8709,7 +8593,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "comments",
@@ -8794,7 +8677,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "comments",
@@ -8882,7 +8764,6 @@ You will be assigned as owner of the new team automatically.",
           },
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "comments",
@@ -8958,7 +8839,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "comments",
@@ -9031,7 +8911,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "notifications",
@@ -9093,7 +8972,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "notifications",
@@ -9154,7 +9032,6 @@ You will be assigned as owner of the new team automatically.",
             "description": "Backup found and content returned.",
             "type": "file",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "backups",
@@ -9216,7 +9093,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "backups",
@@ -9298,7 +9174,6 @@ You will be assigned as owner of the new team automatically.",
             "description": "Backup found and content returned.",
             "type": "file",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "backups",
@@ -9356,7 +9231,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "backups",
@@ -9404,7 +9278,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "backups",
@@ -9446,7 +9319,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "backups",
@@ -9490,7 +9362,6 @@ You will be assigned as owner of the new team automatically.",
           },
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "backups",
@@ -9784,7 +9655,6 @@ You will be assigned as owner of the new team automatically.",
             "description": "Asset found and content or (resized) image returned.",
             "type": "file",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "assets",
@@ -10046,7 +9916,6 @@ You will be assigned as owner of the new team automatically.",
             "description": "Asset found and content or (resized) image returned.",
             "type": "file",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "assets",
@@ -10138,7 +10007,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "assets",
@@ -10209,7 +10077,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "assets",
@@ -10294,7 +10161,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "assets",
@@ -10356,7 +10222,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "assets",
@@ -10441,7 +10306,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "assets",
@@ -10507,7 +10371,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "assets",
@@ -10600,7 +10463,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "assets",
@@ -10774,7 +10636,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "assets",
@@ -10897,7 +10758,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "assets",
@@ -10968,7 +10828,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "assets",
@@ -11040,7 +10899,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "assets",
@@ -11160,7 +11018,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "assets",
@@ -11245,7 +11102,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "assets",
@@ -11338,7 +11194,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "assets",
@@ -11413,7 +11268,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "assets",
@@ -11500,7 +11354,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "assets",
@@ -11585,7 +11438,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "assets",
@@ -11643,7 +11495,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -11714,7 +11565,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -11772,7 +11622,6 @@ You will be assigned as owner of the new team automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -11844,7 +11693,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -11929,7 +11777,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -12002,7 +11849,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -12060,7 +11906,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -12131,7 +11976,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -12190,7 +12034,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -12263,7 +12106,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -12310,7 +12152,6 @@ The client secret is auto generated on the server and returned. The client does 
             "description": "App image found and content or (resized) image returned.",
             "type": "file",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -12382,7 +12223,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -12441,7 +12281,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -12499,7 +12338,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -12570,7 +12408,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -12655,7 +12492,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -12728,7 +12564,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -12786,7 +12621,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -12857,7 +12691,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -12920,7 +12753,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -13005,7 +12837,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -13078,7 +12909,6 @@ The client secret is auto generated on the server and returned. The client does 
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -13125,7 +12955,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -13182,7 +13011,6 @@ You will be assigned as owner of the new app automatically.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -13244,7 +13072,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -13302,7 +13129,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -13373,7 +13199,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -13421,7 +13246,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "request": undefined,
           "requestNameOverride": undefined,
           "response": undefined,
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -13492,7 +13316,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -13550,7 +13373,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -13621,7 +13443,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -13679,7 +13500,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -13750,7 +13570,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -13835,7 +13654,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
@@ -13908,7 +13726,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             },
             "type": "json",
           },
-          "responseIsStreaming": false,
           "sdkName": {
             "groupName": [
               "apps",
