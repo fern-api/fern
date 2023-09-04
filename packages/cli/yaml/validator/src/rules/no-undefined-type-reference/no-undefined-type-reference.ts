@@ -94,6 +94,11 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                                 severity: "error",
                                 message: "The file type can only be used as properties in inlined requests.",
                             });
+                        } else if (namedType.parsed?.typeName != null && isRawTextType(namedType.parsed.typeName)) {
+                            violations.push({
+                                severity: "error",
+                                message: "The text type can only be used as a response-stream or response.",
+                            });
                         } else if (!doesTypeExist(namedType)) {
                             violations.push({
                                 severity: "error",
