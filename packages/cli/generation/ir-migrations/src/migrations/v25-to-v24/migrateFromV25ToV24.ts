@@ -103,7 +103,7 @@ export const V25_TO_V24_MIGRATION: IrMigration<
         if (bytesEndpoints.length > 0) {
             context.taskContext.logger.warn(
                 `Generator ${context.targetGenerator?.name}@${context.targetGenerator?.version}` +
-                    " does not support byte-stream requests. "
+                    " does not support bytes requests. "
             );
             if (bytesEndpoints.length === 1 && bytesEndpoints[0] != null) {
                 context.taskContext.logger.warn(

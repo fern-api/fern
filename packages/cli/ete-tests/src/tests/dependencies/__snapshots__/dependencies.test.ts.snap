@@ -777,4 +777,4 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `901855`;
+exports[`dependencies file dependencies 1`] = `902877`;
