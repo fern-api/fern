@@ -31,6 +31,10 @@ function addTestCommand(cli: Argv) {
                     choices: Object.values(GenerationLanguage),
                     demandOption: true,
                 })
+                .option("parallel-dockers", {
+                    type: "number",
+                    default: 4,
+                })
                 .option("docker", {
                     type: "string",
                     demandOption: true,
@@ -74,6 +78,7 @@ function addTestCommand(cli: Argv) {
                 compileCommand: argv["compile-command"],
                 logLevel: argv["log-level"],
                 outputDir: argv.outputDirectory,
+                numDockers: argv.parallelDockers,
             });
         }
     );

@@ -42,8 +42,6 @@ interface TestFailure {
     fixture: string;
 }
 
-export const MAX_NUM_DOCKERS_RUNNING = 3;
-
 export async function runTests({
     irVersion,
     language,
@@ -52,6 +50,7 @@ export async function runTests({
     compileCommand,
     logLevel,
     outputDir,
+    numDockers,
 }: {
     irVersion: string | undefined;
     language: GenerationLanguage;
@@ -60,8 +59,9 @@ export async function runTests({
     compileCommand: string | undefined;
     logLevel: LogLevel;
     outputDir: string;
+    numDockers: number;
 }): Promise<void> {
-    const lock = new Semaphore(MAX_NUM_DOCKERS_RUNNING);
+    const lock = new Semaphore(numDockers);
     const taskContextFactory = new TaskContextFactory(logLevel);
     const testCases = [];
     for (const fixture of fixtures) {
