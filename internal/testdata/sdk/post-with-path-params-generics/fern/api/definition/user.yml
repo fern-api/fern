@@ -104,4 +104,5 @@ service:
             filter: Filter
             optionalUnion: optional<Union>
             optionalFilter: optional<Filter>
+            optionalTags: optional<list<string>>
       response: string

@@ -3024,6 +3024,46 @@
                                     },
                                     "_type": "container"
                                 }
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "optionalTags",
+                                        "camelCase": {
+                                            "unsafeName": "optionalTags",
+                                            "safeName": "optionalTags"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "optional_tags",
+                                            "safeName": "optional_tags"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "OPTIONAL_TAGS",
+                                            "safeName": "OPTIONAL_TAGS"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "OptionalTags",
+                                            "safeName": "OptionalTags"
+                                        }
+                                    },
+                                    "wireValue": "optionalTags"
+                                },
+                                "valueType": {
+                                    "container": {
+                                        "optional": {
+                                            "container": {
+                                                "list": {
+                                                    "primitive": "STRING",
+                                                    "_type": "primitive"
+                                                },
+                                                "_type": "list"
+                                            },
+                                            "_type": "container"
+                                        },
+                                        "_type": "optional"
+                                    },
+                                    "_type": "container"
+                                }
                             }
                         ],
                         "type": "inlinedRequestBody"

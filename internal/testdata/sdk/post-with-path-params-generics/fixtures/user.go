@@ -176,10 +176,11 @@ func (u *Union) Accept(visitor UnionVisitor) error {
 }
 
 type UpdateRequest struct {
-	Tag            string                 `json:"-"`
-	Extra          *string                `json:"-"`
-	Union          *Union                 `json:"union,omitempty"`
-	Filter         *Filter                `json:"filter,omitempty"`
-	OptionalUnion  *core.Optional[Union]  `json:"optionalUnion,omitempty"`
-	OptionalFilter *core.Optional[Filter] `json:"optionalFilter,omitempty"`
+	Tag            string                   `json:"-"`
+	Extra          *string                  `json:"-"`
+	Union          *Union                   `json:"union,omitempty"`
+	Filter         *Filter                  `json:"filter,omitempty"`
+	OptionalUnion  *core.Optional[Union]    `json:"optionalUnion,omitempty"`
+	OptionalFilter *core.Optional[Filter]   `json:"optionalFilter,omitempty"`
+	OptionalTags   *core.Optional[[]string] `json:"optionalTags,omitempty"`
 }

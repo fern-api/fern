@@ -759,12 +759,12 @@ func (c *containerTypeVisitor) VisitOptional(optional *ir.TypeReference) error {
 	// We also don't want to specify pointers for any container types because those
 	// values are already nil-able.
 	value := strings.TrimLeft(typeReferenceToGoType(optional, c.types, c.imports, c.baseImportPath, c.importPath, c.includeOptionals), "*")
-	if optional.Container != nil && optional.Container.Literal == nil {
-		c.value = value
-		return nil
-	}
 	if c.includeOptionals {
 		c.value = fmt.Sprintf("*core.Optional[%s]", value)
+		return nil
+	}
+	if optional.Container != nil && optional.Container.Literal == nil {
+		c.value = value
 		return nil
 	}
 	c.value = fmt.Sprintf("*%s", value)
