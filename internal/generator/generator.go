@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	"github.com/fern-api/fern-go/internal/coordinator"
-	"github.com/fern-api/fern-go/internal/fern/generatorexec"
+	"github.com/fern-api/generator-exec-go"
 	"github.com/fern-api/fern-go/internal/fern/ir"
 	fernir "github.com/fern-api/fern-go/internal/fern/ir"
 )

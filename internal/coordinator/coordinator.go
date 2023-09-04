@@ -2,15 +2,17 @@ package coordinator
 
 import (
 	"context"
-	"net/http"
 	"time"
 
-	"github.com/fern-api/fern-go/internal/fern/generatorexec"
+	generatorexec "github.com/fern-api/generator-exec-go"
+	generatorexecclient "github.com/fern-api/generator-exec-go/client"
+	"github.com/fern-api/generator-exec-go/logging"
+	"github.com/fern-api/generator-exec-go/readme"
 )
 
 // Client represents the Fern coordinator client.
 type Client struct {
-	client generatorexec.Service
+	client generatorexecclient.Client
 	taskID string
 }
 
@@ -54,22 +56,40 @@ func (c *Client) Log(level generatorexec.LogLevel, message string) error {
 func (c *Client) send(generatorUpdate *generatorexec.GeneratorUpdate) error {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	defer cancel()
-	return c.client.SendUpdate(
+	return c.client.Logging().SendUpdate(
 		ctx,
 		c.taskID,
 		[]*generatorexec.GeneratorUpdate{generatorUpdate},
 	)
 }
 
-func newGeneratorexecClient(url string) (generatorexec.Service, error) {
+func newGeneratorexecClient(url string) (generatorexecclient.Client, error) {
 	if url == "" {
 		return &nopCoordinatorClient{}, nil
 	}
-	return generatorexec.NewClient(url, http.DefaultClient)
+	return generatorexecclient.NewClient(
+		generatorexecclient.ClientWithBaseURL(url),
+	), nil
 }
 
 type nopCoordinatorClient struct{}
 
-func (*nopCoordinatorClient) SendUpdate(_ context.Context, _ generatorexec.TaskId, _ []*generatorexec.GeneratorUpdate) error {
+func (*nopCoordinatorClient) Logging() logging.Client {
+	return new(nopCoordinatorLoggingClient)
+}
+
+func (*nopCoordinatorClient) Readme() readme.Client {
+	return new(nopCoordinatorReadmeClient)
+}
+
+type nopCoordinatorLoggingClient struct{}
+
+func (*nopCoordinatorLoggingClient) SendUpdate(_ context.Context, _ generatorexec.TaskId, _ []*generatorexec.GeneratorUpdate) error {
+	return nil
+}
+
+type nopCoordinatorReadmeClient struct{}
+
+func (*nopCoordinatorReadmeClient) GenerateReadme(_ context.Context, _ generatorexec.TaskId, _ *generatorexec.GenerateReadmeRequest) error {
 	return nil
 }

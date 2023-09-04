@@ -9,7 +9,7 @@ import (
 
 	"github.com/fern-api/fern-go"
 	"github.com/fern-api/fern-go/internal/coordinator"
-	"github.com/fern-api/fern-go/internal/fern/generatorexec"
+	"github.com/fern-api/generator-exec-go"
 	"github.com/fern-api/fern-go/internal/generator"
 	"github.com/fern-api/fern-go/internal/goexec"
 	"github.com/fern-api/fern-go/internal/writer"
