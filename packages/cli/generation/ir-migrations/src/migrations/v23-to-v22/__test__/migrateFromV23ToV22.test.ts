@@ -30,7 +30,7 @@ describe("migrateFromV23ToV22", () => {
                 taskContext: context,
             },
         });
-        const numEndpoints = Object.entries(migrated.services)[0]?.[1].endpoints.length === 0;
+        const numEndpoints = Object.entries(migrated.services)[0]?.[1].endpoints.length;
         expect(numEndpoints).toEqual(0);
         expect(output).toContain("does not support bytes requests");
     });
