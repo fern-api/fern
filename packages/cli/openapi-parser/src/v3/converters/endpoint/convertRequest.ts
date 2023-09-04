@@ -9,10 +9,18 @@ export const APPLICATION_JSON_UTF_8_CONTENT = "application/json; charset=utf-8";
 
 export const MULTIPART_CONTENT = "multipart/form-data";
 
+export const OCTET_STREAM = "application/octet-stream";
+
 function getMultipartFormDataRequest(
     requestBody: OpenAPIV3.RequestBodyObject
 ): OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined {
     return requestBody.content[MULTIPART_CONTENT]?.schema;
+}
+
+function getOctetStreamRequest(
+    requestBody: OpenAPIV3.RequestBodyObject
+): OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined {
+    return requestBody.content[OCTET_STREAM]?.schema;
 }
 
 interface ParsedApplicationJsonRequest {
@@ -87,7 +95,15 @@ export function convertRequest({
         : requestBody;
 
     const multipartSchema = getMultipartFormDataRequest(resolvedRequestBody);
+    const octetStreamSchema = getOctetStreamRequest(resolvedRequestBody);
     const jsonSchema = getApplicationJsonRequest(resolvedRequestBody);
+
+    // convert as application/octet-stream
+    if (octetStreamSchema != null) {
+        return Request.octetStream({
+            description: undefined,
+        });
+    }
 
     // convert as multipart request
     if (

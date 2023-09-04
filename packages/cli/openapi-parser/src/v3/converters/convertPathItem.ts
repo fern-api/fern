@@ -172,7 +172,7 @@ function convertWebhook({
         requestBreadcrumbs: [...baseBreadcrumbs, "Payload"],
     });
 
-    if (convertedPayload == null || convertedPayload.type === "multipart") {
+    if (convertedPayload == null || convertedPayload.type !== "json") {
         context.logger.error(`Skipping webhook ${path} because non-json request body`);
         return undefined;
     }

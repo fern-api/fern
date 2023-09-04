@@ -2,7 +2,6 @@ import { assertNever } from "@fern-api/core-utils";
 import { GeneratorName } from "@fern-api/generators-configuration";
 import { mapValues } from "lodash-es";
 import { IrVersions } from "../../ir-versions";
-import { IrMigrationContext } from "../../IrMigrationContext";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
 
 export const V23_TO_V22_MIGRATION: IrMigration<
@@ -33,12 +32,17 @@ export const V23_TO_V22_MIGRATION: IrMigration<
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v23, context): IrVersions.V22.ir.IntermediateRepresentation => {
+        const bytesEndpoints: IrVersions.V23.http.HttpEndpoint[] = [];
         const v22Services: Record<IrVersions.V22.commons.ServiceId, IrVersions.V22.http.HttpService> = {};
         for (const [serviceId, service] of Object.entries(v23.services)) {
             const v22Endpoints: IrVersions.V22.http.HttpEndpoint[] = [];
             for (const endpoint of service.endpoints) {
-                const convertedEndpoint = convertEndpoint(endpoint, context);
-                v22Endpoints.push(convertedEndpoint);
+                const convertedEndpoint = convertEndpoint(endpoint);
+                if (convertedEndpoint == null) {
+                    bytesEndpoints.push(endpoint);
+                } else {
+                    v22Endpoints.push(convertedEndpoint);
+                }
             }
             v22Services[serviceId] = {
                 ...service,
@@ -46,6 +50,24 @@ export const V23_TO_V22_MIGRATION: IrMigration<
                 headers: service.headers.map((header) => convertHeader(header)),
                 pathParameters: service.pathParameters.map((pathParameter) => convertPathParameter(pathParameter)),
             };
+        }
+
+        if (bytesEndpoints.length > 0) {
+            context.taskContext.logger.warn(
+                `Generator ${context.targetGenerator?.name}@${context.targetGenerator?.version}` +
+                    " does not support bytes requests. "
+            );
+            if (bytesEndpoints.length === 1 && bytesEndpoints[0] != null) {
+                context.taskContext.logger.warn(
+                    `Therefore, endpoint ${bytesEndpoints[0].name.originalName} will be skipped.`
+                );
+            } else {
+                context.taskContext.logger.warn(
+                    `Therefore, endpoints ${bytesEndpoints
+                        .map((endpoint) => endpoint.name.originalName)
+                        .join(", ")} will be skipped.`
+                );
+            }
         }
         return {
             ...v23,
@@ -64,17 +86,22 @@ export const V23_TO_V22_MIGRATION: IrMigration<
     },
 };
 
-function convertEndpoint(
-    endpoint: IrVersions.V23.HttpEndpoint,
-    context: IrMigrationContext
-): IrVersions.V22.http.HttpEndpoint {
+function convertEndpoint(endpoint: IrVersions.V23.HttpEndpoint): IrVersions.V22.http.HttpEndpoint | undefined {
+    let convertedRequestBody = undefined;
+    if (endpoint.requestBody != null) {
+        convertedRequestBody = convertRequestBody(endpoint.requestBody);
+        if (convertedRequestBody == null) {
+            return undefined;
+        }
+    }
+
     return {
         ...endpoint,
         headers: endpoint.headers.map((header) => convertHeader(header)),
         pathParameters: endpoint.pathParameters.map((pathParameter) => convertPathParameter(pathParameter)),
         allPathParameters: endpoint.allPathParameters.map((pathParameter) => convertPathParameter(pathParameter)),
         queryParameters: endpoint.queryParameters.map((queryParameter) => convertQueryParameter(queryParameter)),
-        requestBody: endpoint.requestBody != null ? convertRequestBody(endpoint.requestBody, context) : undefined,
+        requestBody: convertedRequestBody,
         sdkRequest:
             endpoint.sdkRequest != null
                 ? {
@@ -88,17 +115,11 @@ function convertEndpoint(
 }
 
 function convertRequestBody(
-    requestBody: IrVersions.V23.http.HttpRequestBody,
-    { taskContext, targetGenerator }: IrMigrationContext
-): IrVersions.V22.http.HttpRequestBody {
+    requestBody: IrVersions.V23.http.HttpRequestBody
+): IrVersions.V22.http.HttpRequestBody | undefined {
     switch (requestBody.type) {
         case "bytes":
-            return taskContext.failAndThrow(
-                targetGenerator != null
-                    ? `Generator ${targetGenerator.name}@${targetGenerator.version}` +
-                          " does not support bytes requests."
-                    : "Cannot backwards-migrate IR because this IR contains bytes requests."
-            );
+            return undefined;
         case "fileUpload":
             return IrVersions.V22.http.HttpRequestBody.fileUpload({
                 ...requestBody,

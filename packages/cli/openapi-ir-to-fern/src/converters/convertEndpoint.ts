@@ -351,6 +351,15 @@ function getRequest({
             value: convertedRequestValue,
             additionalTypeDeclarations,
         };
+    } else if (request.type === "octetStream") {
+        return {
+            schemaIdsToExclude: [],
+            value: {
+                body: "bytes",
+                "content-type": "application/octet-stream",
+            },
+            additionalTypeDeclarations: {},
+        };
     } else {
         // multipart
         const properties = Object.fromEntries(
