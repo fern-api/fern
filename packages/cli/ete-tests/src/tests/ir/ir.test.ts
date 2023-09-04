@@ -81,6 +81,14 @@ describe("ir", () => {
         );
     }
 
+    it("works with latest version", async () => {
+        const { stdout } = await runFernCli(["ir", "ir.json", "--version", "v25"], {
+            cwd: join(FIXTURES_DIR, RelativeFilePath.of("migration")),
+            reject: false,
+        });
+        expect(stdout).toContain("Wrote IR to");
+    });
+
     it("fails with invalid version", async () => {
         const { stdout } = await runFernCli(["ir", "ir.json", "--version", "v100"], {
             cwd: join(FIXTURES_DIR, RelativeFilePath.of("migration")),

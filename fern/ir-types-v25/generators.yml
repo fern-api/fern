@@ -17,7 +17,7 @@ groups:
         output:
           location: maven
           url: maven.buildwithfern.com
-          coordinate: com.fern.fern:irV23
+          coordinate: com.fern.fern:irV25
 
       - name: fernapi/fern-pydantic-model
         version: 0.3.6-rc1-1-ga2f760f4

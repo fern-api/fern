@@ -149,6 +149,14 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
     }): MigratedIntermediateMigration<Migrated> {
         let hasEncouneredMigrationYet = false;
 
+        const versionIsLatest = this.migrations[0]?.laterVersion === version;
+        if (versionIsLatest) {
+            return {
+                ir: intermediateRepresentation as unknown as Migrated,
+                jsonify: () => Promise.resolve().then(() => intermediateRepresentation),
+            };
+        }
+
         const migrated = this.migrate<Migrated>({
             intermediateRepresentation,
             shouldMigrate: (nextMigration) => {
