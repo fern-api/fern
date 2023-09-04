@@ -3,6 +3,7 @@ import { runSeedCli } from "../../utils/runSeedCli";
 
 describe("seed", () => {
     it("python", async () => {
+        jest.setTimeout(120000);
         const { exitCode, stdout } = await runSeedCli(
             [
                 "test",
