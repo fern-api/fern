@@ -24,14 +24,14 @@ describe("migrateFromV23ToV22", () => {
                 output += logs.join(" ");
             }),
         });
-        await expect(
-            runMigration({
-                pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/bytes")),
-                context: {
-                    taskContext: context,
-                },
-            })
-        ).rejects.toBeTruthy();
+        const migrated = await runMigration({
+            pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/bytes")),
+            context: {
+                taskContext: context,
+            },
+        });
+        const numEndpoints = Object.entries(migrated.services)[0]?.[1].endpoints.length === 0;
+        expect(numEndpoints).toEqual(0);
         expect(output).toContain("does not support bytes requests");
     });
 });
