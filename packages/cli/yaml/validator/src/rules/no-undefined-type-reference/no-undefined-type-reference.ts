@@ -67,19 +67,6 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                         }
                     }
 
-                    if (isRawTextType(typeReference)) {
-                        if (location === TypeReferenceLocation.StreamingResponse) {
-                            return [];
-                        } else {
-                            return [
-                                {
-                                    severity: "error",
-                                    message: "The text type can only be used as a response-stream.",
-                                },
-                            ];
-                        }
-                    }
-
                     const namedTypes = getAllNamedTypes({
                         type: typeReference,
                         relativeFilepath,

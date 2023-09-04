@@ -68,18 +68,6 @@ describe("no-undefined-type-reference", () => {
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
                 severity: "error",
             },
-            {
-                message: "The text type can only be used as a response-stream.",
-                nodePath: ["types", "ListOfText"],
-                relativeFilepath: RelativeFilePath.of("text.yml"),
-                severity: "error",
-            },
-            {
-                message: "The text type can only be used as a response-stream.",
-                nodePath: ["service", "endpoints", "returnText", "response"],
-                relativeFilepath: RelativeFilePath.of("text.yml"),
-                severity: "error",
-            },
         ]);
     });
 });
