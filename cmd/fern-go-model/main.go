@@ -4,6 +4,7 @@ import (
 	"github.com/fern-api/fern-go/internal/cmd"
 	"github.com/fern-api/fern-go/internal/coordinator"
 	"github.com/fern-api/fern-go/internal/generator"
+	"github.com/fern-api/fern-go/internal/writer"
 )
 
 const usage = `Generate Go models from your Fern API definition.
@@ -20,9 +21,12 @@ func main() {
 }
 
 func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File, error) {
+	_, includeReadme := config.Writer.Mode.(*writer.GithubConfig)
 	generatorConfig, err := generator.NewConfig(
 		config.DryRun,
 		config.EnableExplicitNull,
+		includeReadme,
+		config.Organization,
 		config.Version,
 		config.IrFilepath,
 		config.ImportPath,

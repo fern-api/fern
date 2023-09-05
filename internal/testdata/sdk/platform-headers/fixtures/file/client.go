@@ -30,7 +30,7 @@ func NewClient(opts ...core.ClientOption) *Client {
 }
 
 func (c *Client) Download(ctx context.Context, filename string) (io.Reader, error) {
-	baseURL := ""
+	baseURL := "https://core.yoursite.com"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}

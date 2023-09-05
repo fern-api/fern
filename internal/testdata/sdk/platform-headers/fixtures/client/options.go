@@ -30,3 +30,10 @@ func WithHTTPHeader(httpHeader http.Header) core.ClientOption {
 		opts.HTTPHeader = httpHeader.Clone()
 	}
 }
+
+// WithAuthToken sets the 'Authorization: Bearer <token>' header on every request.
+func WithAuthToken(token string) core.ClientOption {
+	return func(opts *core.ClientOptions) {
+		opts.Token = token
+	}
+}

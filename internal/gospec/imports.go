@@ -56,13 +56,13 @@ func (imp Imports) String() string {
 	}
 	if len(imp) == 1 {
 		for path, alias := range imp {
-			return fmt.Sprintf("import %s %q", alias, path)
+			return fmt.Sprintf("import %s %q\n", alias, path)
 		}
 	}
 
 	importBlock := "import (\n"
 	for path, alias := range imp {
-		importBlock += fmt.Sprintf("  %s %q\n", alias, path)
+		importBlock += fmt.Sprintf("\t%s %q\n", alias, path)
 	}
 	importBlock += ")\n"
 

@@ -51,8 +51,7 @@ value := bar.foo(
 	"two",
 	enum.Value,
 	anotherenum.Collision,
-)
-`,
+)`,
 		snippet,
 	)
 }

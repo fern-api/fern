@@ -25,6 +25,17 @@ func NewClient(url string, taskID string) *Client {
 	}
 }
 
+// GenerateReadme tells the coordinator to generate a README.md with the given request.
+func (c *Client) GenerateReadme(request *generatorexec.GenerateReadmeRequest) error {
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+	defer cancel()
+	return c.client.Readme().GenerateReadme(
+		ctx,
+		c.taskID,
+		request,
+	)
+}
+
 // Init sends an initialization update to the coordinator so that it starts to run.
 func (c *Client) Init() error {
 	return c.send(

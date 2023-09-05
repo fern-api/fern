@@ -9,10 +9,10 @@ import (
 
 	"github.com/fern-api/fern-go"
 	"github.com/fern-api/fern-go/internal/coordinator"
-	"github.com/fern-api/generator-exec-go"
 	"github.com/fern-api/fern-go/internal/generator"
 	"github.com/fern-api/fern-go/internal/goexec"
 	"github.com/fern-api/fern-go/internal/writer"
+	generatorexec "github.com/fern-api/generator-exec-go"
 	"go.uber.org/multierr"
 )
 
@@ -50,6 +50,7 @@ var (
 type Config struct {
 	DryRun             bool
 	EnableExplicitNull bool
+	Organization       string
 	CoordinatorURL     string
 	CoordinatorTaskID  string
 	Version            string
@@ -180,6 +181,7 @@ func newConfig(configFilename string) (*Config, error) {
 	return &Config{
 		DryRun:             config.DryRun,
 		EnableExplicitNull: customConfig.EnableExplicitNull,
+		Organization:       config.Organization,
 		CoordinatorURL:     coordinatorURL,
 		CoordinatorTaskID:  coordinatorTaskID,
 		Version:            version,

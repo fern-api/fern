@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/fern-api/fern-go/internal/ast"
 	"github.com/fern-api/fern-go/internal/fern/ir"
 	"github.com/fern-api/fern-go/internal/gospec"
 )
@@ -231,12 +232,19 @@ func (f *fileWriter) writePlatformHeaders(
 	return nil
 }
 
+type GeneratedAuth struct {
+	Option ast.Expr // e.g. acmeclient.WithAuthToken("<YOUR_AUTH_TOKEN>")
+}
+
 // WriteClientOptions writes the client options available to the generated
 // client code.
-func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHeader) error {
+func (f *fileWriter) WriteClientOptions(
+	auth *ir.ApiAuth,
+	headers []*ir.HttpHeader,
+) (*GeneratedAuth, error) {
 	// Now that we know where the types will be generated, format the generated type names as needed.
 	var (
-		importPath        = f.baseImportPath
+		importPath        = path.Join(f.baseImportPath, "client")
 		httpClientType    = "core.HTTPClient"
 		clientOptionType  = "core.ClientOption"
 		clientOptionsType = "*core.ClientOptions"
@@ -267,14 +275,27 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 	f.P("}")
 	f.P()
 
-	// Generat the authorization functional options.
+	// Generate the auth functional options.
 	includeCustomAuthDocs := auth.Docs != nil && len(*auth.Docs) > 0
-	for _, authScheme := range auth.Schemes {
+
+	var option ast.Expr
+	for i, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
 			var (
 				pascalCase = authScheme.Bearer.Token.PascalCase.UnsafeName
 				camelCase  = authScheme.Bearer.Token.CamelCase.SafeName
 			)
+			if i == 0 {
+				option = ast.NewCallExpr(
+					ast.NewImportedObject(
+						"WithAuth"+pascalCase,
+						importPath,
+					),
+					[]ast.Expr{
+						ast.NewLocalObject(`"<YOUR_AUTH_TOKEN>"`),
+					},
+				)
+			}
 			f.P("// WithAuth", pascalCase, " sets the 'Authorization: Bearer <", camelCase, ">' header on every request.")
 			if includeCustomAuthDocs {
 				f.P("//")
@@ -288,6 +309,18 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 			f.P()
 		}
 		if authScheme.Basic != nil {
+			if i == 0 {
+				option = ast.NewCallExpr(
+					ast.NewImportedObject(
+						"WithAuthBasic",
+						importPath,
+					),
+					[]ast.Expr{
+						ast.NewLocalObject(`"<YOUR_USERNAME>"`),
+						ast.NewLocalObject(`"<YOUR_PASSWORD>"`),
+					},
+				)
+			}
 			f.P("// WithAuthBasic sets the 'Authorization: Basic <base64>' header on every request.")
 			if includeCustomAuthDocs {
 				f.P("//")
@@ -307,11 +340,23 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 				continue
 			}
 			var (
-				optionName = fmt.Sprintf("WithAuth%s", authScheme.Header.Name.Name.PascalCase.UnsafeName)
+				pascalCase = authScheme.Header.Name.Name.PascalCase.UnsafeName
+				optionName = fmt.Sprintf("WithAuth%s", pascalCase)
 				field      = authScheme.Header.Name.Name.PascalCase.UnsafeName
 				param      = authScheme.Header.Name.Name.CamelCase.SafeName
 				value      = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.imports, f.baseImportPath, importPath, false)
 			)
+			if i == 0 {
+				option = ast.NewCallExpr(
+					ast.NewImportedObject(
+						"WithAuth"+pascalCase,
+						importPath,
+					),
+					[]ast.Expr{
+						ast.NewLocalObject(fmt.Sprintf(`"<YOUR_%s>"`, pascalCase)),
+					},
+				)
+			}
 			f.P("// ", optionName, " sets the ", param, " auth header on every request.")
 			if includeCustomAuthDocs {
 				f.P("//")
@@ -351,8 +396,16 @@ func (f *fileWriter) WriteClientOptions(auth *ir.ApiAuth, headers []*ir.HttpHead
 		f.P("}")
 		f.P()
 	}
+	if option == nil {
+		return nil, nil
+	}
+	return &GeneratedAuth{
+		Option: option,
+	}, nil
+}
 
-	return nil
+type GeneratedClient struct {
+	Instantiation *ast.AssignStmt
 }
 
 // WriteClient writes a client for interacting with the given service.
@@ -362,7 +415,9 @@ func (f *fileWriter) WriteClient(
 	environmentsConfig *ir.EnvironmentsConfig,
 	errorDiscriminationStrategy *ir.ErrorDiscriminationStrategy,
 	fernFilepath *ir.FernFilepath,
-) error {
+	generatedAuth *GeneratedAuth,
+	generatedEnvironment *GeneratedEnvironment,
+) (*GeneratedClient, error) {
 	var (
 		clientName = "Client"
 		receiver   = "c"
@@ -376,7 +431,7 @@ func (f *fileWriter) WriteClient(
 	for _, irEndpoint := range irEndpoints {
 		endpoint, err := f.endpointFromIR(fernFilepath, irEndpoint, environmentsConfig, receiver)
 		if err != nil {
-			return err
+			return nil, err
 		}
 		endpoints = append(endpoints, endpoint)
 	}
@@ -634,8 +689,29 @@ func (f *fileWriter) WriteClient(
 		f.P("}")
 		f.P()
 	}
-
-	return nil
+	var parameters []ast.Expr
+	if generatedAuth != nil {
+		parameters = append(parameters, generatedAuth.Option)
+	}
+	if generatedEnvironment != nil {
+		parameters = append(parameters, generatedEnvironment.Example)
+	}
+	return &GeneratedClient{
+		Instantiation: &ast.AssignStmt{
+			Left: []ast.Expr{
+				ast.NewLocalObject("client"),
+			},
+			Right: []ast.Expr{
+				ast.NewCallExpr(
+					ast.NewImportedObject(
+						"NewClient",
+						packagePathToImportPath(f.baseImportPath, packagePathForClient(fernFilepath)),
+					),
+					parameters,
+				),
+			},
+		},
+	}, nil
 }
 
 // endpoint holds the fields required to generate a client endpoint.
@@ -840,9 +916,14 @@ func (f *fileWriter) endpointFromIR(
 	}, nil
 }
 
+// GeneratedEnvironment contains information about the environments that were generated.
+type GeneratedEnvironment struct {
+	Example ast.Expr // e.g. acme.Environments.Production
+}
+
 // WriteEnvironments writes the environment constants.
-func (f *fileWriter) WriteEnvironments(environmentsConfig *ir.EnvironmentsConfig) error {
-	return environmentsToEnvironmentsVariable(environmentsConfig.Environments, f)
+func (f *fileWriter) WriteEnvironments(environmentsConfig *ir.EnvironmentsConfig, useCore bool) (*GeneratedEnvironment, error) {
+	return environmentsToEnvironmentsVariable(environmentsConfig, f, useCore)
 }
 
 // WriteError writes the structured error types.
@@ -1096,31 +1177,42 @@ func (f *fileWriter) WriteRequestType(fernFilepath *ir.FernFilepath, endpoint *i
 }
 
 func environmentsToEnvironmentsVariable(
-	environments *ir.Environments,
+	environmentsConfig *ir.EnvironmentsConfig,
 	writer *fileWriter,
-) error {
+	useCore bool,
+) (*GeneratedEnvironment, error) {
 	writer.P("// Environments defines all of the API environments.")
 	writer.P("// These values can be used with the WithBaseURL")
 	writer.P("// ClientOption to override the client's default environment,")
 	writer.P("// if any.")
 	writer.P("var Environments = struct {")
-	declarationVisitor := &environmentsDeclarationVisitor{
-		types:  writer.types,
-		writer: writer,
+	importPath := writer.baseImportPath
+	if useCore {
+		importPath = path.Join(importPath, "core")
 	}
-	if err := environments.Accept(declarationVisitor); err != nil {
-		return err
+	declarationVisitor := &environmentsDeclarationVisitor{
+		types:      writer.types,
+		writer:     writer,
+		importPath: importPath,
+	}
+	if err := environmentsConfig.Environments.Accept(declarationVisitor); err != nil {
+		return nil, err
 	}
 	writer.P("}{")
 	valueVisitor := &environmentsValueVisitor{
 		types:  writer.types,
 		writer: writer,
 	}
-	if err := environments.Accept(valueVisitor); err != nil {
-		return err
+	if err := environmentsConfig.Environments.Accept(valueVisitor); err != nil {
+		return nil, err
 	}
 	writer.P("}")
-	return nil
+	if environmentsConfig.DefaultEnvironment != nil || declarationVisitor.value == nil {
+		return nil, nil
+	}
+	return &GeneratedEnvironment{
+		Example: declarationVisitor.value,
+	}, nil
 }
 
 // environmentURL is used to generate deterministic results (i.e. by iterating
@@ -1146,12 +1238,20 @@ func environmentURLMapToSortedSlice(urls map[ir.EnvironmentBaseUrlId]ir.Environm
 }
 
 type environmentsDeclarationVisitor struct {
-	types  map[ir.TypeId]*ir.TypeDeclaration
-	writer *fileWriter
+	value      ast.Expr
+	types      map[ir.TypeId]*ir.TypeDeclaration
+	writer     *fileWriter
+	importPath string
 }
 
 func (e *environmentsDeclarationVisitor) VisitSingleBaseUrl(url *ir.SingleBaseUrlEnvironments) error {
-	for _, environment := range url.Environments {
+	for i, environment := range url.Environments {
+		if i == 0 {
+			e.value = ast.NewImportedObject(
+				fmt.Sprintf("Environments.%s", environment.Name.PascalCase.UnsafeName),
+				e.importPath,
+			)
+		}
 		e.writer.WriteDocs(environment.Docs)
 		e.writer.P(environment.Name.PascalCase.UnsafeName, " string")
 	}
@@ -1163,7 +1263,13 @@ func (e *environmentsDeclarationVisitor) VisitMultipleBaseUrls(url *ir.MultipleB
 	for _, baseURL := range url.BaseUrls {
 		baseURLs[baseURL.Id] = baseURL.Name.PascalCase.UnsafeName
 	}
-	for _, environment := range url.Environments {
+	for i, environment := range url.Environments {
+		if i == 0 {
+			e.value = ast.NewImportedObject(
+				fmt.Sprintf("Environments.%s", environment.Name.PascalCase.UnsafeName),
+				e.importPath,
+			)
+		}
 		e.writer.WriteDocs(environment.Docs)
 		e.writer.P(environment.Name.PascalCase.UnsafeName, " struct {")
 		for _, environmentURL := range environmentURLMapToSortedSlice(environment.Urls) {

@@ -68,12 +68,27 @@ func (c CallExpr) isExpr() {}
 
 func (c CallExpr) WriteTo(w *Writer) {
 	w.WriteExpr(c.FunctionName)
+	if len(c.Parameters) == 0 {
+		w.Write("()")
+		return
+	}
+
+	if len(c.Parameters) == 1 {
+		// A single parameter can be written in one line, e.g. acme.Call("one")
+		w.Write("(")
+		for _, param := range c.Parameters {
+			w.WriteExpr(param)
+		}
+		w.Write(")")
+		return
+	}
+
 	w.WriteLine("(")
 	for _, param := range c.Parameters {
 		w.WriteExpr(param)
 		w.WriteLine(",")
 	}
-	w.WriteLine(")")
+	w.Write(")")
 }
 
 // Object is either a local or imported object, such as a constant,
@@ -91,13 +106,13 @@ type Object interface {
 // values (e.g. "foo").
 type ImportedObject struct {
 	Name       string
-	importPath string
+	ImportPath string
 }
 
 func NewImportedObject(name string, importPath string) ImportedObject {
 	return ImportedObject{
 		Name:       name,
-		importPath: importPath,
+		ImportPath: importPath,
 	}
 }
 
@@ -105,7 +120,7 @@ func (i ImportedObject) isExpr()   {}
 func (i ImportedObject) isObject() {}
 
 func (i ImportedObject) WriteTo(w *Writer) {
-	alias := w.imports.Add(i.importPath)
+	alias := w.imports.Add(i.ImportPath)
 	w.Write(fmt.Sprintf("%s.%s", alias, i.Name))
 }
 

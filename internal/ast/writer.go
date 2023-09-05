@@ -33,6 +33,11 @@ func (w *Writer) WriteLine(elements ...any) {
 
 // WriteExpr writes the given expression.
 func (w *Writer) WriteExpr(expr Expr) {
+	if expr == nil {
+		// Should never happen, but included for debugging purposes.
+		w.Write("<nil>")
+		return
+	}
 	expr.WriteTo(w)
 }
 
@@ -48,8 +53,9 @@ type SourceCodeBuilder struct {
 	expressions []Expr
 }
 
-func NewSourceCodeBuilder() *SourceCodeBuilder {
-	return new(SourceCodeBuilder)
+func NewSourceCodeBuilder(expr ...Expr) *SourceCodeBuilder {
+	builder := new(SourceCodeBuilder)
+	return builder.AddExpr(expr...)
 }
 
 func (s *SourceCodeBuilder) AddExpr(expr ...Expr) *SourceCodeBuilder {
@@ -63,7 +69,10 @@ func (s *SourceCodeBuilder) BuildSnippet() (string, error) {
 		buffer:  bytes.NewBuffer(nil),
 		imports: make(gospec.Imports),
 	}
-	for _, expr := range s.expressions {
+	for i, expr := range s.expressions {
+		if i > 0 {
+			writer.WriteLine()
+		}
 		writer.WriteExpr(expr)
 	}
 	var prefix []byte
@@ -72,7 +81,7 @@ func (s *SourceCodeBuilder) BuildSnippet() (string, error) {
 	}
 	bytes, err := format.Source(writer.buffer.Bytes())
 	if err != nil {
-		return "", fmt.Errorf("failed to format snippet: %v", err)
+		return "", fmt.Errorf("failed to format snippet: %v\n%s", err, writer.buffer.String())
 	}
 	return string(append(prefix, bytes...)), nil
 }

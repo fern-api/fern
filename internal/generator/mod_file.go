@@ -3,6 +3,8 @@ package generator
 import (
 	"bytes"
 	"fmt"
+
+	"github.com/fern-api/fern-go/internal/coordinator"
 )
 
 const (
@@ -28,9 +30,9 @@ const (
 // go 1.13
 //
 // require github.com/google/uuid v1.3.1
-func NewModFile(c *ModuleConfig, enableExplicitNull bool) (*File, error) {
+func NewModFile(coordinator *coordinator.Client, c *ModuleConfig, enableExplicitNull bool) (*File, string, error) {
 	if c.Path == "" {
-		return nil, fmt.Errorf("module path is required")
+		return nil, "", fmt.Errorf("module path is required")
 	}
 
 	buffer := bytes.NewBuffer(nil)
@@ -59,8 +61,9 @@ func NewModFile(c *ModuleConfig, enableExplicitNull bool) (*File, error) {
 	fmt.Fprint(buffer, ")\n")
 	fmt.Fprintln(buffer)
 
-	return &File{
-		Path:    modFilename,
-		Content: buffer.Bytes(),
-	}, nil
+	return NewFile(
+		coordinator,
+		modFilename,
+		buffer.Bytes(),
+	), version, nil
 }

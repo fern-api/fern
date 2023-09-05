@@ -4,6 +4,8 @@ package generator
 type Config struct {
 	DryRun             bool
 	EnableExplicitNull bool
+	IncludeReadme      bool
+	Organization       string
 	Version            string
 	IRFilepath         string
 	ImportPath         string
@@ -31,6 +33,8 @@ type ModuleConfig struct {
 func NewConfig(
 	dryRun bool,
 	enableExplicitNull bool,
+	includeReadme bool,
+	organization string,
 	version string,
 	irFilepath string,
 	importPath string,
@@ -39,6 +43,8 @@ func NewConfig(
 	return &Config{
 		DryRun:             dryRun,
 		EnableExplicitNull: enableExplicitNull,
+		IncludeReadme:      includeReadme,
+		Organization:       organization,
 		Version:            version,
 		IRFilepath:         irFilepath,
 		ImportPath:         importPath,

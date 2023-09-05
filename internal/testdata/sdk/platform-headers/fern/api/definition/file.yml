@@ -1,4 +1,5 @@
 service:
+  url: Core
   base-path: /file
   auth: false
   endpoints:
