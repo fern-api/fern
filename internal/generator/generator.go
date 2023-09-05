@@ -370,9 +370,10 @@ func (g *Generator) generateReadme(
 	generatedGoVersion string,
 ) (err error) {
 	badge := generatorexec.BadgeTypeGo
+	capitalizedOrganization := strings.Title(g.config.Organization)
 
-	installation := "Run the following command to use the %s Go library in your module:\n"
-	installation += "```go\n"
+	installation := fmt.Sprintf("Run the following command to use the %s Go library in your module:\n", capitalizedOrganization)
+	installation += "```sh\n"
 	installation += fmt.Sprintf("go get %s\n", g.config.ModuleConfig.Path)
 	installation += "```\n"
 
@@ -382,9 +383,9 @@ func (g *Generator) generateReadme(
 		if err != nil {
 			return err
 		}
+		usage = "```go\n" + usage + "\n```\n"
 	}
 
-	capitalizedOrganization := strings.Title(g.config.Organization)
 	return g.coordinator.GenerateReadme(
 		&generatorexec.GenerateReadmeRequest{
 			Title: fmt.Sprintf("%s Go Library", capitalizedOrganization),
