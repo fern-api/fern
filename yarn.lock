@@ -2500,7 +2500,7 @@ __metadata:
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
     typescript: 4.6.4
-    yaml: ^2.1.1
+    yaml: ^2.2.2
     zod: ^3.14.3
   languageName: unknown
   linkType: soft
@@ -13174,6 +13174,13 @@ env-cmd@toddbluhm/env-cmd:
   version: 2.1.1
   resolution: "yaml@npm:2.1.1"
   checksum: f48bb209918aa57cfaf78ef6448d1a1f8187f45c746f933268b7023dc59e5456004611879126c9bb5ea55b0a2b1c2b392dfde436931ece0c703a3d754562bb96
+  languageName: node
+  linkType: hard
+
+"yaml@npm:^2.2.2":
+  version: 2.3.2
+  resolution: "yaml@npm:2.3.2"
+  checksum: acd80cc24df12c808c6dec8a0176d404ef9e6f08ad8786f746ecc9d8974968c53c6e8a67fdfabcc5f99f3dc59b6bb0994b95646ff03d18e9b1dcd59eccc02146
   languageName: node
   linkType: hard
 

@@ -4011,7 +4011,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.7.1"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
-            ["yaml", "npm:2.1.1"],\
+            ["yaml", "npm:2.3.2"],\
             ["zod", "npm:3.16.0"]\
           ],\
           "linkType": "SOFT"\
@@ -16423,6 +16423,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/yaml-npm-2.1.1-e717f9b915-f48bb20991.zip/node_modules/yaml/",\
           "packageDependencies": [\
             ["yaml", "npm:2.1.1"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:2.3.2", {\
+          "packageLocation": "./.yarn/cache/yaml-npm-2.3.2-b844830a8b-acd80cc24d.zip/node_modules/yaml/",\
+          "packageDependencies": [\
+            ["yaml", "npm:2.3.2"]\
           ],\
           "linkType": "HARD"\
         }]\
