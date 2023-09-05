@@ -17162,7 +17162,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The exact weight being shipped. Either \`weight\` or \`teus\` is required.",
                   "file": undefined,
                   "generatedName": "CreateCarbonCalculationWeight",
                   "nameOverride": undefined,
@@ -17197,7 +17197,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The total distance traveled by the shipment. This can be used instead of origin/destination locations.",
                   "file": undefined,
                   "generatedName": "CreateCarbonCalculationDistance",
                   "nameOverride": undefined,
@@ -17214,7 +17214,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The latitude and longitude of the origin. One of \`distance\`, \`origin_coordinates\`, \`origin_address\`, or \`origin_port\` is required.",
                   "file": undefined,
                   "generatedName": "CreateCarbonCalculationOriginCoordinates",
                   "nameOverride": undefined,
@@ -17231,7 +17231,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The physical address of the origin. One of \`distance\`, \`origin_coordinates\`, \`origin_address\`, or \`origin_port\` is required.",
                   "file": undefined,
                   "generatedName": "CreateCarbonCalculationOriginAddress",
                   "nameOverride": undefined,
@@ -17248,7 +17248,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The latitude and longitude of the destination. One of \`distance\`, \`destination_coordinates\`, \`destination_address\`, or \`destination_port\` is required.",
                   "file": undefined,
                   "generatedName": "CreateCarbonCalculationDestinationCoordinates",
                   "nameOverride": undefined,
@@ -17265,7 +17265,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The physical address of the destination. One of \`distance\`, \`destination_coordinates\`, \`destination_address\`, or \`destination_port\` is required.",
                   "file": undefined,
                   "generatedName": "CreateCarbonCalculationDestinationAddress",
                   "nameOverride": undefined,
@@ -18637,7 +18637,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "Optional. The origin port",
                   "file": undefined,
                   "generatedName": "CreateLineItemOriginPort",
                   "nameOverride": undefined,
@@ -18654,7 +18654,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "Optional. The destination port",
                   "file": undefined,
                   "generatedName": "CreateLineItemDestinationPort",
                   "nameOverride": undefined,
@@ -18882,7 +18882,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The cost and currency per unit for this line item",
                   "file": undefined,
                   "generatedName": "CreateLineItemUnitCost",
                   "nameOverride": undefined,
@@ -20378,7 +20378,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The origin port",
                   "file": undefined,
                   "generatedName": "CreateOrUpdatePurchaseOrderOriginPort",
                   "nameOverride": undefined,
@@ -20395,7 +20395,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The destination port",
                   "file": undefined,
                   "generatedName": "CreateOrUpdatePurchaseOrderDestinationPort",
                   "nameOverride": undefined,
@@ -23076,7 +23076,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "Sum of charges on the invoice",
                   "file": undefined,
                   "generatedName": "InvoiceTotal",
                   "nameOverride": undefined,
@@ -23093,7 +23093,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "Outstanding balance on the invoice",
                   "file": undefined,
                   "generatedName": "InvoiceBalance",
                   "nameOverride": undefined,
@@ -23218,7 +23218,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "Entity receiving the invoice (i.e. the customer)",
                   "file": undefined,
                   "generatedName": "InvoiceRecipient",
                   "nameOverride": undefined,
@@ -23235,7 +23235,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "Entity issuing the invoice (i.e. Flexport)",
                   "file": undefined,
                   "generatedName": "InvoiceIssuer",
                   "nameOverride": undefined,
@@ -25135,7 +25135,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The object of the location that is tied to this party. This should be the address that would be associated with the party at the top of a purchase order document. Used for order delivery to suppliers, not in the booking process.",
                   "file": undefined,
                   "generatedName": "PartiesLocation",
                   "nameOverride": undefined,
@@ -28394,7 +28394,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "Links to the parent shipment if the shipment is a child shipment in a buyer's consol.",
                   "file": undefined,
                   "generatedName": "ShipmentParentShipment",
                   "nameOverride": undefined,

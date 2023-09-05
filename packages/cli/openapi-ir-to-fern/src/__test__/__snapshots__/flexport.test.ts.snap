@@ -2180,7 +2180,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<list<CreateLineItemDestinationLocation>>",
             },
             "destination_port": {
-              "docs": undefined,
+              "docs": "Optional. The destination port",
               "type": "optional<CreatePurchaseOrderPort>",
             },
             "hs_codes": {
@@ -2220,7 +2220,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<string>",
             },
             "origin_port": {
-              "docs": undefined,
+              "docs": "Optional. The origin port",
               "type": "optional<CreatePurchaseOrderPort>",
             },
             "parent_line_key": {
@@ -2236,7 +2236,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<CreateLineItemTransportationMode>",
             },
             "unit_cost": {
-              "docs": undefined,
+              "docs": "The cost and currency per unit for this line item",
               "type": "optional<MoneyCreate>",
             },
             "unit_of_measure": {
@@ -3170,7 +3170,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<list<string>>",
             },
             "destination_port": {
-              "docs": undefined,
+              "docs": "The destination port",
               "type": "optional<CreatePurchaseOrderPort>",
             },
             "freight_payment_terms": {
@@ -3218,7 +3218,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<string>",
             },
             "origin_port": {
-              "docs": undefined,
+              "docs": "The origin port",
               "type": "optional<CreatePurchaseOrderPort>",
             },
             "parties": {
@@ -4408,7 +4408,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<string>",
             },
             "balance": {
-              "docs": undefined,
+              "docs": "Outstanding balance on the invoice",
               "type": "optional<Money>",
             },
             "credit_memos": {
@@ -4428,7 +4428,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<datetime>",
             },
             "issuer": {
-              "docs": undefined,
+              "docs": "Entity issuing the invoice (i.e. Flexport)",
               "type": "optional<CompanyEntity>",
             },
             "items": {
@@ -4448,7 +4448,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<list<string>>",
             },
             "recipient": {
-              "docs": undefined,
+              "docs": "Entity receiving the invoice (i.e. the customer)",
               "type": "optional<CompanyEntity>",
             },
             "shipments": {
@@ -4460,7 +4460,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<InvoiceStatus>",
             },
             "total": {
-              "docs": undefined,
+              "docs": "Sum of charges on the invoice",
               "type": "optional<Money>",
             },
             "type": {
@@ -5682,7 +5682,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<list<PartiesContactsItem>>",
             },
             "location": {
-              "docs": undefined,
+              "docs": "The object of the location that is tied to this party. This should be the address that would be associated with the party at the top of a purchase order document. Used for order delivery to suppliers, not in the booking process.",
               "type": "optional<Address>",
             },
             "role": {
@@ -7322,7 +7322,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<OceanShipmentDetail>",
             },
             "parent_shipment": {
-              "docs": undefined,
+              "docs": "Links to the parent shipment if the shipment is a child shipment in a buyer's consol.",
               "type": "optional<ShipmentRef>",
             },
             "picked_up_in_full_date": {
@@ -9182,11 +9182,11 @@ exports[`open api parser flexport simple 1`] = `
               "body": {
                 "properties": {
                   "destination_address": {
-                    "docs": undefined,
+                    "docs": "The physical address of the destination. One of \`distance\`, \`destination_coordinates\`, \`destination_address\`, or \`destination_port\` is required.",
                     "type": "optional<root.AddressForRequestBody>",
                   },
                   "destination_coordinates": {
-                    "docs": undefined,
+                    "docs": "The latitude and longitude of the destination. One of \`distance\`, \`destination_coordinates\`, \`destination_address\`, or \`destination_port\` is required.",
                     "type": "optional<root.CoordinatesCreate>",
                   },
                   "destination_port": {
@@ -9194,7 +9194,7 @@ exports[`open api parser flexport simple 1`] = `
                     "type": "optional<string>",
                   },
                   "distance": {
-                    "docs": undefined,
+                    "docs": "The total distance traveled by the shipment. This can be used instead of origin/destination locations.",
                     "type": "optional<root.DistanceCreate>",
                   },
                   "flight_type": {
@@ -9214,11 +9214,11 @@ exports[`open api parser flexport simple 1`] = `
                     "type": "optional<boolean>",
                   },
                   "origin_address": {
-                    "docs": undefined,
+                    "docs": "The physical address of the origin. One of \`distance\`, \`origin_coordinates\`, \`origin_address\`, or \`origin_port\` is required.",
                     "type": "optional<root.AddressForRequestBody>",
                   },
                   "origin_coordinates": {
-                    "docs": undefined,
+                    "docs": "The latitude and longitude of the origin. One of \`distance\`, \`origin_coordinates\`, \`origin_address\`, or \`origin_port\` is required.",
                     "type": "optional<root.CoordinatesCreate>",
                   },
                   "origin_port": {
@@ -9238,7 +9238,7 @@ exports[`open api parser flexport simple 1`] = `
                     "type": "optional<root.CreateCarbonCalculationTruckingServiceType>",
                   },
                   "weight": {
-                    "docs": undefined,
+                    "docs": "The exact weight being shipped. Either \`weight\` or \`teus\` is required.",
                     "type": "optional<root.WeightCreate>",
                   },
                 },

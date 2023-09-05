@@ -2273,7 +2273,7 @@ exports[`open api parser deel simple 1`] = `
           "docs": undefined,
           "properties": {
             "client_legal_entity": {
-              "docs": undefined,
+              "docs": "The client legal entity associated with the employment.",
               "type": "optional<PeopleClientLegalEntity>",
             },
             "completion_date": {
@@ -2325,7 +2325,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<string>",
             },
             "payment": {
-              "docs": undefined,
+              "docs": "The payment information associated with the employment.",
               "type": "optional<PeoplePayment>",
             },
             "seniority": {
@@ -2341,7 +2341,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<string>",
             },
             "team": {
-              "docs": undefined,
+              "docs": "The team associated with the employment.",
               "type": "optional<Team>",
             },
             "timezone": {
@@ -5802,7 +5802,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<string>",
             },
             "client_legal_entity": {
-              "docs": undefined,
+              "docs": "Object representing the client legal entity that the user is associated with",
               "type": "optional<PeopleClientLegalEntity>",
             },
             "completion_date": {
@@ -5882,7 +5882,7 @@ exports[`open api parser deel simple 1`] = `
               "type": "optional<string>",
             },
             "monthly_payment": {
-              "docs": undefined,
+              "docs": "Object representing the user's monthly payment information",
               "type": "optional<MonthlyPayment>",
             },
             "payments": {

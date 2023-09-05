@@ -68,7 +68,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "properties": {
-              "docs": undefined,
+              "docs": "The field properties.",
               "type": "FieldPropertiesDto",
             },
           },
@@ -292,7 +292,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
           "properties": {
             "_meta": {
-              "docs": undefined,
+              "docs": "The metadata.",
               "type": "optional<AssetMeta>",
             },
             "created": {
@@ -380,7 +380,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<list<string>>",
             },
             "type": {
-              "docs": undefined,
+              "docs": "The type of the asset.",
               "type": "AssetType",
             },
             "version": {
@@ -587,11 +587,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<list<string>>",
             },
             "defaultValues": {
-              "docs": undefined,
+              "docs": "The language specific default value as a list of asset ids.",
               "type": "optional<LocalizedValueOfReadonlyListOfString>",
             },
             "expectedType": {
-              "docs": undefined,
+              "docs": "The expected type.",
               "type": "optional<AssetType>",
             },
             "folderId": {
@@ -639,7 +639,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "previewMode": {
-              "docs": undefined,
+              "docs": "The preview mode for the asset.",
               "type": "AssetPreviewMode",
             },
             "resolveFirst": {
@@ -709,7 +709,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "datetime",
             },
             "status": {
-              "docs": undefined,
+              "docs": "The status of the operation.",
               "type": "JobStatus",
             },
             "stopped": {
@@ -753,11 +753,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<boolean>",
             },
             "defaultValues": {
-              "docs": undefined,
+              "docs": "The language specific default value for the field value.",
               "type": "optional<LocalizedValueOfNullableBoolean>",
             },
             "editor": {
-              "docs": undefined,
+              "docs": "The editor that is used to manage this field.",
               "type": "BooleanFieldEditor",
             },
             "inlineEditable": {
@@ -774,7 +774,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "error": {
-              "docs": undefined,
+              "docs": "The error when the bulk job failed.",
               "type": "optional<ErrorDto>",
             },
             "id": {
@@ -847,7 +847,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<list<string>>",
             },
             "type": {
-              "docs": undefined,
+              "docs": "The update type.",
               "type": "optional<BulkUpdateAssetType>",
             },
           },
@@ -896,7 +896,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "data": {
-              "docs": undefined,
+              "docs": "The data of the content when type is set to 'Upsert', 'Create', 'Update' or 'Patch.",
               "type": "optional<ContentData>",
             },
             "dueTime": {
@@ -924,7 +924,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<boolean>",
             },
             "query": {
-              "docs": undefined,
+              "docs": "An optional query to identify the content to update.",
               "type": "optional<QueryJsonDto>",
             },
             "schema": {
@@ -936,7 +936,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "type": {
-              "docs": undefined,
+              "docs": "The update type.",
               "type": "optional<BulkUpdateContentType>",
             },
           },
@@ -1227,7 +1227,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "referenceData": {
-              "docs": undefined,
+              "docs": "The reference data for the frontend UI.",
               "type": "optional<ContentData>",
             },
             "referenceFields": {
@@ -1235,7 +1235,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<list<FieldDto>>",
             },
             "scheduleJob": {
-              "docs": undefined,
+              "docs": "The scheduled status.",
               "type": "optional<ScheduleJobDto>",
             },
             "schemaDisplayName": {
@@ -1319,7 +1319,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
           "properties": {
             "_meta": {
-              "docs": undefined,
+              "docs": "The metadata to provide information about this request.",
               "type": "optional<ContributorsMetadata>",
             },
             "items": {
@@ -1366,11 +1366,11 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "action": {
-              "docs": undefined,
+              "docs": "The action properties.",
               "type": "RuleActionDto",
             },
             "trigger": {
-              "docs": undefined,
+              "docs": "The trigger properties.",
               "type": "RuleTriggerDto",
             },
           },
@@ -1422,7 +1422,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "calculatedDefaultValue": {
-              "docs": undefined,
+              "docs": "The calculated default value for the field value.",
               "type": "optional<DateTimeCalculatedDefaultValue>",
             },
             "defaultValue": {
@@ -1430,11 +1430,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<datetime>",
             },
             "defaultValues": {
-              "docs": undefined,
+              "docs": "The language specific default value for the field value.",
               "type": "optional<LocalizedValueOfNullableInstant>",
             },
             "editor": {
-              "docs": undefined,
+              "docs": "The editor that is used to manage this field.",
               "type": "DateTimeFieldEditor",
             },
             "format": {
@@ -1714,7 +1714,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "properties": {
-              "docs": undefined,
+              "docs": "The field properties.",
               "type": "FieldPropertiesDto",
             },
           },
@@ -1835,7 +1835,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "action": {
-              "docs": undefined,
+              "docs": "The action to perform when the condition is met.",
               "type": "FieldRuleAction",
             },
             "condition": {
@@ -1853,7 +1853,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "editor": {
-              "docs": undefined,
+              "docs": "The editor that is used to manage this field.",
               "type": "GeolocationFieldEditor",
             },
           },
@@ -2076,7 +2076,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "properties": {
-              "docs": undefined,
+              "docs": "The field properties.",
               "type": "FieldPropertiesDto",
             },
           },
@@ -2139,11 +2139,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<double>",
             },
             "defaultValues": {
-              "docs": undefined,
+              "docs": "The language specific default value for the field value.",
               "type": "optional<LocalizedValueOfNullableDouble>",
             },
             "editor": {
-              "docs": undefined,
+              "docs": "The editor that is used to manage this field.",
               "type": "NumberFieldEditor",
             },
             "inlineEditable": {
@@ -2276,7 +2276,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "locked": {
-              "docs": undefined,
+              "docs": "The reason why the plan cannot be changed.",
               "type": "PlansLockedReason",
             },
             "planOwner": {
@@ -2292,7 +2292,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "referral": {
-              "docs": undefined,
+              "docs": "The referral management.",
               "type": "optional<ReferralInfo>",
             },
           },
@@ -2435,11 +2435,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<list<string>>",
             },
             "defaultValues": {
-              "docs": undefined,
+              "docs": "The language specific default value as a list of content ids.",
               "type": "optional<LocalizedValueOfReadonlyListOfString>",
             },
             "editor": {
-              "docs": undefined,
+              "docs": "The editor that is used to manage this field.",
               "type": "ReferencesFieldEditor",
             },
             "maxItems": {
@@ -2575,7 +2575,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "datetime",
             },
             "status": {
-              "docs": undefined,
+              "docs": "The status of the operation.",
               "type": "JobStatus",
             },
             "stopped": {
@@ -2718,7 +2718,7 @@ exports[`open api parser squidex simple 1`] = `
           ],
           "properties": {
             "action": {
-              "docs": undefined,
+              "docs": "The action properties.",
               "type": "RuleActionDto",
             },
             "created": {
@@ -2762,7 +2762,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "integer",
             },
             "trigger": {
-              "docs": undefined,
+              "docs": "The trigger properties.",
               "type": "RuleTriggerDto",
             },
             "version": {
@@ -2816,7 +2816,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "editor": {
-              "docs": undefined,
+              "docs": "The html editor.",
               "type": "RuleFieldEditor",
             },
             "isFormattable": {
@@ -2860,7 +2860,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "jobResult": {
-              "docs": undefined,
+              "docs": "The result of the job.",
               "type": "RuleJobResult",
             },
             "lastDump": {
@@ -2876,7 +2876,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "integer",
             },
             "result": {
-              "docs": undefined,
+              "docs": "The result of the event.",
               "type": "RuleResult",
             },
           },
@@ -3159,15 +3159,15 @@ exports[`open api parser squidex simple 1`] = `
               "type": "map<string, string>",
             },
             "properties": {
-              "docs": undefined,
+              "docs": "The schema properties.",
               "type": "SchemaPropertiesDto",
             },
             "scripts": {
-              "docs": undefined,
+              "docs": "The scripts.",
               "type": "SchemaScriptsDto",
             },
             "type": {
-              "docs": undefined,
+              "docs": "The type of the schema.",
               "type": "SchemaType",
             },
             "version": {
@@ -3294,7 +3294,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "type": {
-              "docs": undefined,
+              "docs": "The type of the search result.",
               "type": "SearchResultType",
             },
           },
@@ -3338,7 +3338,9 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "action": {
-              "docs": undefined,
+              "docs": "* Broadcast = send to all users.
+ * User = send to all target users(s).
+ * Group = send to all target group(s).",
               "type": "ActionTypeEnum",
             },
             "connectionString": {
@@ -3631,7 +3633,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<list<string>>",
             },
             "contentType": {
-              "docs": undefined,
+              "docs": "How the string content should be interpreted.",
               "type": "StringContentType",
             },
             "createEnum": {
@@ -3643,11 +3645,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "defaultValues": {
-              "docs": undefined,
+              "docs": "The language specific default value for the field value.",
               "type": "optional<LocalizedValueOfString>",
             },
             "editor": {
-              "docs": undefined,
+              "docs": "The editor that is used to manage this field.",
               "type": "StringFieldEditor",
             },
             "folderId": {
@@ -3740,11 +3742,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<list<string>>",
             },
             "defaultValues": {
-              "docs": undefined,
+              "docs": "The language specific default value for the field value.",
               "type": "optional<LocalizedValueOfReadonlyListOfString>",
             },
             "editor": {
-              "docs": undefined,
+              "docs": "The editor that is used to manage this field.",
               "type": "TagsFieldEditor",
             },
             "maxItems": {
@@ -3841,7 +3843,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "result": {
-              "docs": undefined,
+              "docs": "The result of the translation.",
               "type": "TranslationResultCode",
             },
             "text": {
@@ -3932,7 +3934,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "editor": {
-              "docs": undefined,
+              "docs": "The editor that is used to manage this field.",
               "type": "UIFieldEditor",
             },
           },
@@ -3954,7 +3956,7 @@ exports[`open api parser squidex simple 1`] = `
           "docs": undefined,
           "properties": {
             "properties": {
-              "docs": undefined,
+              "docs": "The field properties.",
               "type": "FieldPropertiesDto",
             },
           },
@@ -4010,11 +4012,11 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<map<string, optional<string>>>",
             },
             "properties": {
-              "docs": undefined,
+              "docs": "The optional properties.",
               "type": "optional<SchemaPropertiesDto>",
             },
             "scripts": {
-              "docs": undefined,
+              "docs": "The optional scripts.",
               "type": "optional<SchemaScriptsDto>",
             },
           },
@@ -4047,7 +4049,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "optional<string>",
             },
             "properties": {
-              "docs": undefined,
+              "docs": "The field properties.",
               "type": "FieldPropertiesDto",
             },
           },
@@ -4072,7 +4074,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "properties": {
-              "docs": undefined,
+              "docs": "The field properties.",
               "type": "FieldPropertiesDto",
             },
           },
@@ -4185,7 +4187,7 @@ exports[`open api parser squidex simple 1`] = `
               "type": "string",
             },
             "method": {
-              "docs": undefined,
+              "docs": "The type of the request.",
               "type": "WebhookMethod",
             },
             "payload": {
@@ -8100,7 +8102,7 @@ The client secret is auto generated on the server and returned. The client does 
               "body": {
                 "properties": {
                   "action": {
-                    "docs": undefined,
+                    "docs": "The action properties.",
                     "type": "optional<root.RuleActionDto>",
                   },
                   "isEnabled": {
@@ -8112,7 +8114,7 @@ The client secret is auto generated on the server and returned. The client does 
                     "type": "optional<string>",
                   },
                   "trigger": {
-                    "docs": undefined,
+                    "docs": "The trigger properties.",
                     "type": "optional<root.RuleTriggerDto>",
                   },
                 },
@@ -8733,7 +8735,7 @@ The client secret is auto generated on the server and returned. The client does 
                     "type": "string",
                   },
                   "type": {
-                    "docs": undefined,
+                    "docs": "The type of the schema.",
                     "type": "root.SchemaType",
                   },
                 },

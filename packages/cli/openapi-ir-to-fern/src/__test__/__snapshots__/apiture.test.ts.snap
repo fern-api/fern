@@ -183,7 +183,7 @@ exports[`open api parser apiture simple 1`] = `
               "type": "optional<creditOrDebitValue>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "The account ID.",
               "type": "ReadOnlyResourceId",
             },
             "incomplete": {
@@ -191,7 +191,7 @@ exports[`open api parser apiture simple 1`] = `
               "type": "boolean",
             },
             "updatedAt": {
-              "docs": undefined,
+              "docs": "The time when the balance values were last updated from the banking core.",
               "type": "optional<readOnlyTimestamp>",
             },
           },
@@ -372,7 +372,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "optional<string>",
             },
             "primaryAccountId": {
-              "docs": undefined,
+              "docs": "The \`id\` of the customer's primary account. This property only exists for retail customers, and only if the customer has designated a primary account.",
               "type": "optional<ReadOnlyResourceId>",
             },
             "start": {
@@ -600,7 +600,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "The unique identifier for this problem. This is an immutable opaque string.",
               "type": "optional<ReadOnlyResourceId>",
             },
             "instance": {
@@ -609,7 +609,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "optional<string>",
             },
             "occurredAt": {
-              "docs": undefined,
+              "docs": "The timestamp when the problem occurred, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC.",
               "type": "optional<readOnlyTimestamp>",
             },
             "problems": {
@@ -716,7 +716,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "docs": "A single security question within the \`questions\` array of the [\`challengeSecurityQuestions\`](#schema-challengeSecurityQuestions)",
           "properties": {
             "id": {
-              "docs": undefined,
+              "docs": "The unique ID of security question prompt. This should be included in the [\`challengeVerification\`](#schema-challengeVerification) response as the \`promptId\`.",
               "type": "challengePromptId",
             },
             "prompt": {
@@ -837,7 +837,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "list<CutoffTime>",
             },
             "timeZoneId": {
-              "docs": undefined,
+              "docs": "The identifier of the time zone for which all of the \`items[].time\` are returned in.
+The client can use this value to localize the \`items[].time\` values to the local time zone of the customer, as well as for formatting to localized names, such as \`EST\` and \`EDT\`.",
               "type": "timeZoneId",
             },
           },
@@ -935,7 +936,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           ],
           "properties": {
             "incompleteAccounts": {
-              "docs": undefined,
+              "docs": "Pass these values as the \`?accounts=\` query parameter on the next retry of the [\`listAccountBalances\`](#op-listAccountBalances) operation. This value is empty if the client has reached the retry limit.",
               "type": "accountIds",
             },
             "items": {
@@ -1015,7 +1016,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "boolean",
             },
             "institution": {
-              "docs": undefined,
+              "docs": "The name and other information about the financial institution, if found.",
               "type": "optional<SimpleInstitution>",
             },
             "intermediaryInstitutions": {
@@ -1032,7 +1033,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           ],
           "properties": {
             "id": {
-              "docs": undefined,
+              "docs": "The unique ID of the invitation.",
               "type": "ReadOnlyResourceId",
             },
           },
@@ -1070,7 +1071,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "docs": "Fields of an overdraft protection account, used to compose other schemas.",
           "properties": {
             "id": {
-              "docs": undefined,
+              "docs": "The unique ID of the account resource. Use this as the \`{accountId}\` in [\`getAccount\`](#op-getAccount) or [\`listAccountBalances\`](#op-listAccountBalances).",
               "type": "optional<resourceId>",
             },
             "label": {
@@ -1133,7 +1134,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "string",
             },
             "type": {
-              "docs": undefined,
+              "docs": "The type of account.",
               "type": "ProductType",
             },
           },
@@ -1217,7 +1218,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "docs": "A request from the service for the user to verify their identity. This contains a challenge ID, the corresponding operation ID, and a list of challenge factors for identity verification. The user must complete one of these challenge factors to satisfy the challenge. This schema defines the attributes in the 401 [Unauthorized problem response](#schema-apiProblem) when the 401 problem type name is \`challengeRequired\`. See the "Challenge API" for details.",
           "properties": {
             "challengeId": {
-              "docs": undefined,
+              "docs": "The unique ID of this challenge instance. This is an opaque string. This is passed when starting a challenge factor or when validating the identity challenge responses.",
               "type": "ReadOnlyResourceId",
             },
             "factors": {
@@ -1225,7 +1226,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "list<ChallengeFactor>",
             },
             "x-fern-sdk-method-name": {
-              "docs": undefined,
+              "docs": "The ID of the API operation for which the user must verify their identity. This is passed when starting a challenge factor or when validating the identity challenge responses.",
               "type": "ReadOnlyResourceId",
             },
           },
@@ -1234,7 +1235,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "docs": "A simple representation of a financial institution.",
           "properties": {
             "address": {
-              "docs": undefined,
+              "docs": "The financial institution's postal mailing address.",
               "type": "Address",
             },
             "locator": {
@@ -1242,7 +1243,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "string",
             },
             "locatorType": {
-              "docs": undefined,
+              "docs": "Indicates the type of this institution's \`locator\`.",
               "type": "InstitutionLocatorType",
             },
             "name": {
@@ -1355,15 +1356,15 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "docs": "Common fields of the transaction resource used to build other model schemas.",
           "properties": {
             "amount": {
-              "docs": undefined,
+              "docs": "The transaction amount in dollars. This value is negative if the transaction is a debit and positive if it is a credit.",
               "type": "creditOrDebitValue",
             },
             "balance": {
-              "docs": undefined,
+              "docs": "The account's running current balance as of this transaction. The \`balance\` may be omitted if the request includes filters which preclude the inclusion of a running balance.",
               "type": "optional<creditOrDebitValue>",
             },
             "category": {
-              "docs": undefined,
+              "docs": "The transaction category, if assigned.",
               "type": "optional<TransactionCategorization>",
             },
             "check": {
@@ -1403,11 +1404,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "optional<string>",
             },
             "subtype": {
-              "docs": undefined,
+              "docs": "The transaction's kind of debit or credit.",
               "type": "TransactionSubType",
             },
             "type": {
-              "docs": undefined,
+              "docs": "The transaction type. If the \`type\` is \`debit\` or \`credit\`, the \`subtype\` conveys further transaction type details.",
               "type": "TransactionType",
             },
           },
@@ -1544,7 +1545,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "docs": "A reference to a banking account used within an account to account transfer. This object may be set from an account's \`account.reference\` object.",
           "properties": {
             "id": {
-              "docs": undefined,
+              "docs": "The unique ID of a banking account.",
               "type": "resourceId",
             },
             "label": {
@@ -1552,11 +1553,11 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "optional<string>",
             },
             "location": {
-              "docs": undefined,
+              "docs": "Indicates where an account is held.",
               "type": "optional<AccountLocation>",
             },
             "type": {
-              "docs": undefined,
+              "docs": "The product type of the account.",
               "type": "optional<ProductType>",
             },
           },
@@ -1577,7 +1578,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "string",
             },
             "reason": {
-              "docs": undefined,
+              "docs": "Indicates why this date is restricted.",
               "type": "TransferDateRestrictionType",
             },
           },
@@ -1674,7 +1675,7 @@ The response may include dates prior to requested the start date, as that is use
           "docs": "Common fields of the transfer resource used to build other model schemas.",
           "properties": {
             "amount": {
-              "docs": undefined,
+              "docs": "The amount of money to transfer between accounts.",
               "type": "optional<monetaryValue>",
             },
             "memo": {
@@ -1682,11 +1683,11 @@ The response may include dates prior to requested the start date, as that is use
               "type": "optional<string>",
             },
             "sourceAccount": {
-              "docs": undefined,
+              "docs": "The source account where the funds are withdrawn.",
               "type": "optional<TransferAccountReference>",
             },
             "targetAccount": {
-              "docs": undefined,
+              "docs": "The target account where the funds are deposited.",
               "type": "optional<TransferAccountReference>",
             },
           },
@@ -1841,7 +1842,7 @@ The response may include dates prior to requested the start date, as that is use
               "type": "optional<datetime>",
             },
             "schedule": {
-              "docs": undefined,
+              "docs": "When the transfer should occur and any recurrence.",
               "type": "TransferItemSchedule",
             },
             "state": {
@@ -1911,7 +1912,7 @@ The response may include dates prior to requested the start date, as that is use
 For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are mutually exclusive.",
           "properties": {
             "amountLimit": {
-              "docs": undefined,
+              "docs": "For recurring schedules (\`frequency\` is not \`once\`), this is the total dollar amount limit including the first transfer. No transfers are scheduled if they would exceed this amount. This property is ignored if \`frequency\` is \`once\`.",
               "type": "optional<monetaryValue>",
             },
             "count": {
@@ -2989,7 +2990,7 @@ Note: This operation requires an identity challenge if the financial institution
                 ],
                 "properties": {
                   "schedule": {
-                    "docs": undefined,
+                    "docs": "When the transfer should occur and any recurrence.",
                     "type": "root.TransferSchedule",
                   },
                 },
@@ -3131,7 +3132,7 @@ Note: This operation requires an identity challenge if the financial institution
                 ],
                 "properties": {
                   "schedule": {
-                    "docs": undefined,
+                    "docs": "When the transfer should occur and any recurrence.",
                     "type": "optional<root.TransferSchedule>",
                   },
                 },
