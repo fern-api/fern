@@ -12891,7 +12891,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The team associated with the employment.",
                   "file": undefined,
                   "generatedName": "EmploymentTeam",
                   "nameOverride": undefined,
@@ -12962,7 +12962,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The payment information associated with the employment.",
                   "file": undefined,
                   "generatedName": "EmploymentPayment",
                   "nameOverride": undefined,
@@ -13173,7 +13173,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The client legal entity associated with the employment.",
                   "file": undefined,
                   "generatedName": "EmploymentClientLegalEntity",
                   "nameOverride": undefined,
@@ -23541,7 +23541,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "Object representing the client legal entity that the user is associated with",
                   "file": undefined,
                   "generatedName": "PeopleClientLegalEntity",
                   "nameOverride": undefined,
@@ -23612,7 +23612,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "Object representing the user's monthly payment information",
                   "file": undefined,
                   "generatedName": "PeopleMonthlyPayment",
                   "nameOverride": undefined,

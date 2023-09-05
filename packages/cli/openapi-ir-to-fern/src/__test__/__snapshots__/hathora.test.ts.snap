@@ -527,7 +527,7 @@ exports[`open api parser hathora simple 1`] = `
           "type": "RecordPartialMetricNameMetricValueArray",
         },
         "OmitRoomAllocations": {
-          "docs": undefined,
+          "docs": "Construct a type with the properties of T except for those in type K.",
           "type": "PickRoomExcludeKeyofRoomAllocations",
         },
         "OrgId": {

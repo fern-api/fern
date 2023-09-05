@@ -4492,7 +4492,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "type": "reference",
         },
         "Omit_Room.allocations_": {
-          "description": undefined,
+          "description": "Construct a type with the properties of T except for those in type K.",
           "file": undefined,
           "generatedName": "OmitRoomAllocations",
           "nameOverride": undefined,

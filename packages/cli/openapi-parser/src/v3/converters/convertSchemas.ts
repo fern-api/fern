@@ -381,13 +381,15 @@ export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string
 export function convertToReferencedSchema(schema: OpenAPIV3.ReferenceObject, breadcrumbs: string[]): ReferencedSchema {
     const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
     const generatedName = getGeneratedTypeName(breadcrumbs);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const description = (schema as any).description;
     return Schema.reference({
         // TODO(dsinghvi): references may contain files
         generatedName,
         nameOverride,
         file: undefined,
         schema: getSchemaIdFromReference(schema),
-        description: undefined,
+        description: description ?? undefined,
     });
 }
 

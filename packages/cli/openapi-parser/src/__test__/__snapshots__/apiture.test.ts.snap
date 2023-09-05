@@ -2460,7 +2460,7 @@ Note: This operation requires an identity challenge if the financial institution
               "generatedName": "accountBalanceId",
               "key": "id",
               "schema": {
-                "description": undefined,
+                "description": "The account ID.",
                 "file": undefined,
                 "generatedName": "AccountBalanceId",
                 "nameOverride": undefined,
@@ -2510,7 +2510,7 @@ Note: This operation requires an identity challenge if the financial institution
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The time when the balance values were last updated from the banking core.",
                   "file": undefined,
                   "generatedName": "AccountBalanceUpdatedAt",
                   "nameOverride": undefined,
@@ -3123,7 +3123,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The \`id\` of the customer's primary account. This property only exists for retail customers, and only if the customer has designated a primary account.",
                   "file": undefined,
                   "generatedName": "AccountsPrimaryAccountId",
                   "nameOverride": undefined,
@@ -3601,7 +3601,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The unique identifier for this problem. This is an immutable opaque string.",
                   "file": undefined,
                   "generatedName": "ApiProblemId",
                   "nameOverride": undefined,
@@ -3618,7 +3618,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The timestamp when the problem occurred, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC.",
                   "file": undefined,
                   "generatedName": "ApiProblemOccurredAt",
                   "nameOverride": undefined,
@@ -3825,7 +3825,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "generatedName": "challengeSecurityQuestionId",
               "key": "id",
               "schema": {
-                "description": undefined,
+                "description": "The unique ID of security question prompt. This should be included in the [\`challengeVerification\`](#schema-challengeVerification) response as the \`promptId\`.",
                 "file": undefined,
                 "generatedName": "ChallengeSecurityQuestionId",
                 "nameOverride": undefined,
@@ -4046,7 +4046,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "generatedName": "cutoffTimesTimeZoneId",
               "key": "timeZoneId",
               "schema": {
-                "description": undefined,
+                "description": "The identifier of the time zone for which all of the \`items[].time\` are returned in.
+The client can use this value to localize the \`items[].time\` values to the local time zone of the customer, as well as for formatting to localized names, such as \`EST\` and \`EDT\`.",
                 "file": undefined,
                 "generatedName": "CutoffTimesTimeZoneId",
                 "nameOverride": undefined,
@@ -4292,7 +4293,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "generatedName": "incompleteAccountBalancesIncompleteAccounts",
               "key": "incompleteAccounts",
               "schema": {
-                "description": undefined,
+                "description": "Pass these values as the \`?accounts=\` query parameter on the next retry of the [\`listAccountBalances\`](#op-listAccountBalances) operation. This value is empty if the client has reached the retry limit.",
                 "file": undefined,
                 "generatedName": "IncompleteAccountBalancesIncompleteAccounts",
                 "nameOverride": undefined,
@@ -4441,7 +4442,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The name and other information about the financial institution, if found.",
                   "file": undefined,
                   "generatedName": "InstitutionLookupResultInstitution",
                   "nameOverride": undefined,
@@ -4503,7 +4504,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "generatedName": "jointOwnerInvitationId",
               "key": "id",
               "schema": {
-                "description": undefined,
+                "description": "The unique ID of the invitation.",
                 "file": undefined,
                 "generatedName": "JointOwnerInvitationId",
                 "nameOverride": undefined,
@@ -4687,7 +4688,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "generatedName": "newTransferSchedule",
               "key": "schedule",
               "schema": {
-                "description": undefined,
+                "description": "When the transfer should occur and any recurrence.",
                 "file": undefined,
                 "generatedName": "NewTransferSchedule",
                 "nameOverride": undefined,
@@ -4713,7 +4714,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The unique ID of the account resource. Use this as the \`{accountId}\` in [\`getAccount\`](#op-getAccount) or [\`listAccountBalances\`](#op-listAccountBalances).",
                   "file": undefined,
                   "generatedName": "OverdraftAccountFieldsId",
                   "nameOverride": undefined,
@@ -4902,7 +4903,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "generatedName": "productReferenceType",
               "key": "type",
               "schema": {
-                "description": undefined,
+                "description": "The type of account.",
                 "file": undefined,
                 "generatedName": "ProductReferenceType",
                 "nameOverride": undefined,
@@ -5062,7 +5063,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "generatedName": "requiredIdentityChallengeXFernSdkMethodName",
               "key": "x-fern-sdk-method-name",
               "schema": {
-                "description": undefined,
+                "description": "The ID of the API operation for which the user must verify their identity. This is passed when starting a challenge factor or when validating the identity challenge responses.",
                 "file": undefined,
                 "generatedName": "RequiredIdentityChallengeXFernSdkMethodName",
                 "nameOverride": undefined,
@@ -5075,7 +5076,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "generatedName": "requiredIdentityChallengeChallengeId",
               "key": "challengeId",
               "schema": {
-                "description": undefined,
+                "description": "The unique ID of this challenge instance. This is an opaque string. This is passed when starting a challenge factor or when validating the identity challenge responses.",
                 "file": undefined,
                 "generatedName": "RequiredIdentityChallengeChallengeId",
                 "nameOverride": undefined,
@@ -5138,7 +5139,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "generatedName": "simpleInstitutionAddress",
               "key": "address",
               "schema": {
-                "description": undefined,
+                "description": "The financial institution's postal mailing address.",
                 "file": undefined,
                 "generatedName": "SimpleInstitutionAddress",
                 "nameOverride": undefined,
@@ -5165,7 +5166,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "generatedName": "simpleInstitutionLocatorType",
               "key": "locatorType",
               "schema": {
-                "description": undefined,
+                "description": "Indicates the type of this institution's \`locator\`.",
                 "file": undefined,
                 "generatedName": "SimpleInstitutionLocatorType",
                 "nameOverride": undefined,
@@ -5464,7 +5465,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "generatedName": "transactionFieldsType",
               "key": "type",
               "schema": {
-                "description": undefined,
+                "description": "The transaction type. If the \`type\` is \`debit\` or \`credit\`, the \`subtype\` conveys further transaction type details.",
                 "file": undefined,
                 "generatedName": "TransactionFieldsType",
                 "nameOverride": undefined,
@@ -5477,7 +5478,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "generatedName": "transactionFieldsSubtype",
               "key": "subtype",
               "schema": {
-                "description": undefined,
+                "description": "The transaction's kind of debit or credit.",
                 "file": undefined,
                 "generatedName": "TransactionFieldsSubtype",
                 "nameOverride": undefined,
@@ -5540,7 +5541,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "generatedName": "transactionFieldsAmount",
               "key": "amount",
               "schema": {
-                "description": undefined,
+                "description": "The transaction amount in dollars. This value is negative if the transaction is a debit and positive if it is a credit.",
                 "file": undefined,
                 "generatedName": "TransactionFieldsAmount",
                 "nameOverride": undefined,
@@ -5572,7 +5573,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The account's running current balance as of this transaction. The \`balance\` may be omitted if the request includes filters which preclude the inclusion of a running balance.",
                   "file": undefined,
                   "generatedName": "TransactionFieldsBalance",
                   "nameOverride": undefined,
@@ -5625,7 +5626,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The transaction category, if assigned.",
                   "file": undefined,
                   "generatedName": "TransactionFieldsCategory",
                   "nameOverride": undefined,
@@ -5941,7 +5942,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "generatedName": "transferAccountReferenceId",
               "key": "id",
               "schema": {
-                "description": undefined,
+                "description": "The unique ID of a banking account.",
                 "file": undefined,
                 "generatedName": "TransferAccountReferenceId",
                 "nameOverride": undefined,
@@ -5975,7 +5976,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The product type of the account.",
                   "file": undefined,
                   "generatedName": "TransferAccountReferenceType",
                   "nameOverride": undefined,
@@ -5992,7 +5993,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "Indicates where an account is held.",
                   "file": undefined,
                   "generatedName": "TransferAccountReferenceLocation",
                   "nameOverride": undefined,
@@ -6030,7 +6031,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "generatedName": "transferDateRestrictionReason",
               "key": "reason",
               "schema": {
-                "description": undefined,
+                "description": "Indicates why this date is restricted.",
                 "file": undefined,
                 "generatedName": "TransferDateRestrictionReason",
                 "nameOverride": undefined,
@@ -6231,7 +6232,7 @@ The response may include dates prior to requested the start date, as that is use
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The amount of money to transfer between accounts.",
                   "file": undefined,
                   "generatedName": "TransferFieldsAmount",
                   "nameOverride": undefined,
@@ -6248,7 +6249,7 @@ The response may include dates prior to requested the start date, as that is use
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The source account where the funds are withdrawn.",
                   "file": undefined,
                   "generatedName": "TransferFieldsSourceAccount",
                   "nameOverride": undefined,
@@ -6265,7 +6266,7 @@ The response may include dates prior to requested the start date, as that is use
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "The target account where the funds are deposited.",
                   "file": undefined,
                   "generatedName": "TransferFieldsTargetAccount",
                   "nameOverride": undefined,
@@ -6487,7 +6488,7 @@ The response may include dates prior to requested the start date, as that is use
               "generatedName": "transferItemSchedule",
               "key": "schedule",
               "schema": {
-                "description": undefined,
+                "description": "When the transfer should occur and any recurrence.",
                 "file": undefined,
                 "generatedName": "TransferItemSchedule",
                 "nameOverride": undefined,
@@ -6632,7 +6633,7 @@ The response may include dates prior to requested the start date, as that is use
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "When the transfer should occur and any recurrence.",
                   "file": undefined,
                   "generatedName": "TransferPatchSchedule",
                   "nameOverride": undefined,
@@ -6783,7 +6784,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
                 "description": undefined,
                 "type": "optional",
                 "value": {
-                  "description": undefined,
+                  "description": "For recurring schedules (\`frequency\` is not \`once\`), this is the total dollar amount limit including the first transfer. No transfers are scheduled if they would exceed this amount. This property is ignored if \`frequency\` is \`once\`.",
                   "file": undefined,
                   "generatedName": "TransferScheduleAmountLimit",
                   "nameOverride": undefined,
