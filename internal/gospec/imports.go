@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"go/format"
 	"regexp"
+	"sort"
 	"strings"
 	"unicode"
 )
@@ -60,9 +61,20 @@ func (imp Imports) String() string {
 		}
 	}
 
-	importBlock := "import (\n"
+	// Sort the import statments for deterministic results.
+	type statement struct {
+		Alias string
+		Path  string
+	}
+	var statements []statement
 	for path, alias := range imp {
-		importBlock += fmt.Sprintf("\t%s %q\n", alias, path)
+		statements = append(statements, statement{Alias: alias, Path: path})
+	}
+	sort.Slice(statements, func(i, j int) bool { return statements[i].Alias < statements[j].Alias })
+
+	importBlock := "import (\n"
+	for _, statement := range statements {
+		importBlock += fmt.Sprintf("\t%s %q\n", statement.Alias, statement.Path)
 	}
 	importBlock += ")\n"
 

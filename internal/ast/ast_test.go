@@ -41,9 +41,9 @@ func TestSourceCodeBuilder(t *testing.T) {
 	assert.Equal(
 		t,
 		`import (
+	anotherenum "example.io/another/enum"
 	bar "example.io/bar"
 	enum "example.io/enum"
-	anotherenum "example.io/another/enum"
 )
 
 value := bar.foo(
