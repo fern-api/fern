@@ -30,7 +30,7 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
     "prettier": "^2.7.1",
-    "zod": "^3.14.3",
+    "zod": "^3.22.2",
     "zod-to-json-schema": "3.14.1"
   },
   "devDependencies": {
