@@ -120,7 +120,7 @@ func (i ImportedObject) isExpr()   {}
 func (i ImportedObject) isObject() {}
 
 func (i ImportedObject) WriteTo(w *Writer) {
-	alias := w.imports.Add(i.ImportPath)
+	alias := w.scope.AddImport(i.ImportPath)
 	w.Write(fmt.Sprintf("%s.%s", alias, i.Name))
 }
 

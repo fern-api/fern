@@ -5,9 +5,9 @@ service:
   base-path: ""
   endpoints:
     getUser:
-      path: /users/{userId}
+      path: /users/{user}
       path-parameters:
-        userId: string
+        user: string
       method: GET
       auth: true
       response:

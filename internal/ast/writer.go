@@ -12,8 +12,8 @@ import (
 // This abstraction is used by each individual expression
 // to write itself.
 type Writer struct {
-	buffer  *bytes.Buffer
-	imports gospec.Imports
+	buffer *bytes.Buffer
+	scope  *gospec.Scope
 }
 
 // Write writes the values without a newline.
@@ -66,8 +66,8 @@ func (s *SourceCodeBuilder) AddExpr(expr ...Expr) *SourceCodeBuilder {
 // BuildSnippet builds a source code snippet.
 func (s *SourceCodeBuilder) BuildSnippet() (string, error) {
 	writer := &Writer{
-		buffer:  bytes.NewBuffer(nil),
-		imports: make(gospec.Imports),
+		buffer: bytes.NewBuffer(nil),
+		scope:  gospec.NewScope(),
 	}
 	for i, expr := range s.expressions {
 		if i > 0 {
@@ -76,8 +76,8 @@ func (s *SourceCodeBuilder) BuildSnippet() (string, error) {
 		writer.WriteExpr(expr)
 	}
 	var prefix []byte
-	if len(writer.imports) > 0 {
-		prefix = []byte(writer.imports.String() + "\n")
+	if len(writer.scope.Imports.Values) > 0 {
+		prefix = []byte(writer.scope.Imports.String() + "\n")
 	}
 	bytes, err := format.Source(writer.buffer.Bytes())
 	if err != nil {

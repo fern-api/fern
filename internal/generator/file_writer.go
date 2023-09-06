@@ -26,7 +26,7 @@ type fileWriter struct {
 	filename       string
 	packageName    string
 	baseImportPath string
-	imports        gospec.Imports
+	scope          *gospec.Scope
 	types          map[ir.TypeId]*ir.TypeDeclaration
 	errors         map[ir.ErrorId]*ir.ErrorDeclaration
 	coordinator    *coordinator.Client
@@ -45,31 +45,31 @@ func newFileWriter(
 	// The default set of imports used in the generated output.
 	// These imports are removed from the generated output if
 	// they aren't used.
-	imports := make(gospec.Imports)
-	imports.Add("bytes")
-	imports.Add("context")
-	imports.Add("encoding/base64")
-	imports.Add("encoding/json")
-	imports.Add("errors")
-	imports.Add("fmt")
-	imports.Add("io")
-	imports.Add("mime/multipart")
-	imports.Add("net/http")
-	imports.Add("net/url")
-	imports.Add("strconv")
-	imports.Add("strings")
-	imports.Add("time")
-	imports.Add("github.com/google/uuid")
+	scope := gospec.NewScope()
+	scope.AddImport("bytes")
+	scope.AddImport("context")
+	scope.AddImport("encoding/base64")
+	scope.AddImport("encoding/json")
+	scope.AddImport("errors")
+	scope.AddImport("fmt")
+	scope.AddImport("io")
+	scope.AddImport("mime/multipart")
+	scope.AddImport("net/http")
+	scope.AddImport("net/url")
+	scope.AddImport("strconv")
+	scope.AddImport("strings")
+	scope.AddImport("time")
+	scope.AddImport("github.com/google/uuid")
 
 	// Add an import to the core utilities package generated for
 	// the SDK.
-	imports.Add(path.Join(baseImportPath, "core"))
+	scope.AddImport(path.Join(baseImportPath, "core"))
 
 	return &fileWriter{
 		filename:       filename,
 		packageName:    packageName,
 		baseImportPath: baseImportPath,
-		imports:        imports,
+		scope:          scope,
 		types:          types,
 		errors:         errors,
 		coordinator:    coordinator,
@@ -92,7 +92,7 @@ func (f *fileWriter) File() (*File, error) {
 	header.P(fileHeader)
 	header.P("package ", f.packageName)
 	header.P("import (")
-	for importDecl, importAlias := range f.imports {
+	for importDecl, importAlias := range f.scope.Imports.Values {
 		header.P(fmt.Sprintf("%s %q", importAlias, importDecl))
 	}
 	header.P(")")

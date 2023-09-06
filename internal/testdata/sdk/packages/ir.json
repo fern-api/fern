@@ -1163,7 +1163,7 @@
                         "head": "/users/",
                         "parts": [
                             {
-                                "pathParameter": "userId",
+                                "pathParameter": "user",
                                 "tail": ""
                             }
                         ]
@@ -1172,7 +1172,7 @@
                         "head": "users/",
                         "parts": [
                             {
-                                "pathParameter": "userId",
+                                "pathParameter": "user",
                                 "tail": ""
                             }
                         ]
@@ -1183,22 +1183,22 @@
                                 "status": "GENERAL_AVAILABILITY"
                             },
                             "name": {
-                                "originalName": "userId",
+                                "originalName": "user",
                                 "camelCase": {
-                                    "unsafeName": "userId",
-                                    "safeName": "userId"
+                                    "unsafeName": "user",
+                                    "safeName": "user"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "user_id",
-                                    "safeName": "user_id"
+                                    "unsafeName": "user",
+                                    "safeName": "user"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "USER_ID",
-                                    "safeName": "USER_ID"
+                                    "unsafeName": "USER",
+                                    "safeName": "USER"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "UserId",
-                                    "safeName": "UserId"
+                                    "unsafeName": "User",
+                                    "safeName": "User"
                                 }
                             },
                             "valueType": {
@@ -1214,22 +1214,22 @@
                                 "status": "GENERAL_AVAILABILITY"
                             },
                             "name": {
-                                "originalName": "userId",
+                                "originalName": "user",
                                 "camelCase": {
-                                    "unsafeName": "userId",
-                                    "safeName": "userId"
+                                    "unsafeName": "user",
+                                    "safeName": "user"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "user_id",
-                                    "safeName": "user_id"
+                                    "unsafeName": "user",
+                                    "safeName": "user"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "USER_ID",
-                                    "safeName": "USER_ID"
+                                    "unsafeName": "USER",
+                                    "safeName": "USER"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "UserId",
-                                    "safeName": "UserId"
+                                    "unsafeName": "User",
+                                    "safeName": "User"
                                 }
                             },
                             "valueType": {

@@ -6,7 +6,7 @@ import (
 	context "context"
 	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
-	user "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/user"
+	fixturesuser "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/user"
 	notificationclient "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/user/notification/client"
 	useruser "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/user/user"
 	http "net/http"
@@ -35,14 +35,14 @@ func NewClient(opts ...core.ClientOption) *Client {
 	}
 }
 
-func (c *Client) GetUser(ctx context.Context, userId string) (*user.User, error) {
+func (c *Client) GetUser(ctx context.Context, user string) (*fixturesuser.User, error) {
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v", userId)
+	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v", user)
 
-	var response *user.User
+	var response *fixturesuser.User
 	if err := core.DoRequest(
 		ctx,
 		c.httpClient,
