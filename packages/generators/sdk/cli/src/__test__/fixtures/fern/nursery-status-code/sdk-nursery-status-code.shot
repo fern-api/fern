@@ -2685,6 +2685,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.fetcher = void 0;
 const axios_1 = __importDefault(require(\\"axios\\"));
+const axios_retry_1 = __importDefault(require(\\"axios-retry\\"));
+const INITIAL_RETRY_DELAY = 1;
+const MAX_RETRY_DELAY = 60;
+const MAX_RETRIES = 5;
+const AXIOS = axios_1.default.create();
 function fetcherImpl(args) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
@@ -2699,8 +2704,21 @@ function fetcherImpl(args) {
                 }
             }
         }
+        (0, axios_retry_1.default)(AXIOS, {
+            retries: MAX_RETRIES,
+            retryCondition: (error) => {
+                return error.response != null && [500, 502, 429].includes(error.response.status);
+            },
+            retryDelay: (count) => {
+                if (count == 0) {
+                    return INITIAL_RETRY_DELAY;
+                }
+                // Apply exponential backoff, but not more than the max.
+                return Math.min(INITIAL_RETRY_DELAY * Math.pow(count - 1, 2), MAX_RETRY_DELAY);
+            },
+        });
         try {
-            const response = yield (0, axios_1.default)({
+            const response = yield AXIOS.request({
                 url: args.url,
                 params: args.queryParameters,
                 method: args.method,
@@ -7182,6 +7200,7 @@ __exportStar(require(\\"./RootString\\"), exports);
         \\"@types/url-join\\": \\"4.0.1\\",
         \\"@ungap/url-search-params\\": \\"0.2.2\\",
         \\"axios\\": \\"0.27.2\\",
+        \\"axios-retry\\": \\"3.2.0\\",
         \\"url-join\\": \\"4.0.1\\"
     },
     \\"devDependencies\\": {
@@ -8688,6 +8707,7 @@ export interface FailedResponse<T> {
               Object {
                 "contents": "import { default as URLSearchParams } from \\"@ungap/url-search-params\\";
 import axios, { AxiosAdapter, AxiosError } from \\"axios\\";
+import axiosRetry from \\"axios-retry\\";
 import { APIResponse } from \\"./APIResponse\\";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
@@ -8731,6 +8751,12 @@ export declare namespace Fetcher {
     }
 }
 
+const INITIAL_RETRY_DELAY = 1;
+const MAX_RETRY_DELAY = 60;
+const MAX_RETRIES = 5;
+
+const AXIOS = axios.create();
+
 async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>> {
     const headers: Record<string, string> = {};
     if (args.body !== undefined && args.contentType != null) {
@@ -8745,8 +8771,22 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
         }
     }
 
+    axiosRetry(AXIOS, {
+        retries: MAX_RETRIES,
+        retryCondition: (error) => {
+            return error.response != null && [500, 502, 429].includes(error.response.status);
+        },
+        retryDelay: (count) => {
+            if (count == 0) {
+                return INITIAL_RETRY_DELAY;
+            }
+            // Apply exponential backoff, but not more than the max.
+            return Math.min(INITIAL_RETRY_DELAY * Math.pow(count - 1, 2), MAX_RETRY_DELAY);
+        },
+    });
+
     try {
-        const response = await axios({
+        const response = await AXIOS.request({
             url: args.url,
             params: args.queryParameters,
             method: args.method,

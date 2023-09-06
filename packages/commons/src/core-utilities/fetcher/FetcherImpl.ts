@@ -15,6 +15,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         addDependencies: (dependencyManager: DependencyManager): void => {
             dependencyManager.addDependency("axios", "0.27.2");
             dependencyManager.addDependency("@ungap/url-search-params", "0.2.2");
+            dependencyManager.addDependency("axios-retry", "3.2.0");
         },
     };
 

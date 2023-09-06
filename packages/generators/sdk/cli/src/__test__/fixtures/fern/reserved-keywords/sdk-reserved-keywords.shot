@@ -606,6 +606,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, \\"__esModule\\", { value: true });
 exports.fetcher = void 0;
 const axios_1 = __importDefault(require(\\"axios\\"));
+const axios_retry_1 = __importDefault(require(\\"axios-retry\\"));
+const INITIAL_RETRY_DELAY = 1;
+const MAX_RETRY_DELAY = 60;
+const MAX_RETRIES = 5;
+const AXIOS = axios_1.default.create();
 function fetcherImpl(args) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
@@ -620,8 +625,21 @@ function fetcherImpl(args) {
                 }
             }
         }
+        (0, axios_retry_1.default)(AXIOS, {
+            retries: MAX_RETRIES,
+            retryCondition: (error) => {
+                return error.response != null && [500, 502, 429].includes(error.response.status);
+            },
+            retryDelay: (count) => {
+                if (count == 0) {
+                    return INITIAL_RETRY_DELAY;
+                }
+                // Apply exponential backoff, but not more than the max.
+                return Math.min(INITIAL_RETRY_DELAY * Math.pow(count - 1, 2), MAX_RETRY_DELAY);
+            },
+        });
         try {
-            const response = yield (0, axios_1.default)({
+            const response = yield AXIOS.request({
                 url: args.url,
                 params: args.queryParameters,
                 method: args.method,
