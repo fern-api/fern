@@ -56,7 +56,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-java-sdk
-        version: 0.3.7
+        version: 0.4.9
         output:
           location: local-file-system
           path: ../../generated/java
@@ -114,7 +114,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-java-sdk
-        version: 0.3.7
+        version: 0.4.9
         output:
           location: local-file-system
           path: ../../generated/java
