@@ -39,7 +39,7 @@
     "inquirer": "^9.1.0",
     "js-yaml": "^4.1.0",
     "yaml": "^2.2.2",
-    "zod": "^3.14.3"
+    "zod": "^3.22.2"
   },
   "devDependencies": {
     "@types/inquirer": "^9.0.1",

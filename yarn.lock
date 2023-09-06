@@ -1641,7 +1641,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
-    zod: ^3.14.3
+    zod: ^3.22.2
   languageName: unknown
   linkType: soft
 
@@ -1681,7 +1681,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
-    zod: ^3.14.3
+    zod: ^3.22.2
   languageName: unknown
   linkType: soft
 
@@ -1790,7 +1790,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
-    zod: ^3.14.3
+    zod: ^3.22.2
   languageName: unknown
   linkType: soft
 
@@ -1919,7 +1919,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
-    zod: ^3.14.3
+    zod: ^3.22.2
     zod-to-json-schema: 3.14.1
   languageName: unknown
   linkType: soft
@@ -2162,7 +2162,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
-    zod: ^3.14.3
+    zod: ^3.22.2
   languageName: unknown
   linkType: soft
 
@@ -2187,7 +2187,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
-    zod: ^3.14.3
+    zod: ^3.22.2
   languageName: unknown
   linkType: soft
 
@@ -2450,7 +2450,7 @@ __metadata:
     tar: ^6.1.13
     tmp-promise: ^3.0.3
     typescript: 4.6.4
-    zod: ^3.14.3
+    zod: ^3.22.2
   languageName: unknown
   linkType: soft
 
@@ -2503,7 +2503,7 @@ __metadata:
     tmp-promise: ^3.0.3
     typescript: 4.6.4
     yaml: ^2.2.2
-    zod: ^3.14.3
+    zod: ^3.22.2
   languageName: unknown
   linkType: soft
 
@@ -2521,7 +2521,7 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
-    zod: ^3.14.3
+    zod: ^3.22.2
   languageName: unknown
   linkType: soft
 
@@ -14678,10 +14678,10 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"zod@npm:^3.14.3":
-  version: 3.16.0
-  resolution: "zod@npm:3.16.0"
-  checksum: 2879a18e090ee67206375408eb0e506d32f3d6658634aa7f253250c4c223ebaef64dd0d76634a0b0bbd0ea64d26d512d8817a584a0490030b3b308fc62f83d1c
+"zod@npm:^3.22.2":
+  version: 3.22.2
+  resolution: "zod@npm:3.22.2"
+  checksum: 231e2180c8eabb56e88680d80baff5cf6cbe6d64df3c44c50ebe52f73081ecd0229b1c7215b9552537f537a36d9e36afac2737ddd86dc14e3519bdbc777e82b9
   languageName: node
   linkType: hard
 

@@ -35,7 +35,7 @@
     "@fern-api/workspace-loader": "workspace:*",
     "chalk": "^5.0.1",
     "js-yaml": "^4.1.0",
-    "zod": "^3.14.3"
+    "zod": "^3.22.2"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
