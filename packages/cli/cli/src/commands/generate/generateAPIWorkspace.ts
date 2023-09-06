@@ -6,7 +6,7 @@ import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-r
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { GROUP_CLI_OPTION } from "../../constants";
-import { validateFernWorkspaceAndLogIssues } from "../validate/validateFernWorkspaceAndLogIssues";
+import { validateFernWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues";
 
 export async function generateWorkspace({
     workspace,
