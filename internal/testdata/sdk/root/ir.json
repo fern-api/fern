@@ -1280,6 +1280,42 @@
                             },
                             "_type": "container"
                         }
+                    },
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "unknown",
+                                "camelCase": {
+                                    "unsafeName": "unknown",
+                                    "safeName": "unknown"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "unknown",
+                                    "safeName": "unknown"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UNKNOWN",
+                                    "safeName": "UNKNOWN"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Unknown",
+                                    "safeName": "Unknown"
+                                }
+                            },
+                            "wireValue": "unknown"
+                        },
+                        "valueType": {
+                            "container": {
+                                "optional": {
+                                    "_type": "unknown"
+                                },
+                                "_type": "optional"
+                            },
+                            "_type": "container"
+                        }
                     }
                 ],
                 "_type": "object"

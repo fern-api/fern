@@ -60,6 +60,8 @@ types:
         type: optional<string>
       platform:
         type: optional<literal<"platform">>
+      unknown:
+        type: optional<unknown>
 
   Error:
     properties:

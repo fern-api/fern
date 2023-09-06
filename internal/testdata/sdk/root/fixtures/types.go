@@ -73,6 +73,7 @@ type Request struct {
 	Headers  map[string]interface{} `json:"headers,omitempty"`
 	Body     *string                `json:"body,omitempty"`
 	Platform *string                `json:"platform,omitempty"`
+	Unknown  interface{}            `json:"unknown,omitempty"`
 }
 
 type Id = string

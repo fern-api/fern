@@ -764,7 +764,7 @@ func (c *containerTypeVisitor) VisitOptional(optional *ir.TypeReference) error {
 		c.value = fmt.Sprintf("*core.Optional[%s]", value)
 		return nil
 	}
-	if optional.Container != nil && optional.Container.Literal == nil {
+	if optional.Unknown != nil || (optional.Container != nil && optional.Container.Literal == nil) {
 		c.value = value
 		return nil
 	}
