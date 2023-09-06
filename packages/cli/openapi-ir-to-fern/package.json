@@ -39,7 +39,7 @@
   "devDependencies": {
     "@types/jest": "^29.0.3",
     "@types/lodash-es": "^4.17.7",
-    "@types/node": "^18.7.18",
+    "@types/node": "^20.5.9",
     "depcheck": "^1.4.3",
     "eslint": "^8.26.0",
     "jest": "^29.4.0",
