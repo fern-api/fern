@@ -7,7 +7,7 @@ require (
 	github.com/google/uuid v1.3.1
 	github.com/stretchr/testify v1.8.4
 	go.uber.org/multierr v1.11.0
-	golang.org/x/tools v0.9.1
+	golang.org/x/tools v0.13.0
 )
 
 require (
