@@ -8,9 +8,11 @@ import { CliContext } from "../../cli-context/CliContext";
 export async function generateDocsWorkspace({
     project,
     cliContext,
+    instance,
 }: {
     project: Project;
     cliContext: CliContext;
+    instance: string | undefined;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
@@ -51,6 +53,7 @@ export async function generateDocsWorkspace({
             docsWorkspace,
             context,
             token,
+            instanceUrl: instance,
         });
     });
 }

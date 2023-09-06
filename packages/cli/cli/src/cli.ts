@@ -275,8 +275,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description: "If multiple APIs, specify the name with --api <name>. Otherwise, just --api.",
                 })
                 .option("docs", {
-                    boolean: true,
+                    string: true,
                     description: "If multiple docs sites, specify the name with --docs <name>. Otherwise just --docs.",
+                })
+                .option("instance", {
+                    string: true,
+                    description: "The url for the instance of docs (e.g. --instance acme.docs.buildwithfern.com)",
                 })
                 .option("group", {
                     type: "string",
@@ -334,6 +338,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                         true
                     ),
                     cliContext,
+                    instance: argv.instance,
                 });
             } else {
                 // default to loading api workspace to preserve legacy behavior
