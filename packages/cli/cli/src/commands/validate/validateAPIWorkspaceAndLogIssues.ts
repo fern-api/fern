@@ -4,7 +4,7 @@ import { validateFernWorkspace } from "@fern-api/validator";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import validatePackageName from "validate-npm-package-name";
 
-export async function validateFernWorkspaceAndLogIssues(workspace: FernWorkspace, context: TaskContext): Promise<void> {
+export async function validateAPIWorkspaceAndLogIssues(workspace: FernWorkspace, context: TaskContext): Promise<void> {
     if (!validatePackageName(workspace.name).validForNewPackages) {
         context.failAndThrow("Workspace name is not valid.");
     }

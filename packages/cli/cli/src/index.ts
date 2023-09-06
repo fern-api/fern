@@ -1,1 +1,1 @@
-export { validateFernWorkspaceAndLogIssues } from "./commands/validate/validateFernWorkspaceAndLogIssues";
+export { validateAPIWorkspaceAndLogIssues } from "./commands/validate/validateAPIWorkspaceAndLogIssues";
