@@ -65,7 +65,12 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             GeneratedJavaFile requestOptionsFile,
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces) {
         super(
-                generatorContext.getPoetClassNameFactory().getRootClassName(getRootClientName(generatorContext)),
+                generatorContext
+                        .getPoetClassNameFactory()
+                        .getRootClassName(clientGeneratorContext
+                                .getCustomConfig()
+                                .clientClassName()
+                                .orElseGet(() -> getRootClientName(generatorContext))),
                 generatorContext);
         this.generatedObjectMapper = generatedObjectMapper;
         this.clientGeneratorContext = clientGeneratorContext;

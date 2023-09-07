@@ -102,6 +102,14 @@ When enabled, generates wrapper types for each alias to increase type-safety. Fo
 
 When enabled, generates public constructors for model types.
 
+#### ✨ `client-class-name`
+
+**Type:** string
+
+**Default:** `<Organization>ApiClient`
+
+The provided string will be used as the client class name. 
+
 ## Releases
 
 All generator releases are published in the [Releases section of the GitHub repository](https://github.com/fern-api/fern-java/releases). You can directly use these version numbers in your generator configuration files.

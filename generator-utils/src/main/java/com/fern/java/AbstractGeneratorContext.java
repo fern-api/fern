@@ -68,7 +68,7 @@ public abstract class AbstractGeneratorContext<T extends AbstractPoetClassNameFa
         return generatorConfig;
     }
 
-    public final ICustomConfig getCustomConfig() {
+    public final U getCustomConfig() {
         return customConfig;
     }
 

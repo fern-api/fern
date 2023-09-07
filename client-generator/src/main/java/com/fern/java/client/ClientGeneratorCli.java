@@ -24,9 +24,7 @@ import com.fern.ir.core.ObjectMappers;
 import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.AbstractPoetClassNameFactory;
-import com.fern.java.CustomConfig;
 import com.fern.java.DefaultGeneratorExecClient;
-import com.fern.java.DownloadFilesCustomConfig;
 import com.fern.java.client.generators.ApiErrorGenerator;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.EnvironmentGenerator;
@@ -49,7 +47,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig, DownloadFilesCustomConfig> {
+public final class ClientGeneratorCli
+        extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdkDownloadFilesCustomConfig> {
 
     private static final Logger log = LoggerFactory.getLogger(ClientGeneratorCli.class);
 
@@ -89,14 +88,15 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
-            DownloadFilesCustomConfig customConfig) {
+            JavaSdkDownloadFilesCustomConfig customConfig) {
         ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
                 customConfig.packagePrefix().map(List::of).orElseGet(Collections::emptyList));
         ClientGeneratorContext context = new ClientGeneratorContext(
                 ir,
                 generatorConfig,
-                CustomConfig.builder()
+                JavaSdkCustomConfig.builder()
                         .wrappedAliases(customConfig.wrappedAliases())
+                        .clientClassName(customConfig.clientClassName())
                         .build(),
                 clientPoetClassNameFactory);
         generateClient(context, ir);
@@ -107,7 +107,7 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
-            CustomConfig customConfig,
+            JavaSdkCustomConfig customConfig,
             GithubOutputMode githubOutputMode) {
         ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
                 AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(ir, generatorConfig.getOrganization()));
@@ -138,7 +138,7 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
             DefaultGeneratorExecClient generatorExecClient,
             GeneratorConfig generatorConfig,
             IntermediateRepresentation ir,
-            CustomConfig customConfig,
+            JavaSdkCustomConfig customConfig,
             GeneratorPublishConfig publishOutputMode) {
         ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
                 AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(ir, generatorConfig.getOrganization()));
@@ -230,23 +230,23 @@ public final class ClientGeneratorCli extends AbstractGeneratorCli<CustomConfig,
     }
 
     @Override
-    public DownloadFilesCustomConfig getDownloadFilesCustomConfig(GeneratorConfig generatorConfig) {
+    public JavaSdkDownloadFilesCustomConfig getDownloadFilesCustomConfig(GeneratorConfig generatorConfig) {
         if (generatorConfig.getCustomConfig().isPresent()) {
             JsonNode node = ObjectMappers.JSON_MAPPER.valueToTree(
                     generatorConfig.getCustomConfig().get());
-            return ObjectMappers.JSON_MAPPER.convertValue(node, DownloadFilesCustomConfig.class);
+            return ObjectMappers.JSON_MAPPER.convertValue(node, JavaSdkDownloadFilesCustomConfig.class);
         }
-        return DownloadFilesCustomConfig.builder().build();
+        return JavaSdkDownloadFilesCustomConfig.builder().build();
     }
 
     @Override
-    public CustomConfig getCustomConfig(GeneratorConfig generatorConfig) {
+    public JavaSdkCustomConfig getCustomConfig(GeneratorConfig generatorConfig) {
         if (generatorConfig.getCustomConfig().isPresent()) {
             JsonNode node = ObjectMappers.JSON_MAPPER.valueToTree(
                     generatorConfig.getCustomConfig().get());
-            return ObjectMappers.JSON_MAPPER.convertValue(node, CustomConfig.class);
+            return ObjectMappers.JSON_MAPPER.convertValue(node, JavaSdkCustomConfig.class);
         }
-        return CustomConfig.builder().build();
+        return JavaSdkCustomConfig.builder().build();
     }
 
     public static void main(String... args) {
