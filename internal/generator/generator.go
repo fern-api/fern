@@ -855,7 +855,14 @@ func fileInfoToTypes(
 				fileInfo.filename = filepath.Join(append(directory, fileInfo.filename)...)
 				fileInfo.packageName = directory[len(directory)-1]
 			}
-			result[fileInfo] = append(result[fileInfo], &typeToGenerate{ID: typeDeclaration.Name.TypeId, FernFilepath: typeDeclaration.Name.FernFilepath, TypeDeclaration: typeDeclaration})
+			result[fileInfo] = append(
+				result[fileInfo],
+				&typeToGenerate{
+					ID:              typeDeclaration.Name.TypeId,
+					FernFilepath:    typeDeclaration.Name.FernFilepath,
+					TypeDeclaration: typeDeclaration,
+				},
+			)
 		}
 		for serviceId, typeIds := range irServiceTypeReferenceInfo.TypesReferencedOnlyByService {
 			if serviceId == "service_" {
@@ -878,13 +885,13 @@ func fileInfoToTypes(
 			for _, packageName := range fernFilepath.PackagePath {
 				packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
 			}
-			packageName := strings.ToLower(apiName.CamelCase.SafeName)
+			servicePackageName := strings.ToLower(apiName.CamelCase.SafeName)
 			if len(packages) > 0 {
-				packageName = packages[len(packages)-1]
+				servicePackageName = packages[len(packages)-1]
 			}
-			fileInfo := fileInfo{
+			serviceFileInfo := fileInfo{
 				filename:    filepath.Join(append(packages, fmt.Sprintf("%s.go", basename))...),
-				packageName: packageName,
+				packageName: servicePackageName,
 			}
 			for _, typeId := range typeIds {
 				typeDeclaration, ok := irTypes[typeId]
@@ -892,7 +899,37 @@ func fileInfoToTypes(
 					// Should be unreachable.
 					return nil, fmt.Errorf("IR ServiceTypeReferenceInfo referenced type %q which doesn't exist", typeId)
 				}
-				result[fileInfo] = append(result[fileInfo], &typeToGenerate{ID: typeDeclaration.Name.TypeId, FernFilepath: typeDeclaration.Name.FernFilepath, TypeDeclaration: typeDeclaration})
+				typeFilename := "types.go"
+				typePackageName := strings.ToLower(apiName.CamelCase.SafeName)
+				if directory := directories[typeId]; len(directory) > 0 {
+					typeFilename = filepath.Join(append(directory, typeFilename)...)
+					typePackageName = directory[len(directory)-1]
+				}
+				if servicePackageName != typePackageName {
+					// There is only one service referencing this type, but it still
+					// belongs in the package where it was defined.
+					typeFileInfo := fileInfo{
+						filename:    typeFilename,
+						packageName: typePackageName,
+					}
+					result[typeFileInfo] = append(
+						result[typeFileInfo],
+						&typeToGenerate{
+							ID:              typeId,
+							FernFilepath:    typeDeclaration.Name.FernFilepath,
+							TypeDeclaration: typeDeclaration,
+						},
+					)
+					continue
+				}
+				result[serviceFileInfo] = append(
+					result[serviceFileInfo],
+					&typeToGenerate{
+						ID:              typeDeclaration.Name.TypeId,
+						FernFilepath:    typeDeclaration.Name.FernFilepath,
+						TypeDeclaration: typeDeclaration,
+					},
+				)
 			}
 		}
 	}

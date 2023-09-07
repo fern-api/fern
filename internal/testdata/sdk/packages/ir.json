@@ -218,6 +218,154 @@
             "referencedTypes": [],
             "examples": []
         },
+        "type_config/config:Config": {
+            "availability": {
+                "status": "GENERAL_AVAILABILITY"
+            },
+            "name": {
+                "name": {
+                    "originalName": "Config",
+                    "camelCase": {
+                        "unsafeName": "config",
+                        "safeName": "config"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "config",
+                        "safeName": "config"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CONFIG",
+                        "safeName": "CONFIG"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Config",
+                        "safeName": "Config"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "config",
+                            "camelCase": {
+                                "unsafeName": "config",
+                                "safeName": "config"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "config",
+                                "safeName": "config"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CONFIG",
+                                "safeName": "CONFIG"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Config",
+                                "safeName": "Config"
+                            }
+                        },
+                        {
+                            "originalName": "config",
+                            "camelCase": {
+                                "unsafeName": "config",
+                                "safeName": "config"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "config",
+                                "safeName": "config"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CONFIG",
+                                "safeName": "CONFIG"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Config",
+                                "safeName": "Config"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "config",
+                            "camelCase": {
+                                "unsafeName": "config",
+                                "safeName": "config"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "config",
+                                "safeName": "config"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CONFIG",
+                                "safeName": "CONFIG"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Config",
+                                "safeName": "Config"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "config",
+                        "camelCase": {
+                            "unsafeName": "config",
+                            "safeName": "config"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "config",
+                            "safeName": "config"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CONFIG",
+                            "safeName": "CONFIG"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Config",
+                            "safeName": "Config"
+                        }
+                    }
+                },
+                "typeId": "type_config/config:Config"
+            },
+            "shape": {
+                "extends": [],
+                "properties": [
+                    {
+                        "availability": {
+                            "status": "GENERAL_AVAILABILITY"
+                        },
+                        "name": {
+                            "name": {
+                                "originalName": "id",
+                                "camelCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Id",
+                                    "safeName": "Id"
+                                }
+                            },
+                            "wireValue": "id"
+                        },
+                        "valueType": {
+                            "primitive": "STRING",
+                            "_type": "primitive"
+                        }
+                    }
+                ],
+                "_type": "object"
+            },
+            "referencedTypes": [],
+            "examples": []
+        },
         "type_user/notification/notification:Notification": {
             "availability": {
                 "status": "GENERAL_AVAILABILITY"
@@ -2418,6 +2566,290 @@
                     },
                     "errors": [],
                     "examples": []
+                },
+                {
+                    "availability": {
+                        "status": "GENERAL_AVAILABILITY"
+                    },
+                    "name": {
+                        "originalName": "update",
+                        "camelCase": {
+                            "unsafeName": "update",
+                            "safeName": "update"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "update",
+                            "safeName": "update"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UPDATE",
+                            "safeName": "UPDATE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Update",
+                            "safeName": "Update"
+                        }
+                    },
+                    "auth": true,
+                    "method": "POST",
+                    "path": {
+                        "head": "/users/update",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "users/update",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "requestBodyType": {
+                            "name": {
+                                "originalName": "Config",
+                                "camelCase": {
+                                    "unsafeName": "config",
+                                    "safeName": "config"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "config",
+                                    "safeName": "config"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CONFIG",
+                                    "safeName": "CONFIG"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Config",
+                                    "safeName": "Config"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [
+                                    {
+                                        "originalName": "config",
+                                        "camelCase": {
+                                            "unsafeName": "config",
+                                            "safeName": "config"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "config",
+                                            "safeName": "config"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "CONFIG",
+                                            "safeName": "CONFIG"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Config",
+                                            "safeName": "Config"
+                                        }
+                                    },
+                                    {
+                                        "originalName": "config",
+                                        "camelCase": {
+                                            "unsafeName": "config",
+                                            "safeName": "config"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "config",
+                                            "safeName": "config"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "CONFIG",
+                                            "safeName": "CONFIG"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Config",
+                                            "safeName": "Config"
+                                        }
+                                    }
+                                ],
+                                "packagePath": [
+                                    {
+                                        "originalName": "config",
+                                        "camelCase": {
+                                            "unsafeName": "config",
+                                            "safeName": "config"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "config",
+                                            "safeName": "config"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "CONFIG",
+                                            "safeName": "CONFIG"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Config",
+                                            "safeName": "Config"
+                                        }
+                                    }
+                                ],
+                                "file": {
+                                    "originalName": "config",
+                                    "camelCase": {
+                                        "unsafeName": "config",
+                                        "safeName": "config"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "config",
+                                        "safeName": "config"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "CONFIG",
+                                        "safeName": "CONFIG"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Config",
+                                        "safeName": "Config"
+                                    }
+                                }
+                            },
+                            "typeId": "type_config/config:Config",
+                            "_type": "named"
+                        },
+                        "type": "reference"
+                    },
+                    "sdkRequest": {
+                        "shape": {
+                            "requestBodyType": {
+                                "name": {
+                                    "originalName": "Config",
+                                    "camelCase": {
+                                        "unsafeName": "config",
+                                        "safeName": "config"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "config",
+                                        "safeName": "config"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "CONFIG",
+                                        "safeName": "CONFIG"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Config",
+                                        "safeName": "Config"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "config",
+                                            "camelCase": {
+                                                "unsafeName": "config",
+                                                "safeName": "config"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "config",
+                                                "safeName": "config"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "CONFIG",
+                                                "safeName": "CONFIG"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Config",
+                                                "safeName": "Config"
+                                            }
+                                        },
+                                        {
+                                            "originalName": "config",
+                                            "camelCase": {
+                                                "unsafeName": "config",
+                                                "safeName": "config"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "config",
+                                                "safeName": "config"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "CONFIG",
+                                                "safeName": "CONFIG"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Config",
+                                                "safeName": "Config"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [
+                                        {
+                                            "originalName": "config",
+                                            "camelCase": {
+                                                "unsafeName": "config",
+                                                "safeName": "config"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "config",
+                                                "safeName": "config"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "CONFIG",
+                                                "safeName": "CONFIG"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Config",
+                                                "safeName": "Config"
+                                            }
+                                        }
+                                    ],
+                                    "file": {
+                                        "originalName": "config",
+                                        "camelCase": {
+                                            "unsafeName": "config",
+                                            "safeName": "config"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "config",
+                                            "safeName": "config"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "CONFIG",
+                                            "safeName": "CONFIG"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Config",
+                                            "safeName": "Config"
+                                        }
+                                    }
+                                },
+                                "typeId": "type_config/config:Config",
+                                "_type": "named"
+                            },
+                            "type": "justRequestBody"
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        }
+                    },
+                    "response": {
+                        "responseBodyType": {
+                            "primitive": "BOOLEAN",
+                            "_type": "primitive"
+                        },
+                        "type": "json"
+                    },
+                    "errors": [],
+                    "examples": []
                 }
             ]
         }
@@ -2486,6 +2918,9 @@
         "typesReferencedOnlyByService": {
             "service_": [
                 "type_:Foo"
+            ],
+            "service_user/user": [
+                "type_config/config:Config"
             ]
         },
         "sharedTypes": [
@@ -2677,6 +3112,186 @@
                 "subpackage_user/notification/notification"
             ],
             "hasEndpointsInTree": true
+        },
+        "subpackage_config": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "config",
+                        "camelCase": {
+                            "unsafeName": "config",
+                            "safeName": "config"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "config",
+                            "safeName": "config"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CONFIG",
+                            "safeName": "CONFIG"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Config",
+                            "safeName": "Config"
+                        }
+                    }
+                ],
+                "packagePath": [
+                    {
+                        "originalName": "config",
+                        "camelCase": {
+                            "unsafeName": "config",
+                            "safeName": "config"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "config",
+                            "safeName": "config"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CONFIG",
+                            "safeName": "CONFIG"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Config",
+                            "safeName": "Config"
+                        }
+                    }
+                ]
+            },
+            "name": {
+                "originalName": "config",
+                "camelCase": {
+                    "unsafeName": "config",
+                    "safeName": "config"
+                },
+                "snakeCase": {
+                    "unsafeName": "config",
+                    "safeName": "config"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "CONFIG",
+                    "safeName": "CONFIG"
+                },
+                "pascalCase": {
+                    "unsafeName": "Config",
+                    "safeName": "Config"
+                }
+            },
+            "types": [],
+            "errors": [],
+            "subpackages": [
+                "subpackage_config/config"
+            ],
+            "hasEndpointsInTree": false
+        },
+        "subpackage_config/config": {
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "config",
+                        "camelCase": {
+                            "unsafeName": "config",
+                            "safeName": "config"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "config",
+                            "safeName": "config"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CONFIG",
+                            "safeName": "CONFIG"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Config",
+                            "safeName": "Config"
+                        }
+                    },
+                    {
+                        "originalName": "config",
+                        "camelCase": {
+                            "unsafeName": "config",
+                            "safeName": "config"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "config",
+                            "safeName": "config"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CONFIG",
+                            "safeName": "CONFIG"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Config",
+                            "safeName": "Config"
+                        }
+                    }
+                ],
+                "packagePath": [
+                    {
+                        "originalName": "config",
+                        "camelCase": {
+                            "unsafeName": "config",
+                            "safeName": "config"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "config",
+                            "safeName": "config"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CONFIG",
+                            "safeName": "CONFIG"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Config",
+                            "safeName": "Config"
+                        }
+                    }
+                ],
+                "file": {
+                    "originalName": "config",
+                    "camelCase": {
+                        "unsafeName": "config",
+                        "safeName": "config"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "config",
+                        "safeName": "config"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CONFIG",
+                        "safeName": "CONFIG"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Config",
+                        "safeName": "Config"
+                    }
+                }
+            },
+            "name": {
+                "originalName": "config",
+                "camelCase": {
+                    "unsafeName": "config",
+                    "safeName": "config"
+                },
+                "snakeCase": {
+                    "unsafeName": "config",
+                    "safeName": "config"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "CONFIG",
+                    "safeName": "CONFIG"
+                },
+                "pascalCase": {
+                    "unsafeName": "Config",
+                    "safeName": "Config"
+                }
+            },
+            "types": [
+                "type_config/config:Config"
+            ],
+            "errors": [],
+            "subpackages": [],
+            "hasEndpointsInTree": false
         },
         "subpackage_user/notification/notification": {
             "fernFilepath": {
@@ -2952,7 +3567,8 @@
             "error_:UnprocessableEntityError"
         ],
         "subpackages": [
-            "subpackage_user"
+            "subpackage_user",
+            "subpackage_config"
         ],
         "hasEndpointsInTree": true
     },

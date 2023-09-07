@@ -4,6 +4,7 @@ package user
 
 import (
 	context "context"
+	config "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/config"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/core"
 	user "github.com/fern-api/fern-go/internal/testdata/sdk/packages/fixtures/user"
 	http "net/http"
@@ -41,6 +42,30 @@ func (c *Client) List(ctx context.Context) ([]*user.User, error) {
 		endpointURL,
 		http.MethodGet,
 		nil,
+		&response,
+		false,
+		c.header,
+		nil,
+	); err != nil {
+		return response, err
+	}
+	return response, nil
+}
+
+func (c *Client) Update(ctx context.Context, request *config.Config) (bool, error) {
+	baseURL := "https://api.foo.io/v1"
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	endpointURL := baseURL + "/" + "users/update"
+
+	var response bool
+	if err := core.DoRequest(
+		ctx,
+		c.httpClient,
+		endpointURL,
+		http.MethodPost,
+		request,
 		&response,
 		false,
 		c.header,
