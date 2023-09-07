@@ -11,7 +11,6 @@ const (
 	configFilename    = "config.json"
 	testdataPath      = "../../internal/testdata/sdk"
 	fixturesDirectory = "fixtures"
-	outputDirectory   = "temp"
 )
 
 func TestFixtures(t *testing.T) {

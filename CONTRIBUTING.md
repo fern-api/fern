@@ -50,7 +50,7 @@ make install
 
 ### Compiling
 
-To compile all the packages in the repository , run
+To compile all the packages in the repository, run
 
 ```sh
 go build ./...
@@ -62,4 +62,14 @@ To run the all the tests:
 
 ```sh
 make test
+```
+
+### Updating test fixtures
+
+If you are updating any of the code generators, you will often need to
+update the test fixtures so that they reflect the new behavior. To do
+so, simply run
+
+```sh
+make fixtures
 ```

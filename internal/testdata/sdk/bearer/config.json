@@ -4,7 +4,7 @@
         "mode": {
             "type": "downloadFiles"
         },
-        "path": "temp"
+        "path": "tmp"
     },
     "customConfig": {
       "importPath": "github.com/fern-api/fern-go/internal/testdata/sdk/bearer/fixtures"

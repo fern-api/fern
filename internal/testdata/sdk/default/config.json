@@ -4,7 +4,7 @@
         "mode": {
             "type": "downloadFiles"
         },
-        "path": "temp"
+        "path": "tmp"
     },
     "workspaceName": "test",
     "organization": "fernbot",

@@ -15,7 +15,7 @@ import (
 const (
 	configFilename    = "config.json"
 	fixturesDirectory = "fixtures"
-	outputDirectory   = "temp"
+	outputDirectory   = "tmp"
 )
 
 // TestFixtures runs the given generator function, and asserts that

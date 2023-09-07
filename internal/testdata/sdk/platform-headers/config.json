@@ -5,7 +5,7 @@
             "type": "github",
             "repoUrl": "https://github.com/acme/acme-go"
         },
-        "path": "temp"
+        "path": "tmp"
     },
     "customConfig": {
       "module": {

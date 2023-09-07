@@ -1,7 +1,7 @@
 {
     "irFilepath": "ir.json",
     "output": {
-        "path": "temp",
+        "path": "tmp",
         "mode": {
             "type": "github",
             "repoUrl": "https://github.com/example/repository"
