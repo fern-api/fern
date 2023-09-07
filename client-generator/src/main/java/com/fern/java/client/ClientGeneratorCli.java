@@ -34,6 +34,7 @@ import com.fern.java.client.generators.SampleAppGenerator;
 import com.fern.java.client.generators.SubpackageClientGenerator;
 import com.fern.java.client.generators.SuppliersGenerator;
 import com.fern.java.client.generators.TestGenerator;
+import com.fern.java.generators.DateTimeDeserializerGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
@@ -166,6 +167,9 @@ public final class ClientGeneratorCli
                 new ClientOptionsGenerator(context, generatedEnvironmentsClass, generatedRequestOptions);
         GeneratedClientOptions generatedClientOptions = clientOptionsGenerator.generateFile();
         this.addGeneratedFile(generatedClientOptions);
+
+        DateTimeDeserializerGenerator dateTimeDeserializerGenerator = new DateTimeDeserializerGenerator(context);
+        this.addGeneratedFile(dateTimeDeserializerGenerator.generateFile());
 
         SuppliersGenerator suppliersGenerator = new SuppliersGenerator(context);
         GeneratedJavaFile generatedSuppliersFile = suppliersGenerator.generateFile();

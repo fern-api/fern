@@ -27,6 +27,7 @@ import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.generators.AuthGenerator;
+import com.fern.java.generators.DateTimeDeserializerGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
@@ -102,6 +103,9 @@ public final class SpringGeneratorCli
         ApiExceptionGenerator apiExceptionGenerator = new ApiExceptionGenerator(context);
         GeneratedJavaFile apiException = apiExceptionGenerator.generateFile();
         this.addGeneratedFile(apiException);
+
+        DateTimeDeserializerGenerator dateTimeDeserializerGenerator = new DateTimeDeserializerGenerator(context);
+        this.addGeneratedFile(dateTimeDeserializerGenerator.generateFile());
 
         Optional<GeneratedJavaFile> errorBodyFile = getErrorBody(context);
         errorBodyFile.ifPresent(this::addGeneratedFile);

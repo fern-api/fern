@@ -56,6 +56,10 @@ public final class ObjectMappersGenerator extends AbstractFileGenerator {
                         .indent()
                         .add(".addModule(new $T())\n", Jdk8Module.class)
                         .add(".addModule(new $T())\n", JavaTimeModule.class)
+                        .add(
+                                ".addModule($T.$L())\n",
+                                generatorContext.getPoetClassNameFactory().getDateTimeDeserializerClassName(),
+                                DateTimeDeserializerGenerator.GET_MODULE_METHOD_NAME)
                         .add(".disable($T.FAIL_ON_UNKNOWN_PROPERTIES)\n", DeserializationFeature.class)
                         .add(".disable($T.WRITE_DATES_AS_TIMESTAMPS)\n", SerializationFeature.class)
                         .add(".build()")

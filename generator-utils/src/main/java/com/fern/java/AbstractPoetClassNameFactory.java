@@ -60,6 +60,10 @@ public abstract class AbstractPoetClassNameFactory {
         return String.join(".", tokens);
     }
 
+    public final ClassName getDateTimeDeserializerClassName() {
+        return ClassName.get(getCorePackage(), "DateTimeDeserializer");
+    }
+
     public final List<String> getPackagePrefixTokens() {
         return packagePrefixTokens;
     }

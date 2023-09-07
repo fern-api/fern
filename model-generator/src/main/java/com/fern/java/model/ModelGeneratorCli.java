@@ -26,6 +26,7 @@ import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.CustomConfig;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.DownloadFilesCustomConfig;
+import com.fern.java.generators.DateTimeDeserializerGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
@@ -72,6 +73,9 @@ public final class ModelGeneratorCli extends AbstractGeneratorCli<CustomConfig, 
         // core
         ObjectMappersGenerator objectMappersGenerator = new ObjectMappersGenerator(context);
         this.addGeneratedFile(objectMappersGenerator.generateFile());
+
+        DateTimeDeserializerGenerator dateTimeDeserializerGenerator = new DateTimeDeserializerGenerator(context);
+        this.addGeneratedFile(dateTimeDeserializerGenerator.generateFile());
 
         // types
         TypesGenerator typesGenerator = new TypesGenerator(context, false);
