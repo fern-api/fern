@@ -18,21 +18,12 @@ package com.fern.java.output.gradle;
 
 public abstract class AbstractGradleDependency {
 
-    public abstract DependencyType type();
+    public abstract GradleDependencyType type();
 
     public abstract String coordinate();
 
     @Override
     public final String toString() {
-        if (type().equals(DependencyType.TEST_IMPLEMENTATION)) {
-            return "testImplementation " + coordinate();
-        }
         return type().toString().toLowerCase() + " " + coordinate();
-    }
-
-    public enum DependencyType {
-        IMPLEMENTATION,
-        API,
-        TEST_IMPLEMENTATION,
     }
 }

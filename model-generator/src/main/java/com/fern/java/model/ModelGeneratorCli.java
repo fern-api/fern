@@ -30,8 +30,9 @@ import com.fern.java.generators.DateTimeDeserializerGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
-import com.fern.java.output.gradle.AbstractGradleDependency.DependencyType;
-import com.fern.java.output.gradle.GradleDependency;
+import com.fern.java.output.gradle.AbstractGradleDependency;
+import com.fern.java.output.gradle.GradleDependencyType;
+import com.fern.java.output.gradle.ParsedGradleDependency;
 import java.util.Collections;
 import java.util.List;
 
@@ -85,25 +86,25 @@ public final class ModelGeneratorCli extends AbstractGeneratorCli<CustomConfig, 
     }
 
     @Override
-    public List<GradleDependency> getBuildGradleDependencies() {
+    public List<AbstractGradleDependency> getBuildGradleDependencies() {
         return List.of(
-                GradleDependency.builder()
-                        .type(DependencyType.API)
+                ParsedGradleDependency.builder()
+                        .type(GradleDependencyType.API)
                         .group("com.fasterxml.jackson.core")
                         .artifact("jackson-databind")
-                        .version(GradleDependency.JACKSON_DATABIND_VERSION)
+                        .version(ParsedGradleDependency.JACKSON_DATABIND_VERSION)
                         .build(),
-                GradleDependency.builder()
-                        .type(DependencyType.API)
+                ParsedGradleDependency.builder()
+                        .type(GradleDependencyType.API)
                         .group("com.fasterxml.jackson.datatype")
                         .artifact("jackson-datatype-jdk8")
-                        .version(GradleDependency.JACKSON_JDK8_VERSION)
+                        .version(ParsedGradleDependency.JACKSON_JDK8_VERSION)
                         .build(),
-                GradleDependency.builder()
-                        .type(DependencyType.API)
+                ParsedGradleDependency.builder()
+                        .type(GradleDependencyType.API)
                         .group("com.fasterxml.jackson.datatype")
                         .artifact("jackson-datatype-jsr310")
-                        .version(GradleDependency.JACKSON_JDK8_VERSION)
+                        .version(ParsedGradleDependency.JACKSON_JDK8_VERSION)
                         .build());
     }
 

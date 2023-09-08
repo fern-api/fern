@@ -108,6 +108,17 @@ When enabled, generates public constructors for model types.
 
 **Default:** `<Organization>ApiClient`
 
+#### ✨ `Custom Dependencies`
+
+**Type:** string
+
+```yaml
+custom-dependencies: 
+  - "implementation com.foo:bar:0.0.0"
+  - "testImplementation com.foo:bar:0.0.0"
+  - "api com.foo:bar:0.0.0"
+```
+
 The provided string will be used as the client class name. 
 
 ## Releases

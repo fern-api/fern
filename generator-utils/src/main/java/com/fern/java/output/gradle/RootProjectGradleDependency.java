@@ -21,8 +21,8 @@ public final class RootProjectGradleDependency extends AbstractGradleDependency 
     public static final RootProjectGradleDependency INSTANCE = new RootProjectGradleDependency();
 
     @Override
-    public DependencyType type() {
-        return DependencyType.IMPLEMENTATION;
+    public GradleDependencyType type() {
+        return GradleDependencyType.IMPLEMENTATION;
     }
 
     @Override

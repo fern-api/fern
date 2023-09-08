@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fern.java.ICustomConfig;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
+import java.util.List;
 import java.util.Optional;
 import org.immutables.value.Value;
 
@@ -30,6 +31,9 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
 
     @JsonProperty("client-class-name")
     Optional<String> clientClassName();
+
+    @JsonProperty("custom-dependencies")
+    Optional<List<String>> customDependencies();
 
     static ImmutableJavaSdkCustomConfig.Builder builder() {
         return ImmutableJavaSdkCustomConfig.builder();

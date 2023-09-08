@@ -34,7 +34,7 @@ import com.fern.java.generators.TypesGenerator.Result;
 import com.fern.java.output.GeneratedAuthFiles;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
-import com.fern.java.output.gradle.GradleDependency;
+import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.spring.generators.ApiExceptionGenerator;
 import com.fern.java.spring.generators.ErrorBodyGenerator;
 import com.fern.java.spring.generators.ExceptionGenerator;
@@ -149,7 +149,7 @@ public final class SpringGeneratorCli
     }
 
     @Override
-    public List<GradleDependency> getBuildGradleDependencies() {
+    public List<AbstractGradleDependency> getBuildGradleDependencies() {
         return List.of();
     }
 

@@ -18,11 +18,11 @@ package com.fern.java.output;
 
 import com.fern.generator.exec.model.logging.MavenCoordinate;
 import com.fern.java.output.gradle.AbstractGradleDependency;
-import com.fern.java.output.gradle.AbstractGradleDependency.DependencyType;
-import com.fern.java.output.gradle.GradleDependency;
+import com.fern.java.output.gradle.GradleDependencyType;
 import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.GradlePublishingConfig;
 import com.fern.java.output.gradle.GradleRepository;
+import com.fern.java.output.gradle.ParsedGradleDependency;
 import com.fern.java.output.gradle.RootProjectGradleDependency;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -37,11 +37,11 @@ public class GeneratedBuildGradleTest {
                 .version("0.0.0")
                 .build();
         List<AbstractGradleDependency> deps = List.of(
-                GradleDependency.builder()
-                        .type(DependencyType.IMPLEMENTATION)
+                ParsedGradleDependency.builder()
+                        .type(GradleDependencyType.IMPLEMENTATION)
                         .group("io.github.fern-api")
                         .artifact("jersy-utils")
-                        .version(GradleDependency.UTILS_VERSION)
+                        .version(ParsedGradleDependency.UTILS_VERSION)
                         .build(),
                 RootProjectGradleDependency.INSTANCE);
         GeneratedBuildGradle buildGradle = GeneratedBuildGradle.builder()

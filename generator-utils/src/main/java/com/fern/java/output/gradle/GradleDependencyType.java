@@ -16,19 +16,25 @@
 
 package com.fern.java.output.gradle;
 
-import com.fern.java.immutables.StagedBuilderImmutablesStyle;
-import org.immutables.value.Value;
+public final class GradleDependencyType {
 
-@Value.Immutable
-@StagedBuilderImmutablesStyle
-public abstract class GradleDependency extends AbstractGradleDependency {
+    public static final GradleDependencyType IMPLEMENTATION = new GradleDependencyType("implementation");
 
-    public static GradleDependency of(String value) {
-        String gradleType = value.substring(value.indexOf(" "));
-        String coordinate = value.substring(value.indexOf(" ") + 1);
-        return ImmutableGradleDependency.builder()
-                .type(GradleDependencyType.of(gradleType))
-                .coordinate(coordinate)
-                .build();
+    public static final GradleDependencyType API = new GradleDependencyType("api");
+
+    public static final GradleDependencyType TEST_IMPLEMENTATION = new GradleDependencyType("testImplementation");
+    private final String value;
+
+    private GradleDependencyType(String value) {
+        this.value = value;
+    }
+
+    public static GradleDependencyType of(String value) {
+        return new GradleDependencyType(value);
+    }
+
+    @Override
+    public String toString() {
+        return this.value;
     }
 }

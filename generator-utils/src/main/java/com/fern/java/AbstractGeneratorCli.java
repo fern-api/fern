@@ -36,7 +36,7 @@ import com.fern.java.output.GeneratedBuildGradle;
 import com.fern.java.output.GeneratedFile;
 import com.fern.java.output.ImmutableGeneratedBuildGradle;
 import com.fern.java.output.RawGeneratedFile;
-import com.fern.java.output.gradle.GradleDependency;
+import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradlePlugin;
 import com.fern.java.output.gradle.GradlePublishingConfig;
 import com.fern.java.output.gradle.GradleRepository;
@@ -218,7 +218,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
             T customConfig,
             GeneratorPublishConfig publishOutputMode);
 
-    public abstract List<GradleDependency> getBuildGradleDependencies();
+    public abstract List<AbstractGradleDependency> getBuildGradleDependencies();
 
     public abstract List<String> getSubProjects();
 

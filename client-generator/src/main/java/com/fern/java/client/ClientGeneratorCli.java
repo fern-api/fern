@@ -40,8 +40,10 @@ import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
-import com.fern.java.output.gradle.AbstractGradleDependency.DependencyType;
+import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradleDependency;
+import com.fern.java.output.gradle.GradleDependencyType;
+import com.fern.java.output.gradle.ParsedGradleDependency;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -54,33 +56,33 @@ public final class ClientGeneratorCli
     private static final Logger log = LoggerFactory.getLogger(ClientGeneratorCli.class);
 
     private final List<String> subprojects = new ArrayList<>();
-    private final List<GradleDependency> dependencies = new ArrayList<>();
+    private final List<AbstractGradleDependency> dependencies = new ArrayList<>();
 
     public ClientGeneratorCli() {
         this.dependencies.addAll(List.of(
-                GradleDependency.builder()
-                        .type(DependencyType.API)
+                ParsedGradleDependency.builder()
+                        .type(GradleDependencyType.API)
                         .group("com.squareup.okhttp3")
                         .artifact("okhttp")
-                        .version(GradleDependency.OKHTTP_VERSION)
+                        .version(ParsedGradleDependency.OKHTTP_VERSION)
                         .build(),
-                GradleDependency.builder()
-                        .type(DependencyType.API)
+                ParsedGradleDependency.builder()
+                        .type(GradleDependencyType.API)
                         .group("com.fasterxml.jackson.core")
                         .artifact("jackson-databind")
-                        .version(GradleDependency.JACKSON_DATABIND_VERSION)
+                        .version(ParsedGradleDependency.JACKSON_DATABIND_VERSION)
                         .build(),
-                GradleDependency.builder()
-                        .type(DependencyType.API)
+                ParsedGradleDependency.builder()
+                        .type(GradleDependencyType.API)
                         .group("com.fasterxml.jackson.datatype")
                         .artifact("jackson-datatype-jdk8")
-                        .version(GradleDependency.JACKSON_JDK8_VERSION)
+                        .version(ParsedGradleDependency.JACKSON_JDK8_VERSION)
                         .build(),
-                GradleDependency.builder()
-                        .type(DependencyType.API)
+                ParsedGradleDependency.builder()
+                        .type(GradleDependencyType.API)
                         .group("com.fasterxml.jackson.datatype")
                         .artifact("jackson-datatype-jsr310")
-                        .version(GradleDependency.JACKSON_JDK8_VERSION)
+                        .version(ParsedGradleDependency.JACKSON_JDK8_VERSION)
                         .build()));
     }
 
@@ -118,17 +120,17 @@ public final class ClientGeneratorCli
         SampleAppGenerator sampleAppGenerator = new SampleAppGenerator(context, generatedClientWrapper);
         sampleAppGenerator.generateFiles().forEach(this::addGeneratedFile);
         subprojects.add(SampleAppGenerator.SAMPLE_APP_DIRECTORY);
-        dependencies.add(GradleDependency.builder()
-                .type(DependencyType.TEST_IMPLEMENTATION)
+        dependencies.add(ParsedGradleDependency.builder()
+                .type(GradleDependencyType.TEST_IMPLEMENTATION)
                 .group("org.junit.jupiter")
                 .artifact("junit-jupiter-api")
-                .version(GradleDependency.JUNIT_DEPENDENCY)
+                .version(ParsedGradleDependency.JUNIT_DEPENDENCY)
                 .build());
-        dependencies.add(GradleDependency.builder()
-                .type(DependencyType.TEST_IMPLEMENTATION)
+        dependencies.add(ParsedGradleDependency.builder()
+                .type(GradleDependencyType.TEST_IMPLEMENTATION)
                 .group("org.junit.jupiter")
                 .artifact("junit-jupiter-engine")
-                .version(GradleDependency.JUNIT_DEPENDENCY)
+                .version(ParsedGradleDependency.JUNIT_DEPENDENCY)
                 .build());
         TestGenerator testGenerator = new TestGenerator(context);
         this.addGeneratedFile(testGenerator.generateFile());
@@ -220,11 +222,16 @@ public final class ClientGeneratorCli
         this.addGeneratedFile(generatedRootClient.builderClass());
         generatedRootClient.wrappedRequests().forEach(this::addGeneratedFile);
 
+        context.getCustomConfig().customDependencies().ifPresent(deps -> {
+            for (String dep : deps) {
+                dependencies.add(GradleDependency.of(dep));
+            }
+        });
         return generatedRootClient;
     }
 
     @Override
-    public List<GradleDependency> getBuildGradleDependencies() {
+    public List<AbstractGradleDependency> getBuildGradleDependencies() {
         return dependencies;
     }
 
