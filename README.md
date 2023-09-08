@@ -108,7 +108,7 @@ When enabled, generates public constructors for model types.
 
 **Default:** `<Organization>ApiClient`
 
-#### ✨ `Custom Dependencies`
+#### ✨ `custom-dependencies`
 
 **Type:** string
 
