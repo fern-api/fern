@@ -133,8 +133,15 @@ async function loadApis({
 
         const apiWorkspaces: APIWorkspace[] = [];
 
+        const filteredWorkspaces =
+            commandLineApiWorkspace != null
+                ? apiWorkspaceDirectoryNames.filter((api) => {
+                      api === commandLineApiWorkspace;
+                  })
+                : apiWorkspaceDirectoryNames;
+
         await Promise.all(
-            apiWorkspaceDirectoryNames.map(async (workspaceDirectoryName) => {
+            filteredWorkspaces.map(async (workspaceDirectoryName) => {
                 const workspace = await loadAPIWorkspace({
                     absolutePathToWorkspace: join(apisDirectory, RelativeFilePath.of(workspaceDirectoryName)),
                     context,
