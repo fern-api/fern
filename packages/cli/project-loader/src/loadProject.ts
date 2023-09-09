@@ -136,7 +136,7 @@ async function loadApis({
         const filteredWorkspaces =
             commandLineApiWorkspace != null
                 ? apiWorkspaceDirectoryNames.filter((api) => {
-                      api === commandLineApiWorkspace;
+                      return api === commandLineApiWorkspace;
                   })
                 : apiWorkspaceDirectoryNames;
 
