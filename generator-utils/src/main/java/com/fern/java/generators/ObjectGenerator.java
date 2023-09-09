@@ -69,6 +69,7 @@ public final class ObjectGenerator extends AbstractFileGenerator {
         PoetTypeNameMapper poetTypeNameMapper = generatorContext.getPoetTypeNameMapper();
         List<EnrichedObjectProperty> enrichedObjectProperties = new ArrayList<>();
         Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters = new HashMap<>();
+        List<EnrichedObjectProperty> extendedPropertyGetters = new ArrayList<>();
         if (selfInterface.isEmpty()) {
             enrichedObjectProperties = objectTypeDeclaration.getProperties().stream()
                     .map(objectProperty -> {
@@ -106,7 +107,10 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                             .addAllInterfaceProperties(enrichedProperties)
                             .build();
                 })
-                .forEach(implementsInterfaces::add);
+                .forEach(implementsInterface -> {
+                    extendedPropertyGetters.addAll(implementsInterface.interfaceProperties());
+                    implementsInterfaces.add(implementsInterface);
+                });
         ObjectTypeSpecGenerator genericObjectGenerator = new ObjectTypeSpecGenerator(
                 className,
                 generatorContext.getPoetClassNameFactory().getObjectMapperClassName(),
@@ -121,6 +125,7 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                 .className(className)
                 .javaFile(javaFile)
                 .putAllObjectPropertyGetters(objectPropertyGetters)
+                .addAllExtendedObjectPropertyGetters(extendedPropertyGetters)
                 .build();
     }
 

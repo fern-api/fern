@@ -174,6 +174,7 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                             .map(objectProperty ->
                                     generatedObject.objectPropertyGetters().get(objectProperty))
                             .collect(Collectors.toList()))
+                    .addAllProperties(generatedObject.extendedObjectPropertyGetters())
                     .build();
         }
 

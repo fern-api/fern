@@ -19,6 +19,7 @@ package com.fern.java.output;
 import com.fern.ir.model.types.ObjectProperty;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
+import java.util.List;
 import java.util.Map;
 import org.immutables.value.Value;
 
@@ -27,6 +28,8 @@ import org.immutables.value.Value;
 public abstract class GeneratedObject extends AbstractGeneratedJavaFile {
 
     public abstract Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters();
+
+    public abstract List<EnrichedObjectProperty> extendedObjectPropertyGetters();
 
     public static ImmutableGeneratedObject.ClassNameBuildStage builder() {
         return ImmutableGeneratedObject.builder();
