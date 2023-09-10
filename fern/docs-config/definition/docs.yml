@@ -2,7 +2,9 @@ types:
   DocsConfiguration:
     properties:
       instances: list<DocsInstances>
-      navigation: NavigationConfig
+      navigation:
+        type: optional<NavigationConfig>
+        docs: The navigation config is skipped when multiple versions are present.
       tabs:
         type: optional<map<TabId, TabConfig>>
       versions: optional<list<VersionConfig>>
