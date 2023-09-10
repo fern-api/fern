@@ -5,7 +5,9 @@ exports[`validate docs 1`] = `
 [docs]: docs.yml -> favicon
         Path favicon.ico does not exist
 [docs]: docs.yml -> logo -> dark
-        Path logo.png does not exist"
+        Path logo.png does not exist
+[docs]: docs.yml -> navigation -> 0 -> layout -> 0 -> section -> contents -> 0 -> page
+        Path ./dummy-page.mdx does not exist"
 `;
 
 exports[`validate simple 1`] = `

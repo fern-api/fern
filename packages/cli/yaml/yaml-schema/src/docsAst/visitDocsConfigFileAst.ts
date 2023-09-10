@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
 import {
     DocsConfiguration,
     NavigationConfig,
@@ -117,18 +117,20 @@ async function visitNavigation({
     absoluteFilepathToConfiguration: AbsoluteFilePath;
 }): Promise<void> {
     if (navigationConfigIsTabbed(navigation)) {
-        navigation.map(async (tab, tabIdx) => {
-            await Promise.all(
-                tab.layout.map(async (item, itemIdx) => {
-                    await visitNavigationItem({
-                        navigationItem: item,
-                        visitor,
-                        nodePath: [...nodePath, `${tabIdx}`, "layout", `${itemIdx}`],
-                        absoluteFilepathToConfiguration,
-                    });
-                })
-            );
-        });
+        await Promise.all(
+            navigation.map(async (tab, tabIdx) => {
+                await Promise.all(
+                    tab.layout.map(async (item, itemIdx) => {
+                        await visitNavigationItem({
+                            navigationItem: item,
+                            visitor,
+                            nodePath: [...nodePath, `${tabIdx}`, "layout", `${itemIdx}`],
+                            absoluteFilepathToConfiguration,
+                        });
+                    })
+                );
+            })
+        );
     } else {
         await Promise.all(
             navigation.map(async (item, itemIdx) => {
@@ -162,13 +164,15 @@ async function visitNavigationItem({
             nodePath: [...nodePath, "page"],
         });
         const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), navigationItem.path);
-        await visitor.markdownPage?.(
-            {
-                title: navigationItem.page,
-                content: (await readFile(absoluteFilepath)).toString(),
-            },
-            [...nodePath, "page", navigationItem.path]
-        );
+        if (await doesPathExist(absoluteFilepath)) {
+            await visitor.markdownPage?.(
+                {
+                    title: navigationItem.page,
+                    content: (await readFile(absoluteFilepath)).toString(),
+                },
+                [...nodePath, "page", navigationItem.path]
+            );
+        }
     }
 
     if (navigationItemIsSection(navigationItem)) {
