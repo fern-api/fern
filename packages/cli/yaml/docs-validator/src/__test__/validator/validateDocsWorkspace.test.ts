@@ -2,7 +2,8 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadDocsWorkspace } from "@fern-api/workspace-loader";
-import { validateDocsWorkspace } from "../../validateDocsWorkspace";
+import { getAllRulesForTest } from "../../getAllRules";
+import { runRulesOnDocsWorkspace } from "../../validateDocsWorkspace";
 import { ValidationViolation } from "../../ValidationViolation";
 
 interface Fixture {
@@ -31,7 +32,11 @@ describe("validateFernWorkspace", () => {
             if (docsWorkspace == null) {
                 throw new Error(`Failed to load docs workspace in fixture ${fixture.name}`);
             }
-            const violations = await validateDocsWorkspace(docsWorkspace, CONSOLE_LOGGER);
+            const violations = await runRulesOnDocsWorkspace({
+                workspace: docsWorkspace,
+                rules: getAllRulesForTest(),
+                logger: CONSOLE_LOGGER,
+            });
             expect(violations).toEqual(fixture.expectedViolations);
         });
     }

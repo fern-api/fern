@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readdir } from "fs/promises";
 import { camelCase, upperFirst } from "lodash-es";
-import { getAllRules } from "../getAllRules";
+import { getAllRules, getAllRulesForTest } from "../getAllRules";
 import { Rule } from "../Rule";
 
 const RULES_DIRECTORY = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("../rules"));
@@ -10,6 +10,7 @@ describe("getAllRules", () => {
     it("ensure all docs validation rules are registered", async () => {
         const allRulesPromises = (await readdir(RULES_DIRECTORY, { withFileTypes: true }))
             .filter((item) => item.isDirectory())
+            .filter((iterm) => iterm.name !== "valid-markdown") // jest doesnt like next-mdx
             .map(async (item) => {
                 const fullPath = join(RULES_DIRECTORY, RelativeFilePath.of(item.name));
                 const imported = await import(fullPath);
@@ -22,7 +23,7 @@ describe("getAllRules", () => {
             });
         const allRules: Rule[] = await Promise.all(allRulesPromises);
 
-        const registeredRules = getAllRules();
+        const registeredRules = getAllRulesForTest();
 
         expect(allRules.length).toEqual(registeredRules.length);
         for (const rule of allRules) {

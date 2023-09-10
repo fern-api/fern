@@ -5,3 +5,7 @@ import { ValidMarkdownRule } from "./rules/valid-markdown";
 export function getAllRules(): Rule[] {
     return [FilepathsExistRule, ValidMarkdownRule];
 }
+
+export function getAllRulesForTest(): Rule[] {
+    return [ValidMarkdownRule];
+}
