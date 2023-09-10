@@ -1,8 +1,8 @@
 import { noop, visitObject } from "@fern-api/core-utils";
+import { NodePath } from "../../NodePath";
 import { ExampleTypeSchema, TypeDeclarationSchema } from "../../schemas";
 import { visitRawTypeDeclaration } from "../../utils/visitRawTypeDeclaration";
 import { DefinitionFileAstVisitor } from "../DefinitionFileAstVisitor";
-import { NodePath } from "../NodePath";
 import { createDocsVisitor } from "./utils/createDocsVisitor";
 import { visitAllReferencesInExample } from "./utils/visitAllReferencesInExample";
 import { createTypeReferenceVisitor } from "./utils/visitTypeReference";

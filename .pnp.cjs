@@ -128,6 +128,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/cli/workspace-loader"\
       },\
       {\
+        "name": "@fern-api/docs-validator",\
+        "reference": "workspace:packages/cli/yaml/docs-validator"\
+      },\
+      {\
         "name": "@fern-api/yaml-formatter",\
         "reference": "workspace:packages/cli/yaml/formatter"\
       },\
@@ -183,6 +187,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/dependencies-configuration", ["workspace:packages/cli/config-management/dependencies-configuration"]],\
       ["@fern-api/docker-utils", ["workspace:packages/cli/generation/local-generation/docker-utils"]],\
       ["@fern-api/docs-configuration", ["workspace:packages/cli/config-management/docs-configuration"]],\
+      ["@fern-api/docs-validator", ["workspace:packages/cli/yaml/docs-validator"]],\
       ["@fern-api/ete-tests", ["workspace:packages/cli/ete-tests"]],\
       ["@fern-api/fs-utils", ["workspace:packages/commons/fs-utils"]],\
       ["@fern-api/generators-configuration", ["workspace:packages/cli/config-management/generators-configuration"]],\
@@ -3307,6 +3312,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/auth", "workspace:packages/cli/auth"],\
             ["@fern-api/config-management-commons", "workspace:packages/cli/config-management/commons"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
+            ["@fern-api/docs-validator", "workspace:packages/cli/yaml/docs-validator"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
             ["@fern-api/init", "workspace:packages/cli/init"],\
@@ -3384,6 +3390,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/dependencies-configuration", "workspace:packages/cli/config-management/dependencies-configuration"],\
             ["@fern-api/docker-utils", "workspace:packages/cli/generation/local-generation/docker-utils"],\
             ["@fern-api/docs-configuration", "workspace:packages/cli/config-management/docs-configuration"],\
+            ["@fern-api/docs-validator", "workspace:packages/cli/yaml/docs-validator"],\
             ["@fern-api/ete-tests", "workspace:packages/cli/ete-tests"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
@@ -3521,8 +3528,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
-            ["@fern-fern/docs-config", "npm:0.0.46"],\
-            ["@fern-fern/registry-node", "npm:0.14.1-3-g6c09dff"],\
+            ["@fern-fern/docs-config", "npm:0.0.48"],\
+            ["@fern-fern/registry-node", "npm:0.16.1-2-g13b65b4"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
             ["@types/node", "npm:18.7.18"],\
@@ -3530,6 +3537,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.26.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.5.0"],\
             ["js-yaml", "npm:4.1.0"],\
+            ["organize-imports-cli", "npm:0.10.0"],\
+            ["prettier", "npm:2.7.1"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@fern-api/docs-validator", [\
+        ["workspace:packages/cli/yaml/docs-validator", {\
+          "packageLocation": "./packages/cli/yaml/docs-validator/",\
+          "packageDependencies": [\
+            ["@fern-api/docs-validator", "workspace:packages/cli/yaml/docs-validator"],\
+            ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
+            ["@fern-api/logger", "workspace:packages/cli/logger"],\
+            ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
+            ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
+            ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
+            ["@types/jest", "npm:29.0.3"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["depcheck", "npm:1.4.3"],\
+            ["eslint", "npm:8.26.0"],\
+            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.5.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
@@ -3624,7 +3653,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-formatter", "workspace:packages/cli/yaml/formatter"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
-            ["@fern-fern/docs-config", "npm:0.0.46"],\
+            ["@fern-fern/docs-config", "npm:0.0.48"],\
             ["@types/fs-extra", "npm:11.0.1"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
@@ -4052,7 +4081,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/ir-sdk", "npm:0.0.2884"],\
-            ["@fern-fern/registry-node", "npm:0.14.1-3-g6c09dff"],\
+            ["@fern-fern/registry-node", "npm:0.16.1-2-g13b65b4"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
@@ -4085,9 +4114,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
+            ["@fern-fern/docs-config", "npm:0.0.48"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.290"],\
             ["@fern-fern/ir-sdk", "npm:0.0.2884"],\
-            ["@fern-fern/registry-node", "npm:0.14.1-3-g6c09dff"],\
+            ["@fern-fern/registry-node", "npm:0.16.1-2-g13b65b4"],\
             ["@types/decompress", "npm:4.2.4"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
@@ -4202,7 +4232,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/venus-api-sdk", "npm:0.0.20-7-g6ea8dc4"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.290"],\
-            ["@fern-fern/registry-node", "npm:0.14.1-3-g6c09dff"],\
+            ["@fern-fern/registry-node", "npm:0.16.1-2-g13b65b4"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
@@ -4380,6 +4410,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
+            ["@fern-api/docs-configuration", "workspace:packages/cli/config-management/docs-configuration"],\
+            ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-fern/ir-sdk", "npm:0.0.2884"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
@@ -4395,10 +4427,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/docs-config", [\
-        ["npm:0.0.46", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-docs-config-npm-0.0.46-70092437ad-b20514377d.zip/node_modules/@fern-fern/docs-config/",\
+        ["npm:0.0.48", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-docs-config-npm-0.0.48-f5698f842c-c59fd3c203.zip/node_modules/@fern-fern/docs-config/",\
           "packageDependencies": [\
-            ["@fern-fern/docs-config", "npm:0.0.46"]\
+            ["@fern-fern/docs-config", "npm:0.0.48"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -4666,10 +4698,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/registry-node", [\
-        ["npm:0.14.1-3-g6c09dff", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-registry-node-npm-0.14.1-3-g6c09dff-ac07f2d022-1e72a8314b.zip/node_modules/@fern-fern/registry-node/",\
+        ["npm:0.16.1-2-g13b65b4", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-registry-node-npm-0.16.1-2-g13b65b4-ea73570456-bc8eb79c09.zip/node_modules/@fern-fern/registry-node/",\
           "packageDependencies": [\
-            ["@fern-fern/registry-node", "npm:0.14.1-3-g6c09dff"],\
+            ["@fern-fern/registry-node", "npm:0.16.1-2-g13b65b4"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["@ungap/url-search-params", "npm:0.2.2"],\
             ["axios", "npm:0.27.2"],\

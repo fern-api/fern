@@ -1,9 +1,9 @@
 import { noop, visitObject } from "@fern-api/core-utils";
+import { NodePath } from "../../NodePath";
 import { HttpHeaderSchema, WebhookPayloadSchema } from "../../schemas";
 import { WebhookReferencedPayloadSchema } from "../../schemas/WebhookReferencedPayloadSchema";
 import { WebhookSchema } from "../../schemas/WebhookSchema";
 import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../DefinitionFileAstVisitor";
-import { NodePath } from "../NodePath";
 import { createDocsVisitor } from "./utils/createDocsVisitor";
 import { createTypeReferenceVisitor } from "./utils/visitTypeReference";
 
