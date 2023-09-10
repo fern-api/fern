@@ -1,7 +1,7 @@
 import { noop, visitObject } from "@fern-api/core-utils";
+import { NodePath } from "../../NodePath";
 import { ErrorDeclarationSchema } from "../../schemas";
 import { DefinitionFileAstVisitor } from "../DefinitionFileAstVisitor";
-import { NodePath } from "../NodePath";
 import { createDocsVisitor } from "./utils/createDocsVisitor";
 import { createTypeReferenceVisitor } from "./utils/visitTypeReference";
 import { visitTypeDeclaration } from "./visitTypeDeclarations";

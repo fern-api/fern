@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernDocsConfig as RawDocs } from "@fern-fern/docs-config";
 import { FernRegistry } from "@fern-fern/registry-node";
@@ -41,7 +41,6 @@ export async function convertDocsConfiguration({
                               ? await convertImageReference({
                                     rawImageReference: logo.dark,
                                     absolutePathOfConfiguration,
-                                    context,
                                 })
                               : undefined,
                       light:
@@ -49,7 +48,6 @@ export async function convertDocsConfiguration({
                               ? await convertImageReference({
                                     rawImageReference: logo.light,
                                     absolutePathOfConfiguration,
-                                    context,
                                 })
                               : undefined,
                       height: logo.height,
@@ -58,14 +56,13 @@ export async function convertDocsConfiguration({
                 : undefined,
         favicon:
             favicon != null
-                ? await convertImageReference({ rawImageReference: favicon, absolutePathOfConfiguration, context })
+                ? await convertImageReference({ rawImageReference: favicon, absolutePathOfConfiguration })
                 : undefined,
         backgroundImage:
             backgroundImage != null
                 ? await convertImageReference({
                       rawImageReference: backgroundImage,
                       absolutePathOfConfiguration,
-                      context,
                   })
                 : undefined,
         colors: {
@@ -106,7 +103,6 @@ export async function convertDocsConfiguration({
                 ? await convertTypographyConfiguration({
                       rawTypography: typography,
                       absolutePathOfConfiguration,
-                      context,
                   })
                 : undefined,
     };
@@ -115,11 +111,9 @@ export async function convertDocsConfiguration({
 async function convertTypographyConfiguration({
     rawTypography,
     absolutePathOfConfiguration,
-    context,
 }: {
     rawTypography: RawDocs.DocsTypographyConfig;
     absolutePathOfConfiguration: AbsoluteFilePath;
-    context: TaskContext;
 }): Promise<TypographyConfig> {
     return {
         headingsFont:
@@ -127,7 +121,6 @@ async function convertTypographyConfiguration({
                 ? await convertFontConfig({
                       rawFontConfig: rawTypography.headingsFont,
                       absolutePathOfConfiguration,
-                      context,
                   })
                 : undefined,
         bodyFont:
@@ -135,7 +128,6 @@ async function convertTypographyConfiguration({
                 ? await convertFontConfig({
                       rawFontConfig: rawTypography.bodyFont,
                       absolutePathOfConfiguration,
-                      context,
                   })
                 : undefined,
         codeFont:
@@ -143,7 +135,6 @@ async function convertTypographyConfiguration({
                 ? await convertFontConfig({
                       rawFontConfig: rawTypography.codeFont,
                       absolutePathOfConfiguration,
-                      context,
                   })
                 : undefined,
     };
@@ -152,18 +143,15 @@ async function convertTypographyConfiguration({
 async function convertFontConfig({
     rawFontConfig,
     absolutePathOfConfiguration,
-    context,
 }: {
     rawFontConfig: RawDocs.FontConfig;
     absolutePathOfConfiguration: AbsoluteFilePath;
-    context: TaskContext;
 }): Promise<FontConfig> {
     return {
         name: rawFontConfig.name,
-        absolutePath: await resolveAndValidateFilepath({
+        absolutePath: await resolveFilepath({
             absolutePathOfConfiguration,
             rawUnresolvedFilepath: rawFontConfig.path,
-            context,
         }),
     };
 }
@@ -228,10 +216,9 @@ async function convertNavigationItem({
         return {
             type: "page",
             title: rawConfig.page,
-            absolutePath: await resolveAndValidateFilepath({
+            absolutePath: await resolveFilepath({
                 absolutePathOfConfiguration,
                 rawUnresolvedFilepath: rawConfig.path,
-                context,
             }),
             slug: rawConfig.slug ?? undefined,
         };
@@ -279,17 +266,14 @@ function isRawApiSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.Ap
 async function convertImageReference({
     rawImageReference,
     absolutePathOfConfiguration,
-    context,
 }: {
     rawImageReference: string;
     absolutePathOfConfiguration: AbsoluteFilePath;
-    context: TaskContext;
 }): Promise<ImageReference> {
     return {
-        filepath: await resolveAndValidateFilepath({
+        filepath: await resolveFilepath({
             absolutePathOfConfiguration,
             rawUnresolvedFilepath: rawImageReference,
-            context,
         }),
     };
 }
@@ -397,20 +381,14 @@ function convertNavbarLinks(rawConfig: RawDocs.NavbarLink[]): FernRegistry.docs.
     });
 }
 
-async function resolveAndValidateFilepath({
+async function resolveFilepath({
     rawUnresolvedFilepath,
     absolutePathOfConfiguration,
-    context,
 }: {
     rawUnresolvedFilepath: string;
     absolutePathOfConfiguration: AbsoluteFilePath;
-    context: TaskContext;
 }): Promise<AbsoluteFilePath> {
     const resolved = resolve(dirname(absolutePathOfConfiguration), rawUnresolvedFilepath);
-    const pathExists = await doesPathExist(resolved);
-    if (!pathExists) {
-        context.failAndThrow("Path does not exist: " + rawUnresolvedFilepath);
-    }
     return resolved;
 }
 

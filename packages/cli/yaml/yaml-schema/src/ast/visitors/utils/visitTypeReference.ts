@@ -1,5 +1,5 @@
+import { NodePath } from "../../../NodePath";
 import { DefinitionFileAstVisitor, TypeReferenceLocation } from "../../DefinitionFileAstVisitor";
-import { NodePath } from "../../NodePath";
 
 export function createTypeReferenceVisitor(
     visitor: Partial<DefinitionFileAstVisitor>

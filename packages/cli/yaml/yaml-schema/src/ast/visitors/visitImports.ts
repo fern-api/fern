@@ -1,5 +1,5 @@
+import { NodePath } from "../../NodePath";
 import { DefinitionFileAstVisitor } from "../DefinitionFileAstVisitor";
-import { NodePath } from "../NodePath";
 
 export async function visitImports({
     imports,
