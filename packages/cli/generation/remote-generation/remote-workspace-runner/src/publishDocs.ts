@@ -12,6 +12,7 @@ import { registerApi } from "@fern-api/register";
 import { createFdrService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsDefinition, FernWorkspace } from "@fern-api/workspace-loader";
+import { TabConfig } from "@fern-fern/docs-config/api";
 import { FernRegistry } from "@fern-fern/registry-node";
 import axios from "axios";
 import chalk from "chalk";
@@ -221,6 +222,7 @@ async function convertDocsConfiguration({
                 : undefined,
         navigation: await convertNavigationConfig({
             navigationConfig: docsDefinition.config.navigation,
+            tabs: docsDefinition.config.tabs,
             docsDefinition,
             organization,
             fernWorkspaces,
@@ -268,6 +270,7 @@ async function convertDocsConfiguration({
 
 async function convertNavigationConfig({
     navigationConfig,
+    tabs,
     docsDefinition,
     organization,
     fernWorkspaces,
@@ -276,6 +279,7 @@ async function convertNavigationConfig({
     version,
 }: {
     navigationConfig: DocsNavigationConfiguration;
+    tabs?: Record<string, TabConfig>;
     docsDefinition: DocsDefinition;
     organization: string;
     fernWorkspaces: FernWorkspace[];
@@ -284,7 +288,7 @@ async function convertNavigationConfig({
     version: string | undefined;
 }): Promise<FernRegistry.docs.v1.write.NavigationConfig> {
     switch (navigationConfig.type) {
-        case "unversioned":
+        case "untabbed":
             return {
                 items: await Promise.all(
                     navigationConfig.items.map((item) =>
@@ -300,31 +304,36 @@ async function convertNavigationConfig({
                     )
                 ),
             };
-        case "versioned":
+        case "tabbed":
             return {
-                versions: await Promise.all(
-                    navigationConfig.versions.map(async (configVersion) => {
+                tabs: await Promise.all(
+                    navigationConfig.items.map(async (tabbedItem) => {
+                        const tabConfig = tabs?.[tabbedItem.tab];
+                        if (tabConfig == null) {
+                            throw new Error(`Couldn't find config for tab id ${tabbedItem.tab}`);
+                        }
                         return {
-                            config: {
-                                items: await Promise.all(
-                                    configVersion.items.map(async (item) =>
-                                        convertNavigationItem({
-                                            item,
-                                            docsDefinition,
-                                            organization,
-                                            fernWorkspaces,
-                                            context,
-                                            token,
-                                            version,
-                                        })
-                                    )
-                                ),
-                            },
-                            version: configVersion.version,
+                            title: tabConfig.displayName,
+                            icon: tabConfig.icon,
+                            items: await Promise.all(
+                                tabbedItem.layout.map((item) =>
+                                    convertNavigationItem({
+                                        item,
+                                        docsDefinition,
+                                        organization,
+                                        fernWorkspaces,
+                                        context,
+                                        token,
+                                        version,
+                                    })
+                                )
+                            ),
                         };
                     })
                 ),
             };
+        case "versioned":
+            throw new Error("Please downgrade your Fern CLI version to support versioned docs");
         default:
             assertNever(navigationConfig);
     }

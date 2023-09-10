@@ -1,10 +1,11 @@
 import { Audiences } from "@fern-api/config-management-commons";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { DocsInstances } from "@fern-fern/docs-config/api";
+import { DocsInstances, TabConfig } from "@fern-fern/docs-config/api";
 import type { FernRegistry } from "@fern-fern/registry-node";
 
 export interface DocsConfiguration {
     instances: DocsInstances[];
+    tabs?: Record<string, TabConfig>;
     navigation: DocsNavigationConfiguration;
     title: string | undefined;
     logo: Logo | undefined;
@@ -64,20 +65,30 @@ export interface ImageReference {
     filepath: AbsoluteFilePath;
 }
 
-export interface UnversionedDocsNavigation {
-    type: "unversioned";
+export interface UntabbedDocsNavigation {
+    type: "untabbed";
     items: DocsNavigationItem[];
+}
+
+export interface TabbedDocsNavigation {
+    type: "tabbed";
+    items: TabbedNavigation[];
 }
 
 export interface VersionedDocsNavigation {
     type: "versioned";
     versions: {
-        items: DocsNavigationItem[];
+        navigation: UntabbedDocsNavigation | TabbedDocsNavigation;
         version: string;
     }[];
 }
 
-export type DocsNavigationConfiguration = UnversionedDocsNavigation | VersionedDocsNavigation;
+export type DocsNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNavigation | VersionedDocsNavigation;
+
+export interface TabbedNavigation {
+    tab: string;
+    layout: DocsNavigationItem[];
+}
 
 export type DocsNavigationItem = DocsNavigationItem.Page | DocsNavigationItem.Section | DocsNavigationItem.ApiSection;
 

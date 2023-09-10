@@ -43,12 +43,14 @@ async function visitNavigation({
     nodePath: NodePath;
 }): Promise<void> {
     switch (navigation.type) {
-        case "unversioned":
+        case "untabbed":
             await Promise.all(
                 navigation.items.map(async (item, idx) => {
                     await visitNavigationItem({ navigationItem: item, visitor, nodePath: [...nodePath, `${idx}`] });
                 })
             );
+            break;
+        case "tabbed":
             break;
         case "versioned":
             break;

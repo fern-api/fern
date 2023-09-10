@@ -40,6 +40,7 @@
     "@fern-api/services": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
+    "@fern-fern/docs-config": "0.0.48",
     "@fern-fern/fiddle-sdk": "^0.0.290",
     "@fern-fern/ir-sdk": "0.0.2884",
     "@fern-fern/registry-node": "0.16.1-2-g13b65b4",

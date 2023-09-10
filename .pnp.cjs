@@ -3528,7 +3528,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
-            ["@fern-fern/docs-config", "npm:0.0.46"],\
+            ["@fern-fern/docs-config", "npm:0.0.48"],\
             ["@fern-fern/registry-node", "npm:0.16.1-2-g13b65b4"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
@@ -3660,7 +3660,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-formatter", "workspace:packages/cli/yaml/formatter"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
-            ["@fern-fern/docs-config", "npm:0.0.46"],\
+            ["@fern-fern/docs-config", "npm:0.0.48"],\
             ["@types/fs-extra", "npm:11.0.1"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
@@ -4121,6 +4121,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
+            ["@fern-fern/docs-config", "npm:0.0.48"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.290"],\
             ["@fern-fern/ir-sdk", "npm:0.0.2884"],\
             ["@fern-fern/registry-node", "npm:0.16.1-2-g13b65b4"],\
@@ -4433,10 +4434,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/docs-config", [\
-        ["npm:0.0.46", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-docs-config-npm-0.0.46-70092437ad-b20514377d.zip/node_modules/@fern-fern/docs-config/",\
+        ["npm:0.0.48", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-docs-config-npm-0.0.48-f5698f842c-c59fd3c203.zip/node_modules/@fern-fern/docs-config/",\
           "packageDependencies": [\
-            ["@fern-fern/docs-config", "npm:0.0.46"]\
+            ["@fern-fern/docs-config", "npm:0.0.48"]\
           ],\
           "linkType": "HARD"\
         }]\
