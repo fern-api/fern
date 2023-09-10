@@ -3,6 +3,9 @@ types:
     properties:
       instances: list<DocsInstances>
       navigation: NavigationConfig
+      tabs:
+        type: optional<map<TabId, TabConfig>>
+      versions: optional<list<VersionConfig>>
       title:
         type: optional<string>
         docs: used as tab bar title, and in the navbar if no logo is defined
@@ -15,20 +18,42 @@ types:
       "navbar-links": optional<list<NavbarLink>>
       typography: optional<DocsTypographyConfig>
 
+  TabId: string
+
+  TabConfig:
+    properties:
+      display-name: string
+      icon: string
+
   DocsInstances:
     properties:
       url: string
       "custom-domain": optional<string>
 
+  VersionConfig:
+    properties:
+      display-name: string
+      path: string
+      slug: optional<string>
+
+  VersionFileConfig:
+    properties:
+      navigation: NavigationConfig
+
   NavigationConfig:
     discriminated: false
     union:
-      - list<NavigationItem>
-      - list<VersionedNavigationLayout>
+      - UntabbedNavigationConifg
+      - TabbedNavigationConfig
 
-  VersionedNavigationLayout:
+  UntabbedNavigationConifg: list<NavigationItem>
+
+  TabbedNavigationConfig:
+    type: list<TabbedNavigationItem>
+
+  TabbedNavigationItem:
     properties:
-      version: string
+      tab: TabId
       layout: list<NavigationItem>
 
   NavigationItem:
