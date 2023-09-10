@@ -3,24 +3,25 @@ import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { FernCliError, TaskContext } from "@fern-api/task-context";
 import { FernDocsConfig as RawDocs } from "@fern-fern/docs-config";
 import { FernRegistry } from "@fern-fern/registry-node";
+import { getAllPages } from "./getAllPages";
 import {
-    DocsConfiguration,
     DocsNavigationConfiguration,
     DocsNavigationItem,
     FontConfig,
     ImageReference,
+    ParsedDocsConfiguration,
     TypographyConfig,
-} from "./DocsConfiguration";
+} from "./ParsedDocsConfiguration";
 
-export async function convertDocsConfiguration({
+export async function parseDocsConfiguration({
     rawDocsConfiguration,
-    absolutePathOfConfiguration,
+    absoluteFilepathToDocsConfig,
     context,
 }: {
     rawDocsConfiguration: RawDocs.DocsConfiguration;
-    absolutePathOfConfiguration: AbsoluteFilePath;
+    absoluteFilepathToDocsConfig: AbsoluteFilePath;
     context: TaskContext;
-}): Promise<DocsConfiguration> {
+}): Promise<ParsedDocsConfiguration> {
     const { instances, navigation, colors, favicon, backgroundImage, logo, navbarLinks, title, typography, tabs } =
         rawDocsConfiguration;
     const convertedColors = convertColorsConfiguration(colors ?? {}, context);
@@ -30,13 +31,17 @@ export async function convertDocsConfiguration({
         throw new FernCliError();
     }
 
+    const convertedNavigation = await convertNavigationConfiguration({
+        rawNavigationConfig: navigation,
+        absoluteFilepathToDocsConfig,
+        context,
+    });
+
     return {
         instances,
-        navigation: await convertNavigationConfiguration({
-            rawNavigationConfig: navigation,
-            absolutePathOfConfiguration,
-            context,
-        }),
+        absoluteFilepath: absoluteFilepathToDocsConfig,
+        pages: await getAllPages({ navigation: convertedNavigation, absoluteFilepathToDocsConfig }),
+        navigation: convertedNavigation,
         title,
         tabs,
         logo:
@@ -46,14 +51,14 @@ export async function convertDocsConfiguration({
                           logo.dark != null
                               ? await convertImageReference({
                                     rawImageReference: logo.dark,
-                                    absolutePathOfConfiguration,
+                                    absoluteFilepathToDocsConfig,
                                 })
                               : undefined,
                       light:
                           logo.light != null
                               ? await convertImageReference({
                                     rawImageReference: logo.light,
-                                    absolutePathOfConfiguration,
+                                    absoluteFilepathToDocsConfig,
                                 })
                               : undefined,
                       height: logo.height,
@@ -62,13 +67,13 @@ export async function convertDocsConfiguration({
                 : undefined,
         favicon:
             favicon != null
-                ? await convertImageReference({ rawImageReference: favicon, absolutePathOfConfiguration })
+                ? await convertImageReference({ rawImageReference: favicon, absoluteFilepathToDocsConfig })
                 : undefined,
         backgroundImage:
             backgroundImage != null
                 ? await convertImageReference({
                       rawImageReference: backgroundImage,
-                      absolutePathOfConfiguration,
+                      absoluteFilepathToDocsConfig,
                   })
                 : undefined,
         colors: {
@@ -108,7 +113,7 @@ export async function convertDocsConfiguration({
             typography != null
                 ? await convertTypographyConfiguration({
                       rawTypography: typography,
-                      absolutePathOfConfiguration,
+                      absoluteFilepathToDocsConfig,
                   })
                 : undefined,
     };
@@ -116,31 +121,31 @@ export async function convertDocsConfiguration({
 
 async function convertTypographyConfiguration({
     rawTypography,
-    absolutePathOfConfiguration,
+    absoluteFilepathToDocsConfig,
 }: {
     rawTypography: RawDocs.DocsTypographyConfig;
-    absolutePathOfConfiguration: AbsoluteFilePath;
+    absoluteFilepathToDocsConfig: AbsoluteFilePath;
 }): Promise<TypographyConfig> {
     return {
         headingsFont:
             rawTypography.headingsFont != null
                 ? await convertFontConfig({
                       rawFontConfig: rawTypography.headingsFont,
-                      absolutePathOfConfiguration,
+                      absoluteFilepathToDocsConfig,
                   })
                 : undefined,
         bodyFont:
             rawTypography.bodyFont != null
                 ? await convertFontConfig({
                       rawFontConfig: rawTypography.bodyFont,
-                      absolutePathOfConfiguration,
+                      absoluteFilepathToDocsConfig,
                   })
                 : undefined,
         codeFont:
             rawTypography.codeFont != null
                 ? await convertFontConfig({
                       rawFontConfig: rawTypography.codeFont,
-                      absolutePathOfConfiguration,
+                      absoluteFilepathToDocsConfig,
                   })
                 : undefined,
     };
@@ -148,15 +153,15 @@ async function convertTypographyConfiguration({
 
 async function convertFontConfig({
     rawFontConfig,
-    absolutePathOfConfiguration,
+    absoluteFilepathToDocsConfig,
 }: {
     rawFontConfig: RawDocs.FontConfig;
-    absolutePathOfConfiguration: AbsoluteFilePath;
+    absoluteFilepathToDocsConfig: AbsoluteFilePath;
 }): Promise<FontConfig> {
     return {
         name: rawFontConfig.name,
         absolutePath: await resolveFilepath({
-            absolutePathOfConfiguration,
+            absoluteFilepathToDocsConfig,
             rawUnresolvedFilepath: rawFontConfig.path,
         }),
     };
@@ -164,11 +169,11 @@ async function convertFontConfig({
 
 async function convertNavigationConfiguration({
     rawNavigationConfig,
-    absolutePathOfConfiguration,
+    absoluteFilepathToDocsConfig,
     context,
 }: {
     rawNavigationConfig: RawDocs.NavigationConfig;
-    absolutePathOfConfiguration: AbsoluteFilePath;
+    absoluteFilepathToDocsConfig: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<DocsNavigationConfiguration> {
     if (isTabbedNavigationConfig(rawNavigationConfig)) {
@@ -178,7 +183,7 @@ async function convertNavigationConfiguration({
                     item.layout.map((item) =>
                         convertNavigationItem({
                             rawConfig: item,
-                            absolutePathOfConfiguration,
+                            absoluteFilepathToDocsConfig,
                             context,
                         })
                     )
@@ -198,7 +203,7 @@ async function convertNavigationConfiguration({
             type: "untabbed",
             items: await Promise.all(
                 rawNavigationConfig.map((item) =>
-                    convertNavigationItem({ rawConfig: item, absolutePathOfConfiguration, context })
+                    convertNavigationItem({ rawConfig: item, absoluteFilepathToDocsConfig, context })
                 )
             ),
         };
@@ -207,11 +212,11 @@ async function convertNavigationConfiguration({
 
 async function convertNavigationItem({
     rawConfig,
-    absolutePathOfConfiguration,
+    absoluteFilepathToDocsConfig,
     context,
 }: {
     rawConfig: RawDocs.NavigationItem;
-    absolutePathOfConfiguration: AbsoluteFilePath;
+    absoluteFilepathToDocsConfig: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<DocsNavigationItem> {
     if (isRawPageConfig(rawConfig)) {
@@ -219,7 +224,7 @@ async function convertNavigationItem({
             type: "page",
             title: rawConfig.page,
             absolutePath: await resolveFilepath({
-                absolutePathOfConfiguration,
+                absoluteFilepathToDocsConfig,
                 rawUnresolvedFilepath: rawConfig.path,
             }),
             slug: rawConfig.slug ?? undefined,
@@ -231,7 +236,7 @@ async function convertNavigationItem({
             title: rawConfig.section,
             contents: await Promise.all(
                 rawConfig.contents.map((item) =>
-                    convertNavigationItem({ rawConfig: item, absolutePathOfConfiguration, context })
+                    convertNavigationItem({ rawConfig: item, absoluteFilepathToDocsConfig, context })
                 )
             ),
             slug: rawConfig.slug ?? undefined,
@@ -267,14 +272,14 @@ function isRawApiSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.Ap
 
 async function convertImageReference({
     rawImageReference,
-    absolutePathOfConfiguration,
+    absoluteFilepathToDocsConfig,
 }: {
     rawImageReference: string;
-    absolutePathOfConfiguration: AbsoluteFilePath;
+    absoluteFilepathToDocsConfig: AbsoluteFilePath;
 }): Promise<ImageReference> {
     return {
         filepath: await resolveFilepath({
-            absolutePathOfConfiguration,
+            absoluteFilepathToDocsConfig,
             rawUnresolvedFilepath: rawImageReference,
         }),
     };
@@ -385,12 +390,12 @@ function convertNavbarLinks(rawConfig: RawDocs.NavbarLink[]): FernRegistry.docs.
 
 async function resolveFilepath({
     rawUnresolvedFilepath,
-    absolutePathOfConfiguration,
+    absoluteFilepathToDocsConfig,
 }: {
     rawUnresolvedFilepath: string;
-    absolutePathOfConfiguration: AbsoluteFilePath;
+    absoluteFilepathToDocsConfig: AbsoluteFilePath;
 }): Promise<AbsoluteFilePath> {
-    const resolved = resolve(dirname(absolutePathOfConfiguration), rawUnresolvedFilepath);
+    const resolved = resolve(dirname(absoluteFilepathToDocsConfig), rawUnresolvedFilepath);
     return resolved;
 }
 

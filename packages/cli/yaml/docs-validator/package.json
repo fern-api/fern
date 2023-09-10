@@ -30,11 +30,16 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-api/yaml-schema": "workspace:*"
+    "@fern-api/yaml-schema": "workspace:*",
+    "lodash-es": "^4.17.21",
+    "next-mdx-remote": "^4.4.1",
+    "remark-gfm": "^3.0.1"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
+    "@types/lodash-es": "^4.17.7",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.3",
     "eslint": "^8.26.0",

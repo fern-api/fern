@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
@@ -9,11 +9,11 @@ import { Rule } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
 
 export async function validateDocsWorkspace(workspace: DocsWorkspace, logger: Logger): Promise<ValidationViolation[]> {
-    return runRulesOnWorkspace({ workspace, rules: getAllRules(), logger });
+    return runRulesOnDocsWorkspace({ workspace, rules: getAllRules(), logger });
 }
 
 // exported for testing
-export async function runRulesOnWorkspace({
+export async function runRulesOnDocsWorkspace({
     workspace,
     rules,
     logger,
@@ -33,7 +33,11 @@ export async function runRulesOnWorkspace({
             violations.push(...newViolations);
         },
     });
-    await visitDocsConfigFileYamlAst(workspace.docsDefinition.config, astVisitor);
+    await visitDocsConfigFileYamlAst(
+        workspace.config,
+        astVisitor,
+        join(workspace.absoluteFilepath, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME))
+    );
 
     return violations;
 }

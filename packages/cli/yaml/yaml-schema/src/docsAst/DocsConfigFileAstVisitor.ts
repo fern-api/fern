@@ -6,7 +6,7 @@ export type DocsConfigFileAstVisitor<R = void | Promise<void>> = {
 };
 
 export interface DocsConfigFileAstNodeTypes {
-    filepath: AbsoluteFilePath;
+    filepath: { absoluteFilepath: AbsoluteFilePath; value: string /* User defined value for filepath */ };
     markdownPage: { title: string; content: string };
 }
 

@@ -28,8 +28,8 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/docs-configuration": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
+    "@fern-fern/docs-config": "0.0.48",
     "@fern-fern/ir-sdk": "0.0.2884",
     "zod": "^3.22.2"
   },
