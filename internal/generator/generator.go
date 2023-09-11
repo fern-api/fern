@@ -90,6 +90,39 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			}
 		}
 	}
+	cycleInfo, err := cycleInfoFromIR(ir, g.config.ImportPath)
+	if err != nil {
+		return nil, err
+	}
+	if cycleInfo != nil {
+		for _, leafType := range cycleInfo.LeafTypes {
+			// Update every leaf type's FernFilepath so that the rest of
+			// the types reference it from the appropriate location.
+			typeDecl := ir.Types[leafType]
+
+			var packagePathElement *fernir.Name
+			if packagePath := typeDecl.Name.FernFilepath.PackagePath; len(packagePath) > 0 {
+				packagePathElement = packagePath[len(packagePath)-1]
+			}
+
+			newFernFilepath := &fernir.FernFilepath{
+				AllParts: []*fernir.Name{
+					commonPackageElement,
+				},
+				PackagePath: []*fernir.Name{
+					commonPackageElement,
+				},
+				File: commonPackageElement,
+			}
+			if packagePathElement != nil {
+				newFernFilepath.AllParts = append(newFernFilepath.AllParts, packagePathElement)
+				newFernFilepath.PackagePath = append(newFernFilepath.PackagePath, packagePathElement)
+			}
+			newFernFilepath.AllParts = append(newFernFilepath.AllParts, commonPackageElement)
+
+			replaceFilepathForTypeInIR(ir, typeDecl.Name.TypeId, newFernFilepath)
+		}
+	}
 	// First determine what types will be generated so that we can determine whether or not there will
 	// be any conflicts.
 	var (
@@ -965,6 +998,15 @@ func fileInfoToErrors(
 		sort.Slice(result[fileInfo], func(i, j int) bool { return result[fileInfo][i].Name.ErrorId < result[fileInfo][j].Name.ErrorId })
 	}
 	return result
+}
+
+func stringSetToSortedSlice(set map[string]struct{}) []string {
+	sorted := make([]string, 0, len(set))
+	for s := range set {
+		sorted = append(sorted, s)
+	}
+	sort.Slice(sorted, func(i, j int) bool { return sorted[i] < sorted[j] })
+	return sorted
 }
 
 // pointerFunctionNames enumerates all of the pointer function names.
