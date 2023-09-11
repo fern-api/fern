@@ -10,6 +10,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -392,6 +393,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -531,6 +533,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -666,6 +669,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -717,6 +721,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -882,6 +887,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -933,6 +939,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -984,6 +991,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -1035,6 +1043,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -1259,6 +1268,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -1310,6 +1320,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -1834,6 +1845,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -1945,6 +1957,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -1996,6 +2009,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -2135,6 +2149,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -2186,6 +2201,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -2282,6 +2298,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -2909,6 +2926,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -3089,6 +3107,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -3269,6 +3288,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -3320,6 +3340,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -3536,6 +3557,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -3587,6 +3609,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -3638,6 +3661,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -5102,6 +5126,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -5153,6 +5178,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -5204,6 +5230,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -5255,6 +5282,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -5306,6 +5334,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -7458,6 +7487,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -8794,6 +8824,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -10116,6 +10147,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -10167,6 +10199,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -10218,6 +10251,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -11000,6 +11034,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -11172,6 +11207,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -11330,6 +11366,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -11381,6 +11418,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -11432,6 +11470,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -11503,6 +11542,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -11654,6 +11694,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -11705,6 +11746,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -11888,6 +11930,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -11939,6 +11982,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -12005,6 +12049,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -12071,6 +12116,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -13287,6 +13333,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             422,
@@ -14502,6 +14549,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -14553,6 +14601,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -14656,6 +14705,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -14707,6 +14757,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -15895,6 +15946,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -15946,6 +15998,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -15997,6 +16050,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -16082,6 +16136,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -17562,6 +17617,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -17802,6 +17858,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -19656,6 +19713,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -20706,6 +20764,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -21742,6 +21801,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -21793,6 +21853,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -21844,6 +21905,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -22555,6 +22617,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -22657,6 +22720,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -22759,6 +22823,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -22810,6 +22875,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -22952,6 +23018,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -23003,6 +23070,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -23054,6 +23122,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -23631,6 +23700,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -23696,6 +23766,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -23761,6 +23832,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -23812,6 +23884,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -23917,6 +23990,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -23968,6 +24042,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -24019,6 +24094,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [],
           "generatedRequestName": "ToggleWebhookNotificationsRequest",
@@ -24122,6 +24198,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -24395,6 +24472,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -24519,6 +24597,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -24643,6 +24722,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -24694,6 +24774,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -24842,6 +24923,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -25125,6 +25207,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -25628,6 +25711,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -25693,6 +25777,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -26447,6 +26532,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -26850,6 +26936,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -27253,6 +27340,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -27304,6 +27392,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             400,
@@ -27502,6 +27591,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -27553,6 +27643,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -27604,6 +27695,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,
@@ -27655,6 +27747,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "",
           "errorStatusCode": [
             404,

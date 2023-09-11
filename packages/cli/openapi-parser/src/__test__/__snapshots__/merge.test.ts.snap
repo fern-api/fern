@@ -10,6 +10,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get details for a linked account.",
           "errorStatusCode": [],
           "generatedRequestName": "AccountDetailsRetrieveRequest",
@@ -58,6 +59,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns the account token for the end user with the provided public token.",
           "errorStatusCode": [],
           "generatedRequestName": "AccountTokenRetrieveRequest",
@@ -107,6 +109,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a list of models and actions available for an account.",
           "errorStatusCode": [],
           "generatedRequestName": "AvailableActionsRetrieveRequest",
@@ -155,6 +158,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a list of \`BankInfo\` objects.",
           "errorStatusCode": [],
           "generatedRequestName": "BankInfoListRequest",
@@ -475,6 +479,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a \`BankInfo\` object with the given \`id\`.",
           "errorStatusCode": [],
           "generatedRequestName": "BankInfoRetrieveRequest",
@@ -593,6 +598,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a list of \`Benefit\` objects.",
           "errorStatusCode": [],
           "generatedRequestName": "BenefitsListRequest",
@@ -811,6 +817,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a \`Benefit\` object with the given \`id\`.",
           "errorStatusCode": [],
           "generatedRequestName": "BenefitsRetrieveRequest",
@@ -903,6 +910,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a list of \`Company\` objects.",
           "errorStatusCode": [],
           "generatedRequestName": "CompaniesListRequest",
@@ -1091,6 +1099,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a \`Company\` object with the given \`id\`.",
           "errorStatusCode": [],
           "generatedRequestName": "CompaniesRetrieveRequest",
@@ -1170,6 +1179,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Delete a linked account.",
           "errorStatusCode": [],
           "generatedRequestName": "DeleteAccountCreateRequest",
@@ -1207,6 +1217,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a list of \`EmployeePayrollRun\` objects.",
           "errorStatusCode": [],
           "generatedRequestName": "EmployeePayrollRunsListRequest",
@@ -1523,6 +1534,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns an \`EmployeePayrollRun\` object with the given \`id\`.",
           "errorStatusCode": [],
           "generatedRequestName": "EmployeePayrollRunsRetrieveRequest",
@@ -1636,6 +1648,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a list of \`Employee\` objects.",
           "errorStatusCode": [],
           "generatedRequestName": "EmployeesListRequest",
@@ -3882,6 +3895,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Creates an \`Employee\` object with the given values.",
           "errorStatusCode": [],
           "generatedRequestName": "EmployeesCreateRequest",
@@ -3973,6 +3987,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns an \`Employee\` object with the given \`id\`.",
           "errorStatusCode": [],
           "generatedRequestName": "EmployeesRetrieveRequest",
@@ -5825,6 +5840,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Ignores a specific row based on the \`model_id\` in the url. These records will have their properties set to null, and will not be updated in future syncs. The "reason" and "message" fields in the request body will be stored for audit purposes.",
           "errorStatusCode": [],
           "generatedRequestName": "EmployeesIgnoreCreateRequest",
@@ -5889,6 +5905,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns metadata for \`Employee\` POSTs.",
           "errorStatusCode": [],
           "generatedRequestName": "EmployeesMetaPostRetrieveRequest",
@@ -5937,6 +5954,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a list of \`Employment\` objects.",
           "errorStatusCode": [],
           "generatedRequestName": "EmploymentsListRequest",
@@ -6416,6 +6434,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns an \`Employment\` object with the given \`id\`.",
           "errorStatusCode": [],
           "generatedRequestName": "EmploymentsRetrieveRequest",
@@ -6741,6 +6760,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Create a remote key.",
           "errorStatusCode": [],
           "generatedRequestName": "GenerateKeyCreateRequest",
@@ -6787,6 +6807,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a list of \`Group\` objects.",
           "errorStatusCode": [],
           "generatedRequestName": "GroupsListRequest",
@@ -7018,6 +7039,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a \`Group\` object with the given \`id\`.",
           "errorStatusCode": [],
           "generatedRequestName": "GroupsRetrieveRequest",
@@ -7123,6 +7145,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Gets issues.",
           "errorStatusCode": [],
           "generatedRequestName": "IssuesListRequest",
@@ -7383,6 +7406,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get a specific issue.",
           "errorStatusCode": [],
           "generatedRequestName": "IssuesRetrieveRequest",
@@ -7432,6 +7456,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Creates a link token to be used when linking a new end user.",
           "errorStatusCode": [],
           "generatedRequestName": "LinkTokenCreateRequest",
@@ -7478,6 +7503,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "List linked accounts for your organization.",
           "errorStatusCode": [],
           "generatedRequestName": "LinkedAccountsListRequest",
@@ -7779,6 +7805,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a list of \`Location\` objects.",
           "errorStatusCode": [],
           "generatedRequestName": "LocationsListRequest",
@@ -7993,6 +8020,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a \`Location\` object with the given \`id\`.",
           "errorStatusCode": [],
           "generatedRequestName": "LocationsRetrieveRequest",
@@ -8098,6 +8126,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Pull data from an endpoint not currently supported by Merge.",
           "errorStatusCode": [],
           "generatedRequestName": "PassthroughCreateRequest",
@@ -8158,6 +8187,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a list of \`PayGroup\` objects.",
           "errorStatusCode": [],
           "generatedRequestName": "PayGroupsListRequest",
@@ -8346,6 +8376,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a \`PayGroup\` object with the given \`id\`.",
           "errorStatusCode": [],
           "generatedRequestName": "PayGroupsRetrieveRequest",
@@ -8425,6 +8456,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a list of \`PayrollRun\` objects.",
           "errorStatusCode": [],
           "generatedRequestName": "PayrollRunsListRequest",
@@ -8793,6 +8825,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a \`PayrollRun\` object with the given \`id\`.",
           "errorStatusCode": [],
           "generatedRequestName": "PayrollRunsRetrieveRequest",
@@ -8940,6 +8973,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Exchange remote keys.",
           "errorStatusCode": [],
           "generatedRequestName": "RegenerateKeyCreateRequest",
@@ -8986,6 +9020,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get a linked account's selective syncs.",
           "errorStatusCode": [],
           "generatedRequestName": "SelectiveSyncConfigurationsListRequest",
@@ -9038,6 +9073,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Replace a linked account's selective syncs.",
           "errorStatusCode": [],
           "generatedRequestName": "SelectiveSyncConfigurationsUpdateRequest",
@@ -9102,6 +9138,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get metadata for the conditions available to a linked account.",
           "errorStatusCode": [],
           "generatedRequestName": "SelectiveSyncMetaListRequest",
@@ -9200,6 +9237,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get syncing status. Possible values: \`DISABLED\`, \`DONE\`, \`FAILED\`, \`PARTIALLY_SYNCED\`, \`PAUSED\`, \`SYNCING\`",
           "errorStatusCode": [],
           "generatedRequestName": "SyncStatusListRequest",
@@ -9281,6 +9319,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Core, Professional, or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.",
           "errorStatusCode": [],
           "generatedRequestName": "SyncStatusResyncCreateRequest",
@@ -9333,6 +9372,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a list of \`Team\` objects.",
           "errorStatusCode": [],
           "generatedRequestName": "TeamsListRequest",
@@ -9551,6 +9591,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a \`Team\` object with the given \`id\`.",
           "errorStatusCode": [],
           "generatedRequestName": "TeamsRetrieveRequest",
@@ -9643,6 +9684,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a list of \`TimeOff\` objects.",
           "errorStatusCode": [],
           "generatedRequestName": "TimeOffListRequest",
@@ -10126,6 +10168,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Creates a \`TimeOff\` object with the given values.",
           "errorStatusCode": [],
           "generatedRequestName": "TimeOffCreateRequest",
@@ -10217,6 +10260,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a list of \`TimeOffBalance\` objects.",
           "errorStatusCode": [],
           "generatedRequestName": "TimeOffBalancesListRequest",
@@ -10520,6 +10564,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a \`TimeOffBalance\` object with the given \`id\`.",
           "errorStatusCode": [],
           "generatedRequestName": "TimeOffBalancesRetrieveRequest",
@@ -10638,6 +10683,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a \`TimeOff\` object with the given \`id\`.",
           "errorStatusCode": [],
           "generatedRequestName": "TimeOffRetrieveRequest",
@@ -10867,6 +10913,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns metadata for \`TimeOff\` POSTs.",
           "errorStatusCode": [],
           "generatedRequestName": "TimeOffMetaPostRetrieveRequest",
@@ -10915,6 +10962,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Returns a list of \`WebhookReceiver\` objects.",
           "errorStatusCode": [],
           "generatedRequestName": "WebhookReceiversListRequest",
@@ -10967,6 +11015,7 @@ exports[`open api parser merge parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Creates a \`WebhookReceiver\` object with the given values.",
           "errorStatusCode": [],
           "generatedRequestName": "WebhookReceiversCreateRequest",

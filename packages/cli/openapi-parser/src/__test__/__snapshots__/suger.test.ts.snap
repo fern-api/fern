@@ -10,6 +10,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "list all buyers by the given organization",
           "errorStatusCode": [
             500,
@@ -65,6 +66,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "get buyer by the given organization and buyer id",
           "errorStatusCode": [
             500,
@@ -130,6 +132,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "update buyer name and description by the given organization and buyer id",
           "errorStatusCode": [
             500,
@@ -207,6 +210,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "List all entitlements of the given buyer",
           "errorStatusCode": [
             500,
@@ -276,6 +280,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Create a new draft offer or update the existing draft offer. When updating draft offer, the offer.ID is required.",
           "errorStatusCode": [
             400,
@@ -340,6 +345,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "List all entitlements under the organization",
           "errorStatusCode": [
             500,
@@ -395,6 +401,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the entitlement by ID",
           "errorStatusCode": [
             500,
@@ -460,6 +467,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Add the credit amount to the given Entitlement. The credit amount is accumulated & saved in the current Entitlement Term of the gvien Entitlement.",
           "errorStatusCode": [
             400,
@@ -538,6 +546,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Update the name of the given Entitlement",
           "errorStatusCode": [
             500,
@@ -615,6 +624,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "List all Entitlement Terms of the given Entitlement",
           "errorStatusCode": [
             500,
@@ -684,6 +694,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the entitlement term by ID",
           "errorStatusCode": [
             500,
@@ -763,6 +774,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "list UsageRecordGroups for the given organization and entitlement",
           "errorStatusCode": [
             400,
@@ -894,6 +906,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "It is recommended to provide the ID in the request body CreateUsageRecordGroupParams, so the report can be deduplicated. All duplicate report will return error code 409.",
           "errorStatusCode": [
             400,
@@ -973,6 +986,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "List usageRecordReports for the given organization and entitlement. Filter by entitlementTermId if it is given.",
           "errorStatusCode": [
             400,
@@ -1121,6 +1135,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "List all integrations for the given organization.",
           "errorStatusCode": [
             500,
@@ -1176,6 +1191,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "For each organization, partner & service, there should be at most one integration.",
           "errorStatusCode": [
             400,
@@ -1240,6 +1256,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the integration for the given organization, partner & service.",
           "errorStatusCode": [
             404,
@@ -1348,6 +1365,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Update the given integration.",
           "errorStatusCode": [
             400,
@@ -1468,6 +1486,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "delete the integration for the given orgId, partner and service.",
           "errorStatusCode": [
             500,
@@ -1576,6 +1595,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Verify the given integration, check whether it works correctly.",
           "errorStatusCode": [
             500,
@@ -1682,6 +1702,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "List all offers under the given organization.",
           "errorStatusCode": [
             500,
@@ -1737,6 +1758,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Create a private offer under the given organization.",
           "errorStatusCode": [
             400,
@@ -1801,6 +1823,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the offer by the given offer ID.",
           "errorStatusCode": [
             500,
@@ -1866,6 +1889,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Only the offer with status = "DRAFT" or "CREATE_FAILED" is allowed to be deleted.",
           "errorStatusCode": [
             500,
@@ -1932,6 +1956,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Only the offer with status = "PENDING_ACCEPTANCE" or "PENDING_CANCEL" is allowed to cancel.",
           "errorStatusCode": [
             400,
@@ -1999,6 +2024,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "List all entitlements under the given offer",
           "errorStatusCode": [
             500,
@@ -2068,6 +2094,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "List all long running operations under the given organization, offer, entitlement, crmOpportunity or partnerOpportunity. Only provide one filter on a request.",
           "errorStatusCode": [
             500,
@@ -2192,6 +2219,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "List all entitlements under the given partner",
           "errorStatusCode": [
             500,
@@ -2278,6 +2306,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": false,
+          "availability": undefined,
           "description": "List all offers under the given organization & cloud partner.",
           "errorStatusCode": [
             500,
@@ -2378,6 +2407,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "list all products under the given organization and cloud partner",
           "errorStatusCode": [
             500,
@@ -2464,6 +2494,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "list the revenue records for the given organization, product, entitlement, or buyer.",
           "errorStatusCode": [
             400,
@@ -2663,6 +2694,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "list the raw revenue record details for the given organization, product, entitlement, or buyer.",
           "errorStatusCode": [
             400,
@@ -2862,6 +2894,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "list all products under the given organization",
           "errorStatusCode": [
             500,
@@ -2917,6 +2950,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "get product by product id",
           "errorStatusCode": [
             500,
@@ -2982,6 +3016,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "currently only the Fulfillment URL is allowed to update via this API.",
           "errorStatusCode": [
             500,
@@ -3059,6 +3094,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "only the product with status = "CREATE_FAILED" is allowed to be deleted.",
           "errorStatusCode": [
             500,
@@ -3125,6 +3161,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "list all metering dimensions of the given product",
           "errorStatusCode": [
             500,
@@ -3194,6 +3231,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "List all entitlements under the given product",
           "errorStatusCode": [
             500,
@@ -3263,6 +3301,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "List all offers under the given organization & product.",
           "errorStatusCode": [
             500,
@@ -3332,6 +3371,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "list UsageRecordGroups for the given organization and product",
           "errorStatusCode": [
             400,
@@ -3463,6 +3503,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "List usageRecordReports for the given organization and product",
           "errorStatusCode": [
             400,
@@ -3594,6 +3635,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the revenue report of the given organization, product, entitlement, or buyer.",
           "errorStatusCode": [
             400,
@@ -3658,6 +3700,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "list UsageRecordGroups under the given organization.",
           "errorStatusCode": [
             400,
@@ -3775,6 +3818,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "get UsageRecordGroup for the given organization and usageRecordGroup ID",
           "errorStatusCode": [
             500,
@@ -3840,6 +3884,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "List usageRecordReports under the given organization",
           "errorStatusCode": [
             400,
@@ -3957,6 +4002,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "get the usageRecordReport for a given organization and usageRecordReport ID.",
           "errorStatusCode": [
             500,
@@ -4022,6 +4068,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "get the daily usage report of the given entitlement, the default timespan is lifetime.",
           "errorStatusCode": [
             400,
@@ -4086,6 +4133,7 @@ exports[`open api parser suger parse open api 1`] = `
         {
           "audiences": [],
           "authed": false,
+          "availability": undefined,
           "description": "Get the Bearer Access Token by giving the Suger API Client ID & Client Secret.",
           "errorStatusCode": [
             500,

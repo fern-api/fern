@@ -106,6 +106,14 @@ export const FernOpenAPIExtension = {
      *       x-fern-ignore: true
      */
     IGNORE: "x-fern-ignore",
+
+    /**
+     * paths:
+     *  /path/to/my:
+     *    get:
+     *      x-fern-availability: ga # or beta, generally-available, deprecated,
+     */
+    AVAILABILITY: "x-fern-availability",
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;
