@@ -2416,7 +2416,7 @@ __metadata:
     eslint: ^8.26.0
     jest: ^29.4.0
     organize-imports-cli: ^0.10.0
-    posthog-node: ^2.3.0
+    posthog-node: ^3.1.2
     prettier: ^2.7.1
     typescript: 4.6.4
     uuid: ^9.0.0
@@ -12090,12 +12090,13 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"posthog-node@npm:^2.3.0":
-  version: 2.3.0
-  resolution: "posthog-node@npm:2.3.0"
+"posthog-node@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "posthog-node@npm:3.1.2"
   dependencies:
     axios: ^0.27.0
-  checksum: f4d530f7194e482abdabe81fc47b375a16b6f5bdd5e17088fea6f3da07cbaf0a95d03cd53ccbc1d3910b10f8ec7be3c3ad5134a4c2f827d0516a46b0345d24a6
+    rusha: ^0.8.14
+  checksum: f961dd657737cf2dc02d7e8e2bc3924fc0fb8e13fb23b8a700f83d662431b9a72da91adf9a1e536061ac3422521dd6b7eac7e6bfca506453dfc18c0f685d28cf
   languageName: node
   linkType: hard
 
@@ -12854,6 +12855,13 @@ env-cmd@toddbluhm/env-cmd:
   dependencies:
     queue-microtask: "npm:^1.2.2"
   checksum: cb4f97ad25a75ebc11a8ef4e33bb962f8af8516bb2001082ceabd8902e15b98f4b84b4f8a9b222e5d57fc3bd1379c483886ed4619367a7680dad65316993021d
+  languageName: node
+  linkType: hard
+
+"rusha@npm:^0.8.14":
+  version: 0.8.14
+  resolution: "rusha@npm:0.8.14"
+  checksum: d76d7b4b5df1191712eca1e2465d07054dc9bd5e9ec357e1e0f3ddf95006a762330a3c0348e96ac39853656a3fbe02e65e780aa5f61b9355ad914fa296185623
   languageName: node
   linkType: hard
 

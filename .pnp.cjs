@@ -3980,7 +3980,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.26.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.5.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
-            ["posthog-node", "npm:2.3.0"],\
+            ["posthog-node", "npm:3.1.2"],\
             ["prettier", "npm:2.7.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["uuid", "npm:9.0.0"]\
@@ -15242,11 +15242,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["posthog-node", [\
-        ["npm:2.3.0", {\
-          "packageLocation": "./.yarn/cache/posthog-node-npm-2.3.0-4c8ab80524-f4d530f719.zip/node_modules/posthog-node/",\
+        ["npm:3.1.2", {\
+          "packageLocation": "./.yarn/cache/posthog-node-npm-3.1.2-4a2dc5ddde-f961dd6577.zip/node_modules/posthog-node/",\
           "packageDependencies": [\
-            ["posthog-node", "npm:2.3.0"],\
-            ["axios", "npm:0.27.2"]\
+            ["posthog-node", "npm:3.1.2"],\
+            ["axios", "npm:0.27.2"],\
+            ["rusha", "npm:0.8.14"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -16052,6 +16053,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["run-parallel", "npm:1.2.0"],\
             ["queue-microtask", "npm:1.2.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["rusha", [\
+        ["npm:0.8.14", {\
+          "packageLocation": "./.yarn/cache/rusha-npm-0.8.14-0bd5aea44b-d76d7b4b5d.zip/node_modules/rusha/",\
+          "packageDependencies": [\
+            ["rusha", "npm:0.8.14"]\
           ],\
           "linkType": "HARD"\
         }]\
