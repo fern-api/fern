@@ -20,7 +20,10 @@
                       "docs": { "type": "string" },
                       "availability": {
                         "anyOf": [
-                          { "type": "string", "enum": ["in-development", "pre-release", "deprecated"] },
+                          {
+                            "type": "string",
+                            "enum": ["in-development", "pre-release", "deprecated", "generally-available"]
+                          },
                           {
                             "type": "object",
                             "properties": {
