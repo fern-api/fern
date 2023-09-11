@@ -10,34 +10,16 @@ exports[`open api parser axle simple 1`] = `
         "Account": {
           "docs": "An Account represents an account with an insurance carrier and includes high-level account information (e.g. name) and any Policy objects associated with the Account.",
           "properties": {
-            "carrier": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "createdAt": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "carrier": "string",
+            "createdAt": "string",
             "email": {
               "docs": undefined,
               "type": "optional<string>",
             },
-            "firstName": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "id": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "lastName": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "modifiedAt": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "firstName": "string",
+            "id": "string",
+            "lastName": "string",
+            "modifiedAt": "string",
             "phone": {
               "docs": undefined,
               "type": "optional<string>",
@@ -46,10 +28,7 @@ exports[`open api parser axle simple 1`] = `
               "docs": undefined,
               "type": "list<string>",
             },
-            "refreshedAt": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "refreshedAt": "string",
           },
         },
         "Address": {
@@ -88,30 +67,15 @@ exports[`open api parser axle simple 1`] = `
               "docs": undefined,
               "type": "Address",
             },
-            "domain": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "id": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "domain": "string",
+            "id": "string",
             "logoUrl": {
               "docs": undefined,
               "type": "optional<string>",
             },
-            "modifiedAt": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "name": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "phone": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "modifiedAt": "string",
+            "name": "string",
+            "phone": "string",
           },
         },
         "Coverage": {
@@ -125,10 +89,7 @@ exports[`open api parser axle simple 1`] = `
               "docs": undefined,
               "type": "optional<integer>",
             },
-            "label": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "label": "string",
             "limitPerAccident": {
               "docs": undefined,
               "type": "optional<integer>",
@@ -192,7 +153,7 @@ exports[`open api parser axle simple 1`] = `
           "docs": undefined,
           "properties": {
             "message": {
-              "docs": "Provides a reason for why the operation failed, if available.",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "success": {
@@ -217,14 +178,8 @@ exports[`open api parser axle simple 1`] = `
         "ExchangeTokenResponseData": {
           "docs": undefined,
           "properties": {
-            "accessToken": {
-              "docs": "The token required for access to the requested Account and Policy objects.",
-              "type": "string",
-            },
-            "account": {
-              "docs": "The unique id for the Account object.",
-              "type": "string",
-            },
+            "accessToken": "string",
+            "account": "string",
             "policies": {
               "docs": "List of unique ids for the Policy objects. If Ignition is configured to select a single policy (as is the default), the list will only contain 1 item.",
               "type": "list<unknown>",
@@ -294,14 +249,8 @@ exports[`open api parser axle simple 1`] = `
               "docs": undefined,
               "type": "optional<string>",
             },
-            "firstName": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "lastName": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "firstName": "string",
+            "lastName": "string",
             "licenseNo": {
               "docs": undefined,
               "type": "optional<string>",
@@ -327,62 +276,32 @@ exports[`open api parser axle simple 1`] = `
         "Policy": {
           "docs": "A Policy represents a specific policy associated with an Account and includes high-level policy information (e.g. policy number) and any children objects (e.g., coverages) associated with the policy.",
           "properties": {
-            "account": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "account": "string",
             "address": {
               "docs": undefined,
               "type": "Address",
             },
-            "carrier": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "carrier": "string",
             "coverages": {
               "docs": "",
               "type": "list<Coverage>",
             },
-            "createdAt": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "effectiveDate": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "expirationDate": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "id": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "createdAt": "string",
+            "effectiveDate": "string",
+            "expirationDate": "string",
+            "id": "string",
             "insureds": {
               "docs": "",
               "type": "list<Insured>",
             },
-            "isActive": {
-              "docs": undefined,
-              "type": "boolean",
-            },
-            "modifiedAt": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "policyNumber": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "isActive": "boolean",
+            "modifiedAt": "string",
+            "policyNumber": "string",
             "properties": {
               "docs": "",
               "type": "list<Property>",
             },
-            "refreshedAt": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "refreshedAt": "string",
             "thirdParties": {
               "docs": "",
               "type": "list<ThirdParty>",
@@ -415,10 +334,7 @@ exports[`open api parser axle simple 1`] = `
               "docs": undefined,
               "type": "Vehicle",
             },
-            "id": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "id": "string",
             "type": "literal<"vehicle">",
           },
         },
@@ -438,20 +354,11 @@ exports[`open api parser axle simple 1`] = `
         "StartIgnitionResponseData": {
           "docs": undefined,
           "properties": {
-            "ignitionToken": {
-              "docs": "The unique ID for the ignition session.",
-              "type": "string",
-            },
-            "ignitionUri": {
-              "docs": "The url you should direct the user to to link their account.",
-              "type": "string",
-            },
+            "ignitionToken": "string",
+            "ignitionUri": "string",
           },
         },
-        "Success": {
-          "docs": "Indicates whether the operation was performed successfully.",
-          "type": "boolean",
-        },
+        "Success": "boolean",
         "ThirdParty": {
           "docs": undefined,
           "properties": {
@@ -459,10 +366,7 @@ exports[`open api parser axle simple 1`] = `
               "docs": undefined,
               "type": "optional<Address>",
             },
-            "name": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "name": "string",
             "property": {
               "docs": undefined,
               "type": "optional<string>",
@@ -497,23 +401,20 @@ exports[`open api parser axle simple 1`] = `
           "docs": "User to attach to Ignition session. If user is set, unique \`id\` must be provided.",
           "properties": {
             "email": {
-              "docs": "User's email address.",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "firstName": {
-              "docs": "User's first name.",
+              "docs": undefined,
               "type": "optional<string>",
             },
-            "id": {
-              "docs": "Your application's unique user id.",
-              "type": "string",
-            },
+            "id": "string",
             "lastName": {
-              "docs": "User's last name.",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "phone": {
-              "docs": "User's phone number in E.164 format.",
+              "docs": undefined,
               "type": "optional<string>",
             },
           },
@@ -525,22 +426,10 @@ exports[`open api parser axle simple 1`] = `
               "docs": undefined,
               "type": "optional<string>",
             },
-            "make": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "model": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "vin": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "year": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "make": "string",
+            "model": "string",
+            "vin": "string",
+            "year": "string",
           },
         },
       },
@@ -648,7 +537,7 @@ exports[`open api parser axle simple 1`] = `
                     "type": "optional<map<string, unknown>>",
                   },
                   "redirectUri": {
-                    "docs": "The URI we should direct the user to after authenticating successfully.",
+                    "docs": undefined,
                     "type": "optional<string>",
                   },
                   "user": {
@@ -656,7 +545,7 @@ exports[`open api parser axle simple 1`] = `
                     "type": "optional<root.User>",
                   },
                   "webhookUri": {
-                    "docs": "The URI we should send updates about this session or the resulting account to.",
+                    "docs": undefined,
                     "type": "optional<string>",
                   },
                 },
@@ -732,10 +621,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
             "request": {
               "body": {
                 "properties": {
-                  "authCode": {
-                    "docs": "The authorization code obtained after a user successfully links their account via Ignition. Returned as a query parameter at the redirectUri.",
-                    "type": "string",
-                  },
+                  "authCode": "string",
                 },
               },
               "headers": undefined,
