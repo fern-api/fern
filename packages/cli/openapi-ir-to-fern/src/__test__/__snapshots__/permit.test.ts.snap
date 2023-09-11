@@ -893,10 +893,7 @@ exports[`open api parser permit simple 1`] = `
               "docs": undefined,
               "type": "optional<integer>",
             },
-            "total_count": {
-              "docs": undefined,
-              "type": "integer",
-            },
+            "total_count": "integer",
           },
         },
         "PaginatedResultResourceRead": {
@@ -910,10 +907,7 @@ exports[`open api parser permit simple 1`] = `
               "docs": undefined,
               "type": "optional<integer>",
             },
-            "total_count": {
-              "docs": undefined,
-              "type": "integer",
-            },
+            "total_count": "integer",
           },
         },
         "PaginatedResultResourceRoleRead": {
@@ -927,10 +921,7 @@ exports[`open api parser permit simple 1`] = `
               "docs": undefined,
               "type": "optional<integer>",
             },
-            "total_count": {
-              "docs": undefined,
-              "type": "integer",
-            },
+            "total_count": "integer",
           },
         },
         "PaginatedResultRoleRead": {
@@ -944,10 +935,7 @@ exports[`open api parser permit simple 1`] = `
               "docs": undefined,
               "type": "optional<integer>",
             },
-            "total_count": {
-              "docs": undefined,
-              "type": "integer",
-            },
+            "total_count": "integer",
           },
         },
         "PaginatedResultTenantRead": {
@@ -961,10 +949,7 @@ exports[`open api parser permit simple 1`] = `
               "docs": undefined,
               "type": "optional<integer>",
             },
-            "total_count": {
-              "docs": undefined,
-              "type": "integer",
-            },
+            "total_count": "integer",
           },
         },
         "PaginatedResultUserRead": {
@@ -978,27 +963,18 @@ exports[`open api parser permit simple 1`] = `
               "docs": undefined,
               "type": "optional<integer>",
             },
-            "total_count": {
-              "docs": undefined,
-              "type": "integer",
-            },
+            "total_count": "integer",
           },
         },
         "PdpConfigRead": {
           "docs": undefined,
           "properties": {
-            "client_secret": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "client_secret": "string",
             "environment_id": {
               "docs": "Unique id of the environment that the pdp_config belongs to.",
               "type": "string",
             },
-            "id": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "id": "string",
             "name": {
               "docs": undefined,
               "type": "optional<string>",
@@ -1036,10 +1012,7 @@ exports[`open api parser permit simple 1`] = `
               "docs": undefined,
               "type": "MemberAccessObj",
             },
-            "organization_id": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "organization_id": "string",
             "organization_key": {
               "docs": undefined,
               "type": "optional<string>",
@@ -1682,34 +1655,16 @@ The actions represents the ways you can interact with a protected resource.",
         "Statistics": {
           "docs": undefined,
           "properties": {
-            "has_decision_logs": {
-              "docs": undefined,
-              "type": "boolean",
-            },
+            "has_decision_logs": "boolean",
             "members": {
               "docs": undefined,
               "type": "list<OrgMemberReadWithGrants>",
             },
-            "policies": {
-              "docs": undefined,
-              "type": "integer",
-            },
-            "resources": {
-              "docs": undefined,
-              "type": "integer",
-            },
-            "roles": {
-              "docs": undefined,
-              "type": "integer",
-            },
-            "tenants": {
-              "docs": undefined,
-              "type": "integer",
-            },
-            "users": {
-              "docs": undefined,
-              "type": "integer",
-            },
+            "policies": "integer",
+            "resources": "integer",
+            "roles": "integer",
+            "tenants": "integer",
+            "users": "integer",
           },
         },
         "TenantCreate": {
@@ -1928,28 +1883,16 @@ The actions represents the ways you can interact with a protected resource.",
               "docs": undefined,
               "type": "list<ValidationErrorLocItem>",
             },
-            "msg": {
-              "docs": undefined,
-              "type": "string",
-            },
-            "type": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "msg": "string",
+            "type": "string",
           },
         },
         "ValidationErrorLocItem": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            {
-              "docs": undefined,
-              "type": "string",
-            },
-            {
-              "docs": undefined,
-              "type": "integer",
-            },
+            "string",
+            "integer",
           ],
         },
       },
@@ -2402,7 +2345,7 @@ If we check the checkbox where \`us_based_employees\` and \`private_repos->clone
                     "type": "optional<string>",
                   },
                   "key": {
-                    "docs": "A unique id by which Permit will identify the condition set. The key will be used as the generated rego rule name. <span style="white-space: nowrap">\`non-empty\`</span> ",
+                    "docs": "A unique id by which Permit will identify the condition set. The key will be used as the generated rego rule name.",
                     "type": "string",
                   },
                   "name": {

@@ -3653,10 +3653,7 @@ exports[`open api parser aries simple 1`] = `
         "MediationRecord": {
           "docs": undefined,
           "properties": {
-            "connection_id": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "connection_id": "string",
             "created_at": {
               "docs": "Time of record creation",
               "type": "optional<string>",
@@ -3677,10 +3674,7 @@ exports[`open api parser aries simple 1`] = `
               "docs": undefined,
               "type": "optional<list<string>>",
             },
-            "role": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "role": "string",
             "routing_keys": {
               "docs": undefined,
               "type": "optional<list<string>>",
@@ -4015,10 +4009,7 @@ exports[`open api parser aries simple 1`] = `
         "ProtocolDescriptor": {
           "docs": undefined,
           "properties": {
-            "pid": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "pid": "string",
             "roles": {
               "docs": "List of roles",
               "type": "optional<list<string>>",
@@ -4066,10 +4057,7 @@ exports[`open api parser aries simple 1`] = `
               "docs": undefined,
               "type": "optional<string>",
             },
-            "query": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "query": "string",
           },
         },
         "QueryItem": {
@@ -4250,10 +4238,7 @@ exports[`open api parser aries simple 1`] = `
               "docs": "Time of record creation",
               "type": "optional<string>",
             },
-            "recipient_key": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "recipient_key": "string",
             "record_id": {
               "docs": undefined,
               "type": "optional<string>",
@@ -4465,18 +4450,12 @@ exports[`open api parser aries simple 1`] = `
               "docs": undefined,
               "type": "optional<string>",
             },
-            "proofPurpose": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "proofPurpose": "string",
             "type": {
               "docs": undefined,
               "type": "optional<string>",
             },
-            "verificationMethod": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "verificationMethod": "string",
           },
         },
         "SignedDoc": {
@@ -6369,10 +6348,7 @@ exports[`open api parser aries simple 1`] = `
               "docs": "Error text",
               "type": "optional<string>",
             },
-            "valid": {
-              "docs": undefined,
-              "type": "boolean",
-            },
+            "valid": "boolean",
           },
         },
         "WalletList": {
@@ -8289,10 +8265,7 @@ exports[`open api parser aries simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "description": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
+                  "description": "string",
                 },
               },
               "headers": undefined,
@@ -8782,10 +8755,7 @@ exports[`open api parser aries simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "description": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
+                  "description": "string",
                 },
               },
               "headers": undefined,
@@ -10173,10 +10143,7 @@ exports[`open api parser aries simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "description": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
+                  "description": "string",
                 },
               },
               "headers": undefined,
@@ -10529,10 +10496,7 @@ exports[`open api parser aries simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "description": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
+                  "description": "string",
                 },
               },
               "headers": undefined,

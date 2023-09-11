@@ -18,10 +18,7 @@ exports[`open api parser buzzshot simple 1`] = `
               "docs": undefined,
               "type": "GameComplete",
             },
-            "date": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "date": "string",
             "extra_fields": {
               "docs": undefined,
               "type": "list<GameExtraFieldsItem>",
@@ -35,7 +32,7 @@ exports[`open api parser buzzshot simple 1`] = `
               "type": "optional<integer>",
             },
             "name": {
-              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "photos": {
@@ -50,10 +47,7 @@ exports[`open api parser buzzshot simple 1`] = `
               "docs": undefined,
               "type": "optional<datetime>",
             },
-            "time": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "time": "string",
             "updated_at": {
               "docs": undefined,
               "type": "optional<datetime>",
@@ -63,10 +57,7 @@ exports[`open api parser buzzshot simple 1`] = `
         "GameComplete": {
           "docs": undefined,
           "properties": {
-            "completed_at": {
-              "docs": undefined,
-              "type": "datetime",
-            },
+            "completed_at": "datetime",
             "completion_time": {
               "docs": undefined,
               "type": "optional<integer>",
@@ -88,18 +79,12 @@ exports[`open api parser buzzshot simple 1`] = `
         "GameExtraFieldsItem": {
           "docs": undefined,
           "properties": {
-            "key": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "key": "string",
             "label": {
               "docs": undefined,
               "type": "optional<string>",
             },
-            "present": {
-              "docs": undefined,
-              "type": "boolean",
-            },
+            "present": "boolean",
             "value": {
               "docs": undefined,
               "type": "optional<map<string, unknown>>",
@@ -113,10 +98,7 @@ exports[`open api parser buzzshot simple 1`] = `
               "docs": undefined,
               "type": "optional<datetime>",
             },
-            "photo": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "photo": "string",
             "processed_image": {
               "docs": undefined,
               "type": "optional<string>",
@@ -134,10 +116,7 @@ exports[`open api parser buzzshot simple 1`] = `
               "docs": undefined,
               "type": "optional<datetime>",
             },
-            "date": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "date": "string",
             "games": {
               "docs": undefined,
               "type": "optional<list<GroupGamesItem>>",
@@ -151,7 +130,7 @@ exports[`open api parser buzzshot simple 1`] = `
               "type": "optional<boolean>",
             },
             "name": {
-              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "photos": {
@@ -166,10 +145,7 @@ exports[`open api parser buzzshot simple 1`] = `
               "docs": undefined,
               "type": "optional<datetime>",
             },
-            "time": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "time": "string",
             "updated_at": {
               "docs": undefined,
               "type": "optional<datetime>",
@@ -187,10 +163,7 @@ exports[`open api parser buzzshot simple 1`] = `
               "docs": undefined,
               "type": "GroupGamesItemComplete",
             },
-            "date": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "date": "string",
             "extra_fields": {
               "docs": undefined,
               "type": "list<GroupGamesItemExtraFieldsItem>",
@@ -200,7 +173,7 @@ exports[`open api parser buzzshot simple 1`] = `
               "type": "optional<integer>",
             },
             "name": {
-              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "room": {
@@ -211,10 +184,7 @@ exports[`open api parser buzzshot simple 1`] = `
               "docs": undefined,
               "type": "optional<datetime>",
             },
-            "time": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "time": "string",
             "updated_at": {
               "docs": undefined,
               "type": "optional<datetime>",
@@ -224,10 +194,7 @@ exports[`open api parser buzzshot simple 1`] = `
         "GroupGamesItemComplete": {
           "docs": undefined,
           "properties": {
-            "completed_at": {
-              "docs": undefined,
-              "type": "datetime",
-            },
+            "completed_at": "datetime",
             "completion_time": {
               "docs": undefined,
               "type": "optional<integer>",
@@ -249,18 +216,12 @@ exports[`open api parser buzzshot simple 1`] = `
         "GroupGamesItemExtraFieldsItem": {
           "docs": undefined,
           "properties": {
-            "key": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "key": "string",
             "label": {
               "docs": undefined,
               "type": "optional<string>",
             },
-            "present": {
-              "docs": undefined,
-              "type": "boolean",
-            },
+            "present": "boolean",
             "value": {
               "docs": undefined,
               "type": "optional<map<string, unknown>>",
@@ -278,10 +239,7 @@ exports[`open api parser buzzshot simple 1`] = `
               "docs": undefined,
               "type": "optional<string>",
             },
-            "photo": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "photo": "string",
             "processed_image": {
               "docs": undefined,
               "type": "optional<string>",
@@ -299,26 +257,20 @@ exports[`open api parser buzzshot simple 1`] = `
               "docs": undefined,
               "type": "optional<datetime>",
             },
-            "email": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "email": "string",
             "extra_fields": {
               "docs": undefined,
               "type": "list<GroupPlayersItemExtraFieldsItem>",
             },
             "first_name": {
-              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "last_name": {
-              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
+              "docs": undefined,
               "type": "optional<string>",
             },
-            "phone": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "phone": "string",
             "player": {
               "docs": undefined,
               "type": "optional<string>",
@@ -336,18 +288,12 @@ exports[`open api parser buzzshot simple 1`] = `
         "GroupPlayersItemExtraFieldsItem": {
           "docs": undefined,
           "properties": {
-            "key": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "key": "string",
             "label": {
               "docs": undefined,
               "type": "optional<string>",
             },
-            "present": {
-              "docs": undefined,
-              "type": "boolean",
-            },
+            "present": "boolean",
             "value": {
               "docs": undefined,
               "type": "optional<map<string, unknown>>",
@@ -491,10 +437,7 @@ exports[`open api parser buzzshot simple 1`] = `
               "docs": undefined,
               "type": "optional<string>",
             },
-            "original_image": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "original_image": "string",
             "processed": {
               "docs": undefined,
               "type": "list<PhotoProcessedItem>",
@@ -516,10 +459,7 @@ exports[`open api parser buzzshot simple 1`] = `
               "docs": undefined,
               "type": "optional<string>",
             },
-            "photo": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "photo": "string",
             "processed_image": {
               "docs": undefined,
               "type": "optional<string>",
@@ -537,16 +477,13 @@ exports[`open api parser buzzshot simple 1`] = `
               "docs": undefined,
               "type": "optional<datetime>",
             },
-            "email": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "email": "string",
             "extra_fields": {
               "docs": undefined,
               "type": "list<PlayerExtraFieldsItem>",
             },
             "first_name": {
-              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "id": {
@@ -554,17 +491,14 @@ exports[`open api parser buzzshot simple 1`] = `
               "type": "optional<integer>",
             },
             "last_name": {
-              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
+              "docs": undefined,
               "type": "optional<string>",
             },
             "marketing_email_allowed": {
               "docs": undefined,
               "type": "optional<boolean>",
             },
-            "phone": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "phone": "string",
             "updated_at": {
               "docs": undefined,
               "type": "optional<datetime>",
@@ -574,18 +508,12 @@ exports[`open api parser buzzshot simple 1`] = `
         "PlayerExtraFieldsItem": {
           "docs": undefined,
           "properties": {
-            "key": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "key": "string",
             "label": {
               "docs": undefined,
               "type": "optional<string>",
             },
-            "present": {
-              "docs": undefined,
-              "type": "boolean",
-            },
+            "present": "boolean",
             "value": {
               "docs": undefined,
               "type": "optional<map<string, unknown>>",
@@ -603,10 +531,7 @@ exports[`open api parser buzzshot simple 1`] = `
               "docs": undefined,
               "type": "optional<integer>",
             },
-            "name": {
-              "docs": "<span style="white-space: nowrap">\`<= 255 characters\`</span>",
-              "type": "string",
-            },
+            "name": "string",
           },
         },
       },

@@ -1457,7 +1457,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "identifier": {
               "docs": "The document number of the customer's ID.
- <span style="white-space: nowrap">\`non-empty\`</span> <span style="white-space: nowrap">\`<= 25 characters\`</span> ",
+",
               "type": "string",
             },
             "identifier_type": {
@@ -1466,7 +1466,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "name": {
               "docs": "The full name of the customer you want to create.
- <span style="white-space: nowrap">\`<= 200 characters\`</span> ",
+",
               "type": "string",
             },
             "phone": {
@@ -1499,7 +1499,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "identifier": {
               "docs": "The document number of the customer's ID.
- <span style="white-space: nowrap">\`non-empty\`</span> <span style="white-space: nowrap">\`<= 25 characters\`</span> ",
+",
               "type": "string",
             },
             "identifier_type": {
@@ -1508,7 +1508,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "name": {
               "docs": "The full name of the customer you want to create.
- <span style="white-space: nowrap">\`<= 200 characters\`</span> ",
+",
               "type": "string",
             },
             "phone": {
@@ -1593,14 +1593,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 **Note:** You can send through this value either as a string or an integer. Regardless of the type you choose to send the \`amount\` as, Belvo returns a string with two decimal points, separated by a period ( \`.\`). For example, \`350000.00\`.
 ",
           "union": [
-            {
-              "docs": undefined,
-              "type": "string",
-            },
-            {
-              "docs": undefined,
-              "type": "integer",
-            },
+            "string",
+            "integer",
           ],
         },
         "CreatePaymentLinkOfpi": {
@@ -1658,14 +1652,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 **Note:** You can send through this value either as a string or an float. Regardless of the type you choose to send the \`amount\` as, Belvo returns a string with two decimal points, separated by a period ( \`.\`). For example, \`1234.12\`.
 ",
           "union": [
-            {
-              "docs": undefined,
-              "type": "string",
-            },
-            {
-              "docs": undefined,
-              "type": "double",
-            },
+            "string",
+            "double",
           ],
         },
         "CreatePaymentLinkPse": {
@@ -1723,14 +1711,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 **Note:** You can send this value either as a string or an integer. Regardless of the type you choose to send the \`amount\` as, Belvo returns a string with two decimal points, separated by a period ( \`.\`). For example, \`350000.00\`.
 ",
           "union": [
-            {
-              "docs": undefined,
-              "type": "string",
-            },
-            {
-              "docs": undefined,
-              "type": "integer",
-            },
+            "string",
+            "integer",
           ],
         },
         "CreatePaymentlinkRequest": {
@@ -1805,7 +1787,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "name": {
               "docs": "The full name of the customer.
- <span style="white-space: nowrap">\`<= 200 characters\`</span> ",
+",
               "type": "string",
             },
             "phone": {
@@ -1900,7 +1882,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             },
             "name": {
               "docs": "The full name of the customer.
- <span style="white-space: nowrap">\`<= 200 characters\`</span> ",
+",
               "type": "string",
             },
             "phone": {

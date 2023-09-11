@@ -74,44 +74,17 @@ export function convertPrimitiveToTypeReference(primitiveSchema: PrimitiveSchema
         boolean: () => "boolean",
         _unknown: () => "unknown",
     });
-    const docsSuffix = PrimitiveSchemaValue._visit<string[]>(primitiveSchema.schema, {
-        int: () => [],
-        int64: () => [],
-        float: () => [],
-        double: () => [],
-        string: (value) => {
-            const prefixes = [];
-            if (value.minLength != null && value.minLength === 1) {
-                prefixes.push("non-empty");
-            }
-            if (value.maxLength != null) {
-                prefixes.push(`<= ${value.maxLength} characters`);
-            }
-            return prefixes;
-        },
-        datetime: () => [],
-        date: () => [],
-        base64: () => [],
-        boolean: () => [],
-        _unknown: () => [],
-    });
-
-    const suffixMarkdown = docsSuffix
-        .map((prefix) => `<span style="white-space: nowrap">\`${prefix}\`</span>`)
-        .join(" ");
-    let docs = undefined;
-    if (primitiveSchema.description != null && docsSuffix.length > 0) {
-        docs = `${primitiveSchema.description} ${suffixMarkdown} `;
-    } else if (primitiveSchema.description != null) {
-        docs = `${primitiveSchema.description}`;
-    } else if (docsSuffix.length > 0) {
-        docs = `${suffixMarkdown}`;
+    if (primitiveSchema.description != null) {
+        return {
+            typeReference: {
+                type: typeReference,
+                docs: primitiveSchema.description,
+            },
+            additionalTypeDeclarations: {},
+        };
     }
     return {
-        typeReference: {
-            type: typeReference,
-            docs,
-        },
+        typeReference,
         additionalTypeDeclarations: {},
     };
 }

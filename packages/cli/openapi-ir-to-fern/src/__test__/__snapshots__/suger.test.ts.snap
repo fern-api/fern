@@ -6485,10 +6485,7 @@ the same customer, dimension, and time, but a different quantity.",
                     "docs": "The ID of the API Client.",
                     "type": "string",
                   },
-                  "organizationID": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
+                  "organizationID": "string",
                   "secret": {
                     "docs": "The secret of the API Client.",
                     "type": "string",
@@ -6646,14 +6643,8 @@ the same customer, dimension, and time, but a different quantity.",
                     "docs": "The amount to be added to the credit amount.",
                     "type": "double",
                   },
-                  "entitlementID": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
-                  "organizationID": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
+                  "entitlementID": "string",
+                  "organizationID": "string",
                 },
               },
               "headers": undefined,
@@ -6951,10 +6942,7 @@ the same customer, dimension, and time, but a different quantity.",
                     "docs": undefined,
                     "type": "root.SharedIntegrationInfo",
                   },
-                  "organizationID": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
+                  "organizationID": "string",
                   "partner": {
                     "docs": undefined,
                     "type": "root.SharedCreateIntegrationParamsPartner",
@@ -7079,10 +7067,7 @@ the same customer, dimension, and time, but a different quantity.",
                     "docs": undefined,
                     "type": "root.SharedIntegrationInfo",
                   },
-                  "organizationID": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
+                  "organizationID": "string",
                   "partner": {
                     "docs": undefined,
                     "name": "sharedUpdateIntegrationParamsPartner",
@@ -7512,10 +7497,7 @@ the same customer, dimension, and time, but a different quantity.",
             "request": {
               "body": {
                 "properties": {
-                  "entitlementID": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
+                  "entitlementID": "string",
                   "id": {
                     "docs": "uuid of the UsageRecordGroup (the size is up to 36 characters), if not provided, suger will generate one.",
                     "type": "optional<string>",
@@ -7524,10 +7506,7 @@ the same customer, dimension, and time, but a different quantity.",
                     "docs": "read-only, don't set it when reporting the usage record group.",
                     "type": "optional<root.SharedMeteringUsageRecordGroupMetaInfo>",
                   },
-                  "organizationID": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
+                  "organizationID": "string",
                   "records": {
                     "docs": undefined,
                     "type": "map<string, double>",
@@ -7964,18 +7943,9 @@ the same customer, dimension, and time, but a different quantity.",
             "request": {
               "body": {
                 "properties": {
-                  "fulfillmentUrl": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
-                  "id": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
-                  "organizationID": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
+                  "fulfillmentUrl": "string",
+                  "id": "string",
+                  "organizationID": "string",
                 },
               },
               "headers": undefined,
@@ -8072,14 +8042,8 @@ the same customer, dimension, and time, but a different quantity.",
             "request": {
               "body": {
                 "properties": {
-                  "entitlementID": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
-                  "organizationID": {
-                    "docs": undefined,
-                    "type": "string",
-                  },
+                  "entitlementID": "string",
+                  "organizationID": "string",
                 },
               },
               "headers": undefined,

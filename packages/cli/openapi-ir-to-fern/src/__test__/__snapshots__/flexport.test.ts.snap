@@ -2158,10 +2158,7 @@ exports[`open api parser flexport simple 1`] = `
               "docs": "Your custom string used to refer to the company entity. Can be used to look up or reference the company entity later on.",
               "type": "string",
             },
-            "type": {
-              "docs": undefined,
-              "type": "string",
-            },
+            "type": "string",
           },
         },
         "CreateLineItem": {
@@ -4369,14 +4366,8 @@ exports[`open api parser flexport simple 1`] = `
           "discriminated": false,
           "docs": undefined,
           "union": [
-            {
-              "docs": undefined,
-              "type": "string",
-            },
-            {
-              "docs": undefined,
-              "type": "integer",
-            },
+            "string",
+            "integer",
           ],
         },
         "HsCode": {
