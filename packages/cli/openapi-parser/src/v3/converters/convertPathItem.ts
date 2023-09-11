@@ -6,6 +6,7 @@ import { DummyOpenAPIV3ParserContext } from "../DummyOpenAPIV3ParserContext";
 import { OpenAPIExtension } from "../extensions/extensions";
 import { FernOpenAPIExtension } from "../extensions/fernExtensions";
 import { getExtension } from "../extensions/getExtension";
+import { getFernAvailability } from "../extensions/getFernAvailability";
 import { getGeneratedTypeName } from "../utils/getSchemaName";
 import { isReferenceObject } from "../utils/isReferenceObject";
 import { convertServer } from "./convertServer";
@@ -425,6 +426,9 @@ function convertToEndpoint({
         responseBreadcrumbs,
         responseStatusCode,
     });
+
+    const availability = getFernAvailability(operation);
+
     return {
         summary: operation.summary,
         internal: getExtension<boolean>(operation, OpenAPIExtension.INTERNAL),
@@ -446,6 +450,7 @@ function convertToEndpoint({
         server: (operation.servers ?? []).map((server) => convertServer(server)),
         description: operation.description,
         authed: isEndpointAuthed(operation, document),
+        availability,
     };
 }
 

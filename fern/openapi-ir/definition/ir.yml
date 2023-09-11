@@ -140,12 +140,19 @@ types:
       - GET
       - POST
 
+  EndpointAvailability:
+    enum:
+      - GenerallyAvailable
+      - Beta
+      - Deprecated
+
   Endpoint:
     extends: WithDescription
     properties:
       authed: boolean
       internal: optional<boolean>
       method: HttpMethod
+      availability: optional<EndpointAvailability>
       audiences: list<string>
       path:
         type: string

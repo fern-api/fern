@@ -47,6 +47,10 @@ function convertService(
 ): FernRegistry.api.v1.register.EndpointDefinition[] {
     return irService.endpoints.map(
         (irEndpoint): FernRegistry.api.v1.register.EndpointDefinition => ({
+            availability:
+                irEndpoint.availability != null
+                    ? convertIrEndpointAvailability({ availability: irEndpoint.availability })
+                    : undefined,
             auth: irEndpoint.auth,
             description: irEndpoint.docs ?? undefined,
             method: convertHttpMethod(irEndpoint.method),
@@ -90,6 +94,25 @@ function convertService(
             examples: irEndpoint.examples.map((example) => convertExampleEndpointCall(example, ir)),
         })
     );
+}
+
+function convertIrEndpointAvailability({
+    availability,
+}: {
+    availability: Ir.Availability;
+}): FernRegistry.api.v1.register.Availability | undefined {
+    switch (availability.status) {
+        case "DEPRECATED":
+            return FernRegistry.api.v1.register.Availability.Deprecated;
+        case "PRE_RELEASE":
+            return FernRegistry.api.v1.register.Availability.Beta;
+        case "GENERAL_AVAILABILITY":
+            return FernRegistry.api.v1.register.Availability.GenerallyAvailable;
+        case "IN_DEVELOPMENT":
+            return undefined;
+        default:
+            assertNever(availability.status);
+    }
 }
 
 function convertIrEnvironments({

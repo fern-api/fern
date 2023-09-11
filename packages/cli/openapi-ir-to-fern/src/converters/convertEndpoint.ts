@@ -1,5 +1,14 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { Endpoint, HttpError, Request, Response, Schema, SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/ir";
+import {
+    Endpoint,
+    EndpointAvailability,
+    HttpError,
+    Request,
+    Response,
+    Schema,
+    SchemaId,
+    StatusCode,
+} from "@fern-fern/openapi-ir-model/ir";
 import { ROOT_PREFIX } from "../convertPackage";
 import { Environments } from "../getEnvironments";
 import { convertHeader } from "./convertHeader";
@@ -198,6 +207,14 @@ export function convertEndpoint({
                 `${endpoint.method} ${endpoint.path} can only have a single server override, but has more.`
             );
         }
+    }
+
+    if (endpoint.availability === EndpointAvailability.Beta) {
+        convertedEndpoint.availability = "pre-release";
+    } else if (endpoint.availability === EndpointAvailability.GenerallyAvailable) {
+        convertedEndpoint.availability = "generally-available";
+    } else if (endpoint.availability === EndpointAvailability.Deprecated) {
+        convertedEndpoint.availability = "deprecated";
     }
 
     const errorsThrown: string[] = [];
