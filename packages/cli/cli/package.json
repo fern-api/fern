@@ -75,7 +75,7 @@
     "js-yaml": "^4.1.0",
     "latest-version": "^7.0.0",
     "lodash-es": "^4.17.21",
-    "ora": "^6.1.2",
+    "ora": "^7.0.1",
     "tar": "^6.1.13",
     "tmp-promise": "^3.0.3",
     "validate-npm-package-name": "^4.0.0",
