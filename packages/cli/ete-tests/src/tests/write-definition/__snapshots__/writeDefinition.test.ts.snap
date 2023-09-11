@@ -8,10 +8,8 @@ exports[`validate petstore 1`] = `
 types:
   Pet:
     properties:
-      id:
-        type: integer
-      name:
-        type: string
+      id: integer
+      name: string
       tag:
         type: optional<string>
 
@@ -20,10 +18,8 @@ types:
 
   Error:
     properties:
-      code:
-        type: integer
-      message:
-        type: string
+      code: integer
+      message: string
 
 errors: {}
 ",
