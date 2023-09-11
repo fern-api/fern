@@ -1,61 +1,147 @@
-import { assertNever } from "@fern-api/core-utils";
-import { DocsConfiguration, DocsNavigationConfiguration, DocsNavigationItem } from "@fern-api/docs-configuration";
+import { AbsoluteFilePath, dirname, doesPathExist, resolve } from "@fern-api/fs-utils";
+import {
+    DocsConfiguration,
+    NavigationConfig,
+    NavigationItem,
+    PageConfiguration,
+    SectionConfiguration,
+    TabbedNavigationConfig,
+} from "@fern-fern/docs-config/api";
+import { readFile } from "fs/promises";
 import { NodePath } from "../NodePath";
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
 
 export async function visitDocsConfigFileYamlAst(
     contents: DocsConfiguration,
-    visitor: Partial<DocsConfigFileAstVisitor>
+    visitor: Partial<DocsConfigFileAstVisitor>,
+    absoluteFilepathToConfiguration: AbsoluteFilePath
 ): Promise<void> {
     if (contents.backgroundImage != null) {
-        await visitor.filepath?.(contents.backgroundImage.filepath, ["background-image"]);
+        await visitFilepath({
+            absoluteFilepathToConfiguration,
+            rawUnresolvedFilepath: contents.backgroundImage,
+            visitor,
+            nodePath: ["background-image"],
+        });
     }
     if (contents.favicon != null) {
-        await visitor.filepath?.(contents.favicon.filepath, ["background-image"]);
+        await visitFilepath({
+            absoluteFilepathToConfiguration,
+            rawUnresolvedFilepath: contents.favicon,
+            visitor,
+            nodePath: ["favicon"],
+        });
     }
     if (contents.logo?.dark != null) {
-        await visitor.filepath?.(contents.logo.dark.filepath, ["logo", "dark"]);
+        await visitFilepath({
+            absoluteFilepathToConfiguration,
+            rawUnresolvedFilepath: contents.logo.dark,
+            visitor,
+            nodePath: ["logo", "dark"],
+        });
     }
     if (contents.logo?.light != null) {
-        await visitor.filepath?.(contents.logo.light.filepath, ["logo", "light"]);
+        await visitFilepath({
+            absoluteFilepathToConfiguration,
+            rawUnresolvedFilepath: contents.logo.light,
+            visitor,
+            nodePath: ["logo", "light"],
+        });
     }
 
-    await visitNavigation({ navigation: contents.navigation, visitor, nodePath: ["navigation"] });
+    if (contents.navigation != null) {
+        await visitNavigation({
+            navigation: contents.navigation,
+            visitor,
+            nodePath: ["navigation"],
+            absoluteFilepathToConfiguration,
+        });
+    }
 
     if (contents.typography?.codeFont != null) {
-        await visitor.filepath?.(contents.typography.codeFont.absolutePath, ["typography", "codeFont"]);
+        await visitFilepath({
+            absoluteFilepathToConfiguration,
+            rawUnresolvedFilepath: contents.typography.codeFont.path,
+            visitor,
+            nodePath: ["typography", "codeFont"],
+        });
     }
     if (contents.typography?.bodyFont != null) {
-        await visitor.filepath?.(contents.typography.bodyFont.absolutePath, ["typography", "bodyFont"]);
+        await visitFilepath({
+            absoluteFilepathToConfiguration,
+            rawUnresolvedFilepath: contents.typography.bodyFont.path,
+            visitor,
+            nodePath: ["typography", "codeFont"],
+        });
     }
     if (contents.typography?.headingsFont != null) {
-        await visitor.filepath?.(contents.typography.headingsFont.absolutePath, ["typography", "headingsFont"]);
+        await visitFilepath({
+            absoluteFilepathToConfiguration,
+            rawUnresolvedFilepath: contents.typography.headingsFont.path,
+            visitor,
+            nodePath: ["typography", "codeFont"],
+        });
     }
+}
+
+async function visitFilepath({
+    absoluteFilepathToConfiguration,
+    rawUnresolvedFilepath,
+    visitor,
+    nodePath,
+}: {
+    absoluteFilepathToConfiguration: AbsoluteFilePath;
+    rawUnresolvedFilepath: string;
+    visitor: Partial<DocsConfigFileAstVisitor>;
+    nodePath: NodePath;
+}) {
+    const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), rawUnresolvedFilepath);
+    await visitor.filepath?.(
+        {
+            absoluteFilepath,
+            value: rawUnresolvedFilepath,
+        },
+        nodePath
+    );
 }
 
 async function visitNavigation({
     navigation,
     visitor,
     nodePath,
+    absoluteFilepathToConfiguration,
 }: {
-    navigation: DocsNavigationConfiguration;
+    navigation: NavigationConfig;
     visitor: Partial<DocsConfigFileAstVisitor>;
     nodePath: NodePath;
+    absoluteFilepathToConfiguration: AbsoluteFilePath;
 }): Promise<void> {
-    switch (navigation.type) {
-        case "untabbed":
-            await Promise.all(
-                navigation.items.map(async (item, idx) => {
-                    await visitNavigationItem({ navigationItem: item, visitor, nodePath: [...nodePath, `${idx}`] });
-                })
-            );
-            break;
-        case "tabbed":
-            break;
-        case "versioned":
-            break;
-        default:
-            assertNever(navigation);
+    if (navigationConfigIsTabbed(navigation)) {
+        await Promise.all(
+            navigation.map(async (tab, tabIdx) => {
+                await Promise.all(
+                    tab.layout.map(async (item, itemIdx) => {
+                        await visitNavigationItem({
+                            navigationItem: item,
+                            visitor,
+                            nodePath: [...nodePath, `${tabIdx}`, "layout", `${itemIdx}`],
+                            absoluteFilepathToConfiguration,
+                        });
+                    })
+                );
+            })
+        );
+    } else {
+        await Promise.all(
+            navigation.map(async (item, itemIdx) => {
+                await visitNavigationItem({
+                    navigationItem: item,
+                    visitor,
+                    nodePath: [...nodePath, `${itemIdx}`],
+                    absoluteFilepathToConfiguration,
+                });
+            })
+        );
     }
 }
 
@@ -63,29 +149,56 @@ async function visitNavigationItem({
     navigationItem,
     visitor,
     nodePath,
+    absoluteFilepathToConfiguration,
 }: {
-    navigationItem: DocsNavigationItem;
+    navigationItem: NavigationItem;
     visitor: Partial<DocsConfigFileAstVisitor>;
     nodePath: NodePath;
+    absoluteFilepathToConfiguration: AbsoluteFilePath;
 }): Promise<void> {
-    switch (navigationItem.type) {
-        case "page":
-            await visitor.filepath?.(navigationItem.absolutePath, [...nodePath, "page"]);
-            break;
-        case "section":
-            await Promise.all(
-                navigationItem.contents.map(async (navigationItem, idx) => {
-                    await visitNavigationItem({
-                        navigationItem,
-                        visitor,
-                        nodePath: [...nodePath, "contents", `${idx}`],
-                    });
-                })
+    if (navigationItemIsPage(navigationItem)) {
+        await visitFilepath({
+            absoluteFilepathToConfiguration,
+            rawUnresolvedFilepath: navigationItem.path,
+            visitor,
+            nodePath: [...nodePath, "page"],
+        });
+        const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), navigationItem.path);
+        if (await doesPathExist(absoluteFilepath)) {
+            await visitor.markdownPage?.(
+                {
+                    title: navigationItem.page,
+                    content: (await readFile(absoluteFilepath)).toString(),
+                },
+                [...nodePath, "page", navigationItem.path]
             );
-            break;
-        case "apiSection":
-            break;
-        default:
-            assertNever(navigationItem);
+        }
     }
+
+    if (navigationItemIsSection(navigationItem)) {
+        await Promise.all(
+            navigationItem.contents.map(async (item, itemIdx) => {
+                await visitNavigationItem({
+                    navigationItem: item,
+                    visitor,
+                    nodePath: [...nodePath, "section", "contents", `${itemIdx}`],
+                    absoluteFilepathToConfiguration,
+                });
+            })
+        );
+    }
+}
+
+function navigationItemIsPage(item: NavigationItem): item is PageConfiguration {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (item as PageConfiguration).page != null;
+}
+
+function navigationItemIsSection(item: NavigationItem): item is SectionConfiguration {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (item as SectionConfiguration).section != null;
+}
+
+function navigationConfigIsTabbed(config: NavigationConfig): config is TabbedNavigationConfig {
+    return (config as TabbedNavigationConfig)[0]?.tab != null;
 }

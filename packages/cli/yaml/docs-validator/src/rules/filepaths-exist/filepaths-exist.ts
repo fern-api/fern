@@ -5,12 +5,12 @@ export const FilepathsExistRule: Rule = {
     name: "filepaths-exist",
     create: () => {
         return {
-            filepath: async (absoluteFilepath) => {
+            filepath: async ({ absoluteFilepath, value }) => {
                 if (!(await doesPathExist(absoluteFilepath))) {
                     return [
                         {
                             severity: "error",
-                            message: `Path ${absoluteFilepath} does not exist`,
+                            message: `Path ${value} does not exist`,
                         },
                     ];
                 }

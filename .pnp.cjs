@@ -36,10 +36,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/cli/config-management/dependencies-configuration"\
       },\
       {\
-        "name": "@fern-api/docs-configuration",\
-        "reference": "workspace:packages/cli/config-management/docs-configuration"\
-      },\
-      {\
         "name": "@fern-api/generators-configuration",\
         "reference": "workspace:packages/cli/config-management/generators-configuration"\
       },\
@@ -186,7 +182,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/core-utils", ["workspace:packages/commons/core-utils"]],\
       ["@fern-api/dependencies-configuration", ["workspace:packages/cli/config-management/dependencies-configuration"]],\
       ["@fern-api/docker-utils", ["workspace:packages/cli/generation/local-generation/docker-utils"]],\
-      ["@fern-api/docs-configuration", ["workspace:packages/cli/config-management/docs-configuration"]],\
       ["@fern-api/docs-validator", ["workspace:packages/cli/yaml/docs-validator"]],\
       ["@fern-api/ete-tests", ["workspace:packages/cli/ete-tests"]],\
       ["@fern-api/fs-utils", ["workspace:packages/commons/fs-utils"]],\
@@ -3364,11 +3359,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["js-yaml", "npm:4.1.0"],\
             ["latest-version", "npm:7.0.0"],\
             ["lodash-es", "npm:4.17.21"],\
-            ["next-mdx-remote", "virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:4.4.1"],\
             ["ora", "npm:6.1.2"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
-            ["remark-gfm", "npm:3.0.1"],\
             ["tar", "npm:6.1.13"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
@@ -3389,7 +3382,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/dependencies-configuration", "workspace:packages/cli/config-management/dependencies-configuration"],\
             ["@fern-api/docker-utils", "workspace:packages/cli/generation/local-generation/docker-utils"],\
-            ["@fern-api/docs-configuration", "workspace:packages/cli/config-management/docs-configuration"],\
             ["@fern-api/docs-validator", "workspace:packages/cli/yaml/docs-validator"],\
             ["@fern-api/ete-tests", "workspace:packages/cli/ete-tests"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
@@ -3518,32 +3510,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "SOFT"\
         }]\
       ]],\
-      ["@fern-api/docs-configuration", [\
-        ["workspace:packages/cli/config-management/docs-configuration", {\
-          "packageLocation": "./packages/cli/config-management/docs-configuration/",\
-          "packageDependencies": [\
-            ["@fern-api/docs-configuration", "workspace:packages/cli/config-management/docs-configuration"],\
-            ["@fern-api/config-management-commons", "workspace:packages/cli/config-management/commons"],\
-            ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
-            ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
-            ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
-            ["@fern-fern/docs-config", "npm:0.0.48"],\
-            ["@fern-fern/registry-node", "npm:0.16.1-2-g13b65b4"],\
-            ["@types/jest", "npm:29.0.3"],\
-            ["@types/js-yaml", "npm:4.0.5"],\
-            ["@types/node", "npm:18.7.18"],\
-            ["depcheck", "npm:1.4.3"],\
-            ["eslint", "npm:8.26.0"],\
-            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.5.0"],\
-            ["js-yaml", "npm:4.1.0"],\
-            ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
       ["@fern-api/docs-validator", [\
         ["workspace:packages/cli/yaml/docs-validator", {\
           "packageLocation": "./packages/cli/yaml/docs-validator/",\
@@ -3559,8 +3525,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.5.0"],\
+            ["next-mdx-remote", "virtual:2434b322786904da39177ff03bdc5c7dbbf348dd60dac92e23ac99d71edb460312c4755faf7215e21192d941b8070d96ed0843e8723d06d3b608bb1250bd6880#npm:4.4.1"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
+            ["remark-gfm", "npm:3.0.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -4104,7 +4072,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/auth", "workspace:packages/cli/auth"],\
             ["@fern-api/config-management-commons", "workspace:packages/cli/config-management/commons"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/docs-configuration", "workspace:packages/cli/config-management/docs-configuration"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
             ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
@@ -4313,7 +4280,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/dependencies-configuration", "workspace:packages/cli/config-management/dependencies-configuration"],\
-            ["@fern-api/docs-configuration", "workspace:packages/cli/config-management/docs-configuration"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
             ["@fern-api/openapi-ir-to-fern", "workspace:packages/cli/openapi-ir-to-fern"],\
@@ -4323,6 +4289,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
+            ["@fern-fern/docs-config", "npm:0.0.48"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.290"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
@@ -4410,8 +4377,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/docs-configuration", "workspace:packages/cli/config-management/docs-configuration"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
+            ["@fern-fern/docs-config", "npm:0.0.48"],\
             ["@fern-fern/ir-sdk", "npm:0.0.2884"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
@@ -5173,10 +5140,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:ac5f8a6ae046d35611abf05f031120b4bbe0db467e9a7dc536102c5d0057a9bfed2fedec15b394b39edd218d442c830a66bdfdf953b7f5fd5da717f249e0687b#npm:2.3.0", {\
-          "packageLocation": "./.yarn/__virtual__/@mdx-js-react-virtual-662ab92093/0/cache/@mdx-js-react-npm-2.3.0-d5582a450b-f45fe77955.zip/node_modules/@mdx-js/react/",\
+        ["virtual:2f161f396c89aa6fde3f0af97714bc8e846fbba2762144364ba37831c5e56b4bc72d425ce0ae326b2e9561172f5705d1565c907f149309accfeaa86c6f888e75#npm:2.3.0", {\
+          "packageLocation": "./.yarn/__virtual__/@mdx-js-react-virtual-af829513ce/0/cache/@mdx-js-react-npm-2.3.0-d5582a450b-f45fe77955.zip/node_modules/@mdx-js/react/",\
           "packageDependencies": [\
-            ["@mdx-js/react", "virtual:ac5f8a6ae046d35611abf05f031120b4bbe0db467e9a7dc536102c5d0057a9bfed2fedec15b394b39edd218d442c830a66bdfdf953b7f5fd5da717f249e0687b#npm:2.3.0"],\
+            ["@mdx-js/react", "virtual:2f161f396c89aa6fde3f0af97714bc8e846fbba2762144364ba37831c5e56b4bc72d425ce0ae326b2e9561172f5705d1565c907f149309accfeaa86c6f888e75#npm:2.3.0"],\
             ["@types/mdx", "npm:2.0.7"],\
             ["@types/react", "npm:18.2.21"],\
             ["react", null]\
@@ -14179,12 +14146,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:4.4.1", {\
-          "packageLocation": "./.yarn/__virtual__/next-mdx-remote-virtual-ac5f8a6ae0/0/cache/next-mdx-remote-npm-4.4.1-2a17ed923a-95cd77d03a.zip/node_modules/next-mdx-remote/",\
+        ["virtual:2434b322786904da39177ff03bdc5c7dbbf348dd60dac92e23ac99d71edb460312c4755faf7215e21192d941b8070d96ed0843e8723d06d3b608bb1250bd6880#npm:4.4.1", {\
+          "packageLocation": "./.yarn/__virtual__/next-mdx-remote-virtual-2f161f396c/0/cache/next-mdx-remote-npm-4.4.1-2a17ed923a-95cd77d03a.zip/node_modules/next-mdx-remote/",\
           "packageDependencies": [\
-            ["next-mdx-remote", "virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:4.4.1"],\
+            ["next-mdx-remote", "virtual:2434b322786904da39177ff03bdc5c7dbbf348dd60dac92e23ac99d71edb460312c4755faf7215e21192d941b8070d96ed0843e8723d06d3b608bb1250bd6880#npm:4.4.1"],\
             ["@mdx-js/mdx", "npm:2.3.0"],\
-            ["@mdx-js/react", "virtual:ac5f8a6ae046d35611abf05f031120b4bbe0db467e9a7dc536102c5d0057a9bfed2fedec15b394b39edd218d442c830a66bdfdf953b7f5fd5da717f249e0687b#npm:2.3.0"],\
+            ["@mdx-js/react", "virtual:2f161f396c89aa6fde3f0af97714bc8e846fbba2762144364ba37831c5e56b4bc72d425ce0ae326b2e9561172f5705d1565c907f149309accfeaa86c6f888e75#npm:2.3.0"],\
             ["@types/react", null],\
             ["@types/react-dom", null],\
             ["react", null],\

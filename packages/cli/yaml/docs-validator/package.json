@@ -31,7 +31,9 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-api/yaml-schema": "workspace:*"
+    "@fern-api/yaml-schema": "workspace:*",
+    "next-mdx-remote": "^4.4.1",
+    "remark-gfm": "^3.0.1"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",

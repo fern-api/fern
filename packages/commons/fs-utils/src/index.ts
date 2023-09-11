@@ -6,6 +6,7 @@ export { getDirectoryContents, type Directory, type File, type FileOrDirectory }
 export { join } from "./join";
 export { relative } from "./relative";
 export { RelativeFilePath } from "./RelativeFilePath";
+export { relativize } from "./relativize";
 export { resolve } from "./resolve";
 export { streamObjectToFile } from "./streamObjectToFile";
 export { stringifyLargeObject } from "./stringifyLargeObject";

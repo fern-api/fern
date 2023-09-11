@@ -1,11 +1,12 @@
 import { Audiences } from "@fern-api/config-management-commons";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { DocsInstances, TabConfig } from "@fern-fern/docs-config/api";
 import type { FernRegistry } from "@fern-fern/registry-node";
 
-export interface DocsConfiguration {
+export interface ParsedDocsConfiguration {
+    absoluteFilepath: AbsoluteFilePath;
     instances: DocsInstances[];
-    tabs?: Record<string, TabConfig>;
+    tabs?: Record<RelativeFilePath, TabConfig>;
     navigation: DocsNavigationConfiguration;
     title: string | undefined;
     logo: Logo | undefined;
@@ -14,6 +15,8 @@ export interface DocsConfiguration {
     colors: DocsColorsConfiguration | undefined;
     navbarLinks: FernRegistry.docs.v1.write.NavbarLink[] | undefined;
     typography: TypographyConfig | undefined;
+    /* filepath of page to contents */
+    pages: Record<RelativeFilePath, string>;
 }
 
 export interface DocsColorsConfiguration {

@@ -7,7 +7,6 @@
     { "path": "../../../../commons/fs-utils" },
     { "path": "../../../auth" },
     { "path": "../../../config-management/commons" },
-    { "path": "../../../config-management/docs-configuration" },
     { "path": "../../../config-management/generators-configuration" },
     { "path": "../../../logger" },
     { "path": "../../../register" },
