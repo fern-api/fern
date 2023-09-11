@@ -74,6 +74,15 @@ export function convertPrimitiveToTypeReference(primitiveSchema: PrimitiveSchema
         boolean: () => "boolean",
         _unknown: () => "unknown",
     });
+    if (primitiveSchema.description != null) {
+        return {
+            typeReference: {
+                type: typeReference,
+                docs: primitiveSchema.description,
+            },
+            additionalTypeDeclarations: {},
+        };
+    }
     return {
         typeReference,
         additionalTypeDeclarations: {},

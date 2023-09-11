@@ -16,31 +16,31 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "cargo_ready_date": {
-              "docs": undefined,
+              "docs": "Represents the date when the cargo on the leg is ready for pickup.",
               "type": "optional<string>",
             },
             "delivery_appointment_requested_at_date": {
-              "docs": undefined,
+              "docs": "Date at which the appointment was first requested",
               "type": "optional<datetime>",
             },
             "delivery_appointment_requested_date": {
-              "docs": undefined,
+              "docs": "Date of the actual appointment date that was requested in that initial request",
               "type": "optional<datetime>",
             },
             "delivery_appointment_scheduled_at_date": {
-              "docs": undefined,
+              "docs": "Date at which the appointment was confirmed by the DC",
               "type": "optional<datetime>",
             },
             "delivery_appointment_scheduled_date": {
-              "docs": undefined,
+              "docs": "Date of the actual confirmed appointment",
               "type": "optional<datetime>",
             },
             "delivery_completed": {
-              "docs": undefined,
+              "docs": "Date when the cargo for this leg was unloaded and fully received at the final destination",
               "type": "optional<datetime>",
             },
             "loaded_on_truck_date": {
-              "docs": undefined,
+              "docs": "Date when the cargo has been transloaded from an ocean container to a truck",
               "type": "optional<datetime>",
             },
           },
@@ -49,7 +49,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "city": {
@@ -131,7 +131,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "destination_port": {
@@ -229,7 +229,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "chargeable_volume": {
@@ -275,7 +275,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "country_code": {
@@ -300,7 +300,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "air_booking": {
@@ -336,7 +336,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<Address>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "Unique identifier for the booking",
               "type": "optional<integer>",
             },
             "metadata": {
@@ -344,7 +344,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<Metadata>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "The name of the booking",
               "type": "optional<string>",
             },
             "notify_party": {
@@ -388,11 +388,11 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<TruckingBookingDetail>",
             },
             "wants_export_customs_service": {
-              "docs": undefined,
+              "docs": "Determines if the booking requires Flexport to provide export customs services.",
               "type": "optional<boolean>",
             },
             "wants_import_customs_service": {
-              "docs": undefined,
+              "docs": "Determines if the booking requires Flexport to provide import customs services.",
               "type": "optional<boolean>",
             },
           },
@@ -401,19 +401,19 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "booking_id": {
-              "docs": undefined,
+              "docs": "Unique identifier for the booking that this amendment is for",
               "type": "optional<integer>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "Unique identifier for the booking amendment",
               "type": "optional<integer>",
             },
             "is_pending": {
-              "docs": undefined,
+              "docs": "Depending on various conditions, the requested booking amendment may either be accepted and applied instantly, or it may require Flexport approval. 'is_pending' is set to true if approval is required.",
               "type": "optional<boolean>",
             },
             "new_cargo": {
@@ -421,7 +421,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<Cargo>",
             },
             "new_cargo_ready_date": {
-              "docs": undefined,
+              "docs": "The requested new cargo ready date",
               "type": "optional<string>",
             },
             "new_container_counts": {
@@ -433,7 +433,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<Metadata>",
             },
             "new_name": {
-              "docs": undefined,
+              "docs": "The requested new name of the booking",
               "type": "optional<string>",
             },
             "new_origin_address": {
@@ -453,19 +453,19 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<list<BookingAmendmentHsCode>>",
             },
             "new_wants_bco": {
-              "docs": undefined,
+              "docs": "The requested new wants-bco value",
               "type": "optional<boolean>",
             },
             "new_wants_flexport_freight": {
-              "docs": undefined,
+              "docs": "The requested new wants-flexport-freight value",
               "type": "optional<boolean>",
             },
             "new_wants_import_customs_service": {
-              "docs": undefined,
+              "docs": "The requested new wants-import-customs-service value",
               "type": "optional<boolean>",
             },
             "new_wants_pickup_service": {
-              "docs": undefined,
+              "docs": "The requested new wants-pickup value",
               "type": "optional<boolean>",
             },
           },
@@ -495,15 +495,15 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "String representing the object’s type. Always \`/booking_amendment_product_description\` for this object.",
               "type": "optional<string>",
             },
             "description": {
-              "docs": undefined,
+              "docs": "Always required. English description of product in booking.",
               "type": "optional<string>",
             },
             "description_for_export_customs": {
-              "docs": undefined,
+              "docs": "Required if booking if origin address or origin port is in Mainland China. Chinese description of product in booking.",
               "type": "optional<string>",
             },
             "hs_code": {
@@ -537,19 +537,19 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "String representing the object’s type. Always \`/product_descriptions\` for this object.",
               "type": "optional<string>",
             },
             "description": {
-              "docs": undefined,
+              "docs": "Always required. English description of product in booking.",
               "type": "optional<string>",
             },
             "description_for_export_customs": {
-              "docs": undefined,
+              "docs": "Required if booking if origin address or origin port is in Mainland China. Chinese description of product in booking.",
               "type": "optional<string>",
             },
             "description_for_export_customs_locale": {
-              "docs": undefined,
+              "docs": "Required if booking if origin address or origin port is in Mainland China. Code for the locale for description_for_export_customs. Currently only \`zh_CN\`.",
               "type": "optional<string>",
             },
             "hs_code": {
@@ -562,7 +562,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "booking": {
@@ -570,7 +570,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<BookingRef>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "Unique identifier for the booking line item",
               "type": "optional<integer>",
             },
             "purchase_order_line_item": {
@@ -578,7 +578,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<PurchaseOrderLineItemRef>",
             },
             "units": {
-              "docs": undefined,
+              "docs": "Number of units of purchase_order_line_item booked on booking",
               "type": "optional<integer>",
             },
           },
@@ -587,15 +587,15 @@ exports[`open api parser flexport simple 1`] = `
           "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "link": {
-              "docs": undefined,
+              "docs": "URL to fetch list of objects.",
               "type": "optional<string>",
             },
             "ref_type": {
-              "docs": undefined,
+              "docs": "Type of the object in this list.",
               "type": "optional<string>",
             },
           },
@@ -917,7 +917,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "co2e_emissions": {
@@ -951,27 +951,27 @@ exports[`open api parser flexport simple 1`] = `
           "docs": "With cargo you have two options, detailed or simple. These are both expressed directly on the cargo object. For detailed cargo, \`shipping_units\` is required, and \`weight\` and \`volume\` is required in the \`cargo\` object or the \`shipping_units\` object. For simple cargo, \`shipping_units\` is required, but only one should be specified, and \`weight\` and \`volume\` are required in the \`cargo\` object.",
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "String representing the object’s type. Always \`/cargo\` for this object.",
               "type": "optional<string>",
             },
             "contains_hazmat": {
-              "docs": undefined,
+              "docs": "Required. Whether the cargo contains hazardous materials.",
               "type": "optional<boolean>",
             },
             "contains_li_ion": {
-              "docs": undefined,
+              "docs": "Required. Whether the cargo contains lithium-ion batteries.",
               "type": "optional<boolean>",
             },
             "contains_magnets": {
-              "docs": undefined,
+              "docs": "Required. Whether the cargo contains magnets.",
               "type": "optional<boolean>",
             },
             "contains_non_li_ion_battery": {
-              "docs": undefined,
+              "docs": "Required. Whether the cargo contains non-lithium-ion batteries, e.g. lithium batteries.",
               "type": "optional<boolean>",
             },
             "contains_other_dangerous_goods": {
-              "docs": undefined,
+              "docs": "Required. Whether the cargo contains other non-hazmat, non-magnet, non-battery dangerous goods.",
               "type": "optional<boolean>",
             },
             "lithium_batteries_packing_types": {
@@ -979,7 +979,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<list<CargoLithiumBatteriesPackingTypesItem>>",
             },
             "marks_and_numbers": {
-              "docs": undefined,
+              "docs": "Optional. Identifying markings and numbers that are visible on the cargo.",
               "type": "optional<string>",
             },
             "shipping_units": {
@@ -1025,7 +1025,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object. Always /commercial_invoice for this object.",
               "type": "optional<string>",
             },
             "currency": {
@@ -1037,15 +1037,15 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<CommercialInvoiceDigitizationStatus>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "Unique identifier for the commercial invoice.",
               "type": "optional<string>",
             },
             "invoice_date": {
-              "docs": undefined,
+              "docs": "Represents date of the invoice. This can be null.",
               "type": "optional<string>",
             },
             "invoice_number": {
-              "docs": undefined,
+              "docs": "Invoice number on the commercial invoice, typically used for display purposes.",
               "type": "optional<string>",
             },
             "involved_parties": {
@@ -1053,7 +1053,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<list<CustomsInvolvedParty>>",
             },
             "is_related_parties": {
-              "docs": undefined,
+              "docs": "Whether there was a related parties transaction as defined by CBP.",
               "type": "optional<boolean>",
             },
             "line_items": {
@@ -1069,7 +1069,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<Metadata>",
             },
             "order_number": {
-              "docs": undefined,
+              "docs": "Represents the which order the invoice is linked to. This can be null.",
               "type": "optional<string>",
             },
             "shipment": {
@@ -1077,7 +1077,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<ShipmentRef>",
             },
             "total_unit_count": {
-              "docs": undefined,
+              "docs": "Total units on this commercial invoice.",
               "type": "optional<string>",
             },
             "total_value": {
@@ -1135,7 +1135,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object. Always /commercial_invoice_line_item for this object.",
               "type": "optional<string>",
             },
             "container_number": {
@@ -1179,7 +1179,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<Weight>",
             },
             "po_line_item_number": {
-              "docs": undefined,
+              "docs": "Purchase order line item number",
               "type": "optional<string>",
             },
             "price_per_unit": {
@@ -1350,7 +1350,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object. Always /network/company for this object.",
               "type": "optional<string>",
             },
             "contacts": {
@@ -1366,7 +1366,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<list<CompanyEntity>>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "Unique identifier for the company",
               "type": "optional<string>",
             },
             "locations": {
@@ -1391,7 +1391,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "id": {
@@ -1487,7 +1487,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object. Always /network/contact for this object.",
               "type": "optional<string>",
             },
             "company": {
@@ -1499,7 +1499,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "Unique identifier for the contact",
               "type": "optional<string>",
             },
             "locations": {
@@ -1541,15 +1541,15 @@ exports[`open api parser flexport simple 1`] = `
           "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "link": {
-              "docs": undefined,
+              "docs": "URL to fetch list of objects.",
               "type": "optional<string>",
             },
             "ref_type": {
-              "docs": undefined,
+              "docs": "Type of the object in this list.",
               "type": "optional<string>",
             },
           },
@@ -1558,23 +1558,23 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "String representing the object’s type. Always \`/container_counts\` for this object.",
               "type": "optional<string>",
             },
             "forty_five_ft_hc": {
-              "docs": undefined,
+              "docs": "Quantity of 45 ft HC containers requested.",
               "type": "optional<integer>",
             },
             "forty_ft": {
-              "docs": undefined,
+              "docs": "Quantity of 40 ft containers requested.",
               "type": "optional<integer>",
             },
             "forty_ft_hc": {
-              "docs": undefined,
+              "docs": "Quantity of 40 ft HC containers requested.",
               "type": "optional<integer>",
             },
             "twenty_ft": {
-              "docs": undefined,
+              "docs": "Quantity of 20 ft containers requested.",
               "type": "optional<integer>",
             },
           },
@@ -1583,15 +1583,15 @@ exports[`open api parser flexport simple 1`] = `
           "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "link": {
-              "docs": undefined,
+              "docs": "URL to fetch list of objects.",
               "type": "optional<string>",
             },
             "ref_type": {
-              "docs": undefined,
+              "docs": "Type of the object in this list.",
               "type": "optional<string>",
             },
           },
@@ -1697,19 +1697,19 @@ exports[`open api parser flexport simple 1`] = `
           "docs": "If a non-null value is passed in for 'air_booking', then the new booking will be assumed to be an air booking, even if the 'ocean_booking' or 'trucking_booking' fields are set.",
           "properties": {
             "destination_port_iata_code": {
-              "docs": undefined,
+              "docs": "Optional, provide one of \`destination_port_us_cbp_port_code\`, \`destination_port_loc_code\`, \`destination_port_iata_code\`, or \`destination_port_icao_code\`. Unique airport reference code used by IATA.",
               "type": "optional<string>",
             },
             "destination_port_icao_code": {
-              "docs": undefined,
+              "docs": "Optional, provide one of \`destination_port_us_cbp_port_code\`, \`destination_port_loc_code\`, \`destination_port_iata_code\`, or \`destination_port_icao_code\`. Unique airport reference code used by ICAO.",
               "type": "optional<string>",
             },
             "destination_port_loc_code": {
-              "docs": undefined,
+              "docs": "Optional, provide one of \`destination_port_us_cbp_port_code\`, \`destination_port_loc_code\`, \`destination_port_iata_code\`, or \`destination_port_icao_code\`. Unique port reference code published in the UN/LOCODE.",
               "type": "optional<string>",
             },
             "destination_port_us_cbp_port_code": {
-              "docs": undefined,
+              "docs": "Optional, provide one of \`destination_port_us_cbp_port_code\`, \`destination_port_loc_code\`, \`destination_port_iata_code\`, or \`destination_port_icao_code\`. Unique port reference code used by US CBP, not applicable for non-US airports.",
               "type": "optional<string>",
             },
             "incoterm": {
@@ -1717,19 +1717,19 @@ exports[`open api parser flexport simple 1`] = `
               "type": "CreateAirBookingIncoterm",
             },
             "origin_port_iata_code": {
-              "docs": undefined,
+              "docs": "One of \`origin_port_us_cbp_port_code\`, \`origin_port_loc_code\`, \`origin_port_iata_code\`, or \`origin_port_icao_code\` is required if \`pickup_service\` = \`no\`. Unique airport reference code used by IATA.",
               "type": "optional<string>",
             },
             "origin_port_icao_code": {
-              "docs": undefined,
+              "docs": "One of \`origin_port_us_cbp_port_code\`, \`origin_port_loc_code\`, \`origin_port_iata_code\`, or \`origin_port_icao_code\` is required if \`pickup_service\` = \`no\`. Unique airport reference code used by ICAO.",
               "type": "optional<string>",
             },
             "origin_port_loc_code": {
-              "docs": undefined,
+              "docs": "One of \`origin_port_us_cbp_port_code\`, \`origin_port_loc_code\`, \`origin_port_iata_code\`, or \`origin_port_icao_code\` is required if \`pickup_service\` = \`no\`. Unique port reference code published in the UN/LOCODE.",
               "type": "optional<string>",
             },
             "origin_port_us_cbp_port_code": {
-              "docs": undefined,
+              "docs": "One of \`origin_port_us_cbp_port_code\`, \`origin_port_loc_code\`, \`origin_port_iata_code\`, or \`origin_port_icao_code\` is required if \`pickup_service\` = \`no\`. Unique port reference code used by US CBP, not applicable for non-US airports.",
               "type": "optional<string>",
             },
             "product_descriptions": {
@@ -1737,10 +1737,13 @@ exports[`open api parser flexport simple 1`] = `
               "type": "list<CreateBookingHsCode>",
             },
             "wants_delivery_service": {
-              "docs": undefined,
+              "docs": "Optional. Whether transportation is requested from the destination port to destination address. If unknown, then leave as \`null\`.",
               "type": "optional<boolean>",
             },
-            "wants_pickup_service": "boolean",
+            "wants_pickup_service": {
+              "docs": "Always required. Whether transportation is requested from the origin location to the port.",
+              "type": "boolean",
+            },
           },
         },
         "CreateAirBookingIncoterm": {
@@ -1811,12 +1814,18 @@ exports[`open api parser flexport simple 1`] = `
         "CreateBookingAmendmentHsCode": {
           "docs": undefined,
           "properties": {
-            "description": "string",
+            "description": {
+              "docs": "Always required. English description of product in booking.",
+              "type": "string",
+            },
             "description_for_export_customs": {
-              "docs": undefined,
+              "docs": "Required if booking if origin address or origin port is in Mainland China. Chinese description of product in booking.",
               "type": "optional<string>",
             },
-            "hs_code": "string",
+            "hs_code": {
+              "docs": "The six digit code under which the product should be classified for export customs.",
+              "type": "string",
+            },
           },
         },
         "CreateBookingDeclaredAsStrategy": {
@@ -1842,16 +1851,22 @@ exports[`open api parser flexport simple 1`] = `
         "CreateBookingHsCode": {
           "docs": undefined,
           "properties": {
-            "description": "string",
+            "description": {
+              "docs": "Always required. English description of product in booking.",
+              "type": "string",
+            },
             "description_for_export_customs": {
-              "docs": undefined,
+              "docs": "Required if booking if origin address or origin port is in Mainland China. Chinese description of product in booking.",
               "type": "optional<string>",
             },
             "description_for_export_customs_locale": {
-              "docs": undefined,
+              "docs": "Required if booking if origin address or origin port is in Mainland China. Code for the locale for description_for_export_customs. Currently only \`zh_CN\`.",
               "type": "optional<string>",
             },
-            "hs_code": "string",
+            "hs_code": {
+              "docs": "The six digit code under which the product should be classified for export customs.",
+              "type": "string",
+            },
           },
         },
         "CreateCarbonCalculationFlightType": {
@@ -1943,23 +1958,23 @@ exports[`open api parser flexport simple 1`] = `
           "docs": "With cargo you have two options, detailed or simple. These are both expressed directly on the cargo object. For detailed cargo, \`shipping_units\` is required, and \`weight\` and \`volume\` is required in the \`cargo\` object or the \`shipping_units\` object. For simple cargo, \`shipping_units\` is required, but only one should be specified, and \`weight\` and \`volume\` are required in the \`cargo\` object.",
           "properties": {
             "contains_hazmat": {
-              "docs": undefined,
+              "docs": "Required. Whether the cargo contains hazardous materials.",
               "type": "optional<boolean>",
             },
             "contains_li_ion": {
-              "docs": undefined,
+              "docs": "Required. Whether the cargo contains lithium-ion batteries.",
               "type": "optional<boolean>",
             },
             "contains_magnets": {
-              "docs": undefined,
+              "docs": "Required. Whether the cargo contains magnets.",
               "type": "optional<boolean>",
             },
             "contains_non_li_ion_battery": {
-              "docs": undefined,
+              "docs": "Required. Whether the cargo contains non-lithium-ion batteries, e.g. lithium batteries.",
               "type": "optional<boolean>",
             },
             "contains_other_dangerous_goods": {
-              "docs": undefined,
+              "docs": "Required. Whether the cargo contains other non-hazmat, non-magnet, non-battery dangerous goods.",
               "type": "optional<boolean>",
             },
             "lithium_batteries_packing_types": {
@@ -1967,7 +1982,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<list<CreateCargoLithiumBatteriesPackingTypesItem>>",
             },
             "marks_and_numbers": {
-              "docs": undefined,
+              "docs": "Optional. Identifying markings and numbers that are visible on the cargo.",
               "type": "optional<string>",
             },
             "shipping_units": {
@@ -2021,7 +2036,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<string>",
             },
             "document_line_number": {
-              "docs": undefined,
+              "docs": "Document line number that this data represents. Counting from 1.",
               "type": "optional<integer>",
             },
             "first_sale_value": {
@@ -2033,7 +2048,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<WeightCreate>",
             },
             "manufacturer_ref": {
-              "docs": undefined,
+              "docs": "[DEPRECATED] Your custom string used to refer to a manufacturer location.",
               "type": "optional<string>",
             },
             "metadata": {
@@ -2053,14 +2068,17 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<WeightCreate>",
             },
             "po_line_item_number": {
-              "docs": undefined,
+              "docs": "Purchase order line item number",
               "type": "optional<string>",
             },
             "price_per_unit": {
               "docs": undefined,
               "type": "MoneyCreate",
             },
-            "product_sku": "string",
+            "product_sku": {
+              "docs": "The SKU of the product associated with this line item as it is stored in Flexport's system.",
+              "type": "string",
+            },
             "purchase_order_number": {
               "docs": undefined,
               "type": "optional<string>",
@@ -2083,19 +2101,19 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "forty_five_ft_hc": {
-              "docs": undefined,
+              "docs": "Quantity of 45 ft HC containers requested.",
               "type": "optional<integer>",
             },
             "forty_ft": {
-              "docs": undefined,
+              "docs": "Quantity of 40 ft containers requested.",
               "type": "optional<integer>",
             },
             "forty_ft_hc": {
-              "docs": undefined,
+              "docs": "Quantity of 40 ft HC containers requested.",
               "type": "optional<integer>",
             },
             "twenty_ft": {
-              "docs": undefined,
+              "docs": "Quantity of 20 ft containers requested.",
               "type": "optional<integer>",
             },
           },
@@ -2103,17 +2121,32 @@ exports[`open api parser flexport simple 1`] = `
         "CreateDocument": {
           "docs": undefined,
           "properties": {
-            "document": "string",
-            "document_type": "string",
-            "file_name": "string",
+            "document": {
+              "docs": "Document represented in a strict Base64-encoded string.",
+              "type": "string",
+            },
+            "document_type": {
+              "docs": "Type of document.",
+              "type": "string",
+            },
+            "file_name": {
+              "docs": "Name of the document.",
+              "type": "string",
+            },
             "memo": {
-              "docs": undefined,
+              "docs": "Document memo or message.",
               "type": "optional<string>",
             },
-            "mime_type": "string",
-            "shipment_id": "integer",
+            "mime_type": {
+              "docs": "A two type descriptor describing the media type associated with the document.",
+              "type": "string",
+            },
+            "shipment_id": {
+              "docs": "Corresponding shipment for the document.",
+              "type": "integer",
+            },
             "user_email": {
-              "docs": undefined,
+              "docs": "Email of the user that will be listed as the document's uploader. If omitted, it will default to the company's admin.",
               "type": "optional<string>",
             },
           },
@@ -2121,7 +2154,10 @@ exports[`open api parser flexport simple 1`] = `
         "CreateInvolvedParty": {
           "docs": undefined,
           "properties": {
-            "company_entity_ref": "string",
+            "company_entity_ref": {
+              "docs": "Your custom string used to refer to the company entity. Can be used to look up or reference the company entity later on.",
+              "type": "string",
+            },
             "type": "string",
           },
         },
@@ -2129,11 +2165,11 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "assigned_party_ref": {
-              "docs": undefined,
+              "docs": "The party that this line item is assigned to. Useful if assigning line items to different factories under a vendor, for example.",
               "type": "optional<string>",
             },
             "cargo_ready_date": {
-              "docs": undefined,
+              "docs": "Required if there is no cargo_ready_date in the line item's purchase order. Date when cargo is ready for pickup at the origin location.",
               "type": "optional<string>",
             },
             "destination_locations": {
@@ -2152,9 +2188,12 @@ exports[`open api parser flexport simple 1`] = `
               "docs": "Required if there is no incoterm in the line item's purchase order. The Incoterm of your line item.",
               "type": "optional<CreateLineItemIncoterm>",
             },
-            "item_key": "string",
+            "item_key": {
+              "docs": "Value uniquely identifying a line item within a Purchase Order.",
+              "type": "string",
+            },
             "line_item_number": {
-              "docs": undefined,
+              "docs": "Integer used to sequence the order of line items. Line items will appear in the UX in this order. Assigned automatically if not provided",
               "type": "optional<integer>",
             },
             "line_type": {
@@ -2170,11 +2209,11 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<MetadataCreate>",
             },
             "must_arrive_date": {
-              "docs": undefined,
+              "docs": "Required if there is no must_arrive_date in the line item's purchase order. The must arrive date for this purchase order.",
               "type": "optional<string>",
             },
             "origin_location_ref": {
-              "docs": undefined,
+              "docs": "Optional. Customizable reference ID of network location that is the origin location.",
               "type": "optional<string>",
             },
             "origin_port": {
@@ -2182,7 +2221,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<CreatePurchaseOrderPort>",
             },
             "parent_line_key": {
-              "docs": undefined,
+              "docs": "The line_item_key of the parent line item. This can not be set if this line item is a main line item.",
               "type": "optional<string>",
             },
             "product": {
@@ -2201,15 +2240,21 @@ exports[`open api parser flexport simple 1`] = `
               "docs": "The measurement per unit for this line item.",
               "type": "optional<CreateLineItemUnitOfMeasure>",
             },
-            "units": "integer",
+            "units": {
+              "docs": "Always required. The number of units for this line item.",
+              "type": "integer",
+            },
           },
         },
         "CreateLineItemDestinationLocation": {
           "docs": undefined,
           "properties": {
-            "location_ref": "string",
+            "location_ref": {
+              "docs": "Location ref",
+              "type": "string",
+            },
             "units": {
-              "docs": undefined,
+              "docs": "Number of units to go to this location",
               "type": "optional<integer>",
             },
           },
@@ -2301,8 +2346,14 @@ exports[`open api parser flexport simple 1`] = `
               "docs": "The type of measure",
               "type": "CreateLineItemMeasurementMeasureType",
             },
-            "unit_of_measure": "string",
-            "value": "string",
+            "unit_of_measure": {
+              "docs": "The unit of measure that corresponds to the measure_type used. For example, measure_type might be length, and unit_of_measure might be meters.",
+              "type": "string",
+            },
+            "value": {
+              "docs": "The numeric value",
+              "type": "string",
+            },
           },
         },
         "CreateLineItemMeasurementMeasureType": {
@@ -2998,24 +3049,27 @@ exports[`open api parser flexport simple 1`] = `
               "type": "CreateContainerCounts",
             },
             "destination_port_loc_code": {
-              "docs": undefined,
+              "docs": "Optional, provide one of \`destination_port_us_cbp_port_code\` or \`destination_port_loc_code\`. Unique port reference code published in the United Nations Code for Trade and Transport Locations (UN/LOCODE).",
               "type": "optional<string>",
             },
             "destination_port_us_cbp_port_code": {
-              "docs": undefined,
+              "docs": "Optional, provide one of \`destination_port_us_cbp_port_code\` or \`destination_port_loc_code\`. Unique port reference code published in the United Nations Code for Trade and Transport Locations (UN/LOCODE).",
               "type": "optional<string>",
             },
             "incoterm": {
               "docs": "Always required. The Incoterm of your shipment",
               "type": "CreateOceanBookingIncoterm",
             },
-            "is_lcl": "boolean",
+            "is_lcl": {
+              "docs": "Always required. Whether the booking is for an LCL shipment. If false, the booking is FCL. If true, the booking is LCL.",
+              "type": "boolean",
+            },
             "origin_port_loc_code": {
-              "docs": undefined,
+              "docs": "One of \`origin_port_us_cbp_port_code\` or  \`origin_port_loc_code\` is required if \`pickup_service\` = \`no\`. Unique port reference code used by US CBP.",
               "type": "optional<string>",
             },
             "origin_port_us_cbp_port_code": {
-              "docs": undefined,
+              "docs": "One of \`origin_port_us_cbp_port_code\` or  \`origin_port_loc_code\` is required if \`pickup_service\` = \`no\`. Unique port reference code used by US Customs and Border Protection.",
               "type": "optional<string>",
             },
             "product_descriptions": {
@@ -3023,10 +3077,13 @@ exports[`open api parser flexport simple 1`] = `
               "type": "list<CreateBookingHsCode>",
             },
             "wants_delivery_service": {
-              "docs": undefined,
+              "docs": "Optional. Whether transportation is requested from the destination port to destination address. If unknown, then leave as \`null\`.",
               "type": "optional<boolean>",
             },
-            "wants_pickup_service": "boolean",
+            "wants_pickup_service": {
+              "docs": "Always required. Whether transportation is requested from the origin location to the port.",
+              "type": "boolean",
+            },
           },
         },
         "CreateOceanBookingIncoterm": {
@@ -3098,11 +3155,11 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "cargo_ready_date": {
-              "docs": undefined,
+              "docs": "Required if there is no cargo_ready_date in each line item. Date when cargo is ready for pickup at the origin location.",
               "type": "optional<string>",
             },
             "currency_code": {
-              "docs": undefined,
+              "docs": "Required if there is no currency_code in each line item. The currency code being used in this purchase order.",
               "type": "optional<string>",
             },
             "destination_location_refs": {
@@ -3122,7 +3179,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<CreateOrUpdatePurchaseOrderIncoterm>",
             },
             "issue_date": {
-              "docs": undefined,
+              "docs": "The issue date for this purchase order.",
               "type": "optional<string>",
             },
             "line_items": {
@@ -3130,7 +3187,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "list<CreateLineItem>",
             },
             "memo": {
-              "docs": undefined,
+              "docs": "Your notes or instructions on this purchase order.",
               "type": "optional<string>",
             },
             "metadata": {
@@ -3138,20 +3195,23 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<MetadataCreate>",
             },
             "must_arrive_date": {
-              "docs": undefined,
+              "docs": "Required if there is no must_arrive_date in each line item. The must arrive date for this purchase order.",
               "type": "optional<string>",
             },
-            "name": "string",
+            "name": {
+              "docs": "Always required. Name of the purchase order.",
+              "type": "string",
+            },
             "order_class": {
               "docs": "Class of the purchase order.",
               "type": "optional<CreateOrUpdatePurchaseOrderOrderClass>",
             },
             "order_type": {
-              "docs": undefined,
+              "docs": "Type of purchase order, which is used for rules, searching, and reporting",
               "type": "optional<string>",
             },
             "origin_location_ref": {
-              "docs": undefined,
+              "docs": "Customizable reference ID of the network location that is the origin location.",
               "type": "optional<string>",
             },
             "origin_port": {
@@ -3348,9 +3408,12 @@ exports[`open api parser flexport simple 1`] = `
               "docs": "A list of contact data for who should be contacted should there be questions about this order. For example, if your supplier needs to contact someone, who should they contact?",
               "type": "optional<list<CreatePartyContactsItem>>",
             },
-            "external_ref": "string",
+            "external_ref": {
+              "docs": "The external ref of the company entity that you wish to tie to this party",
+              "type": "string",
+            },
             "location_ref": {
-              "docs": undefined,
+              "docs": "The external ref of the location that you wish to tie to this party. This should be the address that would be associated with the party at the top of a purchase order document. Used for order delivery to suppliers, not in the booking process.",
               "type": "optional<string>",
             },
             "role": {
@@ -3452,14 +3515,23 @@ exports[`open api parser flexport simple 1`] = `
         "CreatePurchaseOrderHsCode": {
           "docs": undefined,
           "properties": {
-            "code": "string",
-            "country_code": "string",
+            "code": {
+              "docs": "The indentifying code on the hs code",
+              "type": "string",
+            },
+            "country_code": {
+              "docs": "The country code of the country that the hs code belongs to",
+              "type": "string",
+            },
           },
         },
         "CreatePurchaseOrderPort": {
           "docs": undefined,
           "properties": {
-            "code": "string",
+            "code": {
+              "docs": "A unique identifier for this port",
+              "type": "string",
+            },
             "code_type": {
               "docs": "The code type of the port",
               "type": "CreatePurchaseOrderPortCodeType",
@@ -3495,48 +3567,51 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "color": {
-              "docs": undefined,
+              "docs": "The color of the product",
               "type": "optional<string>",
             },
             "country_of_origin": {
-              "docs": undefined,
+              "docs": "The country the product was manufactured in",
               "type": "optional<string>",
             },
             "dangerous": {
-              "docs": undefined,
+              "docs": "Whether or not the product is a dangerous good.",
               "type": "optional<boolean>",
             },
             "ean_ucc_13": {
-              "docs": undefined,
+              "docs": "The EAN/UCC-13 of the product.",
               "type": "optional<string>",
             },
             "ean_ucc_8": {
-              "docs": undefined,
+              "docs": "The EAN/UCC-8 of the product.",
               "type": "optional<string>",
             },
             "lot_number": {
-              "docs": undefined,
+              "docs": "The lot number of the product",
               "type": "optional<string>",
             },
-            "name": "string",
+            "name": {
+              "docs": "The name of product",
+              "type": "string",
+            },
             "product_category": {
-              "docs": undefined,
+              "docs": "The category to group this product under",
               "type": "optional<string>",
             },
             "size": {
-              "docs": undefined,
+              "docs": "The size of the product",
               "type": "optional<string>",
             },
             "sku": {
-              "docs": undefined,
+              "docs": "SKU of the product. Required when line item is bookable, there is no sub line item on this line item",
               "type": "optional<string>",
             },
             "style": {
-              "docs": undefined,
+              "docs": "The style of the product",
               "type": "optional<string>",
             },
             "upc": {
-              "docs": undefined,
+              "docs": "Universal product code",
               "type": "optional<string>",
             },
           },
@@ -3548,7 +3623,10 @@ exports[`open api parser flexport simple 1`] = `
               "docs": "Required. Unit of measurement.",
               "type": "CreateQuantityUnit",
             },
-            "value": "double",
+            "value": {
+              "docs": "Required. The number of units in the units of measurement.",
+              "type": "double",
+            },
           },
         },
         "CreateQuantityUnit": {
@@ -3595,10 +3673,13 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "description_of_products": {
-              "docs": undefined,
+              "docs": "General description of the products in the shipment.",
               "type": "optional<string>",
             },
-            "is_ltl": "boolean",
+            "is_ltl": {
+              "docs": "Whether the booking is for an LTL shipment. If false, the booking is FTL. If true, then the booking is LTL.",
+              "type": "boolean",
+            },
             "payment_terms": {
               "docs": "Whether the shipper or consignee is responsible for payment of trucking freight. This can be \`collect\` (consignee) or \`prepaid\` (shipper).",
               "type": "CreateTruckingBookingPaymentTerms",
@@ -3624,7 +3705,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "The type of the object",
               "type": "optional<string>",
             },
             "amount": {
@@ -3636,7 +3717,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<list<string>>",
             },
             "category": {
-              "docs": undefined,
+              "docs": "DEPRECATED - Not available after v3. Please use \`categories\`.",
               "type": "optional<string>",
             },
             "credited_at": {
@@ -3644,7 +3725,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<datetime>",
             },
             "reason": {
-              "docs": undefined,
+              "docs": "DEPRECATED - Not available after v3. Please use \`reasons\`.",
               "type": "optional<string>",
             },
             "reasons": {
@@ -3678,7 +3759,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object. Always /customs_entry for this object.",
               "type": "optional<string>",
             },
             "entry_number": {
@@ -3686,11 +3767,11 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "Unique identifier for the customs entry.",
               "type": "optional<string>",
             },
             "release_date": {
-              "docs": undefined,
+              "docs": "The cargo release date for this entry.",
               "type": "optional<string>",
             },
             "release_status": {
@@ -3786,7 +3867,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "address": {
@@ -3798,11 +3879,11 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<CompanyEntityRef>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "The name of involved party.",
               "type": "optional<string>",
             },
             "type": {
-              "docs": undefined,
+              "docs": "The type of involved party.",
               "type": "optional<string>",
             },
           },
@@ -3815,7 +3896,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<DistanceCreateUnit>",
             },
             "value": {
-              "docs": undefined,
+              "docs": "Required. Specifies the distance as a float.",
               "type": "optional<double>",
             },
           },
@@ -3839,7 +3920,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object. Always /document for this object.",
               "type": "optional<string>",
             },
             "archived_at": {
@@ -3847,11 +3928,11 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<datetime>",
             },
             "document_type": {
-              "docs": undefined,
+              "docs": "Type of the document.",
               "type": "optional<string>",
             },
             "file_link": {
-              "docs": undefined,
+              "docs": "The link that can be used to download the file.",
               "type": "optional<string>",
             },
             "file_metadata": {
@@ -3863,7 +3944,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "Unique identifier for the document",
               "type": "optional<string>",
             },
             "memo": {
@@ -3985,19 +4066,19 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "String representing the object’s type. Always /api/error for this object.",
               "type": "optional<string>",
             },
             "code": {
-              "docs": undefined,
+              "docs": "Specialized identifier for this type of error in our API",
               "type": "optional<string>",
             },
             "message": {
-              "docs": undefined,
+              "docs": "Human readable error message",
               "type": "optional<string>",
             },
             "status": {
-              "docs": undefined,
+              "docs": "The HTTP status code (client or server error) made available for consumption from the body of the response.",
               "type": "optional<integer>",
             },
           },
@@ -4108,11 +4189,11 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<string>",
             },
             "message": {
-              "docs": undefined,
+              "docs": "Description of the exceptional event.",
               "type": "optional<string>",
             },
             "root_cause_name": {
-              "docs": undefined,
+              "docs": "The main reason for the exception as human-friendly text.",
               "type": "optional<string>",
             },
             "root_cause_slug": {
@@ -4205,15 +4286,15 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object. Always /file_metadata for this object.",
               "type": "optional<string>",
             },
             "size": {
-              "docs": undefined,
+              "docs": "Size of the file in bytes",
               "type": "optional<integer>",
             },
             "uploaded_at": {
-              "docs": undefined,
+              "docs": "Date this document was uploaded.",
               "type": "optional<string>",
             },
           },
@@ -4293,11 +4374,11 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "String representing the object’s type. Always \`/hs_code\` for this object.",
               "type": "optional<string>",
             },
             "code": {
-              "docs": undefined,
+              "docs": "6 digit (international HS) or 10 digit (US HTS) code.",
               "type": "optional<string>",
             },
             "country_code": {
@@ -4314,7 +4395,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object. Always '/invoice' for this object.",
               "type": "optional<string>",
             },
             "balance": {
@@ -4326,15 +4407,15 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<list<CreditMemo>>",
             },
             "due_date": {
-              "docs": undefined,
+              "docs": "Due date of the invoice",
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "Unique ID for the invoice",
               "type": "optional<string>",
             },
             "issued_at": {
-              "docs": undefined,
+              "docs": "When the invoice was issued",
               "type": "optional<datetime>",
             },
             "issuer": {
@@ -4346,11 +4427,11 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<list<InvoiceItem>>",
             },
             "last_updated_at": {
-              "docs": undefined,
+              "docs": "Time of the last adjustment to in invoice",
               "type": "optional<datetime>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "Unique name for the invoice",
               "type": "optional<string>",
             },
             "notes": {
@@ -4378,7 +4459,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<InvoiceType>",
             },
             "voided_at": {
-              "docs": undefined,
+              "docs": "When the invoice was voided (if applicable)",
               "type": "optional<datetime>",
             },
           },
@@ -4469,7 +4550,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object.",
               "type": "optional<string>",
             },
             "amount": {
@@ -4485,7 +4566,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<list<string>>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "Description of charge.",
               "type": "optional<string>",
             },
             "quantity": {
@@ -4497,7 +4578,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<InvoiceRate>",
             },
             "slug": {
-              "docs": undefined,
+              "docs": "Code describing the charge.",
               "type": "optional<string>",
             },
           },
@@ -4541,15 +4622,15 @@ exports[`open api parser flexport simple 1`] = `
           "docs": "Describes the number of units used to calculate the price of a line item",
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "The type of the object",
               "type": "optional<string>",
             },
             "qualifier": {
-              "docs": undefined,
+              "docs": "describes what the value represents",
               "type": "optional<string>",
             },
             "value": {
-              "docs": undefined,
+              "docs": "numeric value described by qualifier",
               "type": "optional<string>",
             },
           },
@@ -4558,15 +4639,15 @@ exports[`open api parser flexport simple 1`] = `
           "docs": "Describes the rate per unit used to calculate the price of a line item",
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "The type of the object",
               "type": "optional<string>",
             },
             "qualifier": {
-              "docs": undefined,
+              "docs": "describes what the value represents",
               "type": "optional<string>",
             },
             "value": {
-              "docs": undefined,
+              "docs": "numeric value described by qualifier",
               "type": "optional<string>",
             },
           },
@@ -4641,15 +4722,15 @@ exports[`open api parser flexport simple 1`] = `
           "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "link": {
-              "docs": undefined,
+              "docs": "URL to fetch list of objects.",
               "type": "optional<string>",
             },
             "ref_type": {
-              "docs": undefined,
+              "docs": "Type of the object in this list.",
               "type": "optional<string>",
             },
           },
@@ -4679,7 +4760,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "String representing the object’s type. Always \`/quantity/length\` for this object.",
               "type": "optional<string>",
             },
             "unit": {
@@ -4687,7 +4768,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<LengthUnit>",
             },
             "value": {
-              "docs": undefined,
+              "docs": "Required. Specifies the length as a float.",
               "type": "optional<double>",
             },
           },
@@ -4700,7 +4781,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<LengthCreateUnit>",
             },
             "value": {
-              "docs": undefined,
+              "docs": "Required. Specifies the length as a float.",
               "type": "optional<double>",
             },
           },
@@ -4743,11 +4824,11 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<LineItemMeasurementMeasureType>",
             },
             "unit_of_measure": {
-              "docs": undefined,
+              "docs": "The cost per unit for this line item.",
               "type": "optional<string>",
             },
             "value": {
-              "docs": undefined,
+              "docs": "The numeric value",
               "type": "optional<string>",
             },
           },
@@ -4801,7 +4882,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object. Always /network/location for this object.",
               "type": "optional<string>",
             },
             "address": {
@@ -4821,7 +4902,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<boolean>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "Unique identifier for the location",
               "type": "optional<string>",
             },
             "metadata": {
@@ -4909,7 +4990,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "manufacturer_code": {
@@ -4966,7 +5047,7 @@ exports[`open api parser flexport simple 1`] = `
           ],
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object. Always /money for this object.",
               "type": "optional<string>",
             },
           },
@@ -5332,7 +5413,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "container_counts": {
@@ -5501,7 +5582,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "dates": {
@@ -5522,7 +5603,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "carrier_booking_number": {
@@ -5530,7 +5611,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<string>",
             },
             "confirmed_space_released_at": {
-              "docs": undefined,
+              "docs": "the date-time at which the carrier confirms space release related to the shipping order",
               "type": "optional<datetime>",
             },
             "containers": {
@@ -5695,7 +5776,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "address": {
@@ -5707,7 +5788,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<list<PlaceDetailsItem>>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "Name of the place",
               "type": "optional<string>",
             },
           },
@@ -5838,7 +5919,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "archived_at": {
@@ -5850,15 +5931,15 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<list<ProductClassification>>",
             },
             "client_verified": {
-              "docs": undefined,
+              "docs": "Indicates whether Client has verified this Product.",
               "type": "optional<boolean>",
             },
             "country_of_origin": {
-              "docs": undefined,
+              "docs": "[DEPRECATED] - Use the country_of_origin on the supplier field. The country the product was manufactured",
               "type": "optional<string>",
             },
             "description": {
-              "docs": undefined,
+              "docs": "Description of product",
               "type": "optional<string>",
             },
             "hs_codes": {
@@ -5866,15 +5947,15 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<list<HsCode>>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "The Flexport id used to refer to the product",
               "type": "optional<integer>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "The name of the product",
               "type": "optional<string>",
             },
             "product_category": {
-              "docs": undefined,
+              "docs": "The category to group this product under",
               "type": "optional<string>",
             },
             "product_properties": {
@@ -5882,7 +5963,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<list<ProductProperty>>",
             },
             "sku": {
-              "docs": undefined,
+              "docs": "The SKU used to refer to the product",
               "type": "optional<string>",
             },
           },
@@ -5891,7 +5972,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "codes": {
@@ -5899,7 +5980,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<list<string>>",
             },
             "region": {
-              "docs": undefined,
+              "docs": "The region for this classification. Currently only 2-character ISO codes and "EU" are supported",
               "type": "optional<string>",
             },
           },
@@ -5971,15 +6052,15 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "type": {
-              "docs": undefined,
+              "docs": "Type of this property",
               "type": "optional<string>",
             },
             "value": {
-              "docs": undefined,
+              "docs": "Value of this property",
               "type": "optional<string>",
             },
           },
@@ -6051,7 +6132,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "archived_at": {
@@ -6079,7 +6160,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<PurchaseOrderFreightPaymnetTerms>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "A unique identifier for the purchase order",
               "type": "optional<integer>",
             },
             "incoterm": {
@@ -6087,7 +6168,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<PurchaseOrderIncoterm>",
             },
             "issue_date": {
-              "docs": undefined,
+              "docs": "the date that the order was issued",
               "type": "optional<string>",
             },
             "line_items": {
@@ -6107,7 +6188,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<string>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "The name of the purchase order",
               "type": "optional<string>",
             },
             "order_class": {
@@ -6115,7 +6196,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<PurchaseOrderOrderClass>",
             },
             "order_type": {
-              "docs": undefined,
+              "docs": "Type of purchase order, which is used for rules, searching, and reporting",
               "type": "optional<string>",
             },
             "origin_address": {
@@ -6374,7 +6455,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "assigned_party": {
@@ -6398,7 +6479,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<list<HsCode>>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "Unique identifier for the line item on the latest version of the PO",
               "type": "optional<integer>",
             },
             "incoterm": {
@@ -6406,11 +6487,11 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<PurchaseOrderLineItemIncoterm>",
             },
             "item_key": {
-              "docs": undefined,
+              "docs": "Value uniquely identifying a line item within a Purchase Order.",
               "type": "optional<string>",
             },
             "line_item_number": {
-              "docs": undefined,
+              "docs": "Integer used to sequence the order of line items. Line items will appear in the UX in this order. Assigned automatically if not provided.",
               "type": "optional<integer>",
             },
             "line_type": {
@@ -6438,7 +6519,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<Place>",
             },
             "parent_line_key": {
-              "docs": undefined,
+              "docs": "The line_item_key of this line items parent",
               "type": "optional<string>",
             },
             "product": {
@@ -6471,15 +6552,15 @@ exports[`open api parser flexport simple 1`] = `
           "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "link": {
-              "docs": undefined,
+              "docs": "URL to fetch list of objects",
               "type": "optional<string>",
             },
             "ref_type": {
-              "docs": undefined,
+              "docs": "Type of the object in this list",
               "type": "optional<string>",
             },
           },
@@ -6488,11 +6569,11 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "location_ref": {
-              "docs": undefined,
+              "docs": "Location ref",
               "type": "optional<string>",
             },
             "units": {
-              "docs": undefined,
+              "docs": "Number of units to go to this location",
               "type": "optional<integer>",
             },
           },
@@ -6960,51 +7041,51 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "color": {
-              "docs": undefined,
+              "docs": "The color of the product",
               "type": "optional<string>",
             },
             "country_of_origin": {
-              "docs": undefined,
+              "docs": "The country the product was manufactured in",
               "type": "optional<string>",
             },
             "dangerous": {
-              "docs": undefined,
+              "docs": "Whether or not the product is a dangerous good.",
               "type": "optional<boolean>",
             },
             "ean_ucc_13": {
-              "docs": undefined,
+              "docs": "The EAN/UCC-13 of the product.",
               "type": "optional<string>",
             },
             "ean_ucc_8": {
-              "docs": undefined,
+              "docs": "The EAN/UCC-8 of the product.",
               "type": "optional<string>",
             },
             "lot_number": {
-              "docs": undefined,
+              "docs": "The lot number of the product",
               "type": "optional<string>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "The name of product",
               "type": "optional<string>",
             },
             "product_category": {
-              "docs": undefined,
+              "docs": "The category to group this product under",
               "type": "optional<string>",
             },
             "size": {
-              "docs": undefined,
+              "docs": "The size of the product",
               "type": "optional<string>",
             },
             "sku": {
-              "docs": undefined,
+              "docs": "SKU of the product.",
               "type": "optional<string>",
             },
             "style": {
-              "docs": undefined,
+              "docs": "The style of the product",
               "type": "optional<string>",
             },
             "upc": {
-              "docs": undefined,
+              "docs": "Universal product code",
               "type": "optional<string>",
             },
           },
@@ -7088,23 +7169,23 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "actual_arrival_date": {
-              "docs": undefined,
+              "docs": "Actual arrival date to the last port of the main voyage",
               "type": "optional<datetime>",
             },
             "actual_delivered_in_full_date": {
-              "docs": undefined,
+              "docs": "Actual delivery date to the destination location. For ocean shipments with multiple containers, this is the date of last delivered container",
               "type": "optional<datetime>",
             },
             "actual_departure_date": {
-              "docs": undefined,
+              "docs": "Actual departure date from the first port of the main voyage",
               "type": "optional<datetime>",
             },
             "actual_picked_up_in_full_date": {
-              "docs": undefined,
+              "docs": "Actual pickup date from the origin location. For ocean shipments with multiple containers, this is the date of last picked up container",
               "type": "optional<datetime>",
             },
             "air_shipment": {
@@ -7112,11 +7193,11 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<AirShipmentDetail>",
             },
             "arrival_date": {
-              "docs": undefined,
+              "docs": "DEPRECATED date field",
               "type": "optional<datetime>",
             },
             "belongs_to_a_buyers_consol": {
-              "docs": undefined,
+              "docs": "Indicated whether the shipment is part of a buyer's consol.",
               "type": "optional<boolean>",
             },
             "booking": {
@@ -7136,7 +7217,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<Weight>",
             },
             "cargo_ready_date": {
-              "docs": undefined,
+              "docs": "Date when cargo is ready for pickup at the origin location",
               "type": "optional<string>",
             },
             "child_shipments": {
@@ -7152,7 +7233,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<list<CompanyEntity>>",
             },
             "created_date": {
-              "docs": undefined,
+              "docs": "Date the user confirmed the Flexport quote for this Shipment",
               "type": "optional<datetime>",
             },
             "customs_entries": {
@@ -7164,11 +7245,11 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<ShipmentDangerousGoods>",
             },
             "delivered_in_full_date": {
-              "docs": undefined,
+              "docs": "DEPRECATED date field",
               "type": "optional<datetime>",
             },
             "departure_date": {
-              "docs": undefined,
+              "docs": "DEPRECATED date field",
               "type": "optional<datetime>",
             },
             "documents": {
@@ -7176,19 +7257,19 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<DocumentCollectionRef>",
             },
             "estimated_arrival_date": {
-              "docs": undefined,
+              "docs": "Estimated arrival date to the last port of the main voyage",
               "type": "optional<datetime>",
             },
             "estimated_delivered_in_full_date": {
-              "docs": undefined,
+              "docs": "Estimated delivery date to the destination location. For ocean shipments with multiple containers, this is the date of last delivered container",
               "type": "optional<datetime>",
             },
             "estimated_departure_date": {
-              "docs": undefined,
+              "docs": "Estimated departure date from the first port of the main voyage",
               "type": "optional<datetime>",
             },
             "estimated_picked_up_in_full_date": {
-              "docs": undefined,
+              "docs": "Estimated pickup date from the origin location. For ocean shipments with multiple containers, this is the date of last picked up container",
               "type": "optional<datetime>",
             },
             "freight_type": {
@@ -7196,7 +7277,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<FreightType>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "Unique identifier for the shipment",
               "type": "optional<integer>",
             },
             "importers_of_record": {
@@ -7208,7 +7289,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<ShipmentIncoterm>",
             },
             "it_number": {
-              "docs": undefined,
+              "docs": "Inbond Transit number used for US Customs",
               "type": "optional<string>",
             },
             "items": {
@@ -7224,7 +7305,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<Metadata>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "The name of the shipment",
               "type": "optional<string>",
             },
             "ocean_shipment": {
@@ -7236,7 +7317,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<ShipmentRef>",
             },
             "picked_up_in_full_date": {
-              "docs": undefined,
+              "docs": "DEPRECATED date field",
               "type": "optional<datetime>",
             },
             "pieces": {
@@ -7260,7 +7341,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<ShipmentStatus>",
             },
             "target_delivery_date": {
-              "docs": undefined,
+              "docs": "Target date for when the shipment will be fully delivered. This date is set when the shipment's booking is confirmed. This value may be different from estimated_delivered_in_full_date, which is updated when there is new information about the progress of a shipment.",
               "type": "optional<string>",
             },
             "transportation_mode": {
@@ -7268,47 +7349,47 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<TransportationMode>",
             },
             "updated_at": {
-              "docs": undefined,
+              "docs": "Date when the shipment object was last updated",
               "type": "optional<datetime>",
             },
             "visibility_only": {
-              "docs": undefined,
+              "docs": "Indicates if a shipment was requested for tracking via the Flexport visibility-only service.",
               "type": "optional<boolean>",
             },
             "wants_commercial_invoice_transcription": {
-              "docs": undefined,
+              "docs": "Determines if a shipment is using Flexport’s commercial invoice transcription service.",
               "type": "optional<boolean>",
             },
             "wants_delivery_service": {
-              "docs": undefined,
+              "docs": "Determines if Flexport is responsible for door delivery on a shipment.",
               "type": "optional<boolean>",
             },
             "wants_export_customs_service": {
-              "docs": undefined,
+              "docs": "Determines if the shipment requires Flexport to provide export customs services.",
               "type": "optional<boolean>",
             },
             "wants_flexport_freight": {
-              "docs": undefined,
+              "docs": "Determines if a shipment is using Flexport services for a combination of import customs clearance or final leg delivery.",
               "type": "optional<boolean>",
             },
             "wants_flexport_insurance": {
-              "docs": undefined,
+              "docs": "Determines if a shipment is using Flexport’s insurance service.",
               "type": "optional<boolean>",
             },
             "wants_freight_management_bco": {
-              "docs": undefined,
+              "docs": "Determines if a shipment bypasses a freight forwader and is booked directly with a steamship line.",
               "type": "optional<boolean>",
             },
             "wants_import_customs_service": {
-              "docs": undefined,
+              "docs": "Determines if the shipment requires Flexport to provide import customs services.",
               "type": "optional<boolean>",
             },
             "wants_pickup_service": {
-              "docs": undefined,
+              "docs": "Determines if a shipment uses Flexport trucking services from origin location to port.",
               "type": "optional<boolean>",
             },
             "wants_trade_declaration_service": {
-              "docs": undefined,
+              "docs": "Determines if a shipment uses trade declaration service for HK exports.",
               "type": "optional<boolean>",
             },
           },
@@ -7317,7 +7398,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "actual_arrival_date": {
@@ -7512,7 +7593,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of this object",
               "type": "optional<string>",
             },
             "classifications": {
@@ -7564,7 +7645,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "containers": {
@@ -7763,7 +7844,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "id": {
@@ -7796,7 +7877,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "actual_arrival_date": {
@@ -7816,7 +7897,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<AirShipmentLeg>",
             },
             "cargo_ready_date": {
-              "docs": undefined,
+              "docs": "[DEPRECATED] See additional_dates",
               "type": "optional<string>",
             },
             "carrier_name": {
@@ -7936,7 +8017,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "place": {
@@ -7972,19 +8053,19 @@ exports[`open api parser flexport simple 1`] = `
           "docs": "[Expandable API link.](https://apidocs.flexport.com/v3/tag/Expansion)",
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of Object Returned. In this case, /api/refs/object.",
               "type": "optional<string>",
             },
             "id": {
-              "docs": undefined,
+              "docs": "Unique identifier for the shipment",
               "type": "optional<integer>",
             },
             "link": {
-              "docs": undefined,
+              "docs": "Link to the shipment",
               "type": "optional<string>",
             },
             "ref_type": {
-              "docs": undefined,
+              "docs": "Type of Object Referenced. In this case, /shipment.",
               "type": "optional<string>",
             },
           },
@@ -8156,15 +8237,15 @@ exports[`open api parser flexport simple 1`] = `
           "docs": "For detailed cargo, \`shipping_units\` is required. For simple cargo, \`shipping_units\` is required, but only one should be specified.",
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "String representing the object’s type. Always \`/shipping_unit\` for this object.",
               "type": "optional<string>",
             },
             "atomic_count": {
-              "docs": undefined,
+              "docs": "Required if \`unit_type\` = \`pallet\`. The number of atomic units, i.e. units that will not be unpacked and broken up during shipping, contained in each shipping unit.",
               "type": "optional<integer>",
             },
             "count": {
-              "docs": undefined,
+              "docs": "Required. Total number of this shipping unit.",
               "type": "optional<integer>",
             },
             "height": {
@@ -8176,11 +8257,11 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<Length>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "Optional. Name of the unit of cargo.",
               "type": "optional<string>",
             },
             "unit_type": {
-              "docs": undefined,
+              "docs": "Required. Packing method of the shipping. This can be \`bag\`, \`bale\`, \`barrel\`, \`carton\`, \`crate\`, \`package\`, \`pallet\`, or \`roll\`.",
               "type": "optional<string>",
             },
             "volume": {
@@ -8201,11 +8282,11 @@ exports[`open api parser flexport simple 1`] = `
           "docs": "For detailed cargo, \`shipping_units\` is required. For simple cargo, \`shipping_units\` is required, but only one should be specified.",
           "properties": {
             "atomic_count": {
-              "docs": undefined,
+              "docs": "Required if \`unit_type\` = \`pallet\`. The number of atomic units, i.e. units that will not be unpacked and broken up during shipping, contained in each shipping unit.",
               "type": "optional<integer>",
             },
             "count": {
-              "docs": undefined,
+              "docs": "Required. Total number of this shipping unit.",
               "type": "optional<integer>",
             },
             "height": {
@@ -8217,11 +8298,11 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<LengthCreate>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "Optional. Name of the unit of cargo.",
               "type": "optional<string>",
             },
             "unit_type": {
-              "docs": undefined,
+              "docs": "Required. Packing method of the shipping. This can be \`bag\`, \`bale\`, \`barrel\`, \`carton\`, \`crate\`, \`package\`, \`pallet\`, or \`roll\`.",
               "type": "optional<string>",
             },
             "volume": {
@@ -8242,7 +8323,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": "Name and address of a specific terminal within a port or airport.  Possibly null",
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "address": {
@@ -8250,11 +8331,11 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<Address>",
             },
             "firms_code": {
-              "docs": undefined,
+              "docs": "Four digit alpha-numeric identifier assigned by U.S. Customs and Border Protection to bonded facilities;  available prior to shipment arrival at location tagged 'customs_entry'",
               "type": "optional<string>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "Name of the terminal",
               "type": "optional<string>",
             },
           },
@@ -8308,7 +8389,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "description_of_products": {
@@ -8398,11 +8479,11 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "country_code": {
-              "docs": undefined,
+              "docs": "ISO 3166 two-letter country code",
               "type": "optional<string>",
             },
             "number": {
@@ -8418,7 +8499,7 @@ exports[`open api parser flexport simple 1`] = `
           ],
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
           },
@@ -8431,7 +8512,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<VolumeCreateUnit>",
             },
             "value": {
-              "docs": undefined,
+              "docs": "total volume",
               "type": "optional<double>",
             },
           },
@@ -8455,7 +8536,7 @@ exports[`open api parser flexport simple 1`] = `
           "docs": undefined,
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "Type of the object",
               "type": "optional<string>",
             },
             "created_at": {
@@ -8491,7 +8572,7 @@ exports[`open api parser flexport simple 1`] = `
           ],
           "properties": {
             "_object": {
-              "docs": undefined,
+              "docs": "String representing the object’s type. Always \`/quantity/weight\` for this object.",
               "type": "optional<string>",
             },
           },
@@ -8504,7 +8585,7 @@ exports[`open api parser flexport simple 1`] = `
               "type": "optional<WeightCreateUnit>",
             },
             "value": {
-              "docs": undefined,
+              "docs": "Required. Specifies the weight as a float.",
               "type": "optional<double>",
             },
           },
@@ -8531,26 +8612,38 @@ exports[`open api parser flexport simple 1`] = `
               "docs": "Always required. An array of HS codes for this product in the provided region",
               "type": "list<string>",
             },
-            "region": "string",
+            "region": {
+              "docs": "Always required. The region for this classification. Currently only 2-character ISO codes and "EU" are supported",
+              "type": "string",
+            },
           },
         },
         "WriteProductProperty": {
           "docs": undefined,
           "properties": {
-            "type": "string",
-            "value": "string",
+            "type": {
+              "docs": "Always required. User defined type of this property",
+              "type": "string",
+            },
+            "value": {
+              "docs": "Always required. Value of this property",
+              "type": "string",
+            },
           },
         },
         "WriteProductSupplier": {
           "docs": undefined,
           "properties": {
-            "country_of_origin": "string",
+            "country_of_origin": {
+              "docs": "Always required. ISO Alpha-2 country in which the product is manufactured",
+              "type": "string",
+            },
             "id": {
-              "docs": undefined,
+              "docs": "The supplier location ID. Either id or ref is required.",
               "type": "optional<integer>",
             },
             "ref": {
-              "docs": undefined,
+              "docs": "Your custom string used to refer to the supplier location. Either id or ref is required.",
               "type": "optional<string>",
             },
           },
@@ -8558,8 +8651,14 @@ exports[`open api parser flexport simple 1`] = `
         "WriteVatNumber": {
           "docs": undefined,
           "properties": {
-            "country_code": "string",
-            "number": "string",
+            "country_code": {
+              "docs": "ISO 3166 two-letter country code",
+              "type": "string",
+            },
+            "number": {
+              "docs": "Full VAT number, including the country code",
+              "type": "string",
+            },
           },
         },
       },
@@ -8714,30 +8813,42 @@ exports[`open api parser flexport simple 1`] = `
                     "docs": undefined,
                     "type": "root.CreateCargo",
                   },
-                  "cargo_ready_date": "string",
-                  "consignee_entity_ref": "string",
+                  "cargo_ready_date": {
+                    "docs": "Always required. Date when cargo is ready for pickup at the origin location.",
+                    "type": "string",
+                  },
+                  "consignee_entity_ref": {
+                    "docs": "Always required. Customizable reference ID of company entity that is the consignee of the booking.",
+                    "type": "string",
+                  },
                   "declared_as_strategy": {
                     "docs": "Required when origin or destination port is Hong Kong. Does your shipment contain goods subject to export control regulations? Export Control Regulations include dual use item control, Hong Kong strategic commodity control, US and EU export control, etc.",
                     "type": "optional<root.CreateBookingDeclaredAsStrategy>",
                   },
                   "delivery_date": {
-                    "docs": undefined,
+                    "docs": "Optional. Target date by when cargo must be delivered.",
                     "type": "optional<string>",
                   },
-                  "destination_address_ref": "string",
+                  "destination_address_ref": {
+                    "docs": "Always required for trucking bookings. Always required for air and ocean bookings if \`wants_delivery_service\` is TRUE. Customizable reference ID of network location that is the delivery location.",
+                    "type": "string",
+                  },
                   "eccn_codes": {
-                    "docs": undefined,
+                    "docs": "Required when declared_as_strategy is "yes". Please provide the ECCN codes (Export Control Classification Number) of the products subject to export control regulations. Make sure you find the right ECCN codes in the Commerce Control List. Make sure you provide the correct format of the ECCN code (five character alpha-numeric such as 3A001, 5A002, etc) seperated by commas. According to the laws, providing the wrong ECCN information might cause fines.",
                     "type": "optional<string>",
                   },
                   "flow_direct": {
-                    "docs": undefined,
+                    "docs": "Optional. Whether to create Flow Direct Quote for the Booking. Currently, only Ocean LCL Booking is supported",
                     "type": "optional<boolean>",
                   },
                   "metadata": {
                     "docs": undefined,
                     "type": "optional<root.MetadataCreate>",
                   },
-                  "name": "string",
+                  "name": {
+                    "docs": "Always required. Name of the booking.",
+                    "type": "string",
+                  },
                   "notify_party": {
                     "docs": "Optional. Name and address of company that is the notify party of the booking. If null, then this is the same as consignee.",
                     "type": "optional<string>",
@@ -8746,10 +8857,16 @@ exports[`open api parser flexport simple 1`] = `
                     "docs": undefined,
                     "type": "optional<root.CreateOceanBooking>",
                   },
-                  "origin_address_ref": "string",
-                  "shipper_entity_ref": "string",
+                  "origin_address_ref": {
+                    "docs": "Always required. Customizable reference ID of network location that is the pickup location.",
+                    "type": "string",
+                  },
+                  "shipper_entity_ref": {
+                    "docs": "Always required. Customizable reference ID of company entity that is the shipper of the booking.",
+                    "type": "string",
+                  },
                   "special_instructions": {
-                    "docs": undefined,
+                    "docs": "Additional instructions not included in rest of booking form.",
                     "type": "optional<string>",
                   },
                   "trucking_booking": {
@@ -8757,16 +8874,19 @@ exports[`open api parser flexport simple 1`] = `
                     "type": "optional<root.CreateTruckingBooking>",
                   },
                   "wants_bco": {
-                    "docs": undefined,
+                    "docs": "Optional. Whether the booking requires Flexport to provide BCO services.",
                     "type": "optional<boolean>",
                   },
-                  "wants_export_customs_service": "boolean",
+                  "wants_export_customs_service": {
+                    "docs": "Always required. Whether the booking requires Flexport to provide export customs services.",
+                    "type": "boolean",
+                  },
                   "wants_flexport_freight": {
-                    "docs": undefined,
+                    "docs": "Optional. Whether the booking requires Flexport to provide freight services.",
                     "type": "optional<boolean>",
                   },
                   "wants_import_customs_service": {
-                    "docs": undefined,
+                    "docs": "Optional. Whether the booking requires Flexport to provide import customs services.",
                     "type": "optional<boolean>",
                   },
                 },
@@ -8827,16 +8947,19 @@ exports[`open api parser flexport simple 1`] = `
               "body": {
                 "properties": {
                   "amendment_note": {
-                    "docs": undefined,
+                    "docs": "Additional message to Flexport regarding the booking amendment.",
                     "type": "optional<string>",
                   },
-                  "booking_id": "integer",
+                  "booking_id": {
+                    "docs": "Identifier of the existing booking to be modified",
+                    "type": "integer",
+                  },
                   "new_cargo": {
                     "docs": undefined,
                     "type": "optional<root.CreateCargo>",
                   },
                   "new_cargo_ready_date": {
-                    "docs": undefined,
+                    "docs": "Date when cargo is ready for pickup at the origin location.",
                     "type": "optional<string>",
                   },
                   "new_container_counts": {
@@ -8844,15 +8967,15 @@ exports[`open api parser flexport simple 1`] = `
                     "type": "optional<root.CreateContainerCounts>",
                   },
                   "new_destination_address_ref": {
-                    "docs": undefined,
+                    "docs": "Customizable reference ID of network location that is the delivery location.",
                     "type": "optional<string>",
                   },
                   "new_destination_port_loc_code": {
-                    "docs": undefined,
+                    "docs": "At most one of \`new_destination_port_us_cbp_port_code\` or \`new_destination_port_loc_code\` may be specified. UN code for the destination port.",
                     "type": "optional<string>",
                   },
                   "new_destination_port_us_cbp_port_code": {
-                    "docs": undefined,
+                    "docs": "At most one of \`new_destination_port_us_cbp_port_code\` or \`new_destination_port_loc_code\` may be specified. Unique port reference code used by US Customs and Border Protection.",
                     "type": "optional<string>",
                   },
                   "new_metadata": {
@@ -8860,19 +8983,19 @@ exports[`open api parser flexport simple 1`] = `
                     "type": "optional<root.MetadataCreate>",
                   },
                   "new_name": {
-                    "docs": undefined,
+                    "docs": "Name of the booking.",
                     "type": "optional<string>",
                   },
                   "new_origin_address_ref": {
-                    "docs": undefined,
+                    "docs": "Customizable reference ID of network location that is the pickup location.",
                     "type": "optional<string>",
                   },
                   "new_origin_port_loc_code": {
-                    "docs": undefined,
+                    "docs": "At most one of \`origin_port_us_cbp_port_code\` or  \`origin_port_loc_code\` may be specified. UN code for the origin port.",
                     "type": "optional<string>",
                   },
                   "new_origin_port_us_cbp_port_code": {
-                    "docs": undefined,
+                    "docs": "At most one of \`origin_port_us_cbp_port_code\` or  \`origin_port_loc_code\` may be specified. Unique port reference code used by US Customs and Border Protection.",
                     "type": "optional<string>",
                   },
                   "new_product_descriptions": {
@@ -8932,9 +9055,18 @@ exports[`open api parser flexport simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "booking_id": "integer",
-                  "purchase_order_line_item_id": "integer",
-                  "units": "integer",
+                  "booking_id": {
+                    "docs": "Always required. The identifier of the booking to add the PO line item to",
+                    "type": "integer",
+                  },
+                  "purchase_order_line_item_id": {
+                    "docs": "Always required. The identifier of the PO line item to book",
+                    "type": "integer",
+                  },
+                  "units": {
+                    "docs": "Always required. Number of units to book",
+                    "type": "integer",
+                  },
                 },
               },
               "headers": undefined,
@@ -9049,7 +9181,7 @@ exports[`open api parser flexport simple 1`] = `
                     "type": "optional<root.CoordinatesCreate>",
                   },
                   "destination_port": {
-                    "docs": undefined,
+                    "docs": "Port of destination, used if no more specific destination location is provided.",
                     "type": "optional<string>",
                   },
                   "distance": {
@@ -9061,15 +9193,15 @@ exports[`open api parser flexport simple 1`] = `
                     "type": "optional<root.CreateCarbonCalculationFlightType>",
                   },
                   "is_inland": {
-                    "docs": undefined,
+                    "docs": "For \`transportation_mode: ocean\`, indicates if the calculation was inland or not. Defaults to false.",
                     "type": "optional<boolean>",
                   },
                   "is_lcl": {
-                    "docs": undefined,
+                    "docs": "For \`transportation_mode: ocean\`, indicates if the calculation is less than container load or not. Defaults to false.",
                     "type": "optional<boolean>",
                   },
                   "is_reefer": {
-                    "docs": undefined,
+                    "docs": "For \`transportation_mode: ocean\`, indicates if the calculation is a reefer shipment. Defaults to false.",
                     "type": "optional<boolean>",
                   },
                   "origin_address": {
@@ -9081,11 +9213,11 @@ exports[`open api parser flexport simple 1`] = `
                     "type": "optional<root.CoordinatesCreate>",
                   },
                   "origin_port": {
-                    "docs": undefined,
+                    "docs": "Port of origin, used if no more specific origin location is provided.",
                     "type": "optional<string>",
                   },
                   "teus": {
-                    "docs": undefined,
+                    "docs": "The number of TEUs (Twenty-foot Equivalent Units) moved in the calculation. Either \`weight\` or \`teus\` is required.",
                     "type": "optional<string>",
                   },
                   "transportation_mode": {
@@ -9136,14 +9268,20 @@ exports[`open api parser flexport simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "currency_code": "string",
-                  "invoice_number": "string",
+                  "currency_code": {
+                    "docs": "The currency being used on the commercial invoice.",
+                    "type": "string",
+                  },
+                  "invoice_number": {
+                    "docs": "Invoice number on the commercial invoice, typically used for display purposes. Uniqueness is based on the supplier Involved Party. There can be multiple commercial invoices with the same invoice_number only if they have different suppliers.",
+                    "type": "string",
+                  },
                   "involved_parties": {
                     "docs": undefined,
                     "type": "optional<list<root.CreateInvolvedParty>>",
                   },
                   "is_related_parties": {
-                    "docs": undefined,
+                    "docs": "Whether there was a related parties transaction as defined by CBP.",
                     "type": "optional<boolean>",
                   },
                   "line_items": {
@@ -9163,11 +9301,11 @@ exports[`open api parser flexport simple 1`] = `
                     "type": "root.MoneyCreate",
                   },
                   "shipment_id": {
-                    "docs": undefined,
+                    "docs": "Flexport's unique identifier for the shipment. Either shipment_id or shipment_ref is required.",
                     "type": "optional<integer>",
                   },
                   "shipment_ref": {
-                    "docs": undefined,
+                    "docs": "Your custom string used to refer to the shipment. Can be used to look up or reference the shipment later on. Either shipment_id or shipment_ref is required.",
                     "type": "optional<string>",
                   },
                 },
@@ -9261,15 +9399,15 @@ exports[`open api parser flexport simple 1`] = `
               "body": {
                 "properties": {
                   "currency_code": {
-                    "docs": undefined,
+                    "docs": "The currency being used on the commercial invoice.",
                     "type": "optional<string>",
                   },
                   "invoice_number": {
-                    "docs": undefined,
+                    "docs": "Invoice number on the commercial invoice, typically used for display purposes. Uniqueness is based on the supplier Involved Party. There can be multiple commercial invoices with the same invoice_number only if they have different suppliers.",
                     "type": "optional<string>",
                   },
                   "is_related_parties": {
-                    "docs": undefined,
+                    "docs": "Whether there was a related parties transaction as defined by CBP.",
                     "type": "optional<boolean>",
                   },
                   "line_items": {
@@ -9324,9 +9462,12 @@ exports[`open api parser flexport simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "name": "string",
+                  "name": {
+                    "docs": "Always required. Name of the company.",
+                    "type": "string",
+                  },
                   "ref": {
-                    "docs": undefined,
+                    "docs": "Your custom string used to refer to the company",
                     "type": "optional<string>",
                   },
                 },
@@ -9430,11 +9571,11 @@ exports[`open api parser flexport simple 1`] = `
               "body": {
                 "properties": {
                   "name": {
-                    "docs": undefined,
+                    "docs": "Updated name of the company.",
                     "type": "optional<string>",
                   },
                   "ref": {
-                    "docs": undefined,
+                    "docs": "Updated ref of the company",
                     "type": "optional<string>",
                   },
                 },
@@ -9518,20 +9659,23 @@ exports[`open api parser flexport simple 1`] = `
               "body": {
                 "properties": {
                   "company_id": {
-                    "docs": undefined,
+                    "docs": "The id of the new company entity's parent company. Either company_id or company_ref is required",
                     "type": "optional<string>",
                   },
                   "company_ref": {
-                    "docs": undefined,
+                    "docs": "The ref of the new company entity's parent company. Either company_id or company_ref is required",
                     "type": "optional<string>",
                   },
                   "mailing_address": {
                     "docs": "Always Required. The object representing the mailing address of the company entity.",
                     "type": "root.AddressForRequestBody",
                   },
-                  "name": "string",
+                  "name": {
+                    "docs": "Always required. Legal name of the new company entity",
+                    "type": "string",
+                  },
                   "ref": {
-                    "docs": undefined,
+                    "docs": "Not required. The ref that will be created for the new company entity",
                     "type": "optional<string>",
                   },
                   "vat_numbers": {
@@ -9592,11 +9736,11 @@ exports[`open api parser flexport simple 1`] = `
                     "type": "optional<root.AddressForRequestBody>",
                   },
                   "name": {
-                    "docs": undefined,
+                    "docs": "The new legal name of the company entity",
                     "type": "optional<string>",
                   },
                   "ref": {
-                    "docs": undefined,
+                    "docs": "The new ref that will be used for the company entity",
                     "type": "optional<string>",
                   },
                   "vat_numbers": {
@@ -9640,12 +9784,21 @@ exports[`open api parser flexport simple 1`] = `
               "body": {
                 "properties": {
                   "company_id": {
-                    "docs": undefined,
+                    "docs": "ID of the new contact's company. If not specified, the contact will be created for your company.",
                     "type": "optional<string>",
                   },
-                  "email": "string",
-                  "name": "string",
-                  "phone_number": "string",
+                  "email": {
+                    "docs": "Always required. Email address of the new contact.",
+                    "type": "string",
+                  },
+                  "name": {
+                    "docs": "Always required. Name of the new contact.",
+                    "type": "string",
+                  },
+                  "phone_number": {
+                    "docs": "Always required. Phone number of the new contact.",
+                    "type": "string",
+                  },
                 },
               },
               "headers": undefined,
@@ -9740,15 +9893,15 @@ exports[`open api parser flexport simple 1`] = `
               "body": {
                 "properties": {
                   "email": {
-                    "docs": undefined,
+                    "docs": "Updated email address of the contact.",
                     "type": "optional<string>",
                   },
                   "name": {
-                    "docs": undefined,
+                    "docs": "Updated name of the contact.",
                     "type": "optional<string>",
                   },
                   "phone_number": {
-                    "docs": undefined,
+                    "docs": "Updated phone number of the contact.",
                     "type": "optional<string>",
                   },
                 },
@@ -10412,7 +10565,10 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "docs": undefined,
                     "type": "root.AddressForRequestBody",
                   },
-                  "company_id": "string",
+                  "company_id": {
+                    "docs": "The id of the company entity to create this location for",
+                    "type": "string",
+                  },
                   "contact_ids": {
                     "docs": "Array of contact id's to assign to this location",
                     "type": "optional<list<string>>",
@@ -10421,9 +10577,12 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "docs": "Optional metadata to add to a location. Keys must be strings and values should be arrays of strings.",
                     "type": "optional<map<string, unknown>>",
                   },
-                  "name": "string",
+                  "name": {
+                    "docs": "Name of the location",
+                    "type": "string",
+                  },
                   "ref": {
-                    "docs": undefined,
+                    "docs": "Not required. The ref that will be created for the new location",
                     "type": "optional<string>",
                   },
                 },
@@ -10488,11 +10647,11 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "type": "optional<map<string, unknown>>",
                   },
                   "name": {
-                    "docs": undefined,
+                    "docs": "New name of the location",
                     "type": "optional<string>",
                   },
                   "ref": {
-                    "docs": undefined,
+                    "docs": "The new ref for the location",
                     "type": "optional<string>",
                   },
                 },
@@ -10588,21 +10747,33 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "type": "optional<list<root.WriteProductClassification>>",
                   },
                   "client_verified": {
-                    "docs": undefined,
+                    "docs": "Indicates whether Client has verified this Product.",
                     "type": "optional<boolean>",
                   },
-                  "country_of_origin": "string",
+                  "country_of_origin": {
+                    "docs": "Nation in which the product is manufactured",
+                    "type": "string",
+                  },
                   "description": {
-                    "docs": undefined,
+                    "docs": "Description of product",
                     "type": "optional<string>",
                   },
-                  "name": "string",
-                  "product_category": "string",
+                  "name": {
+                    "docs": "Always required. Name of product",
+                    "type": "string",
+                  },
+                  "product_category": {
+                    "docs": "The category of the product",
+                    "type": "string",
+                  },
                   "product_properties": {
                     "docs": "Array of product properties, custom key value pairs that describe the product",
                     "type": "optional<list<root.WriteProductProperty>>",
                   },
-                  "sku": "string",
+                  "sku": {
+                    "docs": "Always required. SKU of product",
+                    "type": "string",
+                  },
                   "suppliers": {
                     "docs": "Array of suppliers. If a value is specified, the array of suppliers will replace the existing set of suppliers.",
                     "type": "optional<list<root.WriteProductSupplier>>",
@@ -10695,23 +10866,23 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "type": "optional<list<root.WriteProductClassification>>",
                   },
                   "client_verified": {
-                    "docs": undefined,
+                    "docs": "Indicates whether Client has verified this Product.",
                     "type": "optional<boolean>",
                   },
                   "country_of_origin": {
-                    "docs": undefined,
+                    "docs": "Nation in which the product is manufactured",
                     "type": "optional<string>",
                   },
                   "description": {
-                    "docs": undefined,
+                    "docs": "Description of product",
                     "type": "optional<string>",
                   },
                   "name": {
-                    "docs": undefined,
+                    "docs": "Name of product",
                     "type": "optional<string>",
                   },
                   "product_category": {
-                    "docs": undefined,
+                    "docs": "The category of the product",
                     "type": "optional<string>",
                   },
                   "product_properties": {
@@ -10719,7 +10890,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "type": "optional<list<root.WriteProductProperty>>",
                   },
                   "sku": {
-                    "docs": undefined,
+                    "docs": "SKU of product",
                     "type": "optional<string>",
                   },
                   "suppliers": {

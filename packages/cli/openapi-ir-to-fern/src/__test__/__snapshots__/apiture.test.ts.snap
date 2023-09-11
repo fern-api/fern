@@ -52,7 +52,7 @@ exports[`open api parser apiture simple 1`] = `
           ],
           "properties": {
             "start": {
-              "docs": undefined,
+              "docs": "The opaque cursor that specifies the starting location of this page of items.",
               "type": "optional<string>",
             },
           },
@@ -60,9 +60,12 @@ exports[`open api parser apiture simple 1`] = `
         "AbstractPagedBodyFields": {
           "docs": "Common properties of collection page responses.",
           "properties": {
-            "limit": "integer",
+            "limit": {
+              "docs": "The number of items requested for this page response. The length of the \`items\` array may be less that \`limit\`.",
+              "type": "integer",
+            },
             "nextPage_url": {
-              "docs": undefined,
+              "docs": "The URL of the next page of resources. If this URL is omitted, there are no more resources in the collection.",
               "type": "optional<string>",
             },
           },
@@ -78,7 +81,10 @@ exports[`open api parser apiture simple 1`] = `
               "docs": "Flags which indicate the permissions the current authorized user has on this account resource.",
               "type": "FullAccountPermissions",
             },
-            "electronicStatements": "boolean",
+            "electronicStatements": {
+              "docs": "If \`true\`, the customer has opted in to receive account statements electronically.",
+              "type": "boolean",
+            },
           },
         },
         "AccountAllowsFilter": {
@@ -180,7 +186,10 @@ exports[`open api parser apiture simple 1`] = `
               "docs": "The account ID.",
               "type": "ReadOnlyResourceId",
             },
-            "incomplete": "boolean",
+            "incomplete": {
+              "docs": "If \`true\`, the response is incomplete and the client may retry the operation after the \`Retry-After\` time in order to fetch balances for any incomplete accounts in the \`items\`. The retry operation should only pass in accounts that are \`incomplete\`.",
+              "type": "boolean",
+            },
             "updatedAt": {
               "docs": "The time when the balance values were last updated from the banking core.",
               "type": "optional<readOnlyTimestamp>",
@@ -206,7 +215,10 @@ exports[`open api parser apiture simple 1`] = `
               "docs": "The unique identifier for this account resource. This is an immutable opaque string.",
               "type": "ReadOnlyResourceId",
             },
-            "label": "string",
+            "label": {
+              "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
+              "type": "string",
+            },
             "location": {
               "docs": "Indicates where an account is held.",
               "type": "AccountLocation",
@@ -237,7 +249,7 @@ exports[`open api parser apiture simple 1`] = `
               "type": "optional<ReadOnlyResourceId>",
             },
             "label": {
-              "docs": undefined,
+              "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
               "type": "optional<string>",
             },
             "location": {
@@ -268,7 +280,10 @@ exports[`open api parser apiture simple 1`] = `
               "docs": undefined,
               "type": "ReadOnlyResourceId",
             },
-            "name": "string",
+            "name": {
+              "docs": "The full name of the joint owner.",
+              "type": "string",
+            },
           },
         },
         "AccountJointOwners": {
@@ -307,13 +322,34 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "AccountPermissions": {
           "docs": "Flags which indicate the permissions the current authorized user has on this account item resource. Most of these properties may only be \`true\` for internal accounts. These permissions are available in account items in the [\`accounts\`](#schema-accounts) list. See [\`fullAccountPermissions\`](#schema-fullAccountPermissions) for all capabilities a customer has on an account (the \`account.allows\` object in the [\`account\`](#schema-account) object response from [\`getAccount\`](#op-getAccount).)",
           "properties": {
-            "billPay": "boolean",
-            "manageCards": "boolean",
-            "mobileCheckDeposit": "boolean",
-            "transferFrom": "boolean",
-            "transferTo": "boolean",
-            "view": "boolean",
-            "viewCards": "boolean",
+            "billPay": {
+              "docs": "If \`true\`, the customer may use this account for Bill Pay.",
+              "type": "boolean",
+            },
+            "manageCards": {
+              "docs": "If true, the customer may manage debit cards associated with this account. This includes locking and unlocking cards, changing card controls, ordering cards, or canceling cards.",
+              "type": "boolean",
+            },
+            "mobileCheckDeposit": {
+              "docs": "If \`true\`, the customer may use this account for mobile check deposits.",
+              "type": "boolean",
+            },
+            "transferFrom": {
+              "docs": "If \`true\`, the customer may use this account as the target (deposit) account for account-to-account transfers.",
+              "type": "boolean",
+            },
+            "transferTo": {
+              "docs": "If \`true\`, the customer may use this account as the source (debit) account for account-to-account transfers.",
+              "type": "boolean",
+            },
+            "view": {
+              "docs": "If \`true\`, the customer may view the details of this account, including the account balance and transactions.",
+              "type": "boolean",
+            },
+            "viewCards": {
+              "docs": "If \`true\`, the customer may view debit cards associated with this account.",
+              "type": "boolean",
+            },
           },
         },
         "Accounts": {
@@ -324,7 +360,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           ],
           "properties": {
             "count": {
-              "docs": undefined,
+              "docs": "The total number of accounts for which the user has access. This value ignores any filters. This value is _optional_ and may be omitted if the count is not computable efficiently.",
               "type": "optional<integer>",
             },
             "items": {
@@ -332,7 +368,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "list<AccountItem>",
             },
             "nextPage_url": {
-              "docs": undefined,
+              "docs": "The URL of the next page of accounts. If this URL is omitted, there are no more accounts.",
               "type": "optional<string>",
             },
             "primaryAccountId": {
@@ -340,7 +376,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "optional<ReadOnlyResourceId>",
             },
             "start": {
-              "docs": undefined,
+              "docs": "The opaque cursor that specifies the starting location of this page of items.",
               "type": "optional<string>",
             },
           },
@@ -516,13 +552,16 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "AddressFields",
           ],
           "properties": {
-            "postalCode": "string",
+            "postalCode": {
+              "docs": "The postal code, which varies in format by country. If \`countryCode\` is \`US\`, this should be a five digit US ZIP code or ten character ZIP+4.",
+              "type": "string",
+            },
             "regionCode": {
-              "docs": undefined,
+              "docs": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is \`US\` \`regionCode\` and \`regionName\` are mutually exclusive.",
               "type": "optional<string>",
             },
             "regionName": {
-              "docs": undefined,
+              "docs": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is not \`US\`. \`regionCode\` and \`regionName\` are mutually exclusive.",
               "type": "optional<string>",
             },
           },
@@ -530,13 +569,22 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "AddressFields": {
           "docs": "Properties of a simple address, used to compose other addresses.",
           "properties": {
-            "address1": "string",
+            "address1": {
+              "docs": "The first line of the postal address. In the US, this typically includes the building number and street name.",
+              "type": "string",
+            },
             "address2": {
-              "docs": undefined,
+              "docs": "The second line of the street address. This should only be used if it has a value. Typical values include building numbers, suite numbers, and other identifying information beyond the first line of the postal address.",
               "type": "optional<string>",
             },
-            "countryCode": "string",
-            "locality": "string",
+            "countryCode": {
+              "docs": "The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the postal address.",
+              "type": "string",
+            },
+            "locality": {
+              "docs": "The city/town/municipality of the address.",
+              "type": "string",
+            },
           },
         },
         "ApiProblem": {
@@ -547,7 +595,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "optional<map<string, unknown>>",
             },
             "detail": {
-              "docs": undefined,
+              "docs": "A human-readable explanation specific to this occurrence of the problem.
+",
               "type": "optional<string>",
             },
             "id": {
@@ -555,7 +604,8 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "optional<ReadOnlyResourceId>",
             },
             "instance": {
-              "docs": undefined,
+              "docs": "A URI reference that identifies the specific occurrence of the problem. This is the URI of an API resource that the problem is related to, with a unique error correlation ID URI fragment
+",
               "type": "optional<string>",
             },
             "occurredAt": {
@@ -567,15 +617,18 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "type": "optional<list<ApiProblem>>",
             },
             "status": {
-              "docs": undefined,
+              "docs": "The [HTTP status code](https://datatracker.ietf.org/doc/html/rfc7231#section-6) for this occurrence of the problem.
+",
               "type": "optional<integer>",
             },
             "title": {
-              "docs": undefined,
+              "docs": "A short, human-readable summary of the problem type. The title is usually the same for all problem with the same \`type\`.
+",
               "type": "optional<string>",
             },
             "type": {
-              "docs": undefined,
+              "docs": "A [URI reference (RFC3986)](https://tools.ietf.org/html/rfc3986) that identifies the problem type. If present, this is the URL of human-readable HTML documentation for the problem type. When this member is not present, its value is assumed to be \`"about:blank"\`.
+",
               "type": "optional<string>",
             },
           },
@@ -666,7 +719,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "docs": "The unique ID of security question prompt. This should be included in the [\`challengeVerification\`](#schema-challengeVerification) response as the \`promptId\`.",
               "type": "challengePromptId",
             },
-            "prompt": "string",
+            "prompt": {
+              "docs": "The text prompt of this security question.",
+              "type": "string",
+            },
           },
         },
         "ChallengeSecurityQuestions": {
@@ -685,7 +741,10 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "CutoffTime": {
           "docs": "A representation of a cutoff time for a money movement process at a financial institution.",
           "properties": {
-            "time": "string",
+            "time": {
+              "docs": "The cutoff time for a product formatted in [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) \`time\` format: \`hh:mm\`. The time is expressed in 24 hour time and is set to the local time zone of the financial institution.",
+              "type": "string",
+            },
             "type": {
               "docs": undefined,
               "type": "CutoffTimeType",
@@ -796,13 +855,16 @@ The client can use this value to localize the \`items[].time\` values to the loc
           ],
           "properties": {
             "items": "unknown",
-            "maximumOverdraftAccounts": "integer",
+            "maximumOverdraftAccounts": {
+              "docs": "The maximum number of overdraft protection accounts that may be linked to the account.",
+              "type": "integer",
+            },
             "nextPage_url": {
-              "docs": undefined,
+              "docs": "The URL of the next page of eligible accounts. If this URL is omitted, there are no more accounts.",
               "type": "optional<string>",
             },
             "start": {
-              "docs": undefined,
+              "docs": "The opaque cursor that specifies the starting location of this page of items.",
               "type": "optional<string>",
             },
           },
@@ -857,8 +919,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "AccountPermissions",
           ],
           "properties": {
-            "manageJointOwners": "boolean",
-            "manageOverdraftAccounts": "boolean",
+            "manageJointOwners": {
+              "docs": "If \`true\`, the customer can list the other joint owners on the account and invite new joint owners.",
+              "type": "boolean",
+            },
+            "manageOverdraftAccounts": {
+              "docs": "If \`true\`, the customer can list and manage overdraft account settings.",
+              "type": "boolean",
+            },
           },
         },
         "IncompleteAccountBalances": {
@@ -875,7 +943,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "docs": "An array of items, one for each of the \`?accounts=\` in the request, returned in the same order.",
               "type": "list<AccountBalance>",
             },
-            "retryCount": "integer",
+            "retryCount": {
+              "docs": "Pass this value as the as the \`?retryCount=\` parameter with the next retry of the [\`listAccountBalances\`](#op-listAccountBalances) operation.",
+              "type": "integer",
+            },
           },
         },
         "IncompleteTransactions": {
@@ -884,7 +955,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "AbstractBody",
           ],
           "properties": {
-            "retryCount": "integer",
+            "retryCount": {
+              "docs": "Pass this value as the as the \`?retryCount=\` parameter with the next retry of the [\`listTransactions\`](#op-listTransactions) operation.",
+              "type": "integer",
+            },
           },
         },
         "InstitutionLocatorType": {
@@ -937,7 +1011,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "AbstractBody",
           ],
           "properties": {
-            "found": "boolean",
+            "found": {
+              "docs": "\`true\` if a financial institution was found matching the requested FI locator, \`false\` if none was found.",
+              "type": "boolean",
+            },
             "institution": {
               "docs": "The name and other information about the financial institution, if found.",
               "type": "optional<SimpleInstitution>",
@@ -965,15 +1042,27 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "docs": "Fields used to compose other joint owner invitation schemas.",
           "properties": {
             "disallowDebitCardAccess": {
-              "docs": undefined,
+              "docs": "If \`true\`, the invitee is not allowed to order or manage debit cards for the account.",
               "type": "optional<boolean>",
             },
-            "emailAddress": "string",
-            "firstName": "string",
-            "lastName": "string",
-            "sharedSecret": "string",
+            "emailAddress": {
+              "docs": "The invitee's email address.",
+              "type": "string",
+            },
+            "firstName": {
+              "docs": "The invitee's first name.",
+              "type": "string",
+            },
+            "lastName": {
+              "docs": "The invitee's last name name.",
+              "type": "string",
+            },
+            "sharedSecret": {
+              "docs": "A string shared by the inviter with the invitee to verify their identity. This is not sent in the invitation. The inviter should share this string with the invitee though another channel.",
+              "type": "string",
+            },
             "taxId": {
-              "docs": undefined,
+              "docs": "The last 4 digits of the invitee's tax ID number (Social Security Number). This is not sent in the invitation email, but if the invitee enrolls in digital banking, this identification must match the last four digits of the tax ID they use to enroll.",
               "type": "optional<string>",
             },
           },
@@ -986,7 +1075,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "type": "optional<resourceId>",
             },
             "label": {
-              "docs": undefined,
+              "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
               "type": "optional<string>",
             },
             "maskedNumber": {
@@ -1006,7 +1095,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "OverdraftProtectionFields",
           ],
           "properties": {
-            "maximumOverdraftAccounts": "integer",
+            "maximumOverdraftAccounts": {
+              "docs": "The maximum number of overdraft protection accounts that may be linked to the account.",
+              "type": "integer",
+            },
           },
         },
         "OverdraftProtectionFields": {
@@ -1029,9 +1121,18 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "ProductReference": {
           "docs": "A reference to a banking product.",
           "properties": {
-            "code": "string",
-            "description": "string",
-            "label": "string",
+            "code": {
+              "docs": "The product's product code. Codes are unique to the financial institution.",
+              "type": "string",
+            },
+            "description": {
+              "docs": "A human-readable description of this banking product.",
+              "type": "string",
+            },
+            "label": {
+              "docs": "A human-readable label for this banking product.",
+              "type": "string",
+            },
             "type": {
               "docs": "The type of account.",
               "type": "ProductType",
@@ -1137,23 +1238,29 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "docs": "The financial institution's postal mailing address.",
               "type": "Address",
             },
-            "locator": "string",
+            "locator": {
+              "docs": "The [American Bankers Association routing number](https://www.aba.com/about-us/routingnumber), [SWIFT Business Identifier Code (BIC) code](https://www.swift.com/standards/data-standards/bic-business-identifier-code), or [IBAN account number](https://www.ecbs.org/iban.htm) of the institution. The form of this institution locator string is set with the \`locatorType\` property.",
+              "type": "string",
+            },
             "locatorType": {
               "docs": "Indicates the type of this institution's \`locator\`.",
               "type": "InstitutionLocatorType",
             },
-            "name": "string",
+            "name": {
+              "docs": "The financial institution's name.",
+              "type": "string",
+            },
           },
         },
         "TimestampFields": {
           "docs": "Timestamps which describe when a resource was created or last updated.",
           "properties": {
             "createdAt": {
-              "docs": undefined,
+              "docs": "The date-time when this resource was created, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC. This is derived and immutable.",
               "type": "optional<datetime>",
             },
             "updatedAt": {
-              "docs": undefined,
+              "docs": "The date-time when the resource was last updated, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC. This is derived and immutable.",
               "type": "optional<datetime>",
             },
           },
@@ -1170,7 +1277,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "TransactionCategorization": {
           "docs": "The transaction categorization.",
           "properties": {
-            "id": "string",
+            "id": {
+              "docs": "The unique ID of this transaction's category.",
+              "type": "string",
+            },
             "label": {
               "docs": undefined,
               "type": "transactionCategoryLabel",
@@ -1229,14 +1339,17 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "docs": "Describes a check associated with a transaction for a checking account. This object is only present if the transaction \`type\` is \`debit\` and the \`subtype\` is \`check\`.",
           "properties": {
             "imageBack_url": {
-              "docs": undefined,
+              "docs": "The URL for downloading the image of the front of the check.",
               "type": "optional<string>",
             },
             "imageFront_url": {
-              "docs": undefined,
+              "docs": "The URL for downloading the image of the front of the check.",
               "type": "optional<string>",
             },
-            "number": "integer",
+            "number": {
+              "docs": "The check number.",
+              "type": "integer",
+            },
           },
         },
         "TransactionFields": {
@@ -1259,29 +1372,35 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "type": "optional<TransactionCheck>",
             },
             "createdOn": {
-              "docs": undefined,
+              "docs": "The date when the transaction occurred in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.<br>**Warning**: The property \`createdOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`createdOn\` will be removed on version \`v3.0.0\` of the schema.",
               "type": "optional<string>",
             },
             "description": {
-              "docs": undefined,
+              "docs": "The transaction description assigned by the transaction cleansing service.",
               "type": "optional<string>",
             },
-            "id": "string",
+            "id": {
+              "docs": "This transaction's unique identifier.",
+              "type": "string",
+            },
             "memo": {
-              "docs": undefined,
+              "docs": "The user-settable transaction memo.",
               "type": "optional<string>",
             },
             "merchant": {
               "docs": undefined,
               "type": "optional<TransactionMerchant>",
             },
-            "occurredOn": "string",
+            "occurredOn": {
+              "docs": "The date of the transaction in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.",
+              "type": "string",
+            },
             "posted": {
-              "docs": undefined,
+              "docs": "If \`true\`, the transaction has been posted (cleared) and applied to the account. If \`false\`, the transaction is still pending and might be canceled. \`posted\` is only valid for credit and debit transactions and omitted for balance transactions.",
               "type": "optional<boolean>",
             },
             "postedOn": {
-              "docs": undefined,
+              "docs": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date \`YYYY-MM-DD\` format, UTC. This is derived and immutable and only present if \`posted\` is \`true\`.<br>**Warning**: The property \`postedOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`postedOn\` will be removed on version \`v3.0.0\` of the schema.",
               "type": "optional<string>",
             },
             "subtype": {
@@ -1306,15 +1425,15 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "docs": "Describes the merchant associated with a transaction.",
           "properties": {
             "logo_url": {
-              "docs": undefined,
+              "docs": "The optional URL of the merchant's logo. This image must be an image resource (SVG, PNG, GIF, JPEG image) that does not require any authentication. The URL may contain query parameters.",
               "type": "optional<string>",
             },
             "name": {
-              "docs": undefined,
+              "docs": "The merchant\\'s name.",
               "type": "optional<string>",
             },
             "website_url": {
-              "docs": undefined,
+              "docs": "The merchant's website URL.",
               "type": "optional<string>",
             },
           },
@@ -1405,7 +1524,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           ],
           "properties": {
             "count": {
-              "docs": undefined,
+              "docs": "The total number of transactions which satisfy the request filters. This is optional and only included if the service can calculate it.",
               "type": "optional<integer>",
             },
             "items": {
@@ -1430,7 +1549,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "type": "resourceId",
             },
             "label": {
-              "docs": undefined,
+              "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
               "type": "optional<string>",
             },
             "location": {
@@ -1447,14 +1566,17 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "docs": "A date where a transfer restriction occurs, and the \`reason\` it is restricted. If the \`reason\` is \`holiday\`, \`closure\` and the transfer is an ACH transfer, the object also contains either a \`debitOn\` or \`creditOn\` date or both.",
           "properties": {
             "creditOn": {
-              "docs": undefined,
+              "docs": "The date the local financial institution account is credited in [RFC 3339 \`YYYY-MM-DD\`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the \`date\` based on the \`risk\` level. The credit-on date normally falls one business day after the restricted \`date\`. This property is only returned if the payment \`type\` is \`achDebit\` or \`ach\`.",
               "type": "optional<string>",
             },
             "debitOn": {
-              "docs": undefined,
+              "docs": "The date the local financial institution account is debited in [RFC 3339 \`YYYY-MM-DD\`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the \`date\` based on the \`risk\` level and the transfer direction (\`achDebit\` or \`achCredit\`). The debit-on date normally falls one to three business days before the restricted \`date\`. This property is only returned if the payment \`type\` is \`achCredit\` or \`ach\`.",
               "type": "optional<string>",
             },
-            "occursOn": "string",
+            "occursOn": {
+              "docs": "The date that a transfers restriction occurs, is in the [ISO 8601 Date](https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates) format, \`yyyy-mm-dd\`.",
+              "type": "string",
+            },
             "reason": {
               "docs": "Indicates why this date is restricted.",
               "type": "TransferDateRestrictionType",
@@ -1540,7 +1662,7 @@ The response may include dates prior to requested the start date, as that is use
           ],
           "properties": {
             "accuracyEndsOn": {
-              "docs": undefined,
+              "docs": "The service only knows [bank holidays](https://www.federalreserve.gov/aboutthefed/k8.htm) for about two to four years in advance. This date is the end of that known holiday schedule, although the requested dates may extend well beyond this date. Any dates in the response beyond this date may omit holidays but may include other restricted dates based on the financial institution's normal scheduled closures such as Saturdays and Sundays.",
               "type": "optional<string>",
             },
             "restrictedDates": {
@@ -1557,7 +1679,7 @@ The response may include dates prior to requested the start date, as that is use
               "type": "optional<monetaryValue>",
             },
             "memo": {
-              "docs": undefined,
+              "docs": "A customer-defined memo to describe the transfer.",
               "type": "optional<string>",
             },
             "sourceAccount": {
@@ -1716,7 +1838,7 @@ The response may include dates prior to requested the start date, as that is use
               "type": "ReadOnlyResourceId",
             },
             "processedAt": {
-              "docs": undefined,
+              "docs": "The date/time the transfer was processed.",
               "type": "optional<datetime>",
             },
             "schedule": {
@@ -1728,7 +1850,7 @@ The response may include dates prior to requested the start date, as that is use
               "type": "TransferState",
             },
             "updatedBy": {
-              "docs": undefined,
+              "docs": "The full name of the banking customer who last updated the transfer.",
               "type": "optional<string>",
             },
           },
@@ -1740,11 +1862,11 @@ The response may include dates prior to requested the start date, as that is use
           ],
           "properties": {
             "creditsOn": {
-              "docs": undefined,
+              "docs": "The effective the transfer is scheduled to credit the target account, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived from the \`scheduledOn\` date, based on the financial institution's transfer rules.",
               "type": "optional<string>",
             },
             "debitsOn": {
-              "docs": undefined,
+              "docs": "The effective date the transfer is scheduled to debit the source account, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived from the \`scheduledOn\` date, based on the financial institution's transfer rules.",
               "type": "optional<string>",
             },
           },
@@ -1794,11 +1916,11 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "type": "optional<monetaryValue>",
             },
             "count": {
-              "docs": undefined,
+              "docs": "For recurring schedules (\`frequency\` is not \`once\`), this is the total number of transfers to make, including the first transfer. This property is ignored if \`frequency\` is \`once\`.",
               "type": "optional<integer>",
             },
             "endsOn": {
-              "docs": undefined,
+              "docs": "The optional date when the recurring transfer schedule ends, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. Subsequent recurring transfers may be scheduled up to and including this date, but not after. This property is ignored if \`frequency\` is \`once\`.",
               "type": "optional<string>",
             },
             "frequency": {
@@ -1810,7 +1932,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "type": "optional<TransferRecurrenceType>",
             },
             "scheduledOn": {
-              "docs": undefined,
+              "docs": "The date the the customer scheduled the transfer to occur in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format.",
               "type": "optional<string>",
             },
           },
@@ -1862,8 +1984,14 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
         "TransferScheduleItem": {
           "docs": "Summary representation of a transfer schedule resource in transfer schedule list.",
           "properties": {
-            "effectiveOn": "string",
-            "scheduledOn": "string",
+            "effectiveOn": {
+              "docs": "The effective date of the recurrence in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. When the effective date differs from the scheduled date, it is due to a banking holiday, weekend, or other non-business day. The date is adjusted to before the scheduled date when the transfer direction is \`credit\` and adjusted to after the scheduled date when the transfer direction is \`debit\`.",
+              "type": "string",
+            },
+            "scheduledOn": {
+              "docs": "The scheduled date of the calculated calendar recurrence in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
+              "type": "string",
+            },
           },
         },
         "TransferSchedules": {
@@ -2034,7 +2162,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           ],
           "properties": {
             "count": {
-              "docs": undefined,
+              "docs": "The number of transfers that meet the filters in the \`listTransfers\` operation. This is optional and only included if the service can calculate it efficiently.",
               "type": "optional<integer>",
             },
             "items": {
@@ -2050,7 +2178,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           ],
           "properties": {
             "localClearingCode": {
-              "docs": undefined,
+              "docs": "The clearing code used to identify the financial institution for select countries.",
               "type": "optional<string>",
             },
           },
@@ -2059,22 +2187,70 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "docs": "An array of account IDs.",
           "type": "list<resourceId>",
         },
-        "accountNickname": "string",
-        "accountRoutingNumber": "string",
-        "amountRange": "string",
-        "challengePromptId": "string",
-        "challengeToken": "string",
-        "creditOrDebitValue": "string",
-        "dateRange": "string",
-        "fullAccountNumber": "string",
-        "institutionId": "string",
-        "maskedAccountNumber": "string",
-        "monetaryValue": "string",
-        "positiveIntegerRange": "string",
-        "readOnlyTimestamp": "datetime",
-        "resourceId": "string",
-        "timeZoneId": "string",
-        "transactionCategoryLabel": "string",
+        "accountNickname": {
+          "docs": "The nickname (friendly name) the customer has given this account. Each customer can define their own nickname for the same account. If omitted, the customer has not set a nickname.",
+          "type": "string",
+        },
+        "accountRoutingNumber": {
+          "docs": "An account ABA routing and transit number.",
+          "type": "string",
+        },
+        "amountRange": {
+          "docs": "A monetary amount range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>\`1200.50\` match the dollar amount 1,200.50 exactly</li> <li>\`[1000.00,1200.00)\` matches items where \`1000.00 <= amount < 1200.00\`</li> <li>\`[1000.00,1199.99]\` matches items where \`1000.00 <= amount <= 1199.99\`</li> <li>\`[999.99,1200.00]\` matches items where \`999.99 < amount < 1200.00\`</li> <li>\`[1200.50,]\` matches items where \`amount >= 1200.50\`</li> <li>\`(1200.50,)\` matches items where \`amount >= 1200.50\`</li> <li>\`[,1200.50]\` matches items where \`amount <= 1200.50\`</li> <li>\`(,1200.50)\` matches items where \`amount < 1200.50\`</li> </ul>",
+          "type": "string",
+        },
+        "challengePromptId": {
+          "docs": "The unique ID of a prompt (such as a security question) in a challenge factor.",
+          "type": "string",
+        },
+        "challengeToken": {
+          "docs": "The value of the identity \`Challenge\` request header that the client must send when retrying an operation which required a challenge.",
+          "type": "string",
+        },
+        "creditOrDebitValue": {
+          "docs": "The monetary value representing a credit (positive amounts with no prefix or a \`+\` prefix) or debit (negative amounts with a \`-\` prefix). The numeric value is  represented as a string so that it can be exact with no loss of precision.<br>The schema \`creditOrDebitValue\` was added on version \`0.4.0\` of the API.",
+          "type": "string",
+        },
+        "dateRange": {
+          "docs": "A date range, supporting inclusive or exclusive endpoints. Dates ranges use dates expressed in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. The value may have the following forms: <ul> <li>\`YYYY-MM-DD\` match the date exactly; equivalent to matching dates in the range \`[YYYY-MM-DD,YYYY-MM-DD]\`</li> <li>\`[YYYY-MM-DD,YYYY-MM-DD]\` between two dates, inclusive of the endpoints</li> <li>\`(YYYY-MM-DD,YYYY-MM-DD)\` between two dates, exclusive of the endpoints</li> <li>\`[YYYY-MM-DD,]\` on or after the date</li> <li>\`(YYYY-MM-DD,)\` after the date</li> <li>\`[,YYYY-MM-DD]\` before or on the date</li> <li>\`(,YYYY-MM-DD)\` before the date</li> </ul>",
+          "type": "string",
+        },
+        "fullAccountNumber": {
+          "docs": "A full account number. This is the number that the customer uses to reference the account within the financial institution.",
+          "type": "string",
+        },
+        "institutionId": {
+          "docs": "The unique immutable identifier of a financial institution.",
+          "type": "string",
+        },
+        "maskedAccountNumber": {
+          "docs": "A masked account number: an asterisk \`*\` followed by one to four characters of the \`fullAccountNumber\`.",
+          "type": "string",
+        },
+        "monetaryValue": {
+          "docs": "The monetary value, supporting only positive amounts. The numeric value is  represented as a string so that it can be exact with no loss of precision.<br>The schema \`monetaryValue\` was added on version \`0.4.0\` of the API.",
+          "type": "string",
+        },
+        "positiveIntegerRange": {
+          "docs": "A positive integer range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>\`1200\` match the integer 1,200 exactly</li> <li>\`[1000,1200)\` matches items where \`1000 <= number < 1200\`</li> <li>\`[1000,1199]\` matches items where\`1000 <= number <= 1199\`</li> <li>\`[999,1200]\` matches items where \`999 < number < 1200\`</li> <li>\`[1200,]\`  \`number >= 1200\`</li> <li>\`(1200,)\` greater than the value: \`number >= 1200\`</li> <li>\`[,1200]\` less than or equal to the value: \`number <= 1200\`</li> <li>\`(,1200)\` less than the value: \`number < 1200\`</li> </ul>",
+          "type": "string",
+        },
+        "readOnlyTimestamp": {
+          "docs": "A readonly or derived timestamp (an instant in time) formatted in [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date-time\` UTC format: \`YYYY-MM-DDThh:mm:ss.sssZ\`.<br>The schema \`readOnlyTimestamp\` was added on version \`0.4.0\` of the API.",
+          "type": "datetime",
+        },
+        "resourceId": {
+          "docs": "The unique, opaque system identifier for a resource. This case-sensitive ID is also used as path parameters in URLs or in other properties or parameters that reference a resource by ID rather than URL.",
+          "type": "string",
+        },
+        "timeZoneId": {
+          "docs": "The identifier of a time zone, as described by [RFC 7808](https://datatracker.ietf.org/doc/html/rfc7808.html#section-3.6). This value corresponds with the \`tzid\` value described in [RFC 5545](https://datatracker.ietf.org/doc/html/rfc5545#section-3.2.19) and defined by the [IANA Time Zone Database](https://www.iana.org/time-zones).",
+          "type": "string",
+        },
+        "transactionCategoryLabel": {
+          "docs": "The label of a transaction category, such as \`"Shopping"\`, \`"Deposit"\`, \`"Bill"\`, \`"Transfer"\`, or \`"Other"\`.",
+          "type": "string",
+        },
       },
     },
     "accountJointOwners.yml": {

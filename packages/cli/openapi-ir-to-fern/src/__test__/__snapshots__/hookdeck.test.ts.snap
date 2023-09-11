@@ -48,13 +48,22 @@ exports[`open api parser hookdeck simple 1`] = `
         "ApiErrorResponse": {
           "docs": "Error response model",
           "properties": {
-            "code": "string",
+            "code": {
+              "docs": "Error code",
+              "type": "string",
+            },
             "data": {
               "docs": undefined,
               "type": "optional<ApiErrorResponseData>",
             },
-            "message": "string",
-            "status": "double",
+            "message": {
+              "docs": "Error description",
+              "type": "string",
+            },
+            "status": {
+              "docs": "Status code",
+              "type": "double",
+            },
           },
         },
         "ApiErrorResponseData": {
@@ -281,7 +290,10 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "Number of events that were successfully delivered",
               "type": "optional<integer>",
             },
-            "created_at": "datetime",
+            "created_at": {
+              "docs": "Date the bulk retry was created",
+              "type": "datetime",
+            },
             "estimated_batch": {
               "docs": "Number of batches required to complete the bulk retry",
               "type": "optional<integer>",
@@ -294,8 +306,14 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "Number of events that failed to be delivered",
               "type": "optional<integer>",
             },
-            "id": "string",
-            "in_progress": "boolean",
+            "id": {
+              "docs": "ID of the bulk retry",
+              "type": "string",
+            },
+            "in_progress": {
+              "docs": "Indicates if the bulk retry is currently in progress",
+              "type": "boolean",
+            },
             "number": {
               "docs": undefined,
               "type": "optional<double>",
@@ -312,8 +330,14 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "Query object to filter records",
               "type": "optional<BatchOperationQuery>",
             },
-            "team_id": "string",
-            "updated_at": "datetime",
+            "team_id": {
+              "docs": "ID of the workspace",
+              "type": "string",
+            },
+            "updated_at": {
+              "docs": "Last time the bulk retry was updated",
+              "type": "datetime",
+            },
           },
         },
         "BatchOperationPaginatedResult": {
@@ -371,21 +395,42 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "Alternate alias for the bookmark",
               "type": "optional<string>",
             },
-            "created_at": "datetime",
+            "created_at": {
+              "docs": "Date the bookmark was created",
+              "type": "datetime",
+            },
             "data": {
               "docs": undefined,
               "type": "optional<ShortEventData>",
             },
-            "event_data_id": "string",
-            "id": "string",
-            "label": "string",
+            "event_data_id": {
+              "docs": "ID of the bookmarked event data",
+              "type": "string",
+            },
+            "id": {
+              "docs": "ID of the bookmark",
+              "type": "string",
+            },
+            "label": {
+              "docs": "Descriptive name of the bookmark",
+              "type": "string",
+            },
             "last_used_at": {
               "docs": "Date the bookmark was last manually triggered",
               "type": "optional<datetime>",
             },
-            "team_id": "string",
-            "updated_at": "datetime",
-            "webhook_id": "string",
+            "team_id": {
+              "docs": "ID of the workspace",
+              "type": "string",
+            },
+            "updated_at": {
+              "docs": "Date the bookmark was last updated",
+              "type": "datetime",
+            },
+            "webhook_id": {
+              "docs": "ID of the associated connection",
+              "type": "string",
+            },
           },
         },
         "BookmarkPaginatedResult": {
@@ -412,13 +457,22 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "Date the connection was archived",
               "type": "optional<datetime>",
             },
-            "created_at": "datetime",
+            "created_at": {
+              "docs": "Date the connection was created",
+              "type": "datetime",
+            },
             "destination": {
               "docs": undefined,
               "type": "Destination",
             },
-            "id": "string",
-            "name": "string",
+            "id": {
+              "docs": "ID of the connection",
+              "type": "string",
+            },
+            "name": {
+              "docs": "Unique name of the connection for this source",
+              "type": "string",
+            },
             "paused_at": {
               "docs": "Date the connection was paused",
               "type": "optional<datetime>",
@@ -439,8 +493,14 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "Source",
             },
-            "team_id": "string",
-            "updated_at": "datetime",
+            "team_id": {
+              "docs": "ID of the workspace",
+              "type": "string",
+            },
+            "updated_at": {
+              "docs": "Date the connection was last updated",
+              "type": "datetime",
+            },
           },
         },
         "ConnectionFilterProperty": {
@@ -527,7 +587,10 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "Path for the CLI destination",
               "type": "optional<string>",
             },
-            "name": "string",
+            "name": {
+              "docs": "Name for the destination",
+              "type": "string",
+            },
             "path_forwarding_disabled": {
               "docs": undefined,
               "type": "optional<boolean>",
@@ -573,7 +636,10 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "optional<boolean>",
             },
-            "name": "string",
+            "name": {
+              "docs": "Name for the ruleset",
+              "type": "string",
+            },
             "rules": {
               "docs": "Array of rules to apply",
               "type": "optional<list<Rule>>",
@@ -583,7 +649,10 @@ exports[`open api parser hookdeck simple 1`] = `
         "CreateConnectionRequestSource": {
           "docs": "Source input object",
           "properties": {
-            "name": "string",
+            "name": {
+              "docs": "A unique name for the source",
+              "type": "string",
+            },
           },
         },
         "CreateDestinationRequestRateLimitPeriod": {
@@ -666,7 +735,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "optional<CreateEventBulkRetryRequestQueryParsedQuery>",
             },
             "path": {
-              "docs": undefined,
+              "docs": "URL Encoded string of the string to match partially to the path",
               "type": "optional<string>",
             },
             "response_status": {
@@ -832,7 +901,10 @@ exports[`open api parser hookdeck simple 1`] = `
           "discriminated": false,
           "docs": "Filter by destination IDs",
           "union": [
-            "string",
+            {
+              "docs": "Destination ID",
+              "type": "string",
+            },
             {
               "docs": undefined,
               "type": "list<string>",
@@ -880,7 +952,10 @@ exports[`open api parser hookdeck simple 1`] = `
           "discriminated": false,
           "docs": "Filter by event IDs",
           "union": [
-            "string",
+            {
+              "docs": "Event ID",
+              "type": "string",
+            },
             {
               "docs": undefined,
               "type": "list<string>",
@@ -997,7 +1072,10 @@ exports[`open api parser hookdeck simple 1`] = `
           "discriminated": false,
           "docs": "Filter by source IDs",
           "union": [
-            "string",
+            {
+              "docs": "Source ID",
+              "type": "string",
+            },
             {
               "docs": undefined,
               "type": "list<string>",
@@ -1058,7 +1136,10 @@ exports[`open api parser hookdeck simple 1`] = `
           "discriminated": false,
           "docs": "Filter by webhook connection IDs",
           "union": [
-            "string",
+            {
+              "docs": "Webhook ID",
+              "type": "string",
+            },
             {
               "docs": undefined,
               "type": "list<string>",
@@ -1073,7 +1154,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "optional<CreateIgnoredEventBulkRetryRequestQueryCause>",
             },
             "transformation_id": {
-              "docs": undefined,
+              "docs": "The associated transformation ID (only applicable to the cause \`TRANSFORMATION_FAILED\`)",
               "type": "optional<string>",
             },
             "webhook_id": {
@@ -1188,7 +1269,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "optional<CreateRequestBulkRetryRequestQueryParsedQuery>",
             },
             "path": {
-              "docs": undefined,
+              "docs": "URL Encoded string of the string to match partially to the path",
               "type": "optional<string>",
             },
             "rejection_cause": {
@@ -1204,7 +1285,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "type": "optional<CreateRequestBulkRetryRequestQueryStatus>",
             },
             "verified": {
-              "docs": undefined,
+              "docs": "Filter by verification status",
               "type": "optional<boolean>",
             },
           },
@@ -1334,7 +1415,10 @@ exports[`open api parser hookdeck simple 1`] = `
           "discriminated": false,
           "docs": "Filter by requests IDs",
           "union": [
-            "string",
+            {
+              "docs": "Request ID",
+              "type": "string",
+            },
             {
               "docs": undefined,
               "type": "list<string>",
@@ -1487,7 +1571,10 @@ exports[`open api parser hookdeck simple 1`] = `
           "discriminated": false,
           "docs": "Filter by source IDs",
           "union": [
-            "string",
+            {
+              "docs": "Source ID",
+              "type": "string",
+            },
             {
               "docs": undefined,
               "type": "list<string>",
@@ -1520,14 +1607,20 @@ exports[`open api parser hookdeck simple 1`] = `
         "DelayRule": {
           "docs": undefined,
           "properties": {
-            "delay": "integer",
+            "delay": {
+              "docs": "Delay to introduce in MS",
+              "type": "integer",
+            },
             "type": "literal<"delay">",
           },
         },
         "DeletedBookmarkResponse": {
           "docs": undefined,
           "properties": {
-            "id": "string",
+            "id": {
+              "docs": "Bookmark ID",
+              "type": "string",
+            },
           },
         },
         "DeletedIntegration": {
@@ -1553,14 +1646,26 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "optional<datetime>",
             },
-            "created_at": "string",
+            "created_at": {
+              "docs": "ISO timestamp for when the issue was created",
+              "type": "string",
+            },
             "dismissed_at": {
               "docs": "ISO timestamp for when the issue was dismissed",
               "type": "optional<datetime>",
             },
-            "first_seen_at": "datetime",
-            "id": "string",
-            "last_seen_at": "datetime",
+            "first_seen_at": {
+              "docs": "ISO timestamp for when the issue was first opened",
+              "type": "datetime",
+            },
+            "id": {
+              "docs": "Issue ID",
+              "type": "string",
+            },
+            "last_seen_at": {
+              "docs": "ISO timestamp for when the issue last occured",
+              "type": "datetime",
+            },
             "last_updated_by": {
               "docs": "ID of the team member who last updated the issue status",
               "type": "optional<string>",
@@ -1569,7 +1674,10 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "optional<string>",
             },
-            "opened_at": "datetime",
+            "opened_at": {
+              "docs": "ISO timestamp for when the issue was last opened",
+              "type": "datetime",
+            },
             "reference": {
               "docs": undefined,
               "type": "DeliveryIssueReference",
@@ -1578,8 +1686,14 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "IssueStatus",
             },
-            "team_id": "string",
-            "updated_at": "string",
+            "team_id": {
+              "docs": "ID of the workspace",
+              "type": "string",
+            },
+            "updated_at": {
+              "docs": "ISO timestamp for when the issue was last updated",
+              "type": "string",
+            },
           },
         },
         "DeliveryIssueAggregationKeys": {
@@ -1630,7 +1744,10 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "optional<datetime>",
             },
-            "created_at": "string",
+            "created_at": {
+              "docs": "ISO timestamp for when the issue was created",
+              "type": "string",
+            },
             "data": {
               "docs": undefined,
               "type": "optional<DeliveryIssueData>",
@@ -1639,9 +1756,18 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "ISO timestamp for when the issue was dismissed",
               "type": "optional<datetime>",
             },
-            "first_seen_at": "datetime",
-            "id": "string",
-            "last_seen_at": "datetime",
+            "first_seen_at": {
+              "docs": "ISO timestamp for when the issue was first opened",
+              "type": "datetime",
+            },
+            "id": {
+              "docs": "Issue ID",
+              "type": "string",
+            },
+            "last_seen_at": {
+              "docs": "ISO timestamp for when the issue last occured",
+              "type": "datetime",
+            },
             "last_updated_by": {
               "docs": "ID of the team member who last updated the issue status",
               "type": "optional<string>",
@@ -1650,7 +1776,10 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "optional<string>",
             },
-            "opened_at": "datetime",
+            "opened_at": {
+              "docs": "ISO timestamp for when the issue was last opened",
+              "type": "datetime",
+            },
             "reference": {
               "docs": undefined,
               "type": "DeliveryIssueReference",
@@ -1659,8 +1788,14 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "IssueStatus",
             },
-            "team_id": "string",
-            "updated_at": "string",
+            "team_id": {
+              "docs": "ID of the workspace",
+              "type": "string",
+            },
+            "updated_at": {
+              "docs": "ISO timestamp for when the issue was last updated",
+              "type": "string",
+            },
           },
         },
         "Destination": {
@@ -1674,9 +1809,18 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "Path for the CLI destination",
               "type": "optional<string>",
             },
-            "created_at": "datetime",
-            "id": "string",
-            "name": "string",
+            "created_at": {
+              "docs": "Date the destination was created",
+              "type": "datetime",
+            },
+            "id": {
+              "docs": "ID of the destination",
+              "type": "string",
+            },
+            "name": {
+              "docs": "A unique, human-friendly name for the destination",
+              "type": "string",
+            },
             "path_forwarding_disabled": {
               "docs": undefined,
               "type": "optional<boolean>",
@@ -1689,8 +1833,14 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "optional<DestinationRateLimitPeriod>",
             },
-            "team_id": "string",
-            "updated_at": "datetime",
+            "team_id": {
+              "docs": "ID of the workspace",
+              "type": "string",
+            },
+            "updated_at": {
+              "docs": "Date the destination was last updated",
+              "type": "datetime",
+            },
             "url": {
               "docs": "HTTP endpoint of the destination",
               "type": "optional<string>",
@@ -1741,12 +1891,18 @@ exports[`open api parser hookdeck simple 1`] = `
         "Event": {
           "docs": undefined,
           "properties": {
-            "attempts": "integer",
+            "attempts": {
+              "docs": "Number of delivery attempts made",
+              "type": "integer",
+            },
             "cli_id": {
               "docs": "ID of the CLI the event is sent to",
               "type": "optional<string>",
             },
-            "created_at": "datetime",
+            "created_at": {
+              "docs": "Date the event was created",
+              "type": "datetime",
+            },
             "created_at_id": {
               "docs": undefined,
               "type": "optional<string>",
@@ -1755,9 +1911,18 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "optional<EventData>",
             },
-            "destination_id": "string",
-            "event_data_id": "string",
-            "id": "string",
+            "destination_id": {
+              "docs": "ID of the associated destination",
+              "type": "string",
+            },
+            "event_data_id": {
+              "docs": "ID of the request data",
+              "type": "string",
+            },
+            "id": {
+              "docs": "ID of the event",
+              "type": "string",
+            },
             "last_attempt_at": {
               "docs": "Date of the most recently attempted retry",
               "type": "optional<datetime>",
@@ -1770,12 +1935,18 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "Date of the next scheduled retry",
               "type": "optional<datetime>",
             },
-            "request_id": "string",
+            "request_id": {
+              "docs": "ID of the request that created the event",
+              "type": "string",
+            },
             "response_status": {
               "docs": "Event status",
               "type": "optional<integer>",
             },
-            "source_id": "string",
+            "source_id": {
+              "docs": "ID of the associated source",
+              "type": "string",
+            },
             "status": {
               "docs": undefined,
               "type": "EventStatus",
@@ -1784,9 +1955,18 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "Date of the latest successful attempt",
               "type": "optional<datetime>",
             },
-            "team_id": "string",
-            "updated_at": "datetime",
-            "webhook_id": "string",
+            "team_id": {
+              "docs": "ID of the workspace",
+              "type": "string",
+            },
+            "updated_at": {
+              "docs": "Date the event was last updated",
+              "type": "datetime",
+            },
+            "webhook_id": {
+              "docs": "ID of the associated connection",
+              "type": "string",
+            },
           },
         },
         "EventArray": {
@@ -1812,7 +1992,10 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "ID of associated bulk retry",
               "type": "optional<string>",
             },
-            "created_at": "datetime",
+            "created_at": {
+              "docs": "Date the attempt was created",
+              "type": "datetime",
+            },
             "delivered_at": {
               "docs": "Date the attempt was delivered",
               "type": "optional<datetime>",
@@ -1829,8 +2012,14 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "optional<AttemptErrorCodes>",
             },
-            "event_id": "string",
-            "id": "string",
+            "event_id": {
+              "docs": "Event ID",
+              "type": "string",
+            },
+            "id": {
+              "docs": "Attempt ID",
+              "type": "string",
+            },
             "requested_url": {
               "docs": "URL of the destination where delivery was attempted",
               "type": "optional<string>",
@@ -1859,12 +2048,18 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "Date the attempt was successful",
               "type": "optional<datetime>",
             },
-            "team_id": "string",
+            "team_id": {
+              "docs": "Team ID",
+              "type": "string",
+            },
             "trigger": {
               "docs": undefined,
               "type": "optional<AttemptTrigger>",
             },
-            "updated_at": "datetime",
+            "updated_at": {
+              "docs": "Date the attempt was last updated",
+              "type": "datetime",
+            },
           },
         },
         "EventAttemptBody": {
@@ -2734,13 +2929,22 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "Decrypted Key/Value object of the associated configuration for that provider",
               "type": "IntegrationConfigs",
             },
-            "created_at": "datetime",
+            "created_at": {
+              "docs": "Date the integration was created",
+              "type": "datetime",
+            },
             "features": {
               "docs": "List of features to enable (see features list below)",
               "type": "list<IntegrationFeature>",
             },
-            "id": "string",
-            "label": "string",
+            "id": {
+              "docs": "ID of the integration",
+              "type": "string",
+            },
+            "label": {
+              "docs": "Label of the integration",
+              "type": "string",
+            },
             "provider": {
               "docs": undefined,
               "type": "IntegrationProvider",
@@ -2749,8 +2953,14 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "List of source IDs the integration is attached to",
               "type": "list<string>",
             },
-            "team_id": "string",
-            "updated_at": "datetime",
+            "team_id": {
+              "docs": "ID of the workspace",
+              "type": "string",
+            },
+            "updated_at": {
+              "docs": "Date the integration was last updated",
+              "type": "datetime",
+            },
           },
         },
         "IntegrationConfigs": {
@@ -2954,7 +3164,10 @@ exports[`open api parser hookdeck simple 1`] = `
         "IssueCount": {
           "docs": undefined,
           "properties": {
-            "count": "integer",
+            "count": {
+              "docs": "Number of issues",
+              "type": "integer",
+            },
           },
         },
         "IssueStatus": {
@@ -2993,7 +3206,10 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "IssueTriggerReference",
             },
-            "created_at": "datetime",
+            "created_at": {
+              "docs": "ISO timestamp for when the issue trigger was created",
+              "type": "datetime",
+            },
             "deleted_at": {
               "docs": "ISO timestamp for when the issue trigger was deleted",
               "type": "optional<datetime>",
@@ -3002,7 +3218,10 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "ISO timestamp for when the issue trigger was disabled",
               "type": "optional<datetime>",
             },
-            "id": "string",
+            "id": {
+              "docs": "ID of the issue trigger",
+              "type": "string",
+            },
             "name": {
               "docs": "Optional unique name to use as reference when using the API",
               "type": "optional<string>",
@@ -3015,7 +3234,10 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "IssueType",
             },
-            "updated_at": "datetime",
+            "updated_at": {
+              "docs": "ISO timestamp for when the issue trigger was last updated",
+              "type": "datetime",
+            },
           },
         },
         "IssueTriggerBackpressureConfigs": {
@@ -3042,7 +3264,10 @@ exports[`open api parser hookdeck simple 1`] = `
             },
           ],
         },
-        "IssueTriggerBackpressureDelay": "integer",
+        "IssueTriggerBackpressureDelay": {
+          "docs": "The minimum delay (backpressure) to open the issue for min of 1 minute (60000) and max of 1 day (86400000)",
+          "type": "integer",
+        },
         "IssueTriggerChannels": {
           "docs": "Notification channels object for the specific channel type",
           "properties": {
@@ -3130,7 +3355,10 @@ exports[`open api parser hookdeck simple 1`] = `
         "IssueTriggerSlackChannel": {
           "docs": "Slack channel for an issue trigger",
           "properties": {
-            "channel_name": "string",
+            "channel_name": {
+              "docs": "Channel name",
+              "type": "string",
+            },
           },
         },
         "IssueTriggerStrategy": {
@@ -3262,7 +3490,10 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "The count of CLI events created from this request",
               "type": "optional<integer>",
             },
-            "created_at": "datetime",
+            "created_at": {
+              "docs": "	Date the event was created",
+              "type": "datetime",
+            },
             "data": {
               "docs": undefined,
               "type": "optional<RequestData>",
@@ -3279,7 +3510,10 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "The count of events created from this request (CLI events not included)",
               "type": "optional<integer>",
             },
-            "id": "string",
+            "id": {
+              "docs": "ID of the request",
+              "type": "string",
+            },
             "ignored_count": {
               "docs": undefined,
               "type": "optional<integer>",
@@ -3304,9 +3538,18 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "optional<RequestRejectionCause>",
             },
-            "source_id": "string",
-            "team_id": "string",
-            "updated_at": "datetime",
+            "source_id": {
+              "docs": "ID of the associated source",
+              "type": "string",
+            },
+            "team_id": {
+              "docs": "ID of the workspace",
+              "type": "string",
+            },
+            "updated_at": {
+              "docs": "Date the event was last updated",
+              "type": "datetime",
+            },
             "verified": {
               "docs": "Whether or not the request was verified when received",
               "type": "optional<boolean>",
@@ -3561,16 +3804,34 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "Date the ruleset was archived",
               "type": "optional<datetime>",
             },
-            "created_at": "datetime",
-            "id": "string",
-            "is_team_default": "boolean",
-            "name": "string",
+            "created_at": {
+              "docs": "Date the ruleset was created",
+              "type": "datetime",
+            },
+            "id": {
+              "docs": "ID of the ruleset",
+              "type": "string",
+            },
+            "is_team_default": {
+              "docs": "Default ruleset of Workspace",
+              "type": "boolean",
+            },
+            "name": {
+              "docs": "A unique name for the ruleset",
+              "type": "string",
+            },
             "rules": {
               "docs": "Array of rules to apply",
               "type": "list<Rule>",
             },
-            "team_id": "string",
-            "updated_at": "datetime",
+            "team_id": {
+              "docs": "ID of the workspace",
+              "type": "string",
+            },
+            "updated_at": {
+              "docs": "Date the ruleset was last updated",
+              "type": "datetime",
+            },
           },
         },
         "RulesetPaginatedResult": {
@@ -3762,8 +4023,14 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "Date the source was archived",
               "type": "optional<datetime>",
             },
-            "created_at": "datetime",
-            "id": "string",
+            "created_at": {
+              "docs": "Date the source was created",
+              "type": "datetime",
+            },
+            "id": {
+              "docs": "ID of the source",
+              "type": "string",
+            },
             "integration": {
               "docs": "Integration object",
               "type": "optional<SourceIntegration>",
@@ -3772,10 +4039,22 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "ID of the integration",
               "type": "optional<string>",
             },
-            "name": "string",
-            "team_id": "string",
-            "updated_at": "datetime",
-            "url": "string",
+            "name": {
+              "docs": "Name for the source",
+              "type": "string",
+            },
+            "team_id": {
+              "docs": "ID of the workspace",
+              "type": "string",
+            },
+            "updated_at": {
+              "docs": "Date the source was last updated",
+              "type": "datetime",
+            },
+            "url": {
+              "docs": "A unique URL that must be supplied to your webhook's provider",
+              "type": "string",
+            },
           },
         },
         "SourceIntegration": {
@@ -3785,8 +4064,14 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "List of enabled features",
               "type": "list<IntegrationFeature>",
             },
-            "id": "string",
-            "label": "string",
+            "id": {
+              "docs": "ID of the integration",
+              "type": "string",
+            },
+            "label": {
+              "docs": "Label of the integration",
+              "type": "string",
+            },
             "provider": {
               "docs": undefined,
               "type": "IntegrationProvider",
@@ -3911,18 +4196,27 @@ exports[`open api parser hookdeck simple 1`] = `
         "TransformFullTransformation": {
           "docs": "You can optionally define a new transformation while creating a transform rule",
           "properties": {
-            "code": "string",
+            "code": {
+              "docs": "A string representation of your JavaScript (ES6) code to run",
+              "type": "string",
+            },
             "env": {
               "docs": "A key-value object of environment variables to encrypt and expose to your transformation code",
               "type": "optional<map<string, optional<string>>>",
             },
-            "name": "string",
+            "name": {
+              "docs": "The unique name of the transformation",
+              "type": "string",
+            },
           },
         },
         "TransformReference": {
           "docs": undefined,
           "properties": {
-            "transformation_id": "string",
+            "transformation_id": {
+              "docs": "ID of the attached transformation object. Optional input, always set once the rule is defined",
+              "type": "string",
+            },
             "type": "literal<"transform">",
           },
         },
@@ -3943,8 +4237,14 @@ exports[`open api parser hookdeck simple 1`] = `
         "Transformation": {
           "docs": undefined,
           "properties": {
-            "code": "string",
-            "created_at": "datetime",
+            "code": {
+              "docs": "JavaScript code to be executed",
+              "type": "string",
+            },
+            "created_at": {
+              "docs": "Date the transformation was created",
+              "type": "datetime",
+            },
             "encrypted_env": {
               "docs": undefined,
               "type": "optional<string>",
@@ -3953,14 +4253,26 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "Key-value environment variables to be passed to the transformation",
               "type": "optional<map<string, optional<string>>>",
             },
-            "id": "string",
+            "id": {
+              "docs": "ID of the transformation",
+              "type": "string",
+            },
             "iv": {
               "docs": undefined,
               "type": "optional<string>",
             },
-            "name": "string",
-            "team_id": "string",
-            "updated_at": "datetime",
+            "name": {
+              "docs": "A unique, human-friendly name for the transformation",
+              "type": "string",
+            },
+            "team_id": {
+              "docs": "ID of the workspace",
+              "type": "string",
+            },
+            "updated_at": {
+              "docs": "Date the transformation was last updated",
+              "type": "datetime",
+            },
           },
         },
         "TransformationExecution": {
@@ -4173,14 +4485,26 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "optional<datetime>",
             },
-            "created_at": "string",
+            "created_at": {
+              "docs": "ISO timestamp for when the issue was created",
+              "type": "string",
+            },
             "dismissed_at": {
               "docs": "ISO timestamp for when the issue was dismissed",
               "type": "optional<datetime>",
             },
-            "first_seen_at": "datetime",
-            "id": "string",
-            "last_seen_at": "datetime",
+            "first_seen_at": {
+              "docs": "ISO timestamp for when the issue was first opened",
+              "type": "datetime",
+            },
+            "id": {
+              "docs": "Issue ID",
+              "type": "string",
+            },
+            "last_seen_at": {
+              "docs": "ISO timestamp for when the issue last occured",
+              "type": "datetime",
+            },
             "last_updated_by": {
               "docs": "ID of the team member who last updated the issue status",
               "type": "optional<string>",
@@ -4189,7 +4513,10 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "optional<string>",
             },
-            "opened_at": "datetime",
+            "opened_at": {
+              "docs": "ISO timestamp for when the issue was last opened",
+              "type": "datetime",
+            },
             "reference": {
               "docs": undefined,
               "type": "TransformationIssueReference",
@@ -4198,8 +4525,14 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "IssueStatus",
             },
-            "team_id": "string",
-            "updated_at": "string",
+            "team_id": {
+              "docs": "ID of the workspace",
+              "type": "string",
+            },
+            "updated_at": {
+              "docs": "ISO timestamp for when the issue was last updated",
+              "type": "string",
+            },
           },
         },
         "TransformationIssueAggregationKeys": {
@@ -4249,7 +4582,10 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "optional<datetime>",
             },
-            "created_at": "string",
+            "created_at": {
+              "docs": "ISO timestamp for when the issue was created",
+              "type": "string",
+            },
             "data": {
               "docs": undefined,
               "type": "optional<TransformationIssueData>",
@@ -4258,9 +4594,18 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "ISO timestamp for when the issue was dismissed",
               "type": "optional<datetime>",
             },
-            "first_seen_at": "datetime",
-            "id": "string",
-            "last_seen_at": "datetime",
+            "first_seen_at": {
+              "docs": "ISO timestamp for when the issue was first opened",
+              "type": "datetime",
+            },
+            "id": {
+              "docs": "Issue ID",
+              "type": "string",
+            },
+            "last_seen_at": {
+              "docs": "ISO timestamp for when the issue last occured",
+              "type": "datetime",
+            },
             "last_updated_by": {
               "docs": "ID of the team member who last updated the issue status",
               "type": "optional<string>",
@@ -4269,7 +4614,10 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "optional<string>",
             },
-            "opened_at": "datetime",
+            "opened_at": {
+              "docs": "ISO timestamp for when the issue was last opened",
+              "type": "datetime",
+            },
             "reference": {
               "docs": undefined,
               "type": "TransformationIssueReference",
@@ -4278,8 +4626,14 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "IssueStatus",
             },
-            "team_id": "string",
-            "updated_at": "string",
+            "team_id": {
+              "docs": "ID of the workspace",
+              "type": "string",
+            },
+            "updated_at": {
+              "docs": "ISO timestamp for when the issue was last updated",
+              "type": "string",
+            },
           },
         },
         "TransformationPaginatedResult": {
@@ -4321,7 +4675,10 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "optional<boolean>",
             },
-            "name": "string",
+            "name": {
+              "docs": "Name for the ruleset",
+              "type": "string",
+            },
             "rules": {
               "docs": "Array of rules to apply",
               "type": "optional<list<Rule>>",
@@ -4432,7 +4789,10 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": "Path for the CLI destination",
               "type": "optional<string>",
             },
-            "name": "string",
+            "name": {
+              "docs": "Name for the destination",
+              "type": "string",
+            },
             "path_forwarding_disabled": {
               "docs": undefined,
               "type": "optional<boolean>",
@@ -4478,7 +4838,10 @@ exports[`open api parser hookdeck simple 1`] = `
               "docs": undefined,
               "type": "optional<boolean>",
             },
-            "name": "string",
+            "name": {
+              "docs": "Name for the ruleset",
+              "type": "string",
+            },
             "rules": {
               "docs": "Array of rules to apply",
               "type": "optional<list<Rule>>",
@@ -4488,7 +4851,10 @@ exports[`open api parser hookdeck simple 1`] = `
         "UpsertConnectionRequestSource": {
           "docs": "Source input object",
           "properties": {
-            "name": "string",
+            "name": {
+              "docs": "A unique name for the source",
+              "type": "string",
+            },
           },
         },
         "UpsertDestinationRequestRateLimitPeriod": {
@@ -4645,13 +5011,22 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "event_data_id": "string",
-                  "label": "string",
+                  "event_data_id": {
+                    "docs": "ID of the event data to bookmark",
+                    "type": "string",
+                  },
+                  "label": {
+                    "docs": "Descriptive name of the bookmark",
+                    "type": "string",
+                  },
                   "name": {
-                    "docs": undefined,
+                    "docs": "A unique, human-friendly name for the bookmark",
                     "type": "optional<string>",
                   },
-                  "webhook_id": "string",
+                  "webhook_id": {
+                    "docs": "ID of the associated connection",
+                    "type": "string",
+                  },
                 },
               },
               "headers": undefined,
@@ -4834,19 +5209,19 @@ exports[`open api parser hookdeck simple 1`] = `
               "body": {
                 "properties": {
                   "event_data_id": {
-                    "docs": undefined,
+                    "docs": "ID of the event data to bookmark",
                     "type": "optional<string>",
                   },
                   "label": {
-                    "docs": undefined,
+                    "docs": "Descriptive name of the bookmark",
                     "type": "optional<string>",
                   },
                   "name": {
-                    "docs": undefined,
+                    "docs": "A unique, human-friendly name for the bookmark",
                     "type": "optional<string>",
                   },
                   "webhook_id": {
-                    "docs": undefined,
+                    "docs": "ID of the associated connection",
                     "type": "optional<string>",
                   },
                 },
@@ -5427,7 +5802,10 @@ exports[`open api parser hookdeck simple 1`] = `
                     "docs": "ID of a destination to bind to the connection",
                     "type": "optional<string>",
                   },
-                  "name": "string",
+                  "name": {
+                    "docs": "A unique name of the connection for the source",
+                    "type": "string",
+                  },
                   "rules": {
                     "docs": "Array of rules to apply",
                     "type": "optional<list<root.Rule>>",
@@ -5645,7 +6023,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "body": {
                 "properties": {
                   "name": {
-                    "docs": undefined,
+                    "docs": "Unique name of the connection for the source",
                     "type": "optional<string>",
                   },
                   "rules": {
@@ -5692,7 +6070,10 @@ exports[`open api parser hookdeck simple 1`] = `
                     "docs": "ID of a destination to bind to the connection",
                     "type": "optional<string>",
                   },
-                  "name": "string",
+                  "name": {
+                    "docs": "A unique name of the connection for the source",
+                    "type": "string",
+                  },
                   "rules": {
                     "docs": "Array of rules to apply",
                     "type": "optional<list<root.Rule>>",
@@ -5774,7 +6155,10 @@ exports[`open api parser hookdeck simple 1`] = `
                     "docs": "Path for the CLI destination",
                     "type": "optional<string>",
                   },
-                  "name": "string",
+                  "name": {
+                    "docs": "Name for the destination",
+                    "type": "string",
+                  },
                   "path_forwarding_disabled": {
                     "docs": undefined,
                     "type": "optional<boolean>",
@@ -5945,7 +6329,10 @@ exports[`open api parser hookdeck simple 1`] = `
                     "docs": "Path for the CLI destination",
                     "type": "optional<string>",
                   },
-                  "name": "string",
+                  "name": {
+                    "docs": "Name for the destination",
+                    "type": "string",
+                  },
                   "path_forwarding_disabled": {
                     "docs": undefined,
                     "type": "optional<boolean>",
@@ -5990,7 +6377,10 @@ exports[`open api parser hookdeck simple 1`] = `
                     "docs": "Path for the CLI destination",
                     "type": "optional<string>",
                   },
-                  "name": "string",
+                  "name": {
+                    "docs": "Name for the destination",
+                    "type": "string",
+                  },
                   "path_forwarding_disabled": {
                     "docs": undefined,
                     "type": "optional<boolean>",
@@ -6320,7 +6710,10 @@ exports[`open api parser hookdeck simple 1`] = `
                     "docs": "List of features to enable (see features list above)",
                     "type": "list<root.IntegrationFeature>",
                   },
-                  "label": "string",
+                  "label": {
+                    "docs": "Label of the integration",
+                    "type": "string",
+                  },
                   "provider": {
                     "docs": undefined,
                     "type": "root.IntegrationProvider",
@@ -6460,7 +6853,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "type": "optional<list<root.IntegrationFeature>>",
                   },
                   "label": {
-                    "docs": undefined,
+                    "docs": "Label of the integration",
                     "type": "optional<string>",
                   },
                   "provider": {
@@ -6513,7 +6906,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "type": "optional<root.CreateIssueTriggerRequestConfigs>",
                   },
                   "name": {
-                    "docs": undefined,
+                    "docs": "Optional unique name to use as reference when using the API",
                     "type": "optional<string>",
                   },
                   "type": {
@@ -6703,7 +7096,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "type": "optional<datetime>",
                   },
                   "name": {
-                    "docs": undefined,
+                    "docs": "Optional unique name to use as reference when using the API",
                     "type": "optional<string>",
                   },
                 },
@@ -6738,7 +7131,10 @@ exports[`open api parser hookdeck simple 1`] = `
                     "docs": "Configuration object for the specific issue type selected",
                     "type": "optional<root.UpsertIssueTriggerRequestConfigs>",
                   },
-                  "name": "string",
+                  "name": {
+                    "docs": "Required unique name to use as reference when using the API",
+                    "type": "string",
+                  },
                   "type": {
                     "docs": undefined,
                     "type": "root.IssueType",
@@ -7044,11 +7440,11 @@ exports[`open api parser hookdeck simple 1`] = `
               "body": {
                 "properties": {
                   "enabled": {
-                    "docs": undefined,
+                    "docs": "Enable or disable webhook notifications on the workspace",
                     "type": "optional<boolean>",
                   },
                   "source_id": {
-                    "docs": undefined,
+                    "docs": "The Hookdeck Source to send the webhook to",
                     "type": "optional<string>",
                   },
                   "topics": {
@@ -7538,7 +7934,10 @@ exports[`open api parser hookdeck simple 1`] = `
                     "docs": undefined,
                     "type": "optional<boolean>",
                   },
-                  "name": "string",
+                  "name": {
+                    "docs": "Name for the ruleset",
+                    "type": "string",
+                  },
                   "rules": {
                     "docs": "Array of rules to apply",
                     "type": "optional<list<root.Rule>>",
@@ -7688,7 +8087,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "type": "optional<boolean>",
                   },
                   "name": {
-                    "docs": undefined,
+                    "docs": "Name for the ruleset",
                     "type": "optional<string>",
                   },
                   "rules": {
@@ -7723,7 +8122,10 @@ exports[`open api parser hookdeck simple 1`] = `
                     "docs": undefined,
                     "type": "optional<boolean>",
                   },
-                  "name": "string",
+                  "name": {
+                    "docs": "Name for the ruleset",
+                    "type": "string",
+                  },
                   "rules": {
                     "docs": "Array of rules to apply",
                     "type": "optional<list<root.Rule>>",
@@ -7785,7 +8187,10 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "name": "string",
+                  "name": {
+                    "docs": "A unique name for the source",
+                    "type": "string",
+                  },
                 },
               },
               "headers": undefined,
@@ -7932,7 +8337,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "type": "optional<datetime>",
                   },
                   "name": {
-                    "docs": undefined,
+                    "docs": "A unique name for the source",
                     "type": "optional<string>",
                   },
                 },
@@ -7959,7 +8364,10 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "name": "string",
+                  "name": {
+                    "docs": "A unique name for the source",
+                    "type": "string",
+                  },
                 },
               },
               "headers": undefined,
@@ -7997,12 +8405,18 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "code": "string",
+                  "code": {
+                    "docs": "JavaScript code to be executed",
+                    "type": "string",
+                  },
                   "env": {
                     "docs": "Key-value environment variables to be passed to the transformation",
                     "type": "optional<map<string, root.CreateTransformationRequestEnvValue>>",
                   },
-                  "name": "string",
+                  "name": {
+                    "docs": "A unique, human-friendly name for the transformation",
+                    "type": "string",
+                  },
                 },
               },
               "headers": undefined,
@@ -8198,7 +8612,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "body": {
                 "properties": {
                   "code": {
-                    "docs": undefined,
+                    "docs": "JavaScript code to be executed",
                     "type": "optional<string>",
                   },
                   "env": {
@@ -8214,11 +8628,11 @@ exports[`open api parser hookdeck simple 1`] = `
                     "type": "optional<root.TestTransformationRequestRequest>",
                   },
                   "transformation_id": {
-                    "docs": undefined,
+                    "docs": "Transformation ID",
                     "type": "optional<string>",
                   },
                   "webhook_id": {
-                    "docs": undefined,
+                    "docs": "ID of the connection to use for the execution \`context\`",
                     "type": "optional<string>",
                   },
                 },
@@ -8253,7 +8667,7 @@ exports[`open api parser hookdeck simple 1`] = `
               "body": {
                 "properties": {
                   "code": {
-                    "docs": undefined,
+                    "docs": "JavaScript code to be executed",
                     "type": "optional<string>",
                   },
                   "env": {
@@ -8261,7 +8675,7 @@ exports[`open api parser hookdeck simple 1`] = `
                     "type": "optional<map<string, root.UpdateTransformationRequestEnvValue>>",
                   },
                   "name": {
-                    "docs": undefined,
+                    "docs": "A unique, human-friendly name for the transformation",
                     "type": "optional<string>",
                   },
                 },
@@ -8288,12 +8702,18 @@ exports[`open api parser hookdeck simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "code": "string",
+                  "code": {
+                    "docs": "JavaScript code to be executed",
+                    "type": "string",
+                  },
                   "env": {
                     "docs": "Key-value environment variables to be passed to the transformation",
                     "type": "optional<map<string, root.UpsertTransformationRequestEnvValue>>",
                   },
-                  "name": "string",
+                  "name": {
+                    "docs": "A unique, human-friendly name for the transformation",
+                    "type": "string",
+                  },
                 },
               },
               "headers": undefined,
