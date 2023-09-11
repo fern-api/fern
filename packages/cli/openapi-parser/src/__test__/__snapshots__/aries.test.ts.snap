@@ -10,6 +10,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "CloseMenuByConnIdRequest",
@@ -59,6 +60,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "FetchMenuByConnIdRequest",
@@ -108,6 +110,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "PerformActionByConnIdRequest",
@@ -169,6 +172,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "RequestMenuByConnIdRequest",
@@ -218,6 +222,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendMenuToConnIdRequest",
@@ -279,6 +284,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetMatchingConnectionsRequest",
@@ -554,6 +560,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "CreateConnectionInvitationRequest",
@@ -663,6 +670,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "CreateStaticConnectionRequest",
@@ -709,6 +717,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "ReceiveConnectionInvitationRequest",
@@ -805,6 +814,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetConnectionRecordRequest",
@@ -854,6 +864,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "DeleteConnectionRecordRequest",
@@ -903,6 +914,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "AcceptConnectionInvitationRequest",
@@ -1004,6 +1016,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "AcceptConnectionRequestRequest",
@@ -1071,6 +1084,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetConnectionEndpointRequest",
@@ -1120,6 +1134,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SetInboundConnectionRequest",
@@ -1183,6 +1198,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetConnectionMetadataRequest",
@@ -1250,6 +1266,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SetConnectionMetadataRequest",
@@ -1311,6 +1328,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendMessageRequest",
@@ -1372,6 +1390,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendPingRequest",
@@ -1433,6 +1452,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "StartConnectionIntroductionRequest",
@@ -1513,6 +1533,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "PublishCredentialDefinitionRequest",
@@ -1592,6 +1613,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetCreatedCredDefsRequest",
@@ -1729,6 +1751,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetCredentialDefinitionRequest",
@@ -1778,6 +1801,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "WriteCredentialDefinitionRequest",
@@ -1827,6 +1851,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetCredentialMimeTypesRequest",
@@ -1876,6 +1901,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetRevocationStatusRequest",
@@ -1960,6 +1986,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetW3CCredentialRequest",
@@ -2009,6 +2036,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "DeleteW3CCredentialRequest",
@@ -2058,6 +2086,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetCredentialRecordRequest",
@@ -2107,6 +2136,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "DeleteCredentialRecordRequest",
@@ -2156,6 +2186,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetCredentialsRequest",
@@ -2242,6 +2273,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetW3CCredentialsRequest",
@@ -2340,6 +2372,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "CreateDidexRequestRequest",
@@ -2471,6 +2504,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "ReceiveDidexRequestRequest",
@@ -2584,6 +2618,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "AcceptDidexInvitationRequest",
@@ -2668,6 +2703,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "AcceptDidexRequestRequest",
@@ -2752,6 +2788,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetV20FeaturesQueriesRequest",
@@ -2838,6 +2875,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetV20FeatureRecordsRequest",
@@ -2890,6 +2928,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetV10FeaturesQueryRequest",
@@ -2976,6 +3015,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetV10FeatureRecordsRequest",
@@ -3028,6 +3068,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "CreateCredentialRecordRequest",
@@ -3074,6 +3115,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "CreateFreeCredentialOfferRequest",
@@ -3120,6 +3162,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetMatchingCredExRecordsV2Request",
@@ -3299,6 +3342,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetCredExRecordRequest",
@@ -3348,6 +3392,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "DeleteCredExRecordRequest",
@@ -3397,6 +3442,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "IssueCredentialToHolderRequest",
@@ -3458,6 +3504,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "ReportCredExProblemRequest",
@@ -3519,6 +3566,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendCredentialOfferRequest",
@@ -3580,6 +3628,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendCredentialRequestRequest",
@@ -3641,6 +3690,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "StoreReceivedCredentialRequest",
@@ -3702,6 +3752,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendFreeCredentialRequest",
@@ -3748,6 +3799,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendFreeCredentialOfferRequest",
@@ -3794,6 +3846,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendFreeCredentialProposalRequest",
@@ -3840,6 +3893,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendFreeCredentialRequestRequest",
@@ -3886,6 +3940,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "CreateCredentialRecordRequest",
@@ -3932,6 +3987,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "CreateFreeCredentialOfferRequest",
@@ -3978,6 +4034,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetMatchingCredExRecordsRequest",
@@ -4157,6 +4214,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetCredExRecordRequest",
@@ -4206,6 +4264,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "DeleteCredExRecordRequest",
@@ -4255,6 +4314,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "IssueCredentialToHolderRequest",
@@ -4316,6 +4376,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "ReportCredExProblemRequest",
@@ -4377,6 +4438,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendCredentialOfferRequest",
@@ -4438,6 +4500,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendCredentialRequestRequest",
@@ -4487,6 +4550,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "StoreReceivedCredentialRequest",
@@ -4548,6 +4612,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendFreeCredentialRequest",
@@ -4594,6 +4659,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendFreeCredentialOfferRequest",
@@ -4640,6 +4706,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendFreeCredentialProposalRequest",
@@ -4686,6 +4753,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SignRequest",
@@ -4732,6 +4800,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "VerifyRequest",
@@ -4778,6 +4847,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetPublishedDidEndpointRequest",
@@ -4860,6 +4930,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetDidVerkeyRequest",
@@ -4908,6 +4979,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetDidNymRoleRequest",
@@ -4956,6 +5028,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetMultipleLedgerConfigRequest",
@@ -4990,6 +5063,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetWriteLedgerRequest",
@@ -5024,6 +5098,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "RegisterNymRequest",
@@ -5180,6 +5255,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "RotatePublicDidKeypairRequest",
@@ -5214,6 +5290,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetTaaRequest",
@@ -5248,6 +5325,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "AcceptTaaRequest",
@@ -5294,6 +5372,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetDefaultMediatorRequest",
@@ -5328,6 +5407,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "ClearDefaultMediatorRequest",
@@ -5362,6 +5442,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetKeylistsRequest",
@@ -5442,6 +5523,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendKeylistQueryToMediatorRequest",
@@ -5534,6 +5616,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendKeylistUpdateToMediatorRequest",
@@ -5595,6 +5678,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "RequestMediationForConnectionRequest",
@@ -5656,6 +5740,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetMatchingMediationRecordsRequest",
@@ -5784,6 +5869,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetMediationRecordRequest",
@@ -5833,6 +5919,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "DeleteMediationRecordRequest",
@@ -5882,6 +5969,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "DenyMediationRequestRequest",
@@ -5943,6 +6031,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GrantMediationRequestRequest",
@@ -5992,6 +6081,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "UpdateKeylistForConnIdRequest",
@@ -6053,6 +6143,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SetDefaultMediatorRequest",
@@ -6102,6 +6193,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "CreateWalletRequest",
@@ -6148,6 +6240,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetWalletRecordRequest",
@@ -6197,6 +6290,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "UpdateWalletRequest",
@@ -6258,6 +6352,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "DeleteWalletRequest",
@@ -6319,6 +6414,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetAuthTokenRequest",
@@ -6380,6 +6476,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetMatchingWalletsRequest",
@@ -6432,6 +6529,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "CreateOobInvitationRequest",
@@ -6509,6 +6607,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "ReceiveOobInvitationRequest",
@@ -6620,6 +6719,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetLoadedPluginsRequest",
@@ -6654,6 +6754,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "CreateProofRequestRequest",
@@ -6700,6 +6801,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetMatchingPresExRecordsV2Request",
@@ -6861,6 +6963,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetPresExRecordRequest",
@@ -6910,6 +7013,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "DeletePresExRecordRequest",
@@ -6959,6 +7063,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetPresExCredentialsV2Request",
@@ -7081,6 +7186,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "ReportPresExProblemRequest",
@@ -7142,6 +7248,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendProofPresentationRequest",
@@ -7203,6 +7310,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendProofPresentationRequestRequest",
@@ -7264,6 +7372,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "VerifyReceivedPresentationRequest",
@@ -7313,6 +7422,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendPresentationProposalRequest",
@@ -7359,6 +7469,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendFreePresentationRequestRequest",
@@ -7405,6 +7516,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "CreateFreeProofRequestRequest",
@@ -7451,6 +7563,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetMatchingPresExRecordsRequest",
@@ -7618,6 +7731,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetPresExRecordRequest",
@@ -7667,6 +7781,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "DeletePresExRecordRequest",
@@ -7716,6 +7831,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetPresExCredentialsRequest",
@@ -7838,6 +7954,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "ReportPresExProblemRequest",
@@ -7899,6 +8016,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendProofPresentationRequest",
@@ -7960,6 +8078,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendProofPresentationRequestRequest",
@@ -8021,6 +8140,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "VerifyReceivedPresentationRequest",
@@ -8070,6 +8190,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendPresentationProposalRequest",
@@ -8116,6 +8237,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SendFreePresentationRequestRequest",
@@ -8162,6 +8284,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetDidDocumentRequest",
@@ -8211,6 +8334,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetActiveRegistryForCredDefIdRequest",
@@ -8260,6 +8384,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "ClearPendingRevocationsRequest",
@@ -8306,6 +8431,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "CreateRevocationRegistryRequest",
@@ -8352,6 +8478,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetCredentialRevocationRecordRequest",
@@ -8438,6 +8565,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "PublishRevocationsRequest",
@@ -8484,6 +8612,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetCreatedRegistriesRequest",
@@ -8582,6 +8711,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "DeleteTailsFileRequest",
@@ -8651,6 +8781,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetRevocationRegistryRequest",
@@ -8700,6 +8831,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "UpdateRevocationRegistryRequest",
@@ -8761,6 +8893,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "PublishRevocationRegistryDefinitionRequest",
@@ -8843,6 +8976,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "PublishRevocationRegistryEntryRequest",
@@ -8925,6 +9059,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "UpdateRevocationEntryStateRequest",
@@ -8986,6 +9121,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetIssuedCredentialsCountRequest",
@@ -9035,6 +9171,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetIssuedCredentialDetailsRequest",
@@ -9084,6 +9221,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetPublishedCredentialDetailsRequest",
@@ -9133,6 +9271,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SetRevocationRegistryStateRequest",
@@ -9225,6 +9364,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "DownloadTailsFileRequest",
@@ -9266,6 +9406,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "UploadTailsFileRequest",
@@ -9315,6 +9456,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "RevokeIssuedCredentialRequest",
@@ -9361,6 +9503,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "PublishSchemaRequest",
@@ -9440,6 +9583,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetMatchingCreatedSchemasRequest",
@@ -9543,6 +9687,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetSchemaRequest",
@@ -9592,6 +9737,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "WriteSchemaRecordToWalletRequest",
@@ -9641,6 +9787,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "ShutdownServerRequest",
@@ -9675,6 +9822,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetStatusRequest",
@@ -9709,6 +9857,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetConfigRequest",
@@ -9743,6 +9892,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetLivelinessRequest",
@@ -9777,6 +9927,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetReadinessRequest",
@@ -9811,6 +9962,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "ResetStatisticsRequest",
@@ -9845,6 +9997,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "ResendTransactionRequestRequest",
@@ -9894,6 +10047,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetTransactionListRequest",
@@ -9928,6 +10082,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "CreateTransactionRequestRequest",
@@ -10003,6 +10158,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SetEndorserInfoForConnIdRequest",
@@ -10083,6 +10239,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SetEndorserRoleForConnIdRequest",
@@ -10167,6 +10324,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetTransactionRecordRequest",
@@ -10216,6 +10374,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "CancelTransactionRequestRequest",
@@ -10265,6 +10424,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "EndorseTransactionRequest",
@@ -10332,6 +10492,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "RefuseTransactionRequest",
@@ -10381,6 +10542,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "PublishEndorsedTransactionRequest",
@@ -10430,6 +10592,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetDidsRequest",
@@ -10589,6 +10752,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "CreateLocalDidRequest",
@@ -10635,6 +10799,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "RotateKeypairRequest",
@@ -10683,6 +10848,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetPublicDidRequest",
@@ -10717,6 +10883,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SetPublicDidRequest",
@@ -10814,6 +10981,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetDidEndpointRequest",
@@ -10862,6 +11030,7 @@ exports[`open api parser aries parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "SetDidEndpointRequest",

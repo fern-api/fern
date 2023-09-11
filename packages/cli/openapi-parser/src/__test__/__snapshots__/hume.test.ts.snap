@@ -10,6 +10,7 @@ exports[`open api parser hume parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Sort and filter jobs.",
           "errorStatusCode": [],
           "generatedRequestName": "ListJobsRequest",
@@ -147,6 +148,7 @@ exports[`open api parser hume parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Start a new batch job.",
           "errorStatusCode": [],
           "generatedRequestName": "StartJobRequest",
@@ -193,6 +195,7 @@ exports[`open api parser hume parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the JSON predictions of a completed job.",
           "errorStatusCode": [],
           "generatedRequestName": "GetJobPredictionsRequest",
@@ -246,6 +249,7 @@ exports[`open api parser hume parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the artifacts ZIP of a completed job.",
           "errorStatusCode": [],
           "generatedRequestName": "GetJobArtifactsRequest",
@@ -287,6 +291,7 @@ exports[`open api parser hume parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the request details and state of a given job.",
           "errorStatusCode": [],
           "generatedRequestName": "GetJobRequest",

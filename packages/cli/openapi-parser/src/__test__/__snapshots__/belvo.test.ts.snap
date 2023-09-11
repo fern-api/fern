@@ -155,6 +155,7 @@ in the DevPortal.
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get a paginated list of all the existing links in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
             401,
@@ -582,6 +583,7 @@ in the DevPortal.
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Register a new link with your Belvo account.
 
 <div style="background-color:#f4f6f8; border-left: 6px solid #4CAF50;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px">
@@ -673,6 +675,7 @@ in the DevPortal.
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Used to resume a Link register session that was paused because an MFA token was required by the institution.",
           "errorStatusCode": [
             400,
@@ -759,6 +762,7 @@ in the DevPortal.
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details of a specific link.",
           "errorStatusCode": [
             401,
@@ -846,6 +850,7 @@ in the DevPortal.
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Update the credentials of a specific link. If the successfully updated link is a recurrent one, we automatically trigger an update of the link. If we find fresh data, you'll [receive historical update](https://developers.belvo.com/docs/webhooks) webhooks.
 <div style="background-color:#f4f6f8; border-left: 6px solid #4CAF50;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px"> <strong>Note: </strong> We recommend using our <a href="https://developers.belvo.com/docs/connect-widget" target="_blank">Connect Widget</a> to handle updating <code>invalid</code> or <code>token_required</code> links. </div>
 ",
@@ -950,6 +955,7 @@ in the DevPortal.
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Change a link's access mode from \`single\` to \`recurrent\` or from \`recurrent\` to single.
 ℹ️ **Note**: When you change a link from \`single\`\` to \`recurrent\`, they will only be updated the next day at the scheduled interval.",
           "errorStatusCode": [
@@ -1053,6 +1059,7 @@ in the DevPortal.
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Delete a specific link and all associated accounts, transactions, and owners from your Belvo account.
 # Deleting links in batches
 To delete links in bulk, we recommend looping through the list of links you want to delete and making the delete request.
@@ -1102,6 +1109,7 @@ To delete links in bulk, we recommend looping through the list of links you want
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get a paginated list of all existing accounts in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
             401,
@@ -1787,6 +1795,7 @@ To delete links in bulk, we recommend looping through the list of links you want
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Retrieve accounts from an existing link.
 
   > 🚧 Scheduled field deprecation
@@ -1892,6 +1901,7 @@ To delete links in bulk, we recommend looping through the list of links you want
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Used to resume an Account retrieve session that was paused because an MFA token was required by the institution.
 
   > 🚧 Scheduled field deprecation
@@ -1997,6 +2007,7 @@ To delete links in bulk, we recommend looping through the list of links you want
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details of a specific account.
 
   > 🚧 Scheduled field deprecation
@@ -2098,6 +2109,7 @@ To delete links in bulk, we recommend looping through the list of links you want
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Delete a specific account and all associated transactions, as well as owners, from your Belvo account.",
           "errorStatusCode": [
             401,
@@ -2139,6 +2151,7 @@ To delete links in bulk, we recommend looping through the list of links you want
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get a paginated list of all existing transactions in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
             401,
@@ -3163,6 +3176,7 @@ To delete links in bulk, we recommend looping through the list of links you want
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Retrieve transactions for one or more accounts from a specific link.
 <div style="background-color:#f4f6f8; border-left: 6px solid #0663F9;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px"> <strong>Info: </strong> When retrieving transactions, it is important to understand that the available transaction data ranges depend on each institution. <br><br>
 If you try to access older information than what we can access, we will return all the data we can read within that date range. For example, if you request transactions for the last year and we can only access the last six months, we will return the information corresponding to these six months of data. </div>
@@ -3257,6 +3271,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Retrieve transactions for one or more accounts from a specific link.
 <div style="background-color:#f4f6f8; border-left: 6px solid #0663F9;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px"> <strong>Info: </strong> When retrieving transactions, it is important to understand that the available transaction data ranges depend on each institution. <br><br>
 If you try to access older information than what we can access, we will return all the data we can read within that date range. For example, if you request transactions for the last year and we can only access the last six months, we will return the information corresponding to these six months of data. </div>
@@ -3357,6 +3372,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Used to resume a Transaction retrieve session that was paused because an MFA token was required by the institution.",
           "errorStatusCode": [
             400,
@@ -3448,6 +3464,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details of a specific transaction.",
           "errorStatusCode": [
             401,
@@ -3535,6 +3552,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Delete a specific transaction from your Belvo account.",
           "errorStatusCode": [
             401,
@@ -3576,6 +3594,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get a paginated list of all existing balances in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
             401,
@@ -4094,6 +4113,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Retrieve balances from one or more accounts for a specific link within a specified date range.",
           "errorStatusCode": [
             400,
@@ -4185,6 +4205,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Used to resume a Balance retrieve session that was paused because an MFA token was required by the institution.",
           "errorStatusCode": [
             400,
@@ -4276,6 +4297,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details of a specific balance.",
           "errorStatusCode": [
             401,
@@ -4363,6 +4385,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Delete a specific balance from your Belvo account.",
           "errorStatusCode": [
             401,
@@ -4404,6 +4427,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get a paginated list of all the institutions currently supported by Belvo. By default, we return up to 100 results per page.",
           "errorStatusCode": [
             401,
@@ -4695,6 +4719,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details of a specific institution.",
           "errorStatusCode": [
             401,
@@ -4782,6 +4807,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get a paginated list of all existing owners in your Belvo account. We return up to 100 results per page.",
           "errorStatusCode": [
             401,
@@ -5073,6 +5099,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Retrieve owner information from a specific link.",
           "errorStatusCode": [
             400,
@@ -5164,6 +5191,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Used to resume an Owner retrieve session that was paused because an MFA token was required by the institution.",
           "errorStatusCode": [
             400,
@@ -5255,6 +5283,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details of a specific owner.",
           "errorStatusCode": [
             401,
@@ -5342,6 +5371,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Delete a specific owner from your Belvo account.",
           "errorStatusCode": [
             401,
@@ -5383,6 +5413,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get a paginated list of all existing invoices in your Belvo account. By default, we return 100 results per page.",
           "errorStatusCode": [
             401,
@@ -5949,6 +5980,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Retrieve invoice information from a specific fiscal link.
 <div style="background-color:#f4f6f8; border-left: 6px solid #0663F9;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px"> <strong>Info: </strong> You can ask for up to **one** year (365 days) of invoices per request. If you need invoices for more than one year, just make another request. </div>
 ",
@@ -6060,6 +6092,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Used to resume an Invoice retrieve session that was paused because an MFA token was required by the institution.",
           "errorStatusCode": [
             400,
@@ -6170,6 +6203,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details of a specific invoice.",
           "errorStatusCode": [
             401,
@@ -6276,6 +6310,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Delete a specific invoice from your Belvo account.",
           "errorStatusCode": [
             401,
@@ -6317,6 +6352,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get a paginated list of all existing tax returns in your Belvo account. By default, we return up to 100 results per page. The results will include a mix of both monthly and yearly tax returns.",
           "errorStatusCode": [
             401,
@@ -6748,6 +6784,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Retrieve tax return information for a specific fiscal link.",
           "errorStatusCode": [
             400,
@@ -6892,6 +6929,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details of a specific tax return.",
           "errorStatusCode": [
             401,
@@ -7014,6 +7052,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Delete a specific tax return from your Belvo account.",
           "errorStatusCode": [
             401,
@@ -7055,6 +7094,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get a paginated list of all existing tax status in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
             401,
@@ -7315,6 +7355,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Retrieve tax status information for a specific fiscal link.",
           "errorStatusCode": [
             400,
@@ -7420,6 +7461,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details of a specific tax status.",
           "errorStatusCode": [
             401,
@@ -7526,6 +7568,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Delete a specific tax status from your Belvo account.",
           "errorStatusCode": [
             401,
@@ -7567,6 +7610,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get a paginated list of all existing Tax compliance statuses in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
             401,
@@ -7827,6 +7871,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Retrieve the Tax compliance status information for a specific fiscal link.",
           "errorStatusCode": [
             400,
@@ -7913,6 +7958,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details of a specific Tax compliance status.",
           "errorStatusCode": [
             401,
@@ -8000,6 +8046,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Delete a specific Tax compliance status from your Belvo account.",
           "errorStatusCode": [
             401,
@@ -8041,6 +8088,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get a paginated list of all incomes in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
             401,
@@ -8219,6 +8267,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Retrieve income insights for <b>checking and savings accounts</b> from a specific link. You can receive insights for a period of up to 365 days, depending on the transaction history available for each [bank](https://developers.belvo.com/docs/institution).",
           "errorStatusCode": [
             400,
@@ -8306,6 +8355,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Used to resume an Income retrieve session that was paused because an MFA token was required by the institution.",
           "errorStatusCode": [
             400,
@@ -8397,6 +8447,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details of a specific income.",
           "errorStatusCode": [
             401,
@@ -8488,6 +8539,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Delete a specific income from your Belvo account.",
           "errorStatusCode": [
             401,
@@ -8529,6 +8581,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get a paginated list of all recurring expenses in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
             401,
@@ -8741,6 +8794,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Retrieve recurring expense insights for <b>checking and savings accounts</b> from a specific link. You can receive insights for a period of up to 365 days, depending on the transaction history available for each [bank](https://developers.belvo.com/docs/institution).",
           "errorStatusCode": [
             400,
@@ -8832,6 +8886,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Used to resume an Recurring Expenses retrieve session that was paused because an MFA token was required by the institution.",
           "errorStatusCode": [
             400,
@@ -8923,6 +8978,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details of a specific recurring expense.",
           "errorStatusCode": [
             401,
@@ -9014,6 +9070,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Delete a specific recurring expense from your Belvo account.",
           "errorStatusCode": [
             401,
@@ -9055,6 +9112,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get a paginated list of all the existing portfolios (and their instruments) in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
             401,
@@ -9281,6 +9339,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Retrieve all portfolios for an existing link.",
           "errorStatusCode": [
             400,
@@ -9367,6 +9426,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Used to resume a portfolio retrieve session that was paused because an MFA token was required by the institution.",
           "errorStatusCode": [
             400,
@@ -9453,6 +9513,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details of a specific portfolio.",
           "errorStatusCode": [
             401,
@@ -9540,6 +9601,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Delete a specific investment portfolio and all associated instruments, transactions, and owners from your Belvo account.",
           "errorStatusCode": [
             401,
@@ -9581,6 +9643,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get a paginated list of all the existing receivable transactions in your Belvo account. We return up to 100 results per page.",
           "errorStatusCode": [
             401,
@@ -9946,6 +10009,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Retrieve all receivable transactions for an existing link.",
           "errorStatusCode": [
             400,
@@ -10032,6 +10096,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details of a specific receivable transaction.",
           "errorStatusCode": [
             401,
@@ -10119,6 +10184,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Delete a specific receivable transaction from your Belvo account.",
           "errorStatusCode": [
             401,
@@ -10160,6 +10226,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get a paginated list of all risk insight analyses in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
             401,
@@ -10335,6 +10402,7 @@ If you try to access older information than what we can access, we will return a
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Request the risk insights for a given link ID.
 
 If you need to know the currency of the account, just do a GET Details to the accounts endpoint (using the ID you receive from the accounts response).",
@@ -10428,6 +10496,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Used to resume an Risk insights retrieve session that was paused because an MFA token was required by the institution.",
           "errorStatusCode": [
             400,
@@ -10519,6 +10588,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details of a specific risk insight.",
           "errorStatusCode": [
             401,
@@ -10610,6 +10680,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Delete a specific risk insight from your Belvo account.",
           "errorStatusCode": [
             401,
@@ -10651,6 +10722,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get a paginated list of all existing tax retentions in your Belvo account. We return up to 100 results per page.",
           "errorStatusCode": [
             401,
@@ -10877,6 +10949,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Retrieve tax retention information from a specific link. The maximum number of tax retentions that can be returned for a period is 500.",
           "errorStatusCode": [
             400,
@@ -10967,6 +11040,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details of a specific tax retention.",
           "errorStatusCode": [
             401,
@@ -11054,6 +11128,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Delete a specific tax retention from your Belvo account.",
           "errorStatusCode": [
             401,
@@ -11095,6 +11170,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get a paginated list of all existing tax declarations in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
             401,
@@ -11476,6 +11552,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Retrieve tax declaration information for a specific fiscal link.",
           "errorStatusCode": [
             400,
@@ -11585,6 +11662,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details of a specific Tax declaration.",
           "errorStatusCode": [
             401,
@@ -11691,6 +11769,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Delete a specific Tax declaration from your Belvo account.",
           "errorStatusCode": [
             401,
@@ -11732,6 +11811,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get a paginated list of all existing employment records in your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
             401,
@@ -11836,6 +11916,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Retrieve employment record details for an individual.
 ",
           "errorStatusCode": [
@@ -11928,6 +12009,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details of a specific employment record.",
           "errorStatusCode": [
             401,
@@ -12015,6 +12097,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Delete a specific employment record from your Belvo account.",
           "errorStatusCode": [
             401,
@@ -12056,6 +12139,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Send through your raw data and receive enriched information for each of your user's income streams.
 
 <div style="background-color:#f4f6f8; border-left: 6px solid #5bc0de;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px">
@@ -12115,6 +12199,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Send through your raw transaction data and receive enriched information for each of your transactions.
 
 <div style="background-color:#f4f6f8; border-left: 6px solid #5bc0de;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px">
@@ -12170,6 +12255,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get a paginated list of all existing secret keys in your Belvo account. We return up to 100 results per page.
 
 
@@ -12209,6 +12295,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Request API keys to use with Belvo's Payments API.
 
 You will need to send through the username and password (in plain text) you use to login to the Belvo dashboard in the Authorization header.
@@ -12260,6 +12347,7 @@ For example:
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "List all payment webhooks associated with your Belvo account.",
           "errorStatusCode": [
             401,
@@ -12296,6 +12384,7 @@ For example:
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Register a new payments webhook for your Belvo account.
 ",
           "errorStatusCode": [
@@ -12352,6 +12441,7 @@ For example:
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details about a specific payment webhook.",
           "errorStatusCode": [
             401,
@@ -12404,6 +12494,7 @@ For example:
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Delete a specific payment webhook from your Belvo account.",
           "errorStatusCode": [
             401,
@@ -12445,6 +12536,7 @@ For example:
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "List all available payment institutions.",
           "errorStatusCode": [
             401,
@@ -12633,6 +12725,7 @@ For example:
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details about a specific payment institution",
           "errorStatusCode": [
             401,
@@ -12685,6 +12778,7 @@ For example:
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "List all customers associated with your Belvo account.",
           "errorStatusCode": [
             401,
@@ -12896,6 +12990,7 @@ For example:
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Create a new customer to send or request funds.",
           "errorStatusCode": [
             400,
@@ -12984,6 +13079,7 @@ For example:
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details about a specific customer",
           "errorStatusCode": [
             401,
@@ -13055,6 +13151,7 @@ For example:
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "List all bank accounts associated with your Belvo account.",
           "errorStatusCode": [
             401,
@@ -13345,6 +13442,7 @@ For example:
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Create a new bank account from which to send or request funds.",
           "errorStatusCode": [
             400,
@@ -13434,6 +13532,7 @@ For example:
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details about a specific bank account",
           "errorStatusCode": [
             401,
@@ -13505,6 +13604,7 @@ For example:
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "List all payment links associated with your Belvo account. By default, we return up to 100 results per page.",
           "errorStatusCode": [
             401,
@@ -13758,6 +13858,7 @@ For example:
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Create a new payment link to start a hosted-widget payment.",
           "errorStatusCode": [
             400,
@@ -13847,6 +13948,7 @@ For example:
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details about a payment link.",
           "errorStatusCode": [
             401,
@@ -13920,6 +14022,7 @@ For example:
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "List all payment intents associated with your Belvo account.",
           "errorStatusCode": [
             401,
@@ -14278,6 +14381,7 @@ For example:
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Create a payment intent.",
           "errorStatusCode": [
             400,
@@ -14329,6 +14433,7 @@ For example:
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details about a specific payment intent.",
           "errorStatusCode": [
             401,
@@ -14381,6 +14486,7 @@ For example:
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Complete a new payment intent.
 
 During the payment intent flow, you need to fill in the payment intent with required information about your customer (their institution, bank account, and login credentials). This is done by sending PATCH requests with the information that Belvo asked you display in each \`next_step\` object. If you need more information on how to complete a payment intent, check our <a href="https://developers.belvo.com/docs/colombia-pse#payment-intents" target="_blank">PSE payment initiation</a> guides for  🇨🇴 Colombia.",
@@ -14447,6 +14553,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "List all payment transactions associated with your Belvo account.",
           "errorStatusCode": [
             401,
@@ -14873,6 +14980,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": "Get the details about a specific payment transaction.",
           "errorStatusCode": [
             401,

@@ -20,6 +20,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -87,6 +88,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -137,6 +139,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "BuyNumberRequest",
@@ -171,6 +174,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -233,6 +237,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -283,6 +288,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -350,6 +356,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -400,6 +407,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -450,6 +458,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -498,6 +507,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -543,6 +553,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [],
           "generatedRequestName": "GetUsageRequest",
@@ -577,6 +588,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -656,6 +668,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -723,6 +736,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -800,6 +814,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -891,6 +906,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -941,6 +957,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -1008,6 +1025,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -1056,6 +1074,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -1118,6 +1137,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -1205,6 +1225,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -1272,6 +1293,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -1357,6 +1379,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -1456,6 +1479,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -1506,6 +1530,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -1573,6 +1598,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
@@ -1621,6 +1647,7 @@ exports[`open api parser vocode parse open api 1`] = `
         {
           "audiences": [],
           "authed": true,
+          "availability": undefined,
           "description": undefined,
           "errorStatusCode": [
             422,
