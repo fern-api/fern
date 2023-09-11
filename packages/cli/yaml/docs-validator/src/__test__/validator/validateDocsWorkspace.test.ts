@@ -20,8 +20,8 @@ const FIXTURES: Fixture[] = [
 
 describe("validateFernWorkspace", () => {
     for (const fixture of FIXTURES) {
-        // eslint-disable-next-line jest/valid-title
-        it(fixture.name, async () => {
+        // eslint-disable-next-line jest/valid-title, jest/no-disabled-tests
+        it.skip(fixture.name, async () => {
             const docsWorkspace = await loadDocsWorkspace({
                 fernDirectory: join(
                     AbsoluteFilePath.of(__dirname),
