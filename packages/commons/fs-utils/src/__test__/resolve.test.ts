@@ -1,6 +1,3 @@
-/* eslint-disable jest/expect-expect */
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-
 import { AbsoluteFilePath } from "../AbsoluteFilePath";
 import { resolve } from "../resolve";
 
