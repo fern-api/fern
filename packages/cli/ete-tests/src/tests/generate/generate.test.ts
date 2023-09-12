@@ -29,8 +29,3 @@ describe("fern generate", () => {
         ).toMatchSnapshot();
     });
 });
-
-function isOnMainOrTagOnCircle(): boolean {
-    const { CIRCLE_BRANCH, CIRCLE_TAG } = process.env;
-    return CIRCLE_BRANCH === "main" || CIRCLE_TAG != null;
-}
