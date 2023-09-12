@@ -158,13 +158,13 @@ async function getNavigationConfiguration({
     } else if (versions != null) {
         const versionedNavbars: VersionInfo[] = [];
         for (const version of versions) {
-            const absoluteFilepath = resolve(absolutePathToFernFolder, version.path);
-            const content = yaml.load((await readFile(absoluteFilepath)).toString());
+            const absoluteFilepathToVersionFile = resolve(absolutePathToFernFolder, version.path);
+            const content = yaml.load((await readFile(absoluteFilepathToVersionFile)).toString());
             const result = await RawVersionFileConfigSerializer.parseOrThrow(content);
             const navigation = await convertNavigationConfiguration({
                 rawNavigationConfig: result.navigation,
                 absolutePathToFernFolder,
-                absolutePathToConfig,
+                absolutePathToConfig: absoluteFilepathToVersionFile,
                 context,
             });
             versionedNavbars.push({

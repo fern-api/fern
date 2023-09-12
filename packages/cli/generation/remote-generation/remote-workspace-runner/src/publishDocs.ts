@@ -1,6 +1,6 @@
 import { FernToken } from "@fern-api/auth";
 import { assertNever, entries } from "@fern-api/core-utils";
-import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { registerApi } from "@fern-api/register";
 import { createFdrService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
@@ -564,7 +564,7 @@ async function convertNavigationItem({
         case "page":
             return FernRegistry.docs.v1.write.NavigationItem.page({
                 title: item.title,
-                id: constructPageId(relative(parsedDocsConfig.absoluteFilepath, item.absolutePath)),
+                id: constructPageId(relative(dirname(parsedDocsConfig.absoluteFilepath), item.absolutePath)),
                 urlSlugOverride: item.slug,
             });
         case "section":
