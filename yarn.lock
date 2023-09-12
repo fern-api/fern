@@ -2516,6 +2516,7 @@ __metadata:
     "@fern-fern/registry-node": 0.17.0-3-gc97ab78
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
+    "@types/js-yaml": ^4.0.5
     "@types/lodash-es": ^4.17.7
     "@types/mime-types": ^2.1.1
     "@types/node": ^18.7.18
@@ -2527,6 +2528,7 @@ __metadata:
     eslint: ^8.26.0
     form-data: ^4.0.0
     jest: ^29.4.0
+    js-yaml: ^4.1.0
     lodash-es: ^4.17.21
     mime-types: ^2.1.35
     organize-imports-cli: ^0.10.0

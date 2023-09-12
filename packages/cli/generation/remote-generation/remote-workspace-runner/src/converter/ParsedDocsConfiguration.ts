@@ -80,10 +80,12 @@ export interface TabbedDocsNavigation {
 
 export interface VersionedDocsNavigation {
     type: "versioned";
-    versions: {
-        navigation: UntabbedDocsNavigation | TabbedDocsNavigation;
-        version: string;
-    }[];
+    versions: VersionInfo[];
+}
+
+export interface VersionInfo {
+    navigation: UntabbedDocsNavigation | TabbedDocsNavigation;
+    version: string;
 }
 
 export type DocsNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNavigation | VersionedDocsNavigation;

@@ -2,7 +2,11 @@ import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { FernCliError, TaskContext } from "@fern-api/task-context";
 import { FernDocsConfig as RawDocs } from "@fern-fern/docs-config";
+import { NavigationConfig, VersionConfig } from "@fern-fern/docs-config/api";
+import { VersionFileConfig as RawVersionFileConfigSerializer } from "@fern-fern/docs-config/serialization";
 import { FernRegistry } from "@fern-fern/registry-node";
+import { readFile } from "fs/promises";
+import yaml from "js-yaml";
 import { getAllPages } from "./getAllPages";
 import {
     DocsNavigationConfiguration,
@@ -10,9 +14,11 @@ import {
     FontConfig,
     ImageReference,
     ParsedDocsConfiguration,
+    TabbedDocsNavigation,
     TypographyConfig,
+    UntabbedDocsNavigation,
+    VersionInfo,
 } from "./ParsedDocsConfiguration";
-
 export async function parseDocsConfiguration({
     rawDocsConfiguration,
     absoluteFilepathToDocsConfig,
@@ -22,8 +28,19 @@ export async function parseDocsConfiguration({
     absoluteFilepathToDocsConfig: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<ParsedDocsConfiguration> {
-    const { instances, navigation, colors, favicon, backgroundImage, logo, navbarLinks, title, typography, tabs } =
-        rawDocsConfiguration;
+    const {
+        instances,
+        navigation,
+        colors,
+        favicon,
+        backgroundImage,
+        logo,
+        navbarLinks,
+        title,
+        typography,
+        tabs,
+        versions,
+    } = rawDocsConfiguration;
     const convertedColors = convertColorsConfiguration(colors ?? {}, context);
 
     if (navigation == null) {
@@ -31,8 +48,9 @@ export async function parseDocsConfiguration({
         throw new FernCliError();
     }
 
-    const convertedNavigation = await convertNavigationConfiguration({
-        rawNavigationConfig: navigation,
+    const convertedNavigation = await getNavigationConfiguration({
+        versions,
+        navigation,
         absoluteFilepathToDocsConfig,
         context,
     });
@@ -119,6 +137,47 @@ export async function parseDocsConfiguration({
     };
 }
 
+async function getNavigationConfiguration({
+    versions,
+    navigation,
+    absoluteFilepathToDocsConfig,
+    context,
+}: {
+    versions?: VersionConfig[];
+    navigation?: NavigationConfig;
+    absoluteFilepathToDocsConfig: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<DocsNavigationConfiguration> {
+    if (navigation != null) {
+        return await convertNavigationConfiguration({
+            rawNavigationConfig: navigation,
+            absoluteFilepathToDocsConfig,
+            context,
+        });
+    } else if (versions != null) {
+        const versionedNavbars: VersionInfo[] = [];
+        for (const version of versions) {
+            const absoluteFilepath = resolve(dirname(absoluteFilepathToDocsConfig), version.path);
+            const content = yaml.load((await readFile(absoluteFilepath)).toString());
+            const result = await RawVersionFileConfigSerializer.parseOrThrow(content);
+            const navigation = await convertNavigationConfiguration({
+                rawNavigationConfig: result.navigation,
+                absoluteFilepathToDocsConfig,
+                context,
+            });
+            versionedNavbars.push({
+                version: version.displayName,
+                navigation,
+            });
+        }
+        return {
+            type: "versioned",
+            versions: versionedNavbars,
+        };
+    }
+    throw new Error("Unexpected. Docs have neither navigation or versions defined.");
+}
+
 async function convertTypographyConfiguration({
     rawTypography,
     absoluteFilepathToDocsConfig,
@@ -175,7 +234,7 @@ async function convertNavigationConfiguration({
     rawNavigationConfig: RawDocs.NavigationConfig;
     absoluteFilepathToDocsConfig: AbsoluteFilePath;
     context: TaskContext;
-}): Promise<DocsNavigationConfiguration> {
+}): Promise<UntabbedDocsNavigation | TabbedDocsNavigation> {
     if (isTabbedNavigationConfig(rawNavigationConfig)) {
         const tabbedNavigationItems = await Promise.all(
             rawNavigationConfig.map(async (item) => {
