@@ -99,7 +99,7 @@ export async function visitDocsConfigFileYamlAst(
                     absoluteFilepathToConfiguration,
                     rawUnresolvedFilepath: version.path,
                     visitor,
-                    nodePath: ["versions", `${0}`],
+                    nodePath: ["versions", `${idx}`],
                 });
                 const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), version.path);
                 const content = yaml.load((await readFile(absoluteFilepath)).toString());
