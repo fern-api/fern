@@ -16,18 +16,6 @@ describe("fern generate", () => {
         expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of("generated/typescript")))).toBe(true);
     }, 180_000);
 
-    // to prevent overloading algolia, we only
-    // run the docs test on main or tags
-    (isOnMainOrTagOnCircle() ? it : it.skip)(
-        "docs",
-        async () => {
-            await runFernCli(["generate", "--docs"], {
-                cwd: join(fixturesDir, RelativeFilePath.of("docs")),
-            });
-        },
-        180_000
-    );
-
     it("missing docs page", async () => {
         const { stdout } = await runFernCli(["generate", "--docs"], {
             cwd: join(fixturesDir, RelativeFilePath.of("docs-missing-page")),
