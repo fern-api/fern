@@ -40,7 +40,16 @@ export async function getAllPages({
                 )
             );
         case "versioned":
-            return {};
+            return combineMaps(
+                await Promise.all(
+                    navigation.versions.map(async (version) => {
+                        return await getAllPages({
+                            navigation: version.navigation,
+                            absoluteFilepathToDocsConfig,
+                        });
+                    })
+                )
+            );
         default:
             assertNever(navigation);
     }
