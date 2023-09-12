@@ -21,10 +21,12 @@ import {
 } from "./ParsedDocsConfiguration";
 export async function parseDocsConfiguration({
     rawDocsConfiguration,
+    absolutePathToFernFolder,
     absoluteFilepathToDocsConfig,
     context,
 }: {
     rawDocsConfiguration: RawDocs.DocsConfiguration;
+    absolutePathToFernFolder: AbsoluteFilePath;
     absoluteFilepathToDocsConfig: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<ParsedDocsConfiguration> {
@@ -46,14 +48,15 @@ export async function parseDocsConfiguration({
     const convertedNavigation = await getNavigationConfiguration({
         versions,
         navigation,
-        absoluteFilepathToDocsConfig,
+        absolutePathToFernFolder,
+        absolutePathToConfig: absoluteFilepathToDocsConfig,
         context,
     });
 
     return {
         instances,
         absoluteFilepath: absoluteFilepathToDocsConfig,
-        pages: await getAllPages({ navigation: convertedNavigation, absoluteFilepathToDocsConfig }),
+        pages: await getAllPages({ navigation: convertedNavigation, absolutePathToFernFolder }),
         navigation: convertedNavigation,
         title,
         tabs,
@@ -135,29 +138,33 @@ export async function parseDocsConfiguration({
 async function getNavigationConfiguration({
     versions,
     navigation,
-    absoluteFilepathToDocsConfig,
+    absolutePathToFernFolder,
+    absolutePathToConfig,
     context,
 }: {
     versions?: VersionConfig[];
     navigation?: NavigationConfig;
-    absoluteFilepathToDocsConfig: AbsoluteFilePath;
+    absolutePathToFernFolder: AbsoluteFilePath;
+    absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<DocsNavigationConfiguration> {
     if (navigation != null) {
         return await convertNavigationConfiguration({
             rawNavigationConfig: navigation,
-            absoluteFilepathToDocsConfig,
+            absolutePathToFernFolder,
+            absolutePathToConfig,
             context,
         });
     } else if (versions != null) {
         const versionedNavbars: VersionInfo[] = [];
         for (const version of versions) {
-            const absoluteFilepath = resolve(dirname(absoluteFilepathToDocsConfig), version.path);
+            const absoluteFilepath = resolve(absolutePathToFernFolder, version.path);
             const content = yaml.load((await readFile(absoluteFilepath)).toString());
             const result = await RawVersionFileConfigSerializer.parseOrThrow(content);
             const navigation = await convertNavigationConfiguration({
                 rawNavigationConfig: result.navigation,
-                absoluteFilepathToDocsConfig,
+                absolutePathToFernFolder,
+                absolutePathToConfig,
                 context,
             });
             versionedNavbars.push({
@@ -216,7 +223,7 @@ async function convertFontConfig({
     return {
         name: rawFontConfig.name,
         absolutePath: await resolveFilepath({
-            absoluteFilepathToDocsConfig,
+            absolutePath: absoluteFilepathToDocsConfig,
             rawUnresolvedFilepath: rawFontConfig.path,
         }),
     };
@@ -224,11 +231,13 @@ async function convertFontConfig({
 
 async function convertNavigationConfiguration({
     rawNavigationConfig,
-    absoluteFilepathToDocsConfig,
+    absolutePathToFernFolder,
+    absolutePathToConfig,
     context,
 }: {
     rawNavigationConfig: RawDocs.NavigationConfig;
-    absoluteFilepathToDocsConfig: AbsoluteFilePath;
+    absolutePathToFernFolder: AbsoluteFilePath;
+    absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<UntabbedDocsNavigation | TabbedDocsNavigation> {
     if (isTabbedNavigationConfig(rawNavigationConfig)) {
@@ -238,7 +247,8 @@ async function convertNavigationConfiguration({
                     item.layout.map((item) =>
                         convertNavigationItem({
                             rawConfig: item,
-                            absoluteFilepathToDocsConfig,
+                            absolutePathToFernFolder,
+                            absolutePathToConfig,
                             context,
                         })
                     )
@@ -258,7 +268,7 @@ async function convertNavigationConfiguration({
             type: "untabbed",
             items: await Promise.all(
                 rawNavigationConfig.map((item) =>
-                    convertNavigationItem({ rawConfig: item, absoluteFilepathToDocsConfig, context })
+                    convertNavigationItem({ rawConfig: item, absolutePathToFernFolder, absolutePathToConfig, context })
                 )
             ),
         };
@@ -267,11 +277,13 @@ async function convertNavigationConfiguration({
 
 async function convertNavigationItem({
     rawConfig,
-    absoluteFilepathToDocsConfig,
+    absolutePathToFernFolder,
+    absolutePathToConfig,
     context,
 }: {
     rawConfig: RawDocs.NavigationItem;
-    absoluteFilepathToDocsConfig: AbsoluteFilePath;
+    absolutePathToFernFolder: AbsoluteFilePath;
+    absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<DocsNavigationItem> {
     if (isRawPageConfig(rawConfig)) {
@@ -279,7 +291,7 @@ async function convertNavigationItem({
             type: "page",
             title: rawConfig.page,
             absolutePath: await resolveFilepath({
-                absoluteFilepathToDocsConfig,
+                absolutePath: absolutePathToConfig,
                 rawUnresolvedFilepath: rawConfig.path,
             }),
             slug: rawConfig.slug ?? undefined,
@@ -291,7 +303,7 @@ async function convertNavigationItem({
             title: rawConfig.section,
             contents: await Promise.all(
                 rawConfig.contents.map((item) =>
-                    convertNavigationItem({ rawConfig: item, absoluteFilepathToDocsConfig, context })
+                    convertNavigationItem({ rawConfig: item, absolutePathToFernFolder, absolutePathToConfig, context })
                 )
             ),
             slug: rawConfig.slug ?? undefined,
@@ -334,7 +346,7 @@ async function convertImageReference({
 }): Promise<ImageReference> {
     return {
         filepath: await resolveFilepath({
-            absoluteFilepathToDocsConfig,
+            absolutePath: absoluteFilepathToDocsConfig,
             rawUnresolvedFilepath: rawImageReference,
         }),
     };
@@ -445,12 +457,12 @@ function convertNavbarLinks(rawConfig: RawDocs.NavbarLink[]): FernRegistry.docs.
 
 async function resolveFilepath({
     rawUnresolvedFilepath,
-    absoluteFilepathToDocsConfig,
+    absolutePath,
 }: {
     rawUnresolvedFilepath: string;
-    absoluteFilepathToDocsConfig: AbsoluteFilePath;
+    absolutePath: AbsoluteFilePath;
 }): Promise<AbsoluteFilePath> {
-    const resolved = resolve(dirname(absoluteFilepathToDocsConfig), rawUnresolvedFilepath);
+    const resolved = resolve(dirname(absolutePath), rawUnresolvedFilepath);
     return resolved;
 }
 
