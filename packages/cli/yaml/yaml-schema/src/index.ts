@@ -24,6 +24,7 @@ export {
     type DocsConfigFileAstNodeVisitor,
     type DocsConfigFileAstVisitor,
 } from "./docsAst/DocsConfigFileAstVisitor";
+export { validateVersionConfigFileSchema } from "./docsAst/validateVersionConfig";
 export { visitDocsConfigFileYamlAst } from "./docsAst/visitDocsConfigFileAst";
 export { type NodePath } from "./NodePath";
 export * as RawSchemas from "./schemas";

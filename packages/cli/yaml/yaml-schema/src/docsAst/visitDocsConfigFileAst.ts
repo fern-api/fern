@@ -8,14 +8,23 @@ import {
     TabbedNavigationConfig,
 } from "@fern-fern/docs-config/api";
 import { readFile } from "fs/promises";
+import yaml from "js-yaml";
 import { NodePath } from "../NodePath";
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
+import { validateVersionConfigFileSchema } from "./validateVersionConfig";
 
 export async function visitDocsConfigFileYamlAst(
     contents: DocsConfiguration,
     visitor: Partial<DocsConfigFileAstVisitor>,
     absoluteFilepathToConfiguration: AbsoluteFilePath
 ): Promise<void> {
+    await visitor.file?.(
+        {
+            config: contents,
+        },
+        []
+    );
+
     if (contents.backgroundImage != null) {
         await visitFilepath({
             absoluteFilepathToConfiguration,
@@ -81,6 +90,39 @@ export async function visitDocsConfigFileYamlAst(
             visitor,
             nodePath: ["typography", "codeFont"],
         });
+    }
+
+    if (contents.versions != null) {
+        await Promise.all(
+            contents.versions.map(async (version, idx) => {
+                await visitFilepath({
+                    absoluteFilepathToConfiguration,
+                    rawUnresolvedFilepath: version.path,
+                    visitor,
+                    nodePath: ["versions", `${0}`],
+                });
+                const absoluteFilepath = resolve(dirname(absoluteFilepathToConfiguration), version.path);
+                const content = yaml.load((await readFile(absoluteFilepath)).toString());
+                if (await doesPathExist(absoluteFilepath)) {
+                    await visitor.versionFile?.(
+                        {
+                            path: version.path,
+                            content,
+                        },
+                        [version.path]
+                    );
+                }
+                const parsedVersionFile = await validateVersionConfigFileSchema({ value: content });
+                if (parsedVersionFile.type === "success") {
+                    await visitNavigation({
+                        navigation: parsedVersionFile.contents.navigation,
+                        visitor,
+                        nodePath: ["navigation"],
+                        absoluteFilepathToConfiguration: absoluteFilepath,
+                    });
+                }
+            })
+        );
     }
 }
 
