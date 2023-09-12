@@ -1,6 +1,6 @@
 import { Audiences } from "@fern-api/config-management-commons";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { DocsInstances, TabConfig } from "@fern-fern/docs-config/api";
+import { DocsInstances, TabConfig, VersionAvailability } from "@fern-fern/docs-config/api";
 import type { FernRegistry } from "@fern-fern/registry-node";
 
 export interface ParsedDocsConfiguration {
@@ -86,6 +86,7 @@ export interface VersionedDocsNavigation {
 export interface VersionInfo {
     navigation: UntabbedDocsNavigation | TabbedDocsNavigation;
     version: string;
+    availability: VersionAvailability | undefined;
 }
 
 export type DocsNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNavigation | VersionedDocsNavigation;

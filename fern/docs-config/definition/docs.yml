@@ -37,6 +37,14 @@ types:
       display-name: string
       path: string
       slug: optional<string>
+      availability: optional<VersionAvailability>
+
+  VersionAvailability:
+    enum:
+      - deprecated
+      - ga
+      - stable
+      - beta
 
   VersionFileConfig:
     properties:

@@ -5,7 +5,7 @@ import { registerApi } from "@fern-api/register";
 import { createFdrService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
-import { TabConfig } from "@fern-fern/docs-config/api";
+import { TabConfig, VersionAvailability } from "@fern-fern/docs-config/api";
 import { FernRegistry } from "@fern-fern/registry-node";
 import axios from "axios";
 import chalk from "chalk";
@@ -358,12 +358,29 @@ async function convertNavigationConfig({
                                 token,
                                 version: version.version,
                             }),
+                            availability:
+                                version.availability != null ? convertAvailability(version.availability) : undefined,
                         };
                     })
                 ),
             };
         default:
             assertNever(navigationConfig);
+    }
+}
+
+function convertAvailability(availability: VersionAvailability): FernRegistry.docs.v1.write.VersionAvailability {
+    switch (availability) {
+        case "beta":
+            return FernRegistry.docs.v1.write.VersionAvailability.Beta;
+        case "deprecated":
+            return FernRegistry.docs.v1.write.VersionAvailability.Deprecated;
+        case "ga":
+            return FernRegistry.docs.v1.write.VersionAvailability.GenerallyAvailable;
+        case "stable":
+            return FernRegistry.docs.v1.write.VersionAvailability.Stable;
+        default:
+            assertNever(availability);
     }
 }
 

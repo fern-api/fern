@@ -163,6 +163,7 @@ async function getNavigationConfiguration({
             versionedNavbars.push({
                 version: version.displayName,
                 navigation,
+                availability: version.availability,
             });
         }
         return {
