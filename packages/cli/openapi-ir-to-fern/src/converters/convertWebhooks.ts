@@ -54,6 +54,10 @@ export function convertWebhooks({
             payload: payloadTypeReference.typeReference,
         };
 
+        if (webhook.description != null) {
+            webhookDefinition.docs = webhook.description;
+        }
+
         const maybeWebhooksForFile = webhooksByFile[webhookLocation.file];
         if (maybeWebhooksForFile != null) {
             maybeWebhooksForFile[webhookLocation.endpointId] = webhookDefinition;
