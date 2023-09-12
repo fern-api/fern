@@ -46,6 +46,7 @@ export async function publishDocs({
     const parsedDocsConfig = await parseDocsConfiguration({
         rawDocsConfiguration: docsWorkspace.config,
         context,
+        absolutePathToFernFolder: docsWorkspace.absoluteFilepath,
         absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig,
     });
 

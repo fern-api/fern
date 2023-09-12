@@ -5,10 +5,10 @@ import { DocsNavigationConfiguration, DocsNavigationItem } from "./ParsedDocsCon
 
 export async function getAllPages({
     navigation,
-    absoluteFilepathToDocsConfig,
+    absolutePathToFernFolder,
 }: {
     navigation: DocsNavigationConfiguration;
-    absoluteFilepathToDocsConfig: AbsoluteFilePath;
+    absolutePathToFernFolder: AbsoluteFilePath;
 }): Promise<Record<RelativeFilePath, string>> {
     switch (navigation.type) {
         case "tabbed":
@@ -20,7 +20,7 @@ export async function getAllPages({
                                 tab.layout.map(async (item) => {
                                     return await getAllPagesFromNavigationItem({
                                         item,
-                                        absoluteFilepathToDocsConfig,
+                                        absolutePathToFernFolder,
                                     });
                                 })
                             )
@@ -34,7 +34,7 @@ export async function getAllPages({
                     navigation.items.map(async (item) => {
                         return await getAllPagesFromNavigationItem({
                             item,
-                            absoluteFilepathToDocsConfig,
+                            absolutePathToFernFolder,
                         });
                     })
                 )
@@ -45,7 +45,7 @@ export async function getAllPages({
                     navigation.versions.map(async (version) => {
                         return await getAllPages({
                             navigation: version.navigation,
-                            absoluteFilepathToDocsConfig,
+                            absolutePathToFernFolder,
                         });
                     })
                 )
@@ -57,17 +57,17 @@ export async function getAllPages({
 
 export async function getAllPagesFromNavigationItem({
     item,
-    absoluteFilepathToDocsConfig,
+    absolutePathToFernFolder,
 }: {
     item: DocsNavigationItem;
-    absoluteFilepathToDocsConfig: AbsoluteFilePath;
+    absolutePathToFernFolder: AbsoluteFilePath;
 }): Promise<Record<RelativeFilePath, string>> {
     switch (item.type) {
         case "apiSection":
             return {};
         case "page":
             return {
-                [await relativize(absoluteFilepathToDocsConfig, item.absolutePath)]: (
+                [await relativize(absolutePathToFernFolder, item.absolutePath)]: (
                     await readFile(item.absolutePath)
                 ).toString(),
             };
@@ -75,7 +75,7 @@ export async function getAllPagesFromNavigationItem({
             return combineMaps(
                 await Promise.all(
                     item.contents.map(async (sectionItem) => {
-                        return await getAllPagesFromNavigationItem({ item: sectionItem, absoluteFilepathToDocsConfig });
+                        return await getAllPagesFromNavigationItem({ item: sectionItem, absolutePathToFernFolder });
                     })
                 )
             );
