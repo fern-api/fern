@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
-import { FernCliError, TaskContext } from "@fern-api/task-context";
+import { TaskContext } from "@fern-api/task-context";
 import { FernDocsConfig as RawDocs } from "@fern-fern/docs-config";
 import { NavigationConfig, VersionConfig } from "@fern-fern/docs-config/api";
 import { VersionFileConfig as RawVersionFileConfigSerializer } from "@fern-fern/docs-config/serialization";
@@ -42,11 +42,6 @@ export async function parseDocsConfiguration({
         versions,
     } = rawDocsConfiguration;
     const convertedColors = convertColorsConfiguration(colors ?? {}, context);
-
-    if (navigation == null) {
-        context.failAndThrow("navigation key must be defined in docs.yml");
-        throw new FernCliError();
-    }
 
     const convertedNavigation = await getNavigationConfiguration({
         versions,
