@@ -90,6 +90,8 @@ export interface VersionInfo {
 
 export type DocsNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNavigation | VersionedDocsNavigation;
 
+export type UnversionedNavigationConfiguration = UntabbedDocsNavigation | TabbedDocsNavigation;
+
 export interface TabbedNavigation {
     tab: string;
     layout: DocsNavigationItem[];

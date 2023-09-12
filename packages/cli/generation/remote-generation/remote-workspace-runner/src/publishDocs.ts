@@ -18,6 +18,7 @@ import {
     ImageReference,
     ParsedDocsConfiguration,
     TypographyConfig,
+    UnversionedNavigationConfiguration,
 } from "./converter/ParsedDocsConfiguration";
 import { parseDocsConfiguration } from "./converter/parseDocsConfiguration";
 
@@ -343,7 +344,93 @@ async function convertNavigationConfig({
                 ),
             };
         case "versioned":
-            throw new Error("Please downgrade your Fern CLI version to support versioned docs");
+            return {
+                versions: await Promise.all(
+                    navigationConfig.versions.map(async (version) => {
+                        return {
+                            version: version.version,
+                            config: await convertUnversionedNavigationConfig({
+                                navigationConfig: version.navigation,
+                                parsedDocsConfig,
+                                organization,
+                                fernWorkspaces,
+                                context,
+                                token,
+                                version: version.version,
+                            }),
+                        };
+                    })
+                ),
+            };
+        default:
+            assertNever(navigationConfig);
+    }
+}
+
+async function convertUnversionedNavigationConfig({
+    navigationConfig,
+    tabs,
+    parsedDocsConfig,
+    organization,
+    fernWorkspaces,
+    context,
+    token,
+    version,
+}: {
+    navigationConfig: UnversionedNavigationConfiguration;
+    tabs?: Record<string, TabConfig>;
+    parsedDocsConfig: ParsedDocsConfiguration;
+    organization: string;
+    fernWorkspaces: FernWorkspace[];
+    context: TaskContext;
+    token: FernToken;
+    version: string | undefined;
+}): Promise<FernRegistry.docs.v1.write.UnversionedNavigationConfig> {
+    switch (navigationConfig.type) {
+        case "untabbed":
+            return {
+                items: await Promise.all(
+                    navigationConfig.items.map((item) =>
+                        convertNavigationItem({
+                            item,
+                            parsedDocsConfig,
+                            organization,
+                            fernWorkspaces,
+                            context,
+                            token,
+                            version,
+                        })
+                    )
+                ),
+            };
+        case "tabbed":
+            return {
+                tabs: await Promise.all(
+                    navigationConfig.items.map(async (tabbedItem) => {
+                        const tabConfig = tabs?.[tabbedItem.tab];
+                        if (tabConfig == null) {
+                            throw new Error(`Couldn't find config for tab id ${tabbedItem.tab}`);
+                        }
+                        return {
+                            title: tabConfig.displayName,
+                            icon: tabConfig.icon,
+                            items: await Promise.all(
+                                tabbedItem.layout.map((item) =>
+                                    convertNavigationItem({
+                                        item,
+                                        parsedDocsConfig,
+                                        organization,
+                                        fernWorkspaces,
+                                        context,
+                                        token,
+                                        version,
+                                    })
+                                )
+                            ),
+                        };
+                    })
+                ),
+            };
         default:
             assertNever(navigationConfig);
     }
