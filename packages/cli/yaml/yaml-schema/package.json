@@ -31,10 +31,12 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-fern/docs-config": "0.0.48",
     "@fern-fern/ir-sdk": "0.0.2920",
+    "js-yaml": "^4.1.0",
     "zod": "^3.22.2"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
+    "@types/js-yaml": "^4.0.5",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.3",
     "eslint": "^8.26.0",
