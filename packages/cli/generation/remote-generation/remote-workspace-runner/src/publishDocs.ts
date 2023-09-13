@@ -602,6 +602,7 @@ async function convertNavigationItem({
             return FernRegistry.docs.v1.write.NavigationItem.api({
                 title: item.title,
                 api: apiDefinitionId,
+                showErrors: item.showErrors,
             });
         }
         default:

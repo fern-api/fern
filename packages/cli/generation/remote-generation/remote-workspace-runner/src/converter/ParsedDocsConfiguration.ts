@@ -122,5 +122,6 @@ export declare namespace DocsNavigationItem {
         title: string;
         apiName: string | undefined;
         audiences: Audiences;
+        showErrors: boolean;
     }
 }

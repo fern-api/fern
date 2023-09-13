@@ -116,6 +116,9 @@ types:
         type: optional<string>
         docs: Name of API that we are referencing
       audiences: optional<list<string>>
+      display-errors:
+        type: optional<boolean>
+        docs: Defaults to false
 
   ColorsConfiguration:
     properties:

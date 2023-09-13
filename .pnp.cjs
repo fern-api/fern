@@ -3621,7 +3621,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-formatter", "workspace:packages/cli/yaml/formatter"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
-            ["@fern-fern/docs-config", "npm:0.0.49"],\
+            ["@fern-fern/docs-config", "npm:0.0.50"],\
             ["@types/fs-extra", "npm:11.0.1"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
@@ -4082,7 +4082,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-            ["@fern-fern/docs-config", "npm:0.0.49"],\
+            ["@fern-fern/docs-config", "npm:0.0.50"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.290"],\
             ["@fern-fern/ir-sdk", "npm:0.0.2920"],\
             ["@fern-fern/registry-node", "npm:0.17.0-8-g5dfc5af"],\
@@ -4292,7 +4292,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
-            ["@fern-fern/docs-config", "npm:0.0.49"],\
+            ["@fern-fern/docs-config", "npm:0.0.50"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.290"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
@@ -4381,7 +4381,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
-            ["@fern-fern/docs-config", "npm:0.0.49"],\
+            ["@fern-fern/docs-config", "npm:0.0.50"],\
             ["@fern-fern/ir-sdk", "npm:0.0.2920"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.5"],\
@@ -4399,10 +4399,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/docs-config", [\
-        ["npm:0.0.49", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-docs-config-npm-0.0.49-f3a2d1f66a-89725d490a.zip/node_modules/@fern-fern/docs-config/",\
+        ["npm:0.0.50", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-docs-config-npm-0.0.50-e5569fbf43-135741ac23.zip/node_modules/@fern-fern/docs-config/",\
           "packageDependencies": [\
-            ["@fern-fern/docs-config", "npm:0.0.49"]\
+            ["@fern-fern/docs-config", "npm:0.0.50"]\
           ],\
           "linkType": "HARD"\
         }]\
