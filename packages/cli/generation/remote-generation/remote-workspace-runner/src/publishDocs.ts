@@ -51,15 +51,19 @@ export async function publishDocs({
     });
 
     const filepathsToUpload = getFilepathsToUpload(parsedDocsConfig);
+    context.logger.debug("Absolute filepaths to upload:", filepathsToUpload.join(", "));
+
+    const relativeFilepathsToUpload = filepathsToUpload.map((filepath) =>
+        convertAbsoluteFilepathToFdrFilepath(filepath, parsedDocsConfig)
+    );
+    context.logger.debug("Relative filepaths to upload: [", relativeFilepathsToUpload.join(", "));
 
     const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsRegister({
         domain,
         customDomains,
         apiId: FernRegistry.ApiId(""),
         orgId: FernRegistry.OrgId(organization),
-        filepaths: filepathsToUpload.map((filepath) =>
-            convertAbsoluteFilepathToFdrFilepath(filepath, parsedDocsConfig)
-        ),
+        filepaths: relativeFilepathsToUpload,
     });
 
     if (!startDocsRegisterResponse.ok) {
@@ -664,5 +668,5 @@ function getFilepathsToUpload(parsedDocsConfig: ParsedDocsConfiguration): Absolu
 }
 
 function convertAbsoluteFilepathToFdrFilepath(filepath: AbsoluteFilePath, parsedDocsConfig: ParsedDocsConfiguration) {
-    return FernRegistry.docs.v1.write.FilePath(relative(parsedDocsConfig.absoluteFilepath, filepath));
+    return FernRegistry.docs.v1.write.FilePath(relative(dirname(parsedDocsConfig.absoluteFilepath), filepath));
 }
