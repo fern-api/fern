@@ -51,12 +51,12 @@ export async function publishDocs({
     });
 
     const filepathsToUpload = getFilepathsToUpload(parsedDocsConfig);
-    context.logger.debug("filepathsToUpload", filepathsToUpload.join(", "));
+    context.logger.debug("Absolute filepaths to upload:", filepathsToUpload.join(", "));
 
     const relativeFilepathsToUpload = filepathsToUpload.map((filepath) =>
         convertAbsoluteFilepathToFdrFilepath(filepath, parsedDocsConfig)
     );
-    context.logger.debug("relativeFilepathsToUpload", relativeFilepathsToUpload.join(", "));
+    context.logger.debug("Relative filepaths to upload: [", relativeFilepathsToUpload.join(", "));
 
     const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsRegister({
         domain,
