@@ -171,6 +171,7 @@ async function getNavigationConfiguration({
                 version: version.displayName,
                 navigation,
                 availability: version.availability,
+                slug: version.slug,
             });
         }
         return {

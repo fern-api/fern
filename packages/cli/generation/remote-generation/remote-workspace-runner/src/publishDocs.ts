@@ -361,6 +361,7 @@ async function convertNavigationConfig({
                             }),
                             availability:
                                 version.availability != null ? convertAvailability(version.availability) : undefined,
+                            slug: version.slug,
                         };
                     })
                 ),
