@@ -20,7 +20,7 @@ import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.ir.model.ir.PlatformHeaders;
 import com.fern.ir.model.variables.VariableDeclaration;
 import com.fern.ir.model.variables.VariableId;
-import com.fern.java.AbstractGeneratorContext;
+import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.generators.AbstractFileGenerator;
@@ -72,18 +72,22 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     private final ClassName builderClassName;
     private final FieldSpec environmentField;
     private final GeneratedJavaFile requestOptionsFile;
+    private final ClientGeneratorContext clientGeneratorContext;
 
     public ClientOptionsGenerator(
-            AbstractGeneratorContext<?, ?> generatorContext,
+            ClientGeneratorContext clientGeneratorContext,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
             GeneratedJavaFile requestOptionsFile) {
-        super(generatorContext.getPoetClassNameFactory().getCoreClassName(CLIENT_OPTIONS_CLASS_NAME), generatorContext);
+        super(
+                clientGeneratorContext.getPoetClassNameFactory().getCoreClassName(CLIENT_OPTIONS_CLASS_NAME),
+                clientGeneratorContext);
         this.builderClassName = className.nestedClass("Builder");
         this.environmentField = FieldSpec.builder(
                         generatedEnvironmentsClass.getClassName(), "environment", Modifier.PRIVATE, Modifier.FINAL)
                 .addModifiers()
                 .build();
         this.requestOptionsFile = requestOptionsFile;
+        this.clientGeneratorContext = clientGeneratorContext;
     }
 
     @Override
@@ -283,13 +287,22 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
             return MethodSpec.methodBuilder("build")
                     .addModifiers(Modifier.PUBLIC)
                     .returns(className)
+                    .addStatement(CodeBlock.builder()
+                            .add("$T okhttpClient = new $T.Builder()", OkHttpClient.class, OkHttpClient.class)
+                            .add(
+                                    "\n    .addInterceptor(new $T(3))",
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getRetryInterceptorClassName())
+                            .add("\n    .build()")
+                            .build())
                     .addStatement(
-                            "return new $T($L, $L, $L, new $T())",
+                            "return new $T($L, $L, $L, $L)",
                             className,
                             environmentField.name,
                             HEADERS_FIELD.name,
                             HEADER_SUPPLIERS_FIELD.name,
-                            OkHttpClient.class)
+                            "okhttpClient")
                     .build();
         } else {
             String variableArgs = variableFields.values().stream()
@@ -298,13 +311,22 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
             return MethodSpec.methodBuilder("build")
                     .addModifiers(Modifier.PUBLIC)
                     .returns(className)
+                    .addStatement(CodeBlock.builder()
+                            .add("$T okhttpClient = new $T.Builder()", OkHttpClient.class, OkHttpClient.class)
+                            .add(
+                                    "\n    .addInterceptor(new $T(3))",
+                                    clientGeneratorContext
+                                            .getPoetClassNameFactory()
+                                            .getRetryInterceptorClassName())
+                            .add("\n    .build()")
+                            .build())
                     .addStatement(
-                            "return new $T($L, $L, $L, new $T()," + variableArgs + ")",
+                            "return new $T($L, $L, $L, $L," + variableArgs + ")",
                             className,
                             environmentField.name,
                             HEADERS_FIELD.name,
                             HEADER_SUPPLIERS_FIELD.name,
-                            OkHttpClient.class)
+                            "okhttpClient")
                     .build();
         }
     }

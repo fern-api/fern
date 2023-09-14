@@ -39,6 +39,10 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
                 errorDeclaration.getName().getName().getPascalCase().getSafeName());
     }
 
+    public ClassName getRetryInterceptorClassName() {
+        return ClassName.get(getCorePackage(), "RetryInterceptor");
+    }
+
     public ClassName getClientClassName(Subpackage subpackage) {
         String packageName = getResourcesPackage(Optional.of(subpackage.getFernFilepath()), Optional.empty());
         return ClassName.get(packageName, getClientName(subpackage.getFernFilepath()));

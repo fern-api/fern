@@ -29,6 +29,7 @@ import com.fern.java.client.generators.ApiErrorGenerator;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.EnvironmentGenerator;
 import com.fern.java.client.generators.RequestOptionsGenerator;
+import com.fern.java.client.generators.RetryInterceptorGenerator;
 import com.fern.java.client.generators.RootClientGenerator;
 import com.fern.java.client.generators.SampleAppGenerator;
 import com.fern.java.client.generators.SubpackageClientGenerator;
@@ -164,6 +165,9 @@ public final class ClientGeneratorCli
         RequestOptionsGenerator requestOptionsGenerator = new RequestOptionsGenerator(context);
         GeneratedJavaFile generatedRequestOptions = requestOptionsGenerator.generateFile();
         this.addGeneratedFile(generatedRequestOptions);
+
+        RetryInterceptorGenerator retryInterceptorGenerator = new RetryInterceptorGenerator(context);
+        this.addGeneratedFile(retryInterceptorGenerator.generateFile());
 
         ClientOptionsGenerator clientOptionsGenerator =
                 new ClientOptionsGenerator(context, generatedEnvironmentsClass, generatedRequestOptions);

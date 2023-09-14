@@ -74,7 +74,10 @@ public final class ClientOptions {
         }
 
         public ClientOptions build() {
-            return new ClientOptions(environment, headers, headerSuppliers, new OkHttpClient());
+            OkHttpClient okhttpClient = new OkHttpClient.Builder()
+                    .addInterceptor(new RetryInterceptor(3))
+                    .build();
+            return new ClientOptions(environment, headers, headerSuppliers, okhttpClient);
         }
     }
 }
