@@ -1,6 +1,8 @@
 package com.seed.bytes.core;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.util.Optional;
 import java.util.Random;
 import okhttp3.Interceptor;
 import okhttp3.Response;
@@ -18,7 +20,11 @@ public class RetryInterceptor implements Interceptor {
         Optional<Duration> nextBackoff = this.backoff.nextBackoff();
 
         while (nextBackoff.isPresent()) {
-            Thread.sleep(nextBackoff.get().toMillis());
+            try {
+                Thread.sleep(nextBackoff.get().toMillis());
+            } catch (InterruptedException e) {
+                throw new IOException("Interrupted while trying request", e);
+            }
             Response response = chain.proceed(chain.request());
             if (response.isSuccessful()) {
                 return response;
@@ -42,7 +48,6 @@ public class RetryInterceptor implements Interceptor {
             this.maxNumRetries = maxNumRetries;
         }
 
-        @Override
         public Optional<Duration> nextBackoff() {
             retryNumber += 1;
             if (retryNumber > maxNumRetries) {
