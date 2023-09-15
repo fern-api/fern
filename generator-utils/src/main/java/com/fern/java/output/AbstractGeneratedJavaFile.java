@@ -16,10 +16,10 @@
 
 package com.fern.java.output;
 
+import com.fern.java.utils.JavaFileWriter;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -43,9 +43,9 @@ public abstract class AbstractGeneratedJavaFile extends GeneratedFile {
 
     @Override
     public final void writeToFile(Path directory, boolean isLocal, Optional<String> packagePrefix) throws IOException {
+        Path filepath;
         if (isLocal) {
             if (packagePrefix.isPresent()) {
-                String contents = javaFile().toString();
                 String replacedPackageName = javaFile().packageName.replace(packagePrefix.get(), "");
                 if (replacedPackageName.startsWith(".")) {
                     replacedPackageName = replacedPackageName.substring(1);
@@ -53,17 +53,23 @@ public abstract class AbstractGeneratedJavaFile extends GeneratedFile {
                 String fileName = replacedPackageName.isEmpty()
                         ? javaFile().typeSpec.name
                         : replacedPackageName + "." + javaFile().typeSpec.name;
-                Path filepath = Paths.get(fileName.replace('.', '/') + ".java");
-                Path resolvedFilePath = directory.resolve(filepath);
-                Files.createDirectories(resolvedFilePath.getParent());
-                Files.writeString(resolvedFilePath, contents);
+                filepath = directory.resolve(Paths.get(fileName.replace('.', '/') + ".java"));
             } else {
-                javaFile().writeToFile(directory.toFile());
+                filepath = directory
+                        .resolve(javaFile().packageName.replace(".", "/"))
+                        .resolve(javaFile().typeSpec.name + ".java");
             }
         } else if (testFile().isPresent() && testFile().get()) {
-            javaFile().writeToFile(directory.resolve("src/test/java").toFile());
+            filepath = directory
+                    .resolve("src/test/java")
+                    .resolve(javaFile().packageName.replace(".", "/"))
+                    .resolve(javaFile().typeSpec.name + ".java");
         } else {
-            javaFile().writeToFile(directory.resolve("src/main/java").toFile());
+            filepath = directory
+                    .resolve("src/main/java")
+                    .resolve(javaFile().packageName.replace(".", "/"))
+                    .resolve(javaFile().typeSpec.name + ".java");
         }
+        JavaFileWriter.write(filepath, javaFile().toString());
     }
 }

@@ -17,9 +17,9 @@
 package com.fern.java.output;
 
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
+import com.fern.java.utils.JavaFileWriter;
 import com.squareup.javapoet.ClassName;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -44,6 +44,7 @@ public abstract class GeneratedResourcesJavaFile extends GeneratedFile {
 
     @Override
     public final void writeToFile(Path directory, boolean isLocal, Optional<String> packagePrefix) throws IOException {
+        Path filepath;
         String packageName = getClassName().packageName();
         String contentsWithPackageName = "package " + getClassName().packageName() + ";\n\n" + contents();
         if (isLocal) {
@@ -55,24 +56,18 @@ public abstract class GeneratedResourcesJavaFile extends GeneratedFile {
                 String fileName = replacedPackageName.isEmpty()
                         ? getClassName().simpleName()
                         : replacedPackageName + "." + getClassName().simpleName();
-                Path filepath = Paths.get(fileName.replace('.', '/') + ".java");
-                Path resolvedFilePath = directory.resolve(filepath);
-                Files.createDirectories(resolvedFilePath.getParent());
-                Files.writeString(resolvedFilePath, contentsWithPackageName);
+                filepath = directory.resolve(Paths.get(fileName.replace('.', '/') + ".java"));
             } else {
-                Path filepath = Paths.get(packageName.replace('.', '/'));
-                Files.writeString(
-                        directory.resolve(filepath).resolve(getClassName().simpleName() + ".java"),
-                        contentsWithPackageName);
+                filepath = directory
+                        .resolve(Paths.get(packageName.replace('.', '/')))
+                        .resolve(getClassName().simpleName() + ".java");
             }
         } else {
-            Path filepath = Paths.get(packageName.replace('.', '/'));
-            Files.writeString(
-                    directory.resolve(Path.of("src/main/java/")
-                            .resolve(filepath)
-                            .resolve(getClassName().simpleName() + ".java")),
-                    contentsWithPackageName);
+            filepath = directory.resolve(Path.of("src/main/java/")
+                    .resolve(packageName.replace('.', '/'))
+                    .resolve(getClassName().simpleName() + ".java"));
         }
+        JavaFileWriter.write(filepath, contentsWithPackageName);
     }
 
     public static ImmutableGeneratedResourcesJavaFile.ClassNameBuildStage builder() {
