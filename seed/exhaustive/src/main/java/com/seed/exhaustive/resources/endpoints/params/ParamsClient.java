@@ -66,10 +66,9 @@ public class ParamsClient {
                 .addPathSegments("params");
         httpUrl.addQueryParameter("query", request.getQuery());
         httpUrl.addQueryParameter("number", Integer.toString(request.getNumber()));
-        RequestBody _requestBody = null;
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
-                .method("GET", _requestBody)
+                .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request okhttpRequest = _requestBuilder.build();
         try {
@@ -96,10 +95,9 @@ public class ParamsClient {
                 .addPathSegments("params");
         httpUrl.addQueryParameter("query", request.getQuery());
         httpUrl.addQueryParameter("numer", Integer.toString(request.getNumer()));
-        RequestBody _requestBody = null;
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
-                .method("GET", _requestBody)
+                .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request okhttpRequest = _requestBuilder.build();
         try {
@@ -127,10 +125,9 @@ public class ParamsClient {
                 .addPathSegments("path")
                 .addPathSegment(param);
         httpUrl.addQueryParameter("query", request.getQuery());
-        RequestBody _requestBody = null;
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
-                .method("GET", _requestBody)
+                .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request okhttpRequest = _requestBuilder.build();
         try {
@@ -158,16 +155,16 @@ public class ParamsClient {
                 .addPathSegments("path")
                 .addPathSegment(param)
                 .build();
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("PUT", _requestBody)
+                .method("PUT", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();

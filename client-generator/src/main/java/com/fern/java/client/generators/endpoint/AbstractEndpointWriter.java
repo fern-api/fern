@@ -84,7 +84,6 @@ public abstract class AbstractEndpointWriter {
     public static final String APPLICATION_JSON_HEADER = "application/json";
     public static final String APPLICATION_OCTET_STREAM = "application/octet-stream";
     public static final String REQUEST_BUILDER_NAME = "_requestBuilder";
-    public static final String REQUEST_BODY_NAME = "_requestBody";
     public static final String REQUEST_OPTIONS_PARAMETER_NAME = "requestOptions";
     private final HttpService httpService;
     private final HttpEndpoint httpEndpoint;
@@ -336,6 +335,13 @@ public abstract class AbstractEndpointWriter {
             return "_properties";
         }
         return "properties";
+    }
+
+    protected final String getOkhttpRequestBodyName() {
+        if (this.endpointParameterNames.contains("body")) {
+            return "_body";
+        }
+        return "body";
     }
 
     private List<ParameterSpec> getPathParameters() {

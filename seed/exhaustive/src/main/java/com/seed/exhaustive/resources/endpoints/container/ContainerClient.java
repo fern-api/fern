@@ -38,16 +38,16 @@ public class ContainerClient {
                 .addPathSegments("container")
                 .addPathSegments("list-of-primitives")
                 .build();
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", _requestBody)
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -77,16 +77,16 @@ public class ContainerClient {
                 .addPathSegments("container")
                 .addPathSegments("list-of-objects")
                 .build();
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", _requestBody)
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -115,16 +115,16 @@ public class ContainerClient {
                 .addPathSegments("container")
                 .addPathSegments("set-of-primitives")
                 .build();
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", _requestBody)
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -154,16 +154,16 @@ public class ContainerClient {
                 .addPathSegments("container")
                 .addPathSegments("set-of-objects")
                 .build();
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", _requestBody)
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -192,16 +192,16 @@ public class ContainerClient {
                 .addPathSegments("container")
                 .addPathSegments("map-prim-to-prim")
                 .build();
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", _requestBody)
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -232,16 +232,16 @@ public class ContainerClient {
                 .addPathSegments("container")
                 .addPathSegments("map-prim-to-object")
                 .build();
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", _requestBody)
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -271,16 +271,16 @@ public class ContainerClient {
                 .addPathSegments("container")
                 .addPathSegments("opt-objects")
                 .build();
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", _requestBody)
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();

@@ -44,9 +44,9 @@ public class PlaylistClient {
             httpUrl.addQueryParameter(
                     "optionalDatetime", request.getOptionalDatetime().get().toString());
         }
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()),
                     MediaType.parse("application/json"));
         } catch (Exception e) {
@@ -54,7 +54,7 @@ public class PlaylistClient {
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
-                .method("POST", _requestBody)
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
@@ -92,10 +92,9 @@ public class PlaylistClient {
                     "optionalMultipleField", request.getOptionalMultipleField().get());
         }
         httpUrl.addQueryParameter("multipleField", request.getMultipleField());
-        RequestBody _requestBody = null;
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
-                .method("GET", _requestBody)
+                .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
@@ -161,16 +160,16 @@ public class PlaylistClient {
                 .addPathSegment(Integer.toString(serviceParam))
                 .addPathSegment(playlistId)
                 .build();
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("PUT", _requestBody)
+                .method("PUT", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();

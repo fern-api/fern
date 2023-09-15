@@ -34,16 +34,16 @@ public class PrimitiveClient {
                 .addPathSegments("primitive")
                 .addPathSegments("string")
                 .build();
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", _requestBody)
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -71,16 +71,16 @@ public class PrimitiveClient {
                 .addPathSegments("primitive")
                 .addPathSegments("integer")
                 .build();
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", _requestBody)
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -108,16 +108,16 @@ public class PrimitiveClient {
                 .addPathSegments("primitive")
                 .addPathSegments("long")
                 .build();
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", _requestBody)
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -145,16 +145,16 @@ public class PrimitiveClient {
                 .addPathSegments("primitive")
                 .addPathSegments("double")
                 .build();
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", _requestBody)
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -182,16 +182,16 @@ public class PrimitiveClient {
                 .addPathSegments("primitive")
                 .addPathSegments("boolean")
                 .build();
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", _requestBody)
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -219,16 +219,16 @@ public class PrimitiveClient {
                 .addPathSegments("primitive")
                 .addPathSegments("datetime")
                 .build();
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", _requestBody)
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -256,16 +256,16 @@ public class PrimitiveClient {
                 .addPathSegments("primitive")
                 .addPathSegments("date")
                 .build();
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", _requestBody)
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -293,16 +293,16 @@ public class PrimitiveClient {
                 .addPathSegments("primitive")
                 .addPathSegments("uuid")
                 .build();
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", _requestBody)
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -330,16 +330,16 @@ public class PrimitiveClient {
                 .addPathSegments("primitive")
                 .addPathSegments("base64")
                 .build();
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", _requestBody)
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();

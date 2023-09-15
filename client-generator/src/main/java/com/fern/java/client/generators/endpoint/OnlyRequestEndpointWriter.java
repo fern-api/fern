@@ -182,10 +182,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     .add(".url(")
                     .add(inlineableHttpUrl)
                     .add(")\n")
-                    .add(
-                            ".method($S, $L)\n",
-                            httpEndpoint.getMethod().toString(),
-                            AbstractEndpointWriter.REQUEST_BODY_NAME)
+                    .add(".method($S, $L)\n", httpEndpoint.getMethod().toString(), getOkhttpRequestBodyName())
                     .add(
                             ".headers($T.of($L.$N($L)))\n",
                             Headers.class,
@@ -230,10 +227,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     .add(".url(")
                     .add(inlineableHttpUrl)
                     .add(")\n")
-                    .add(
-                            ".method($S, $L)\n",
-                            httpEndpoint.getMethod().toString(),
-                            AbstractEndpointWriter.REQUEST_BODY_NAME)
+                    .add(".method($S, $L)\n", httpEndpoint.getMethod().toString(), getOkhttpRequestBodyName())
                     .add(
                             ".headers($T.of($L.$N($L)))\n",
                             Headers.class,
@@ -261,11 +255,11 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
         @Override
         public Void visitTypeReference(HttpRequestBodyReference _typeReference) {
             codeBlock
-                    .addStatement("$T $L", RequestBody.class, AbstractEndpointWriter.REQUEST_BODY_NAME)
+                    .addStatement("$T $L", RequestBody.class, getOkhttpRequestBodyName())
                     .beginControlFlow("try")
                     .addStatement(
                             "$L = $T.create($T.$L.writeValueAsBytes($L), $T.parse($S))",
-                            AbstractEndpointWriter.REQUEST_BODY_NAME,
+                            getOkhttpRequestBodyName(),
                             RequestBody.class,
                             generatedObjectMapper.getClassName(),
                             generatedObjectMapper.jsonMapperStaticField().name,
@@ -284,7 +278,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             codeBlock.addStatement(
                     "$T $L = $T.create($L)",
                     RequestBody.class,
-                    AbstractEndpointWriter.REQUEST_BODY_NAME,
+                    getOkhttpRequestBodyName(),
                     RequestBody.class,
                     sdkRequest.getRequestParameterName().getCamelCase().getSafeName());
             return null;

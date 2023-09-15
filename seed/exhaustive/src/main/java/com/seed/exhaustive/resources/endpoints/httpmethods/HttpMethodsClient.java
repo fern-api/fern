@@ -63,16 +63,16 @@ public class HttpMethodsClient {
                 .newBuilder()
                 .addPathSegments("http-methods")
                 .build();
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", _requestBody)
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -100,16 +100,16 @@ public class HttpMethodsClient {
                 .addPathSegments("http-methods")
                 .addPathSegment(id)
                 .build();
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("PUT", _requestBody)
+                .method("PUT", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
@@ -138,16 +138,16 @@ public class HttpMethodsClient {
                 .addPathSegments("http-methods")
                 .addPathSegment(id)
                 .build();
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("PATCH", _requestBody)
+                .method("PATCH", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();

@@ -33,9 +33,9 @@ public class ReqWithHeadersClient {
                 .addPathSegments("test-headers")
                 .addPathSegments("custom-header")
                 .build();
-        RequestBody _requestBody;
+        RequestBody body;
         try {
-            _requestBody = RequestBody.create(
+            body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()),
                     MediaType.parse("application/json"));
         } catch (Exception e) {
@@ -43,7 +43,7 @@ public class ReqWithHeadersClient {
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", _requestBody)
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         _requestBuilder.addHeader("X-TEST-SERVICE-HEADER", request.getXTestServiceHeader());

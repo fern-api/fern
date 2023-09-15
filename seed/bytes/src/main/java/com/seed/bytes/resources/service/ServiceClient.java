@@ -30,10 +30,10 @@ public class ServiceClient {
                 .newBuilder()
                 .addPathSegments("upload-content")
                 .build();
-        RequestBody _requestBody = RequestBody.create(request);
+        RequestBody body = RequestBody.create(request);
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", _requestBody)
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/octet-stream")
                 .build();

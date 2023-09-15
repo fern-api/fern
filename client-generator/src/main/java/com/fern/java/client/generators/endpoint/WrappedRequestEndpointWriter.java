@@ -132,6 +132,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         CodeBlock.Builder requestBodyCodeBlock = CodeBlock.builder();
         boolean isFileUpload = generatedWrappedRequest.requestBodyGetter().isPresent()
                 && generatedWrappedRequest.requestBodyGetter().get() instanceof FileUploadRequestBodyGetters;
+        Optional<CodeBlock> inlinedRequestBodyBuilder = Optional.empty();
         if (generatedWrappedRequest.requestBodyGetter().isPresent()) {
             if (generatedWrappedRequest.requestBodyGetter().get() instanceof ReferencedRequestBodyGetter) {
                 String jsonRequestBodyArgument = requestParameterName + "."
@@ -151,23 +152,13 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 FileUploadRequestBodyGetters fileUploadRequestBodyGetter = ((FileUploadRequestBodyGetters)
                         generatedWrappedRequest.requestBodyGetter().get());
                 initializeMultipartBody(fileUploadRequestBodyGetter, requestBodyCodeBlock, generatedObjectMapper);
-                requestBodyCodeBlock.addStatement(
-                        "$T $L = $L.build()",
-                        RequestBody.class,
-                        AbstractEndpointWriter.REQUEST_BODY_NAME,
-                        MULTIPART_BODY_PROPERTIES_NAME);
+                inlinedRequestBodyBuilder = Optional.of(CodeBlock.of("$L.build()", getOkhttpRequestBodyName()));
             }
         } else {
             if (httpEndpoint.getMethod().equals(HttpMethod.POST)) {
-                requestBodyCodeBlock.addStatement(
-                        "$T $L = $T.create($S, null)",
-                        RequestBody.class,
-                        AbstractEndpointWriter.REQUEST_BODY_NAME,
-                        RequestBody.class,
-                        "");
+                inlinedRequestBodyBuilder = Optional.of(CodeBlock.of("$T.create($S, null)", RequestBody.class, ""));
             } else {
-                requestBodyCodeBlock.addStatement(
-                        "$T $L = null", RequestBody.class, AbstractEndpointWriter.REQUEST_BODY_NAME);
+                inlinedRequestBodyBuilder = Optional.of(CodeBlock.of("null"));
             }
         }
         requestBodyCodeBlock
@@ -179,11 +170,16 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 .indent()
                 .add(".url(")
                 .add(inlineableHttpUrl)
-                .add(")\n")
-                .add(
-                        ".method($S, $L)\n",
-                        httpEndpoint.getMethod().toString(),
-                        AbstractEndpointWriter.REQUEST_BODY_NAME);
+                .add(")\n");
+        if (inlinedRequestBodyBuilder.isPresent()) {
+            requestBodyCodeBlock
+                    .add(".method($S, ", httpEndpoint.getMethod().toString())
+                    .add(inlinedRequestBodyBuilder.get())
+                    .add(")\n");
+        } else {
+            requestBodyCodeBlock.add(
+                    ".method($S, $L)\n", httpEndpoint.getMethod().toString(), getOkhttpRequestBodyName());
+        }
         if (sendContentType && !isFileUpload) {
             requestBodyCodeBlock
                     .add(
@@ -267,11 +263,11 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             String variableToJsonify,
             CodeBlock.Builder requestBodyCodeBlock) {
         requestBodyCodeBlock
-                .addStatement("$T $L", RequestBody.class, AbstractEndpointWriter.REQUEST_BODY_NAME)
+                .addStatement("$T $L", RequestBody.class, getOkhttpRequestBodyName())
                 .beginControlFlow("try")
                 .addStatement(
                         "$L = $T.create($T.$L.writeValueAsBytes($L), $T.parse($S))",
-                        AbstractEndpointWriter.REQUEST_BODY_NAME,
+                        getOkhttpRequestBodyName(),
                         RequestBody.class,
                         generatedObjectMapper.getClassName(),
                         generatedObjectMapper.jsonMapperStaticField().name,

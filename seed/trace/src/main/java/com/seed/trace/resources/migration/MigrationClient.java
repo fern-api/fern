@@ -15,7 +15,6 @@ import java.util.List;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class MigrationClient {
@@ -36,10 +35,9 @@ public class MigrationClient {
                 .addPathSegments("migration-info")
                 .addPathSegments("all")
                 .build();
-        RequestBody _requestBody = null;
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
-                .method("GET", _requestBody)
+                .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         _requestBuilder.addHeader("admin-key-header", request.getAdminKeyHeader());

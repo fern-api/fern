@@ -83,10 +83,9 @@ public class ServiceClient {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        RequestBody _requestBody = _multipartBody.build();
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", _requestBody)
+                .method("POST", body.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request okhttpRequest = _requestBuilder.build();
         try {
@@ -118,10 +117,9 @@ public class ServiceClient {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        RequestBody _requestBody = _multipartBody.build();
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", _requestBody)
+                .method("POST", body.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request okhttpRequest = _requestBuilder.build();
         try {
