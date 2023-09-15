@@ -31,14 +31,14 @@ public class SubmissionClient {
     }
 
     public ExecutionSessionResponse createExecutionSession(Language language, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sessions")
                 .addPathSegments("create-session")
                 .addPathSegment(language.toString())
                 .build();
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", RequestBody.create("", null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -61,13 +61,13 @@ public class SubmissionClient {
     }
 
     public Optional<ExecutionSessionResponse> getExecutionSession(String sessionId, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sessions")
                 .addPathSegment(sessionId)
                 .build();
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -91,14 +91,14 @@ public class SubmissionClient {
     }
 
     public void stopExecutionSession(String sessionId, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sessions")
                 .addPathSegments("stop")
                 .addPathSegment(sessionId)
                 .build();
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("DELETE", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
@@ -120,13 +120,13 @@ public class SubmissionClient {
     }
 
     public GetExecutionSessionStateResponse getExecutionSessionsState(RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sessions")
                 .addPathSegments("execution-sessions-state")
                 .build();
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

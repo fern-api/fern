@@ -28,7 +28,7 @@ public class ReqWithHeadersClient {
     }
 
     public void getWithCustomHeader(ReqWithHeaders request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("test-headers")
                 .addPathSegments("custom-header")
@@ -42,7 +42,7 @@ public class ReqWithHeadersClient {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");

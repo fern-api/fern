@@ -29,13 +29,13 @@ public class HttpMethodsClient {
     }
 
     public String testGet(String id, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("http-methods")
                 .addPathSegment(id)
                 .build();
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -58,7 +58,7 @@ public class HttpMethodsClient {
     }
 
     public ObjectWithOptionalField testPost(ObjectWithRequiredField request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("http-methods")
                 .build();
@@ -70,7 +70,7 @@ public class HttpMethodsClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -93,7 +93,7 @@ public class HttpMethodsClient {
     }
 
     public ObjectWithOptionalField testPut(String id, ObjectWithRequiredField request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("http-methods")
                 .addPathSegment(id)
@@ -106,7 +106,7 @@ public class HttpMethodsClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("PUT", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -130,7 +130,7 @@ public class HttpMethodsClient {
 
     public ObjectWithOptionalField testPatch(
             String id, ObjectWithOptionalField request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("http-methods")
                 .addPathSegment(id)
@@ -143,7 +143,7 @@ public class HttpMethodsClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("PATCH", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -170,13 +170,13 @@ public class HttpMethodsClient {
     }
 
     public boolean testDelete(String id, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("http-methods")
                 .addPathSegment(id)
                 .build();
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("DELETE", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

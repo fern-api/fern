@@ -28,7 +28,7 @@ public class S3Client {
     }
 
     public String getPresignedUrl(GetPresignedUrlRequest request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().gets3URL())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().gets3URL())
                 .newBuilder()
                 .addPathSegments("s3")
                 .addPathSegments("presigned-url")
@@ -41,7 +41,7 @@ public class S3Client {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

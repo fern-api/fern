@@ -29,7 +29,7 @@ public class PrimitiveClient {
     }
 
     public String getAndReturnString(String request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
                 .addPathSegments("string")
@@ -42,7 +42,7 @@ public class PrimitiveClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -65,7 +65,7 @@ public class PrimitiveClient {
     }
 
     public int getAndReturnInt(int request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
                 .addPathSegments("integer")
@@ -78,7 +78,7 @@ public class PrimitiveClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -101,7 +101,7 @@ public class PrimitiveClient {
     }
 
     public long getAndReturnLong(long request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
                 .addPathSegments("long")
@@ -114,7 +114,7 @@ public class PrimitiveClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -137,7 +137,7 @@ public class PrimitiveClient {
     }
 
     public double getAndReturnDouble(double request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
                 .addPathSegments("double")
@@ -150,7 +150,7 @@ public class PrimitiveClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -173,7 +173,7 @@ public class PrimitiveClient {
     }
 
     public boolean getAndReturnBool(boolean request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
                 .addPathSegments("boolean")
@@ -186,7 +186,7 @@ public class PrimitiveClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -209,7 +209,7 @@ public class PrimitiveClient {
     }
 
     public OffsetDateTime getAndReturnDatetime(OffsetDateTime request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
                 .addPathSegments("datetime")
@@ -222,7 +222,7 @@ public class PrimitiveClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -245,7 +245,7 @@ public class PrimitiveClient {
     }
 
     public String getAndReturnDate(String request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
                 .addPathSegments("date")
@@ -258,7 +258,7 @@ public class PrimitiveClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -281,7 +281,7 @@ public class PrimitiveClient {
     }
 
     public UUID getAndReturnUuid(UUID request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
                 .addPathSegments("uuid")
@@ -294,7 +294,7 @@ public class PrimitiveClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -317,7 +317,7 @@ public class PrimitiveClient {
     }
 
     public byte[] getAndReturnBase64(byte[] request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("primitive")
                 .addPathSegments("base64")
@@ -330,7 +330,7 @@ public class PrimitiveClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

@@ -28,7 +28,7 @@ public class Ec2Client {
     }
 
     public void bootInstance(BootInstanceRequest request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getec2URL())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getec2URL())
                 .newBuilder()
                 .addPathSegments("ec2")
                 .addPathSegments("boot")
@@ -41,7 +41,7 @@ public class Ec2Client {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

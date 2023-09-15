@@ -31,14 +31,14 @@ public class MigrationClient {
 
     public List<Migration> getAttemptedMigrations(
             GetAttemptedMigrationsRequest request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("migration-info")
                 .addPathSegments("all")
                 .build();
         RequestBody _requestBody = null;
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("GET", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");

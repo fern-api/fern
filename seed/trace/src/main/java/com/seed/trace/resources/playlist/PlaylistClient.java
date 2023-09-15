@@ -34,15 +34,14 @@ public class PlaylistClient {
     }
 
     public Playlist createPlaylist(int serviceParam, CreatePlaylistRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder _httpUrl = HttpUrl.parse(
-                        this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/playlist")
                 .addPathSegment(Integer.toString(serviceParam))
                 .addPathSegments("create");
-        _httpUrl.addQueryParameter("datetime", request.getDatetime().toString());
+        httpUrl.addQueryParameter("datetime", request.getDatetime().toString());
         if (request.getOptionalDatetime().isPresent()) {
-            _httpUrl.addQueryParameter(
+            httpUrl.addQueryParameter(
                     "optionalDatetime", request.getOptionalDatetime().get().toString());
         }
         RequestBody _requestBody;
@@ -54,7 +53,7 @@ public class PlaylistClient {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(_httpUrl.build())
+                .url(httpUrl.build())
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
@@ -77,25 +76,24 @@ public class PlaylistClient {
     }
 
     public List<Playlist> getPlaylists(int serviceParam, GetPlaylistsRequest request, RequestOptions requestOptions) {
-        HttpUrl.Builder _httpUrl = HttpUrl.parse(
-                        this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/playlist")
                 .addPathSegment(Integer.toString(serviceParam))
                 .addPathSegments("all");
         if (request.getLimit().isPresent()) {
-            _httpUrl.addQueryParameter("limit", request.getLimit().get().toString());
+            httpUrl.addQueryParameter("limit", request.getLimit().get().toString());
         }
-        _httpUrl.addQueryParameter("otherField", request.getOtherField());
-        _httpUrl.addQueryParameter("multiLineDocs", request.getMultiLineDocs());
+        httpUrl.addQueryParameter("otherField", request.getOtherField());
+        httpUrl.addQueryParameter("multiLineDocs", request.getMultiLineDocs());
         if (request.getOptionalMultipleField().isPresent()) {
-            _httpUrl.addQueryParameter(
+            httpUrl.addQueryParameter(
                     "optionalMultipleField", request.getOptionalMultipleField().get());
         }
-        _httpUrl.addQueryParameter("multipleField", request.getMultipleField());
+        httpUrl.addQueryParameter("multipleField", request.getMultipleField());
         RequestBody _requestBody = null;
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(_httpUrl.build())
+                .url(httpUrl.build())
                 .method("GET", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
@@ -119,14 +117,14 @@ public class PlaylistClient {
     }
 
     public Playlist getPlaylist(int serviceParam, String playlistId, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/playlist")
                 .addPathSegment(Integer.toString(serviceParam))
                 .addPathSegment(playlistId)
                 .build();
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -154,7 +152,7 @@ public class PlaylistClient {
             String playlistId,
             Optional<UpdatePlaylistRequest> request,
             RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/playlist")
                 .addPathSegment(Integer.toString(serviceParam))
@@ -168,7 +166,7 @@ public class PlaylistClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("PUT", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -196,14 +194,14 @@ public class PlaylistClient {
     }
 
     public void deletePlaylist(int serviceParam, String playlistId, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/playlist")
                 .addPathSegment(Integer.toString(serviceParam))
                 .addPathSegment(playlistId)
                 .build();
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("DELETE", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();

@@ -37,7 +37,7 @@ public class AdminClient {
 
     public void updateTestSubmissionStatus(
             UUID submissionId, TestSubmissionStatus request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-test-submission-status")
@@ -51,7 +51,7 @@ public class AdminClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -75,7 +75,7 @@ public class AdminClient {
 
     public void sendTestSubmissionUpdate(
             UUID submissionId, TestSubmissionUpdate request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-test-submission-status-v2")
@@ -89,7 +89,7 @@ public class AdminClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -113,7 +113,7 @@ public class AdminClient {
 
     public void updateWorkspaceSubmissionStatus(
             UUID submissionId, WorkspaceSubmissionStatus request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-workspace-submission-status")
@@ -127,7 +127,7 @@ public class AdminClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -151,7 +151,7 @@ public class AdminClient {
 
     public void sendWorkspaceSubmissionUpdate(
             UUID submissionId, WorkspaceSubmissionUpdate request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-workspace-submission-status-v2")
@@ -165,7 +165,7 @@ public class AdminClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -189,7 +189,7 @@ public class AdminClient {
 
     public void storeTracedTestCase(
             UUID submissionId, String testCaseId, StoreTracedTestCaseRequest request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-test-trace/submission")
@@ -205,7 +205,7 @@ public class AdminClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -229,7 +229,7 @@ public class AdminClient {
 
     public void storeTracedTestCaseV2(
             UUID submissionId, String testCaseId, List<TraceResponseV2> request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-test-trace-v2/submission")
@@ -245,7 +245,7 @@ public class AdminClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -269,7 +269,7 @@ public class AdminClient {
 
     public void storeTracedWorkspace(
             UUID submissionId, StoreTracedWorkspaceRequest request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-workspace-trace/submission")
@@ -283,7 +283,7 @@ public class AdminClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -307,7 +307,7 @@ public class AdminClient {
 
     public void storeTracedWorkspaceV2(
             UUID submissionId, List<TraceResponseV2> request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-workspace-trace-v2/submission")
@@ -321,7 +321,7 @@ public class AdminClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

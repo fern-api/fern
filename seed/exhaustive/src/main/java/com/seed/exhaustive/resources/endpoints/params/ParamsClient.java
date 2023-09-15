@@ -30,14 +30,14 @@ public class ParamsClient {
     }
 
     public String getWithPath(String param, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path")
                 .addPathSegment(param)
                 .build();
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
@@ -60,15 +60,14 @@ public class ParamsClient {
     }
 
     public void getWithQuery(GetWithQuery request, RequestOptions requestOptions) {
-        HttpUrl.Builder _httpUrl = HttpUrl.parse(
-                        this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params");
-        _httpUrl.addQueryParameter("query", request.getQuery());
-        _httpUrl.addQueryParameter("number", Integer.toString(request.getNumber()));
+        httpUrl.addQueryParameter("query", request.getQuery());
+        httpUrl.addQueryParameter("number", Integer.toString(request.getNumber()));
         RequestBody _requestBody = null;
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(_httpUrl.build())
+                .url(httpUrl.build())
                 .method("GET", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request _request = _requestBuilder.build();
@@ -90,15 +89,14 @@ public class ParamsClient {
     }
 
     public void getWithAllowMultipleQuery(GetWithMultipleQuery request, RequestOptions requestOptions) {
-        HttpUrl.Builder _httpUrl = HttpUrl.parse(
-                        this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params");
-        _httpUrl.addQueryParameter("query", request.getQuery());
-        _httpUrl.addQueryParameter("numer", Integer.toString(request.getNumer()));
+        httpUrl.addQueryParameter("query", request.getQuery());
+        httpUrl.addQueryParameter("numer", Integer.toString(request.getNumer()));
         RequestBody _requestBody = null;
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(_httpUrl.build())
+                .url(httpUrl.build())
                 .method("GET", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request _request = _requestBuilder.build();
@@ -120,16 +118,15 @@ public class ParamsClient {
     }
 
     public void getWithPathAndQuery(String param, GetWithPathAndQuery request, RequestOptions requestOptions) {
-        HttpUrl.Builder _httpUrl = HttpUrl.parse(
-                        this.clientOptions.environment().getUrl())
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path")
                 .addPathSegment(param);
-        _httpUrl.addQueryParameter("query", request.getQuery());
+        httpUrl.addQueryParameter("query", request.getQuery());
         RequestBody _requestBody = null;
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(_httpUrl.build())
+                .url(httpUrl.build())
                 .method("GET", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request _request = _requestBuilder.build();
@@ -151,7 +148,7 @@ public class ParamsClient {
     }
 
     public String modifyWithPath(String param, String request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path")
@@ -165,7 +162,7 @@ public class ParamsClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("PUT", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

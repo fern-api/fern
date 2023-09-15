@@ -28,7 +28,7 @@ public class SyspropClient {
     }
 
     public void setNumWarmInstances(Language language, int numWarmInstances, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sysprop")
                 .addPathSegments("num-warm-instances")
@@ -36,7 +36,7 @@ public class SyspropClient {
                 .addPathSegment(Integer.toString(numWarmInstances))
                 .build();
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("PUT", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
@@ -58,13 +58,13 @@ public class SyspropClient {
     }
 
     public Map<Language, Integer> getNumWarmInstances(RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sysprop")
                 .addPathSegments("num-warm-instances")
                 .build();
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

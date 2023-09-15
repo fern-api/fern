@@ -31,7 +31,7 @@ public class ServiceClient {
     }
 
     public void post(File file, Optional<File> maybeFile, MyRequest request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .build();
         MultipartBody.Builder _multipartBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
@@ -85,7 +85,7 @@ public class ServiceClient {
         }
         RequestBody _requestBody = _multipartBody.build();
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request _request = _requestBuilder.build();
@@ -107,7 +107,7 @@ public class ServiceClient {
     }
 
     public void justFile(File file, JustFileRequet request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("just-file")
                 .build();
@@ -119,7 +119,7 @@ public class ServiceClient {
         }
         RequestBody _requestBody = _multipartBody.build();
         Request.Builder _requestBuilder = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request _request = _requestBuilder.build();

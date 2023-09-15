@@ -30,7 +30,7 @@ public class InlinedRequestsClient {
 
     public ObjectWithOptionalField postWithObjectBodyandResponse(
             PostWithObjectBody request, RequestOptions requestOptions) {
-        HttpUrl _httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("req-bodies")
                 .addPathSegments("object")
@@ -43,7 +43,7 @@ public class InlinedRequestsClient {
             throw new RuntimeException(e);
         }
         Request _request = new Request.Builder()
-                .url(_httpUrl)
+                .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")

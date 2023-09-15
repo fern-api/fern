@@ -81,7 +81,6 @@ public abstract class AbstractEndpointWriter {
     public static final String CONTENT_TYPE_HEADER = "Content-Type";
     public static final String APPLICATION_JSON_HEADER = "application/json";
     public static final String APPLICATION_OCTET_STREAM = "application/octet-stream";
-    public static final String HTTP_URL_NAME = "_httpUrl";
     public static final String REQUEST_NAME = "_request";
     public static final String REQUEST_BUILDER_NAME = "_requestBuilder";
     public static final String REQUEST_BODY_NAME = "_requestBody";
@@ -135,7 +134,9 @@ public abstract class AbstractEndpointWriter {
 
         // Step 4: Get http client initializer
         HttpUrlBuilder httpUrlBuilder = new HttpUrlBuilder(
-                HTTP_URL_NAME,
+                getHttpUrlName(endpointMethodBuilder.parameters.stream()
+                        .map(parameterSpec -> parameterSpec.name)
+                        .collect(Collectors.toList())),
                 sdkRequest()
                         .map(sdkRequest -> sdkRequest
                                 .getRequestParameterName()
@@ -299,6 +300,13 @@ public abstract class AbstractEndpointWriter {
         } else {
             throw new RuntimeException("Generated Environments class was unknown : " + generatedEnvironmentsClass);
         }
+    }
+
+    private String getHttpUrlName(List<String> paramNames) {
+        if (paramNames.contains("httpUrl")) {
+            return "_httpUrl";
+        }
+        return "httpUrl";
     }
 
     private List<ParameterSpec> getPathParameters() {
