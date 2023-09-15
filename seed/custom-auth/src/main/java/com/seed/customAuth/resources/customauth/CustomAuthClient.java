@@ -26,6 +26,9 @@ public class CustomAuthClient {
         return getWithCustomAuth(null);
     }
 
+    /**
+     * GET request with custom auth scheme
+     */
     public boolean getWithCustomAuth(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -55,6 +58,9 @@ public class CustomAuthClient {
         return postWithCustomAuth(request, null);
     }
 
+    /**
+     * POST request with custom auth scheme
+     */
     public boolean postWithCustomAuth(Object request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()

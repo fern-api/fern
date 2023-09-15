@@ -26,6 +26,9 @@ public class NoAuthClient {
         return postWithNoAuth(request, null);
     }
 
+    /**
+     * POST request with no auth
+     */
     public boolean postWithNoAuth(Object request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()

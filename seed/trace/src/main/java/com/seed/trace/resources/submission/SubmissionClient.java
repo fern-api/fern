@@ -30,6 +30,9 @@ public class SubmissionClient {
         return createExecutionSession(language, null);
     }
 
+    /**
+     * Returns sessionId and execution server URL for session. Spins up server.
+     */
     public ExecutionSessionResponse createExecutionSession(Language language, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -61,6 +64,9 @@ public class SubmissionClient {
         return getExecutionSession(sessionId, null);
     }
 
+    /**
+     * Returns execution server URL for session. Returns empty if session isn't registered.
+     */
     public Optional<ExecutionSessionResponse> getExecutionSession(String sessionId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -92,6 +98,9 @@ public class SubmissionClient {
         stopExecutionSession(sessionId, null);
     }
 
+    /**
+     * Stops execution session.
+     */
     public void stopExecutionSession(String sessionId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()

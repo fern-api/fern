@@ -28,6 +28,9 @@ public class ProblemClient {
         return getLightweightProblems(null);
     }
 
+    /**
+     * Returns lightweight versions of all problems
+     */
     public List<LightweightProblemInfoV2> getLightweightProblems(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -59,6 +62,9 @@ public class ProblemClient {
         return getProblems(null);
     }
 
+    /**
+     * Returns latest versions of all problems
+     */
     public List<ProblemInfoV2> getProblems(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -90,6 +96,9 @@ public class ProblemClient {
         return getLatestProblem(problemId, null);
     }
 
+    /**
+     * Returns latest version of a problem
+     */
     public ProblemInfoV2 getLatestProblem(String problemId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -121,6 +130,9 @@ public class ProblemClient {
         return getProblemVersion(problemId, problemVersion, null);
     }
 
+    /**
+     * Returns requested version of a problem
+     */
     public ProblemInfoV2 getProblemVersion(String problemId, int problemVersion, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()

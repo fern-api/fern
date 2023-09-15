@@ -28,6 +28,9 @@ public class InlinedRequestsClient {
         return postWithObjectBodyandResponse(request, null);
     }
 
+    /**
+     * POST with custom object in request body, response is an object
+     */
     public ObjectWithOptionalField postWithObjectBodyandResponse(
             PostWithObjectBody request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())

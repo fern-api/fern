@@ -31,6 +31,9 @@ public class ProblemClient {
         return createProblem(request, null);
     }
 
+    /**
+     * Creates a problem
+     */
     public CreateProblemResponse createProblem(CreateProblemRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -68,6 +71,9 @@ public class ProblemClient {
         return updateProblem(problemId, request, null);
     }
 
+    /**
+     * Updates a problem
+     */
     public UpdateProblemResponse updateProblem(
             String problemId, CreateProblemRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -107,6 +113,9 @@ public class ProblemClient {
         deleteProblem(problemId, null);
     }
 
+    /**
+     * Soft deletes a problem
+     */
     public void deleteProblem(String problemId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -137,6 +146,9 @@ public class ProblemClient {
         return getDefaultStarterFiles(request, null);
     }
 
+    /**
+     * Returns default starter files for problem
+     */
     public GetDefaultStarterFilesResponse getDefaultStarterFiles(
             GetDefaultStarterFilesRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())

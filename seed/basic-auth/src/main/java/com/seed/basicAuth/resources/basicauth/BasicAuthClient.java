@@ -26,6 +26,9 @@ public class BasicAuthClient {
         return getWithBasicAuth(null);
     }
 
+    /**
+     * GET request with basic auth scheme
+     */
     public boolean getWithBasicAuth(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -55,6 +58,9 @@ public class BasicAuthClient {
         return postWithBasicAuth(request, null);
     }
 
+    /**
+     * POST request with basic auth scheme
+     */
     public boolean postWithBasicAuth(Object request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()

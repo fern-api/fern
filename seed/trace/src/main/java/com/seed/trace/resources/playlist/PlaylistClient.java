@@ -33,6 +33,9 @@ public class PlaylistClient {
         return createPlaylist(serviceParam, request, null);
     }
 
+    /**
+     * Create a new playlist
+     */
     public Playlist createPlaylist(int serviceParam, CreatePlaylistRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -76,6 +79,9 @@ public class PlaylistClient {
         return getPlaylists(serviceParam, request, null);
     }
 
+    /**
+     * Returns the user's playlists
+     */
     public List<Playlist> getPlaylists(int serviceParam, GetPlaylistsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -117,6 +123,9 @@ public class PlaylistClient {
         return getPlaylist(serviceParam, playlistId, null);
     }
 
+    /**
+     * Returns a playlist
+     */
     public Playlist getPlaylist(int serviceParam, String playlistId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -149,6 +158,9 @@ public class PlaylistClient {
         return updatePlaylist(serviceParam, playlistId, request, null);
     }
 
+    /**
+     * Updates a playlist
+     */
     public Optional<Playlist> updatePlaylist(
             int serviceParam,
             String playlistId,
@@ -196,6 +208,9 @@ public class PlaylistClient {
         deletePlaylist(serviceParam, playlistId, null);
     }
 
+    /**
+     * Deletes a playlist
+     */
     public void deletePlaylist(int serviceParam, String playlistId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()

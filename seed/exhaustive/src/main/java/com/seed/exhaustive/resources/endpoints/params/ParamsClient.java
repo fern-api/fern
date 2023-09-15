@@ -29,6 +29,9 @@ public class ParamsClient {
         return getWithPath(param, null);
     }
 
+    /**
+     * GET with path param
+     */
     public String getWithPath(String param, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -60,6 +63,9 @@ public class ParamsClient {
         getWithQuery(request, null);
     }
 
+    /**
+     * GET with query param
+     */
     public void getWithQuery(GetWithQuery request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -89,6 +95,9 @@ public class ParamsClient {
         getWithAllowMultipleQuery(request, null);
     }
 
+    /**
+     * GET with multiple of same query param
+     */
     public void getWithAllowMultipleQuery(GetWithMultipleQuery request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -118,6 +127,9 @@ public class ParamsClient {
         getWithPathAndQuery(param, request, null);
     }
 
+    /**
+     * GET with path and query params
+     */
     public void getWithPathAndQuery(String param, GetWithPathAndQuery request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -148,6 +160,9 @@ public class ParamsClient {
         return modifyWithPath(param, request, null);
     }
 
+    /**
+     * PUT to update with path param
+     */
     public String modifyWithPath(String param, String request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
