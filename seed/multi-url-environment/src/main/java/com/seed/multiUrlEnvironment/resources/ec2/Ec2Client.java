@@ -9,8 +9,6 @@ import com.seed.multiUrlEnvironment.core.ObjectMappers;
 import com.seed.multiUrlEnvironment.core.RequestOptions;
 import com.seed.multiUrlEnvironment.resources.ec2.requests.BootInstanceRequest;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
@@ -35,22 +33,19 @@ public class Ec2Client {
                 .addPathSegments("ec2")
                 .addPathSegments("boot")
                 .build();
-        Map<String, Object> _requestBodyProperties = new HashMap<>();
-        _requestBodyProperties.put("size", request.getSize());
         RequestBody _requestBody;
         try {
             _requestBody = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(_requestBodyProperties),
-                    MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        Request.Builder _requestBuilder = new Request.Builder()
+        Request _request = new Request.Builder()
                 .url(_httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request _request = _requestBuilder.build();
+                .addHeader("Content-Type", "application/json")
+                .build();
         try {
             Response _response = clientOptions.httpClient().newCall(_request).execute();
             if (_response.isSuccessful()) {

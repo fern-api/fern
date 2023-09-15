@@ -22,9 +22,11 @@ import com.fern.ir.model.http.HttpRequestBodyReference;
 import com.fern.ir.model.http.HttpService;
 import com.fern.ir.model.http.SdkRequest;
 import com.fern.ir.model.http.SdkRequestBodyType;
+import com.fern.ir.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
+import com.fern.java.client.GeneratedWrappedRequest;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
@@ -47,6 +49,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
     private final HttpEndpoint httpEndpoint;
     private final SdkRequestBodyType sdkRequestBodyType;
     private final SdkRequest sdkRequest;
+    private final GeneratedWrappedRequest generatedWrappedRequest;
 
     public OnlyRequestEndpointWriter(
             HttpService httpService,
@@ -72,6 +75,34 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
         this.httpEndpoint = httpEndpoint;
         this.sdkRequestBodyType = sdkRequestBodyType;
         this.sdkRequest = sdkRequest;
+        this.generatedWrappedRequest = null;
+    }
+
+    public OnlyRequestEndpointWriter(
+            HttpService httpService,
+            HttpEndpoint httpEndpoint,
+            GeneratedObjectMapper generatedObjectMapper,
+            ClientGeneratorContext clientGeneratorContext,
+            FieldSpec clientOptionsField,
+            GeneratedClientOptions generatedClientOptions,
+            GeneratedEnvironmentsClass generatedEnvironmentsClass,
+            GeneratedWrappedRequest generatedWrappedRequest,
+            SdkRequest sdkRequest,
+            GeneratedJavaFile requestOptionsFile) {
+        super(
+                httpService,
+                httpEndpoint,
+                generatedObjectMapper,
+                clientGeneratorContext,
+                clientOptionsField,
+                generatedClientOptions,
+                generatedEnvironmentsClass,
+                requestOptionsFile);
+        this.clientGeneratorContext = clientGeneratorContext;
+        this.httpEndpoint = httpEndpoint;
+        this.sdkRequestBodyType = null;
+        this.generatedWrappedRequest = generatedWrappedRequest;
+        this.sdkRequest = sdkRequest;
     }
 
     @Override
@@ -86,6 +117,12 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
 
     @Override
     public List<ParameterSpec> additionalParameters() {
+        if (generatedWrappedRequest != null) {
+            return Collections.singletonList(ParameterSpec.builder(
+                            generatedWrappedRequest.getClassName(),
+                            sdkRequest.getRequestParameterName().getCamelCase().getSafeName())
+                    .build());
+        }
         ParameterSpec parameterSpec = sdkRequestBodyType.visit(new SdkRequestBodyType.Visitor<ParameterSpec>() {
 
             @Override
@@ -134,48 +171,78 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             boolean sendContentType) {
         CodeBlock.Builder builder = CodeBlock.builder();
 
-        sdkRequestBodyType.visit(new RequestBodyInitializer(builder, generatedObjectMapper));
+        if (sdkRequestBodyType != null) {
+            sdkRequestBodyType.visit(new RequestBodyInitializer(builder, generatedObjectMapper));
 
-        builder.add("$T $L = new $T.Builder()\n", Request.class, AbstractEndpointWriter.REQUEST_NAME, Request.class)
-                .indent()
-                .add(".url(")
-                .add(inlineableHttpUrl)
-                .add(")\n")
-                .add(".method($S, $L)\n", httpEndpoint.getMethod().toString(), AbstractEndpointWriter.REQUEST_BODY_NAME)
-                .add(
-                        ".headers($T.of($L.$N($L)))\n",
-                        Headers.class,
-                        clientOptionsMember.name,
-                        clientOptions.headers(),
-                        REQUEST_OPTIONS_PARAMETER_NAME);
-        if (sendContentType) {
-            sdkRequestBodyType.visit(new SdkRequestBodyType.Visitor<Void>() {
+            builder.add("$T $L = new $T.Builder()\n", Request.class, AbstractEndpointWriter.REQUEST_NAME, Request.class)
+                    .indent()
+                    .add(".url(")
+                    .add(inlineableHttpUrl)
+                    .add(")\n")
+                    .add(
+                            ".method($S, $L)\n",
+                            httpEndpoint.getMethod().toString(),
+                            AbstractEndpointWriter.REQUEST_BODY_NAME)
+                    .add(
+                            ".headers($T.of($L.$N($L)))\n",
+                            Headers.class,
+                            clientOptionsMember.name,
+                            clientOptions.headers(),
+                            REQUEST_OPTIONS_PARAMETER_NAME);
+            if (sendContentType) {
+                sdkRequestBodyType.visit(new SdkRequestBodyType.Visitor<Void>() {
 
-                @Override
-                public Void visitTypeReference(HttpRequestBodyReference typeReference) {
-                    builder.add(
-                            ".addHeader($S, $S)\n",
-                            AbstractEndpointWriter.CONTENT_TYPE_HEADER,
-                            AbstractEndpointWriter.APPLICATION_JSON_HEADER);
-                    return null;
-                }
+                    @Override
+                    public Void visitTypeReference(HttpRequestBodyReference typeReference) {
+                        builder.add(
+                                ".addHeader($S, $S)\n",
+                                AbstractEndpointWriter.CONTENT_TYPE_HEADER,
+                                AbstractEndpointWriter.APPLICATION_JSON_HEADER);
+                        return null;
+                    }
 
-                @Override
-                public Void visitBytes(BytesRequest bytes) {
-                    builder.add(
-                            ".addHeader($S, $S)\n",
-                            AbstractEndpointWriter.CONTENT_TYPE_HEADER,
-                            bytes.getContentType().orElse(AbstractEndpointWriter.APPLICATION_OCTET_STREAM));
-                    return null;
-                }
+                    @Override
+                    public Void visitBytes(BytesRequest bytes) {
+                        builder.add(
+                                ".addHeader($S, $S)\n",
+                                AbstractEndpointWriter.CONTENT_TYPE_HEADER,
+                                bytes.getContentType().orElse(AbstractEndpointWriter.APPLICATION_OCTET_STREAM));
+                        return null;
+                    }
 
-                @Override
-                public Void _visitUnknown(Object unknownType) {
-                    return null;
-                }
-            });
+                    @Override
+                    public Void _visitUnknown(Object unknownType) {
+                        return null;
+                    }
+                });
+            }
+            return builder.add(".build();\n").unindent().build();
+        } else {
+            SdkRequestBodyType.typeReference(HttpRequestBodyReference.builder()
+                            .requestBodyType(TypeReference.unknown())
+                            .build())
+                    .visit(new RequestBodyInitializer(builder, generatedObjectMapper));
+            builder.add("$T $L = new $T.Builder()\n", Request.class, AbstractEndpointWriter.REQUEST_NAME, Request.class)
+                    .indent()
+                    .add(".url(")
+                    .add(inlineableHttpUrl)
+                    .add(")\n")
+                    .add(
+                            ".method($S, $L)\n",
+                            httpEndpoint.getMethod().toString(),
+                            AbstractEndpointWriter.REQUEST_BODY_NAME)
+                    .add(
+                            ".headers($T.of($L.$N($L)))\n",
+                            Headers.class,
+                            clientOptionsMember.name,
+                            clientOptions.headers(),
+                            REQUEST_OPTIONS_PARAMETER_NAME);
+            builder.add(
+                    ".addHeader($S, $S)\n",
+                    AbstractEndpointWriter.CONTENT_TYPE_HEADER,
+                    AbstractEndpointWriter.APPLICATION_JSON_HEADER);
+            return builder.add(".build();\n").unindent().build();
         }
-        return builder.add(".build();\n").unindent().build();
     }
 
     private final class RequestBodyInitializer implements SdkRequestBodyType.Visitor<Void> {
@@ -189,7 +256,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
         }
 
         @Override
-        public Void visitTypeReference(HttpRequestBodyReference typeReference) {
+        public Void visitTypeReference(HttpRequestBodyReference _typeReference) {
             codeBlock
                     .addStatement("$T $L", RequestBody.class, AbstractEndpointWriter.REQUEST_BODY_NAME)
                     .beginControlFlow("try")

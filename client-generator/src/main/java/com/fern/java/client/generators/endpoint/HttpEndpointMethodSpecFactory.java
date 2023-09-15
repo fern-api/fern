@@ -26,6 +26,7 @@ import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.GeneratedWrappedRequest;
+import com.fern.java.client.GeneratedWrappedRequest.FileUploadRequestBodyGetters;
 import com.fern.java.client.generators.WrappedRequestGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
@@ -102,6 +103,24 @@ public final class HttpEndpointMethodSpecFactory {
                             clientGeneratorContext);
                     GeneratedWrappedRequest generatedWrappedRequest = wrappedRequestGenerator.generateFile();
                     generatedWrappedRequests.add(generatedWrappedRequest);
+                    if (httpEndpoint.getHeaders().isEmpty()
+                            && httpEndpoint.getQueryParameters().isEmpty()
+                            && generatedWrappedRequest.requestBodyGetter().isPresent()
+                            && !(generatedWrappedRequest.requestBodyGetter().get()
+                                    instanceof FileUploadRequestBodyGetters)) {
+                        OnlyRequestEndpointWriter onlyRequestEndpointWriter = new OnlyRequestEndpointWriter(
+                                httpService,
+                                httpEndpoint,
+                                generatedObjectMapper,
+                                clientGeneratorContext,
+                                clientOptionsField,
+                                generatedClientOptions,
+                                generatedEnvironmentsClass,
+                                generatedWrappedRequest,
+                                httpEndpoint.getSdkRequest().get(),
+                                requestOptionsFile);
+                        return onlyRequestEndpointWriter.generate();
+                    }
                     WrappedRequestEndpointWriter wrappedRequestEndpointWriter = new WrappedRequestEndpointWriter(
                             httpService,
                             httpEndpoint,

@@ -10,8 +10,6 @@ import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.resources.inlinedrequests.requests.PostWithObjectBody;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
@@ -37,24 +35,19 @@ public class InlinedRequestsClient {
                 .addPathSegments("req-bodies")
                 .addPathSegments("object")
                 .build();
-        Map<String, Object> _requestBodyProperties = new HashMap<>();
-        _requestBodyProperties.put("string", request.getString());
-        _requestBodyProperties.put("integer", request.getInteger());
-        _requestBodyProperties.put("NestedObject", request.getNestedObject());
         RequestBody _requestBody;
         try {
             _requestBody = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(_requestBodyProperties),
-                    MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        Request.Builder _requestBuilder = new Request.Builder()
+        Request _request = new Request.Builder()
                 .url(_httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request _request = _requestBuilder.build();
+                .addHeader("Content-Type", "application/json")
+                .build();
         try {
             Response _response = clientOptions.httpClient().newCall(_request).execute();
             if (_response.isSuccessful()) {

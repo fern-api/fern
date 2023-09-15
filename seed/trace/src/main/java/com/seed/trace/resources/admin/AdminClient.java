@@ -15,9 +15,7 @@ import com.seed.trace.resources.submission.types.TraceResponseV2;
 import com.seed.trace.resources.submission.types.WorkspaceSubmissionStatus;
 import com.seed.trace.resources.submission.types.WorkspaceSubmissionUpdate;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
@@ -199,23 +197,19 @@ public class AdminClient {
                 .addPathSegments("testCase")
                 .addPathSegment(testCaseId)
                 .build();
-        Map<String, Object> _requestBodyProperties = new HashMap<>();
-        _requestBodyProperties.put("result", request.getResult());
-        _requestBodyProperties.put("traceResponses", request.getTraceResponses());
         RequestBody _requestBody;
         try {
             _requestBody = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(_requestBodyProperties),
-                    MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        Request.Builder _requestBuilder = new Request.Builder()
+        Request _request = new Request.Builder()
                 .url(_httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request _request = _requestBuilder.build();
+                .addHeader("Content-Type", "application/json")
+                .build();
         try {
             Response _response = clientOptions.httpClient().newCall(_request).execute();
             if (_response.isSuccessful()) {
@@ -281,23 +275,19 @@ public class AdminClient {
                 .addPathSegments("store-workspace-trace/submission")
                 .addPathSegment(submissionId.toString())
                 .build();
-        Map<String, Object> _requestBodyProperties = new HashMap<>();
-        _requestBodyProperties.put("workspaceRunDetails", request.getWorkspaceRunDetails());
-        _requestBodyProperties.put("traceResponses", request.getTraceResponses());
         RequestBody _requestBody;
         try {
             _requestBody = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(_requestBodyProperties),
-                    MediaType.parse("application/json"));
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaType.parse("application/json"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        Request.Builder _requestBuilder = new Request.Builder()
+        Request _request = new Request.Builder()
                 .url(_httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
-                .addHeader("Content-Type", "application/json");
-        Request _request = _requestBuilder.build();
+                .addHeader("Content-Type", "application/json")
+                .build();
         try {
             Response _response = clientOptions.httpClient().newCall(_request).execute();
             if (_response.isSuccessful()) {
