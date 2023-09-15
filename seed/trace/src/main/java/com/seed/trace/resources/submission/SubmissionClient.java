@@ -37,20 +37,21 @@ public class SubmissionClient {
                 .addPathSegments("create-session")
                 .addPathSegment(language.toString())
                 .build();
-        Request _request = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", RequestBody.create("", null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), ExecutionSessionResponse.class);
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), ExecutionSessionResponse.class);
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -66,21 +67,22 @@ public class SubmissionClient {
                 .addPathSegments("sessions")
                 .addPathSegment(sessionId)
                 .build();
-        Request _request = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(
-                        _response.body().string(), new TypeReference<Optional<ExecutionSessionResponse>>() {});
+                        response.body().string(), new TypeReference<Optional<ExecutionSessionResponse>>() {});
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -97,19 +99,20 @@ public class SubmissionClient {
                 .addPathSegments("stop")
                 .addPathSegment(sessionId)
                 .build();
-        Request _request = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("DELETE", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
                 return;
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -125,21 +128,22 @@ public class SubmissionClient {
                 .addPathSegments("sessions")
                 .addPathSegments("execution-sessions-state")
                 .build();
-        Request _request = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(
-                        _response.body().string(), GetExecutionSessionStateResponse.class);
+                        response.body().string(), GetExecutionSessionStateResponse.class);
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

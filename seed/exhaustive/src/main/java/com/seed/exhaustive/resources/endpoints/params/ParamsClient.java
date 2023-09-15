@@ -36,20 +36,21 @@ public class ParamsClient {
                 .addPathSegments("path")
                 .addPathSegment(param)
                 .build();
-        Request _request = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), String.class);
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), String.class);
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -70,15 +71,16 @@ public class ParamsClient {
                 .url(httpUrl.build())
                 .method("GET", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
-        Request _request = _requestBuilder.build();
+        Request okhttpRequest = _requestBuilder.build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
                 return;
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -99,15 +101,16 @@ public class ParamsClient {
                 .url(httpUrl.build())
                 .method("GET", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
-        Request _request = _requestBuilder.build();
+        Request okhttpRequest = _requestBuilder.build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
                 return;
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -129,15 +132,16 @@ public class ParamsClient {
                 .url(httpUrl.build())
                 .method("GET", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
-        Request _request = _requestBuilder.build();
+        Request okhttpRequest = _requestBuilder.build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
                 return;
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -161,20 +165,21 @@ public class ParamsClient {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        Request _request = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("PUT", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), String.class);
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), String.class);
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

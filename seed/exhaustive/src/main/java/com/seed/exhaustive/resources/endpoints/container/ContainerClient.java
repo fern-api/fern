@@ -45,21 +45,22 @@ public class ContainerClient {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        Request _request = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(
-                        _response.body().string(), new TypeReference<List<String>>() {});
+                        response.body().string(), new TypeReference<List<String>>() {});
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -83,21 +84,22 @@ public class ContainerClient {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        Request _request = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(
-                        _response.body().string(), new TypeReference<List<ObjectWithRequiredField>>() {});
+                        response.body().string(), new TypeReference<List<ObjectWithRequiredField>>() {});
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -120,21 +122,22 @@ public class ContainerClient {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        Request _request = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(
-                        _response.body().string(), new TypeReference<Set<String>>() {});
+                        response.body().string(), new TypeReference<Set<String>>() {});
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -158,21 +161,22 @@ public class ContainerClient {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        Request _request = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(
-                        _response.body().string(), new TypeReference<Set<ObjectWithRequiredField>>() {});
+                        response.body().string(), new TypeReference<Set<ObjectWithRequiredField>>() {});
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -195,21 +199,22 @@ public class ContainerClient {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        Request _request = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(
-                        _response.body().string(), new TypeReference<Map<String, String>>() {});
+                        response.body().string(), new TypeReference<Map<String, String>>() {});
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -234,21 +239,22 @@ public class ContainerClient {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        Request _request = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(
-                        _response.body().string(), new TypeReference<Map<String, ObjectWithRequiredField>>() {});
+                        response.body().string(), new TypeReference<Map<String, ObjectWithRequiredField>>() {});
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -272,21 +278,22 @@ public class ContainerClient {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        Request _request = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(
-                        _response.body().string(), new TypeReference<Optional<ObjectWithRequiredField>>() {});
+                        response.body().string(), new TypeReference<Optional<ObjectWithRequiredField>>() {});
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -82,7 +82,7 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
             CodeBlock inlineableHttpUrl,
             boolean sendContentType) {
         CodeBlock.Builder builder = CodeBlock.builder()
-                .add("$T $L = new $T.Builder()\n", Request.class, AbstractEndpointWriter.REQUEST_NAME, Request.class)
+                .add("$T $L = new $T.Builder()\n", Request.class, getOkhttpRequestName(), Request.class)
                 .indent()
                 .add(".url(")
                 .add(inlineableHttpUrl)

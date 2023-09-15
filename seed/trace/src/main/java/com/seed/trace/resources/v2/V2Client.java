@@ -38,19 +38,20 @@ public class V2Client {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .build();
-        Request _request = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
                 return;
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -57,15 +57,16 @@ public class PlaylistClient {
                 .method("POST", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
-        Request _request = _requestBuilder.build();
+        Request okhttpRequest = _requestBuilder.build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Playlist.class);
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Playlist.class);
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -97,16 +98,17 @@ public class PlaylistClient {
                 .method("GET", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
-        Request _request = _requestBuilder.build();
+        Request okhttpRequest = _requestBuilder.build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(
-                        _response.body().string(), new TypeReference<List<Playlist>>() {});
+                        response.body().string(), new TypeReference<List<Playlist>>() {});
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -123,20 +125,21 @@ public class PlaylistClient {
                 .addPathSegment(Integer.toString(serviceParam))
                 .addPathSegment(playlistId)
                 .build();
-        Request _request = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("GET", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
-                return ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Playlist.class);
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Playlist.class);
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -165,21 +168,22 @@ public class PlaylistClient {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        Request _request = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("PUT", _requestBody)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(
-                        _response.body().string(), new TypeReference<Optional<Playlist>>() {});
+                        response.body().string(), new TypeReference<Optional<Playlist>>() {});
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -200,19 +204,20 @@ public class PlaylistClient {
                 .addPathSegment(Integer.toString(serviceParam))
                 .addPathSegment(playlistId)
                 .build();
-        Request _request = new Request.Builder()
+        Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
                 .method("DELETE", null)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
                 return;
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -122,43 +122,46 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                             generatedWrappedRequest.getClassName(),
                             sdkRequest.getRequestParameterName().getCamelCase().getSafeName())
                     .build());
-        }
-        ParameterSpec parameterSpec = sdkRequestBodyType.visit(new SdkRequestBodyType.Visitor<ParameterSpec>() {
+        } else if (sdkRequestBodyType != null) {
+            ParameterSpec parameterSpec = sdkRequestBodyType.visit(new SdkRequestBodyType.Visitor<ParameterSpec>() {
 
-            @Override
-            public ParameterSpec visitTypeReference(HttpRequestBodyReference typeReference) {
-                return ParameterSpec.builder(
-                                clientGeneratorContext
-                                        .getPoetTypeNameMapper()
-                                        .convertToTypeName(true, typeReference.getRequestBodyType()),
-                                sdkRequest
-                                        .getRequestParameterName()
-                                        .getCamelCase()
-                                        .getSafeName())
-                        .build();
-            }
-
-            @Override
-            public ParameterSpec visitBytes(BytesRequest bytes) {
-                TypeName typeName = ArrayTypeName.of(byte.class);
-                if (bytes.getIsOptional()) {
-                    typeName = ParameterizedTypeName.get(ClassName.get(Optional.class), typeName);
+                @Override
+                public ParameterSpec visitTypeReference(HttpRequestBodyReference typeReference) {
+                    return ParameterSpec.builder(
+                                    clientGeneratorContext
+                                            .getPoetTypeNameMapper()
+                                            .convertToTypeName(true, typeReference.getRequestBodyType()),
+                                    sdkRequest
+                                            .getRequestParameterName()
+                                            .getCamelCase()
+                                            .getSafeName())
+                            .build();
                 }
-                return ParameterSpec.builder(
-                                typeName,
-                                sdkRequest
-                                        .getRequestParameterName()
-                                        .getCamelCase()
-                                        .getSafeName())
-                        .build();
-            }
 
-            @Override
-            public ParameterSpec _visitUnknown(Object unknownType) {
-                throw new RuntimeException("Encountered unknown sdk request body type: " + unknownType);
-            }
-        });
-        return Collections.singletonList(parameterSpec);
+                @Override
+                public ParameterSpec visitBytes(BytesRequest bytes) {
+                    TypeName typeName = ArrayTypeName.of(byte.class);
+                    if (bytes.getIsOptional()) {
+                        typeName = ParameterizedTypeName.get(ClassName.get(Optional.class), typeName);
+                    }
+                    return ParameterSpec.builder(
+                                    typeName,
+                                    sdkRequest
+                                            .getRequestParameterName()
+                                            .getCamelCase()
+                                            .getSafeName())
+                            .build();
+                }
+
+                @Override
+                public ParameterSpec _visitUnknown(Object unknownType) {
+                    throw new RuntimeException("Encountered unknown sdk request body type: " + unknownType);
+                }
+            });
+            return Collections.singletonList(parameterSpec);
+        } else {
+            throw new RuntimeException("Unexpected, both generatedWrappedRequest and sdkRequestBodyType are null");
+        }
     }
 
     @Override
@@ -174,7 +177,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
         if (sdkRequestBodyType != null) {
             sdkRequestBodyType.visit(new RequestBodyInitializer(builder, generatedObjectMapper));
 
-            builder.add("$T $L = new $T.Builder()\n", Request.class, AbstractEndpointWriter.REQUEST_NAME, Request.class)
+            builder.add("$T $L = new $T.Builder()\n", Request.class, getOkhttpRequestName(), Request.class)
                     .indent()
                     .add(".url(")
                     .add(inlineableHttpUrl)
@@ -222,7 +225,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                             .requestBodyType(TypeReference.unknown())
                             .build())
                     .visit(new RequestBodyInitializer(builder, generatedObjectMapper));
-            builder.add("$T $L = new $T.Builder()\n", Request.class, AbstractEndpointWriter.REQUEST_NAME, Request.class)
+            builder.add("$T $L = new $T.Builder()\n", Request.class, getOkhttpRequestName(), Request.class)
                     .indent()
                     .add(".url(")
                     .add(inlineableHttpUrl)

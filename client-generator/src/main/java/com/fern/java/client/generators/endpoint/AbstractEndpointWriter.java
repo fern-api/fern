@@ -68,9 +68,11 @@ import com.squareup.javapoet.TypeName;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.lang.model.element.Modifier;
@@ -81,10 +83,8 @@ public abstract class AbstractEndpointWriter {
     public static final String CONTENT_TYPE_HEADER = "Content-Type";
     public static final String APPLICATION_JSON_HEADER = "application/json";
     public static final String APPLICATION_OCTET_STREAM = "application/octet-stream";
-    public static final String REQUEST_NAME = "_request";
     public static final String REQUEST_BUILDER_NAME = "_requestBuilder";
     public static final String REQUEST_BODY_NAME = "_requestBody";
-    public static final String RESPONSE_NAME = "_response";
     public static final String REQUEST_OPTIONS_PARAMETER_NAME = "requestOptions";
     private final HttpService httpService;
     private final HttpEndpoint httpEndpoint;
@@ -95,6 +95,7 @@ public abstract class AbstractEndpointWriter {
     private final GeneratedObjectMapper generatedObjectMapper;
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
     private final GeneratedJavaFile requestOptionsFile;
+    private final Set<String> endpointParameterNames = new HashSet<>();
 
     public AbstractEndpointWriter(
             HttpService httpService,
@@ -119,6 +120,15 @@ public abstract class AbstractEndpointWriter {
     }
 
     public final HttpEndpointMethodSpecs generate() {
+        // populate all param names
+        this.endpointParameterNames.addAll(getPathParameters().stream()
+                .map(parameterSpec -> parameterSpec.name)
+                .collect(Collectors.toList()));
+        this.endpointParameterNames.addAll(additionalParameters().stream()
+                .map(parameterSpec -> parameterSpec.name)
+                .collect(Collectors.toList()));
+        this.endpointParameterNames.add(REQUEST_OPTIONS_PARAMETER_NAME);
+
         // Step 1: Add Path Params as parameters
         List<ParameterSpec> pathParameters = getPathParameters();
 
@@ -134,9 +144,7 @@ public abstract class AbstractEndpointWriter {
 
         // Step 4: Get http client initializer
         HttpUrlBuilder httpUrlBuilder = new HttpUrlBuilder(
-                getHttpUrlName(endpointMethodBuilder.parameters.stream()
-                        .map(parameterSpec -> parameterSpec.name)
-                        .collect(Collectors.toList())),
+                getHttpUrlName(),
                 sdkRequest()
                         .map(sdkRequest -> sdkRequest
                                 .getRequestParameterName()
@@ -256,11 +264,11 @@ public abstract class AbstractEndpointWriter {
                 .addStatement(
                         "$T $L = $N.$N().newCall($L).execute()",
                         Response.class,
-                        RESPONSE_NAME,
+                        getResponseName(),
                         clientOptionsField,
                         generatedClientOptions.httpClient(),
-                        REQUEST_NAME)
-                .beginControlFlow("if ($L.isSuccessful())", RESPONSE_NAME);
+                        getOkhttpRequestName())
+                .beginControlFlow("if ($L.isSuccessful())", getResponseName());
         if (httpEndpoint.getResponse().isPresent()) {
             httpEndpoint
                     .getResponse()
@@ -274,10 +282,10 @@ public abstract class AbstractEndpointWriter {
         httpResponseBuilder.addStatement(
                 "throw new $T($L.code(), $T.$L.readValue($L.body().string(), $T.class))",
                 clientGeneratorContext.getPoetClassNameFactory().getApiErrorClassName(),
-                RESPONSE_NAME,
+                getResponseName(),
                 generatedObjectMapper.getClassName(),
                 generatedObjectMapper.jsonMapperStaticField().name,
-                RESPONSE_NAME,
+                getResponseName(),
                 Object.class);
         httpResponseBuilder
                 .endControlFlow()
@@ -302,11 +310,32 @@ public abstract class AbstractEndpointWriter {
         }
     }
 
-    private String getHttpUrlName(List<String> paramNames) {
-        if (paramNames.contains("httpUrl")) {
+    private String getHttpUrlName() {
+        if (this.endpointParameterNames.contains("httpUrl")) {
             return "_httpUrl";
         }
         return "httpUrl";
+    }
+
+    private String getResponseName() {
+        if (this.endpointParameterNames.contains("response")) {
+            return "_response";
+        }
+        return "response";
+    }
+
+    protected final String getOkhttpRequestName() {
+        if (this.endpointParameterNames.contains("okhttpRequest")) {
+            return "_okhttpRequest";
+        }
+        return "okhttpRequest";
+    }
+
+    protected final String getRequestBodyPropertiesName() {
+        if (this.endpointParameterNames.contains("properties")) {
+            return "_properties";
+        }
+        return "properties";
     }
 
     private List<ParameterSpec> getPathParameters() {
@@ -364,7 +393,7 @@ public abstract class AbstractEndpointWriter {
                 && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class));
     }
 
-    private static final class SuccessResponseWriter implements HttpResponse.Visitor<Void> {
+    private final class SuccessResponseWriter implements HttpResponse.Visitor<Void> {
 
         private final CodeBlock.Builder httpResponseBuilder;
         private final MethodSpec.Builder endpointMethodBuilder;
@@ -392,14 +421,14 @@ public abstract class AbstractEndpointWriter {
                         "return $T.$L.readValue($L.body().string(), new $T() {})",
                         generatedObjectMapper.getClassName(),
                         generatedObjectMapper.jsonMapperStaticField().name,
-                        RESPONSE_NAME,
+                        getResponseName(),
                         ParameterizedTypeName.get(ClassName.get(TypeReference.class), returnType));
             } else {
                 httpResponseBuilder.addStatement(
                         "return $T.$L.readValue($L.body().string(), $T.class)",
                         generatedObjectMapper.getClassName(),
                         generatedObjectMapper.jsonMapperStaticField().name,
-                        RESPONSE_NAME,
+                        getResponseName(),
                         returnType);
             }
             return null;
@@ -408,14 +437,14 @@ public abstract class AbstractEndpointWriter {
         @Override
         public Void visitFileDownload(FileDownloadResponse fileDownload) {
             endpointMethodBuilder.returns(InputStream.class);
-            httpResponseBuilder.addStatement("return $L.body().byteStream()", RESPONSE_NAME);
+            httpResponseBuilder.addStatement("return $L.body().byteStream()", getResponseName());
             return null;
         }
 
         @Override
         public Void visitText(TextResponse text) {
             endpointMethodBuilder.returns(String.class);
-            httpResponseBuilder.addStatement("return $L.body().string()", RESPONSE_NAME);
+            httpResponseBuilder.addStatement("return $L.body().string()", getResponseName());
             return null;
         }
 

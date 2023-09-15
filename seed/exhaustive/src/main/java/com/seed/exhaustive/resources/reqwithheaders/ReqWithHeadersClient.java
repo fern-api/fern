@@ -48,15 +48,16 @@ public class ReqWithHeadersClient {
                 .addHeader("Content-Type", "application/json");
         _requestBuilder.addHeader("X-TEST-SERVICE-HEADER", request.getXTestServiceHeader());
         _requestBuilder.addHeader("X-TEST-ENDPOINT-HEADER", request.getXTestEndpointHeader());
-        Request _request = _requestBuilder.build();
+        Request okhttpRequest = _requestBuilder.build();
         try {
-            Response _response = clientOptions.httpClient().newCall(_request).execute();
-            if (_response.isSuccessful()) {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
                 return;
             }
             throw new ApiError(
-                    _response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(_response.body().string(), Object.class));
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
