@@ -7,6 +7,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { TabConfig, VersionAvailability } from "@fern-fern/docs-config/api";
 import { FernRegistry } from "@fern-fern/registry-node";
+import { VersionedNavigationConfigData } from "@fern-fern/registry-node/api/resources/docs/resources/v1/resources/write";
 import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
@@ -351,7 +352,7 @@ async function convertNavigationConfig({
         case "versioned":
             return {
                 versions: await Promise.all(
-                    navigationConfig.versions.map(async (version) => {
+                    navigationConfig.versions.map(async (version): Promise<VersionedNavigationConfigData> => {
                         return {
                             version: version.version,
                             config: await convertUnversionedNavigationConfig({
@@ -365,7 +366,7 @@ async function convertNavigationConfig({
                             }),
                             availability:
                                 version.availability != null ? convertAvailability(version.availability) : undefined,
-                            slug: version.slug,
+                            urlSlugOverride: version.slug,
                         };
                     })
                 ),
