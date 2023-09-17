@@ -36,9 +36,9 @@ export function getAudiences(schema: RawSchemas.TypeDeclarationSchema): string[]
     return schema.audiences ?? [];
 }
 
-function convertAvailabilityStatus(status: RawSchemas.AvailabilityStatusSchema | undefined): AvailabilityStatus {
+function convertAvailabilityStatus(status: RawSchemas.AvailabilityStatusSchema | undefined): AvailabilityStatus | undefined {
     if (status == null) {
-        return AvailabilityStatus.GeneralAvailability;
+        return undefined;
     }
     switch (status) {
         case "in-development":
