@@ -88,10 +88,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/cli/openapi-ir-to-fern"\
       },\
       {\
-        "name": "@fern-api/openapi-migrator",\
-        "reference": "workspace:packages/cli/openapi-migrator"\
-      },\
-      {\
         "name": "@fern-api/openapi-parser",\
         "reference": "workspace:packages/cli/openapi-parser"\
       },\
@@ -197,7 +193,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/login", ["workspace:packages/cli/login"]],\
       ["@fern-api/manage-generator", ["workspace:packages/cli/config-management/manage-generator"]],\
       ["@fern-api/openapi-ir-to-fern", ["workspace:packages/cli/openapi-ir-to-fern"]],\
-      ["@fern-api/openapi-migrator", ["workspace:packages/cli/openapi-migrator"]],\
       ["@fern-api/openapi-parser", ["workspace:packages/cli/openapi-parser"]],\
       ["@fern-api/posthog-manager", ["workspace:packages/cli/posthog-manager"]],\
       ["@fern-api/project-configuration", ["workspace:packages/cli/config-management/project-configuration"]],\
@@ -3397,7 +3392,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/login", "workspace:packages/cli/login"],\
             ["@fern-api/manage-generator", "workspace:packages/cli/config-management/manage-generator"],\
             ["@fern-api/openapi-ir-to-fern", "workspace:packages/cli/openapi-ir-to-fern"],\
-            ["@fern-api/openapi-migrator", "workspace:packages/cli/openapi-migrator"],\
             ["@fern-api/openapi-parser", "workspace:packages/cli/openapi-parser"],\
             ["@fern-api/posthog-manager", "workspace:packages/cli/posthog-manager"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
@@ -3905,31 +3899,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.26.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.5.0"],\
             ["lodash-es", "npm:4.17.21"],\
-            ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
-      ["@fern-api/openapi-migrator", [\
-        ["workspace:packages/cli/openapi-migrator", {\
-          "packageLocation": "./packages/cli/openapi-migrator/",\
-          "packageDependencies": [\
-            ["@fern-api/openapi-migrator", "workspace:packages/cli/openapi-migrator"],\
-            ["@apidevtools/swagger-parser", "virtual:0723d5426c36615503b1e0c9bbcbd0b420921e1bb4d10ec5914c46fdebcd14987437e829fd6e0efc13868cf2174843e481e3a9f35379fdc05ab12949705a5457#npm:10.1.0"],\
-            ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
-            ["@fern-api/logger", "workspace:packages/cli/logger"],\
-            ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
-            ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
-            ["@types/jest", "npm:29.0.3"],\
-            ["@types/lodash-es", "npm:4.17.7"],\
-            ["@types/node", "npm:18.7.18"],\
-            ["depcheck", "npm:1.4.3"],\
-            ["eslint", "npm:8.26.0"],\
-            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.5.0"],\
-            ["lodash-es", "npm:4.17.21"],\
-            ["openapi-types", "npm:12.1.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\

@@ -1877,7 +1877,6 @@ __metadata:
     "@fern-api/login": "workspace:*"
     "@fern-api/manage-generator": "workspace:*"
     "@fern-api/openapi-ir-to-fern": "workspace:*"
-    "@fern-api/openapi-migrator": "workspace:*"
     "@fern-api/openapi-parser": "workspace:*"
     "@fern-api/posthog-manager": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
@@ -2347,29 +2346,6 @@ __metadata:
     eslint: ^8.26.0
     jest: ^29.4.0
     lodash-es: ^4.17.21
-    organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
-    typescript: 4.6.4
-  languageName: unknown
-  linkType: soft
-
-"@fern-api/openapi-migrator@workspace:*, @fern-api/openapi-migrator@workspace:packages/cli/openapi-migrator":
-  version: 0.0.0-use.local
-  resolution: "@fern-api/openapi-migrator@workspace:packages/cli/openapi-migrator"
-  dependencies:
-    "@apidevtools/swagger-parser": ^10.1.0
-    "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/logger": "workspace:*"
-    "@fern-api/task-context": "workspace:*"
-    "@fern-api/yaml-schema": "workspace:*"
-    "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.7
-    "@types/node": ^18.7.18
-    depcheck: ^1.4.3
-    eslint: ^8.26.0
-    jest: ^29.4.0
-    lodash-es: ^4.17.21
-    openapi-types: ^12.0.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
