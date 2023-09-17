@@ -4,10 +4,7 @@ import { Availability, AvailabilityStatus, Declaration } from "@fern-fern/ir-sdk
 
 const DEFAULT_DECLARATION = {
     docs: undefined,
-    availability: {
-        status: convertAvailabilityStatus(undefined),
-        message: undefined,
-    },
+    availability: undefined,
 };
 
 export function convertDeclaration(declaration: string | RawSchemas.DeclarationSchema): Declaration {
@@ -22,9 +19,12 @@ export function convertDeclaration(declaration: string | RawSchemas.DeclarationS
 
 export function convertAvailability(
     availability: RawSchemas.AvailabilitySchema | RawSchemas.AvailabilityStatusSchema | undefined
-): Availability {
+): Availability | undefined {
+    if (availability == null) {
+        return undefined;
+    }
     return {
-        status: convertAvailabilityStatus(typeof availability === "string" ? availability : availability?.status),
+        status: convertAvailabilityStatus(typeof availability === "string" ? availability : availability.status),
         message: typeof availability !== "string" ? availability?.message : undefined,
     };
 }
@@ -36,10 +36,7 @@ export function getAudiences(schema: RawSchemas.TypeDeclarationSchema): string[]
     return schema.audiences ?? [];
 }
 
-function convertAvailabilityStatus(status: RawSchemas.AvailabilityStatusSchema | undefined): AvailabilityStatus | undefined {
-    if (status == null) {
-        return undefined;
-    }
+function convertAvailabilityStatus(status: RawSchemas.AvailabilityStatusSchema): AvailabilityStatus {
     switch (status) {
         case "in-development":
             return AvailabilityStatus.InDevelopment;
