@@ -25,7 +25,7 @@ export function convertAvailability(
     }
     return {
         status: convertAvailabilityStatus(typeof availability === "string" ? availability : availability.status),
-        message: typeof availability !== "string" ? availability?.message : undefined,
+        message: typeof availability !== "string" ? availability.message : undefined,
     };
 }
 

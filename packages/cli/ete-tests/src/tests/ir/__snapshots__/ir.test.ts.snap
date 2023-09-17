@@ -346,10 +346,7 @@ exports[`ir {"name":"extended-examples"} 1`] = `
                             "_type": "primitive",
                             "primitive": "STRING"
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -749,10 +746,7 @@ exports[`ir {"name":"extended-examples"} 1`] = `
                     "docs": null
                 }
             ],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_commons:AppId": {
@@ -871,10 +865,7 @@ exports[`ir {"name":"extended-examples"} 1`] = `
                     "docs": null
                 }
             ],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_commons:Deployment": {
@@ -1036,10 +1027,7 @@ exports[`ir {"name":"extended-examples"} 1`] = `
                             },
                             "typeId": "type_commons:AppId"
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -1112,10 +1100,7 @@ exports[`ir {"name":"extended-examples"} 1`] = `
                 }
             ],
             "examples": [],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         }
     },
@@ -1376,10 +1361,7 @@ exports[`ir {"name":"file-upload"} 1`] = `
     "errors": {},
     "services": {
         "service_file-upload": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
@@ -1670,10 +1652,7 @@ exports[`ir {"name":"file-upload"} 1`] = `
                     "response": null,
                     "errors": [],
                     "examples": [],
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY",
-                        "message": null
-                    },
+                    "availability": null,
                     "docs": null
                 }
             ]
@@ -7919,10 +7898,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
     "errors": {},
     "services": {
         "service_endpoint-urls": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
@@ -8017,10 +7993,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                     "response": null,
                     "errors": [],
                     "examples": [],
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY",
-                        "message": null
-                    },
+                    "availability": null,
                     "docs": null
                 },
                 {
@@ -8064,19 +8037,13 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                     "response": null,
                     "errors": [],
                     "examples": [],
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY",
-                        "message": null
-                    },
+                    "availability": null,
                     "docs": null
                 }
             ]
         },
         "service_service-url": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
@@ -8171,10 +8138,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                     "response": null,
                     "errors": [],
                     "examples": [],
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY",
-                        "message": null
-                    },
+                    "availability": null,
                     "docs": null
                 }
             ]
@@ -9037,10 +9001,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                                 }
                             }
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -9113,10 +9074,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                 }
             ],
             "examples": [],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_nested:Product": {
@@ -9221,20 +9179,14 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                                 }
                             }
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     }
                 ]
             },
             "referencedTypes": [],
             "examples": [],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_nested:StringAlias": {
@@ -9353,20 +9305,14 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                     "docs": null
                 }
             ],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         }
     },
     "errors": {},
     "services": {
         "service_nested": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
@@ -9933,10 +9879,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                             "docs": null
                         }
                     ],
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY",
-                        "message": null
-                    },
+                    "availability": null,
                     "docs": null
                 }
             ]
@@ -10164,10 +10107,7 @@ exports[`ir {"name":"packages"} 1`] = `
             },
             "referencedTypes": [],
             "examples": [],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_package:PackageString": {
@@ -10251,10 +10191,7 @@ exports[`ir {"name":"packages"} 1`] = `
             },
             "referencedTypes": [],
             "examples": [],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_importer:Foo": {
@@ -10378,10 +10315,7 @@ exports[`ir {"name":"packages"} 1`] = `
                             },
                             "typeId": "type_:RootString"
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -10475,10 +10409,7 @@ exports[`ir {"name":"packages"} 1`] = `
                             },
                             "typeId": "type_package:PackageString"
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -10580,10 +10511,7 @@ exports[`ir {"name":"packages"} 1`] = `
                 }
             ],
             "examples": [],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_package/a:A": {
@@ -10704,20 +10632,14 @@ exports[`ir {"name":"packages"} 1`] = `
             },
             "referencedTypes": [],
             "examples": [],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         }
     },
     "errors": {},
     "services": {
         "service_": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [],
@@ -10774,19 +10696,13 @@ exports[`ir {"name":"packages"} 1`] = `
                     "response": null,
                     "errors": [],
                     "examples": [],
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY",
-                        "message": null
-                    },
+                    "availability": null,
                     "docs": null
                 }
             ]
         },
         "service_package": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
@@ -11359,10 +11275,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                     }
                 }
             },
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         }
     ],
@@ -11464,20 +11377,14 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                             "_type": "primitive",
                             "primitive": "STRING"
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     }
                 ]
             },
             "referencedTypes": [],
             "examples": [],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_imdb:UnknownRequest": {
@@ -11576,20 +11483,14 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                         "valueType": {
                             "_type": "unknown"
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     }
                 ]
             },
             "referencedTypes": [],
             "examples": [],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         }
     },
@@ -11689,10 +11590,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
     },
     "services": {
         "service_imdb": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
@@ -12061,10 +11959,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                         }
                     ],
                     "examples": [],
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY",
-                        "message": null
-                    },
+                    "availability": null,
                     "docs": null
                 }
             ]
@@ -12438,10 +12333,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                     }
                 }
             },
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         }
     ],
@@ -12543,20 +12435,14 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                             "_type": "primitive",
                             "primitive": "STRING"
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     }
                 ]
             },
             "referencedTypes": [],
             "examples": [],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_imdb:MovieId": {
@@ -12675,10 +12561,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                     "docs": null
                 }
             ],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_imdb:CreateMovieRequest": {
@@ -12778,10 +12661,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                             "_type": "primitive",
                             "primitive": "STRING"
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -12817,10 +12697,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                 }
                             }
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -13054,10 +12931,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                     "docs": null
                 }
             ],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         }
     },
@@ -13157,10 +13031,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
     },
     "services": {
         "service_imdb": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
@@ -14378,10 +14249,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                             "docs": null
                         }
                     ],
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY",
-                        "message": null
-                    },
+                    "availability": null,
                     "docs": null
                 }
             ]
@@ -14757,10 +14625,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     }
                 }
             },
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         }
     ],
@@ -14862,20 +14727,14 @@ exports[`ir {"name":"simple"} 1`] = `
                             "_type": "primitive",
                             "primitive": "STRING"
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     }
                 ]
             },
             "referencedTypes": [],
             "examples": [],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_commons:Type": {
@@ -14975,20 +14834,14 @@ exports[`ir {"name":"simple"} 1`] = `
                             "_type": "primitive",
                             "primitive": "STRING"
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     }
                 ]
             },
             "referencedTypes": [],
             "examples": [],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_commons:UndiscriminatedUnion": {
@@ -15110,10 +14963,7 @@ exports[`ir {"name":"simple"} 1`] = `
             },
             "referencedTypes": [],
             "examples": [],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_director:Director": {
@@ -15213,10 +15063,7 @@ exports[`ir {"name":"simple"} 1`] = `
                             "_type": "primitive",
                             "primitive": "STRING"
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -15308,10 +15155,7 @@ exports[`ir {"name":"simple"} 1`] = `
                             },
                             "typeId": "type_director:Age"
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -15646,10 +15490,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     "docs": null
                 }
             ],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_director:Age": {
@@ -15768,10 +15609,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     "docs": null
                 }
             ],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_director:LiteralString": {
@@ -15865,10 +15703,7 @@ exports[`ir {"name":"simple"} 1`] = `
             },
             "referencedTypes": [],
             "examples": [],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_imdb:CurrencyAmount": {
@@ -15969,10 +15804,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     "docs": null
                 }
             ],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_imdb:MovieId": {
@@ -16091,10 +15923,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     "docs": null
                 }
             ],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_imdb:ActorId": {
@@ -16176,10 +16005,7 @@ exports[`ir {"name":"simple"} 1`] = `
             },
             "referencedTypes": [],
             "examples": [],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_imdb:Movie": {
@@ -16341,10 +16167,7 @@ exports[`ir {"name":"simple"} 1`] = `
                             },
                             "typeId": "type_imdb:MovieId"
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -16374,10 +16197,7 @@ exports[`ir {"name":"simple"} 1`] = `
                             "_type": "primitive",
                             "primitive": "STRING"
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -16407,10 +16227,7 @@ exports[`ir {"name":"simple"} 1`] = `
                             "_type": "primitive",
                             "primitive": "DOUBLE"
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -16806,10 +16623,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     "docs": null
                 }
             ],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_imdb:CreateMovieRequest": {
@@ -16909,10 +16723,7 @@ exports[`ir {"name":"simple"} 1`] = `
                             "_type": "primitive",
                             "primitive": "STRING"
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     },
                     {
@@ -16948,10 +16759,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                 }
                             }
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -17185,10 +16993,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     "docs": null
                 }
             ],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_imdb:DirectorWrapper": {
@@ -17350,10 +17155,7 @@ exports[`ir {"name":"simple"} 1`] = `
                             },
                             "typeId": "type_director:Director"
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -17884,10 +17686,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     "docs": null
                 }
             ],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_imdb:Person": {
@@ -18892,10 +18691,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     "docs": null
                 }
             ],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_imdb:UnknownRequest": {
@@ -18994,20 +18790,14 @@ exports[`ir {"name":"simple"} 1`] = `
                         "valueType": {
                             "_type": "unknown"
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     }
                 ]
             },
             "referencedTypes": [],
             "examples": [],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         },
         "type_imdb:RecursiveType": {
@@ -19241,10 +19031,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                 }
                             }
                         },
-                        "availability": {
-                            "status": "GENERAL_AVAILABILITY",
-                            "message": null
-                        },
+                        "availability": null,
                         "docs": null
                     }
                 ]
@@ -20641,10 +20428,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     "docs": null
                 }
             ],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         }
     },
@@ -20839,10 +20623,7 @@ exports[`ir {"name":"simple"} 1`] = `
     },
     "services": {
         "service_imdb": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
@@ -21211,10 +20992,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         }
                     ],
                     "examples": [],
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY",
-                        "message": null
-                    },
+                    "availability": null,
                     "docs": null
                 },
                 {
@@ -22381,10 +22159,7 @@ exports[`ir {"name":"simple"} 1`] = `
                             "docs": null
                         }
                     ],
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY",
-                        "message": null
-                    },
+                    "availability": null,
                     "docs": null
                 },
                 {
@@ -22674,10 +22449,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                 "primitive": "STRING"
                             },
                             "allowMultiple": true,
-                            "availability": {
-                                "status": "GENERAL_AVAILABILITY",
-                                "message": null
-                            },
+                            "availability": null,
                             "docs": null
                         }
                     ],
@@ -23680,10 +23452,7 @@ exports[`ir {"name":"simple"} 1`] = `
                             "docs": null
                         }
                     ],
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY",
-                        "message": null
-                    },
+                    "availability": null,
                     "docs": null
                 },
                 {
@@ -24020,10 +23789,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         }
                     ],
                     "examples": [],
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY",
-                        "message": null
-                    },
+                    "availability": null,
                     "docs": null
                 }
             ]
@@ -24470,10 +24236,7 @@ exports[`ir {"name":"streaming"} 1`] = `
     "errors": {},
     "services": {
         "service_streaming": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
@@ -24579,10 +24342,7 @@ exports[`ir {"name":"streaming"} 1`] = `
                     },
                     "errors": [],
                     "examples": [],
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY",
-                        "message": null
-                    },
+                    "availability": null,
                     "docs": null
                 },
                 {
@@ -24752,10 +24512,7 @@ exports[`ir {"name":"streaming"} 1`] = `
                     },
                     "errors": [],
                     "examples": [],
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY",
-                        "message": null
-                    },
+                    "availability": null,
                     "docs": null
                 }
             ]
@@ -25010,20 +24767,14 @@ exports[`ir {"name":"variables"} 1`] = `
             },
             "referencedTypes": [],
             "examples": [],
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "docs": null
         }
     },
     "errors": {},
     "services": {
         "service_service": {
-            "availability": {
-                "status": "GENERAL_AVAILABILITY",
-                "message": null
-            },
+            "availability": null,
             "name": {
                 "fernFilepath": {
                     "allParts": [
@@ -25404,10 +25155,7 @@ exports[`ir {"name":"variables"} 1`] = `
                     "response": null,
                     "errors": [],
                     "examples": [],
-                    "availability": {
-                        "status": "GENERAL_AVAILABILITY",
-                        "message": null
-                    },
+                    "availability": null,
                     "docs": null
                 }
             ]
@@ -25996,10 +25744,7 @@ exports[`ir {"name":"webhooks"} 1`] = `
                         }
                     ]
                 },
-                "availability": {
-                    "status": "GENERAL_AVAILABILITY",
-                    "message": null
-                },
+                "availability": null,
                 "docs": "This is a webhook to receive notifications."
             }
         ]
