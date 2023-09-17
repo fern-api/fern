@@ -20,7 +20,6 @@
     { "path": "../cli/logger" },
     { "path": "../cli/login" },
     { "path": "../cli/openapi-ir-to-fern" },
-    { "path": "../cli/openapi-migrator" },
     { "path": "../cli/openapi-parser" },
     { "path": "../cli/posthog-manager" },
     { "path": "../cli/project-loader" },
