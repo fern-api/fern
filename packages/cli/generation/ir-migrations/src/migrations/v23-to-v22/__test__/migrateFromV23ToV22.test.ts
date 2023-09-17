@@ -1,7 +1,6 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createLogger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { readFile } from "fs/promises";
 import { createMigrationTester } from "../../../__test__/utils/createMigrationTester";
 import { V23_TO_V22_MIGRATION } from "../migrateFromV23ToV22";
 
@@ -13,8 +12,7 @@ describe("migrateFromV23ToV22", () => {
         const migrated = await runMigration({
             pathToFixture,
         });
-        const expected = JSON.parse((await readFile(join(pathToFixture, RelativeFilePath.of("ir.json")))).toString());
-        expect(migrated).toMatchObject(expected);
+        expect(migrated).toMatchSnapshot();
     });
 
     it("skips when definition contains bytes", async () => {
