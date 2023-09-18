@@ -17,6 +17,7 @@ export const FIXTURES = {
     CIRCULAR_REFERENCES: "circular-references",
     CUSTOM_AUTH: "custom-auth",
     ERROR_PROPERTY: "error-property",
+    EXAMPLES: "examples",
     MULTI_URL_ENVIRONMENT: "multi-url-environment",
     NO_ENVIRONMENT: "no-environment",
     SINGLE_URL_ENVIRONMENT: "single-url-environment-default",
