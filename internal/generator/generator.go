@@ -72,11 +72,12 @@ func (g *Generator) Generate(mode Mode) ([]*File, error) {
 	return g.generate(ir, mode)
 }
 
-func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, files []*File, mode Mode) ([]*File, error) {
+func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mode Mode) ([]*File, error) {
 	fileInfoToTypes, err := fileInfoToTypes(ir.ApiName, ir.Types, ir.Services, ir.ServiceTypeReferenceInfo)
 	if err != nil {
 		return nil, err
 	}
+	files := make([]*File, 0, len(fileInfoToTypes))
 	for fileInfo, typesToGenerate := range fileInfoToTypes {
 		writer := newFileWriter(
 			fileInfo.filename,
@@ -97,7 +98,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, fi
 					if err := writer.WriteFiberRequestType(typeToGenerate.FernFilepath, typeToGenerate.Endpoint, g.config.EnableExplicitNull); err != nil {
 						return nil, err
 					}
-				} else {
+				} else if mode == ModeClient {
 					if err := writer.WriteRequestType(typeToGenerate.FernFilepath, typeToGenerate.Endpoint, g.config.EnableExplicitNull); err != nil {
 						return nil, err
 					}
@@ -189,14 +190,13 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	}
 	// Then split up all the types based on the Fern directory they belong to (i.e. the root package,
 	// or some other subpackage).
-	files, err := g.generateModelTypes(ir, files, mode)
+	modelFiles, err := g.generateModelTypes(ir, mode)
 	if err != nil {
 		return nil, err
 	}
+	files = append(files, modelFiles...)
 	// Then handle mode-specific generation tasks.
-	var (
-		generatedClient *GeneratedClient
-	)
+	var generatedClient *GeneratedClient
 	switch mode {
 	case ModeFiber:
 		break
