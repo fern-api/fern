@@ -19,11 +19,9 @@ export function convert({
 }): OpenApiConvertedFernDefinition {
     const context = new OpenApiIrConverterContext({ taskContext });
     const convertedPackage = convertPackage({ openApiFile: openApiIr, context });
+
     return {
         rootApiFile: convertedPackage.rootApiFile,
-        definitionFiles = {
-            ...definitionFiles,
-            ...convertedPackage.definitionFiles,
-        },
+        definitionFiles: convertedPackage.definitionFiles,
     };
 }
