@@ -13,13 +13,10 @@ export function testParseOpenAPI(fixtureName: string, filename: string): void {
         it("parse open api", async () => {
             const openApiPath = path.join(FIXTURES_PATH, fixtureName, filename);
             const openApiIr = await parse({
-                root: {
-                    file: {
-                        absoluteFilepath: AbsoluteFilePath.of(openApiPath),
-                        contents: "",
-                        relativeFilepath: RelativeFilePath.of(filename),
-                    },
-                    subDirectories: [],
+                openApiFile: {
+                    absoluteFilepath: AbsoluteFilePath.of(openApiPath),
+                    contents: "",
+                    relativeFilepath: RelativeFilePath.of(filename),
                 },
                 taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER }),
             });

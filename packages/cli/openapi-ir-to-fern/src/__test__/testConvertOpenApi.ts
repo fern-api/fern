@@ -15,13 +15,10 @@ export function testConvertOpenAPI(fixtureName: string, filename: string): void 
             const openApiPath = path.join(FIXTURES_PATH, fixtureName, filename);
             const mockTaskContext = createMockTaskContext({ logger: CONSOLE_LOGGER });
             const openApiIr = await parse({
-                root: {
-                    file: {
-                        absoluteFilepath: AbsoluteFilePath.of(openApiPath),
-                        contents: "",
-                        relativeFilepath: RelativeFilePath.of(filename),
-                    },
-                    subDirectories: [],
+                openApiFile: {
+                    absoluteFilepath: AbsoluteFilePath.of(openApiPath),
+                    contents: "",
+                    relativeFilepath: RelativeFilePath.of(filename),
                 },
                 taskContext: mockTaskContext,
             });

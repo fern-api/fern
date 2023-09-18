@@ -1,14 +1,14 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { lstat, readdir, readFile } from "fs/promises";
-import { OpenAPIDefinition, OpenAPIFile } from "./types/Workspace";
+import { OpenAPIDefinition, OpenAPIIntermediateRepresentation } from "./types/Workspace";
 
 export async function loadAndValidateOpenAPIDefinition(
     context: TaskContext,
     absolutePathToDefinition: AbsoluteFilePath,
     relativeFilePath: RelativeFilePath = RelativeFilePath.of(".")
 ): Promise<OpenAPIDefinition> {
-    let openAPIFile: undefined | OpenAPIFile;
+    let openAPIFile: undefined | OpenAPIIntermediateRepresentation;
     const subDirectories: OpenAPIDefinition[] = [];
     const files = await readdir(join(absolutePathToDefinition, relativeFilePath));
     for (const file of files) {
@@ -41,6 +41,5 @@ export async function loadAndValidateOpenAPIDefinition(
     return {
         absolutePath: join(absolutePathToDefinition, relativeFilePath),
         file: openAPIFile,
-        subDirectories,
     };
 }

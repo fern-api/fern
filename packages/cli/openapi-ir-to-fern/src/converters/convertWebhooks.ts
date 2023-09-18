@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { OpenAPIFile, Webhook } from "@fern-fern/openapi-ir-model/ir";
+import { OpenAPIIntermediateRepresentation, Webhook } from "@fern-fern/openapi-ir-model/ir";
 import { camelCase, isEqual } from "lodash-es";
 import { ROOT_PREFIX } from "../convertPackage";
 import { OpenApiIrConverterContext } from "../OpenApiIrConverterContext";
@@ -18,7 +18,7 @@ export function convertWebhooks({
     openApiFile,
     context,
 }: {
-    openApiFile: OpenAPIFile;
+    openApiFile: OpenAPIIntermediateRepresentation;
     context: OpenApiIrConverterContext;
 }): ConvertedWebhooks | undefined {
     const webhooksByFile: Record<RelativeFilePath, Record<string, RawSchemas.WebhookSchema>> = {};

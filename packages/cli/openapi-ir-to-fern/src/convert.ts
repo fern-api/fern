@@ -21,39 +21,12 @@ export function convert({
     let rootApiFile: RootApiFileSchema | undefined = undefined;
     let definitionFiles: Record<RelativeFilePath, DefinitionFileSchema> = {};
 
-    if (openApiIr.rootPackage.file != null) {
-        const openApiFile = openApiIr.files[openApiIr.rootPackage.file];
-        if (openApiFile != null) {
-            const convertedPackage = convertPackage({ openApiFile, context });
-            rootApiFile = convertedPackage.rootApiFile;
-            definitionFiles = {
-                ...definitionFiles,
-                ...convertedPackage.definitionFiles,
-            };
-        }
-    }
-
-    // TODO(dsinghvi): should be fully recursive. Currently only exploring 1 level deep.
-    for (const subPackage of openApiIr.rootPackage.subpackages) {
-        if (subPackage.file != null) {
-            const openApiFile = openApiIr.files[subPackage.file];
-            if (openApiFile != null) {
-                const convertedPackage = convertPackage({ openApiFile, context });
-                if (rootApiFile == null) {
-                    rootApiFile = convertedPackage.rootApiFile;
-                }
-                const prefixedDefinitionFiles = Object.fromEntries(
-                    Object.entries(convertedPackage.definitionFiles).map(([filepath, definitionFile]) => {
-                        return [`${subPackage.name}/${filepath}`, definitionFile];
-                    })
-                );
-                definitionFiles = {
-                    ...definitionFiles,
-                    ...prefixedDefinitionFiles,
-                };
-            }
-        }
-    }
+    const convertedPackage = convertPackage({ openApiFile: openApiIr, context });
+    rootApiFile = convertedPackage.rootApiFile;
+    definitionFiles = {
+        ...definitionFiles,
+        ...convertedPackage.definitionFiles,
+    };
 
     if (rootApiFile == null) {
         rootApiFile = {
