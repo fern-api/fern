@@ -31,6 +31,12 @@ jobs:
             projectVersion=$(./scripts/git-version.sh)
             echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
             docker buildx build --platform linux/amd64,linux/arm64 -f ./docker/Dockerfile.sdk -t fernapi/fern-go-sdk:${projectVersion} . --push
+      - run:
+          name: Publish Fiber Docker
+          command: |
+            projectVersion=$(./scripts/git-version.sh)
+            echo "$FERNAPI_DOCKER_HUB_PASSWORD" | docker login --username fernapi --password-stdin
+            docker buildx build --platform linux/amd64,linux/arm64 -f ./docker/Dockerfile.fiber -t fernapi/fern-go-fiber:${projectVersion} . --push
 
 workflows:
   build:
