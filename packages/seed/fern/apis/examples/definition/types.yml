@@ -131,17 +131,6 @@ types:
             - public
           value: <head>...</head>
 
-  Event:
-    discriminated: false
-    union:
-      - Exception
-      - Migration
-    examples:
-      - name: One
-        value:
-          name: 002_upgrade
-          status: $MigrationStatus.Failed
-
   Exception:
     union:
       generic: ExceptionInfo
