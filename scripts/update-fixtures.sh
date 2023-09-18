@@ -3,6 +3,7 @@
 declare -A COMMANDS
 COMMANDS["fern-go-model"]=$(find ./internal/testdata/model -maxdepth 1 -mindepth 1 -type d)
 COMMANDS["fern-go-sdk"]=$(find ./internal/testdata/sdk -maxdepth 1 -mindepth 1 -type d)
+COMMANDS["fern-go-fiber"]=$(find ./internal/testdata/fiber -maxdepth 1 -mindepth 1 -type d)
 
 for command in "${!COMMANDS[@]}"; do
   directories="${COMMANDS[$command]}"

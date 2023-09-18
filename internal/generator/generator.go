@@ -11,7 +11,6 @@ import (
 
 	"github.com/fern-api/fern-go/internal/ast"
 	"github.com/fern-api/fern-go/internal/coordinator"
-	"github.com/fern-api/fern-go/internal/fern/ir"
 	fernir "github.com/fern-api/fern-go/internal/fern/ir"
 	generatorexec "github.com/fern-api/generator-exec-go"
 )
@@ -27,6 +26,7 @@ type Mode uint8
 const (
 	ModeModel = iota + 1
 	ModeClient
+	ModeFiber
 )
 
 // Generator represents the Go code generator.
@@ -70,6 +70,47 @@ func (g *Generator) Generate(mode Mode) ([]*File, error) {
 		return nil, err
 	}
 	return g.generate(ir, mode)
+}
+
+func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, files []*File, mode Mode) ([]*File, error) {
+	fileInfoToTypes, err := fileInfoToTypes(ir.ApiName, ir.Types, ir.Services, ir.ServiceTypeReferenceInfo)
+	if err != nil {
+		return nil, err
+	}
+	for fileInfo, typesToGenerate := range fileInfoToTypes {
+		writer := newFileWriter(
+			fileInfo.filename,
+			fileInfo.packageName,
+			g.config.ImportPath,
+			ir.Types,
+			ir.Errors,
+			g.coordinator,
+		)
+		for _, typeToGenerate := range typesToGenerate {
+			switch {
+			case typeToGenerate.TypeDeclaration != nil:
+				if err := writer.WriteType(typeToGenerate.TypeDeclaration); err != nil {
+					return nil, err
+				}
+			case typeToGenerate.Endpoint != nil:
+				if mode == ModeFiber {
+					if err := writer.WriteFiberRequestType(typeToGenerate.FernFilepath, typeToGenerate.Endpoint, g.config.EnableExplicitNull); err != nil {
+						return nil, err
+					}
+				} else {
+					if err := writer.WriteRequestType(typeToGenerate.FernFilepath, typeToGenerate.Endpoint, g.config.EnableExplicitNull); err != nil {
+						return nil, err
+					}
+				}
+			}
+		}
+		file, err := writer.File()
+		if err != nil {
+			return nil, err
+		}
+		files = append(files, file)
+	}
+	return files, nil
 }
 
 func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) ([]*File, error) {
@@ -130,7 +171,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		generatedPackages = generatedPackagesFromIR(ir)
 	)
 	var files []*File
-	// First write all of the package-level documentation, if any (i.e. in a doc.go file).
+	// Write all of the package-level documentation, if any (i.e. in a doc.go file).
 	if ir.RootPackage != nil && ir.RootPackage.Docs != nil && len(*ir.RootPackage.Docs) > 0 {
 		fileInfo := fileInfoForPackage(ir.ApiName, ir.RootPackage.FernFilepath)
 		writer := newFileWriter(fileInfo.filename, fileInfo.packageName, "", nil, nil, g.coordinator)
@@ -148,44 +189,22 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	}
 	// Then split up all the types based on the Fern directory they belong to (i.e. the root package,
 	// or some other subpackage).
-	fileInfoToTypes, err := fileInfoToTypes(ir.ApiName, ir.Types, ir.Services, ir.ServiceTypeReferenceInfo)
+	files, err := g.generateModelTypes(ir, files, mode)
 	if err != nil {
 		return nil, err
 	}
+	// Then handle mode-specific generation tasks.
 	var (
-		generatedAuth        *GeneratedAuth
-		generatedEnvironment *GeneratedEnvironment
-		generatedClient      *GeneratedClient
+		generatedClient *GeneratedClient
 	)
-	for fileInfo, typesToGenerate := range fileInfoToTypes {
-		writer := newFileWriter(
-			fileInfo.filename,
-			fileInfo.packageName,
-			g.config.ImportPath,
-			ir.Types,
-			ir.Errors,
-			g.coordinator,
-		)
-		for _, typeToGenerate := range typesToGenerate {
-			switch {
-			case typeToGenerate.TypeDeclaration != nil:
-				if err := writer.WriteType(typeToGenerate.TypeDeclaration); err != nil {
-					return nil, err
-				}
-			case typeToGenerate.Endpoint != nil:
-				if err := writer.WriteRequestType(typeToGenerate.FernFilepath, typeToGenerate.Endpoint, g.config.EnableExplicitNull); err != nil {
-					return nil, err
-				}
-			}
-		}
-		file, err := writer.File()
-		if err != nil {
-			return nil, err
-		}
-		files = append(files, file)
-	}
 	switch mode {
+	case ModeFiber:
+		break
 	case ModeClient:
+		var (
+			generatedAuth        *GeneratedAuth
+			generatedEnvironment *GeneratedEnvironment
+		)
 		// Generate the core API files.
 		fileInfo := fileInfoForClientOptionsDefinition()
 		writer := newFileWriter(
@@ -398,6 +417,12 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	return files, nil
 }
 
+// generateReadme generates a README.md file for a generated Go module, called
+// if a module config was provided.
+//
+// Parameters:
+//   - generatedClient: The generated client, if any.
+//   - generatedGoVersion: The Go version that the generated client supports.
 func (g *Generator) generateReadme(
 	generatedClient *GeneratedClient,
 	generatedGoVersion string,
@@ -544,12 +569,12 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 }
 
 // readIR reads the *InermediateRepresentation from the given filename.
-func readIR(irFilename string) (*ir.IntermediateRepresentation, error) {
+func readIR(irFilename string) (*fernir.IntermediateRepresentation, error) {
 	bytes, err := os.ReadFile(irFilename)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read intermediate representation: %v", err)
 	}
-	ir := new(ir.IntermediateRepresentation)
+	ir := new(fernir.IntermediateRepresentation)
 	if err := json.Unmarshal(bytes, ir); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal intermediate representation: %v", err)
 	}
@@ -563,7 +588,7 @@ func readIR(irFilename string) (*ir.IntermediateRepresentation, error) {
 // access the helpers alongside the rest of the top-level definitions. However,
 // if any naming conflict exists between the generated types, this file is
 // deposited in the core package.
-func newPointerFile(coordinator *coordinator.Client, apiName *ir.Name, generatedNames map[string]struct{}) *File {
+func newPointerFile(coordinator *coordinator.Client, apiName *fernir.Name, generatedNames map[string]struct{}) *File {
 	// First determine whether or not we need to generate the type in the
 	// core package.
 	var useCorePackage bool
@@ -655,7 +680,7 @@ func fileInfoForClientOptionsDefinition() *fileInfo {
 }
 
 // TODO: We need to guard against the case when the user defines a client.yml file.
-func fileInfoForClientOptions(apiName *ir.Name, generatedNames map[string]struct{}) *fileInfo {
+func fileInfoForClientOptions(apiName *fernir.Name, generatedNames map[string]struct{}) *fileInfo {
 	return &fileInfo{
 		filename:    "client/options.go",
 		packageName: "client",
@@ -671,7 +696,7 @@ func fileInfoForCoreClientOptions() *fileInfo {
 	}
 }
 
-func fileInfoForOptionalHelpers(apiName *ir.Name, generatedNames map[string]struct{}, generatedPackages map[string]struct{}) (*fileInfo, bool) {
+func fileInfoForOptionalHelpers(apiName *fernir.Name, generatedNames map[string]struct{}, generatedPackages map[string]struct{}) (*fileInfo, bool) {
 	_, hasOptional := generatedNames["Optional"]
 	_, hasNull := generatedNames["Null"]
 	if hasOptional || hasNull {
@@ -692,7 +717,7 @@ func fileInfoForOptionalHelpers(apiName *ir.Name, generatedNames map[string]stru
 	}, false
 }
 
-func fileInfoForEnvironments(apiName *ir.Name, generatedNames map[string]struct{}, generatedPackages map[string]struct{}) (*fileInfo, bool) {
+func fileInfoForEnvironments(apiName *fernir.Name, generatedNames map[string]struct{}, generatedPackages map[string]struct{}) (*fileInfo, bool) {
 	if _, ok := generatedNames["Environments"]; ok {
 		return &fileInfo{
 			filename:    "core/environments.go",
@@ -711,7 +736,7 @@ func fileInfoForEnvironments(apiName *ir.Name, generatedNames map[string]struct{
 	}, false
 }
 
-func fileInfoForType(apiName *ir.Name, fernFilepath *ir.FernFilepath) fileInfo {
+func fileInfoForType(apiName *fernir.Name, fernFilepath *fernir.FernFilepath) fileInfo {
 	var packages []string
 	for _, packageName := range fernFilepath.PackagePath {
 		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
@@ -732,7 +757,7 @@ func fileInfoForType(apiName *ir.Name, fernFilepath *ir.FernFilepath) fileInfo {
 	}
 }
 
-func fileInfoForService(fernFilepath *ir.FernFilepath) *fileInfo {
+func fileInfoForService(fernFilepath *fernir.FernFilepath) *fileInfo {
 	packagePath := packagePathForClient(fernFilepath)
 	return &fileInfo{
 		filename:    filepath.Join(append(packagePath, "client.go")...),
@@ -740,7 +765,7 @@ func fileInfoForService(fernFilepath *ir.FernFilepath) *fileInfo {
 	}
 }
 
-func fileInfoForPackage(apiName *ir.Name, fernFilepath *ir.FernFilepath) *fileInfo {
+func fileInfoForPackage(apiName *fernir.Name, fernFilepath *fernir.FernFilepath) *fileInfo {
 	var packages []string
 	for _, packageName := range fernFilepath.PackagePath {
 		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
@@ -759,7 +784,7 @@ func fileInfoForPackage(apiName *ir.Name, fernFilepath *ir.FernFilepath) *fileIn
 	}
 }
 
-func generatedNamesFromIR(ir *ir.IntermediateRepresentation) map[string]struct{} {
+func generatedNamesFromIR(ir *fernir.IntermediateRepresentation) map[string]struct{} {
 	generatedNames := make(map[string]struct{})
 	for _, irType := range ir.Types {
 		generatedNames[irType.Name.Name.PascalCase.UnsafeName] = struct{}{}
@@ -776,7 +801,7 @@ func generatedNamesFromIR(ir *ir.IntermediateRepresentation) map[string]struct{}
 // TODO: Consolidate these functions into a single collision detection type.
 // The collision detection needs to be far more robust (i.e. clients generated
 // in nested packages that define client types).
-func generatedPackagesFromIR(ir *ir.IntermediateRepresentation) map[string]struct{} {
+func generatedPackagesFromIR(ir *fernir.IntermediateRepresentation) map[string]struct{} {
 	generatedPackages := make(map[string]struct{})
 	for _, irService := range ir.Services {
 		fernFilepath := irService.Name.FernFilepath
@@ -788,7 +813,7 @@ func generatedPackagesFromIR(ir *ir.IntermediateRepresentation) map[string]struc
 }
 
 // shouldSkipRequestType returns true if the request type should not be generated.
-func shouldSkipRequestType(irEndpoint *ir.HttpEndpoint) bool {
+func shouldSkipRequestType(irEndpoint *fernir.HttpEndpoint) bool {
 	if irEndpoint.SdkRequest == nil || irEndpoint.SdkRequest.Shape == nil || irEndpoint.SdkRequest.Shape.Wrapper == nil {
 		// This endpoint doesn't have any in-lined request types that need to be generated.
 		return true
@@ -801,7 +826,7 @@ func shouldSkipRequestType(irEndpoint *ir.HttpEndpoint) bool {
 
 // fileUploadHasBodyProperties returns true if the file upload request has at least
 // one body property.
-func fileUploadHasBodyProperties(fileUpload *ir.FileUploadRequest) bool {
+func fileUploadHasBodyProperties(fileUpload *fernir.FileUploadRequest) bool {
 	if fileUpload == nil {
 		return false
 	}
