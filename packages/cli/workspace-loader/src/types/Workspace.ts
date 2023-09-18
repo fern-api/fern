@@ -28,11 +28,10 @@ export interface OpenAPIWorkspace {
 
 export interface OpenAPIDefinition {
     absolutePath: AbsoluteFilePath;
-    file: OpenAPIFile;
-    subDirectories: OpenAPIDefinition[];
+    file: OpenAPIIntermediateRepresentation;
 }
 
-export interface OpenAPIFile {
+export interface OpenAPIIntermediateRepresentation {
     absoluteFilepath: AbsoluteFilePath;
     /* relative filepath from the root of the definition */
     relativeFilepath: RelativeFilePath;

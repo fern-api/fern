@@ -1,5 +1,5 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { OpenAPIFile } from "@fern-fern/openapi-ir-model/ir";
+import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/ir";
 import { convertHeader } from "./converters/convertHeader";
 
 class GlobalHeader {
@@ -15,7 +15,9 @@ class GlobalHeader {
     }
 }
 
-export function getGlobalHeaders(openApiFile: OpenAPIFile): Record<string, RawSchemas.HttpHeaderSchema> {
+export function getGlobalHeaders(
+    openApiFile: OpenAPIIntermediateRepresentation
+): Record<string, RawSchemas.HttpHeaderSchema> {
     const globalHeaders: Record<string, GlobalHeader> = {};
     for (const endpoint of openApiFile.endpoints) {
         endpoint.headers.forEach((header) => {

@@ -1,5 +1,11 @@
 import { TaskContext } from "@fern-api/task-context";
-import { Endpoint, OpenAPIFile, Schema, SecurityScheme, Webhook } from "@fern-fern/openapi-ir-model/ir/_types";
+import {
+    Endpoint,
+    OpenAPIIntermediateRepresentation,
+    Schema,
+    SecurityScheme,
+    Webhook,
+} from "@fern-fern/openapi-ir-model/ir/_types";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext";
 import { convertPathItem } from "./converters/convertPathItem";
@@ -9,7 +15,7 @@ import { convertServer } from "./converters/convertServer";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 
-export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext): OpenAPIFile {
+export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext): OpenAPIIntermediateRepresentation {
     const securitySchemes: Record<string, SecurityScheme> = Object.fromEntries(
         Object.entries(openApi.components?.securitySchemes ?? {}).map(([key, securityScheme]) => {
             const convertedSecurityScheme = convertSecurityScheme(securityScheme);
@@ -68,7 +74,6 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
         hasEndpointsMarkedInternal: endpoints.some((endpoint) => endpoint.internal),
         errors: context.getErrors(),
         nonRequestReferencedSchemas: Array.from(context.getReferencedSchemas()),
-        dependencies: [],
         variables,
     };
 }

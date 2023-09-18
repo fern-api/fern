@@ -387,7 +387,6 @@ export function convertToReferencedSchema(schema: OpenAPIV3.ReferenceObject, bre
         // TODO(dsinghvi): references may contain files
         generatedName,
         nameOverride,
-        file: undefined,
         schema: getSchemaIdFromReference(schema),
         description: description ?? undefined,
     });
