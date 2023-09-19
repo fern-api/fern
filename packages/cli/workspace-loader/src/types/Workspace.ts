@@ -23,15 +23,18 @@ export interface OpenAPIWorkspace {
     name: string;
     absoluteFilepath: AbsoluteFilePath;
     generatorsConfiguration: GeneratorsConfiguration;
-    definition: OpenAPIDefinition;
+    openapi: OpenAPIFile;
+    asyncapi: AsyncAPIFile | undefined;
 }
 
-export interface OpenAPIDefinition {
-    absolutePath: AbsoluteFilePath;
-    file: OpenAPIIntermediateRepresentation;
+export interface OpenAPIFile {
+    absoluteFilepath: AbsoluteFilePath;
+    /* relative filepath from the root of the definition */
+    relativeFilepath: RelativeFilePath;
+    contents: string;
 }
 
-export interface OpenAPIIntermediateRepresentation {
+export interface AsyncAPIFile {
     absoluteFilepath: AbsoluteFilePath;
     /* relative filepath from the root of the definition */
     relativeFilepath: RelativeFilePath;

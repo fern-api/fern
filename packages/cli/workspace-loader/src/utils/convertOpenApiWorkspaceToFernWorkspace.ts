@@ -11,7 +11,7 @@ export async function convertOpenApiWorkspaceToFernWorkspace(
     context: TaskContext
 ): Promise<FernWorkspace> {
     const openApiIr = await parse({
-        openApiFile: openapiWorkspace.definition.file,
+        openApiFile: openapiWorkspace.openapi,
         taskContext: context,
     });
     const definition = convert({
