@@ -1,10 +1,11 @@
 import { loadDependenciesConfiguration } from "@fern-api/dependencies-configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loadGeneratorsConfiguration } from "@fern-api/generators-configuration";
-import { DEFINITION_DIRECTORY, OPENAPI_DIRECTORY } from "@fern-api/project-configuration";
+import { ASYNCAPI_DIRECTORY, DEFINITION_DIRECTORY, OPENAPI_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { listFiles } from "./listFiles";
-import { loadAndValidateOpenAPIDefinition } from "./loadAndValidateOpenAPIWorkspace";
+import { loadAsyncAPIFile } from "./loadAsyncAPIFile";
+import { loadOpenAPIFile } from "./loadOpenAPIFile";
 import { parseYamlFiles } from "./parseYamlFiles";
 import { processPackageMarkers } from "./processPackageMarkers";
 import { WorkspaceLoader } from "./types/Result";
@@ -23,11 +24,17 @@ export async function loadAPIWorkspace({
 }): Promise<WorkspaceLoader.Result> {
     const generatorsConfiguration = await loadGeneratorsConfiguration({ absolutePathToWorkspace, context });
 
-    const absolutePathToOpenAPIDefinition = join(absolutePathToWorkspace, RelativeFilePath.of(OPENAPI_DIRECTORY));
-    const openApiDirectoryExists = await doesPathExist(absolutePathToOpenAPIDefinition);
+    const absolutePathToOpenAPIFolder = join(absolutePathToWorkspace, RelativeFilePath.of(OPENAPI_DIRECTORY));
+    const openApiDirectoryExists = await doesPathExist(absolutePathToOpenAPIFolder);
+
+    const absolutePathToAsyncAPIFolder = join(absolutePathToWorkspace, RelativeFilePath.of(ASYNCAPI_DIRECTORY));
+    const asyncApiDirectoryExists = await doesPathExist(absolutePathToAsyncAPIFolder);
 
     if (openApiDirectoryExists) {
-        const openApiDefinition = await loadAndValidateOpenAPIDefinition(context, absolutePathToOpenAPIDefinition);
+        const asyncApiFile = asyncApiDirectoryExists
+            ? await loadAsyncAPIFile(context, absolutePathToAsyncAPIFolder)
+            : undefined;
+        const openApiFile = await loadOpenAPIFile(context, absolutePathToOpenAPIFolder);
         return {
             didSucceed: true,
             workspace: {
@@ -36,7 +43,8 @@ export async function loadAPIWorkspace({
                 workspaceName,
                 absoluteFilepath: absolutePathToWorkspace,
                 generatorsConfiguration,
-                definition: openApiDefinition,
+                openapi: openApiFile,
+                asyncapi: asyncApiFile,
             },
         };
     }
