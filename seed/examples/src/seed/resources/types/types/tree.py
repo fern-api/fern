@@ -11,6 +11,12 @@ from ....core.datetime_utils import serialize_datetime
 
 
 class Tree(pydantic.BaseModel):
+    """
+    from seed import Node, Tree
+
+    Tree(nodes=[Node(name="left"), Node(name="right")])
+    """
+
     nodes: typing.Optional[typing.List[Node]]
 
     def json(self, **kwargs: typing.Any) -> str:

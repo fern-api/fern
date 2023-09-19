@@ -7,6 +7,12 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class Language(str, enum.Enum):
+    """
+    from fern.my_api import Language
+
+    Language.JAVA
+    """
+
     JAVA = "JAVA"
     JAVASCRIPT = "JAVASCRIPT"
     PYTHON = "PYTHON"

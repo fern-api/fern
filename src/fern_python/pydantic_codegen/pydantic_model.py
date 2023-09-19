@@ -32,6 +32,7 @@ class PydanticModel:
         base_models: Sequence[AST.ClassReference] = None,
         parent: ClassParent = None,
         docstring: Optional[str] = None,
+        snippet: Optional[str] = None,
         forbid_extra_fields: bool = False,
     ):
         self._source_file = source_file
@@ -39,6 +40,7 @@ class PydanticModel:
             name=name,
             extends=base_models or [Pydantic.BaseModel],
             docstring=AST.Docstring(docstring) if docstring is not None else None,
+            snippet=snippet,
         )
         self._base_models = base_models or []
         self._local_class_reference = (parent or source_file).add_class_declaration(

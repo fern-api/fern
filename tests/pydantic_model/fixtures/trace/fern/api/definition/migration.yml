@@ -6,10 +6,20 @@ types:
       - value: FAILED
         docs: The migration is failed
       - FINISHED
+    examples:
+      - name: Running
+        value: RUNNING
+      - name: Failed
+        value: FAILED
+
   Migration:
     properties:
       name: string
       status: MigrationStatus
+    examples:
+      - value:
+          name: 001_init
+          status: $MigrationStatus.Running
 
 service:
   base-path: /migration-info

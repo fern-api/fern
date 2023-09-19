@@ -9,23 +9,58 @@ types:
       problemName: string
       problemVersion: integer
       files: map<commons.Language, ProblemFiles>
-      inputParams: list<VariableTypeAndName>
-      outputType: commons.VariableType
-      testcases: list<commons.TestCaseWithExpectedResult>
+      inputParams: optional<list<VariableTypeAndName>>
+      outputType: optional<commons.VariableType>
+      testcases: optional<list<commons.TestCaseWithExpectedResult>>
       methodName: string
       supportsCustomTestCases: boolean
+    examples:
+      - value:
+          problemId: problem-213ious
+          problemDescription: $ProblemDescription.One
+          problemName: Internal
+          problemVersion: 1
+          files:
+            PYTHON:
+              solutionFile:
+                filename: problem.txt
+                contents: <truncated>
+              readOnlyFiles:
+                - $commons.FileInfo.One
+          methodName: Upload
+          supportsCustomTestCases: false
+
   ProblemDescription:
     properties:
       boards: list<ProblemDescriptionBoard>
+    examples:
+      - name: One
+        value:
+          boards:
+            - $ProblemDescriptionBoard.One
   ProblemDescriptionBoard:
     union:
       html: string
       variable: commons.VariableValue
       testCaseId: string
+    examples:
+      - name: One
+        value:
+          type: html
+          value: <head>...</head>
   ProblemFiles:
     properties:
       solutionFile: commons.FileInfo
       readOnlyFiles: list<commons.FileInfo>
+    examples:
+      - name: One
+        value:
+          solutionFile:
+            filename: problem.txt
+            contents: <truncated>
+          readOnlyFiles:
+            - $commons.FileInfo.One
+
   VariableTypeAndName:
     properties:
       variableType: commons.VariableType

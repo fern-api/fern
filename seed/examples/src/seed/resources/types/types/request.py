@@ -9,6 +9,12 @@ from ....core.datetime_utils import serialize_datetime
 
 
 class Request(pydantic.BaseModel):
+    """
+    from seed import Request
+
+    Request(request={})
+    """
+
     request: typing.Any
 
     def json(self, **kwargs: typing.Any) -> str:

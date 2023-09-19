@@ -8,6 +8,18 @@ from .movie import Movie
 
 
 class ExtendedMovie(Movie):
+    """
+    from seed import ExtendedMovie
+
+    ExtendedMovie(
+        id="movie-sda231x",
+        title="Pulp Fiction",
+        from_="Quentin Tarantino",
+        rating=8.5,
+        cast=["John Travolta", "Samuel L. Jackson", "Uma Thurman", "Bruce Willis"],
+    )
+    """
+
     cast: typing.List[str]
 
     def json(self, **kwargs: typing.Any) -> str:

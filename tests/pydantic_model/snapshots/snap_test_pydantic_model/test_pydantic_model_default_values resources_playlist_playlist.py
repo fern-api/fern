@@ -16,6 +16,18 @@ from .playlist_id import PlaylistId
 
 
 class Playlist(PlaylistCreateRequest):
+    """
+    from fern.my_api import Playlist
+
+    Playlist(
+        name="Pop",
+        problems=["problem-213ious", "problem-sdka2s1"],
+        playlist_id="playlist-j23df2s",
+        owner_id="owner-k5ase4v",
+        schema="basic",
+    )
+    """
+
     playlist_id: PlaylistId
     owner_id: UserId = pydantic.Field(alias="owner-id")
     schema_: str = pydantic.Field(alias="schema")

@@ -21,6 +21,7 @@ class SdkGeneratorContext(ABC):
         ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
         custom_config: SDKCustomConfig,
+        project_module_path: AST.ModulePath,
     ):
         self.ir = ir
         self.generator_config = generator_config
@@ -28,6 +29,7 @@ class SdkGeneratorContext(ABC):
             ir=ir,
             type_declaration_referencer=TypeDeclarationReferencer(),
             generator_config=generator_config,
+            project_module_path=project_module_path,
         )
         self.core_utilities = CoreUtilities()
         self.custom_config = custom_config

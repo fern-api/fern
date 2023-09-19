@@ -26,8 +26,11 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
         source_file: SourceFile,
         custom_config: PydanticModelCustomConfig,
         docs: Optional[str],
+        snippet: Optional[str] = None,
     ):
-        super().__init__(context=context, custom_config=custom_config, source_file=source_file, docs=docs)
+        super().__init__(
+            context=context, custom_config=custom_config, source_file=source_file, docs=docs, snippet=snippet
+        )
         self._name = name
         self._union = union
 
@@ -42,6 +45,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
             custom_config=self._custom_config,
             source_file=self._source_file,
             docstring=self._docs,
+            snippet=self._snippet,
         ) as external_pydantic_model:
             external_pydantic_model.add_class_var_unsafe(
                 name="factory",

@@ -7,6 +7,12 @@ T_Result = typing.TypeVar("T_Result")
 
 
 class MigrationStatus(str, enum.Enum):
+    """
+    from seed import MigrationStatus
+
+    MigrationStatus.RUNNING
+    """
+
     RUNNING = "RUNNING"
     """
     The migration is running.

@@ -11,6 +11,12 @@ from .movie_id import MovieId
 
 
 class Movie(pydantic.BaseModel):
+    """
+    from seed import Movie
+
+    Movie(id="movie-c06a4ad7", title="The Boy and the Heron", from_="Hayao Miyazaki", rating=8.0)
+    """
+
     id: MovieId
     title: str
     from_: str = pydantic.Field(alias="from")

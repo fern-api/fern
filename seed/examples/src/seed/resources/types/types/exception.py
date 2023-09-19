@@ -27,4 +27,13 @@ class Exception_Timeout(pydantic.BaseModel):
         smart_union = True
 
 
+"""
+from seed import Exception_Generic, ExceptionInfo
+
+Exception_Generic(
+    value=ExceptionInfo(
+        exception_type="Unavailable", exception_message="This component is unavailable!", exception_stacktrace="<logs>"
+    )
+)
+"""
 Exception = typing.Union[Exception_Generic, Exception_Timeout]

@@ -18,4 +18,9 @@ class Test_Or(pydantic.BaseModel):
     value: bool
 
 
+"""
+from fern.my_api import Test_And
+
+Test_And(value=True)
+"""
 Test = typing.Union[Test_And, Test_Or]

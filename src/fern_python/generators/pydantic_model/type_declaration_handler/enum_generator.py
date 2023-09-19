@@ -19,8 +19,11 @@ class EnumGenerator(AbstractTypeGenerator):
         source_file: SourceFile,
         custom_config: PydanticModelCustomConfig,
         docs: Optional[str],
+        snippet: Optional[str] = None,
     ):
-        super().__init__(context=context, custom_config=custom_config, source_file=source_file, docs=docs)
+        super().__init__(
+            context=context, custom_config=custom_config, source_file=source_file, docs=docs, snippet=snippet
+        )
         self._name = name
         self._enum = enum
 
@@ -37,6 +40,7 @@ class EnumGenerator(AbstractTypeGenerator):
                 ),
             ],
             docstring=AST.Docstring(self._docs) if self._docs is not None else None,
+            snippet=self._snippet,
         )
 
         self._source_file.add_class_declaration(enum_class)

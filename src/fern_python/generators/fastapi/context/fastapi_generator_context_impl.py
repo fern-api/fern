@@ -17,8 +17,9 @@ class FastApiGeneratorContextImpl(FastApiGeneratorContext):
         self,
         ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
+        project_module_path: AST.ModulePath,
     ):
-        super().__init__(ir=ir, generator_config=generator_config)
+        super().__init__(ir=ir, generator_config=generator_config, project_module_path=project_module_path)
         self._service_declaration_referencer = ServiceDeclarationReferencer()
         self._error_declaration_referencer = ErrorDeclarationReferencer()
         self._inlined_request_declaration_referencer = InlinedRequestDeclarationReferencer(

@@ -12,6 +12,12 @@ from ...core.datetime_utils import serialize_datetime
 
 
 class FileInfo(pydantic.BaseModel):
+    """
+    from fern.my_api import FileInfo
+
+    FileInfo(filename="file.txt", contents="...")
+    """
+
     filename: str
     contents: str
 

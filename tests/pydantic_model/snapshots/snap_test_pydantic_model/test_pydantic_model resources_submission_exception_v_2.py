@@ -21,4 +21,13 @@ class ExceptionV2_Timeout(pydantic.BaseModel):
     type: typing_extensions.Literal["timeout"]
 
 
+"""
+from fern.my_api import ExceptionInfo, ExceptionV2_Generic
+
+ExceptionV2_Generic(
+    value=ExceptionInfo(
+        exception_type="Unavailable", exception_message="This component is unavailable!", exception_stacktrace="<logs>"
+    )
+)
+"""
 ExceptionV2 = typing.Union[ExceptionV2_Generic, ExceptionV2_Timeout]

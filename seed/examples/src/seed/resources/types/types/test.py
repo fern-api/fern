@@ -26,4 +26,9 @@ class Test_Or(pydantic.BaseModel):
         smart_union = True
 
 
+"""
+from seed import Test_And
+
+Test_And(value=True)
+"""
 Test = typing.Union[Test_And, Test_Or]

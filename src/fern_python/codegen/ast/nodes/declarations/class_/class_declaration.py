@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Sequence, Set
+from typing import List, Optional, Sequence, Set
 
 from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ....references import ClassReference, Module, Reference, ReferenceImport
@@ -22,6 +22,7 @@ class ClassDeclaration(AstNode):
         extends: Sequence[ClassReference] = None,
         constructor: ClassConstructor = None,
         docstring: Docstring = None,
+        snippet: Optional[str] = None,
     ):
         self.name = name
         self.extends = list(extends or [])
@@ -35,6 +36,7 @@ class ClassDeclaration(AstNode):
             )
         self.constructor = constructor
         self.docstring = docstring
+        self.snippet = snippet
         self.class_vars: List[VariableDeclaration] = []
         self.statements: List[AstNode] = []
         self.ghost_references: Set[Reference] = set()
@@ -152,8 +154,18 @@ class ClassDeclaration(AstNode):
         writer.write_line(":")
 
         with writer.indent():
-            if self.docstring is not None:
+            if self.snippet is not None:
                 writer.write_line('"""')
+                writer.write(self.snippet)
+                writer.write_newline_if_last_line_not()
+                if self.docstring is None:
+                    writer.write_line('"""')
+                else:
+                    writer.write_line("---")
+
+            if self.docstring is not None:
+                if self.snippet is None:
+                    writer.write_line('"""')
                 writer.write_node(self.docstring)
                 writer.write_newline_if_last_line_not()
                 writer.write_line('"""')

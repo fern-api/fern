@@ -12,6 +12,12 @@ from ...core.datetime_utils import serialize_datetime
 
 
 class LangServerRequest(pydantic.BaseModel):
+    """
+    from fern.my_api import LangServerRequest
+
+    LangServerRequest(request={})
+    """
+
     request: typing.Any
 
     class Partial(typing_extensions.TypedDict):

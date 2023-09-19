@@ -13,6 +13,12 @@ from .problem_description_board import ProblemDescriptionBoard
 
 
 class ProblemDescription(pydantic.BaseModel):
+    """
+    from fern.my_api import ProblemDescription, ProblemDescriptionBoard_Html
+
+    ProblemDescription(boards=[ProblemDescriptionBoard_Html(value="<head>...</head>")])
+    """
+
     boards: typing.List[ProblemDescriptionBoard]
 
     class Partial(typing_extensions.TypedDict):

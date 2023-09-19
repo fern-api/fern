@@ -15,6 +15,7 @@ class FastApiGeneratorContext(ABC):
         self,
         ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
+        project_module_path: AST.ModulePath,
     ):
         self.ir = ir
         self.generator_config = generator_config
@@ -22,6 +23,7 @@ class FastApiGeneratorContext(ABC):
             ir=ir,
             type_declaration_referencer=TypeDeclarationReferencer(),
             generator_config=generator_config,
+            project_module_path=project_module_path,
         )
         self.core_utilities = CoreUtilities()
 

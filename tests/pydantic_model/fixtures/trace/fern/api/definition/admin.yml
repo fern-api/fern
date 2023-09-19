@@ -7,6 +7,15 @@ types:
     union:
       and: boolean
       or: boolean
+    examples:
+      - name: And
+        value:
+          type: and
+          value: true
+      - name: Or
+        value:
+          type: or
+          value: true
 
 service:
   auth: false

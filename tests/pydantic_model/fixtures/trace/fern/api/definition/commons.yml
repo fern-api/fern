@@ -1,6 +1,10 @@
 types:
   UserId: string
-  ProblemId: string
+  ProblemId:
+    type: string
+    examples:
+      - name: One
+        value: problem-x72fas2
   NodeId: string
   VariableType:
     union:
@@ -139,8 +143,16 @@ types:
     properties:
       filename: string
       contents: string
+    examples:
+      - name: One
+        value:
+          filename: file.txt
+          contents: ...
   Language:
     enum:
       - JAVA
       - JAVASCRIPT
       - PYTHON
+    examples:
+      - name: Java
+        value: JAVA

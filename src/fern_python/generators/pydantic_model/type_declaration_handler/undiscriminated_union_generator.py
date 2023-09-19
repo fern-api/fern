@@ -18,8 +18,11 @@ class UndiscriminatedUnionGenerator(AbstractTypeGenerator):
         source_file: SourceFile,
         custom_config: PydanticModelCustomConfig,
         docs: Optional[str],
+        snippet: Optional[str] = None,
     ):
-        super().__init__(context=context, custom_config=custom_config, source_file=source_file, docs=docs)
+        super().__init__(
+            context=context, custom_config=custom_config, source_file=source_file, docs=docs, snippet=snippet
+        )
         self._name = name
         self._union = union
 

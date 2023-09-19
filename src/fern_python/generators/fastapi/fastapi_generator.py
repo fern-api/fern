@@ -63,7 +63,14 @@ class FastApiGenerator(AbstractGenerator):
             **custom_config.pydantic_config.dict(),
         )
 
-        context = FastApiGeneratorContextImpl(ir=ir, generator_config=generator_config)
+        context = FastApiGeneratorContextImpl(
+            ir=ir,
+            generator_config=generator_config,
+            project_module_path=self.get_relative_path_to_project_for_publish(
+                generator_config=generator_config,
+                ir=ir,
+            ),
+        )
 
         PydanticModelGenerator().generate_types(
             generator_exec_wrapper=generator_exec_wrapper,

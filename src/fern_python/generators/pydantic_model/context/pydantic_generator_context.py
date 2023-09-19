@@ -24,6 +24,10 @@ class PydanticGeneratorContext(ABC):
         self.core_utilities = CoreUtilities()
 
     @abstractmethod
+    def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:
+        ...
+
+    @abstractmethod
     def get_type_hint_for_type_reference(
         self,
         type_reference: ir_types.TypeReference,

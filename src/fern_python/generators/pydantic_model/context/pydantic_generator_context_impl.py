@@ -19,6 +19,7 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         ir: ir_types.IntermediateRepresentation,
         type_declaration_referencer: AbstractDeclarationReferencer[ir_types.DeclaredTypeName],
         generator_config: GeneratorConfig,
+        project_module_path: AST.ModulePath,
     ):
         super().__init__(ir=ir, generator_config=generator_config)
         self._type_reference_to_type_hint_converter = TypeReferenceToTypeHintConverter(
@@ -30,6 +31,10 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         }
 
         self._type_declaration_referencer = type_declaration_referencer
+        self._project_module_path = project_module_path
+
+    def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:
+        return self._project_module_path + module_path
 
     def get_type_hint_for_type_reference(
         self,

@@ -19,8 +19,11 @@ class AliasGenerator(AbstractTypeGenerator):
         source_file: SourceFile,
         custom_config: PydanticModelCustomConfig,
         docs: Optional[str],
+        snippet: Optional[str] = None,
     ):
-        super().__init__(context=context, custom_config=custom_config, source_file=source_file, docs=docs)
+        super().__init__(
+            context=context, custom_config=custom_config, source_file=source_file, docs=docs, snippet=snippet
+        )
         self._name = name
         self._alias = alias
 
@@ -32,6 +35,7 @@ class AliasGenerator(AbstractTypeGenerator):
                 declaration=AST.TypeAliasDeclaration(
                     name=self._context.get_class_name_for_type_name(self._name),
                     type_hint=self._context.get_type_hint_for_type_reference(self._alias.alias_of),
+                    snippet=self._snippet,
                 ),
                 should_export=True,
             )
@@ -44,6 +48,7 @@ class AliasGenerator(AbstractTypeGenerator):
                 custom_config=self._custom_config,
                 source_file=self._source_file,
                 docstring=self._docs,
+                snippet=self._snippet,
             ) as pydantic_model:
                 pydantic_model.set_root_type(self._alias.alias_of)
                 pydantic_model.add_method(

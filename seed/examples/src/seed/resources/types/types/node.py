@@ -11,6 +11,16 @@ from ....core.datetime_utils import serialize_datetime
 
 
 class Node(pydantic.BaseModel):
+    """
+    from seed import Node, Tree
+
+    Node(
+        name="root",
+        nodes=[Node(name="left"), Node(name="right")],
+        trees=[Tree(nodes=[Node(name="left"), Node(name="right")])],
+    )
+    """
+
     name: str
     nodes: typing.Optional[typing.List[Node]]
     trees: typing.Optional[typing.List[Tree]]

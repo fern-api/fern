@@ -12,6 +12,16 @@ from .file import File
 
 
 class Directory(pydantic.BaseModel):
+    """
+    from seed import Directory, File
+
+    Directory(
+        name="root",
+        files=[File(name="file.txt", contents="...")],
+        directories=[Directory(name="tmp", files=[File(name="another_file.txt", contents="...")])],
+    )
+    """
+
     name: str
     files: typing.Optional[typing.List[File]]
     directories: typing.Optional[typing.List[Directory]]

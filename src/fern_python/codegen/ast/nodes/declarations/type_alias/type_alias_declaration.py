@@ -1,4 +1,4 @@
-from typing import Set
+from typing import Optional, Set
 
 from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ....references import Reference
@@ -6,9 +6,10 @@ from ...type_hint import TypeHint
 
 
 class TypeAliasDeclaration(AstNode):
-    def __init__(self, name: str, type_hint: TypeHint):
+    def __init__(self, name: str, type_hint: TypeHint, snippet: Optional[str] = None):
         self.name = name
         self.type_hint = type_hint
+        self.snippet = snippet
         self.ghost_references: Set[Reference] = set()
 
     def get_metadata(self) -> AstNodeMetadata:
@@ -22,6 +23,12 @@ class TypeAliasDeclaration(AstNode):
         self.ghost_references.add(reference)
 
     def write(self, writer: NodeWriter) -> None:
+        if self.snippet is not None:
+            writer.write_line('"""')
+            writer.write(self.snippet)
+            writer.write_newline_if_last_line_not()
+            writer.write_line('"""')
+
         writer.write(f"{self.name} = ")
         self.type_hint.write(writer=writer)
         writer.write_newline_if_last_line_not()

@@ -12,6 +12,12 @@ from ....core.datetime_utils import serialize_datetime
 
 
 class Base(pydantic.BaseModel):
+    """
+    from seed import Metadata_Html
+
+    Metadata_Html(value="<head>...</head>")
+    """
+
     extra: typing.Dict[str, str]
     tags: typing.List[str]
 
@@ -49,4 +55,9 @@ class Metadata_Markdown(Base):
         allow_population_by_field_name = True
 
 
+"""
+from seed import Metadata_Html
+
+Metadata_Html(value="<head>...</head>")
+"""
 Metadata = typing.Union[Metadata_Html, Metadata_Markdown]

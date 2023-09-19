@@ -10,6 +10,19 @@ from ....core.datetime_utils import serialize_datetime
 
 
 class Moment(pydantic.BaseModel):
+    """
+    import datetime
+    import uuid
+
+    from seed import Moment
+
+    Moment(
+        id=uuid.UUID("656f12d6-f592-444c-a1d3-a3cfd46d5b39"),
+        date=datetime.date.fromisoformat("1994-01-01"),
+        datetime=datetime.datetime.fromisoformat("1994-01-01 01:01:01+00:00"),
+    )
+    """
+
     id: uuid.UUID
     date: dt.date
     datetime: dt.datetime

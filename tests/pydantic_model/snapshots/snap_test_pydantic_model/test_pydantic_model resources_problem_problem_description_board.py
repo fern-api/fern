@@ -23,6 +23,11 @@ class ProblemDescriptionBoard_TestCaseId(pydantic.BaseModel):
     value: str
 
 
+"""
+from fern.my_api import ProblemDescriptionBoard_Html
+
+ProblemDescriptionBoard_Html(value="<head>...</head>")
+"""
 ProblemDescriptionBoard = typing.Union[
     ProblemDescriptionBoard_Html, ProblemDescriptionBoard_Variable, ProblemDescriptionBoard_TestCaseId
 ]

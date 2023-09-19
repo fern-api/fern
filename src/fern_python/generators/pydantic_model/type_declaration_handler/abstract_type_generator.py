@@ -14,11 +14,13 @@ class AbstractTypeGenerator(ABC):
         source_file: SourceFile,
         custom_config: PydanticModelCustomConfig,
         docs: Optional[str],
+        snippet: Optional[str] = None,
     ):
         self._context = context
         self._custom_config = custom_config
         self._source_file = source_file
         self._docs = docs
+        self._snippet = snippet
 
     @abstractmethod
     def generate(self) -> None:

@@ -26,8 +26,11 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
         source_file: SourceFile,
         custom_config: PydanticModelCustomConfig,
         docs: Optional[str],
+        snippet: Optional[str],
     ):
-        super().__init__(context=context, custom_config=custom_config, source_file=source_file, docs=docs)
+        super().__init__(
+            context=context, custom_config=custom_config, source_file=source_file, docs=docs, snippet=snippet
+        )
         self._name = name
         self._union = union
 
@@ -60,6 +63,7 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                 custom_config=self._custom_config,
                 source_file=self._source_file,
                 docstring=None,
+                snippet=self._snippet,
                 should_export=False,
             ) as base_union_pydantic_model:
                 for property in self._union.base_properties:
@@ -155,6 +159,7 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
         type_alias_declaration = AST.TypeAliasDeclaration(
             type_hint=AST.TypeHint.union(*(AST.TypeHint(ref) for ref in single_union_type_references)),
             name=self._name.name.pascal_case.safe_name,
+            snippet=self._snippet,
         )
 
         for referenced_type in all_referenced_types:

@@ -9,6 +9,12 @@ from ....core.datetime_utils import serialize_datetime
 
 
 class File(pydantic.BaseModel):
+    """
+    from seed import File
+
+    File(name="file.txt", contents="...")
+    """
+
     name: str
     contents: str
 

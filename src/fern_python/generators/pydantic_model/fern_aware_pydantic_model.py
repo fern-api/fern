@@ -43,6 +43,7 @@ class FernAwarePydanticModel:
         should_export: bool = None,
         extends: Sequence[ir_types.DeclaredTypeName] = None,
         docstring: Optional[str] = None,
+        snippet: Optional[str] = None,
     ):
         self._class_name = class_name
         self._type_name = type_name
@@ -58,6 +59,7 @@ class FernAwarePydanticModel:
             if extends is not None
             else None,
             docstring=docstring,
+            snippet=snippet,
             forbid_extra_fields=custom_config.forbid_extra_fields,
             frozen=custom_config.frozen,
             orm_mode=custom_config.orm_mode,

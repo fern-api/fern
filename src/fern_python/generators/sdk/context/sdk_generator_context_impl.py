@@ -25,7 +25,12 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         custom_config: SDKCustomConfig,
         project_module_path: AST.ModulePath,
     ):
-        super().__init__(ir=ir, generator_config=generator_config, custom_config=custom_config)
+        super().__init__(
+            ir=ir,
+            generator_config=generator_config,
+            custom_config=custom_config,
+            project_module_path=project_module_path,
+        )
         client_class_name = custom_config.client_class_name or (
             pascal_case(generator_config.organization) + pascal_case(generator_config.workspace_name)
         )

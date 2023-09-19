@@ -13,6 +13,12 @@ from .migration_status import MigrationStatus
 
 
 class Migration(pydantic.BaseModel):
+    """
+    from fern.my_api import Migration, MigrationStatus
+
+    Migration(name="001_init", status=MigrationStatus.RUNNING)
+    """
+
     name: str
     status: MigrationStatus
 

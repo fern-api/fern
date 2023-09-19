@@ -19,14 +19,33 @@ from .variable_type_and_name import VariableTypeAndName
 
 
 class ProblemInfo(pydantic.BaseModel):
+    """
+    from fern.my_api import FileInfo, Language, ProblemDescription, ProblemDescriptionBoard_Html, ProblemFiles, ProblemInfo
+
+    ProblemInfo(
+        problem_id="problem-213ious",
+        problem_description=ProblemDescription(boards=[ProblemDescriptionBoard_Html(value="<head>...</head>")]),
+        problem_name="Internal",
+        problem_version=1,
+        files={
+            Language.PYTHON: ProblemFiles(
+                solution_file=FileInfo(filename="problem.txt", contents="<truncated>"),
+                read_only_files=[FileInfo(filename="file.txt", contents="...")],
+            )
+        },
+        method_name="Upload",
+        supports_custom_test_cases=False,
+    )
+    """
+
     problem_id: ProblemId = pydantic.Field(alias="problemId")
     problem_description: ProblemDescription = pydantic.Field(alias="problemDescription")
     problem_name: str = pydantic.Field(alias="problemName")
     problem_version: int = pydantic.Field(alias="problemVersion")
     files: typing.Dict[Language, ProblemFiles]
-    input_params: typing.List[VariableTypeAndName] = pydantic.Field(alias="inputParams")
-    output_type: VariableType = pydantic.Field(alias="outputType")
-    testcases: typing.List[TestCaseWithExpectedResult]
+    input_params: typing.Optional[typing.List[VariableTypeAndName]] = pydantic.Field(alias="inputParams")
+    output_type: typing.Optional[VariableType] = pydantic.Field(alias="outputType")
+    testcases: typing.Optional[typing.List[TestCaseWithExpectedResult]]
     method_name: str = pydantic.Field(alias="methodName")
     supports_custom_test_cases: bool = pydantic.Field(alias="supportsCustomTestCases")
 
@@ -36,9 +55,9 @@ class ProblemInfo(pydantic.BaseModel):
         problem_name: typing_extensions.NotRequired[str]
         problem_version: typing_extensions.NotRequired[int]
         files: typing_extensions.NotRequired[typing.Dict[Language, ProblemFiles]]
-        input_params: typing_extensions.NotRequired[typing.List[VariableTypeAndName]]
-        output_type: typing_extensions.NotRequired[VariableType]
-        testcases: typing_extensions.NotRequired[typing.List[TestCaseWithExpectedResult]]
+        input_params: typing_extensions.NotRequired[typing.Optional[typing.List[VariableTypeAndName]]]
+        output_type: typing_extensions.NotRequired[typing.Optional[VariableType]]
+        testcases: typing_extensions.NotRequired[typing.Optional[typing.List[TestCaseWithExpectedResult]]]
         method_name: typing_extensions.NotRequired[str]
         supports_custom_test_cases: typing_extensions.NotRequired[bool]
 
@@ -71,15 +90,15 @@ class ProblemInfo(pydantic.BaseModel):
                 ...
 
             @ProblemInfo.Validators.field("input_params")
-            def validate_input_params(input_params: typing.List[VariableTypeAndName], values: ProblemInfo.Partial) -> typing.List[VariableTypeAndName]:
+            def validate_input_params(input_params: typing.Optional[typing.List[VariableTypeAndName]], values: ProblemInfo.Partial) -> typing.Optional[typing.List[VariableTypeAndName]]:
                 ...
 
             @ProblemInfo.Validators.field("output_type")
-            def validate_output_type(output_type: VariableType, values: ProblemInfo.Partial) -> VariableType:
+            def validate_output_type(output_type: typing.Optional[VariableType], values: ProblemInfo.Partial) -> typing.Optional[VariableType]:
                 ...
 
             @ProblemInfo.Validators.field("testcases")
-            def validate_testcases(testcases: typing.List[TestCaseWithExpectedResult], values: ProblemInfo.Partial) -> typing.List[TestCaseWithExpectedResult]:
+            def validate_testcases(testcases: typing.Optional[typing.List[TestCaseWithExpectedResult]], values: ProblemInfo.Partial) -> typing.Optional[typing.List[TestCaseWithExpectedResult]]:
                 ...
 
             @ProblemInfo.Validators.field("method_name")
@@ -439,8 +458,8 @@ class ProblemInfo(pydantic.BaseModel):
 
         class InputParamsValidator(typing_extensions.Protocol):
             def __call__(
-                self, __v: typing.List[VariableTypeAndName], __values: ProblemInfo.Partial
-            ) -> typing.List[VariableTypeAndName]:
+                self, __v: typing.Optional[typing.List[VariableTypeAndName]], __values: ProblemInfo.Partial
+            ) -> typing.Optional[typing.List[VariableTypeAndName]]:
                 ...
 
         class PreOutputTypeValidator(typing_extensions.Protocol):
@@ -448,7 +467,9 @@ class ProblemInfo(pydantic.BaseModel):
                 ...
 
         class OutputTypeValidator(typing_extensions.Protocol):
-            def __call__(self, __v: VariableType, __values: ProblemInfo.Partial) -> VariableType:
+            def __call__(
+                self, __v: typing.Optional[VariableType], __values: ProblemInfo.Partial
+            ) -> typing.Optional[VariableType]:
                 ...
 
         class PreTestcasesValidator(typing_extensions.Protocol):
@@ -457,8 +478,8 @@ class ProblemInfo(pydantic.BaseModel):
 
         class TestcasesValidator(typing_extensions.Protocol):
             def __call__(
-                self, __v: typing.List[TestCaseWithExpectedResult], __values: ProblemInfo.Partial
-            ) -> typing.List[TestCaseWithExpectedResult]:
+                self, __v: typing.Optional[typing.List[TestCaseWithExpectedResult]], __values: ProblemInfo.Partial
+            ) -> typing.Optional[typing.List[TestCaseWithExpectedResult]]:
                 ...
 
         class PreMethodNameValidator(typing_extensions.Protocol):
@@ -567,44 +588,48 @@ class ProblemInfo(pydantic.BaseModel):
 
     @pydantic.validator("input_params", pre=True)
     def _pre_validate_input_params(
-        cls, v: typing.List[VariableTypeAndName], values: ProblemInfo.Partial
-    ) -> typing.List[VariableTypeAndName]:
+        cls, v: typing.Optional[typing.List[VariableTypeAndName]], values: ProblemInfo.Partial
+    ) -> typing.Optional[typing.List[VariableTypeAndName]]:
         for validator in ProblemInfo.Validators._input_params_pre_validators:
             v = validator(v, values)
         return v
 
     @pydantic.validator("input_params", pre=False)
     def _post_validate_input_params(
-        cls, v: typing.List[VariableTypeAndName], values: ProblemInfo.Partial
-    ) -> typing.List[VariableTypeAndName]:
+        cls, v: typing.Optional[typing.List[VariableTypeAndName]], values: ProblemInfo.Partial
+    ) -> typing.Optional[typing.List[VariableTypeAndName]]:
         for validator in ProblemInfo.Validators._input_params_post_validators:
             v = validator(v, values)
         return v
 
     @pydantic.validator("output_type", pre=True)
-    def _pre_validate_output_type(cls, v: VariableType, values: ProblemInfo.Partial) -> VariableType:
+    def _pre_validate_output_type(
+        cls, v: typing.Optional[VariableType], values: ProblemInfo.Partial
+    ) -> typing.Optional[VariableType]:
         for validator in ProblemInfo.Validators._output_type_pre_validators:
             v = validator(v, values)
         return v
 
     @pydantic.validator("output_type", pre=False)
-    def _post_validate_output_type(cls, v: VariableType, values: ProblemInfo.Partial) -> VariableType:
+    def _post_validate_output_type(
+        cls, v: typing.Optional[VariableType], values: ProblemInfo.Partial
+    ) -> typing.Optional[VariableType]:
         for validator in ProblemInfo.Validators._output_type_post_validators:
             v = validator(v, values)
         return v
 
     @pydantic.validator("testcases", pre=True)
     def _pre_validate_testcases(
-        cls, v: typing.List[TestCaseWithExpectedResult], values: ProblemInfo.Partial
-    ) -> typing.List[TestCaseWithExpectedResult]:
+        cls, v: typing.Optional[typing.List[TestCaseWithExpectedResult]], values: ProblemInfo.Partial
+    ) -> typing.Optional[typing.List[TestCaseWithExpectedResult]]:
         for validator in ProblemInfo.Validators._testcases_pre_validators:
             v = validator(v, values)
         return v
 
     @pydantic.validator("testcases", pre=False)
     def _post_validate_testcases(
-        cls, v: typing.List[TestCaseWithExpectedResult], values: ProblemInfo.Partial
-    ) -> typing.List[TestCaseWithExpectedResult]:
+        cls, v: typing.Optional[typing.List[TestCaseWithExpectedResult]], values: ProblemInfo.Partial
+    ) -> typing.Optional[typing.List[TestCaseWithExpectedResult]]:
         for validator in ProblemInfo.Validators._testcases_post_validators:
             v = validator(v, values)
         return v

@@ -33,7 +33,11 @@ service:
         - MovieNotFoundError
 
 types:
-  MovieId: string
+  MovieId:
+    type: string
+    examples:
+      - name: One
+        value: movie-c06a4ad7
 
   Movie:
     properties:
@@ -44,6 +48,55 @@ types:
         type: double
         docs: The rating scale is one to five stars
       type: literal<"movie">
+    examples:
+      - value:
+          id: $MovieId.One
+          title: The Boy and the Heron
+          from: Hayao Miyazaki
+          rating: 8.0
+          type: movie
+
+  Moment:
+    properties:
+      id: uuid
+      date: date
+      datetime: datetime
+    examples:
+      - value:
+          id: 656f12d6-f592-444c-a1d3-a3cfd46d5b39
+          date: 1994-01-01
+          datetime: 1994-01-01T01:01:01
+
+  Node:
+    properties:
+      name: string
+      nodes: optional<list<Node>>
+      trees: optional<list<Tree>>
+    examples:
+      - name: Tree
+        value:
+          name: root
+          nodes:
+            - $Node.Left
+            - $Node.Right
+          trees:
+            - $Tree.Root
+      - name: Left
+        value:
+          name: left
+      - name: Right
+        value:
+          name: right
+
+  Tree:
+    properties:
+      nodes: optional<list<Node>>
+    examples:
+      - name: Root
+        value:
+          nodes:
+            - $Node.Left
+            - $Node.Right
 
 errors:
   MovieNotFoundError:

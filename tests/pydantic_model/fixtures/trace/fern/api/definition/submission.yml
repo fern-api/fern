@@ -194,11 +194,24 @@ types:
     union:
       generic: ExceptionInfo
       timeout: {}
+    examples:
+      - name: One
+        value:
+          type: generic
+          exceptionType: Unavailable
+          exceptionMessage: This component is unavailable!
+          exceptionStacktrace: <logs>
   ExceptionInfo:
     properties:
       exceptionType: string
       exceptionMessage: string
       exceptionStacktrace: string
+    examples:
+      - name: One
+        value:
+          exceptionType: Unavailable
+          exceptionMessage: This component is unavailable!
+          exceptionStacktrace: <logs>
   InvalidRequestResponse:
     properties:
       request: SubmissionRequest

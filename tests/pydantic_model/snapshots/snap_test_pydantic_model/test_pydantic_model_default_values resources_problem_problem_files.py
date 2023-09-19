@@ -13,6 +13,15 @@ from ..commons.file_info import FileInfo
 
 
 class ProblemFiles(pydantic.BaseModel):
+    """
+    from fern.my_api import FileInfo, ProblemFiles
+
+    ProblemFiles(
+        solution_file=FileInfo(filename="problem.txt", contents="<truncated>"),
+        read_only_files=[FileInfo(filename="file.txt", contents="...")],
+    )
+    """
+
     solution_file: FileInfo = pydantic.Field(alias="solutionFile")
     read_only_files: typing.List[FileInfo] = pydantic.Field(alias="readOnlyFiles")
 

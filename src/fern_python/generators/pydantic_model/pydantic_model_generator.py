@@ -11,6 +11,7 @@ from fern_python.source_file_factory import SourceFileFactory
 from .context import PydanticGeneratorContext, PydanticGeneratorContextImpl
 from .custom_config import PydanticModelCustomConfig
 from .type_declaration_handler import TypeDeclarationHandler
+from .type_declaration_handler.snippet_regsitry import SnippetRegistry
 from .type_declaration_referencer import TypeDeclarationReferencer
 
 
@@ -47,6 +48,10 @@ class PydanticModelGenerator(AbstractGenerator):
             ir=ir,
             type_declaration_referencer=TypeDeclarationReferencer(),
             generator_config=generator_config,
+            project_module_path=self.get_relative_path_to_project_for_publish(
+                generator_config=generator_config,
+                ir=ir,
+            ),
         )
         self.generate_types(
             generator_exec_wrapper=generator_exec_wrapper,
@@ -66,6 +71,10 @@ class PydanticModelGenerator(AbstractGenerator):
         project: Project,
         context: PydanticGeneratorContext,
     ) -> None:
+        snippet_registry = SnippetRegistry(
+            ir=ir,
+            context=context,
+        )
         for type_to_generate in ir.types.values():
             self._generate_type(
                 project,
@@ -74,6 +83,7 @@ class PydanticModelGenerator(AbstractGenerator):
                 generator_exec_wrapper=generator_exec_wrapper,
                 custom_config=custom_config,
                 context=context,
+                snippet_registry=snippet_registry,
             )
 
     def _generate_type(
@@ -84,6 +94,7 @@ class PydanticModelGenerator(AbstractGenerator):
         generator_exec_wrapper: GeneratorExecWrapper,
         custom_config: PydanticModelCustomConfig,
         context: PydanticGeneratorContext,
+        snippet_registry: SnippetRegistry,
     ) -> None:
         filepath = context.get_filepath_for_type_name(type_name=type.name)
         source_file = SourceFileFactory.create(
@@ -94,6 +105,7 @@ class PydanticModelGenerator(AbstractGenerator):
             context=context,
             custom_config=custom_config,
             source_file=source_file,
+            snippet_registry=snippet_registry,
         )
         type_declaration_handler.run()
         project.write_source_file(source_file=source_file, filepath=filepath)
