@@ -24,7 +24,7 @@ export interface OpenAPIWorkspace {
     absoluteFilepath: AbsoluteFilePath;
     generatorsConfiguration: GeneratorsConfiguration;
     openapi: OpenAPIFile;
-    asyncapi: AsyncAPIFile;
+    asyncapi: AsyncAPIFile | undefined;
 }
 
 export interface OpenAPIFile {
