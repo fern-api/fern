@@ -49,7 +49,7 @@
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
-    "@types/node": "^18.7.18",
+    "@types/node": "^20.6.2",
     "@types/yargs": "^17.0.24",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.3",
