@@ -3332,7 +3332,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/boxen", "npm:3.0.1"],\
             ["@types/is-ci", "npm:3.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/js-yaml", "npm:4.0.5"],\
+            ["@types/js-yaml", "npm:4.0.6"],\
             ["@types/latest-version", "npm:4.0.1"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
@@ -3470,7 +3470,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/js-yaml", "npm:4.0.5"],\
+            ["@types/js-yaml", "npm:4.0.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
@@ -3538,7 +3538,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/js-yaml", "npm:4.0.5"],\
+            ["@types/js-yaml", "npm:4.0.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
@@ -3586,7 +3586,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.290"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/js-yaml", "npm:4.0.5"],\
+            ["@types/js-yaml", "npm:4.0.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
@@ -3618,7 +3618,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/docs-config", "npm:0.0.50"],\
             ["@types/fs-extra", "npm:11.0.1"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/js-yaml", "npm:4.0.5"],\
+            ["@types/js-yaml", "npm:4.0.6"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
             ["chalk", "npm:5.0.1"],\
@@ -3918,12 +3918,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-fern/openapi-ir-model", "npm:0.0.106"],\
             ["@types/jest", "npm:29.0.3"],\
+            ["@types/js-yaml", "npm:4.0.6"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/swagger2openapi", "npm:7.0.0"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.5.0"],\
+            ["js-yaml", "npm:4.1.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["openapi-types", "npm:12.1.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
@@ -3991,7 +3993,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/js-yaml", "npm:4.0.5"],\
+            ["@types/js-yaml", "npm:4.0.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["chalk", "npm:5.0.1"],\
             ["depcheck", "npm:1.4.3"],\
@@ -4057,7 +4059,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/registry-node", "npm:0.17.0-8-g5dfc5af"],\
             ["@types/decompress", "npm:4.2.4"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/js-yaml", "npm:4.0.5"],\
+            ["@types/js-yaml", "npm:4.0.6"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/mime-types", "npm:2.1.1"],\
             ["@types/node", "npm:18.7.18"],\
@@ -4090,7 +4092,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/json-schema", "workspace:packages/cli/yaml/json-schema"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/js-yaml", "npm:4.0.5"],\
+            ["@types/js-yaml", "npm:4.0.6"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/yargs", "npm:17.0.24"],\
@@ -4264,7 +4266,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/docs-config", "npm:0.0.50"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.290"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/js-yaml", "npm:4.0.5"],\
+            ["@types/js-yaml", "npm:4.0.6"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/tar", "npm:6.1.3"],\
@@ -4322,7 +4324,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@types/inquirer", "npm:9.0.1"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/js-yaml", "npm:4.0.5"],\
+            ["@types/js-yaml", "npm:4.0.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["chalk", "npm:5.0.1"],\
             ["depcheck", "npm:1.4.3"],\
@@ -4353,7 +4355,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/docs-config", "npm:0.0.50"],\
             ["@fern-fern/ir-sdk", "npm:0.0.2920"],\
             ["@types/jest", "npm:29.0.3"],\
-            ["@types/js-yaml", "npm:4.0.5"],\
+            ["@types/js-yaml", "npm:4.0.6"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.26.0"],\
@@ -5661,6 +5663,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@types-js-yaml-npm-4.0.5-bb64d71397-7dcac8c50f.zip/node_modules/@types/js-yaml/",\
           "packageDependencies": [\
             ["@types/js-yaml", "npm:4.0.5"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:4.0.6", {\
+          "packageLocation": "./.yarn/cache/@types-js-yaml-npm-4.0.6-2552380aa3-d4439ec2cc.zip/node_modules/@types/js-yaml/",\
+          "packageDependencies": [\
+            ["@types/js-yaml", "npm:4.0.6"]\
           ],\
           "linkType": "HARD"\
         }]\

@@ -13,6 +13,7 @@ export function testParseOpenAPI(fixtureName: string, filename: string): void {
         it("parse open api", async () => {
             const openApiPath = path.join(FIXTURES_PATH, fixtureName, filename);
             const openApiIr = await parse({
+                asyncApiFile: undefined,
                 openApiFile: {
                     absoluteFilepath: AbsoluteFilePath.of(openApiPath),
                     contents: "",

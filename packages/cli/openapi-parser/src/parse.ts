@@ -1,12 +1,22 @@
 import SwaggerParser from "@apidevtools/swagger-parser";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { OpenAPIIntermediateRepresentation } from "@fern-fern/openapi-ir-model/ir";
+import { OpenAPIIntermediateRepresentation, Schema, SchemaId } from "@fern-fern/openapi-ir-model/ir";
+import yaml from "js-yaml";
 import { OpenAPI, OpenAPIV2, OpenAPIV3 } from "openapi-types";
+import { AsyncAPI } from "./asyncapi";
+import { generateSchemasFromAsyncAPI } from "./asyncapi/generateSchemasFromAsyncAPI";
 import { generateIr as generateIrFromV2 } from "./v2/generateIr";
 import { generateIr as generateIrFromV3 } from "./v3/generateIr";
 
-export interface RawOpenAPIIntermediateRepresentation {
+export interface RawOpenAPIFile {
+    absoluteFilepath: AbsoluteFilePath;
+    /* relative filepath from the root of the definition */
+    relativeFilepath: RelativeFilePath;
+    contents: string;
+}
+
+export interface RawAsyncAPIFile {
     absoluteFilepath: AbsoluteFilePath;
     /* relative filepath from the root of the definition */
     relativeFilepath: RelativeFilePath;
@@ -14,18 +24,38 @@ export interface RawOpenAPIIntermediateRepresentation {
 }
 
 export async function parse({
+    asyncApiFile,
     openApiFile,
     taskContext,
 }: {
-    openApiFile: RawOpenAPIIntermediateRepresentation;
+    asyncApiFile: RawAsyncAPIFile | undefined;
+    openApiFile: RawOpenAPIFile;
     taskContext: TaskContext;
 }): Promise<OpenAPIIntermediateRepresentation> {
-    const openApiDocument = await SwaggerParser.parse(openApiFile.absoluteFilepath);
-    if (isOpenApiV3(openApiDocument)) {
-        return generateIrFromV3(openApiDocument, taskContext);
-    } else if (isOpenApiV2(openApiDocument)) {
-        return await generateIrFromV2(openApiDocument, taskContext);
+    let asyncAPISchemas: Record<SchemaId, Schema> = {};
+    if (asyncApiFile != null) {
+        const asyncAPI = (await yaml.load(asyncApiFile.contents)) as AsyncAPI;
+        asyncAPISchemas = generateSchemasFromAsyncAPI(asyncAPI, taskContext);
     }
+
+    const openApiDocument = await SwaggerParser.parse(openApiFile.absoluteFilepath);
+    let openApiIr: OpenAPIIntermediateRepresentation | undefined = undefined;
+    if (isOpenApiV3(openApiDocument)) {
+        openApiIr = generateIrFromV3(openApiDocument, taskContext);
+    } else if (isOpenApiV2(openApiDocument)) {
+        openApiIr = await generateIrFromV2(openApiDocument, taskContext);
+    }
+
+    if (openApiIr != null) {
+        return {
+            ...openApiIr,
+            schemas: {
+                ...openApiIr.schemas,
+                ...asyncAPISchemas,
+            },
+        };
+    }
+
     return taskContext.failAndThrow("Only OpenAPI V3 and V2 Documents are supported.");
 }
 
