@@ -1816,7 +1816,7 @@ __metadata:
     "@types/boxen": ^3.0.1
     "@types/is-ci": ^3.0.0
     "@types/jest": ^29.0.3
-    "@types/js-yaml": ^4.0.5
+    "@types/js-yaml": ^4.0.6
     "@types/latest-version": ^4.0.1
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -1949,7 +1949,7 @@ __metadata:
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/js-yaml": ^4.0.5
+    "@types/js-yaml": ^4.0.6
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
     eslint: ^8.26.0
@@ -2011,7 +2011,7 @@ __metadata:
     "@fern-api/logging-execa": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/js-yaml": ^4.0.5
+    "@types/js-yaml": ^4.0.6
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
     eslint: ^8.26.0
@@ -2055,7 +2055,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.290
     "@types/jest": ^29.0.3
-    "@types/js-yaml": ^4.0.5
+    "@types/js-yaml": ^4.0.6
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
     eslint: ^8.26.0
@@ -2085,7 +2085,7 @@ __metadata:
     "@fern-fern/docs-config": 0.0.50
     "@types/fs-extra": ^11.0.1
     "@types/jest": ^29.0.3
-    "@types/js-yaml": ^4.0.5
+    "@types/js-yaml": ^4.0.6
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
     chalk: ^5.0.1
@@ -2363,12 +2363,14 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-fern/openapi-ir-model": 0.0.106
     "@types/jest": ^29.0.3
+    "@types/js-yaml": ^4.0.6
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
     "@types/swagger2openapi": ^7.0.0
     depcheck: ^1.4.3
     eslint: ^8.26.0
     jest: ^29.4.0
+    js-yaml: ^4.1.0
     lodash-es: ^4.17.21
     openapi-types: ^12.0.0
     organize-imports-cli: ^0.10.0
@@ -2430,7 +2432,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/js-yaml": ^4.0.5
+    "@types/js-yaml": ^4.0.6
     "@types/node": ^18.7.18
     chalk: ^5.0.1
     depcheck: ^1.4.3
@@ -2492,7 +2494,7 @@ __metadata:
     "@fern-fern/registry-node": 0.17.0-8-g5dfc5af
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
-    "@types/js-yaml": ^4.0.5
+    "@types/js-yaml": ^4.0.6
     "@types/lodash-es": ^4.17.7
     "@types/mime-types": ^2.1.1
     "@types/node": ^18.7.18
@@ -2523,7 +2525,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/json-schema": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/js-yaml": ^4.0.5
+    "@types/js-yaml": ^4.0.6
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
     "@types/yargs": ^17.0.24
@@ -2688,7 +2690,7 @@ __metadata:
     "@fern-fern/docs-config": 0.0.50
     "@fern-fern/fiddle-sdk": ^0.0.290
     "@types/jest": ^29.0.3
-    "@types/js-yaml": ^4.0.5
+    "@types/js-yaml": ^4.0.6
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
     "@types/tar": ^6.1.3
@@ -2742,7 +2744,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@types/inquirer": ^9.0.1
     "@types/jest": ^29.0.3
-    "@types/js-yaml": ^4.0.5
+    "@types/js-yaml": ^4.0.6
     "@types/node": ^18.7.18
     chalk: ^5.0.1
     depcheck: ^1.4.3
@@ -2771,7 +2773,7 @@ __metadata:
     "@fern-fern/docs-config": 0.0.50
     "@fern-fern/ir-sdk": 0.0.2920
     "@types/jest": ^29.0.3
-    "@types/js-yaml": ^4.0.5
+    "@types/js-yaml": ^4.0.6
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
     eslint: ^8.26.0
@@ -3900,10 +3902,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/js-yaml@npm:^4.0.0, @types/js-yaml@npm:^4.0.5":
+"@types/js-yaml@npm:^4.0.0":
   version: 4.0.5
   resolution: "@types/js-yaml@npm:4.0.5"
   checksum: 7dcac8c50fec31643cc9d6444b5503239a861414cdfaa7ae9a38bc22597c4d850c4b8cec3d82d73b3fbca408348ce223b0408d598b32e094470dfffc6d486b4d
+  languageName: node
+  linkType: hard
+
+"@types/js-yaml@npm:^4.0.6":
+  version: 4.0.6
+  resolution: "@types/js-yaml@npm:4.0.6"
+  checksum: d4439ec2cc830d355c2a1d7508f49888931b2cfe59d786d27621edd530bf06314b1dceeaa759e21f9b035a0ff623a0ca306752ebb73df9485c02abe045bd962c
   languageName: node
   linkType: hard
 

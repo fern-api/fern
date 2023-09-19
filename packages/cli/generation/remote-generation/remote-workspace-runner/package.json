@@ -57,7 +57,7 @@
   "devDependencies": {
     "@types/decompress": "^4.2.4",
     "@types/jest": "^29.0.3",
-    "@types/js-yaml": "^4.0.5",
+    "@types/js-yaml": "^4.0.6",
     "@types/lodash-es": "^4.17.7",
     "@types/mime-types": "^2.1.1",
     "@types/node": "^18.7.18",
