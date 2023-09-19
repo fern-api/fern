@@ -1,11 +1,13 @@
 from fern_python.codegen import AST
 
+PYDANTIC_DEPENDENCY = AST.Dependency(name="pydantic", version="^1.9.2")
+
 
 def _export(*export: str) -> AST.ClassReference:
     return AST.ClassReference(
         import_=AST.ReferenceImport(
             module=AST.Module.external(
-                dependency=AST.Dependency(name="pydantic", version="^1.9.2"),
+                dependency=PYDANTIC_DEPENDENCY,
                 module_path=("pydantic",),
             )
         ),

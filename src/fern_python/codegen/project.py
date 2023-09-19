@@ -6,6 +6,7 @@ from pathlib import Path
 from types import TracebackType
 from typing import Optional, Sequence, Set, Type
 
+from fern_python.codegen import AST
 from fern_python.codegen.pyproject_toml import PyProjectToml, PyProjectTomlPackageConfig
 
 from .dependency_manager import DependencyManager
@@ -55,6 +56,9 @@ class Project:
         self._python_version = python_version
         self._dependency_manager = DependencyManager()
         self._should_format_files = should_format_files
+
+    def add_dependency(self, dependency: AST.Dependency) -> None:
+        self._dependency_manager.add_dependency(dependency)
 
     def set_generate_readme(self, generate_readme: bool) -> None:
         self._generate_readme = generate_readme

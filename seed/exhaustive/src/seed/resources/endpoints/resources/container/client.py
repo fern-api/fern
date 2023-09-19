@@ -145,6 +145,28 @@ class ContainerClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
+    def get_and_return_optional(
+        self, *, request: typing.Optional[ObjectWithRequiredField] = None
+    ) -> typing.Optional[ObjectWithRequiredField]:
+        """
+        Parameters:
+            - request: typing.Optional[ObjectWithRequiredField].
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/opt-objects"),
+            json=jsonable_encoder(request),
+            headers=self._client_wrapper.get_headers(),
+            timeout=60,
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(typing.Optional[ObjectWithRequiredField], _response.json())  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
 
 class AsyncContainerClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -270,6 +292,28 @@ class AsyncContainerClient:
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.Dict[str, ObjectWithRequiredField], _response.json())  # type: ignore
+        try:
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, body=_response.text)
+        raise ApiError(status_code=_response.status_code, body=_response_json)
+
+    async def get_and_return_optional(
+        self, *, request: typing.Optional[ObjectWithRequiredField] = None
+    ) -> typing.Optional[ObjectWithRequiredField]:
+        """
+        Parameters:
+            - request: typing.Optional[ObjectWithRequiredField].
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            "POST",
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/opt-objects"),
+            json=jsonable_encoder(request),
+            headers=self._client_wrapper.get_headers(),
+            timeout=60,
+        )
+        if 200 <= _response.status_code < 300:
+            return pydantic.parse_obj_as(typing.Optional[ObjectWithRequiredField], _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:

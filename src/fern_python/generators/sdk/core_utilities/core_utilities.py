@@ -2,6 +2,7 @@ import os
 from typing import Optional, Set
 
 from fern_python.codegen import AST, Filepath, Project
+from fern_python.external_dependencies.pydantic import PYDANTIC_DEPENDENCY
 from fern_python.source_file_factory import SourceFileFactory
 
 
@@ -50,6 +51,7 @@ class CoreUtilities:
             ),
             exports={"remove_none_from_dict"},
         )
+        project.add_dependency(PYDANTIC_DEPENDENCY)
 
     def _copy_file_to_project(
         self, *, project: Project, relative_filepath_on_disk: str, filepath_in_project: Filepath, exports: Set[str]
