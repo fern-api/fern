@@ -4,6 +4,7 @@ import { Project } from "@fern-api/project-loader";
 import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
 import { convertOpenApiWorkspaceToFernWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext";
+import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorkspaceAndLogIssues";
 
 export async function generateDocsWorkspace({
     project,
@@ -39,6 +40,8 @@ export async function generateDocsWorkspace({
     });
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
+        await validateDocsWorkspaceAndLogIssues(docsWorkspace, context);
+
         const fernWorkspaces = await Promise.all(
             project.apiWorkspaces.map(async (workspace) => {
                 return workspace.type === "fern"
