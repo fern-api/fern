@@ -1,0 +1,5 @@
+name: root
+base-path: /{id}
+path-parameters:
+  id: string
+

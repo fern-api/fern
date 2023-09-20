@@ -12,22 +12,23 @@ import { runDockerForWorkspace } from "./runDockerForWorkspace";
 import { TaskContextFactory } from "./TaskContextFactory";
 
 export const FIXTURES = {
-    EXHAUSTIVE: "exhaustive",
     BASIC_AUTH: "basic-auth",
+    BYTES: "bytes",
     CIRCULAR_REFERENCES: "circular-references",
     CUSTOM_AUTH: "custom-auth",
     ERROR_PROPERTY: "error-property",
     EXAMPLES: "examples",
-    MULTI_URL_ENVIRONMENT: "multi-url-environment",
-    NO_ENVIRONMENT: "no-environment",
-    SINGLE_URL_ENVIRONMENT: "single-url-environment-default",
-    SINGLE_URL_ENVIRONMENT_NO_DEFAULT: "single-url-environment-no-default",
+    EXHAUSTIVE: "exhaustive",
     FILE_DOWNLOAD: "file-download",
     FILE_UPLOAD: "file-upload",
-    TRACE: "trace",
-    STREAMING: "streaming",
+    MULTI_URL_ENVIRONMENT: "multi-url-environment",
+    NO_ENVIRONMENT: "no-environment",
     PLAIN_TEXT: "plain-text",
-    BYTES: "bytes",
+    ROOT: "root",
+    SINGLE_URL_ENVIRONMENT: "single-url-environment-default",
+    SINGLE_URL_ENVIRONMENT_NO_DEFAULT: "single-url-environment-no-default",
+    STREAMING: "streaming",
+    TRACE: "trace",
 } as const;
 
 type TestResult = TestSuccess | TestFailure;
