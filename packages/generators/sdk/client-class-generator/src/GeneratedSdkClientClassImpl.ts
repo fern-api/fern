@@ -61,6 +61,7 @@ export declare namespace GeneratedSdkClientClassImpl {
 export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private static REQUEST_OPTIONS_INTERFACE_NAME = "RequestOptions";
     private static TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME = "timeoutInSeconds";
+    private static MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME = "maxRetries";
     private static OPTIONS_INTERFACE_NAME = "Options";
     private static OPTIONS_PRIVATE_MEMBER = "_options";
     private static ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
@@ -477,6 +478,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
                     hasQuestionToken: true,
                 },
+                {
+                    name: GeneratedSdkClientClassImpl.MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME,
+                    type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)),
+                    hasQuestionToken: true,
+                },
             ],
         };
     }
@@ -678,6 +684,25 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                   ts.factory.createIdentifier(
                       GeneratedSdkClientClassImpl.TIMEOUT_IN_SECONDS_REQUEST_OPTION_PROPERTY_NAME
                   )
+              );
+    }
+
+    public getReferenceToMaxRetries({
+        referenceToRequestOptions,
+        isNullable,
+    }: {
+        referenceToRequestOptions: ts.Expression;
+        isNullable: boolean;
+    }): ts.Expression {
+        return isNullable
+            ? ts.factory.createPropertyAccessChain(
+                  referenceToRequestOptions,
+                  ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                  ts.factory.createIdentifier(GeneratedSdkClientClassImpl.MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME)
+              )
+            : ts.factory.createPropertyAccessExpression(
+                  referenceToRequestOptions,
+                  ts.factory.createIdentifier(GeneratedSdkClientClassImpl.MAX_RETRIES_REQUEST_OPTION_PROPERTY_NAME)
               );
     }
 

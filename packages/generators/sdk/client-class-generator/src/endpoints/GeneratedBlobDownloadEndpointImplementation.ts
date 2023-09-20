@@ -7,7 +7,11 @@ import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
 import { EndpointSignature, GeneratedEndpointImplementation } from "./GeneratedEndpointImplementation";
 import { buildUrl } from "./utils/buildUrl";
-import { getRequestOptionsParameter, getTimeoutExpression } from "./utils/requestOptionsParameter";
+import {
+    getMaxRetriesExpression,
+    getRequestOptionsParameter,
+    getTimeoutExpression,
+} from "./utils/requestOptionsParameter";
 
 export declare namespace GeneratedBlobDownloadEndpointImplementation {
     export interface Init {
@@ -116,6 +120,11 @@ export class GeneratedBlobDownloadEndpointImplementation implements GeneratedEnd
             timeoutInSeconds: getTimeoutExpression({
                 defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
                 timeoutInSecondsReference: this.generatedSdkClientClass.getReferenceToTimeoutInSeconds.bind(
+                    this.generatedSdkClientClass
+                ),
+            }),
+            maxRetries: getMaxRetriesExpression({
+                maxRetriesReference: this.generatedSdkClientClass.getReferenceToMaxRetries.bind(
                     this.generatedSdkClientClass
                 ),
             }),

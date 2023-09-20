@@ -52,3 +52,14 @@ export const getTimeoutExpression = ({
             : ts.factory.createIdentifier("undefined")
     );
 };
+
+export const getMaxRetriesExpression = ({
+    maxRetriesReference,
+}: {
+    maxRetriesReference: (args: { referenceToRequestOptions: ts.Expression; isNullable: boolean }) => ts.Expression;
+}): ts.Expression => {
+    return maxRetriesReference({
+        referenceToRequestOptions: ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
+        isNullable: true,
+    });
+};

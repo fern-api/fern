@@ -27,6 +27,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 headers: "headers",
                 contentType: "contentType",
                 queryParameters: "queryParameters",
+                maxRetries: "maxRetries",
                 body: "body",
                 timeoutMs: "timeoutMs",
                 withCredentials: "withCredentials",
@@ -108,6 +109,11 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             properties.push(
                 ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.timeoutMs, args.timeoutInSeconds)
             );
+            if (args.maxRetries != null) {
+                properties.push(
+                    ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.timeoutMs, args.maxRetries)
+                );
+            }
             if (args.withCredentials) {
                 properties.push(
                     ts.factory.createPropertyAssignment(

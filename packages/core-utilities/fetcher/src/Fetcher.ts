@@ -14,6 +14,7 @@ export declare namespace Fetcher {
         queryParameters?: URLSearchParams;
         body?: unknown;
         timeoutMs?: number;
+        maxRetries?: number;
         withCredentials?: boolean;
         responseType?: "json" | "blob";
         adapter?: AxiosAdapter;
@@ -46,7 +47,7 @@ export declare namespace Fetcher {
 
 const INITIAL_RETRY_DELAY = 1;
 const MAX_RETRY_DELAY = 60;
-const MAX_RETRIES = 5;
+const DEFAULT_MAX_RETRIES = 2;
 
 const AXIOS = axios.create();
 
@@ -65,7 +66,7 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
     }
 
     axiosRetry(AXIOS, {
-        retries: MAX_RETRIES,
+        retries: args.maxRetries ?? DEFAULT_MAX_RETRIES,
         retryCondition: (error) => {
             return error.response != null && [500, 502, 429].includes(error.response.status);
         },

@@ -23,6 +23,7 @@ export declare namespace TraceApiClient {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 export declare class TraceApiClient {
@@ -156,6 +157,7 @@ export declare namespace Admin {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 export declare class Admin {
@@ -2876,6 +2878,7 @@ export declare namespace Homepage {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 export declare class Homepage {
@@ -3462,6 +3465,7 @@ export declare namespace Migration {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 export declare class Migration {
@@ -3856,6 +3860,7 @@ export declare namespace Playlist {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 export declare class Playlist {
@@ -5409,6 +5414,7 @@ export declare namespace Problem {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 export declare class Problem {
@@ -6726,6 +6732,7 @@ export declare namespace Submission {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 /**
@@ -11266,6 +11273,7 @@ export declare namespace Sysprop {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 export declare class Sysprop {
@@ -11659,6 +11667,7 @@ export declare namespace V2 {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 export declare class V2 {
@@ -11812,6 +11821,7 @@ export declare namespace Problem {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 export declare class Problem {
@@ -14057,6 +14067,7 @@ export declare namespace V3 {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 export declare class V3 {
@@ -14201,6 +14212,7 @@ export declare namespace Problem {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 export declare class Problem {
@@ -16590,6 +16602,7 @@ export declare namespace Fetcher {
         queryParameters?: URLSearchParams;
         body?: unknown;
         timeoutMs?: number;
+        maxRetries?: number;
         withCredentials?: boolean;
         responseType?: \\"json\\" | \\"blob\\";
         adapter?: AxiosAdapter;
@@ -16639,10 +16652,10 @@ const axios_1 = __importDefault(require(\\"axios\\"));
 const axios_retry_1 = __importDefault(require(\\"axios-retry\\"));
 const INITIAL_RETRY_DELAY = 1;
 const MAX_RETRY_DELAY = 60;
-const MAX_RETRIES = 5;
+const DEFAULT_MAX_RETRIES = 2;
 const AXIOS = axios_1.default.create();
 function fetcherImpl(args) {
-    var _a, _b;
+    var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
         const headers = {};
         if (args.body !== undefined && args.contentType != null) {
@@ -16656,7 +16669,7 @@ function fetcherImpl(args) {
             }
         }
         (0, axios_retry_1.default)(AXIOS, {
-            retries: MAX_RETRIES,
+            retries: (_a = args.maxRetries) !== null && _a !== void 0 ? _a : DEFAULT_MAX_RETRIES,
             retryCondition: (error) => {
                 return error.response != null && [500, 502, 429].includes(error.response.status);
             },
@@ -16686,7 +16699,7 @@ function fetcherImpl(args) {
                 onUploadProgress: args.onUploadProgress,
                 maxBodyLength: Infinity,
                 maxContentLength: Infinity,
-                responseType: (_a = args.responseType) !== null && _a !== void 0 ? _a : \\"json\\",
+                responseType: (_b = args.responseType) !== null && _b !== void 0 ? _b : \\"json\\",
             });
             let body;
             if (args.responseType === \\"blob\\") {
@@ -16694,9 +16707,9 @@ function fetcherImpl(args) {
             }
             else if (response.data != null && response.data.length > 0) {
                 try {
-                    body = (_b = JSON.parse(response.data)) !== null && _b !== void 0 ? _b : undefined;
+                    body = (_c = JSON.parse(response.data)) !== null && _c !== void 0 ? _c : undefined;
                 }
-                catch (_c) {
+                catch (_d) {
                     return {
                         ok: false,
                         error: {
@@ -19297,6 +19310,7 @@ export declare namespace TraceApiClient {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 export declare class TraceApiClient {
@@ -19430,6 +19444,7 @@ export declare namespace Admin {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 export declare class Admin {
@@ -22150,6 +22165,7 @@ export declare namespace Homepage {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 export declare class Homepage {
@@ -22736,6 +22752,7 @@ export declare namespace Migration {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 export declare class Migration {
@@ -23130,6 +23147,7 @@ export declare namespace Playlist {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 export declare class Playlist {
@@ -24683,6 +24701,7 @@ export declare namespace Problem {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 export declare class Problem {
@@ -26000,6 +26019,7 @@ export declare namespace Submission {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 /**
@@ -30540,6 +30560,7 @@ export declare namespace Sysprop {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 export declare class Sysprop {
@@ -30933,6 +30954,7 @@ export declare namespace V2 {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 export declare class V2 {
@@ -31086,6 +31108,7 @@ export declare namespace Problem {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 export declare class Problem {
@@ -33331,6 +33354,7 @@ export declare namespace V3 {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 export declare class V3 {
@@ -33475,6 +33499,7 @@ export declare namespace Problem {
     }
     interface RequestOptions {
         timeoutInSeconds?: number;
+        maxRetries?: number;
     }
 }
 export declare class Problem {
@@ -35864,6 +35889,7 @@ export declare namespace Fetcher {
         queryParameters?: URLSearchParams;
         body?: unknown;
         timeoutMs?: number;
+        maxRetries?: number;
         withCredentials?: boolean;
         responseType?: \\"json\\" | \\"blob\\";
         adapter?: AxiosAdapter;
@@ -35913,10 +35939,10 @@ const axios_1 = __importDefault(require(\\"axios\\"));
 const axios_retry_1 = __importDefault(require(\\"axios-retry\\"));
 const INITIAL_RETRY_DELAY = 1;
 const MAX_RETRY_DELAY = 60;
-const MAX_RETRIES = 5;
+const DEFAULT_MAX_RETRIES = 2;
 const AXIOS = axios_1.default.create();
 function fetcherImpl(args) {
-    var _a, _b;
+    var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
         const headers = {};
         if (args.body !== undefined && args.contentType != null) {
@@ -35930,7 +35956,7 @@ function fetcherImpl(args) {
             }
         }
         (0, axios_retry_1.default)(AXIOS, {
-            retries: MAX_RETRIES,
+            retries: (_a = args.maxRetries) !== null && _a !== void 0 ? _a : DEFAULT_MAX_RETRIES,
             retryCondition: (error) => {
                 return error.response != null && [500, 502, 429].includes(error.response.status);
             },
@@ -35960,7 +35986,7 @@ function fetcherImpl(args) {
                 onUploadProgress: args.onUploadProgress,
                 maxBodyLength: Infinity,
                 maxContentLength: Infinity,
-                responseType: (_a = args.responseType) !== null && _a !== void 0 ? _a : \\"json\\",
+                responseType: (_b = args.responseType) !== null && _b !== void 0 ? _b : \\"json\\",
             });
             let body;
             if (args.responseType === \\"blob\\") {
@@ -35968,9 +35994,9 @@ function fetcherImpl(args) {
             }
             else if (response.data != null && response.data.length > 0) {
                 try {
-                    body = (_b = JSON.parse(response.data)) !== null && _b !== void 0 ? _b : undefined;
+                    body = (_c = JSON.parse(response.data)) !== null && _c !== void 0 ? _c : undefined;
                 }
-                catch (_c) {
+                catch (_d) {
                     return {
                         ok: false,
                         error: {

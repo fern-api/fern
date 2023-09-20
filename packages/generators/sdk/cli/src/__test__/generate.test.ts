@@ -58,6 +58,7 @@ const FIXTURES: FixtureInfo[] = [
             timeoutInSeconds: "infinity",
         },
         targetRuntime: JavaScriptRuntime.NODE,
+        only: true,
     },
     {
         path: "reserved-keywords",

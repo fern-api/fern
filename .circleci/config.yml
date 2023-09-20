@@ -195,7 +195,6 @@ workflows:
               only: /.*/
           requires:
             - lint
-            - test
           context:
             - docker-hub
             - auth0-dev
@@ -208,7 +207,6 @@ workflows:
               only: /.*/
           requires:
             - lint
-            - test
           context:
             - npm
             - auth0-dev

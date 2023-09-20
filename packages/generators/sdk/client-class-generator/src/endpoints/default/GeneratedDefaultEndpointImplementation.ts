@@ -6,7 +6,11 @@ import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpoi
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
 import { EndpointSignature, GeneratedEndpointImplementation } from "../GeneratedEndpointImplementation";
 import { buildUrl } from "../utils/buildUrl";
-import { getRequestOptionsParameter, getTimeoutExpression } from "../utils/requestOptionsParameter";
+import {
+    getMaxRetriesExpression,
+    getRequestOptionsParameter,
+    getTimeoutExpression,
+} from "../utils/requestOptionsParameter";
 import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse";
 
 export declare namespace GeneratedDefaultEndpointImplementation {
@@ -112,6 +116,11 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             timeoutInSeconds: getTimeoutExpression({
                 defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
                 timeoutInSecondsReference: this.generatedSdkClientClass.getReferenceToTimeoutInSeconds.bind(
+                    this.generatedSdkClientClass
+                ),
+            }),
+            maxRetries: getMaxRetriesExpression({
+                maxRetriesReference: this.generatedSdkClientClass.getReferenceToMaxRetries.bind(
                     this.generatedSdkClientClass
                 ),
             }),
