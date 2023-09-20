@@ -1,3 +1,8 @@
+errors:
+  NotFoundError:
+    status-code: 404
+    type: string
+
 types:
   MovieId:
     type: string

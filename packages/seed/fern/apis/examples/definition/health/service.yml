@@ -1,0 +1,23 @@
+imports:
+  types: ../types.yml
+
+service:
+  auth: true
+  base-path: /
+  endpoints:
+    check:
+      method: GET
+      path: /check/{id}
+      path-parameters:
+        id: string
+      examples:
+        - path-parameters:
+            id: id-2sdx82h
+
+    ping:
+      method: GET
+      path: /ping
+      response: boolean
+      examples:
+        - response:
+            body: true

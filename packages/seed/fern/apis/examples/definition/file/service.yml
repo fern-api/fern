@@ -1,0 +1,27 @@
+imports:
+  types: ../types.yml
+
+service:
+  auth: true
+  base-path: /file
+  headers:
+    X-File-API-Version: string
+  endpoints:
+    getFile:
+      method: GET
+      path: /{filename}
+      path-parameters:
+        filename: string
+      request:
+        name: GetFileRequest
+      response: types.File
+      errors:
+        - types.NotFoundError
+      examples:
+        - path-parameters:
+            filename: file.txt
+          headers:
+            X-File-API-Version: 0.0.2
+          response:
+            error: types.NotFoundError
+            body: A file with that name was not found!
