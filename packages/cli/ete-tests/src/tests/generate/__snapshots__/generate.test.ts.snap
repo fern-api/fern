@@ -1,3 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`fern generate missing docs page 1`] = `"[docs]:   No instances specified in docs.yml! Cannot register docs."`;
+exports[`fern generate missing docs page 1`] = `
+"[docs]:   docs.yml -> navigation -> 0 -> page
+          Path missing.md does not exist"
+`;
