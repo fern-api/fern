@@ -13,9 +13,9 @@ module.exports = {
     dev: {
         AUTH0_DOMAIN: "fern-dev.us.auth0.com",
         AUTH0_CLIENT_ID: "4QiMvRvRUYpnycrVDK2M59hhJ6kcHYFQ",
-        DEFAULT_FIDDLE_ORIGIN: "https://fiddle-coordinator-dev.buildwithfern.com",
-        DEFAULT_VENUS_ORIGIN: "https://venus-dev.buildwithfern.com",
-        DEFAULT_FDR_ORIGIN: "https://registry-dev.buildwithfern.com",
+        DEFAULT_FIDDLE_ORIGIN: "https://fiddle-coordinator-dev2.buildwithfern.com",
+        DEFAULT_VENUS_ORIGIN: "https://venus-dev2.buildwithfern.com",
+        DEFAULT_FDR_ORIGIN: "https://registry-dev2.buildwithfern.com",
         VENUS_AUDIENCE: "venus-dev",
         LOCAL_STORAGE_FOLDER: ".fern-dev",
         POSTHOG_API_KEY: null,
