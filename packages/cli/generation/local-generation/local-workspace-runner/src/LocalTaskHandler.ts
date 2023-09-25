@@ -1,6 +1,6 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { FERNIGNORE_FILENAME } from "@fern-api/project-configuration";
+import { FERNIGNORE_FILENAME, SNIPPET_JSON_FILENAME } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import decompress from "decompress";
 import { cp, readdir, readFile } from "fs/promises";
@@ -10,6 +10,7 @@ export declare namespace LocalTaskHandler {
     export interface Init {
         context: TaskContext;
         absolutePathToTmpOutputDirectory: AbsoluteFilePath;
+        absolutePathToTmpSnippetJSON: AbsoluteFilePath | undefined;
         absolutePathToLocalOutput: AbsoluteFilePath;
     }
 }
@@ -17,12 +18,19 @@ export declare namespace LocalTaskHandler {
 export class LocalTaskHandler {
     private context: TaskContext;
     private absolutePathToTmpOutputDirectory: AbsoluteFilePath;
+    private absolutePathToTmpSnippetJSON: AbsoluteFilePath | undefined;
     private absolutePathToLocalOutput: AbsoluteFilePath;
 
-    constructor({ context, absolutePathToTmpOutputDirectory, absolutePathToLocalOutput }: LocalTaskHandler.Init) {
+    constructor({
+        context,
+        absolutePathToTmpOutputDirectory,
+        absolutePathToTmpSnippetJSON,
+        absolutePathToLocalOutput,
+    }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
         this.absolutePathToTmpOutputDirectory = absolutePathToTmpOutputDirectory;
+        this.absolutePathToTmpSnippetJSON = absolutePathToTmpSnippetJSON;
     }
 
     public async copyGeneratedFiles(): Promise<void> {
@@ -30,6 +38,9 @@ export class LocalTaskHandler {
             await this.copyGeneratedFilesWithFernIgnore();
         } else {
             await this.copyGeneratedFilesNoFernIgnore();
+        }
+        if (this.absolutePathToTmpSnippetJSON !== undefined) {
+            await this.copySnippetJSON(this.absolutePathToTmpSnippetJSON);
         }
     }
 
@@ -89,7 +100,6 @@ export class LocalTaskHandler {
         if (firstLocalOutputItem == null) {
             return;
         }
-
         this.context.logger.debug(`Copying generated files to ${outputPath}`);
         if (firstLocalOutputItem.endsWith(".zip") && remaininglocalOutputItems.length === 0) {
             await decompress(
@@ -102,6 +112,13 @@ export class LocalTaskHandler {
         } else {
             await cp(this.absolutePathToTmpOutputDirectory, this.absolutePathToLocalOutput, { recursive: true });
         }
+    }
+
+    private async copySnippetJSON(absolutePathToTmpSnippetJSON: string): Promise<void> {
+        const absolutePathToSnippet = AbsoluteFilePath.of(
+            join(this.absolutePathToLocalOutput, RelativeFilePath.of(SNIPPET_JSON_FILENAME))
+        );
+        await cp(AbsoluteFilePath.of(absolutePathToTmpSnippetJSON), absolutePathToSnippet);
     }
 
     private async runGitCommand(options: string[], cwd: AbsoluteFilePath): Promise<void> {

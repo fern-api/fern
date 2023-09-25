@@ -1,6 +1,6 @@
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_PATH_TO_IR } from "./constants";
+import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_PATH_TO_IR, DOCKER_PATH_TO_SNIPPET } from "./constants";
 
 export declare namespace getGeneratorConfig {
     export interface Args {
@@ -8,6 +8,7 @@ export declare namespace getGeneratorConfig {
         organization: string;
         customConfig: unknown;
         generatorInvocation: GeneratorInvocation;
+        writeSnippets: boolean;
     }
 
     export interface Return {
@@ -21,6 +22,7 @@ export function getGeneratorConfig({
     customConfig,
     workspaceName,
     organization,
+    writeSnippets,
 }: getGeneratorConfig.Args): getGeneratorConfig.Return {
     const binds: string[] = [];
     const output = generatorInvocation.outputMode._visit<FernGeneratorExec.GeneratorOutputConfig>({
@@ -37,12 +39,17 @@ export function getGeneratorConfig({
             };
         },
         github: (value) => {
+            let snippetFilepath: string | undefined = undefined;
+            if (writeSnippets) {
+                snippetFilepath = DOCKER_PATH_TO_SNIPPET;
+            }
             return {
                 mode: FernGeneratorExec.OutputMode.github({
                     repoUrl: `https://github.com/${value.owner}/${value.repo}`,
                     version: "0.0.1",
                 }),
                 path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+                snippetFilepath,
             };
         },
         _other: () => {

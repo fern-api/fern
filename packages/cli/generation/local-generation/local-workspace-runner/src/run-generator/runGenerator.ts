@@ -3,7 +3,12 @@ import { AbsoluteFilePath, waitUntilPathExists } from "@fern-api/fs-utils";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { writeFile } from "fs/promises";
-import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_GENERATOR_CONFIG_PATH, DOCKER_PATH_TO_IR } from "./constants";
+import {
+    DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+    DOCKER_GENERATOR_CONFIG_PATH,
+    DOCKER_PATH_TO_IR,
+    DOCKER_PATH_TO_SNIPPET,
+} from "./constants";
 import { getGeneratorConfig } from "./getGeneratorConfig";
 
 export declare namespace runGenerator {
@@ -13,6 +18,7 @@ export declare namespace runGenerator {
 
         absolutePathToIr: AbsoluteFilePath;
         absolutePathToOutput: AbsoluteFilePath;
+        absolutePathToSnippet: AbsoluteFilePath | undefined;
         absolutePathToWriteConfigJson: AbsoluteFilePath;
 
         keepDocker: boolean;
@@ -25,6 +31,7 @@ export async function runGenerator({
     workspaceName,
     organization,
     absolutePathToOutput,
+    absolutePathToSnippet,
     absolutePathToIr,
     absolutePathToWriteConfigJson,
     keepDocker,
@@ -38,12 +45,16 @@ export async function runGenerator({
         `${absolutePathToIr}:${DOCKER_PATH_TO_IR}:ro`,
         `${absolutePathToOutput}:${DOCKER_CODEGEN_OUTPUT_DIRECTORY}`,
     ];
-
+    if (absolutePathToSnippet !== undefined) {
+        // TODO: Should this be returned as an element of "bindsForGenerators"?
+        binds.push(`${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`);
+    }
     const { config, binds: bindsForGenerators } = getGeneratorConfig({
         generatorInvocation,
         customConfig,
         workspaceName,
         organization,
+        writeSnippets: absolutePathToSnippet !== undefined,
     });
     binds.push(...bindsForGenerators);
 
