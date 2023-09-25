@@ -70,7 +70,7 @@ export class FilteredIrImpl implements FilteredIr {
     }
 
     public hasEndpoint(service: HttpService, endpoint: HttpEndpoint): boolean {
-        const endpointId = IdGenerator.generateEndpointId(service.name, endpoint);
+        const endpointId = IdGenerator.generateEndpointId(service.name, endpoint.name);
         return this.endpoints.has(endpointId);
     }
 

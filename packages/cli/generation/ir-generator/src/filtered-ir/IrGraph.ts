@@ -88,7 +88,7 @@ export class IrGraph {
 
     public addEndpoint(service: HttpService, httpEndpoint: HttpEndpoint): void {
         const serviceId = IdGenerator.generateServiceId(service.name);
-        const endpointId = IdGenerator.generateEndpointId(service.name, httpEndpoint);
+        const endpointId = IdGenerator.generateEndpointId(service.name, httpEndpoint.name);
         const referencedTypes = new Set<TypeId>();
         const referencedErrors = new Set<ErrorId>();
         const referencedSubpackages = new Set<FernFilepath>();
@@ -187,7 +187,7 @@ export class IrGraph {
             const serviceId = IdGenerator.generateServiceId(declaredServiceName);
             this.servicesNeededForAudience.add(serviceId);
             httpEndpoints.forEach((httpEndpoint) => {
-                const endpointId = IdGenerator.generateEndpointId(declaredServiceName, httpEndpoint);
+                const endpointId = IdGenerator.generateEndpointId(declaredServiceName, httpEndpoint.name);
                 this.endpointsNeededForAudience.add(endpointId);
                 this.endpoints[endpointId]?.referencedSubpackages.forEach((fernFilePath) => {
                     this.addSubpackages(fernFilePath);
