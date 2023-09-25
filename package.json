@@ -50,7 +50,7 @@
     "@types/is-ci": "^3.0.0",
     "@types/jest": "^29.0.3",
     "@types/lodash-es": "^4.17.6",
-    "@types/node": "^18.7.18",
+    "@types/node": "^20.6.5",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
     "@typescript-eslint/parser": "^5.27.1",
     "chalk": "^5.0.1",
