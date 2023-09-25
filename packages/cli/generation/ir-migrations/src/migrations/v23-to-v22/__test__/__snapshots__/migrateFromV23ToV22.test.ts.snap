@@ -1745,6 +1745,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/container.getAndReturnListOfPrimitives",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -1857,6 +1858,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/container.getAndReturnListOfObjects",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -2278,6 +2280,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/container.getAndReturnSetOfPrimitives",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -2390,6 +2393,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/container.getAndReturnSetOfObjects",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -2811,6 +2815,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/container.getAndReturnMapPrimToPrim",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -2935,6 +2940,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/container.getAndReturnMapOfPrimToObject",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -3467,6 +3473,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/enum.getAndReturnEnum",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -4004,6 +4011,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             ],
           },
           "headers": [],
+          "id": "endpoint_endpoints/http-methods.testGet",
           "method": "GET",
           "name": {
             "camelCase": {
@@ -4094,6 +4102,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/http-methods.testPost",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -4532,6 +4541,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             ],
           },
           "headers": [],
+          "id": "endpoint_endpoints/http-methods.testPut",
           "method": "PUT",
           "name": {
             "camelCase": {
@@ -5005,6 +5015,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             ],
           },
           "headers": [],
+          "id": "endpoint_endpoints/http-methods.testPatch",
           "method": "PATCH",
           "name": {
             "camelCase": {
@@ -5478,6 +5489,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             ],
           },
           "headers": [],
+          "id": "endpoint_endpoints/http-methods.testDelete",
           "method": "DELETE",
           "name": {
             "camelCase": {
@@ -5667,6 +5679,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/object.getAndReturnWithOptionalField",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -6070,6 +6083,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/object.getAndReturnWithRequiredField",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -6473,6 +6487,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/object.getAndReturnNestedWithOptionalField",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -6876,6 +6891,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/object.getAndReturnNestedWithRequiredField",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -7413,6 +7429,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             ],
           },
           "headers": [],
+          "id": "endpoint_endpoints/params.getWithPath",
           "method": "GET",
           "name": {
             "camelCase": {
@@ -7503,6 +7520,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/params.getWithQuery",
           "method": "GET",
           "name": {
             "camelCase": {
@@ -7681,6 +7699,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/params.getWithAllowMultipleQuery",
           "method": "GET",
           "name": {
             "camelCase": {
@@ -7894,6 +7913,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             ],
           },
           "headers": [],
+          "id": "endpoint_endpoints/params.getWithPathAndQuery",
           "method": "GET",
           "name": {
             "camelCase": {
@@ -8108,6 +8128,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             ],
           },
           "headers": [],
+          "id": "endpoint_endpoints/params.modifyWithPath",
           "method": "PUT",
           "name": {
             "camelCase": {
@@ -8336,6 +8357,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/primitive.getAndReturnString",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -8430,6 +8452,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/primitive.getAndReturnInt",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -8524,6 +8547,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/primitive.getAndReturnLong",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -8618,6 +8642,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/primitive.getAndReturnDouble",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -8712,6 +8737,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/primitive.getAndReturnBool",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -8806,6 +8832,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/primitive.getAndReturnDatetime",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -8900,6 +8927,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/primitive.getAndReturnDate",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -8994,6 +9022,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/primitive.getAndReturnUUID",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -9088,6 +9117,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/primitive.getAndReturnBase64",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -9281,6 +9311,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_endpoints/union.getAndReturnUnion",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -9852,6 +9883,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_inlined-requests.postWithObjectBodyandResponse",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -10417,6 +10449,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_no-auth.postWithNoAuth",
           "method": "POST",
           "name": {
             "camelCase": {
@@ -10569,6 +10602,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "parts": [],
           },
           "headers": [],
+          "id": "endpoint_no-req-body.getWithNoRequestBody",
           "method": "GET",
           "name": {
             "camelCase": {
@@ -10821,6 +10855,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               },
             },
           ],
+          "id": "endpoint_req-with-headers.getWithCustomHeader",
           "method": "POST",
           "name": {
             "camelCase": {

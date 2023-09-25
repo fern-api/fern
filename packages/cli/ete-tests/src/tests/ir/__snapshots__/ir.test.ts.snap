@@ -1416,6 +1416,7 @@ exports[`ir {"name":"file-upload"} 1`] = `
             "pathParameters": [],
             "endpoints": [
                 {
+                    "id": "endpoint_file-upload.fileUpload",
                     "name": {
                         "originalName": "fileUpload",
                         "camelCase": {
@@ -7953,6 +7954,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
             "pathParameters": [],
             "endpoints": [
                 {
+                    "id": "endpoint_endpoint-urls.test1",
                     "name": {
                         "originalName": "test1",
                         "camelCase": {
@@ -7997,6 +7999,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                     "docs": null
                 },
                 {
+                    "id": "endpoint_endpoint-urls.test2",
                     "name": {
                         "originalName": "test2",
                         "camelCase": {
@@ -8098,6 +8101,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
             "pathParameters": [],
             "endpoints": [
                 {
+                    "id": "endpoint_service-url.test",
                     "name": {
                         "originalName": "test",
                         "camelCase": {
@@ -9367,6 +9371,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
             "pathParameters": [],
             "endpoints": [
                 {
+                    "id": "endpoint_nested.calculate",
                     "name": {
                         "originalName": "calculate",
                         "camelCase": {
@@ -10656,6 +10661,7 @@ exports[`ir {"name":"packages"} 1`] = `
             "pathParameters": [],
             "endpoints": [
                 {
+                    "id": "endpoint_.rootEndpoint",
                     "name": {
                         "originalName": "rootEndpoint",
                         "camelCase": {
@@ -11645,6 +11651,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
             "pathParameters": [],
             "endpoints": [
                 {
+                    "id": "endpoint_imdb.internalEndpoint",
                     "name": {
                         "originalName": "internalEndpoint",
                         "camelCase": {
@@ -13086,6 +13093,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
             "pathParameters": [],
             "endpoints": [
                 {
+                    "id": "endpoint_imdb.createMovie",
                     "name": {
                         "originalName": "createMovie",
                         "camelCase": {
@@ -20678,6 +20686,7 @@ exports[`ir {"name":"simple"} 1`] = `
             "pathParameters": [],
             "endpoints": [
                 {
+                    "id": "endpoint_imdb.internalEndpoint",
                     "name": {
                         "originalName": "internalEndpoint",
                         "camelCase": {
@@ -20996,6 +21005,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     "docs": null
                 },
                 {
+                    "id": "endpoint_imdb.createMovie",
                     "name": {
                         "originalName": "createMovie",
                         "camelCase": {
@@ -22163,6 +22173,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     "docs": null
                 },
                 {
+                    "id": "endpoint_imdb.getMovie",
                     "name": {
                         "originalName": "getMovie",
                         "camelCase": {
@@ -23456,6 +23467,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     "docs": null
                 },
                 {
+                    "id": "endpoint_imdb.delete",
                     "name": {
                         "originalName": "delete",
                         "camelCase": {
@@ -24291,6 +24303,7 @@ exports[`ir {"name":"streaming"} 1`] = `
             "pathParameters": [],
             "endpoints": [
                 {
+                    "id": "endpoint_streaming.streaming",
                     "name": {
                         "originalName": "streaming",
                         "camelCase": {
@@ -24346,6 +24359,7 @@ exports[`ir {"name":"streaming"} 1`] = `
                     "docs": null
                 },
                 {
+                    "id": "endpoint_streaming.maybeStreaming",
                     "name": {
                         "originalName": "maybeStreaming",
                         "camelCase": {
@@ -24829,6 +24843,7 @@ exports[`ir {"name":"variables"} 1`] = `
             "pathParameters": [],
             "endpoints": [
                 {
+                    "id": "endpoint_service.test",
                     "name": {
                         "originalName": "test",
                         "camelCase": {

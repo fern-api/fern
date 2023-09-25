@@ -378,6 +378,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "pathParameters": [],
             "endpoints": [
                 {
+                    "id": "endpoint_imported.rootEndpoint",
                     "name": {
                         "originalName": "rootEndpoint",
                         "camelCase": {
@@ -762,4 +763,4 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `876966`;
+exports[`dependencies file dependencies 1`] = `877479`;
