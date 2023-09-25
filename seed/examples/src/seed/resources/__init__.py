@@ -17,6 +17,7 @@ from .types import (
     Movie,
     MovieId,
     Node,
+    NotFoundError,
     Request,
     Response,
     Test,
@@ -24,7 +25,7 @@ from .types import (
     Test_Or,
     Tree,
 )
-from . import service, types
+from . import file, health, service, types
 
 __all__ = [
     "Directory",
@@ -43,12 +44,15 @@ __all__ = [
     "Movie",
     "MovieId",
     "Node",
+    "NotFoundError",
     "Request",
     "Response",
     "Test",
     "Test_And",
     "Test_Or",
     "Tree",
+    "file",
+    "health",
     "service",
     "types",
 ]

@@ -9,6 +9,7 @@ from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model import (
     PydanticModelCustomConfig,
     PydanticModelGenerator,
+    SnippetRegistry,
 )
 from fern_python.source_file_factory import SourceFileFactory
 
@@ -72,12 +73,18 @@ class FastApiGenerator(AbstractGenerator):
             ),
         )
 
+        snippet_registry = SnippetRegistry(
+            ir=ir,
+            context=context.pydantic_generator_context,
+        )
+
         PydanticModelGenerator().generate_types(
             generator_exec_wrapper=generator_exec_wrapper,
             custom_config=self._pydantic_model_custom_config,
             ir=ir,
             project=project,
             context=context.pydantic_generator_context,
+            snippet_registry=snippet_registry,
         )
 
         for service in ir.services.values():

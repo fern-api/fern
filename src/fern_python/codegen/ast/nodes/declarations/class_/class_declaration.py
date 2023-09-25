@@ -154,19 +154,19 @@ class ClassDeclaration(AstNode):
         writer.write_line(":")
 
         with writer.indent():
-            if self.snippet is not None:
+            if self.docstring is not None:
                 writer.write_line('"""')
-                writer.write(self.snippet)
+                writer.write_node(self.docstring)
                 writer.write_newline_if_last_line_not()
-                if self.docstring is None:
+                if self.snippet is None:
                     writer.write_line('"""')
                 else:
                     writer.write_line("---")
 
-            if self.docstring is not None:
-                if self.snippet is None:
+            if self.snippet is not None:
+                if self.docstring is None:
                     writer.write_line('"""')
-                writer.write_node(self.docstring)
+                writer.write(self.snippet)
                 writer.write_newline_if_last_line_not()
                 writer.write_line('"""')
 

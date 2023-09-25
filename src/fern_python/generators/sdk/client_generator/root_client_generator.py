@@ -7,6 +7,7 @@ import fern.ir.resources as ir_types
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies import HttpX
+from fern_python.generators.pydantic_model import SnippetRegistry
 from fern_python.generators.sdk.client_generator.endpoint_response_code_writer import (
     EndpointResponseCodeWriter,
 )
@@ -23,6 +24,7 @@ from ..environment_generators import (
 )
 from .constants import DEFAULT_BODY_PARAMETER_VALUE
 from .endpoint_function_generator import EndpointFunctionGenerator
+from .generated_root_client import GeneratedRootClient
 
 
 @dataclass
@@ -32,12 +34,6 @@ class RootClientConstructorParameter:
     private_member_name: typing.Optional[str] = None
     initializer: Optional[AST.Expression] = None
     exclude_from_wrapper_construction: Optional[bool] = False
-
-
-@dataclass
-class GeneratedRootClient:
-    async_instantiation: AST.Expression
-    sync_instantiation: AST.Expression
 
 
 class RootClientGenerator:
@@ -60,6 +56,7 @@ class RootClientGenerator:
         generated_environment: Optional[GeneratedEnvironment],
         class_name: str,
         async_class_name: str,
+        snippet_registry: SnippetRegistry,
     ):
         self._context = context
         self._package = package
@@ -68,22 +65,41 @@ class RootClientGenerator:
         self._is_default_body_parameter_used = False
         self._environments_config = self._context.ir.environments
         self._generated_environment = generated_environment
+        self._snippet_registry = snippet_registry
 
         client_wrapper_generator = ClientWrapperGenerator(
             context=self._context,
             generated_environment=generated_environment,
         )
-        self._client_wrapper_constructor_params = (
-            client_wrapper_generator._get_constructor_info().constructor_parameters
-        )
         self._constructor_info = client_wrapper_generator._get_constructor_info()
+        self._client_wrapper_constructor_params = self._constructor_info.constructor_parameters
+        if self._context.ir.environments is not None and self._context.ir.environments.default_environment is None:
+            environment_constructor_parameter = client_wrapper_generator._get_environment_constructor_parameter()
+            self._client_wrapper_constructor_params.append(environment_constructor_parameter)
+        elif self._context.ir.environments is None:
+            base_url_constructor_parameter = client_wrapper_generator._get_base_url_constructor_parameter()
+            self._client_wrapper_constructor_params.append(base_url_constructor_parameter)
 
         self._timeout_constructor_parameter_name = self._get_timeout_constructor_parameter_name(
             [param.constructor_parameter_name for param in self._client_wrapper_constructor_params]
         )
 
+        self._snippet_registry = snippet_registry
+
     def generate(self, source_file: SourceFile) -> GeneratedRootClient:
-        class_declaration = self._create_class_declaration(is_async=False)
+        builder = RootClientGenerator.GeneratedRootClientBuilder(
+            module_path=self._context.get_module_path_in_project(
+                self._context.get_filepath_for_root_client().to_module().path
+            ),
+            class_name=self._class_name,
+            async_class_name=self._async_class_name,
+            constructor_parameters=self._client_wrapper_constructor_params,
+        )
+        generated_root_client = builder.build()
+        class_declaration = self._create_class_declaration(
+            is_async=False,
+            generated_root_client=generated_root_client,
+        )
         if self._is_default_body_parameter_used:
             source_file.add_arbitrary_code(AST.CodeWriter(self._write_default_param))
         source_file.add_class_declaration(
@@ -91,7 +107,10 @@ class RootClientGenerator:
             should_export=False,
         )
         source_file.add_class_declaration(
-            declaration=self._create_class_declaration(is_async=True),
+            declaration=self._create_class_declaration(
+                is_async=True,
+                generated_root_client=generated_root_client,
+            ),
             should_export=False,
         )
         if self._environments_config is not None:
@@ -121,18 +140,14 @@ class RootClientGenerator:
                     ),
                     should_export=False,
                 )
+        return generated_root_client
 
-        builder = RootClientGenerator.GeneratedRootClientBuilder(
-            module_path=self._context.get_module_path_in_project(
-                self._context.get_filepath_for_root_client().to_module().path
-            ),
-            class_name=self._class_name,
-            async_class_name=self._async_class_name,
-            constructor_parameters=self._client_wrapper_constructor_params,
-        )
-        return builder.build()
-
-    def _create_class_declaration(self, *, is_async: bool) -> AST.ClassDeclaration:
+    def _create_class_declaration(
+        self,
+        *,
+        is_async: bool,
+        generated_root_client: GeneratedRootClient,
+    ) -> AST.ClassDeclaration:
         constructor_parameters = self._get_constructor_parameters(is_async=is_async)
 
         named_parameters = [
@@ -159,10 +174,14 @@ class RootClientGenerator:
             for endpoint in service.endpoints:
                 endpoint_function_generator = EndpointFunctionGenerator(
                     context=self._context,
+                    package=self._package,
+                    serviceId=self._package.service,
                     service=service,
                     endpoint=endpoint,
-                    is_async=is_async,
                     client_wrapper_member_name=self._get_client_wrapper_member_name(),
+                    is_async=is_async,
+                    generated_root_client=generated_root_client,
+                    snippet_registry=self._snippet_registry,
                 )
                 generated_endpoint_function = endpoint_function_generator.generate()
                 class_declaration.add_method(generated_endpoint_function.function)

@@ -17,15 +17,19 @@ from .resources import (
     Movie,
     MovieId,
     Node,
+    NotFoundError,
     Request,
     Response,
     Test,
     Test_And,
     Test_Or,
     Tree,
+    file,
+    health,
     service,
     types,
 )
+from .environment import SeedExamplesEnvironment
 
 __all__ = [
     "Directory",
@@ -44,12 +48,16 @@ __all__ = [
     "Movie",
     "MovieId",
     "Node",
+    "NotFoundError",
     "Request",
     "Response",
+    "SeedExamplesEnvironment",
     "Test",
     "Test_And",
     "Test_Or",
     "Tree",
+    "file",
+    "health",
     "service",
     "types",
 ]

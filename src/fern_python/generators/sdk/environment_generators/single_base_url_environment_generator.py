@@ -30,7 +30,7 @@ class SingleBaseUrlEnvironmentGenerator:
         for i, single_base_url_env in enumerate(self._environments.environments):
             class_var_name = self._get_enum_value_name(single_base_url_env)
             if i == 0:
-                example_environment = f"{class_name}.{class_var_name}"
+                example_environment = class_var_name
             enum_class.add_class_var(
                 AST.VariableDeclaration(
                     name=class_var_name,

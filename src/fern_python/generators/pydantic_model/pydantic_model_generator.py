@@ -53,12 +53,17 @@ class PydanticModelGenerator(AbstractGenerator):
                 ir=ir,
             ),
         )
+        snippet_registry = SnippetRegistry(
+            ir=ir,
+            context=context,
+        )
         self.generate_types(
             generator_exec_wrapper=generator_exec_wrapper,
             ir=ir,
             custom_config=custom_config,
             project=project,
             context=context,
+            snippet_registry=snippet_registry,
         )
         context.core_utilities.copy_to_project(project=project)
 
@@ -70,15 +75,11 @@ class PydanticModelGenerator(AbstractGenerator):
         custom_config: PydanticModelCustomConfig,
         project: Project,
         context: PydanticGeneratorContext,
+        snippet_registry: SnippetRegistry,
     ) -> None:
-        snippet_registry = SnippetRegistry(
-            ir=ir,
-            context=context,
-        )
         for type_to_generate in ir.types.values():
             self._generate_type(
                 project,
-                ir=ir,
                 type=type_to_generate,
                 generator_exec_wrapper=generator_exec_wrapper,
                 custom_config=custom_config,
@@ -89,7 +90,6 @@ class PydanticModelGenerator(AbstractGenerator):
     def _generate_type(
         self,
         project: Project,
-        ir: ir_types.IntermediateRepresentation,
         type: ir_types.TypeDeclaration,
         generator_exec_wrapper: GeneratorExecWrapper,
         custom_config: PydanticModelCustomConfig,

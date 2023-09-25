@@ -93,37 +93,43 @@ class ClientWrapperGenerator:
     def _get_url_storage_info(self) -> ConstructorParameter:
         url_storage_type = get_client_wrapper_url_type(ir=self._context.ir)
         if url_storage_type is ClientWrapperUrlStorage.URL:
-            return ConstructorParameter(
-                constructor_parameter_name=ClientWrapperGenerator.BASE_URL_PARAMETER_NAME,
-                type_hint=AST.TypeHint.str_(),
-                private_member_name=f"_{ClientWrapperGenerator.BASE_URL_PARAMETER_NAME}",
-                instantiation=AST.Expression(
-                    f'{ClientWrapperGenerator.BASE_URL_PARAMETER_NAME}="https://yourhost.com/path/to/api"',
-                ),
-                getter_method=AST.FunctionDeclaration(
-                    name=ClientWrapperGenerator.GET_BASE_URL_METHOD_NAME,
-                    signature=AST.FunctionSignature(return_type=AST.TypeHint.str_()),
-                    body=AST.CodeWriter(f"return self._{ClientWrapperGenerator.BASE_URL_PARAMETER_NAME}"),
-                ),
-            )
+            return self._get_base_url_constructor_parameter()
         elif url_storage_type is ClientWrapperUrlStorage.ENVIRONMENT:
-            return ConstructorParameter(
-                constructor_parameter_name=ClientWrapperGenerator.ENVIRONMENT_PARAMETER_NAME,
-                type_hint=AST.TypeHint(self._context.get_reference_to_environments_class()),
-                private_member_name=f"_{ClientWrapperGenerator.ENVIRONMENT_PARAMETER_NAME}",
-                instantiation=self._get_environment_instantiation(
-                    self._generated_environment,
-                ),
-                getter_method=AST.FunctionDeclaration(
-                    name=ClientWrapperGenerator.GET_ENVIRONMENT_METHOD_NAME,
-                    signature=AST.FunctionSignature(
-                        return_type=AST.TypeHint(self._context.get_reference_to_environments_class())
-                    ),
-                    body=AST.CodeWriter(f"return self._{ClientWrapperGenerator.ENVIRONMENT_PARAMETER_NAME}"),
-                ),
-            )
+            return self._get_environment_constructor_parameter()
         else:
             raise Exception(f"URL Storage type is unknown {url_storage_type}")
+
+    def _get_base_url_constructor_parameter(self) -> ConstructorParameter:
+        return ConstructorParameter(
+            constructor_parameter_name=ClientWrapperGenerator.BASE_URL_PARAMETER_NAME,
+            type_hint=AST.TypeHint.str_(),
+            private_member_name=f"_{ClientWrapperGenerator.BASE_URL_PARAMETER_NAME}",
+            instantiation=AST.Expression(
+                f'{ClientWrapperGenerator.BASE_URL_PARAMETER_NAME}="https://yourhost.com/path/to/api"',
+            ),
+            getter_method=AST.FunctionDeclaration(
+                name=ClientWrapperGenerator.GET_BASE_URL_METHOD_NAME,
+                signature=AST.FunctionSignature(return_type=AST.TypeHint.str_()),
+                body=AST.CodeWriter(f"return self._{ClientWrapperGenerator.BASE_URL_PARAMETER_NAME}"),
+            ),
+        )
+
+    def _get_environment_constructor_parameter(self) -> ConstructorParameter:
+        return ConstructorParameter(
+            constructor_parameter_name=ClientWrapperGenerator.ENVIRONMENT_PARAMETER_NAME,
+            type_hint=AST.TypeHint(self._context.get_reference_to_environments_class()),
+            private_member_name=f"_{ClientWrapperGenerator.ENVIRONMENT_PARAMETER_NAME}",
+            instantiation=self._get_environment_instantiation(
+                self._generated_environment,
+            ),
+            getter_method=AST.FunctionDeclaration(
+                name=ClientWrapperGenerator.GET_ENVIRONMENT_METHOD_NAME,
+                signature=AST.FunctionSignature(
+                    return_type=AST.TypeHint(self._context.get_reference_to_environments_class())
+                ),
+                body=AST.CodeWriter(f"return self._{ClientWrapperGenerator.ENVIRONMENT_PARAMETER_NAME}"),
+            ),
+        )
 
     def _create_base_client_wrapper_class_declaration(
         self, *, constructor_parameters: typing.List[ConstructorParameter], project: Project

@@ -26,6 +26,12 @@ class ServiceClient:
         """
         Parameters:
             - movie_id: MovieId.
+        ---
+        from seed.client import SeedExamples
+        from seed.environment import SeedExamplesEnvironment
+
+        client = SeedExamples(token=<"YOUR_TOKEN">, environment=SeedExamplesEnvironment.PRODUCTION)
+        client.get_movie(movie_id="movie-c06a4ad7")
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -45,6 +51,13 @@ class ServiceClient:
         """
         Parameters:
             - request: Movie.
+        ---
+        from seed import Movie
+        from seed.client import SeedExamples
+        from seed.environment import SeedExamplesEnvironment
+
+        client = SeedExamples(token=<"YOUR_TOKEN">, environment=SeedExamplesEnvironment.PRODUCTION)
+        client.create_movie(request=Movie(id="movie-c06a4ad7", title="The Boy and the Heron", from_="Hayao Miyazaki", rating=8.0))
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -75,6 +88,12 @@ class ServiceClient:
             - tag: typing.Union[typing.Optional[str], typing.List[str]].
 
             - x_api_version: str.
+        ---
+        from seed.client import SeedExamples
+        from seed.environment import SeedExamplesEnvironment
+
+        client = SeedExamples(token=<"YOUR_TOKEN">, environment=SeedExamplesEnvironment.PRODUCTION)
+        client.get_metadata(x_api_version="0.0.1", shallow=False, tag="development")
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -100,6 +119,12 @@ class AsyncServiceClient:
         """
         Parameters:
             - movie_id: MovieId.
+        ---
+        from seed.client import AsyncSeedExamples
+        from seed.environment import SeedExamplesEnvironment
+
+        client = AsyncSeedExamples(token=<"YOUR_TOKEN">, environment=SeedExamplesEnvironment.PRODUCTION)
+        await client.get_movie(movie_id="movie-c06a4ad7")
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -119,6 +144,13 @@ class AsyncServiceClient:
         """
         Parameters:
             - request: Movie.
+        ---
+        from seed import Movie
+        from seed.client import AsyncSeedExamples
+        from seed.environment import SeedExamplesEnvironment
+
+        client = AsyncSeedExamples(token=<"YOUR_TOKEN">, environment=SeedExamplesEnvironment.PRODUCTION)
+        await client.create_movie(request=Movie(id="movie-c06a4ad7", title="The Boy and the Heron", from_="Hayao Miyazaki", rating=8.0))
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -149,6 +181,12 @@ class AsyncServiceClient:
             - tag: typing.Union[typing.Optional[str], typing.List[str]].
 
             - x_api_version: str.
+        ---
+        from seed.client import AsyncSeedExamples
+        from seed.environment import SeedExamplesEnvironment
+
+        client = AsyncSeedExamples(token=<"YOUR_TOKEN">, environment=SeedExamplesEnvironment.PRODUCTION)
+        await client.get_metadata(x_api_version="0.0.1", shallow=False, tag="development")
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",

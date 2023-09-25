@@ -22,7 +22,7 @@ class MultipleBaseUrlsEnvironmentGenerator:
         for i, environment in enumerate(self._environments.environments):
             class_var_name = self._get_class_var_name(environment)
             if i == 0:
-                example_environment = f"{class_name}.{class_var_name}"
+                example_environment = class_var_name
 
             environment_class.add_class_var(
                 AST.VariableDeclaration(

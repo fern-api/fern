@@ -15,6 +15,7 @@ class SnippetRegistry:
         ir: ir_types.IntermediateRepresentation,
         context: PydanticGeneratorContext,
     ):
+        self._endpoint_snippets: Dict[str, AST.Expression] = {}
         self._snippets: Dict[ir_types.TypeId, AST.Expression] = {}
         self._init_snippets_from_ir(ir, context)
 
@@ -32,6 +33,19 @@ class SnippetRegistry:
         snippet.add_expression(expr)
         return snippet.to_str()
 
+    def get_snippet_for_endpoint(
+        self,
+        serviceId: ir_types.ServiceId,
+        endpoint: ir_types.HttpEndpoint,
+    ) -> Optional[AST.Expression]:
+        key = self._get_endpoint_snippet_key(
+            serviceId=serviceId,
+            endpoint=endpoint,
+        )
+        if key in self._endpoint_snippets:
+            return self._endpoint_snippets[key]
+        return None
+
     def _init_snippets_from_ir(
         self,
         ir: ir_types.IntermediateRepresentation,
@@ -43,6 +57,198 @@ class SnippetRegistry:
                 context=context,
                 type=type,
             )
+        for serviceId, service in ir.services.items():
+            for endpoint in service.endpoints:
+                self._snippet_for_endpoint(
+                    ir=ir,
+                    context=context,
+                    serviceId=serviceId,
+                    service=service,
+                    endpoint=endpoint,
+                )
+
+    def _get_endpoint_snippet_key(
+        self,
+        serviceId: ir_types.ServiceId,
+        endpoint: ir_types.HttpEndpoint,
+    ) -> str:
+        return f"{serviceId}.{endpoint.name.get_as_name().original_name}"
+
+    def _snippet_for_endpoint(
+        self,
+        ir: ir_types.IntermediateRepresentation,
+        context: PydanticGeneratorContext,
+        serviceId: ir_types.ServiceId,
+        service: ir_types.HttpService,
+        endpoint: ir_types.HttpEndpoint,
+    ) -> Optional[AST.Expression]:
+        if len(endpoint.examples) == 0:
+            # For now, we only include snippets for endpoints that specify examples.
+            return None
+
+        # For now, the snippet we generate is always just the first example.
+        # This is the example that we register for external use.
+        example_endpoint_call = endpoint.examples[0]
+        return self._snippet_for_example_endpoint_call(
+            ir=ir,
+            context=context,
+            serviceId=serviceId,
+            service=service,
+            endpoint=endpoint,
+            example_endpoint_call=example_endpoint_call,
+            register=True,
+        )
+
+    def _snippet_for_example_endpoint_call(
+        self,
+        ir: ir_types.IntermediateRepresentation,
+        context: PydanticGeneratorContext,
+        serviceId: ir_types.ServiceId,
+        service: ir_types.HttpService,
+        endpoint: ir_types.HttpEndpoint,
+        example_endpoint_call: ir_types.ExampleEndpointCall,
+        register: bool = False,
+    ) -> AST.Expression:
+        args: List[AST.Expression] = []
+        all_path_parameters = (
+            example_endpoint_call.root_path_parameters
+            + example_endpoint_call.service_path_parameters
+            + example_endpoint_call.endpoint_path_parameters
+        )
+        for property in all_path_parameters:
+            path_parameter_name = self._get_path_parameter_name_from_key(
+                endpoint=endpoint,
+                key=property.key,
+            )
+            path_parameter_value = self._snippet_for_example_type_reference(
+                ir=ir,
+                context=context,
+                example_type_reference=property.value,
+            )
+            args.append(
+                self._write_named_parameter_for_value(
+                    parameter_name=path_parameter_name,
+                    value=path_parameter_value,
+                ),
+            )
+
+        all_headers = example_endpoint_call.service_headers + example_endpoint_call.endpoint_headers
+        for header in all_headers:
+            header_parameter_name = self._get_header_name_from_wire_key(
+                service=service,
+                endpoint=endpoint,
+                wire_key=header.wire_key,
+            )
+            header_parameter_value = self._snippet_for_example_type_reference(
+                ir=ir,
+                context=context,
+                example_type_reference=header.value,
+            )
+            args.append(
+                self._write_named_parameter_for_value(
+                    parameter_name=header_parameter_name,
+                    value=header_parameter_value,
+                ),
+            )
+
+        for query_parameter in example_endpoint_call.query_parameters:
+            query_parameter_name = self._get_query_parameter_name_from_wire_key(
+                endpoint=endpoint,
+                wire_key=query_parameter.wire_key,
+            )
+            query_parameter_value = self._snippet_for_example_type_reference(
+                ir=ir,
+                context=context,
+                example_type_reference=query_parameter.value,
+            )
+            args.append(
+                self._write_named_parameter_for_value(
+                    parameter_name=query_parameter_name,
+                    value=query_parameter_value,
+                ),
+            )
+
+        if example_endpoint_call.request is not None:
+            args.extend(
+                example_endpoint_call.request.visit(
+                    inlined_request_body=lambda inlined_request_body: self._snippet_for_inlined_request_body_properties(
+                        ir=ir,
+                        context=context,
+                        endpoint=endpoint,
+                        example_inlined_request_body=inlined_request_body,
+                    ),
+                    reference=lambda reference: self._snippet_for_request_reference(
+                        ir=ir,
+                        context=context,
+                        endpoint=endpoint,
+                        example_type_reference=reference,
+                    ),
+                ),
+            )
+
+        snippet = AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(endpoint.name.get_as_name().snake_case.safe_name,),
+                ),
+                args=args,
+            ),
+        )
+        if register:
+            key = self._get_endpoint_snippet_key(
+                serviceId=serviceId,
+                endpoint=endpoint,
+            )
+            self._endpoint_snippets[key] = snippet
+        return snippet
+
+    def _snippet_for_inlined_request_body_properties(
+        self,
+        ir: ir_types.IntermediateRepresentation,
+        context: PydanticGeneratorContext,
+        endpoint: ir_types.HttpEndpoint,
+        example_inlined_request_body: ir_types.ExampleInlinedRequestBody,
+    ) -> List[AST.Expression]:
+        wire_key_to_property = self._get_inlined_request_properties_for_endpoint(
+            context=context,
+            endpoint=endpoint,
+        )
+        snippets: List[AST.Expression] = []
+        for example_property in example_inlined_request_body.properties:
+            property = wire_key_to_property[example_property.wire_key]
+            if property is None:
+                raise Exception(
+                    f"internal error: cannot generate snippet - example wire key {example_property.wire_key} did not match a property in endpoint {endpoint.name.get_as_name().original_name}"
+                )
+            snippets.append(
+                self._write_named_parameter_for_value(
+                    parameter_name=property.name.name.snake_case.unsafe_name,
+                    value=self._snippet_for_example_type_reference(
+                        ir=ir,
+                        context=context,
+                        example_type_reference=example_property.value,
+                    ),
+                ),
+            )
+        return snippets
+
+    def _snippet_for_request_reference(
+        self,
+        ir: ir_types.IntermediateRepresentation,
+        context: PydanticGeneratorContext,
+        endpoint: ir_types.HttpEndpoint,
+        example_type_reference: ir_types.ExampleTypeReference,
+    ) -> List[AST.Expression]:
+        return [
+            self._write_named_parameter_for_value(
+                parameter_name=self._get_request_parameter_name(endpoint),
+                value=self._snippet_for_example_type_reference(
+                    ir=ir,
+                    context=context,
+                    example_type_reference=example_type_reference,
+                ),
+            )
+        ]
 
     def _snippet_for_type(
         self,
@@ -184,11 +390,16 @@ class SnippetRegistry:
                     example_type_shape=named.shape,
                 ),
             )
-            key = self._get_property_key(
+            parameter_name = self._get_property_key(
                 ir=ir,
                 property=property,
             )
-            args.append(self._write_named_parameter_for_property_key(key, value))
+            args.append(
+                self._write_named_parameter_for_value(
+                    parameter_name=parameter_name,
+                    value=value,
+                ),
+            )
 
         return AST.Expression(
             AST.ClassInstantiation(
@@ -536,13 +747,97 @@ class SnippetRegistry:
                 return property.name.name.snake_case.safe_name
         return wire_key
 
-    def _write_named_parameter_for_property_key(
+    def _get_path_parameter_name_from_key(
         self,
-        property_key: str,
+        endpoint: ir_types.HttpEndpoint,
+        key: str,
+    ) -> str:
+        for path_parameter in endpoint.all_path_parameters:
+            if path_parameter.name.original_name == key:
+                return path_parameter.name.snake_case.unsafe_name
+        return key
+
+    def _get_header_name_from_wire_key(
+        self,
+        service: ir_types.HttpService,
+        endpoint: ir_types.HttpEndpoint,
+        wire_key: str,
+    ) -> str:
+        all_headers = service.headers + endpoint.headers
+        for header in all_headers:
+            if header.name.wire_value == wire_key:
+                return header.name.name.snake_case.safe_name
+        return wire_key
+
+    def _get_query_parameter_name_from_wire_key(
+        self,
+        endpoint: ir_types.HttpEndpoint,
+        wire_key: str,
+    ) -> str:
+        for query_parameter in endpoint.query_parameters:
+            if query_parameter.name.wire_value == wire_key:
+                return query_parameter.name.name.snake_case.safe_name
+        return wire_key
+
+    def _get_inlined_request_properties_for_endpoint(
+        self,
+        context: PydanticGeneratorContext,
+        endpoint: ir_types.HttpEndpoint,
+    ) -> Dict[str, ir_types.InlinedRequestBodyProperty]:
+        if endpoint.request_body is None:
+            raise Exception("in-lined request body is referenced but HttpRequestBody is not defined")
+
+        properties = endpoint.request_body.visit(
+            inlined_request_body=lambda inlined_request_body: self._get_properties_for_inlined_request_body(
+                context=context,
+                inlined_request_body=inlined_request_body,
+            ),
+            reference=lambda _: None,
+            file_upload=lambda _: None,
+        )
+        if properties is None:
+            raise Exception("in-lined request body is referenced but HttpRequestBody is not an in-lined request")
+
+        wire_key_to_property: Dict[str, ir_types.InlinedRequestBodyProperty] = {}
+        for property in properties:
+            wire_key_to_property[property.name.wire_value] = property
+
+        return wire_key_to_property
+
+    def _get_properties_for_inlined_request_body(
+        self,
+        context: PydanticGeneratorContext,
+        inlined_request_body: ir_types.InlinedRequestBody,
+    ) -> List[ir_types.InlinedRequestBodyProperty]:
+        properties = inlined_request_body.properties.copy()
+        for extension in inlined_request_body.extends:
+            properties.extend(
+                [
+                    ir_types.InlinedRequestBodyProperty(
+                        name=extended_property.name,
+                        value_type=extended_property.value_type,
+                        docs=extended_property.docs,
+                    )
+                    for extended_property in (context.get_all_properties_including_extensions(extension))
+                ]
+            )
+        return properties
+
+    def _get_request_parameter_name(
+        self,
+        endpoint: ir_types.HttpEndpoint,
+    ) -> str:
+        if endpoint.sdk_request is None:
+            raise Exception("request body is referenced but SDKRequestBody is not defined")
+        return endpoint.sdk_request.request_parameter_name.snake_case.unsafe_name
+
+    def _write_named_parameter_for_value(
+        self,
+        parameter_name: str,
         value: AST.Expression,
     ) -> AST.Expression:
         def write_named_parameter(writer: AST.NodeWriter) -> None:
-            writer.write(f"{property_key}=")
+            writer.write(f"{parameter_name}=")
             writer.write_node(value)
 
         return AST.Expression(AST.CodeWriter(write_named_parameter))

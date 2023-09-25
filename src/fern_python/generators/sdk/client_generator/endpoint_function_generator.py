@@ -6,6 +6,7 @@ from typing_extensions import Never
 
 from fern_python.codegen import AST
 from fern_python.external_dependencies import HttpX, UrlLibParse
+from fern_python.generators.pydantic_model import SnippetRegistry
 from fern_python.generators.sdk.client_generator.endpoint_response_code_writer import (
     EndpointResponseCodeWriter,
 )
@@ -14,8 +15,10 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
     get_base_url,
     get_base_url_property_name,
 )
+from fern_python.source_file_factory import SourceFileFactory
 
 from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
+from .generated_root_client import GeneratedRootClient
 from .request_body_parameters import (
     AbstractRequestBodyParameters,
     FileUploadRequestBodyParameters,
@@ -44,16 +47,24 @@ class EndpointFunctionGenerator:
         self,
         *,
         context: SdkGeneratorContext,
+        package: ir_types.Package,
+        serviceId: ir_types.ServiceId,
         service: ir_types.HttpService,
         endpoint: ir_types.HttpEndpoint,
         client_wrapper_member_name: str,
         is_async: bool,
+        generated_root_client: GeneratedRootClient,
+        snippet_registry: SnippetRegistry,
     ):
         self._context = context
+        self._package = package
+        self._serviceId = serviceId
         self._service = service
         self._endpoint = endpoint
         self._is_async = is_async
         self._client_wrapper_member_name = client_wrapper_member_name
+        self._generated_root_client = generated_root_client
+        self._snippet_registry = snippet_registry
 
     def generate(self) -> GeneratedEndpointFunction:
         request_body_parameters: Optional[AbstractRequestBodyParameters] = (
@@ -84,9 +95,14 @@ class EndpointFunctionGenerator:
             name=self._endpoint.name.get_as_name().snake_case.unsafe_name,
             is_async=self._is_async,
             docstring=self._get_docstring_for_endpoint(
+                package=self._package,
+                serviceId=self._serviceId,
                 endpoint=self._endpoint,
                 named_parameters=named_parameters,
                 path_parameters=self._endpoint.all_path_parameters,
+                generated_root_client=self._generated_root_client,
+                snippet_registry=self._snippet_registry,
+                is_async=self._is_async,
             ),
             signature=AST.FunctionSignature(
                 parameters=[
@@ -237,11 +253,24 @@ class EndpointFunctionGenerator:
 
     def _get_docstring_for_endpoint(
         self,
+        package: ir_types.Package,
+        serviceId: ir_types.ServiceId,
         endpoint: ir_types.HttpEndpoint,
         named_parameters: List[AST.NamedFunctionParameter],
         path_parameters: List[ir_types.PathParameter],
+        generated_root_client: GeneratedRootClient,
+        snippet_registry: SnippetRegistry,
+        is_async: bool,
     ) -> Optional[AST.CodeWriter]:
-        if endpoint.docs is None and len(named_parameters) == 0 and len(path_parameters) == 0:
+        snippet = self._get_snippet_for_endpoint(
+            package=package,
+            serviceId=serviceId,
+            endpoint=endpoint,
+            generated_root_client=generated_root_client,
+            snippet_registry=snippet_registry,
+            is_async=is_async,
+        )
+        if snippet is None and endpoint.docs is None and len(named_parameters) == 0 and len(path_parameters) == 0:
             return None
 
         # Consolidate the named parameters and path parameters in a single list.
@@ -252,59 +281,113 @@ class EndpointFunctionGenerator:
         def write(writer: AST.NodeWriter) -> None:
             if endpoint.docs is not None:
                 writer.write_line(endpoint.docs)
-            if len(parameters) == 0:
+            if len(parameters) == 0 and snippet is None:
                 return
             if endpoint.docs is not None:
                 # Include a line between the endpoint docs and field docs.
                 writer.write_line()
-            writer.write_line("Parameters:")
-            with writer.indent():
-                for i, param in enumerate(parameters):
-                    if i > 0:
-                        writer.write_line()
-
-                    if param.docs is None:
-                        writer.write(f"- {param.name}: ")
-                        if param.type_hint is not None:
-                            writer.write_node(param.type_hint)
-                        writer.write_line(".")
-                        continue
-
-                    split = param.docs.split("\n")
-                    if len(split) == 1:
-                        writer.write(f"- {param.name}: ")
-                        if param.type_hint is not None:
-                            writer.write_node(param.type_hint)
-                        writer.write_line(f". {param.docs}")
-                        continue
-
-                    # Handle multi-line comments at the same level of indentation for the same field,
-                    # e.g.
-                    #
-                    #  - userId: str. This is a multi-line comment.
-                    #                 This one has three lines
-                    #                 in total.
-                    #
-                    #  - request: Request. The request body.
-                    #
-                    indent = ""
-                    for i, line in enumerate(split):
-                        if i == 0:
-                            # Determine the level of indentation we need by capturing the length
-                            # before and after we write the type hint.
-                            writer.write(f"- {param.name}: ")
-                            before = writer.size()
-                            if param.type_hint is not None:
-                                writer.write_node(param.type_hint)
-                            after = writer.size()
-                            writer.write_line(f". {line}")
-                            indent = " " * (len(param.name) + (after - before) + 4)
-                            continue
-                        writer.write(f" {indent} {line}")
-                        if i < len(split) - 1:
+            if len(parameters) > 0:
+                writer.write_line("Parameters:")
+                with writer.indent():
+                    for i, param in enumerate(parameters):
+                        if i > 0:
                             writer.write_line()
 
+                        if param.docs is None:
+                            writer.write(f"- {param.name}: ")
+                            if param.type_hint is not None:
+                                writer.write_node(param.type_hint)
+                            writer.write_line(".")
+                            continue
+
+                        split = param.docs.split("\n")
+                        if len(split) == 1:
+                            writer.write(f"- {param.name}: ")
+                            if param.type_hint is not None:
+                                writer.write_node(param.type_hint)
+                            writer.write_line(f". {param.docs}")
+                            continue
+
+                        # Handle multi-line comments at the same level of indentation for the same field,
+                        # e.g.
+                        #
+                        #  - userId: str. This is a multi-line comment.
+                        #                 This one has three lines
+                        #                 in total.
+                        #
+                        #  - request: Request. The request body.
+                        #
+                        indent = ""
+                        for i, line in enumerate(split):
+                            if i == 0:
+                                # Determine the level of indentation we need by capturing the length
+                                # before and after we write the type hint.
+                                writer.write(f"- {param.name}: ")
+                                before = writer.size()
+                                if param.type_hint is not None:
+                                    writer.write_node(param.type_hint)
+                                after = writer.size()
+                                writer.write_line(f". {line}")
+                                indent = " " * (len(param.name) + (after - before) + 4)
+                                continue
+                            writer.write(f" {indent} {line}")
+                            if i < len(split) - 1:
+                                writer.write_line()
+            if snippet is not None:
+                if endpoint.docs is not None or len(parameters) > 0:
+                    # Include a dashed line between the endpoint snippet and the rest of the docs, if any.
+                    writer.write_line("---")
+                writer.write(snippet)
+                writer.write_newline_if_last_line_not()
+
         return AST.CodeWriter(write)
+
+    def _get_snippet_for_endpoint(
+        self,
+        package: ir_types.Package,
+        serviceId: ir_types.ServiceId,
+        endpoint: ir_types.HttpEndpoint,
+        generated_root_client: GeneratedRootClient,
+        snippet_registry: SnippetRegistry,
+        is_async: bool,
+    ) -> Optional[str]:
+        endpoint_snippet = snippet_registry.get_snippet_for_endpoint(
+            serviceId=serviceId,
+            endpoint=endpoint,
+        )
+        if endpoint_snippet is None:
+            return None
+
+        def write(writer: AST.NodeWriter) -> None:
+            if is_async:
+                writer.write_node(generated_root_client.async_instantiation)
+            else:
+                writer.write_node(generated_root_client.sync_instantiation)
+            writer.write_line()
+
+            if is_async:
+                writer.write("await ")
+
+            writer.write("client.")
+            writer.write(self._get_subpackage_client_accessor(package))
+
+            if endpoint_snippet is not None:
+                writer.write_node(endpoint_snippet)
+            writer.write_newline_if_last_line_not()
+
+        expr = AST.Expression(AST.CodeWriter(write))
+
+        snippet = SourceFileFactory.create_snippet()
+        snippet.add_expression(expr)
+        return snippet.to_str()
+
+    def _get_subpackage_client_accessor(
+        self,
+        package: ir_types.Package,
+    ) -> str:
+        if len(package.fern_filepath.package_path) == 0:
+            return ""
+        return ".".join([directory.snake_case.safe_name for directory in package.fern_filepath.package_path]) + "."
 
     def _named_parameters_have_docs(self, named_parameters: List[AST.NamedFunctionParameter]) -> bool:
         return named_parameters is not None and any(param.docs is not None for param in named_parameters)

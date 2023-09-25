@@ -24,6 +24,7 @@ from .types import (
     Test_Or,
     Tree,
 )
+from .errors import NotFoundError
 
 __all__ = [
     "Directory",
@@ -42,6 +43,7 @@ __all__ = [
     "Movie",
     "MovieId",
     "Node",
+    "NotFoundError",
     "Request",
     "Response",
     "Test",
