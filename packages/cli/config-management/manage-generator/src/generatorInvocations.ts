@@ -52,6 +52,9 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
     [GeneratorName.PYTHON_SDK]: {
         version: "0.4.0",
     },
+    [GeneratorName.GO_FIBER]: {
+        version: "0.0.1",
+    },
     [GeneratorName.GO_MODEL]: {
         version: "0.2.0",
     },
