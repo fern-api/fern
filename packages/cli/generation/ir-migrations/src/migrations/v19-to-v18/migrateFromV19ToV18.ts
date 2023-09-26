@@ -31,6 +31,7 @@ export const V19_TO_V18_MIGRATION: IrMigration<
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: "0.0.44-1-gbf4b0f3",
         [GeneratorName.PYTHON_SDK]: "0.3.4-rc0-9-ge815162f",
+        [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
     },

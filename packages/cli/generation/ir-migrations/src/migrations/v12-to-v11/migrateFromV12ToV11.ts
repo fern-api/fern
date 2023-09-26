@@ -31,6 +31,7 @@ export const V12_TO_V11_MIGRATION: IrMigration<
         [GeneratorName.OPENAPI]: "0.0.22-1-g1c86b58",
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.GO_FIBER]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
     },
