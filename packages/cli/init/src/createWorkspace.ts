@@ -55,14 +55,14 @@ const GENERATORS_CONFIGURATION: GeneratorsConfigurationSchema = {
     groups: {
         [DEFAULT_GROUP_NAME]: {
             generators: [
-                {
-                    name: "fernapi/fern-typescript-node-sdk",
-                    version: "0.7.2",
-                    output: {
-                        location: "local-file-system",
-                        path: "../generated/typescript",
-                    },
-                },
+                // {
+                //     name: "fernapi/fern-typescript-node-sdk",
+                //     version: "0.7.2",
+                //     output: {
+                //         location: "local-file-system",
+                //         path: "../generated/typescript",
+                //     },
+                // },
             ],
         },
     },
