@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
-    "@types/node": "^18.7.18",
+    "@types/node": "^20.7.0",
     "@types/ua-parser-js": "^0.7.36",
     "depcheck": "^1.4.3",
     "eslint": "^8.26.0",

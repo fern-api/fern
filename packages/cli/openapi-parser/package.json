@@ -42,7 +42,7 @@
     "@types/jest": "^29.0.3",
     "@types/js-yaml": "^4.0.6",
     "@types/lodash-es": "^4.17.7",
-    "@types/node": "^18.7.18",
+    "@types/node": "^20.7.0",
     "@types/swagger2openapi": "^7.0.0",
     "depcheck": "^1.4.3",
     "eslint": "^8.26.0",
