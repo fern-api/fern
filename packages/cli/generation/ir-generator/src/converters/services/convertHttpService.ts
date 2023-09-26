@@ -72,11 +72,10 @@ export function convertHttpService({
                 variableResolver,
             });
 
-            const endpointName = file.casingsGenerator.generateName(endpointKey);
-            return {
+            const httpEndpoint = {
                 ...convertDeclaration(endpoint),
-                id: IdGenerator.generateEndpointId(serviceName, endpointName),
-                name: endpointName,
+                id: "",
+                name: file.casingsGenerator.generateName(endpointKey),
                 displayName: endpoint["display-name"],
                 auth: endpoint.auth ?? serviceDefinition.auth,
                 baseUrl: endpoint.url ?? serviceDefinition.url,
@@ -141,6 +140,8 @@ export function convertHttpService({
                           )
                         : [],
             };
+            httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
+            return httpEndpoint;
         }),
     };
 }

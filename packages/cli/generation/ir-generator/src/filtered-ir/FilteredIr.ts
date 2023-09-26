@@ -9,7 +9,7 @@ export interface FilteredIr {
     hasErrorId(type: string): boolean;
     hasService(service: HttpService): boolean;
     hasServiceId(type: string): boolean;
-    hasEndpoint(service: HttpService, endpoint: HttpEndpoint): boolean;
+    hasEndpoint(endpoint: HttpEndpoint): boolean;
     hasSubpackageId(subpackageId: string): boolean;
 }
 
@@ -69,9 +69,8 @@ export class FilteredIrImpl implements FilteredIr {
         return this.services.has(serviceId);
     }
 
-    public hasEndpoint(service: HttpService, endpoint: HttpEndpoint): boolean {
-        const endpointId = IdGenerator.generateEndpointId(service.name, endpoint.name);
-        return this.endpoints.has(endpointId);
+    public hasEndpoint(endpoint: HttpEndpoint): boolean {
+        return this.endpoints.has(endpoint.id);
     }
 
     public hasSubpackage(subpackageId: string): boolean {
