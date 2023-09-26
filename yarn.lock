@@ -2230,7 +2230,7 @@ __metadata:
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/generator-exec-sdk": 0.0.101
+    "@fern-fern/generator-exec-sdk": 0.0.372
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -2808,14 +2808,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/generator-exec-sdk@npm:0.0.101":
-  version: 0.0.101
-  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.101"
+"@fern-fern/generator-exec-sdk@npm:0.0.372":
+  version: 0.0.372
+  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.372"
   dependencies:
     "@types/url-join": 4.0.1
-    axios: ^0.27.2
+    "@ungap/url-search-params": 0.2.2
+    axios: 0.27.2
+    axios-retry: 3.2.0
     url-join: 4.0.1
-  checksum: aa892abc02598bfb32aae640f12f5153f3b6b53e8e9fa4c445859dec311632beaa75fd9b9035aa8c17da09f8f56c329fb2b1da63e83d602cfed814e609daa62a
+  checksum: b7905c3fd5a2128a9134ddc55111036a70bd6dd25b6c8763fa53ff333ee81daa5a764f536effc2eff9bbdc7ec6e9050014dbbc7a5071262b67d9e6327c6de845
   languageName: node
   linkType: hard
 
@@ -4906,6 +4908,15 @@ __metadata:
   version: 0.4.0
   resolution: "asynckit@npm:0.4.0"
   checksum: 7b78c451df768adba04e2d02e63e2d0bf3b07adcd6e42b4cf665cb7ce899bedd344c69a1dcbce355b5f972d597b25aaa1c1742b52cffd9caccb22f348114f6be
+  languageName: node
+  linkType: hard
+
+"axios-retry@npm:3.2.0":
+  version: 3.2.0
+  resolution: "axios-retry@npm:3.2.0"
+  dependencies:
+    is-retry-allowed: ^1.1.0
+  checksum: 411bedb3d2254bd05f9eaf8c9c7a7e14a985ad424f3448d6ec15e2a3584079c3bb99950c07465bdbab1138a5329ccb3e9d22c58db58c83253df4ca3f41e315e6
   languageName: node
   linkType: hard
 
@@ -8765,6 +8776,13 @@ env-cmd@toddbluhm/env-cmd:
     call-bind: "npm:^1.0.2"
     has-tostringtag: "npm:^1.0.0"
   checksum: 362399b33535bc8f386d96c45c9feb04cf7f8b41c182f54174c1a45c9abbbe5e31290bbad09a458583ff6bf3b2048672cdb1881b13289569a7c548370856a652
+  languageName: node
+  linkType: hard
+
+"is-retry-allowed@npm:^1.1.0":
+  version: 1.2.0
+  resolution: "is-retry-allowed@npm:1.2.0"
+  checksum: 50d700a89ae31926b1c91b3eb0104dbceeac8790d8b80d02f5c76d9a75c2056f1bb24b5268a8a018dead606bddf116b2262e5ac07401eb8b8783b266ed22558d
   languageName: node
   linkType: hard
 

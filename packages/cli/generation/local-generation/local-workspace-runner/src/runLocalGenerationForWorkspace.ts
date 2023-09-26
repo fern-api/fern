@@ -48,6 +48,7 @@ export async function runLocalGenerationForWorkspace({
                         keepDocker,
                         context: interactiveTaskContext,
                         irVersionOverride: undefined,
+                        writeSnippets: false,
                     });
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
@@ -97,6 +98,9 @@ export async function runLocalGenerationForSeed({
                         keepDocker,
                         context: interactiveTaskContext,
                         irVersionOverride,
+
+                        // TODO: For now, we only write the snippet.json for non-typescript generators.
+                        writeSnippets: !generatorInvocation.name.includes("typescript"),
                     });
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
@@ -130,6 +134,7 @@ async function writeFilesToDiskAndRunGenerator({
     keepDocker,
     context,
     irVersionOverride,
+    writeSnippets,
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -140,6 +145,7 @@ async function writeFilesToDiskAndRunGenerator({
     keepDocker: boolean;
     context: TaskContext;
     irVersionOverride: string | undefined;
+    writeSnippets: boolean;
 }): Promise<void> {
     const absolutePathToIr = await writeIrToFile({
         workspace,
@@ -163,8 +169,18 @@ async function writeFilesToDiskAndRunGenerator({
     const absolutePathToTmpOutputDirectory = AbsoluteFilePath.of(tmpOutputDirectory.path);
     context.logger.debug("Will write output to: " + absolutePathToTmpOutputDirectory);
 
+    let absolutePathToTmpSnippetJSON = undefined;
+    if (writeSnippets) {
+        const snippetJsonFile = await tmp.file({
+            tmpdir: workspaceTempDir.path,
+        });
+        absolutePathToTmpSnippetJSON = AbsoluteFilePath.of(snippetJsonFile.path);
+        context.logger.debug("Will write snippet.json to: " + absolutePathToTmpSnippetJSON);
+    }
+
     await runGenerator({
         absolutePathToOutput: absolutePathToTmpOutputDirectory,
+        absolutePathToSnippet: absolutePathToTmpSnippetJSON,
         absolutePathToIr,
         absolutePathToWriteConfigJson,
         workspaceName: workspace.name,
@@ -177,6 +193,7 @@ async function writeFilesToDiskAndRunGenerator({
         context,
         absolutePathToLocalOutput,
         absolutePathToTmpOutputDirectory,
+        absolutePathToTmpSnippetJSON,
     });
     await taskHandler.copyGeneratedFiles();
 }

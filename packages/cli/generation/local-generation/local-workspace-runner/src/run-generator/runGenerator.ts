@@ -13,6 +13,7 @@ export declare namespace runGenerator {
 
         absolutePathToIr: AbsoluteFilePath;
         absolutePathToOutput: AbsoluteFilePath;
+        absolutePathToSnippet: AbsoluteFilePath | undefined;
         absolutePathToWriteConfigJson: AbsoluteFilePath;
 
         keepDocker: boolean;
@@ -25,6 +26,7 @@ export async function runGenerator({
     workspaceName,
     organization,
     absolutePathToOutput,
+    absolutePathToSnippet,
     absolutePathToIr,
     absolutePathToWriteConfigJson,
     keepDocker,
@@ -38,19 +40,21 @@ export async function runGenerator({
         `${absolutePathToIr}:${DOCKER_PATH_TO_IR}:ro`,
         `${absolutePathToOutput}:${DOCKER_CODEGEN_OUTPUT_DIRECTORY}`,
     ];
-
     const { config, binds: bindsForGenerators } = getGeneratorConfig({
         generatorInvocation,
         customConfig,
         workspaceName,
         organization,
+        absolutePathToSnippet,
     });
     binds.push(...bindsForGenerators);
 
-    await writeFile(
-        absolutePathToWriteConfigJson,
-        JSON.stringify(await FernGeneratorExecParsing.GeneratorConfig.json(config), undefined, 4)
-    );
+    const parsedConfig = await FernGeneratorExecParsing.GeneratorConfig.json(config);
+    if (!parsedConfig.ok) {
+        throw new Error(`Failed to parse config.json into ${absolutePathToWriteConfigJson}`);
+    }
+
+    await writeFile(absolutePathToWriteConfigJson, JSON.stringify(parsedConfig.value, undefined, 4));
 
     const doesConfigJsonExist = await waitUntilPathExists(absolutePathToWriteConfigJson, 5_000);
     if (!doesConfigJsonExist) {

@@ -1,6 +1,7 @@
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_PATH_TO_IR } from "./constants";
+import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_PATH_TO_IR, DOCKER_PATH_TO_SNIPPET } from "./constants";
 
 export declare namespace getGeneratorConfig {
     export interface Args {
@@ -8,6 +9,7 @@ export declare namespace getGeneratorConfig {
         organization: string;
         customConfig: unknown;
         generatorInvocation: GeneratorInvocation;
+        absolutePathToSnippet: AbsoluteFilePath | undefined;
     }
 
     export interface Return {
@@ -21,6 +23,7 @@ export function getGeneratorConfig({
     customConfig,
     workspaceName,
     organization,
+    absolutePathToSnippet,
 }: getGeneratorConfig.Args): getGeneratorConfig.Return {
     const binds: string[] = [];
     const output = generatorInvocation.outputMode._visit<FernGeneratorExec.GeneratorOutputConfig>({
@@ -37,13 +40,18 @@ export function getGeneratorConfig({
             };
         },
         github: (value) => {
-            return {
+            const outputConfig: FernGeneratorExec.GeneratorOutputConfig = {
                 mode: FernGeneratorExec.OutputMode.github({
                     repoUrl: `https://github.com/${value.owner}/${value.repo}`,
                     version: "0.0.1",
                 }),
                 path: DOCKER_CODEGEN_OUTPUT_DIRECTORY,
             };
+            if (absolutePathToSnippet !== undefined) {
+                binds.push(`${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`);
+                outputConfig.snippetFilepath = DOCKER_PATH_TO_SNIPPET;
+            }
+            return outputConfig;
         },
         _other: () => {
             throw new Error("Output type did not match any of the types supported by Fern");
