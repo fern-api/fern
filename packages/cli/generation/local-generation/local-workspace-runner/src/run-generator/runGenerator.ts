@@ -58,10 +58,12 @@ export async function runGenerator({
     });
     binds.push(...bindsForGenerators);
 
-    await writeFile(
-        absolutePathToWriteConfigJson,
-        JSON.stringify(await FernGeneratorExecParsing.GeneratorConfig.json(config), undefined, 4)
-    );
+    const parsedConfig = await FernGeneratorExecParsing.GeneratorConfig.json(config);
+    if (parsedConfig.ok === false) {
+        throw new Error(`Failed to parse config.json into ${absolutePathToWriteConfigJson}`);
+    }
+
+    await writeFile(absolutePathToWriteConfigJson, JSON.stringify(parsedConfig.value, undefined, 4));
 
     const doesConfigJsonExist = await waitUntilPathExists(absolutePathToWriteConfigJson, 5_000);
     if (!doesConfigJsonExist) {
