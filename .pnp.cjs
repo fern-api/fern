@@ -3773,7 +3773,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.349"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.355"],\
             ["@types/decompress", "npm:4.2.4"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
@@ -4395,11 +4395,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/generator-exec-sdk", [\
-        ["npm:0.0.349", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-generator-exec-sdk-npm-0.0.349-e9b18c1ded-c00e1f5e18.zip/node_modules/@fern-fern/generator-exec-sdk/",\
+        ["npm:0.0.355", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-generator-exec-sdk-npm-0.0.355-6a82181cdc-da38aea518.zip/node_modules/@fern-fern/generator-exec-sdk/",\
           "packageDependencies": [\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.349"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.355"],\
             ["@types/url-join", "npm:4.0.1"],\
+            ["@ungap/url-search-params", "npm:0.2.2"],\
             ["axios", "npm:0.27.2"],\
             ["url-join", "npm:4.0.1"]\
           ],\

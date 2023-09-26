@@ -2230,7 +2230,7 @@ __metadata:
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/generator-exec-sdk": 0.0.349
+    "@fern-fern/generator-exec-sdk": 0.0.355
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -2808,14 +2808,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/generator-exec-sdk@npm:0.0.349":
-  version: 0.0.349
-  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.349"
+"@fern-fern/generator-exec-sdk@npm:0.0.355":
+  version: 0.0.355
+  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.355"
   dependencies:
     "@types/url-join": 4.0.1
-    axios: ^0.27.2
+    "@ungap/url-search-params": 0.2.2
+    axios: 0.27.2
     url-join: 4.0.1
-  checksum: c00e1f5e18eda6a304fc233e763fe229f0c0fe30025d9deeab2608166a4b83bae765b41a1820ccd7901f8ca2fffe8660de2c97b2e8886b8de9a26fd8c2e748a0
+  checksum: da38aea51841b6a0e04dc724f1439f94bfb760d042151ae38f1485139e4c7f32313dcf5040c2349ab889af7cc39a8181f7867fd2a9f71106a7ed10f71a70e1d8
   languageName: node
   linkType: hard
 
