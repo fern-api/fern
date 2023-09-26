@@ -266,7 +266,7 @@ supplement the generated client with custom code.
 ```yaml
 # generators.yml
 config:
-  dependencies:
+  extraDependencies:
     jest: "^29.6.1"
 ```
 
