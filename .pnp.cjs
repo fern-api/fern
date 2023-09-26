@@ -3340,7 +3340,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/validate-npm-package-name", "npm:4.0.0"],\
             ["@types/yargs", "npm:17.0.24"],\
             ["@yarnpkg/esbuild-plugin-pnp", "virtual:e27057136cbc8d6604e8ad844644db08f7b9ebb1ee6412bdae58c0b53531f2ce21503c38b50a31a3b4d352bf8b1c84e4bd18636df76f7a5ae6b0b24714362ee9#npm:3.0.0-rc.14"],\
-            ["ansi-escapes", "npm:5.0.0"],\
+            ["ansi-escapes", "npm:6.2.0"],\
             ["axios", "npm:0.27.2"],\
             ["boxen", "npm:7.0.0"],\
             ["chalk", "npm:5.0.1"],\
@@ -6694,6 +6694,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["ansi-escapes", "npm:5.0.0"],\
             ["type-fest", "npm:1.4.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:6.2.0", {\
+          "packageLocation": "./.yarn/cache/ansi-escapes-npm-6.2.0-acda9c0a5d-f0bc667d5f.zip/node_modules/ansi-escapes/",\
+          "packageDependencies": [\
+            ["ansi-escapes", "npm:6.2.0"],\
+            ["type-fest", "npm:3.13.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -17653,6 +17661,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/type-fest-npm-2.18.0-cd9d170d6e-0737128d9d.zip/node_modules/type-fest/",\
           "packageDependencies": [\
             ["type-fest", "npm:2.18.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:3.13.1", {\
+          "packageLocation": "./.yarn/cache/type-fest-npm-3.13.1-4bd562882d-c06b0901d5.zip/node_modules/type-fest/",\
+          "packageDependencies": [\
+            ["type-fest", "npm:3.13.1"]\
           ],\
           "linkType": "HARD"\
         }]\

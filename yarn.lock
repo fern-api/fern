@@ -1824,7 +1824,7 @@ __metadata:
     "@types/validate-npm-package-name": ^4.0.0
     "@types/yargs": ^17.0.24
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
-    ansi-escapes: ^5.0.0
+    ansi-escapes: ^6.2.0
     axios: ^0.27.2
     boxen: ^7.0.0
     chalk: ^5.0.1
@@ -4685,6 +4685,15 @@ __metadata:
   dependencies:
     type-fest: ^1.0.2
   checksum: d4b5eb8207df38367945f5dd2ef41e08c28edc192dc766ef18af6b53736682f49d8bfcfa4e4d6ecbc2e2f97c258fda084fb29a9e43b69170b71090f771afccac
+  languageName: node
+  linkType: hard
+
+"ansi-escapes@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "ansi-escapes@npm:6.2.0"
+  dependencies:
+    type-fest: ^3.0.0
+  checksum: f0bc667d5f1ededc3ea89b73c34f0cba95473525b07e1290ddfd3fc868c94614e95f3549f5c4fd0c05424af7d3fd298101fb3d9a52a597d3782508b340783bd7
   languageName: node
   linkType: hard
 
@@ -14230,6 +14239,13 @@ env-cmd@toddbluhm/env-cmd:
   version: 2.18.0
   resolution: "type-fest@npm:2.18.0"
   checksum: 0737128d9d77b93793c6ee443e304462a792f5b723a6be035d6cb488c5610a8baa00522805421341c04324c80efba9849885bbfbc5a9623d0672fe8712969f62
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^3.0.0":
+  version: 3.13.1
+  resolution: "type-fest@npm:3.13.1"
+  checksum: c06b0901d54391dc46de3802375f5579868949d71f93b425ce564e19a428a0d411ae8d8cb0e300d330071d86152c3ea86e744c3f2860a42a79585b6ec2fdae8e
   languageName: node
   linkType: hard
 
