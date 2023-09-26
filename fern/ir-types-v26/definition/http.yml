@@ -23,6 +23,7 @@ types:
   HttpEndpoint:
     extends: commons.Declaration
     properties:
+      id: commons.EndpointId
       name: EndpointName
       displayName: optional<string>
       method: HttpMethod

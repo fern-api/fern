@@ -1,11 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import {
-    DeclaredErrorName,
-    DeclaredServiceName,
-    DeclaredTypeName,
-    FernFilepath,
-    HttpEndpoint,
-} from "@fern-fern/ir-sdk/api";
+import { DeclaredErrorName, DeclaredServiceName, DeclaredTypeName, FernFilepath } from "@fern-fern/ir-sdk/api";
 
 export const IdGenerator = {
     generateTypeId: (typeName: Omit<DeclaredTypeName, "typeId">): FernIr.commons.TypeId => {
@@ -24,7 +18,10 @@ export const IdGenerator = {
         const joinedFernFilePath = stringifyFernFilepath(fernFilepath);
         return `subpackage_${joinedFernFilePath}`;
     },
-    generateEndpointId: (declaredServiceName: DeclaredServiceName, httpEndpoint: HttpEndpoint): string => {
+    generateEndpointId: (
+        declaredServiceName: DeclaredServiceName,
+        httpEndpoint: Omit<FernIr.http.HttpEndpoint, "id">
+    ): string => {
         const joinedFernFilePath = stringifyFernFilepath(declaredServiceName.fernFilepath);
         const endpointId = httpEndpoint.name.originalName;
         return `endpoint_${joinedFernFilePath}.${endpointId}`;

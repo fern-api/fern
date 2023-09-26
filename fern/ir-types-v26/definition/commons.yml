@@ -42,6 +42,7 @@ types:
 
   SubpackageId: string
   ServiceId: string
+  EndpointId: string
   TypeId: string
   ErrorId: string
   WebhookGroupId: string

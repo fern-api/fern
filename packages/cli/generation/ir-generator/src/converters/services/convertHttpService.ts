@@ -12,6 +12,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import urlJoin from "url-join";
 import { FernFileContext } from "../../FernFileContext";
+import { IdGenerator } from "../../IdGenerator";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
@@ -50,9 +51,10 @@ export function convertHttpService({
         variableResolver,
     });
 
+    const serviceName = { fernFilepath: file.fernFilepath };
     return {
         availability: convertAvailability(serviceDefinition.availability),
-        name: { fernFilepath: file.fernFilepath },
+        name: serviceName,
         displayName: serviceDefinition["display-name"] ?? undefined,
         basePath: constructHttpPath(serviceDefinition["base-path"]),
         headers:
@@ -70,8 +72,9 @@ export function convertHttpService({
                 variableResolver,
             });
 
-            return {
+            const httpEndpoint = {
                 ...convertDeclaration(endpoint),
+                id: "",
                 name: file.casingsGenerator.generateName(endpointKey),
                 displayName: endpoint["display-name"],
                 auth: endpoint.auth ?? serviceDefinition.auth,
@@ -137,6 +140,8 @@ export function convertHttpService({
                           )
                         : [],
             };
+            httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
+            return httpEndpoint;
         }),
     };
 }

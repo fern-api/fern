@@ -359,9 +359,7 @@ function filterIntermediateRepresentationForAudiences(
             pickBy(intermediateRepresentation.services, (httpService) => filteredIr.hasService(httpService)),
             (httpService) => ({
                 ...httpService,
-                endpoints: httpService.endpoints.filter((httpEndpoint) =>
-                    filteredIr.hasEndpoint(httpService, httpEndpoint)
-                ),
+                endpoints: httpService.endpoints.filter((httpEndpoint) => filteredIr.hasEndpoint(httpEndpoint)),
             })
         ),
         serviceTypeReferenceInfo: filterServiceTypeReferenceInfoForAudiences(
