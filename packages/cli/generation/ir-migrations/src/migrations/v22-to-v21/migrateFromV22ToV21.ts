@@ -26,6 +26,7 @@ export const V22_TO_V21_MIGRATION: IrMigration<
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PYTHON_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.GO_FIBER]: "0.5.0-3-gac7ce7c",
         [GeneratorName.GO_MODEL]: "0.0.14-8-g2fa39f7",
         [GeneratorName.GO_SDK]: "0.0.14-8-g2fa39f7",
     },
