@@ -13,6 +13,7 @@ export const GeneratorName = {
     PYTHON_SDK: "fernapi/fern-python-sdk",
     GO_MODEL: "fernapi/fern-go-model",
     GO_SDK: "fernapi/fern-go-sdk",
+    GO_FIBER: "fernapi/fern-go-fiber",
     OPENAPI: "fernapi/fern-openapi",
     STOPLIGHT: "fernapi/fern-stoplight",
     POSTMAN: "fernapi/fern-postman",
