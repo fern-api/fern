@@ -1941,7 +1941,7 @@ __metadata:
     "@types/decompress": ^4.2.4
     "@types/jest": ^28.1.6
     "@types/jest-specific-snapshot": ^0.5.6
-    "@types/lodash-es": ^4.17.6
+    "@types/lodash-es": ^4.17.9
     "@types/node": ^18.7.18
     "@types/tmp": ^0.2.3
     "@types/webpack-bundle-analyzer": ^4.4.1
@@ -2057,7 +2057,7 @@ __metadata:
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
     "@types/jest": ^28.1.6
-    "@types/lodash-es": ^4.17.6
+    "@types/lodash-es": ^4.17.9
     "@types/node": ^18.7.18
     depcheck: ^1.4.3
     eslint: ^8.23.1
@@ -2323,7 +2323,7 @@ __metadata:
     "@types/decompress": ^4.2.4
     "@types/jest": ^28.1.6
     "@types/jest-specific-snapshot": ^0.5.6
-    "@types/lodash-es": ^4.17.6
+    "@types/lodash-es": ^4.17.9
     "@types/node": ^18.7.18
     "@types/tmp": ^0.2.3
     "@types/webpack-bundle-analyzer": ^4.4.1
@@ -3388,12 +3388,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash-es@npm:^4.17.6":
-  version: 4.17.6
-  resolution: "@types/lodash-es@npm:4.17.6"
+"@types/lodash-es@npm:^4.17.9":
+  version: 4.17.9
+  resolution: "@types/lodash-es@npm:4.17.9"
   dependencies:
     "@types/lodash": "*"
-  checksum: 9bd239dd525086e278821949ce12fbdd4f100a060fed9323fc7ad5661113e1641f28a7ebab617230ed3474680d8f4de705c1928b48252bb684be6ec9eed715db
+  checksum: a2c7ab8da13892f89ab86b61dd9a0125c767b9db7b9bdaac7fd8508c9fa884bbb19a9760dbdc1e7e698e3322b7a8ba03daa80832371da32a8bd42da0920be838
   languageName: node
   linkType: hard
 
@@ -5891,7 +5891,7 @@ __metadata:
     "@types/is-ci": ^3.0.0
     "@types/jest": ^28.1.6
     "@types/jest-specific-snapshot": ^0.5.6
-    "@types/lodash-es": ^4.17.6
+    "@types/lodash-es": ^4.17.9
     "@types/node": ^18.7.18
     "@typescript-eslint/eslint-plugin": ^5.38.1
     "@typescript-eslint/parser": ^5.38.1

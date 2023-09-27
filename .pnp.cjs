@@ -239,7 +239,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/is-ci", "npm:3.0.0"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/jest-specific-snapshot", "npm:0.5.6"],\
-            ["@types/lodash-es", "npm:4.17.6"],\
+            ["@types/lodash-es", "npm:4.17.9"],\
             ["@types/node", "npm:18.7.18"],\
             ["@typescript-eslint/eslint-plugin", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:5.38.1"],\
             ["@typescript-eslint/parser", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:5.38.1"],\
@@ -3581,7 +3581,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/decompress", "npm:4.2.4"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/jest-specific-snapshot", "npm:0.5.6"],\
-            ["@types/lodash-es", "npm:4.17.6"],\
+            ["@types/lodash-es", "npm:4.17.9"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/tmp", "npm:0.2.3"],\
             ["@types/webpack-bundle-analyzer", "npm:4.4.1"],\
@@ -3667,7 +3667,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/contexts", "workspace:packages/contexts"],\
             ["@fern-typescript/resolvers", "workspace:packages/resolvers"],\
             ["@types/jest", "npm:28.1.6"],\
-            ["@types/lodash-es", "npm:4.17.6"],\
+            ["@types/lodash-es", "npm:4.17.9"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.3"],\
             ["eslint", "npm:8.23.1"],\
@@ -3996,7 +3996,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/decompress", "npm:4.2.4"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/jest-specific-snapshot", "npm:0.5.6"],\
-            ["@types/lodash-es", "npm:4.17.6"],\
+            ["@types/lodash-es", "npm:4.17.9"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/tmp", "npm:0.2.3"],\
             ["@types/webpack-bundle-analyzer", "npm:4.4.1"],\
@@ -5140,10 +5140,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/lodash-es", [\
-        ["npm:4.17.6", {\
-          "packageLocation": "./.yarn/cache/@types-lodash-es-npm-4.17.6-fd5abbdc74-9bd239dd52.zip/node_modules/@types/lodash-es/",\
+        ["npm:4.17.9", {\
+          "packageLocation": "./.yarn/cache/@types-lodash-es-npm-4.17.9-256f3fab3d-a2c7ab8da1.zip/node_modules/@types/lodash-es/",\
           "packageDependencies": [\
-            ["@types/lodash-es", "npm:4.17.6"],\
+            ["@types/lodash-es", "npm:4.17.9"],\
             ["@types/lodash", "npm:4.14.182"]\
           ],\
           "linkType": "HARD"\
@@ -8313,7 +8313,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/is-ci", "npm:3.0.0"],\
             ["@types/jest", "npm:28.1.6"],\
             ["@types/jest-specific-snapshot", "npm:0.5.6"],\
-            ["@types/lodash-es", "npm:4.17.6"],\
+            ["@types/lodash-es", "npm:4.17.9"],\
             ["@types/node", "npm:18.7.18"],\
             ["@typescript-eslint/eslint-plugin", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:5.38.1"],\
             ["@typescript-eslint/parser", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:5.38.1"],\
