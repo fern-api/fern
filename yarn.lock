@@ -4002,7 +4002,7 @@ __metadata:
     lint-staged: ^12.4.1
     lodash-es: ^4.17.21
     openapi-types: ^12.0.0
-    prettier: ^2.6.2
+    prettier: ^3.0.3
     simple-progress-webpack-plugin: ^2.0.0
     tmp-promise: ^3.0.3
     typescript: ^4.6.4
@@ -6020,12 +6020,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.6.2":
-  version: 2.7.1
-  resolution: "prettier@npm:2.7.1"
+"prettier@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "prettier@npm:3.0.3"
   bin:
-    prettier: bin-prettier.js
-  checksum: 55a4409182260866ab31284d929b3cb961e5fdb91fe0d2e099dac92eaecec890f36e524b4c19e6ceae839c99c6d7195817579cdffc8e2c80da0cb794463a748b
+    prettier: bin/prettier.cjs
+  checksum: e10b9af02b281f6c617362ebd2571b1d7fc9fb8a3bd17e371754428cda992e5e8d8b7a046e8f7d3e2da1dcd21aa001e2e3c797402ebb6111b5cd19609dd228e0
   languageName: node
   linkType: hard
 
