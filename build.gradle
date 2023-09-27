@@ -12,7 +12,7 @@ buildscript {
 plugins {
     id "com.palantir.consistent-versions" version "2.9.0"
     id "com.palantir.git-version" version "0.14.0"
-    id "org.inferred.processors" version "3.6.0"
+    id "org.inferred.processors" version "3.7.0"
     id "com.jfrog.artifactory" version "4.28.1"
     id "com.palantir.baseline" version "4.145.0"
     id "com.palantir.java-format" version "2.24.0"
