@@ -53,7 +53,7 @@
     "tmp-promise": "^3.0.3",
     "ts-loader": "^9.3.1",
     "typescript": "^4.6.4",
-    "webpack": "^5.72.1",
+    "webpack": "^5.88.2",
     "webpack-cli": "^4.9.2"
   },
   "packageManager": "yarn@3.2.0"
