@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
-    "@babel/preset-env": "^7.19.1",
+    "@babel/preset-env": "^7.22.20",
     "@babel/preset-typescript": "^7.18.6",
     "@types/decompress": "^4.2.4",
     "@types/esutils": "^2.0.0",
