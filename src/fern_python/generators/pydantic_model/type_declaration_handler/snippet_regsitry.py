@@ -1,6 +1,7 @@
 import json
 from typing import Any, Dict, List, Optional
 
+import fern.generator_exec.resources as generator_exec
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST
@@ -15,8 +16,11 @@ class SnippetRegistry:
         ir: ir_types.IntermediateRepresentation,
         context: PydanticGeneratorContext,
     ):
-        self._endpoint_snippets: Dict[str, AST.Expression] = {}
         self._snippets: Dict[ir_types.TypeId, AST.Expression] = {}
+        self._endpoint_snippets: Dict[ir_types.EndpointId, AST.Expression] = {}
+        self._sync_client_endpoint_snippets: Dict[ir_types.EndpointId, AST.Expression] = {}
+        self._async_client_endpoint_snippets: Dict[ir_types.EndpointId, AST.Expression] = {}
+
         self._init_snippets_from_ir(ir, context)
 
     def get_snippet(self, type_id: ir_types.TypeId) -> Optional[AST.Expression]:
@@ -28,23 +32,64 @@ class SnippetRegistry:
         expr = self.get_snippet(type_id)
         if expr is None:
             return None
+        return self._expression_to_snippet_str(expr)
 
+    def get_snippet_for_endpoint(self, endpoint_id: ir_types.EndpointId) -> Optional[AST.Expression]:
+        if endpoint_id in self._endpoint_snippets:
+            return self._endpoint_snippets[endpoint_id]
+        return None
+
+    def register_async_client_endpoint_snippet(
+        self,
+        endpoint_id: ir_types.EndpointId,
+        expr: AST.Expression,
+    ) -> None:
+        self._async_client_endpoint_snippets[endpoint_id] = expr
+
+    def register_sync_client_endpoint_snippet(
+        self,
+        endpoint_id: ir_types.EndpointId,
+        expr: AST.Expression,
+    ) -> None:
+        self._sync_client_endpoint_snippets[endpoint_id] = expr
+
+    def snippets(self) -> Optional[generator_exec.Snippets]:
+        if (
+            len(self._snippets) == 0
+            and len(self._sync_client_endpoint_snippets) == 0
+            and len(self._async_client_endpoint_snippets) == 0
+        ):
+            return None
+
+        types: Dict[generator_exec.TypeId, str] = {}
+        for typeId, expr in self._snippets.items():
+            types[generator_exec.TypeId(typeId.get_as_str())] = self._expression_to_snippet_str(expr)
+
+        endpoints: Dict[generator_exec.EndpointId, generator_exec.EndpointSnippet] = {}
+        for endpointId, sync_expr in self._sync_client_endpoint_snippets.items():
+            endpoints[
+                generator_exec.EndpointId(endpointId.get_as_str())
+            ] = generator_exec.EndpointSnippet.factory.python(
+                value=generator_exec.PythonEndpointSnippet(
+                    sync_client=self._expression_to_snippet_str(sync_expr),
+                    async_client=self._expression_to_snippet_str(self._async_client_endpoint_snippets[endpointId])
+                    if endpointId in self._async_client_endpoint_snippets
+                    else "",
+                ),
+            )
+
+        return generator_exec.Snippets(
+            types=types,
+            endpoints=endpoints,
+        )
+
+    def _expression_to_snippet_str(
+        self,
+        expr: AST.Expression,
+    ) -> str:
         snippet = SourceFileFactory.create_snippet()
         snippet.add_expression(expr)
         return snippet.to_str()
-
-    def get_snippet_for_endpoint(
-        self,
-        serviceId: ir_types.ServiceId,
-        endpoint: ir_types.HttpEndpoint,
-    ) -> Optional[AST.Expression]:
-        key = self._get_endpoint_snippet_key(
-            serviceId=serviceId,
-            endpoint=endpoint,
-        )
-        if key in self._endpoint_snippets:
-            return self._endpoint_snippets[key]
-        return None
 
     def _init_snippets_from_ir(
         self,
@@ -66,13 +111,6 @@ class SnippetRegistry:
                     service=service,
                     endpoint=endpoint,
                 )
-
-    def _get_endpoint_snippet_key(
-        self,
-        serviceId: ir_types.ServiceId,
-        endpoint: ir_types.HttpEndpoint,
-    ) -> str:
-        return f"{serviceId}.{endpoint.name.get_as_name().original_name}"
 
     def _snippet_for_endpoint(
         self,
@@ -195,11 +233,7 @@ class SnippetRegistry:
             ),
         )
         if register:
-            key = self._get_endpoint_snippet_key(
-                serviceId=serviceId,
-                endpoint=endpoint,
-            )
-            self._endpoint_snippets[key] = snippet
+            self._endpoint_snippets[endpoint.id] = snippet
         return snippet
 
     def _snippet_for_inlined_request_body_properties(
@@ -794,6 +828,7 @@ class SnippetRegistry:
             ),
             reference=lambda _: None,
             file_upload=lambda _: None,
+            bytes=lambda _: None,
         )
         if properties is None:
             raise Exception("in-lined request body is referenced but HttpRequestBody is not an in-lined request")

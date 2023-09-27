@@ -49,6 +49,7 @@ class EndpointGenerator:
                         context=context, request_type=request.request_body_type
                     ),
                     file_upload=lambda request: raise_file_upload_unsupported(),
+                    bytes=lambda request: raise_bytes_unsupported(),
                 )
             )
         for path_parameter in service.path_parameters:
@@ -356,6 +357,8 @@ class EndpointGenerator:
             json=lambda json_response: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                 json_response.response_body_type
             ),
+            text=lambda _: AST.TypeHint.str_(),
+            streaming=lambda _: raise_streaming_unsupported(),
         )
 
 
@@ -367,6 +370,14 @@ def convert_http_method_to_fastapi_method_name(http_method: ir_types.HttpMethod)
         patch=lambda: "patch",
         delete=lambda: "delete",
     )
+
+
+def raise_streaming_unsupported() -> Never:
+    raise RuntimeError("streaming is not supported")
+
+
+def raise_bytes_unsupported() -> Never:
+    raise RuntimeError("bytes request is not supported")
 
 
 def raise_file_upload_unsupported() -> Never:

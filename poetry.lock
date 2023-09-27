@@ -180,14 +180,13 @@ wasmer-compiler-cranelift = ">=1.0.0"
 
 [[package]]
 name = "fern-fern-generator-exec-sdk"
-version = "0.0.281"
+version = "0.0.350"
 description = ""
-category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "fern_fern_generator_exec_sdk-0.0.281-py3-none-any.whl", hash = "sha256:1cfee07d89d08eb96f4540e37cc23087f0346281ba3958fb9483d7cac815e6d0"},
-    {file = "fern_fern_generator_exec_sdk-0.0.281.tar.gz", hash = "sha256:77adfea612a2a3e145419e47232701c2853054e33c762a4bdf41a6f8654e045d"},
+    {file = "fern_fern_generator_exec_sdk-0.0.350-py3-none-any.whl", hash = "sha256:334a16ec13db2317dfaa7bfcaeb788f9488bff93f68e11dcf62105bc38573f51"},
+    {file = "fern_fern_generator_exec_sdk-0.0.350.tar.gz", hash = "sha256:eb7425a08488751f620533ce15e39c83ace7c989684a9020ccaff980919d7dce"},
 ]
 
 [package.dependencies]
@@ -203,14 +202,14 @@ reference = "fern-prod"
 
 [[package]]
 name = "fern-fern-ir-model"
-version = "0.0.1841"
+version = "0.0.2922"
 description = ""
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "fern_fern_ir_model-0.0.1841-py3-none-any.whl", hash = "sha256:fdda0f232e7981643e926c6661735b237257a1a1cc0bbd253d0a4a9aad4e5db8"},
-    {file = "fern_fern_ir_model-0.0.1841.tar.gz", hash = "sha256:26348732582f539f49e10372d2846cc9af121625afc85fbc3fced602d4bdc1a5"},
+    {file = "fern_fern_ir_model-0.0.2922-py3-none-any.whl", hash = "sha256:c78f5734f8696219b5a8b588151bc2cabb763625a5ff5a719b9f1b448cd179e2"},
+    {file = "fern_fern_ir_model-0.0.2922.tar.gz", hash = "sha256:45d31ddd66558529e7f06bcc5edc9b87dbcb1e5d69db39f1fbcaf39d0853433e"},
 ]
 
 [package.dependencies]

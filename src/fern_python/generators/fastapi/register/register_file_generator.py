@@ -24,7 +24,9 @@ class RegisterFileGenerator:
             ServiceInitializer(
                 context=context,
                 service=service,
-                is_in_development=service.availability.status == ir_types.AvailabilityStatus.IN_DEVELOPMENT,
+                is_in_development=service.availability.status == ir_types.AvailabilityStatus.IN_DEVELOPMENT
+                if service.availability is not None
+                else False,
             )
             for service in self._context.ir.services.values()
         ]

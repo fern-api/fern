@@ -1,5 +1,4 @@
 import fern.ir.resources as ir_types
-from typing_extensions import Never
 
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
@@ -50,12 +49,11 @@ class EndpointResponseCodeWriter:
             writer.write("yield ")
             writer.write_node(
                 Pydantic.parse_obj_as(
-                    self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                        stream_response.data_event_type
-                    ),
+                    self._get_streaming_response_data_type(stream_response),
                     AST.Expression(Json.loads(AST.Expression(EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE))),
-                )
+                ),
             )
+
         writer.write_line("return")
 
     def _get_iter_lines_method(self, *, is_async: bool) -> str:
@@ -83,6 +81,16 @@ class EndpointResponseCodeWriter:
         )
         writer.write_newline_if_last_line_not()
 
+    def _handle_success_text(
+        self,
+        *,
+        writer: AST.NodeWriter,
+    ) -> None:
+        writer.write("return ")
+        writer.write_node(AST.Expression(f"{EndpointResponseCodeWriter.RESPONSE_VARIABLE}"))
+        writer.write("  # type: ignore ")
+        writer.write_newline_if_last_line_not()
+
     def _handle_success_file_download(self, *, writer: AST.NodeWriter) -> None:
         if self._is_async:
             writer.write("async ")
@@ -103,25 +111,25 @@ class EndpointResponseCodeWriter:
     def _write_status_code_discriminated_response_handler(self, *, writer: AST.NodeWriter) -> None:
         writer.write_line(f"if 200 <= {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.status_code < 300:")
         with writer.indent():
-            if self._endpoint.sdk_response is None:
+            if self._endpoint.response is None:
                 writer.write_line("return")
             else:
-                self._endpoint.sdk_response.visit(
+                self._endpoint.response.visit(
                     json=lambda json_response: self._handle_success_json(
                         writer=writer, json_response=json_response, use_response_json=False
                     ),
-                    maybe_streaming=raise_maybe_streaming_unsupported,
                     streaming=lambda stream_response: self._handle_success_stream(
                         writer=writer, stream_response=stream_response
                     ),
                     file_download=lambda _: self._handle_success_file_download(writer=writer),
+                    text=lambda _: self._handle_success_text(writer=writer),
                 )
 
         # in streaming responses, we need to call read() or aread()
         # before deserializing or httpx will raise ResponseNotRead
-        if self._endpoint.sdk_response is not None and (
-            self._endpoint.sdk_response.get_as_union().type == "streaming"
-            or self._endpoint.sdk_response.get_as_union().type == "fileDownload"
+        if self._endpoint.response is not None and (
+            self._endpoint.response.get_as_union().type == "streaming"
+            or self._endpoint.response.get_as_union().type == "fileDownload"
         ):
             writer.write_line(
                 f"await {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.aread()"
@@ -176,18 +184,18 @@ class EndpointResponseCodeWriter:
 
         writer.write_line(f"if 200 <= {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.status_code < 300:")
         with writer.indent():
-            if self._endpoint.sdk_response is None:
+            if self._endpoint.response is None:
                 writer.write_line("return")
             else:
-                self._endpoint.sdk_response.visit(
+                self._endpoint.response.visit(
                     json=lambda json_response: self._handle_success_json(
                         writer=writer, json_response=json_response, use_response_json=True
                     ),
-                    maybe_streaming=raise_maybe_streaming_unsupported,
                     streaming=lambda stream_response: self._handle_success_stream(
                         writer=writer, stream_response=stream_response
                     ),
                     file_download=lambda _: self._handle_success_file_download(writer=writer),
+                    text=lambda _: self._handle_success_text(writer=writer),
                 )
 
         if self._endpoint.response is None:
@@ -264,8 +272,14 @@ class EndpointResponseCodeWriter:
             json=lambda json_response: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                 json_response.response_body_type
             ),
+            streaming=lambda streaming_response: self._get_streaming_response_data_type(streaming_response),
+            text=lambda _: AST.TypeHint.str_(),
         )
 
-
-def raise_maybe_streaming_unsupported(maybe_streaming_response: ir_types.MaybeStreamingResponse) -> Never:
-    raise RuntimeError("Maybe streaming is not supported")
+    def _get_streaming_response_data_type(self, streaming_response: ir_types.StreamingResponse) -> AST.TypeHint:
+        union = streaming_response.data_event_type.get_as_union()
+        if union.type == "json":
+            return self._context.pydantic_generator_context.get_type_hint_for_type_reference(union.json_)
+        if union.type == "text":
+            return AST.TypeHint.str_()
+        raise RuntimeError(f"{union.type} streaming response is unsupported")

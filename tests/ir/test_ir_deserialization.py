@@ -5,7 +5,7 @@ from fern.ir import IntermediateRepresentation
 
 
 def test_ir_deserialization() -> None:
-    path_to_ir = os.path.join(os.path.dirname(__file__), "fixtures/fern/date/ir.json")
+    path_to_ir = os.path.join(os.path.dirname(__file__), "fixtures/fern/ir.json")
     subprocess.run(
         [
             "npx",
@@ -15,8 +15,6 @@ def test_ir_deserialization() -> None:
             path_to_ir,
             "--language",
             "python",
-            "--api",
-            "date",
         ],
         cwd=os.path.join(
             os.path.dirname(__file__),

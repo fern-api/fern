@@ -44,7 +44,7 @@ class SeedExamples:
         from seed.client import SeedExamples
         from seed.environment import SeedExamplesEnvironment
 
-        client = SeedExamples(token=<"YOUR_TOKEN">, environment=SeedExamplesEnvironment.PRODUCTION)
+        client = SeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION)
         client.echo(request="Hello world!")
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -89,7 +89,7 @@ class AsyncSeedExamples:
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
 
-        client = AsyncSeedExamples(token=<"YOUR_TOKEN">, environment=SeedExamplesEnvironment.PRODUCTION)
+        client = AsyncSeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION)
         await client.echo(request="Hello world!")
         """
         _response = await self._client_wrapper.httpx_client.request(

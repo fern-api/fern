@@ -82,6 +82,7 @@ class EndpointFunctionGenerator:
                 file_upload=lambda file_upload_request: FileUploadRequestBodyParameters(
                     endpoint=self._endpoint, request=file_upload_request, context=self._context
                 ),
+                bytes=lambda _: raise_bytes_unsupported(),  # TODO: We probably just need to wrap AST.TypeHint.bytes().
             )
             if self._endpoint.request_body is not None
             else None
@@ -115,8 +116,8 @@ class EndpointFunctionGenerator:
                     for path_parameter in self._endpoint.all_path_parameters
                 ],
                 named_parameters=named_parameters,
-                return_type=self._get_response_body_type(self._endpoint.sdk_response, self._is_async)
-                if self._endpoint.sdk_response is not None
+                return_type=self._get_response_body_type(self._endpoint.response, self._is_async)
+                if self._endpoint.response is not None
                 else AST.TypeHint.none(),
             ),
             body=self._create_endpoint_body_writer(
@@ -199,10 +200,10 @@ class EndpointFunctionGenerator:
 
             is_streaming = (
                 True
-                if endpoint.sdk_response is not None
+                if endpoint.response is not None
                 and (
-                    endpoint.sdk_response.get_as_union().type == "streaming"
-                    or endpoint.sdk_response.get_as_union().type == "fileDownload"
+                    endpoint.response.get_as_union().type == "streaming"
+                    or endpoint.response.get_as_union().type == "fileDownload"
                 )
                 else False
             )
@@ -352,8 +353,7 @@ class EndpointFunctionGenerator:
         is_async: bool,
     ) -> Optional[str]:
         endpoint_snippet = snippet_registry.get_snippet_for_endpoint(
-            serviceId=serviceId,
-            endpoint=endpoint,
+            endpoint_id=endpoint.id,
         )
         if endpoint_snippet is None:
             return None
@@ -376,6 +376,17 @@ class EndpointFunctionGenerator:
             writer.write_newline_if_last_line_not()
 
         expr = AST.Expression(AST.CodeWriter(write))
+
+        if is_async:
+            snippet_registry.register_async_client_endpoint_snippet(
+                endpoint_id=endpoint.id,
+                expr=expr,
+            )
+        else:
+            snippet_registry.register_sync_client_endpoint_snippet(
+                endpoint_id=endpoint.id,
+                expr=expr,
+            )
 
         snippet = SourceFileFactory.create_snippet()
         snippet.add_expression(expr)
@@ -445,30 +456,36 @@ class EndpointFunctionGenerator:
                 return path_parameter
         raise RuntimeError("Path parameter does not exist: " + path_parameter_name)
 
-    def _get_response_body_type(self, sdk_response: ir_types.SdkResponse, is_async: bool) -> AST.TypeHint:
-        return sdk_response.visit(
-            maybe_streaming=raise_maybe_streaming_unsupported,
+    def _get_response_body_type(self, response: ir_types.HttpResponse, is_async: bool) -> AST.TypeHint:
+        return response.visit(
             file_download=lambda _: AST.TypeHint.async_iterator(AST.TypeHint.bytes())
             if self._is_async
             else AST.TypeHint.iterator(AST.TypeHint.bytes()),
             json=lambda json_response: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                json_response.response_body_type
+                json_response.response_body_type,
             ),
             streaming=lambda stream_response: self._get_streaming_response_body_type(
                 stream_response=stream_response, is_async=is_async
             ),
+            text=lambda _: AST.TypeHint.str_(),
         )
 
     def _get_streaming_response_body_type(
         self, *, stream_response: ir_types.StreamingResponse, is_async: bool
     ) -> AST.TypeHint:
-        streaming_data_event_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-            stream_response.data_event_type
-        )
+        streaming_data_event_type_hint = self._get_streaming_response_data_type(stream_response)
         if is_async:
             return AST.TypeHint.async_iterator(streaming_data_event_type_hint)
         else:
             return AST.TypeHint.iterator(streaming_data_event_type_hint)
+
+    def _get_streaming_response_data_type(self, streaming_response: ir_types.StreamingResponse) -> AST.TypeHint:
+        union = streaming_response.data_event_type.get_as_union()
+        if union.type == "json":
+            return self._context.pydantic_generator_context.get_type_hint_for_type_reference(union.json_)
+        if union.type == "text":
+            return AST.TypeHint.str_()
+        raise RuntimeError(f"{union.type} streaming response is unsupported")
 
     def _get_reference_to_query_parameter(self, query_parameter: ir_types.QueryParameter) -> AST.Expression:
         reference = AST.Expression(self._get_query_parameter_name(query_parameter))
@@ -722,5 +739,6 @@ def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.Typ
     return type_reference
 
 
-def raise_maybe_streaming_unsupported(maybe_streaming_response: ir_types.MaybeStreamingResponse) -> Never:
-    raise RuntimeError("Maybe streaming is not supported")
+# TODO: Add support for bytes.
+def raise_bytes_unsupported() -> Never:
+    raise RuntimeError("bytes request is not supported")

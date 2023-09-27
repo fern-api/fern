@@ -1,0 +1,62 @@
+{
+    "types": {
+        "type_types:MovieId": "\"movie-c06a4ad7\"\n",
+        "type_types:Movie": "from seed import Movie\n\nMovie(id=\"movie-c06a4ad7\", title=\"The Boy and the Heron\", from_=\"Hayao Miyazaki\", rating=8.0)\n",
+        "type_types:ExtendedMovie": "from seed import ExtendedMovie\n\nExtendedMovie(\n    id=\"movie-sda231x\",\n    title=\"Pulp Fiction\",\n    from_=\"Quentin Tarantino\",\n    rating=8.5,\n    cast=[\"John Travolta\", \"Samuel L. Jackson\", \"Uma Thurman\", \"Bruce Willis\"],\n)\n",
+        "type_types:Moment": "import datetime\nimport uuid\n\nfrom seed import Moment\n\nMoment(\n    id=uuid.UUID(\"656f12d6-f592-444c-a1d3-a3cfd46d5b39\"),\n    date=datetime.date.fromisoformat(\"1994-01-01\"),\n    datetime=datetime.datetime.fromisoformat(\"1994-01-01 01:01:01+00:00\"),\n)\n",
+        "type_types:File": "from seed import File\n\nFile(name=\"file.txt\", contents=\"...\")\n",
+        "type_types:Directory": "from seed import Directory, File\n\nDirectory(\n    name=\"root\",\n    files=[File(name=\"file.txt\", contents=\"...\")],\n    directories=[Directory(name=\"tmp\", files=[File(name=\"another_file.txt\", contents=\"...\")])],\n)\n",
+        "type_types:Node": "from seed import Node, Tree\n\nNode(\n    name=\"root\",\n    nodes=[Node(name=\"left\"), Node(name=\"right\")],\n    trees=[Tree(nodes=[Node(name=\"left\"), Node(name=\"right\")])],\n)\n",
+        "type_types:Tree": "from seed import Node, Tree\n\nTree(nodes=[Node(name=\"left\"), Node(name=\"right\")])\n",
+        "type_types:Metadata": "from seed import Metadata_Html\n\nMetadata_Html(value=\"<head>...</head>\")\n",
+        "type_types:Exception": "from seed import Exception_Generic, ExceptionInfo\n\nException_Generic(\n    value=ExceptionInfo(\n        exception_type=\"Unavailable\", exception_message=\"This component is unavailable!\", exception_stacktrace=\"<logs>\"\n    )\n)\n",
+        "type_types:ExceptionInfo": "from seed import ExceptionInfo\n\nExceptionInfo(\n    exception_type=\"Unavailable\", exception_message=\"This component is unavailable!\", exception_stacktrace=\"<logs>\"\n)\n",
+        "type_types:MigrationStatus": "from seed import MigrationStatus\n\nMigrationStatus.RUNNING\n",
+        "type_types:Migration": "from seed import Migration, MigrationStatus\n\nMigration(name=\"001_init\", status=MigrationStatus.RUNNING)\n",
+        "type_types:Request": "from seed import Request\n\nRequest(request={})\n",
+        "type_types:Response": "from seed import Response\n\nResponse(response=\"Initializing...\")\n",
+        "type_types:Test": "from seed import Test_And\n\nTest_And(value=True)\n"
+    },
+    "endpoints": {
+        "endpoint_.echo": {
+            "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.echo(request=\"Hello world!\")\n",
+            "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.echo(request=\"Hello world!\")\n",
+            "type": "python"
+        },
+        "endpoint_file/notification/service.getException": {
+            "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.file.notification.get_exception(notification_id=\"notification-hsy129x\")\n",
+            "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.file.notification.get_exception(notification_id=\"notification-hsy129x\")\n",
+            "type": "python"
+        },
+        "endpoint_file/service.getFile": {
+            "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.file.get_file(filename=\"file.txt\", x_file_api_version=\"0.0.2\")\n",
+            "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.file.get_file(filename=\"file.txt\", x_file_api_version=\"0.0.2\")\n",
+            "type": "python"
+        },
+        "endpoint_health/service.check": {
+            "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.health.check(id=\"id-2sdx82h\")\n",
+            "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.health.check(id=\"id-2sdx82h\")\n",
+            "type": "python"
+        },
+        "endpoint_health/service.ping": {
+            "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.health.ping()\n",
+            "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.health.ping()\n",
+            "type": "python"
+        },
+        "endpoint_service.getMovie": {
+            "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.get_movie(movie_id=\"movie-c06a4ad7\")\n",
+            "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.get_movie(movie_id=\"movie-c06a4ad7\")\n",
+            "type": "python"
+        },
+        "endpoint_service.createMovie": {
+            "sync_client": "from seed import Movie\nfrom seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.create_movie(\n    request=Movie(id=\"movie-c06a4ad7\", title=\"The Boy and the Heron\", from_=\"Hayao Miyazaki\", rating=8.0)\n)\n",
+            "async_client": "from seed import Movie\nfrom seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.create_movie(\n    request=Movie(id=\"movie-c06a4ad7\", title=\"The Boy and the Heron\", from_=\"Hayao Miyazaki\", rating=8.0)\n)\n",
+            "type": "python"
+        },
+        "endpoint_service.getMetadata": {
+            "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.get_metadata(x_api_version=\"0.0.1\", shallow=False, tag=\"development\")\n",
+            "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.get_metadata(x_api_version=\"0.0.1\", shallow=False, tag=\"development\")\n",
+            "type": "python"
+        }
+    }
+}

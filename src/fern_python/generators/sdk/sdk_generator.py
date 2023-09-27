@@ -154,6 +154,12 @@ class SdkGenerator(AbstractGenerator):
 
         context.core_utilities.copy_to_project(project=project)
 
+        self._maybe_write_snippets(
+            context=context,
+            snippet_registry=snippet_registry,
+            project=project,
+        )
+
         output_mode = generator_config.output.mode.get_as_union()
         if output_mode.type == "github":
             request_sent = self._generate_readme(
@@ -314,6 +320,18 @@ pip install --upgrade {project._project_config.package_name}
             async_usage=async_usage,
             requirements=[],
         )
+
+    def _maybe_write_snippets(
+        self,
+        context: SdkGeneratorContext,
+        snippet_registry: SnippetRegistry,
+        project: Project,
+    ) -> None:
+        if context.generator_config.output.snippet_filepath is not None:
+            snippets = snippet_registry.snippets()
+            if snippets is None:
+                return
+            project.add_file(context.generator_config.output.snippet_filepath, snippets.json(indent=4))
 
     def get_sorted_modules(self) -> Sequence[str]:
         # always import types/errors before resources (nested packages)

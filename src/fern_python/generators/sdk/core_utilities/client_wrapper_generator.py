@@ -386,7 +386,7 @@ class ClientWrapperGenerator:
                         header.value_type
                     ),
                     instantiation=AST.Expression(
-                        f'{constructor_parameter_name}=<"YOUR_{header.name.name.screaming_snake_case.safe_name}">',
+                        f'{constructor_parameter_name}="YOUR_{header.name.name.screaming_snake_case.safe_name}"',
                     ),
                     header_key=header.name.wire_value,
                 )
@@ -403,7 +403,7 @@ class ClientWrapperGenerator:
                         header_auth_scheme.value_type
                     ),
                     instantiation=AST.Expression(
-                        f'{constructor_parameter_name}=<"YOUR_{header_auth_scheme.name.name.screaming_snake_case.safe_name}">',
+                        f'{constructor_parameter_name}="YOUR_{header_auth_scheme.name.name.screaming_snake_case.safe_name}"',
                     ),
                     header_key=header_auth_scheme.name.wire_value,
                     header_prefix=header_auth_scheme.prefix,
@@ -421,7 +421,7 @@ class ClientWrapperGenerator:
                     if self._context.ir.sdk_config.is_auth_mandatory
                     else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT),
                     instantiation=AST.Expression(
-                        f'{constructor_parameter_name}=<"YOUR_{bearer_auth_scheme.token.screaming_snake_case.safe_name}">',
+                        f'{constructor_parameter_name}="YOUR_{bearer_auth_scheme.token.screaming_snake_case.safe_name}"',
                     ),
                     getter_method=AST.FunctionDeclaration(
                         name=self._get_token_getter_name(bearer_auth_scheme),
@@ -456,7 +456,7 @@ class ClientWrapperGenerator:
                 if self._context.ir.sdk_config.is_auth_mandatory
                 else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT),
                 instantiation=AST.Expression(
-                    f'{username_constructor_parameter_name}=<"YOUR_{basic_auth_scheme.username.screaming_snake_case.safe_name}">',
+                    f'{username_constructor_parameter_name}="YOUR_{basic_auth_scheme.username.screaming_snake_case.safe_name}"',
                 ),
                 getter_method=AST.FunctionDeclaration(
                     name=self._get_username_getter_name(basic_auth_scheme),
@@ -486,7 +486,7 @@ class ClientWrapperGenerator:
                 if self._context.ir.sdk_config.is_auth_mandatory
                 else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT),
                 instantiation=AST.Expression(
-                    f'{password_constructor_parameter_name}=<"YOUR_{basic_auth_scheme.password.screaming_snake_case.safe_name}">',
+                    f'{password_constructor_parameter_name}="YOUR_{basic_auth_scheme.password.screaming_snake_case.safe_name}"',
                 ),
                 getter_method=AST.FunctionDeclaration(
                     name=self._get_password_getter_name(basic_auth_scheme),

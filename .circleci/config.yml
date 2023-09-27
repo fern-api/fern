@@ -35,8 +35,8 @@ jobs:
             docker build -f ./docker/sdk/Dockerfile -t fernapi/fern-python-sdk:latest .
 
             # Run seed
-            npm install -g @fern-api/seed-cli@0.15.0-rc25
-            seed test --docker fernapi/fern-python-sdk:latest --irVersion v20 --language python --compile-command 'poetry install && poetry run mypy .'
+            npm install -g @fern-api/seed-cli@0.15.0-rc27
+            seed test --docker fernapi/fern-python-sdk:latest --irVersion v26 --language python --compile-command 'poetry install && poetry run mypy .'
 
             git --no-pager diff --exit-code
 
