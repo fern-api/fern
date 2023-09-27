@@ -41,15 +41,14 @@ jobs:
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff --exit-code
-  build-test-and-notify-slack:
+  notify-slack:
     executor:
       name: node/default
     steps:
       - checkout
+      - node/install-packages      
       - run:
-          name: Install dependencies
-          command: npm install
-      - run: npm test
+          command: npm run notify-slack 
       # Do not notify upon a successful build.
       # - slack/notify:
       #     event: pass
@@ -436,6 +435,6 @@ workflows:
               ignore: /.*/
             tags:
               only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
-  build-and-notify-slack:
+  notify:
     jobs:
-      - build-test-and-notify-slack
+      - notify-slack
