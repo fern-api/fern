@@ -9912,10 +9912,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["loader-utils", [\
-        ["npm:1.4.0", {\
-          "packageLocation": "./.yarn/cache/loader-utils-npm-1.4.0-a56254a277-d150b15e7a.zip/node_modules/loader-utils/",\
+        ["npm:1.4.2", {\
+          "packageLocation": "./.yarn/cache/loader-utils-npm-1.4.2-b4537b2f88-eb6fb622ef.zip/node_modules/loader-utils/",\
           "packageDependencies": [\
-            ["loader-utils", "npm:1.4.0"],\
+            ["loader-utils", "npm:1.4.2"],\
             ["big.js", "npm:5.2.2"],\
             ["emojis-list", "npm:3.0.0"],\
             ["json5", "npm:1.0.1"]\
@@ -12318,7 +12318,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["umd-compat-loader", "npm:2.1.2"],\
             ["ast-types", "npm:0.9.14"],\
-            ["loader-utils", "npm:1.4.0"],\
+            ["loader-utils", "npm:1.4.2"],\
             ["recast", "npm:0.11.23"]\
           ],\
           "linkType": "HARD"\
