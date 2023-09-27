@@ -15,7 +15,7 @@
 
 </div>
 
-Fern is an open source toolkit for designing, building, and consuming REST APIs. With Fern, you can generate client libraries, API documentation, and boilerplate for your backend server.
+Fern is an open-source toolkit for designing, building and consuming REST APIs. With Fern, you can generate client libraries, API documentation, and boilerplate for your backend server.
 
 Fern is **fully compatible with OpenAPI.** You can use your existing OpenAPI spec to generate code and documentation with Fern. If you're not a fan of OpenAPI, you can also use Fern's [simpler format](#the-fern-specification) to define your API.
 
@@ -25,7 +25,7 @@ The Fern CLI can generate the following types of artifacts:
 
 ### 🌿 Client libraries & SDKs
 
-Whether you call them client libraries, SDKs, bindings, or wrappers, Fern generates idiomatic SDKs you can use to interact with your APIs. This makes it trivial to keep your SDKs in sync with your backend, and eliminates the need to write the SDKs manually.
+Whether you call them client libraries, SDKs, bindings, or wrappers, Fern generates idiomatic SDKs you can use to interact with your APIs. This makes it trivial to keep your SDKs in sync with your backend and eliminates the need to write the SDKs manually.
 
 Currently, the following languages are supported:
 
@@ -52,13 +52,13 @@ For a walkthrough, check out the [Fern + Express video](https://buildwithfern.co
 
 ### 🌿 Documentation
 
-Fern provides first class support for generating documentation, ranging from [fully featured documentation websites](https://docs.vellum.ai/api-reference/generate) to Postman Collections. This allows you to always keep your documentation, API and Postman collections in sync with ease.
+Fern provides first-class support for generating documentation, ranging from [fully featured documentation websites](https://docs.vellum.ai/api-reference/generate) to Postman Collections. This allows you to always keep your documentation, API, and Postman collections in sync with ease.
 
 Generating API documentation is part of our cloud offering. If you're interested in trying out this service, [get in touch!](mailto:hey@buildwithfern.com)
 
 ## Fern and OpenAPI
 
-We have designed Fern to complement existing OpenAPI toolchains and workflows, rather than replace them. We believe OpenAPI does a good job at as a declarative standard for defining APIs, but at times it is too verbose and complex, which reduces the quality of generated code.
+We have designed Fern to complement existing OpenAPI toolchains and workflows, rather than replace them. We believe OpenAPI does a good job as a declarative standard for defining APIs, but at times it is too verbose and complex, which reduces the quality of generated code.
 
 We've built [our own format](https://buildwithfern.com/docs/definition) that we believe to be easier to work with. Feel free to use either OpenAPI or the Fern specification - the Fern toolchain is fully compatible with both!
 
