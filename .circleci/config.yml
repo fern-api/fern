@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
-  node: circleci/node@5.0.1
+  node: circleci/node@5.0.3
+  slack: circleci/slack@4.10.1
 jobs:
   check:
     docker:
@@ -40,7 +41,24 @@ jobs:
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff --exit-code
-
+  build-test-and-notify-slack:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: npm install
+      - run: npm test
+      # Do not notify upon a successful build.
+      # - slack/notify:
+      #     event: pass
+      #     template: success_tagged_deploy_1
+      - slack/notify:
+          event: fail
+          channel: C05TNCKT09M #builds channel
+          mentions: "@dsinghvi"
+          template: basic_fail_1
   organize-imports:
     docker:
       - image: cimg/node:lts
@@ -418,3 +436,6 @@ workflows:
               ignore: /.*/
             tags:
               only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
+  build-and-notify-slack:
+    jobs:
+      - build-test-and-notify-slack
