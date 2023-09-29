@@ -87,5 +87,8 @@
     "jsonc-parser@2.2.1": {
       "unplugged": true
     }
+  },
+  "dependencies": {
+    "open": "^9.1.0"
   }
 }
