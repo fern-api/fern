@@ -91,6 +91,7 @@ function convertService(
             request: irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
             response: irEndpoint.response != null ? convertResponse(irEndpoint.response) : undefined,
             errors: convertResponseErrors(irEndpoint.errors, ir),
+            errorsV2: convertResponseErrorsV2(irEndpoint.errors, ir),
             examples: irEndpoint.examples.map((example) => convertExampleEndpointCall(example, ir)),
         })
     );
@@ -261,6 +262,65 @@ function convertResponseErrors(
                 statusCode: errorDeclaration.statusCode,
                 description: errorDeclaration.docs ?? undefined,
             });
+        }
+    }
+    return errors;
+}
+
+function convertResponseErrorsV2(
+    irResponseErrors: Ir.http.ResponseErrors,
+    ir: Ir.ir.IntermediateRepresentation
+): FernRegistry.api.v1.register.ErrorDeclarationV2[] {
+    const errors: FernRegistry.api.v1.register.ErrorDeclarationV2[] = [];
+    if (ir.errorDiscriminationStrategy.type === "statusCode") {
+        for (const irResponseError of irResponseErrors) {
+            const errorDeclaration = ir.errors[irResponseError.error.errorId];
+            if (errorDeclaration) {
+                errors.push({
+                    type:
+                        errorDeclaration.type == null
+                            ? undefined
+                            : FernRegistry.api.v1.register.TypeShape.alias(convertTypeReference(errorDeclaration.type)),
+                    statusCode: errorDeclaration.statusCode,
+                    description: errorDeclaration.docs ?? undefined,
+                });
+            }
+        }
+    } else {
+        for (const irResponseError of irResponseErrors) {
+            const errorDeclaration = ir.errors[irResponseError.error.errorId];
+            if (errorDeclaration) {
+                const properties: FernRegistry.api.v1.register.ObjectProperty[] = [
+                    {
+                        key: ir.errorDiscriminationStrategy.discriminant.wireValue,
+                        valueType: FernRegistry.api.v1.register.TypeReference.literal(
+                            FernRegistry.api.v1.register.LiteralType.stringLiteral(
+                                errorDeclaration.discriminantValue.name.originalName
+                            )
+                        ),
+                    },
+                ];
+
+                if (errorDeclaration.type != null) {
+                    properties.push({
+                        key: ir.errorDiscriminationStrategy.contentProperty.wireValue,
+                        valueType: convertTypeReference(errorDeclaration.type),
+                    });
+                }
+
+                errors.push({
+                    type:
+                        errorDeclaration.type == null
+                            ? undefined
+                            : FernRegistry.api.v1.register.TypeShape.object({
+                                  extends: [],
+                                  properties,
+                              }),
+                    statusCode: errorDeclaration.statusCode,
+                    description: errorDeclaration.docs ?? undefined,
+                    name: errorDeclaration.name.name.originalName,
+                });
+            }
         }
     }
     return errors;
