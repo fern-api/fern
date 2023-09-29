@@ -1,8 +1,0 @@
-errors:
-  BlogNotFoundError:
-    status-code: 404
-
-service:
-  base-path: /blog
-  auth: false
-  endpoints: {}

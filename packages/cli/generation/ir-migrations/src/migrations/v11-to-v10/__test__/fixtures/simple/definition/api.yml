@@ -1,6 +1,0 @@
-name: api
-
-auth: ApiKey
-auth-schemes:
-  ApiKey:
-    header: Authorization

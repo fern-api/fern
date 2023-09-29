@@ -1,6 +1,0 @@
-types:
-  MyEnum:
-    enum:
-      - A
-      - B
-      - A

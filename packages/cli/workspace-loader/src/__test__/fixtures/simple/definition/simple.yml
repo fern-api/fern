@@ -1,6 +1,0 @@
-types:
-  MyAlias: string
-  MyDateTime:
-    type: datetime
-    examples:
-      - value: 2023-02-16T16:47:38.259Z

@@ -1,6 +1,0 @@
-types:
-  OtherType:
-    type: string
-    examples:
-      - name: OtherExample1
-        value: hello world

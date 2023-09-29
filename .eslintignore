@@ -1,8 +1,0 @@
-lib
-build
-dist
-.yarn
-.husky
-generated
-bundle.c?js
-.pnp*

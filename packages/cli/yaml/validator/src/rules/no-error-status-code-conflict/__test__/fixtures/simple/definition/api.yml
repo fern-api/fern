@@ -1,4 +1,0 @@
-name: simple-api
-
-error-discrimination:
-  strategy: status-code

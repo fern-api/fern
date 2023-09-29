@@ -1,7 +1,0 @@
-name: api
-
-auth: ApiKey
-auth-schemes:
-  ApiKey:
-    header: X-Api-Key
-    name: apiKey

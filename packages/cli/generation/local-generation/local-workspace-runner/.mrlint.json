@@ -1,9 +1,0 @@
-{
-  "type": "library",
-  "private": true,
-  "rules": {
-    "depcheck": {
-      "ignores": ["@types/tmp"]
-    }
-  }
-}

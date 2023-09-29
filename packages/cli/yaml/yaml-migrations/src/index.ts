@@ -1,1 +1,0 @@
-export { runMigrations } from "./runMigrations";

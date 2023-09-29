@@ -1,9 +1,0 @@
-service:
-  base-path: /
-  auth: false
-  endpoints:
-    stream:
-      path: ""
-      method: POST
-      response-stream:
-        type: string

@@ -1,6 +1,0 @@
-{
-  "extends": "../../shared/tsconfig.shared.json",
-  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
-  "include": ["./src"],
-  "references": [{ "path": "../cli/yaml/json-schema" }, { "path": "../commons/fs-utils" }]
-}

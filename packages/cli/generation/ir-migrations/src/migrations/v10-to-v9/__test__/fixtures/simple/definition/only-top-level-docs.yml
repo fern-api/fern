@@ -1,5 +1,0 @@
-docs: top-level docs
-service:
-  auth: false
-  base-path: /
-  endpoints: {}

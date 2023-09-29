@@ -1,5 +1,0 @@
-service:
-  url: SomeUrl
-  base-path: /
-  auth: false
-  endpoints: {}

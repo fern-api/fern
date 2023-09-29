@@ -1,5 +1,0 @@
-name: my-api-2
-
-error-discrimination:
-  strategy: property
-  property-name: error
