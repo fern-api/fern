@@ -65,7 +65,7 @@ export class GeneratedSdkErrorClassImpl
 
     protected getSuperArguments(context: SdkContext): ts.Expression[] {
         return context.genericAPISdkError.getGeneratedGenericAPISdkError().buildConstructorArguments({
-            message: undefined,
+            message: ts.factory.createStringLiteral(this.errorDeclaration.name.name.originalName),
             statusCode: ts.factory.createNumericLiteral(this.errorDeclaration.statusCode),
             responseBody:
                 this.errorDeclaration.type != null
