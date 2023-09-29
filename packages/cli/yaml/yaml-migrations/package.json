@@ -32,7 +32,6 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/docs-config": "0.0.41",
     "@fern-fern/docs-config": "0.0.46",
     "chalk": "^5.0.1",
     "find-up": "^6.3.0",

@@ -15,18 +15,31 @@ import yaml from "js-yaml";
 import { Migration } from "../../../types/Migration";
 import { GeneratorsConfigurationSchema } from "./generators-config-schemas/GeneratorsConfigurationSchema";
 
+const WORKSPACE_TYPE = (
+    SINGLE_API = "single",
+);
+
 export const migration: Migration = {
     name: "flatten-fern-directory-structure",
     summary: "Flattens your fern directory structure. If you have one API, you no longer need an API folder.",
     run: async ({ context }) => {
         const fernDirectory = await getFernDirectory();
         if (fernDirectory == null) {
-            context.failAndThrow("Fern folder not found. Failed to run migration");
+            context.failAndThrow("Fern directory not found. Failed to run migration");
             return;
         }
         const fernDirectoryContents = await getDirectoryContents(fernDirectory);
     },
 };
+
+
+/**
+ * How to do migrations: 
+ * Single API, No Docs (move api upwards)
+ * Single API, Docs (move api upwards, unnest docs.yml)
+ * Multiple APIs, No Docs (nest apis within a `apis` folder)
+ * Multipe APIs, Docs (nest apis with a `apis` folder, unnest docs.yml)
+ */
 
 const FERN_DIRECTORY = "fern";
 
@@ -82,10 +95,10 @@ async function migrateMoreThanOneAPI({
 }
 
 function convertGeneratorsConfiguration(generatorsConfiguration: GeneratorsConfigurationSchema) {
-    const 
+    const;
     for (const [groupName, groupValue] of Object.entries(generatorsConfiguration.groups ?? {})) {
         if (groupValue.docs != null) {
-            groupValue.docs.domain
+            groupValue.docs.domain;
         }
     }
 }
