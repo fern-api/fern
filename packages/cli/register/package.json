@@ -35,7 +35,7 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/ir-sdk": "0.0.2921",
-    "@fern-fern/registry-node": "0.24.1-8-g2681377",
+    "@fern-fern/registry-node": "0.26.0-1-g7cf6a78",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {

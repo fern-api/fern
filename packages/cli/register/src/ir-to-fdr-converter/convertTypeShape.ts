@@ -71,6 +71,7 @@ export function convertTypeShape(irType: Ir.types.Type): FernRegistry.api.v1.reg
             return FernRegistry.api.v1.register.TypeShape.undiscriminatedUnion({
                 variants: union.members.map((variant): FernRegistry.api.v1.register.UndiscriminatedUnionVariant => {
                     return {
+                        typeName: variant.type.type === "named" ? variant.type.name.originalName : undefined,
                         description: variant.docs ?? undefined,
                         type: convertTypeReference(variant.type),
                     };
