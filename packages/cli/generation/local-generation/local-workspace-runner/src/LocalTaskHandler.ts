@@ -104,10 +104,7 @@ export class LocalTaskHandler {
         if (firstLocalOutputItem.endsWith(".zip") && remaininglocalOutputItems.length === 0) {
             await decompress(
                 join(this.absolutePathToTmpOutputDirectory, RelativeFilePath.of(firstLocalOutputItem)),
-                this.absolutePathToLocalOutput,
-                {
-                    strip: 1,
-                }
+                this.absolutePathToLocalOutput
             );
         } else {
             await cp(this.absolutePathToTmpOutputDirectory, this.absolutePathToLocalOutput, { recursive: true });
