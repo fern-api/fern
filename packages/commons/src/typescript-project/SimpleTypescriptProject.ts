@@ -1,6 +1,7 @@
 import produce from "immer";
 import yaml from "js-yaml";
 import { IPackageJson } from "package-json-type";
+import sortPackageJson from "sort-package-json";
 import { CompilerOptions, ModuleKind, ModuleResolutionKind, ScriptTarget } from "ts-morph";
 import { DependencyType, PackageDependencies } from "../dependency-manager/DependencyManager";
 import { NpmPackage } from "../NpmPackage";
@@ -157,7 +158,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
             };
         });
 
-        await this.writeFileToVolume("package.json", JSON.stringify(packageJson, undefined, 4));
+        await this.writeFileToVolume("package.json", JSON.stringify(sortPackageJson(packageJson), undefined, 4));
     }
 
     private getDevDependencies(): Record<string, string> {

@@ -21,9 +21,7 @@
     "organize-imports": "organize-imports-cli",
     "organize-imports:fix": "yarn organize-imports packages/**/tsconfig.json",
     "organize-imports:check": "yarn organize-imports:all --list-different",
-    "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore",
-    "format:all": "yarn format \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
+    "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
     "depcheck": "yarn workspaces foreach --verbose --parallel run depcheck",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
     "add-workspace": "yarn mrlint add-workspace"

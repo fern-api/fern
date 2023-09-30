@@ -30,7 +30,7 @@ module.exports = {
     env: {
         "jest/globals": true,
     },
-    ignorePatterns: ["*.js"],
+    ignorePatterns: ["*.js", "seed/**"],
     rules: {
         "linebreak-style": ["error", "unix"],
         quotes: [
