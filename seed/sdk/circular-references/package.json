@@ -1,5 +1,7 @@
 {
+    "name": "",
     "version": "0.0.1",
+    "private": false,
     "repository": "https://github.com/fern-api/seed-typescript",
     "main": "./index.js",
     "types": "./index.d.ts",

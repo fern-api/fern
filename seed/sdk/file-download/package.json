@@ -1,5 +1,7 @@
 {
+    "name": "",
     "version": "0.0.1",
+    "private": false,
     "repository": "https://github.com/fern-api/seed-typescript",
     "main": "./index.js",
     "types": "./index.d.ts",
@@ -9,8 +11,9 @@
         "prepack": "cp -rv dist/. ."
     },
     "dependencies": {
+        "axios": "0.27.2",
         "@ungap/url-search-params": "0.2.2",
-        "axios": "0.27.2"
+        "axios-retry": "3.2.0"
     },
     "devDependencies": {
         "@types/node": "17.0.33",

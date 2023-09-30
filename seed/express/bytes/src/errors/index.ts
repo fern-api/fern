@@ -1,0 +1,1 @@
+export { SeedBytesError } from "./SeedBytesError";
