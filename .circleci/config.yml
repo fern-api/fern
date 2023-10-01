@@ -74,7 +74,7 @@ jobs:
       - store_test_results: { path: ~/junit }
       - store_artifacts: { path: ~/artifacts }
 
-  seed-test:
+  seed-sdk-test:
     machine:
       image: ubuntu-2004:current
     environment:
@@ -90,50 +90,52 @@ jobs:
       - run:
           name: Install Seed
           command: |
-            npm install -g @fern-api/seed-cli@0.15.0-rc15-1-g7cf91822 
+            npm install -g @fern-api/seed-cli@0.15.0-rc31 
             ./gradlew :client-generator:dockerTagLatest
-            seed test --docker java-client:latest --irVersion v25 --language java --compile-command './gradlew compileJava'
+            seed test --workspace sdk --parallel 15
             git --no-pager diff --exit-code
 
-  build:
+  seed-spring-test:
     machine:
       image: ubuntu-2004:current
     environment:
       CIRCLE_TEST_REPORTS: /home/circleci/junit
       CIRCLE_ARTIFACTS: /home/circleci/artifacts
-      _JAVA_OPTIONS: -Dorg.gradle.internal.launcher.welcomeMessageEnabled=false -Xmx8192m
-      CI: true
-      TERM: dumb
-    steps:
-      - attach_workspace: { at: /home/circleci }
-      - restore_cache: { key: 'gradle-wrapper-v2-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}' }
-      - restore_cache: { key: 'unit-test-gradle-cache-v2-{{ checksum "versions.props" }}-{{ checksum "build.gradle" }}' }
-      - run:
-          name: Install Fern
-          command: |
-            npm install -g fern-api
-      - run: docker network prune -f
-      - run: ./gradlew --stacktrace build -x test -x check
-      - run:
-          command: mkdir -p ~/junit && find . -type f -regex ".*/build/.*TEST.*xml" -exec cp --parents {} ~/junit/ \; || true
-          when: always
-      - store_test_results: { path: ~/junit }
-      - store_artifacts: { path: ~/artifacts }
-
-  publish-jars:
-    docker: [ { image: 'cimg/openjdk:11.0.10-node' } ]
-    environment:
       GRADLE_OPTS: -Dorg.gradle.jvmargs='-XX:MaxMetaspaceSize=256m' -Dorg.gradle.workers.max=4
       _JAVA_OPTIONS: -XX:ActiveProcessorCount=4 -Xmx1177m -XX:MaxMetaspaceSize=512m -XX:ErrorFile=/home/circleci/artifacts/hs_err_pid%p.log -XX:HeapDumpPath=/home/circleci/artifacts
       TERM: dumb
-    resource_class: small
     steps:
       - attach_workspace: { at: /home/circleci }
       - restore_cache: { key: 'gradle-wrapper-v2-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}' }
       - restore_cache: { key: 'unit-test-gradle-cache-v2-{{ checksum "versions.props" }}-{{ checksum "build.gradle" }}' }
       - run:
-          command: ./gradlew  publish
-          name: Publish utils jars
+          name: Install Seed
+          command: |
+            npm install -g @fern-api/seed-cli@0.15.0-rc31
+            ./gradlew :spring-server-generator:dockerTagLatest
+            seed test --workspace spring --parallel 15
+            git --no-pager diff --exit-code
+
+  seed-model-test:
+    machine:
+      image: ubuntu-2004:current
+    environment:
+      CIRCLE_TEST_REPORTS: /home/circleci/junit
+      CIRCLE_ARTIFACTS: /home/circleci/artifacts
+      GRADLE_OPTS: -Dorg.gradle.jvmargs='-XX:MaxMetaspaceSize=256m' -Dorg.gradle.workers.max=4
+      _JAVA_OPTIONS: -XX:ActiveProcessorCount=4 -Xmx1177m -XX:MaxMetaspaceSize=512m -XX:ErrorFile=/home/circleci/artifacts/hs_err_pid%p.log -XX:HeapDumpPath=/home/circleci/artifacts
+      TERM: dumb
+    steps:
+      - attach_workspace: { at: /home/circleci }
+      - restore_cache: { key: 'gradle-wrapper-v2-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}' }
+      - restore_cache: { key: 'unit-test-gradle-cache-v2-{{ checksum "versions.props" }}-{{ checksum "build.gradle" }}' }
+      - run:
+          name: Install Seed
+          command: |
+            npm install -g @fern-api/seed-cli@0.15.0-rc31
+            ./gradlew :model-generator:dockerTagLatest
+            seed test --workspace model --parallel 15
+            git --no-pager diff --exit-code
 
   publish-docker:
     machine:
@@ -187,41 +189,29 @@ workflows:
           filters: { tags: { only: /.*/ } }
           context: jfrog
 
-      - seed-test:
+      - seed-sdk-test:
           requires: [ compile ]
           filters: { tags: { only: /.*/ } }
-          context: jfrog
+
+      - seed-model-test:
+          requires: [ compile ]
+          filters: { tags: { only: /.*/ } }
+
+      - seed-spring-test:
+          requires: [ compile ]
+          filters: { tags: { only: /.*/ } }
 
       - check:
           requires: [ compile ]
           filters: { tags: { only: /.*/ } }
           context: jfrog
 
-      - build:
-          requires: [ compile ]
-          filters: { tags: { only: /.*/ } }
-          context:
-            - jfrog
-            - npm
-
       - publish-docker:
-          requires: [ check, unit-test, build, seed-test ]
+          requires: [ check, unit-test, seed-sdk-test, seed-model-test, seed-spring-test ]
           filters:
             branches:
               only: main
             tags:
               only: /.*/
           context:
-            - docker-hub
-
-      - publish-jars:
-          requires: [ check, unit-test, build, seed-test ]
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only:
-                - /.*/
-          context:
-            - fern-maven
             - docker-hub

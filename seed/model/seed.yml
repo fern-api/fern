@@ -1,0 +1,4 @@
+irVersion: v25
+docker: java-model:latest
+language: java
+generatorType: Model

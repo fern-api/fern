@@ -1,0 +1,4 @@
+irVersion: v25
+docker: java-client:latest
+language: java
+generatorType: SDK

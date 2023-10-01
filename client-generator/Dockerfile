@@ -1,4 +1,5 @@
-FROM gradle:7.4.2-jdk11-alpine
+# Apple Silicon: FROM bitnami/gradle:latest
+FROM bitnami/gradle:latest
 
 ARG BUILD_VERSION
 ENV VERSION=$BUILD_VERSION

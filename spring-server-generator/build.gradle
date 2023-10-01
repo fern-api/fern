@@ -1,7 +1,6 @@
 plugins {
     id 'java-library-distribution'
     id "com.palantir.docker" version "0.33.0"
-    id "org.unbroken-dome.test-sets" version "4.0.0"
     id 'java'
 }
 
@@ -40,21 +39,3 @@ docker {
 task dockerTagVersion {
     dependsOn ":spring-server-generator:dockerTag${project.version}"
 }
-
-testSets {
-    eteTest
-}
-
-eteTest {
-    useJUnitPlatform()
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
-}
-
-task deleteSnapshot(type: Exec) {
-    commandLine 'rm', '-rf', 'src/eteTest/java/com/fern/java/spring/__snapshots__/SpringGeneratorEteTest.snap'
-}
-
-rootProject.tasks.build.dependsOn eteTest
-tasks.eteTest.dependsOn ':spring-server-generator:dockerTagLatest'

@@ -1,0 +1,4 @@
+irVersion: v25
+docker: java-spring:latest
+language: java
+generatorType: Server
