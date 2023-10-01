@@ -2563,6 +2563,8 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.290
+    "@fern-fern/seed-config": 0.0.2
+    "@types/find-up": ^4.0.0
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/yargs": ^17.0.24
@@ -2572,6 +2574,7 @@ __metadata:
     env-cmd: toddbluhm/env-cmd
     esbuild: ^0.15.7
     eslint: ^8.26.0
+    find-up: ^6.3.0
     jest: ^29.4.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -3020,6 +3023,13 @@ __metadata:
     js-base64: 3.7.2
     url-join: 4.0.1
   checksum: 9ab8b5b3e714756733a5a9688a142a88a592f1ac75fe6616c0342056d233265e217871881074b38c89d4c24fcb59966c0cd233cdb3c3f37b93298775f631ab21
+  languageName: node
+  linkType: hard
+
+"@fern-fern/seed-config@npm:0.0.2":
+  version: 0.0.2
+  resolution: "@fern-fern/seed-config@npm:0.0.2"
+  checksum: 26997d09341edeb344427fade63158bd08266712d68729cb1274622811ce79b9a9c02e38f3fbd1f49d9676d8d2e73028a5aaec65c8cc20f348fad76551225363
   languageName: node
   linkType: hard
 
@@ -3802,6 +3812,15 @@ __metadata:
     "@types/qs": "*"
     "@types/serve-static": "*"
   checksum: b4acd8a836d4f6409cdf79b12d6e660485249b62500cccd61e7997d2f520093edf77d7f8498ca79d64a112c6434b6de5ca48039b8fde2c881679eced7e96979b
+  languageName: node
+  linkType: hard
+
+"@types/find-up@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@types/find-up@npm:4.0.0"
+  dependencies:
+    find-up: "*"
+  checksum: de458be8f01af84d10902add813ce369e8e92aeeece28f717d8bb2117889bc27b701c6f80876abfee3fcbed54e8f98c39fbd304a2a3e7507c288f83867260b28
   languageName: node
   linkType: hard
 
@@ -7615,6 +7634,16 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"find-up@npm:*, find-up@npm:^6.3.0":
+  version: 6.3.0
+  resolution: "find-up@npm:6.3.0"
+  dependencies:
+    locate-path: ^7.1.0
+    path-exists: ^5.0.0
+  checksum: 9a21b7f9244a420e54c6df95b4f6fc3941efd3c3e5476f8274eb452f6a85706e7a6a90de71353ee4f091fcb4593271a6f92810a324ec542650398f928783c280
+  languageName: node
+  linkType: hard
+
 "find-up@npm:^4.0.0, find-up@npm:^4.1.0":
   version: 4.1.0
   resolution: "find-up@npm:4.1.0"
@@ -7632,16 +7661,6 @@ env-cmd@toddbluhm/env-cmd:
     locate-path: ^6.0.0
     path-exists: ^4.0.0
   checksum: 07955e357348f34660bde7920783204ff5a26ac2cafcaa28bace494027158a97b9f56faaf2d89a6106211a8174db650dd9f503f9c0d526b1202d5554a00b9095
-  languageName: node
-  linkType: hard
-
-"find-up@npm:^6.3.0":
-  version: 6.3.0
-  resolution: "find-up@npm:6.3.0"
-  dependencies:
-    locate-path: ^7.1.0
-    path-exists: ^5.0.0
-  checksum: 9a21b7f9244a420e54c6df95b4f6fc3941efd3c3e5476f8274eb452f6a85706e7a6a90de71353ee4f091fcb4593271a6f92810a324ec542650398f928783c280
   languageName: node
   linkType: hard
 

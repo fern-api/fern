@@ -4130,6 +4130,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.290"],\
+            ["@fern-fern/seed-config", "npm:0.0.2"],\
+            ["@types/find-up", "npm:4.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/yargs", "npm:17.0.24"],\
@@ -4139,6 +4141,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["env-cmd", "https://github.com/toddbluhm/env-cmd.git#commit=8f35b71651f6a78710308ff38ab30896ea72ee8b"],\
             ["esbuild", "npm:0.15.7"],\
             ["eslint", "npm:8.26.0"],\
+            ["find-up", "npm:6.3.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.5.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
@@ -4661,6 +4664,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["axios", "npm:0.27.2"],\
             ["js-base64", "npm:3.7.2"],\
             ["url-join", "npm:4.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fern-fern/seed-config", [\
+        ["npm:0.0.2", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-seed-config-npm-0.0.2-9a3052fcf5-26997d0934.zip/node_modules/@fern-fern/seed-config/",\
+          "packageDependencies": [\
+            ["@fern-fern/seed-config", "npm:0.0.2"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -5544,6 +5556,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.7.18"],\
             ["@types/qs", "npm:6.9.7"],\
             ["@types/range-parser", "npm:1.2.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/find-up", [\
+        ["npm:4.0.0", {\
+          "packageLocation": "./.yarn/cache/@types-find-up-npm-4.0.0-7bbcc082c1-de458be8f0.zip/node_modules/@types/find-up/",\
+          "packageDependencies": [\
+            ["@types/find-up", "npm:4.0.0"],\
+            ["find-up", "npm:6.3.0"]\
           ],\
           "linkType": "HARD"\
         }]\

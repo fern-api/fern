@@ -1,8 +1,8 @@
-import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { CONSOLE_LOGGER, LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
-import { FIXTURES, runTests } from "./commands/test/test";
+import { FIXTURES, testWorkspace } from "./commands/test/testWorkspace";
+import { loadSeedWorkspaces } from "./loadSeedWorkspaces";
 
 void tryRunCli();
 
@@ -22,33 +22,18 @@ function addTestCommand(cli: Argv) {
         "Run all snapshot tests",
         (yargs) =>
             yargs
-                .option("irVersion", {
+                .option("workspace", {
                     type: "string",
-                    demandOption: false,
                 })
-                .option("language", {
-                    type: "string",
-                    choices: Object.values(GenerationLanguage),
-                    demandOption: true,
-                })
-                .option("parallel-dockers", {
+                .option("parallel", {
                     type: "number",
                     default: 4,
-                })
-                .option("docker", {
-                    type: "string",
-                    demandOption: true,
                 })
                 .option("fixture", {
                     type: "string",
                     choices: Object.values(FIXTURES),
                     demandOption: false,
                     description: "Runs on all fixtures if not provided",
-                })
-                .options("compile-command", {
-                    type: "string",
-                    demandOption: false,
-                    description: "User inputted command to compile generated code with",
                 })
                 .option("update", {
                     type: "boolean",
@@ -59,26 +44,31 @@ function addTestCommand(cli: Argv) {
                 .option("log-level", {
                     default: LogLevel.Info,
                     choices: LOG_LEVELS,
-                })
-                .option("output-directory", {
-                    type: "string",
-                    alias: "output-dir",
-                    description:
-                        "The output directory of the generated code, useful for generators with multiple dockers",
-                    demandOption: false,
-                    default: "seed",
                 }),
         async (argv) => {
-            const parsedDockerImage = validateAndParseDockerImage(argv.docker);
-            await runTests({
+            const workspaces = await loadSeedWorkspaces();
+
+            const filteredWorkspace = workspaces.filter((workspace) => {
+                return workspace.workspaceName === argv.workspace;
+            });
+
+            if (filteredWorkspace[0] == null) {
+                throw new Error(`Failed to find workspace ${argv.workspace}`);
+            }
+
+            const workspace = filteredWorkspace[0];
+
+            const parsedDockerImage = validateAndParseDockerImage(workspace.workspaceConfig.docker);
+            await testWorkspace({
+                workspace,
                 fixtures: argv.fixture != null ? [argv.fixture] : Object.values(FIXTURES),
-                irVersion: argv.irVersion,
-                language: argv.language,
+                irVersion: workspace.workspaceConfig.irVersion,
+                language: workspace.workspaceConfig.language,
                 docker: parsedDockerImage,
-                compileCommand: argv["compile-command"],
+                compileCommand: undefined,
                 logLevel: argv["log-level"],
-                outputDir: argv.outputDirectory,
-                numDockers: argv.parallelDockers,
+                outputDir: "",
+                numDockers: argv.parallel,
             });
         }
     );
