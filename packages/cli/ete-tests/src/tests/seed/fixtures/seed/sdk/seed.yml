@@ -1,0 +1,12 @@
+irVersion: v20
+docker: fernapi/fern-python-sdk:0.4.0-rc0
+language: python
+generatorType: SDK
+fixtures: 
+  exhaustive: 
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        client_class_name: Seed
+      outputFolder: custom-client-class
+  

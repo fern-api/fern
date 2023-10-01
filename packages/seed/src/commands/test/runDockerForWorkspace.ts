@@ -18,6 +18,7 @@ export async function runDockerForWorkspace({
     language,
     workspace,
     taskContext,
+    customConfig,
     irVersion,
 }: {
     absolutePathToOutput: AbsoluteFilePath;
@@ -25,6 +26,7 @@ export async function runDockerForWorkspace({
     language: GenerationLanguage;
     workspace: FernWorkspace;
     taskContext: TaskContext;
+    customConfig: unknown;
     irVersion?: string;
 }): Promise<void> {
     const publishInfo = getPublishInfo(language);
@@ -36,7 +38,7 @@ export async function runDockerForWorkspace({
             {
                 name: docker.name,
                 version: docker.version,
-                config: undefined,
+                config: customConfig,
                 outputMode: FernFiddle.remoteGen.OutputMode.github({
                     repo: `seed-${language}`,
                     owner: "fern-api",

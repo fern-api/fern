@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, cwd, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { CONSOLE_LOGGER, LogLevel } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
@@ -7,6 +7,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import path from "path";
 import { ParsedDockerName } from "../../cli";
+import { SeedWorkspace } from "../../loadSeedWorkspaces";
 import { Semaphore } from "../../Semaphore";
 import { runDockerForWorkspace } from "./runDockerForWorkspace";
 import { TaskContextFactory } from "./TaskContextFactory";
@@ -44,41 +45,65 @@ interface TestFailure {
     fixture: string;
 }
 
-export async function runTests({
+export async function testWorkspace({
+    workspace,
     irVersion,
     language,
     fixtures,
     docker,
     compileCommand,
     logLevel,
-    outputDir,
     numDockers,
 }: {
+    workspace: SeedWorkspace;
     irVersion: string | undefined;
     language: GenerationLanguage;
     fixtures: string[];
     docker: ParsedDockerName;
     compileCommand: string | undefined;
     logLevel: LogLevel;
-    outputDir: string;
     numDockers: number;
 }): Promise<void> {
     const lock = new Semaphore(numDockers);
     const taskContextFactory = new TaskContextFactory(logLevel);
     const testCases = [];
     for (const fixture of fixtures) {
-        testCases.push(
-            acquireLocksAndRunTest({
-                lock,
-                irVersion,
-                language,
-                fixture,
-                docker,
-                compileCommand,
-                taskContext: taskContextFactory.create(fixture),
-                outputDir,
-            })
-        );
+        const fixtureConfig = workspace.workspaceConfig.fixtures?.[fixture];
+        if (fixtureConfig != null) {
+            for (const fixtureConfigInstance of fixtureConfig) {
+                testCases.push(
+                    acquireLocksAndRunTest({
+                        lock,
+                        irVersion,
+                        language,
+                        fixture,
+                        docker,
+                        compileCommand,
+                        customConfig: fixtureConfigInstance.customConfig,
+                        taskContext: taskContextFactory.create(fixture),
+                        outputDir: join(
+                            workspace.absolutePathToWorkspace,
+                            RelativeFilePath.of(fixture),
+                            RelativeFilePath.of(fixtureConfigInstance.outputFolder)
+                        ),
+                    })
+                );
+            }
+        } else {
+            testCases.push(
+                acquireLocksAndRunTest({
+                    lock,
+                    irVersion,
+                    language,
+                    fixture,
+                    docker,
+                    compileCommand,
+                    customConfig: undefined,
+                    taskContext: taskContextFactory.create(fixture),
+                    outputDir: join(workspace.absolutePathToWorkspace, RelativeFilePath.of(fixture)),
+                })
+            );
+        }
     }
     const results = await Promise.all(testCases);
     const failedFixtures = results.filter((res) => res.type === "failure").map((res) => res.fixture);
@@ -99,6 +124,7 @@ export async function acquireLocksAndRunTest({
     language,
     fixture,
     docker,
+    customConfig,
     compileCommand,
     taskContext,
     outputDir,
@@ -108,6 +134,7 @@ export async function acquireLocksAndRunTest({
     language: GenerationLanguage;
     fixture: string;
     docker: ParsedDockerName;
+    customConfig: unknown;
     compileCommand: string | undefined;
     taskContext: TaskContext;
     outputDir: string;
@@ -120,6 +147,7 @@ export async function acquireLocksAndRunTest({
         irVersion,
         language,
         docker,
+        customConfig,
         compileCommand,
         taskContext,
         outputDir,
@@ -134,6 +162,7 @@ async function testWithWriteToDisk({
     irVersion,
     language,
     docker,
+    customConfig,
     compileCommand,
     taskContext,
     outputDir,
@@ -142,6 +171,7 @@ async function testWithWriteToDisk({
     irVersion: string | undefined;
     language: GenerationLanguage;
     docker: ParsedDockerName;
+    customConfig: unknown;
     compileCommand: string | undefined;
     taskContext: TaskContext;
     outputDir: string;
@@ -180,6 +210,7 @@ async function testWithWriteToDisk({
             docker,
             workspace: workspace.workspace,
             language,
+            customConfig,
             taskContext,
             irVersion,
         });
