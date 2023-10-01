@@ -2,6 +2,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernSeedConfig } from "@fern-fern/seed-config";
 import { findUp } from "find-up";
 import { readdir, readFile } from "fs/promises";
+import yaml from "js-yaml";
 
 export interface SeedWorkspace {
     workspaceName: string;
@@ -35,7 +36,8 @@ export async function loadSeedWorkspaces(): Promise<SeedWorkspace[]> {
         const seedConfig = await readFile(join(absolutePathToWorkspace, RelativeFilePath.of(SEED_CONFIG_FILENAME)));
         workspaces.push({
             absolutePathToWorkspace,
-            workspaceConfig: JSON.parse(seedConfig.toString()),
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            workspaceConfig: yaml.load(seedConfig.toString()) as any as FernSeedConfig.SeedWorkspaceConfiguration,
             workspaceName: workspace,
         });
     }

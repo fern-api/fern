@@ -67,7 +67,6 @@ function addTestCommand(cli: Argv) {
                 docker: parsedDockerImage,
                 compileCommand: undefined,
                 logLevel: argv["log-level"],
-                outputDir: "",
                 numDockers: argv.parallel,
             });
         }
