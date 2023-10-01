@@ -5,6 +5,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
+import { GeneratorType } from "@fern-fern/seed-config/api";
 import path from "path";
 import { ParsedDockerName } from "../../cli";
 import { SeedWorkspace } from "../../loadSeedWorkspaces";
@@ -46,6 +47,7 @@ interface TestFailure {
 }
 
 export async function testWorkspace({
+    generatorType,
     workspace,
     irVersion,
     language,
@@ -56,6 +58,7 @@ export async function testWorkspace({
     numDockers,
 }: {
     workspace: SeedWorkspace;
+    generatorType: GeneratorType;
     irVersion: string | undefined;
     language: GenerationLanguage;
     fixtures: string[];
@@ -74,6 +77,7 @@ export async function testWorkspace({
                 testCases.push(
                     acquireLocksAndRunTest({
                         lock,
+                        generatorType,
                         irVersion,
                         language,
                         fixture,
@@ -94,6 +98,7 @@ export async function testWorkspace({
                 acquireLocksAndRunTest({
                     lock,
                     irVersion,
+                    generatorType,
                     language,
                     fixture,
                     docker,
@@ -120,6 +125,7 @@ export async function testWorkspace({
 
 export async function acquireLocksAndRunTest({
     lock,
+    generatorType,
     irVersion,
     language,
     fixture,
@@ -130,6 +136,7 @@ export async function acquireLocksAndRunTest({
     outputDir,
 }: {
     lock: Semaphore;
+    generatorType: GeneratorType;
     irVersion: string | undefined;
     language: GenerationLanguage;
     fixture: string;
@@ -148,6 +155,7 @@ export async function acquireLocksAndRunTest({
         language,
         docker,
         customConfig,
+        generatorType,
         compileCommand,
         taskContext,
         outputDir,
@@ -158,6 +166,7 @@ export async function acquireLocksAndRunTest({
 }
 
 async function testWithWriteToDisk({
+    generatorType,
     fixture,
     irVersion,
     language,
@@ -171,6 +180,7 @@ async function testWithWriteToDisk({
     irVersion: string | undefined;
     language: GenerationLanguage;
     docker: ParsedDockerName;
+    generatorType: GeneratorType;
     customConfig: unknown;
     compileCommand: string | undefined;
     taskContext: TaskContext;
@@ -210,6 +220,7 @@ async function testWithWriteToDisk({
             docker,
             workspace: workspace.workspace,
             language,
+            generatorType,
             customConfig,
             taskContext,
             irVersion,

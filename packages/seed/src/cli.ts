@@ -64,6 +64,7 @@ function addTestCommand(cli: Argv) {
                 fixtures: argv.fixture != null ? [argv.fixture] : Object.values(FIXTURES),
                 irVersion: workspace.workspaceConfig.irVersion,
                 language: workspace.workspaceConfig.language,
+                generatorType: workspace.workspaceConfig.generatorType,
                 docker: parsedDockerImage,
                 compileCommand: undefined,
                 logLevel: argv["log-level"],
