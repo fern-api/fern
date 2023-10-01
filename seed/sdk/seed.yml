@@ -2,3 +2,11 @@ irVersion: v25
 docker: java-client:latest
 language: java
 generatorType: SDK
+fixtures:
+  exhaustive:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        custom-dependencies:
+          - "implementation jakarta.websocket:jakarta.websocket-api:2.1.0"
+      outputFolder: custom-dependency

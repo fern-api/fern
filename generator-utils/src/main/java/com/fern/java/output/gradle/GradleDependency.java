@@ -24,11 +24,11 @@ import org.immutables.value.Value;
 public abstract class GradleDependency extends AbstractGradleDependency {
 
     public static GradleDependency of(String value) {
-        String gradleType = value.substring(value.indexOf(" "));
+        String gradleType = value.substring(0, value.indexOf(" "));
         String coordinate = value.substring(value.indexOf(" ") + 1);
         return ImmutableGradleDependency.builder()
                 .type(GradleDependencyType.of(gradleType))
-                .coordinate(coordinate)
+                .coordinate("'" + coordinate + "'")
                 .build();
     }
 }
