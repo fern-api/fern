@@ -12,7 +12,9 @@ import okhttp3.Response;
 
 public class RetryInterceptor implements Interceptor {
 
+    private static final Duration ONE_SECOND = Duration.ofSeconds(1);
     private final ExponentialBackoff backoff;
+    private final Random random = new Random();
 
     public RetryInterceptor(int maxRetries) {
         this.backoff = new ExponentialBackoff(maxRetries);
@@ -20,6 +22,16 @@ public class RetryInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
+        Response response = chain.proceed(chain.request());
+
+        if (shouldRetry(response.code())) {
+            return retryChain(chain);
+        }
+
+        return response;
+    }
+
+    private Response retryChain(Chain chain) throws IOException {
         Optional<Duration> nextBackoff = this.backoff.nextBackoff();
 
         while (nextBackoff.isPresent()) {
@@ -29,21 +41,23 @@ public class RetryInterceptor implements Interceptor {
                 throw new IOException("Interrupted while trying request", e);
             }
             Response response = chain.proceed(chain.request());
-            if (response.isSuccessful()) {
+            if (shouldRetry(response.code())) {
+                nextBackoff = this.backoff.nextBackoff();
+            } else {
                 return response;
             }
-            nextBackoff = this.backoff.nextBackoff();
         }
 
         throw new IOException("Max retries reached");
     }
 
-    private static final class ExponentialBackoff {
+    private static boolean shouldRetry(int statusCode) {
+        return statusCode == 408 || statusCode == 409 || statusCode == 429 || statusCode >= 500;
+    }
 
-        private static final Duration ONE_SECOND = Duration.ofSeconds(1);
+    private final class ExponentialBackoff {
 
         private final int maxNumRetries;
-        private final Random random = new Random();
 
         private int retryNumber = 0;
 
