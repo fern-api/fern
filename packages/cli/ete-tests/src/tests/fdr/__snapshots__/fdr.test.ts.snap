@@ -365,7 +365,7 @@ exports[`fdr {"name":"simple"} 1`] = `
                     "errorsV2": [
                         {
                             "statusCode": 400,
-                            "name": "BadRequestError"
+                            "name": "Bad Request Error"
                         }
                     ],
                     "examples": [
@@ -501,11 +501,11 @@ exports[`fdr {"name":"simple"} 1`] = `
                                 "type": "object"
                             },
                             "statusCode": 404,
-                            "name": "NotFoundError"
+                            "name": "Not Found Error"
                         },
                         {
                             "statusCode": 400,
-                            "name": "BadRequestError"
+                            "name": "Bad Request Error"
                         }
                     ],
                     "examples": [
@@ -583,7 +583,7 @@ exports[`fdr {"name":"simple"} 1`] = `
                     "errorsV2": [
                         {
                             "statusCode": 400,
-                            "name": "BadRequestError"
+                            "name": "Bad Request Error"
                         }
                     ],
                     "examples": []
@@ -632,7 +632,7 @@ exports[`fdr {"name":"simple"} 1`] = `
                     "errorsV2": [
                         {
                             "statusCode": 400,
-                            "name": "BadRequestError"
+                            "name": "Bad Request Error"
                         }
                     ],
                     "examples": []
