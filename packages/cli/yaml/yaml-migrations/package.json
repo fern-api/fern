@@ -36,13 +36,13 @@
     "find-up": "^6.3.0",
     "glob": "^7.2.0",
     "glob-promise": "^4.2.2",
-    "inquirer": "^9.1.0",
+    "inquirer": "^9.2.11",
     "js-yaml": "^4.1.0",
     "yaml": "^2.2.2",
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@types/inquirer": "^9.0.1",
+    "@types/inquirer": "^9.0.3",
     "@types/jest": "^29.0.3",
     "@types/js-yaml": "^4.0.6",
     "@types/node": "^18.7.18",
