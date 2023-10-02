@@ -34,13 +34,13 @@
     "axios": "^0.27.2",
     "boxen": "^7.0.0",
     "chalk": "^5.0.1",
-    "inquirer": "^9.1.0",
+    "inquirer": "^9.2.11",
     "open": "^8.4.0",
     "qs": "^6.11.1"
   },
   "devDependencies": {
     "@types/boxen": "^3.0.1",
-    "@types/inquirer": "^9.0.1",
+    "@types/inquirer": "^9.0.3",
     "@types/jest": "^29.0.3",
     "@types/node": "^18.7.18",
     "@types/qs": "^6.9.7",
