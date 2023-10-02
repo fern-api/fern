@@ -2,6 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { FernIr as Ir } from "@fern-fern/ir-sdk";
 import { FernRegistry } from "@fern-fern/registry-node";
 import { startCase } from "lodash-es";
+import { titleCase } from "../util";
 import { convertTypeId, convertTypeReference } from "./convertTypeShape";
 
 export function convertPackage(
@@ -318,7 +319,7 @@ function convertResponseErrorsV2(
                               }),
                     statusCode: errorDeclaration.statusCode,
                     description: errorDeclaration.docs ?? undefined,
-                    name: errorDeclaration.name.name.originalName,
+                    name: titleCase(errorDeclaration.name.name.originalName),
                 });
             }
         }
