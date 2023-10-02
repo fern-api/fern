@@ -33,7 +33,6 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -218,9 +217,8 @@ public final class ForwardCompatibleEnumGenerator extends AbstractFileGenerator 
     }
 
     private MethodSpec getValueOfMethod(Map<EnumValue, FieldSpec> constants) {
-        CodeBlock.Builder valueOfCodeBlockBuilder = CodeBlock.builder()
-                .addStatement("String upperCasedValue = value.toUpperCase($T.ROOT)", Locale.class)
-                .beginControlFlow("switch (upperCasedValue)");
+        CodeBlock.Builder valueOfCodeBlockBuilder =
+                CodeBlock.builder().beginControlFlow("switch ($L)", VALUE_FIELD_NAME);
         constants.forEach((enumValue, constantField) -> {
             valueOfCodeBlockBuilder
                     .add("case $S:\n", enumValue.getName().getWireValue())
@@ -231,7 +229,7 @@ public final class ForwardCompatibleEnumGenerator extends AbstractFileGenerator 
         CodeBlock valueOfCodeBlock = valueOfCodeBlockBuilder
                 .add("default:\n")
                 .indent()
-                .addStatement("return new $T(Value.UNKNOWN, upperCasedValue)", className)
+                .addStatement("return new $T(Value.UNKNOWN, $L)", className, VALUE_FIELD_NAME)
                 .unindent()
                 .endControlFlow()
                 .build();
@@ -240,7 +238,7 @@ public final class ForwardCompatibleEnumGenerator extends AbstractFileGenerator 
                 .addAnnotation(FernJavaAnnotations.jacksonDelegatingCreator())
                 .addCode(valueOfCodeBlock)
                 .returns(className)
-                .addParameter(ParameterSpec.builder(ClassName.get(String.class), "value")
+                .addParameter(ParameterSpec.builder(ClassName.get(String.class), VALUE_FIELD_NAME)
                         .build())
                 .build();
     }
