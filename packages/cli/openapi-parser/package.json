@@ -44,7 +44,7 @@
     "@types/lodash-es": "^4.17.7",
     "@types/node": "^18.7.18",
     "@types/swagger2openapi": "^7.0.0",
-    "depcheck": "^1.4.3",
+    "depcheck": "^1.4.6",
     "eslint": "^8.26.0",
     "jest": "^29.4.0",
     "organize-imports-cli": "^0.10.0",
