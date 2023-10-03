@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
-    "@types/node": "^18.7.18",
+    "@types/node": "^20.8.2",
     "depcheck": "^1.4.6",
     "eslint": "^8.26.0",
     "jest": "^29.4.0",

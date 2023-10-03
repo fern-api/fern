@@ -1824,7 +1824,7 @@ __metadata:
     "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
     "@types/jest": ^29.0.3
     "@types/jsonwebtoken": ^9.0.0
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     depcheck: ^1.4.6
     eslint: ^8.26.0
     jest: ^29.4.0
@@ -1876,7 +1876,7 @@ __metadata:
     "@types/js-yaml": ^4.0.6
     "@types/latest-version": ^4.0.1
     "@types/lodash-es": ^4.17.7
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     "@types/tar": ^6.1.3
     "@types/validate-npm-package-name": ^4.0.0
     "@types/yargs": ^17.0.24
@@ -1951,7 +1951,7 @@ __metadata:
     "@fern-api/yaml-migrations": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     depcheck: ^1.4.6
     eslint: ^8.26.0
     jest: ^29.4.0
@@ -1968,7 +1968,7 @@ __metadata:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     depcheck: ^1.4.6
     eslint: ^8.26.0
     jest: ^29.4.0
@@ -1984,7 +1984,7 @@ __metadata:
   resolution: "@fern-api/core-utils@workspace:packages/commons/core-utils"
   dependencies:
     "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     "@types/ua-parser-js": ^0.7.36
     depcheck: ^1.4.6
     eslint: ^8.26.0
@@ -2007,7 +2007,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.6
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     depcheck: ^1.4.6
     eslint: ^8.26.0
     jest: ^29.4.0
@@ -2026,7 +2026,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@types/dockerode": ^3.3.9
     "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     depcheck: ^1.4.6
     dockerode: ^3.3.1
     eslint: ^8.26.0
@@ -2047,7 +2047,7 @@ __metadata:
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     depcheck: ^1.4.6
     eslint: ^8.26.0
     jest: ^29.4.0
@@ -2069,7 +2069,7 @@ __metadata:
     "@fern-api/project-configuration": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.6
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     depcheck: ^1.4.6
     eslint: ^8.26.0
     execa: ^5.1.1
@@ -2089,7 +2089,7 @@ __metadata:
   dependencies:
     "@fern-api/core-utils": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     depcheck: ^1.4.6
     eslint: ^8.26.0
     jest: ^29.4.0
@@ -2113,7 +2113,7 @@ __metadata:
     "@fern-fern/fiddle-sdk": ^0.0.290
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.6
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     depcheck: ^1.4.6
     eslint: ^8.26.0
     immer: ^9.0.15
@@ -2144,7 +2144,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.6
     "@types/lodash-es": ^4.17.7
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     chalk: ^5.0.1
     depcheck: ^1.4.6
     eslint: ^8.26.0
@@ -2173,7 +2173,7 @@ __metadata:
     "@fern-fern/ir-sdk": 0.0.2921
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     "@types/url-join": ^4.0.1
     depcheck: ^1.4.6
     eslint: ^8.26.0
@@ -2226,7 +2226,7 @@ __metadata:
     "@fern-fern/ir-v9-model": 0.0.1
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     depcheck: ^1.4.6
     eslint: ^8.26.0
     jest: ^29.4.0
@@ -2244,7 +2244,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     "@types/prettier": ^2.7.2
     depcheck: ^1.4.6
     eslint: ^8.26.0
@@ -2263,7 +2263,7 @@ __metadata:
   dependencies:
     "@fern-api/core-utils": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     depcheck: ^1.4.6
     eslint: ^8.26.0
     jest: ^29.4.0
@@ -2290,7 +2290,7 @@ __metadata:
     "@fern-fern/generator-exec-sdk": 0.0.372
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     "@types/tmp": ^0.2.4
     chalk: ^5.0.1
     decompress: ^4.2.1
@@ -2310,7 +2310,7 @@ __metadata:
   dependencies:
     "@fern-api/core-utils": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     chalk: ^5.0.1
     depcheck: ^1.4.6
     eslint: ^8.26.0
@@ -2327,7 +2327,7 @@ __metadata:
   dependencies:
     "@fern-api/logger": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     depcheck: ^1.4.6
     eslint: ^8.26.0
     execa: ^5.1.1
@@ -2350,7 +2350,7 @@ __metadata:
     "@types/boxen": ^3.0.1
     "@types/inquirer": ^9.0.3
     "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     "@types/qs": ^6.9.7
     axios: ^0.27.2
     boxen: ^7.0.0
@@ -2375,7 +2375,7 @@ __metadata:
     "@fern-api/logger": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     depcheck: ^1.4.6
     eslint: ^8.26.0
     jest: ^29.4.0
@@ -2398,7 +2398,7 @@ __metadata:
     "@fern-fern/openapi-ir-model": 0.0.106
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     depcheck: ^1.4.6
     eslint: ^8.26.0
     jest: ^29.4.0
@@ -2422,7 +2422,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.6
     "@types/lodash-es": ^4.17.7
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     "@types/swagger2openapi": ^7.0.0
     depcheck: ^1.4.6
     eslint: ^8.26.0
@@ -2445,7 +2445,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     "@types/uuid": ^9.0.0
     depcheck: ^1.4.6
     eslint: ^8.26.0
@@ -2466,7 +2466,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     depcheck: ^1.4.6
     eslint: ^8.26.0
     find-up: ^6.3.0
@@ -2490,7 +2490,7 @@ __metadata:
     "@fern-api/workspace-loader": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.6
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     chalk: ^5.0.1
     depcheck: ^1.4.6
     eslint: ^8.26.0
@@ -2518,7 +2518,7 @@ __metadata:
     "@fern-fern/registry-node": 0.26.0-1-g7cf6a78
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     depcheck: ^1.4.6
     eslint: ^8.26.0
     jest: ^29.4.0
@@ -2554,7 +2554,7 @@ __metadata:
     "@types/js-yaml": ^4.0.6
     "@types/lodash-es": ^4.17.7
     "@types/mime-types": ^2.1.1
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     "@types/terminal-link": ^1.2.0
     axios: ^0.27.2
     chalk: ^5.0.1
@@ -2584,7 +2584,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.6
     "@types/lodash-es": ^4.17.7
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     "@types/yargs": ^17.0.24
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     chalk: ^5.0.1
@@ -2624,7 +2624,7 @@ __metadata:
     "@types/find-up": ^4.0.0
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.6
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     "@types/yargs": ^17.0.24
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     chalk: ^5.0.1
@@ -2649,7 +2649,7 @@ __metadata:
   resolution: "@fern-api/semver-utils@workspace:packages/cli/semver-utils"
   dependencies:
     "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     depcheck: ^1.4.6
     eslint: ^8.26.0
     jest: ^29.4.0
@@ -2668,7 +2668,7 @@ __metadata:
     "@fern-fern/fiddle-sdk": ^0.0.290
     "@fern-fern/registry-node": 0.26.0-1-g7cf6a78
     "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     depcheck: ^1.4.6
     eslint: ^8.26.0
     jest: ^29.4.0
@@ -2684,7 +2684,7 @@ __metadata:
   dependencies:
     "@fern-api/logger": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     depcheck: ^1.4.6
     eslint: ^8.26.0
     jest: ^29.4.0
@@ -2709,7 +2709,7 @@ __metadata:
     "@fern-fern/ir-sdk": 0.0.2921
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     chalk: ^5.0.1
     depcheck: ^1.4.6
     eslint: ^8.26.0
@@ -2754,7 +2754,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.6
     "@types/lodash-es": ^4.17.7
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     "@types/tar": ^6.1.3
     axios: ^0.27.2
     depcheck: ^1.4.6
@@ -2783,7 +2783,7 @@ __metadata:
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     "@types/prettier": ^2.7.2
     chalk: ^5.0.1
     depcheck: ^1.4.6
@@ -2807,7 +2807,7 @@ __metadata:
     "@types/inquirer": ^9.0.3
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.6
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     chalk: ^5.0.1
     depcheck: ^1.4.6
     eslint: ^8.26.0
@@ -2836,7 +2836,7 @@ __metadata:
     "@fern-fern/ir-sdk": 0.0.2921
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.6
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     depcheck: ^1.4.6
     eslint: ^8.26.0
     jest: ^29.4.0
@@ -4160,10 +4160,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^18.7.18":
+"@types/node@npm:*":
   version: 18.7.18
   resolution: "@types/node@npm:18.7.18"
   checksum: 8aec61f0f96e2a69ce51f1f40f949ca578bbb4fe05d7c0b8ce3aeeb848e90f755837f17f6ac132ca404d974fe9b2974150ad3b4984fc9dc7c3ceddb10bae0167
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^20.8.2":
+  version: 20.8.2
+  resolution: "@types/node@npm:20.8.2"
+  checksum: 3da73e25d821bfcdb7de98589027e08bb4848e55408671c4a83ec0341e124b5313a0b20e1e4b4eff1168ea17a86f622ad73fcb04b761abd77496b9a27cbd5de5
   languageName: node
   linkType: hard
 
@@ -7639,7 +7646,7 @@ env-cmd@toddbluhm/env-cmd:
     "@types/is-ci": ^3.0.0
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.6
-    "@types/node": ^18.7.18
+    "@types/node": ^20.8.2
     "@typescript-eslint/eslint-plugin": ^5.27.1
     "@typescript-eslint/parser": ^5.27.1
     chalk: ^5.0.1
