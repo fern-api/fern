@@ -65,7 +65,7 @@ func (c *Client) GetUsername(ctx context.Context, request *fixtures.GetUsersRequ
 		c.httpClient,
 		endpointURL,
 		http.MethodGet,
-		request,
+		nil,
 		&response,
 		false,
 		c.header,

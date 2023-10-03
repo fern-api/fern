@@ -803,8 +803,12 @@ func (f *fileWriter) endpointFromIR(
 				requestType = fmt.Sprintf("*%s.%s", scope.AddImport(requestImportPath), irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
 			}
 			requestParameterName = irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
-			requestValueName = requestParameterName
 			signatureParameters += fmt.Sprintf(", %s %s", requestParameterName, requestType)
+
+			if irEndpoint.RequestBody != nil {
+				// Only send a request body if one is defined.
+				requestValueName = requestParameterName
+			}
 		}
 		if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.FileUpload != nil {
 			// This is a file upload request, so we prepare a buffer for the request body

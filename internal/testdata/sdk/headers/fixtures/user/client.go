@@ -66,7 +66,7 @@ func (c *Client) SetName(ctx context.Context, userId string, request *fixtures.S
 		c.httpClient,
 		endpointURL,
 		http.MethodPost,
-		request,
+		nil,
 		&response,
 		false,
 		headers,

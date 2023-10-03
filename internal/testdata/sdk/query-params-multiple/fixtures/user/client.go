@@ -60,7 +60,7 @@ func (c *Client) GetAllUsers(ctx context.Context, request *fixtures.GetAllUsersR
 		c.httpClient,
 		endpointURL,
 		http.MethodGet,
-		request,
+		nil,
 		&response,
 		false,
 		headers,

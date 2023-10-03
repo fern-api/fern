@@ -50,7 +50,7 @@ func (c *Client) GetUser(ctx context.Context, userId string, request *fixtures.G
 		c.httpClient,
 		endpointURL,
 		http.MethodGet,
-		request,
+		nil,
 		&response,
 		false,
 		c.header,
