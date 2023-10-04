@@ -379,12 +379,12 @@ class EndpointFunctionGenerator:
 
         if is_async:
             snippet_registry.register_async_client_endpoint_snippet(
-                endpoint_id=endpoint.id,
+                endpoint=endpoint,
                 expr=expr,
             )
         else:
             snippet_registry.register_sync_client_endpoint_snippet(
-                endpoint_id=endpoint.id,
+                endpoint=endpoint,
                 expr=expr,
             )
 

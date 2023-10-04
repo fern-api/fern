@@ -8,7 +8,7 @@ authors = []
 python = "^3.8"
 pydantic = "^1.9.2"
 typer = {extras = ["all"], version = "^0.6.1"}
-fern-fern-generator-exec-sdk = {version = "0.0.350", source = "fern-prod"}
+fern-fern-generator-exec-sdk = {version = "0.0.397", source = "fern-prod"}
 fern-fern-ir-model = "0.0.2922"
 
 [tool.poetry.dev-dependencies]
@@ -21,18 +21,10 @@ pre-commit = "^2.20.0"
 snapshottest = "^0.6.0"
 
 [[tool.poetry.source]]
-name = "fern-dev"
-url = "https://pypi-dev.buildwithfern.com/"
-default = false
-secondary = true
-
-
-[[tool.poetry.source]]
 name = "fern-prod"
 url = "https://pypi.buildwithfern.com/"
 default = false
 secondary = true
-
 
 [tool.poetry.group.dev.dependencies]
 pytest-only = "^2.0.0"

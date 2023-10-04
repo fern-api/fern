@@ -17,46 +17,94 @@
         "type_types:Response": "from seed import Response\n\nResponse(response=\"Initializing...\")\n",
         "type_types:Test": "from seed import Test_And\n\nTest_And(value=True)\n"
     },
-    "endpoints": {
-        "endpoint_.echo": {
-            "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.echo(request=\"Hello world!\")\n",
-            "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.echo(request=\"Hello world!\")\n",
-            "type": "python"
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.echo(request=\"Hello world!\")\n",
+                "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.echo(request=\"Hello world!\")\n",
+                "type": "python"
+            }
         },
-        "endpoint_file/notification/service.getException": {
-            "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.file.notification.get_exception(notification_id=\"notification-hsy129x\")\n",
-            "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.file.notification.get_exception(notification_id=\"notification-hsy129x\")\n",
-            "type": "python"
+        {
+            "id": {
+                "path": "/file/notification/{notificationId}",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.file.notification.get_exception(notification_id=\"notification-hsy129x\")\n",
+                "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.file.notification.get_exception(notification_id=\"notification-hsy129x\")\n",
+                "type": "python"
+            }
         },
-        "endpoint_file/service.getFile": {
-            "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.file.get_file(filename=\"file.txt\", x_file_api_version=\"0.0.2\")\n",
-            "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.file.get_file(filename=\"file.txt\", x_file_api_version=\"0.0.2\")\n",
-            "type": "python"
+        {
+            "id": {
+                "path": "/file/{filename}",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.file.get_file(filename=\"file.txt\", x_file_api_version=\"0.0.2\")\n",
+                "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.file.get_file(filename=\"file.txt\", x_file_api_version=\"0.0.2\")\n",
+                "type": "python"
+            }
         },
-        "endpoint_health/service.check": {
-            "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.health.check(id=\"id-2sdx82h\")\n",
-            "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.health.check(id=\"id-2sdx82h\")\n",
-            "type": "python"
+        {
+            "id": {
+                "path": "/check/{id}",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.health.check(id=\"id-2sdx82h\")\n",
+                "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.health.check(id=\"id-2sdx82h\")\n",
+                "type": "python"
+            }
         },
-        "endpoint_health/service.ping": {
-            "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.health.ping()\n",
-            "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.health.ping()\n",
-            "type": "python"
+        {
+            "id": {
+                "path": "/ping",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.health.ping()\n",
+                "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.health.ping()\n",
+                "type": "python"
+            }
         },
-        "endpoint_service.getMovie": {
-            "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.get_movie(movie_id=\"movie-c06a4ad7\")\n",
-            "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.get_movie(movie_id=\"movie-c06a4ad7\")\n",
-            "type": "python"
+        {
+            "id": {
+                "path": "/movie/{movieId}",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.get_movie(movie_id=\"movie-c06a4ad7\")\n",
+                "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.get_movie(movie_id=\"movie-c06a4ad7\")\n",
+                "type": "python"
+            }
         },
-        "endpoint_service.createMovie": {
-            "sync_client": "from seed import Movie\nfrom seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.create_movie(\n    request=Movie(id=\"movie-c06a4ad7\", title=\"The Boy and the Heron\", from_=\"Hayao Miyazaki\", rating=8.0)\n)\n",
-            "async_client": "from seed import Movie\nfrom seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.create_movie(\n    request=Movie(id=\"movie-c06a4ad7\", title=\"The Boy and the Heron\", from_=\"Hayao Miyazaki\", rating=8.0)\n)\n",
-            "type": "python"
+        {
+            "id": {
+                "path": "/movie",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed import Movie\nfrom seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.create_movie(\n    request=Movie(id=\"movie-c06a4ad7\", title=\"The Boy and the Heron\", from_=\"Hayao Miyazaki\", rating=8.0)\n)\n",
+                "async_client": "from seed import Movie\nfrom seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.create_movie(\n    request=Movie(id=\"movie-c06a4ad7\", title=\"The Boy and the Heron\", from_=\"Hayao Miyazaki\", rating=8.0)\n)\n",
+                "type": "python"
+            }
         },
-        "endpoint_service.getMetadata": {
-            "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.get_metadata(x_api_version=\"0.0.1\", shallow=False, tag=\"development\")\n",
-            "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.get_metadata(x_api_version=\"0.0.1\", shallow=False, tag=\"development\")\n",
-            "type": "python"
+        {
+            "id": {
+                "path": "/metadata",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = SeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nclient.get_metadata(x_api_version=\"0.0.1\", shallow=False, tag=\"development\")\n",
+                "async_client": "from seed.client import AsyncSeedExamples\nfrom seed.environment import SeedExamplesEnvironment\n\nclient = AsyncSeedExamples(token=\"YOUR_TOKEN\", environment=SeedExamplesEnvironment.PRODUCTION)\nawait client.get_metadata(x_api_version=\"0.0.1\", shallow=False, tag=\"development\")\n",
+                "type": "python"
+            }
         }
-    }
+    ]
 }
