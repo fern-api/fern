@@ -22,6 +22,9 @@ public class NoAuthClient {
         this.clientOptions = clientOptions;
     }
 
+    /**
+     * POST request with no auth
+     */
     public boolean postWithNoAuth(Object request) {
         return postWithNoAuth(request, null);
     }

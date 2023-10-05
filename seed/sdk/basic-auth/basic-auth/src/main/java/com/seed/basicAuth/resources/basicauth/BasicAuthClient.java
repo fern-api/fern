@@ -22,6 +22,9 @@ public class BasicAuthClient {
         this.clientOptions = clientOptions;
     }
 
+    /**
+     * GET request with basic auth scheme
+     */
     public boolean getWithBasicAuth() {
         return getWithBasicAuth(null);
     }
@@ -54,6 +57,9 @@ public class BasicAuthClient {
         }
     }
 
+    /**
+     * POST request with basic auth scheme
+     */
     public boolean postWithBasicAuth(Object request) {
         return postWithBasicAuth(request, null);
     }

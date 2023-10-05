@@ -20,6 +20,9 @@ public class PropertyBasedErrorClient {
         this.clientOptions = clientOptions;
     }
 
+    /**
+     * GET request that always throws an error
+     */
     public String throwError() {
         return throwError(null);
     }

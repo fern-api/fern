@@ -22,6 +22,9 @@ public class CustomAuthClient {
         this.clientOptions = clientOptions;
     }
 
+    /**
+     * GET request with custom auth scheme
+     */
     public boolean getWithCustomAuth() {
         return getWithCustomAuth(null);
     }
@@ -54,6 +57,9 @@ public class CustomAuthClient {
         }
     }
 
+    /**
+     * POST request with custom auth scheme
+     */
     public boolean postWithCustomAuth(Object request) {
         return postWithCustomAuth(request, null);
     }

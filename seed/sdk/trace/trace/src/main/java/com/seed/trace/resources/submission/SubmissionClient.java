@@ -26,6 +26,9 @@ public class SubmissionClient {
         this.clientOptions = clientOptions;
     }
 
+    /**
+     * Returns sessionId and execution server URL for session. Spins up server.
+     */
     public ExecutionSessionResponse createExecutionSession(Language language) {
         return createExecutionSession(language, null);
     }
@@ -60,6 +63,9 @@ public class SubmissionClient {
         }
     }
 
+    /**
+     * Returns execution server URL for session. Returns empty if session isn't registered.
+     */
     public Optional<ExecutionSessionResponse> getExecutionSession(String sessionId) {
         return getExecutionSession(sessionId, null);
     }
@@ -94,6 +100,9 @@ public class SubmissionClient {
         }
     }
 
+    /**
+     * Stops execution session.
+     */
     public void stopExecutionSession(String sessionId) {
         stopExecutionSession(sessionId, null);
     }

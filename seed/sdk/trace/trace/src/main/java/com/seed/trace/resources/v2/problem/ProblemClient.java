@@ -24,6 +24,9 @@ public class ProblemClient {
         this.clientOptions = clientOptions;
     }
 
+    /**
+     * Returns lightweight versions of all problems
+     */
     public List<LightweightProblemInfoV2> getLightweightProblems() {
         return getLightweightProblems(null);
     }
@@ -58,6 +61,9 @@ public class ProblemClient {
         }
     }
 
+    /**
+     * Returns latest versions of all problems
+     */
     public List<ProblemInfoV2> getProblems() {
         return getProblems(null);
     }
@@ -92,6 +98,9 @@ public class ProblemClient {
         }
     }
 
+    /**
+     * Returns latest version of a problem
+     */
     public ProblemInfoV2 getLatestProblem(String problemId) {
         return getLatestProblem(problemId, null);
     }
@@ -126,6 +135,9 @@ public class ProblemClient {
         }
     }
 
+    /**
+     * Returns requested version of a problem
+     */
     public ProblemInfoV2 getProblemVersion(String problemId, int problemVersion) {
         return getProblemVersion(problemId, problemVersion, null);
     }

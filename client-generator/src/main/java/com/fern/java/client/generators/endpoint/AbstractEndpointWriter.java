@@ -58,6 +58,7 @@ import com.fern.java.client.generators.endpoint.HttpUrlBuilder.PathParamInfo;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
+import com.fern.java.utils.JavaDocUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -130,7 +131,8 @@ public abstract class AbstractEndpointWriter {
 
         // Step 0: Populate JavaDoc
         if (httpEndpoint.getDocs().isPresent()) {
-            endpointMethodBuilder.addJavadoc(httpEndpoint.getDocs().get());
+            endpointMethodBuilder.addJavadoc(
+                    JavaDocUtils.render(httpEndpoint.getDocs().get(), true));
         }
 
         // Step 1: Add Path Params as parameters
@@ -195,6 +197,7 @@ public abstract class AbstractEndpointWriter {
                 .addModifiers(Modifier.PUBLIC)
                 .addParameters(pathParameters)
                 .addParameters(additionalParameters)
+                .addJavadoc(endpointWithRequestOptions.javadoc)
                 .addStatement(
                         endpointWithRequestOptions.returnType.equals(TypeName.VOID)
                                 ? endpointWithRequestOptions.name + "(" + String.join(",", paramNames) + ")"

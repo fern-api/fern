@@ -24,6 +24,9 @@ public class InlinedRequestsClient {
         this.clientOptions = clientOptions;
     }
 
+    /**
+     * POST with custom object in request body, response is an object
+     */
     public ObjectWithOptionalField postWithObjectBodyandResponse(PostWithObjectBody request) {
         return postWithObjectBodyandResponse(request, null);
     }

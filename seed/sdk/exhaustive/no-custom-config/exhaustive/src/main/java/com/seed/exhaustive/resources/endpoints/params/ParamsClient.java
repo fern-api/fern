@@ -25,6 +25,9 @@ public class ParamsClient {
         this.clientOptions = clientOptions;
     }
 
+    /**
+     * GET with path param
+     */
     public String getWithPath(String param) {
         return getWithPath(param, null);
     }
@@ -59,6 +62,9 @@ public class ParamsClient {
         }
     }
 
+    /**
+     * GET with query param
+     */
     public void getWithQuery(GetWithQuery request) {
         getWithQuery(request, null);
     }
@@ -91,6 +97,9 @@ public class ParamsClient {
         }
     }
 
+    /**
+     * GET with multiple of same query param
+     */
     public void getWithAllowMultipleQuery(GetWithMultipleQuery request) {
         getWithAllowMultipleQuery(request, null);
     }
@@ -123,6 +132,9 @@ public class ParamsClient {
         }
     }
 
+    /**
+     * GET with path and query params
+     */
     public void getWithPathAndQuery(String param, GetWithPathAndQuery request) {
         getWithPathAndQuery(param, request, null);
     }
@@ -156,6 +168,9 @@ public class ParamsClient {
         }
     }
 
+    /**
+     * PUT to update with path param
+     */
     public String modifyWithPath(String param, String request) {
         return modifyWithPath(param, request, null);
     }

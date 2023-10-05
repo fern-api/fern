@@ -27,6 +27,9 @@ public class ProblemClient {
         this.clientOptions = clientOptions;
     }
 
+    /**
+     * Creates a problem
+     */
     public CreateProblemResponse createProblem(CreateProblemRequest request) {
         return createProblem(request, null);
     }
@@ -67,6 +70,9 @@ public class ProblemClient {
         }
     }
 
+    /**
+     * Updates a problem
+     */
     public UpdateProblemResponse updateProblem(String problemId, CreateProblemRequest request) {
         return updateProblem(problemId, request, null);
     }
@@ -109,6 +115,9 @@ public class ProblemClient {
         }
     }
 
+    /**
+     * Soft deletes a problem
+     */
     public void deleteProblem(String problemId) {
         deleteProblem(problemId, null);
     }
@@ -142,6 +151,9 @@ public class ProblemClient {
         }
     }
 
+    /**
+     * Returns default starter files for problem
+     */
     public GetDefaultStarterFilesResponse getDefaultStarterFiles(GetDefaultStarterFilesRequest request) {
         return getDefaultStarterFiles(request, null);
     }

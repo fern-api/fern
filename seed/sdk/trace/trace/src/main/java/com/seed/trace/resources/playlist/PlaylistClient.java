@@ -29,6 +29,9 @@ public class PlaylistClient {
         this.clientOptions = clientOptions;
     }
 
+    /**
+     * Create a new playlist
+     */
     public Playlist createPlaylist(int serviceParam, CreatePlaylistRequest request) {
         return createPlaylist(serviceParam, request, null);
     }
@@ -75,6 +78,9 @@ public class PlaylistClient {
         }
     }
 
+    /**
+     * Returns the user's playlists
+     */
     public List<Playlist> getPlaylists(int serviceParam, GetPlaylistsRequest request) {
         return getPlaylists(serviceParam, request, null);
     }
@@ -119,6 +125,9 @@ public class PlaylistClient {
         }
     }
 
+    /**
+     * Returns a playlist
+     */
     public Playlist getPlaylist(int serviceParam, String playlistId) {
         return getPlaylist(serviceParam, playlistId, null);
     }
@@ -153,6 +162,9 @@ public class PlaylistClient {
         }
     }
 
+    /**
+     * Updates a playlist
+     */
     public Optional<Playlist> updatePlaylist(
             int serviceParam, String playlistId, Optional<UpdatePlaylistRequest> request) {
         return updatePlaylist(serviceParam, playlistId, request, null);
@@ -204,6 +216,9 @@ public class PlaylistClient {
         return updatePlaylist(serviceParam, playlistId, Optional.empty());
     }
 
+    /**
+     * Deletes a playlist
+     */
     public void deletePlaylist(int serviceParam, String playlistId) {
         deletePlaylist(serviceParam, playlistId, null);
     }
