@@ -601,6 +601,11 @@ function getPossibleDiscriminants({
         ) {
             possibleDiscrimimants[propertyName] = resolvedPropertySchema.enum[0];
         }
+
+        const maybeConstValue = getProperty<string>(resolvedPropertySchema, "const");
+        if (resolvedPropertySchema.type === "string" && maybeConstValue != null) {
+            possibleDiscrimimants[propertyName] = maybeConstValue;
+        }
     }
     return possibleDiscrimimants;
 }
