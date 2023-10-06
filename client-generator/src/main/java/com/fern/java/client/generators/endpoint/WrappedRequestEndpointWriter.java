@@ -41,19 +41,19 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import java.io.File;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import okhttp3.Headers;
+import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
 public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
-
-    public static final String MULTIPART_BODY_PROPERTIES_NAME = "_multipartBody";
 
     private final GeneratedWrappedRequest generatedWrappedRequest;
     private final ClientGeneratorContext clientGeneratorContext;
@@ -287,7 +287,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         requestBodyCodeBlock.addStatement(
                 "$T.Builder $L = new $T.Builder().setType($T.FORM)",
                 MultipartBody.class,
-                MULTIPART_BODY_PROPERTIES_NAME,
+                getMultipartBodyPropertiesName(),
                 MultipartBody.class,
                 MultipartBody.class);
         requestBodyCodeBlock.beginControlFlow("try");
@@ -300,7 +300,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                                     "if ($L.$N().isPresent())", requestParameterName, jsonProperty.getterProperty())
                             .addStatement(
                                     "$L.addFormDataPart($S, $T.$L.writeValueAsString($L))",
-                                    MULTIPART_BODY_PROPERTIES_NAME,
+                                    getMultipartBodyPropertiesName(),
                                     jsonProperty.wireKey().get(),
                                     generatedObjectMapper.getClassName(),
                                     generatedObjectMapper.jsonMapperStaticField().name,
@@ -309,7 +309,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 } else {
                     requestBodyCodeBlock.addStatement(
                             "$L.addFormDataPart($S, $T.$L.writeValueAsString($L))",
-                            MULTIPART_BODY_PROPERTIES_NAME,
+                            getMultipartBodyPropertiesName(),
                             jsonProperty.wireKey().get(),
                             generatedObjectMapper.getClassName(),
                             generatedObjectMapper.jsonMapperStaticField().name,
@@ -317,23 +317,53 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 }
             } else if (fileUploadProperty instanceof FilePropertyContainer) {
                 FileProperty fileProperty = ((FilePropertyContainer) fileUploadProperty).fileProperty();
+                String mimeTypeVariableName = getVariableName("mimeType");
+                String mediaTypeVariableName = getVariableName("mediaType");
+                String filePropertyParameterName = getFilePropertyParameterName(fileProperty);
                 if (fileProperty.getIsOptional()) {
                     requestBodyCodeBlock
                             .beginControlFlow("if ($N.isPresent())", getFilePropertyParameterName(fileProperty))
                             .addStatement(
-                                    "$L.addFormDataPart($S, null, $T.create(null, $L.get()))",
-                                    MULTIPART_BODY_PROPERTIES_NAME,
+                                    "String $L = $T.probeContentType($L.toPath())",
+                                    mimeTypeVariableName,
+                                    Files.class,
+                                    filePropertyParameterName)
+                            .addStatement(
+                                    "$T $L = $L != null ? $T.parse(mimeType) : null",
+                                    MediaType.class,
+                                    mediaTypeVariableName,
+                                    mimeTypeVariableName,
+                                    MediaType.class)
+                            .addStatement(
+                                    "$L.addFormDataPart($S, $L.getName(), $T.create($L, $L.get()))",
+                                    getMultipartBodyPropertiesName(),
                                     fileProperty.getKey().getWireValue(),
+                                    filePropertyParameterName,
                                     RequestBody.class,
-                                    getFilePropertyParameterName(fileProperty))
+                                    mediaTypeVariableName,
+                                    filePropertyParameterName)
                             .endControlFlow();
                 } else {
-                    requestBodyCodeBlock.addStatement(
-                            "$L.addFormDataPart($S, null, $T.create(null, $L))",
-                            MULTIPART_BODY_PROPERTIES_NAME,
-                            fileProperty.getKey().getWireValue(),
-                            RequestBody.class,
-                            getFilePropertyParameterName(fileProperty));
+                    requestBodyCodeBlock
+                            .addStatement(
+                                    "String $L = $T.probeContentType($L.toPath())",
+                                    mimeTypeVariableName,
+                                    Files.class,
+                                    filePropertyParameterName)
+                            .addStatement(
+                                    "$T $L = $L != null ? $T.parse(mimeType) : null",
+                                    MediaType.class,
+                                    mediaTypeVariableName,
+                                    mimeTypeVariableName,
+                                    MediaType.class)
+                            .addStatement(
+                                    "$L.addFormDataPart($S, $L.getName(), $T.create($L, $L))",
+                                    getMultipartBodyPropertiesName(),
+                                    fileProperty.getKey().getWireValue(),
+                                    getFilePropertyParameterName(fileProperty),
+                                    RequestBody.class,
+                                    mediaTypeVariableName,
+                                    getFilePropertyParameterName(fileProperty));
                 }
             }
         }

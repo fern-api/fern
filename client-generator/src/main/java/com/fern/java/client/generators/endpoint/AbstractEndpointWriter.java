@@ -317,6 +317,13 @@ public abstract class AbstractEndpointWriter {
         }
     }
 
+    public final String getVariableName(String variable) {
+        if (this.endpointParameterNames.contains("body")) {
+            return "_" + variable;
+        }
+        return variable;
+    }
+
     private String getHttpUrlName() {
         if (this.endpointParameterNames.contains("httpUrl")) {
             return "_httpUrl";
@@ -350,6 +357,10 @@ public abstract class AbstractEndpointWriter {
             return "_body";
         }
         return "body";
+    }
+
+    protected final String getMultipartBodyPropertiesName() {
+        return getVariableName("multipartBody");
     }
 
     private List<ParameterSpec> getPathParameters() {
