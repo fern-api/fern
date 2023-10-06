@@ -259,7 +259,13 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
                 .addCustomBlocks("spotless {\n" + "    java {\n" + "        palantirJavaFormat()\n" + "    }\n" + "}\n")
                 .addCustomBlocks("java {\n" + "    withSourcesJar()\n" + "    withJavadocJar()\n" + "}\n");
         if (addTestBlock) {
-            buildGradle.addCustomBlocks("test {\n" + "    useJUnitPlatform()\n" + "}\n");
+            buildGradle.addCustomBlocks(
+              "test {\n"
+                    + "    useJUnitPlatform()\n"
+                    + "    testLogging {\n"
+                    + "        showStandardStreams = true\n"
+                    + "    }\n"
+                    + "}");
         }
 
         addGeneratedFile(buildGradle.build());
