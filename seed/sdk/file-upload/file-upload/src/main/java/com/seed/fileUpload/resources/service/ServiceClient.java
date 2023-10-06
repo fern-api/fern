@@ -32,56 +32,53 @@ public class ServiceClient {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .build();
-        MultipartBody.Builder multipartBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
             if (request.getMaybeString().isPresent()) {
-                multipartBody.addFormDataPart(
+                body.addFormDataPart(
                         "maybeString", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getMaybeString()));
             }
-            multipartBody.addFormDataPart(
-                    "integer", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getInteger()));
+            body.addFormDataPart("integer", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getInteger()));
             String mimeType = Files.probeContentType(file.toPath());
             MediaType mediaType = mimeType != null ? MediaType.parse(mimeType) : null;
-            multipartBody.addFormDataPart("file", file.getName(), RequestBody.create(mediaType, file));
+            body.addFormDataPart("file", file.getName(), RequestBody.create(mediaType, file));
             if (maybeFile.isPresent()) {
                 String mimeType = Files.probeContentType(maybeFile.toPath());
                 MediaType mediaType = mimeType != null ? MediaType.parse(mimeType) : null;
-                multipartBody.addFormDataPart(
-                        "maybeFile", maybeFile.getName(), RequestBody.create(mediaType, maybeFile.get()));
+                body.addFormDataPart("maybeFile", maybeFile.getName(), RequestBody.create(mediaType, maybeFile.get()));
             }
             if (request.getMaybeInteger().isPresent()) {
-                multipartBody.addFormDataPart(
+                body.addFormDataPart(
                         "maybeInteger", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getMaybeInteger()));
             }
-            multipartBody.addFormDataPart(
+            body.addFormDataPart(
                     "listOfStrings", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getListOfStrings()));
-            multipartBody.addFormDataPart(
+            body.addFormDataPart(
                     "setOfStrings", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getSetOfStrings()));
             if (request.getOptionalListOfStrings().isPresent()) {
-                multipartBody.addFormDataPart(
+                body.addFormDataPart(
                         "optionalListOfStrings",
                         ObjectMappers.JSON_MAPPER.writeValueAsString(request.getOptionalListOfStrings()));
             }
             if (request.getOptionalSetOfStrings().isPresent()) {
-                multipartBody.addFormDataPart(
+                body.addFormDataPart(
                         "optionalSetOfStrings",
                         ObjectMappers.JSON_MAPPER.writeValueAsString(request.getOptionalSetOfStrings()));
             }
-            multipartBody.addFormDataPart(
-                    "maybeList", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getMaybeList()));
+            body.addFormDataPart("maybeList", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getMaybeList()));
             if (request.getOptionalMaybeList().isPresent()) {
-                multipartBody.addFormDataPart(
+                body.addFormDataPart(
                         "optionalMaybeList",
                         ObjectMappers.JSON_MAPPER.writeValueAsString(request.getOptionalMaybeList()));
             }
-            multipartBody.addFormDataPart(
+            body.addFormDataPart(
                     "maybeListOrSet", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getMaybeListOrSet()));
             if (request.getOptionalMaybeListOrSet().isPresent()) {
-                multipartBody.addFormDataPart(
+                body.addFormDataPart(
                         "optionalMaybeListOrSet",
                         ObjectMappers.JSON_MAPPER.writeValueAsString(request.getOptionalMaybeListOrSet()));
             }
-            multipartBody.addFormDataPart(
+            body.addFormDataPart(
                     "listOfObjects", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getListOfObjects()));
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -114,11 +111,11 @@ public class ServiceClient {
                 .newBuilder()
                 .addPathSegments("just-file")
                 .build();
-        MultipartBody.Builder multipartBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
             String mimeType = Files.probeContentType(file.toPath());
             MediaType mediaType = mimeType != null ? MediaType.parse(mimeType) : null;
-            multipartBody.addFormDataPart("file", file.getName(), RequestBody.create(mediaType, file));
+            body.addFormDataPart("file", file.getName(), RequestBody.create(mediaType, file));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

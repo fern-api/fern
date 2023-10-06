@@ -361,7 +361,7 @@ public abstract class AbstractEndpointWriter {
     }
 
     protected final String getMultipartBodyPropertiesName() {
-        return getVariableName("multipartBody");
+        return getVariableName("body");
     }
 
     private List<ParameterSpec> getPathParameters() {
