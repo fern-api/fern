@@ -22,10 +22,6 @@ public class NoReqBodyClient {
         this.clientOptions = clientOptions;
     }
 
-    public ObjectWithOptionalField getWithNoRequestBody() {
-        return getWithNoRequestBody(null);
-    }
-
     public ObjectWithOptionalField getWithNoRequestBody(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -51,8 +47,8 @@ public class NoReqBodyClient {
         }
     }
 
-    public String postWithNoRequestBody() {
-        return postWithNoRequestBody(null);
+    public ObjectWithOptionalField getWithNoRequestBody() {
+        return getWithNoRequestBody(null);
     }
 
     public String postWithNoRequestBody(RequestOptions requestOptions) {
@@ -78,5 +74,9 @@ public class NoReqBodyClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String postWithNoRequestBody() {
+        return postWithNoRequestBody(null);
     }
 }

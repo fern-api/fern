@@ -20,10 +20,6 @@ public class ServiceClient {
         this.clientOptions = clientOptions;
     }
 
-    public void nop(String nestedId) {
-        nop(nestedId, null);
-    }
-
     public void nop(String nestedId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -46,5 +42,9 @@ public class ServiceClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void nop(String nestedId) {
+        nop(nestedId, null);
     }
 }

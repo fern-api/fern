@@ -24,10 +24,6 @@ public class HomepageClient {
         this.clientOptions = clientOptions;
     }
 
-    public List<String> getHomepageProblems() {
-        return getHomepageProblems(null);
-    }
-
     public List<String> getHomepageProblems(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -54,8 +50,8 @@ public class HomepageClient {
         }
     }
 
-    public void setHomepageProblems(List<String> request) {
-        setHomepageProblems(request, null);
+    public List<String> getHomepageProblems() {
+        return getHomepageProblems(null);
     }
 
     public void setHomepageProblems(List<String> request, RequestOptions requestOptions) {
@@ -88,5 +84,9 @@ public class HomepageClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void setHomepageProblems(List<String> request) {
+        setHomepageProblems(request, null);
     }
 }

@@ -24,10 +24,6 @@ public class PrimitiveClient {
         this.clientOptions = clientOptions;
     }
 
-    public String getAndReturnString(String request) {
-        return getAndReturnString(request, null);
-    }
-
     public String getAndReturnString(String request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -61,8 +57,8 @@ public class PrimitiveClient {
         }
     }
 
-    public int getAndReturnInt(int request) {
-        return getAndReturnInt(request, null);
+    public String getAndReturnString(String request) {
+        return getAndReturnString(request, null);
     }
 
     public int getAndReturnInt(int request, RequestOptions requestOptions) {
@@ -98,8 +94,8 @@ public class PrimitiveClient {
         }
     }
 
-    public long getAndReturnLong(long request) {
-        return getAndReturnLong(request, null);
+    public int getAndReturnInt(int request) {
+        return getAndReturnInt(request, null);
     }
 
     public long getAndReturnLong(long request, RequestOptions requestOptions) {
@@ -135,8 +131,8 @@ public class PrimitiveClient {
         }
     }
 
-    public double getAndReturnDouble(double request) {
-        return getAndReturnDouble(request, null);
+    public long getAndReturnLong(long request) {
+        return getAndReturnLong(request, null);
     }
 
     public double getAndReturnDouble(double request, RequestOptions requestOptions) {
@@ -172,8 +168,8 @@ public class PrimitiveClient {
         }
     }
 
-    public boolean getAndReturnBool(boolean request) {
-        return getAndReturnBool(request, null);
+    public double getAndReturnDouble(double request) {
+        return getAndReturnDouble(request, null);
     }
 
     public boolean getAndReturnBool(boolean request, RequestOptions requestOptions) {
@@ -209,8 +205,8 @@ public class PrimitiveClient {
         }
     }
 
-    public OffsetDateTime getAndReturnDatetime(OffsetDateTime request) {
-        return getAndReturnDatetime(request, null);
+    public boolean getAndReturnBool(boolean request) {
+        return getAndReturnBool(request, null);
     }
 
     public OffsetDateTime getAndReturnDatetime(OffsetDateTime request, RequestOptions requestOptions) {
@@ -246,8 +242,8 @@ public class PrimitiveClient {
         }
     }
 
-    public String getAndReturnDate(String request) {
-        return getAndReturnDate(request, null);
+    public OffsetDateTime getAndReturnDatetime(OffsetDateTime request) {
+        return getAndReturnDatetime(request, null);
     }
 
     public String getAndReturnDate(String request, RequestOptions requestOptions) {
@@ -283,8 +279,8 @@ public class PrimitiveClient {
         }
     }
 
-    public UUID getAndReturnUuid(UUID request) {
-        return getAndReturnUuid(request, null);
+    public String getAndReturnDate(String request) {
+        return getAndReturnDate(request, null);
     }
 
     public UUID getAndReturnUuid(UUID request, RequestOptions requestOptions) {
@@ -320,8 +316,8 @@ public class PrimitiveClient {
         }
     }
 
-    public byte[] getAndReturnBase64(byte[] request) {
-        return getAndReturnBase64(request, null);
+    public UUID getAndReturnUuid(UUID request) {
+        return getAndReturnUuid(request, null);
     }
 
     public byte[] getAndReturnBase64(byte[] request, RequestOptions requestOptions) {
@@ -355,5 +351,9 @@ public class PrimitiveClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public byte[] getAndReturnBase64(byte[] request) {
+        return getAndReturnBase64(request, null);
     }
 }

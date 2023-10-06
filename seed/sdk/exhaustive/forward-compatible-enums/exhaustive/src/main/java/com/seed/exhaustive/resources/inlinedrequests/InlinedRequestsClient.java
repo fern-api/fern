@@ -27,13 +27,6 @@ public class InlinedRequestsClient {
     /**
      * POST with custom object in request body, response is an object
      */
-    public ObjectWithOptionalField postWithObjectBodyandResponse(PostWithObjectBody request) {
-        return postWithObjectBodyandResponse(request, null);
-    }
-
-    /**
-     * POST with custom object in request body, response is an object
-     */
     public ObjectWithOptionalField postWithObjectBodyandResponse(
             PostWithObjectBody request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -66,5 +59,12 @@ public class InlinedRequestsClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * POST with custom object in request body, response is an object
+     */
+    public ObjectWithOptionalField postWithObjectBodyandResponse(PostWithObjectBody request) {
+        return postWithObjectBodyandResponse(request, null);
     }
 }

@@ -22,10 +22,6 @@ public class ServiceClient {
         this.clientOptions = clientOptions;
     }
 
-    public InputStream downloadFile() {
-        return downloadFile(null);
-    }
-
     public InputStream downloadFile(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -48,5 +44,9 @@ public class ServiceClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public InputStream downloadFile() {
+        return downloadFile(null);
     }
 }

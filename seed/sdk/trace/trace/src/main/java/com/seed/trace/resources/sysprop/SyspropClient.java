@@ -23,10 +23,6 @@ public class SyspropClient {
         this.clientOptions = clientOptions;
     }
 
-    public void setNumWarmInstances(Language language, int numWarmInstances) {
-        setNumWarmInstances(language, numWarmInstances, null);
-    }
-
     public void setNumWarmInstances(Language language, int numWarmInstances, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -54,8 +50,8 @@ public class SyspropClient {
         }
     }
 
-    public Map<Language, Integer> getNumWarmInstances() {
-        return getNumWarmInstances(null);
+    public void setNumWarmInstances(Language language, int numWarmInstances) {
+        setNumWarmInstances(language, numWarmInstances, null);
     }
 
     public Map<Language, Integer> getNumWarmInstances(RequestOptions requestOptions) {
@@ -83,5 +79,9 @@ public class SyspropClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Map<Language, Integer> getNumWarmInstances() {
+        return getNumWarmInstances(null);
     }
 }

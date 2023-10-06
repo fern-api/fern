@@ -26,8 +26,8 @@ public class ObjectClient {
         this.clientOptions = clientOptions;
     }
 
-    public ObjectWithOptionalField getAndReturnWithOptionalField(ObjectWithOptionalField request) {
-        return getAndReturnWithOptionalField(request, null);
+    public ObjectWithOptionalField getAndReturnWithOptionalField() {
+        return getAndReturnWithOptionalField(ObjectWithOptionalField.builder().build());
     }
 
     public ObjectWithOptionalField getAndReturnWithOptionalField(
@@ -64,12 +64,8 @@ public class ObjectClient {
         }
     }
 
-    public ObjectWithOptionalField getAndReturnWithOptionalField() {
-        return getAndReturnWithOptionalField(ObjectWithOptionalField.builder().build());
-    }
-
-    public ObjectWithRequiredField getAndReturnWithRequiredField(ObjectWithRequiredField request) {
-        return getAndReturnWithRequiredField(request, null);
+    public ObjectWithOptionalField getAndReturnWithOptionalField(ObjectWithOptionalField request) {
+        return getAndReturnWithOptionalField(request, null);
     }
 
     public ObjectWithRequiredField getAndReturnWithRequiredField(
@@ -106,8 +102,13 @@ public class ObjectClient {
         }
     }
 
-    public NestedObjectWithOptionalField getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField request) {
-        return getAndReturnNestedWithOptionalField(request, null);
+    public ObjectWithRequiredField getAndReturnWithRequiredField(ObjectWithRequiredField request) {
+        return getAndReturnWithRequiredField(request, null);
+    }
+
+    public NestedObjectWithOptionalField getAndReturnNestedWithOptionalField() {
+        return getAndReturnNestedWithOptionalField(
+                NestedObjectWithOptionalField.builder().build());
     }
 
     public NestedObjectWithOptionalField getAndReturnNestedWithOptionalField(
@@ -145,13 +146,8 @@ public class ObjectClient {
         }
     }
 
-    public NestedObjectWithOptionalField getAndReturnNestedWithOptionalField() {
-        return getAndReturnNestedWithOptionalField(
-                NestedObjectWithOptionalField.builder().build());
-    }
-
-    public NestedObjectWithRequiredField getAndReturnNestedWithRequiredField(NestedObjectWithRequiredField request) {
-        return getAndReturnNestedWithRequiredField(request, null);
+    public NestedObjectWithOptionalField getAndReturnNestedWithOptionalField(NestedObjectWithOptionalField request) {
+        return getAndReturnNestedWithOptionalField(request, null);
     }
 
     public NestedObjectWithRequiredField getAndReturnNestedWithRequiredField(
@@ -187,5 +183,9 @@ public class ObjectClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public NestedObjectWithRequiredField getAndReturnNestedWithRequiredField(NestedObjectWithRequiredField request) {
+        return getAndReturnNestedWithRequiredField(request, null);
     }
 }

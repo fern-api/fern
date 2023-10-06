@@ -29,13 +29,6 @@ public class SubmissionClient {
     /**
      * Returns sessionId and execution server URL for session. Spins up server.
      */
-    public ExecutionSessionResponse createExecutionSession(Language language) {
-        return createExecutionSession(language, null);
-    }
-
-    /**
-     * Returns sessionId and execution server URL for session. Spins up server.
-     */
     public ExecutionSessionResponse createExecutionSession(Language language, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -64,10 +57,10 @@ public class SubmissionClient {
     }
 
     /**
-     * Returns execution server URL for session. Returns empty if session isn't registered.
+     * Returns sessionId and execution server URL for session. Spins up server.
      */
-    public Optional<ExecutionSessionResponse> getExecutionSession(String sessionId) {
-        return getExecutionSession(sessionId, null);
+    public ExecutionSessionResponse createExecutionSession(Language language) {
+        return createExecutionSession(language, null);
     }
 
     /**
@@ -101,10 +94,10 @@ public class SubmissionClient {
     }
 
     /**
-     * Stops execution session.
+     * Returns execution server URL for session. Returns empty if session isn't registered.
      */
-    public void stopExecutionSession(String sessionId) {
-        stopExecutionSession(sessionId, null);
+    public Optional<ExecutionSessionResponse> getExecutionSession(String sessionId) {
+        return getExecutionSession(sessionId, null);
     }
 
     /**
@@ -136,8 +129,11 @@ public class SubmissionClient {
         }
     }
 
-    public GetExecutionSessionStateResponse getExecutionSessionsState() {
-        return getExecutionSessionsState(null);
+    /**
+     * Stops execution session.
+     */
+    public void stopExecutionSession(String sessionId) {
+        stopExecutionSession(sessionId, null);
     }
 
     public GetExecutionSessionStateResponse getExecutionSessionsState(RequestOptions requestOptions) {
@@ -165,5 +161,9 @@ public class SubmissionClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public GetExecutionSessionStateResponse getExecutionSessionsState() {
+        return getExecutionSessionsState(null);
     }
 }

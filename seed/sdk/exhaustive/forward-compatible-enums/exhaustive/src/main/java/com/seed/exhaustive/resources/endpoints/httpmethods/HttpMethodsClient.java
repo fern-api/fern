@@ -24,10 +24,6 @@ public class HttpMethodsClient {
         this.clientOptions = clientOptions;
     }
 
-    public String testGet(String id) {
-        return testGet(id, null);
-    }
-
     public String testGet(String id, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -54,8 +50,8 @@ public class HttpMethodsClient {
         }
     }
 
-    public ObjectWithOptionalField testPost(ObjectWithRequiredField request) {
-        return testPost(request, null);
+    public String testGet(String id) {
+        return testGet(id, null);
     }
 
     public ObjectWithOptionalField testPost(ObjectWithRequiredField request, RequestOptions requestOptions) {
@@ -90,8 +86,8 @@ public class HttpMethodsClient {
         }
     }
 
-    public ObjectWithOptionalField testPut(String id, ObjectWithRequiredField request) {
-        return testPut(id, request, null);
+    public ObjectWithOptionalField testPost(ObjectWithRequiredField request) {
+        return testPost(request, null);
     }
 
     public ObjectWithOptionalField testPut(String id, ObjectWithRequiredField request, RequestOptions requestOptions) {
@@ -127,8 +123,12 @@ public class HttpMethodsClient {
         }
     }
 
-    public ObjectWithOptionalField testPatch(String id, ObjectWithOptionalField request) {
-        return testPatch(id, request, null);
+    public ObjectWithOptionalField testPut(String id, ObjectWithRequiredField request) {
+        return testPut(id, request, null);
+    }
+
+    public ObjectWithOptionalField testPatch(String id) {
+        return testPatch(id, ObjectWithOptionalField.builder().build());
     }
 
     public ObjectWithOptionalField testPatch(
@@ -165,12 +165,8 @@ public class HttpMethodsClient {
         }
     }
 
-    public ObjectWithOptionalField testPatch(String id) {
-        return testPatch(id, ObjectWithOptionalField.builder().build());
-    }
-
-    public boolean testDelete(String id) {
-        return testDelete(id, null);
+    public ObjectWithOptionalField testPatch(String id, ObjectWithOptionalField request) {
+        return testPatch(id, request, null);
     }
 
     public boolean testDelete(String id, RequestOptions requestOptions) {
@@ -197,5 +193,9 @@ public class HttpMethodsClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public boolean testDelete(String id) {
+        return testDelete(id, null);
     }
 }

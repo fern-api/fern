@@ -24,10 +24,6 @@ public class MigrationClient {
         this.clientOptions = clientOptions;
     }
 
-    public List<Migration> getAttemptedMigrations(GetAttemptedMigrationsRequest request) {
-        return getAttemptedMigrations(request, null);
-    }
-
     public List<Migration> getAttemptedMigrations(
             GetAttemptedMigrationsRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -55,5 +51,9 @@ public class MigrationClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<Migration> getAttemptedMigrations(GetAttemptedMigrationsRequest request) {
+        return getAttemptedMigrations(request, null);
     }
 }

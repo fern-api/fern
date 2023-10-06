@@ -21,10 +21,6 @@ public class ServiceClient {
         this.clientOptions = clientOptions;
     }
 
-    public Exception getException(String notificationId) {
-        return getException(notificationId, null);
-    }
-
     public Exception getException(String notificationId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -49,5 +45,9 @@ public class ServiceClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Exception getException(String notificationId) {
+        return getException(notificationId, null);
     }
 }

@@ -25,13 +25,6 @@ public class NoAuthClient {
     /**
      * POST request with no auth
      */
-    public boolean postWithNoAuth(Object request) {
-        return postWithNoAuth(request, null);
-    }
-
-    /**
-     * POST request with no auth
-     */
     public boolean postWithNoAuth(Object request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -62,5 +55,12 @@ public class NoAuthClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * POST request with no auth
+     */
+    public boolean postWithNoAuth(Object request) {
+        return postWithNoAuth(request, null);
     }
 }

@@ -23,13 +23,6 @@ public class PropertyBasedErrorClient {
     /**
      * GET request that always throws an error
      */
-    public String throwError() {
-        return throwError(null);
-    }
-
-    /**
-     * GET request that always throws an error
-     */
     public String throwError(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -53,5 +46,12 @@ public class PropertyBasedErrorClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * GET request that always throws an error
+     */
+    public String throwError() {
+        return throwError(null);
     }
 }

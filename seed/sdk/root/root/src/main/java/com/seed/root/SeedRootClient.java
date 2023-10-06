@@ -28,10 +28,6 @@ public class SeedRootClient {
         this.serviceClient = Suppliers.memoize(() -> new ServiceClient(clientOptions));
     }
 
-    public String echo(String request) {
-        return echo(request, null);
-    }
-
     public String echo(String request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -61,6 +57,10 @@ public class SeedRootClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String echo(String request) {
+        return echo(request, null);
     }
 
     public ServiceClient service() {

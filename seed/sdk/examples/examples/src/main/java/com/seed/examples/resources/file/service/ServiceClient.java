@@ -22,8 +22,8 @@ public class ServiceClient {
         this.clientOptions = clientOptions;
     }
 
-    public File getFile(String filename, GetFileRequest request) {
-        return getFile(filename, request, null);
+    public File getFile(String filename) {
+        return getFile(filename, GetFileRequest.builder().build());
     }
 
     public File getFile(String filename, GetFileRequest request, RequestOptions requestOptions) {
@@ -53,7 +53,7 @@ public class ServiceClient {
         }
     }
 
-    public File getFile(String filename) {
-        return getFile(filename, GetFileRequest.builder().build());
+    public File getFile(String filename, GetFileRequest request) {
+        return getFile(filename, request, null);
     }
 }

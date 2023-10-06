@@ -23,10 +23,6 @@ public class Ec2Client {
         this.clientOptions = clientOptions;
     }
 
-    public void bootInstance(BootInstanceRequest request) {
-        bootInstance(request, null);
-    }
-
     public void bootInstance(BootInstanceRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getec2URL())
                 .newBuilder()
@@ -58,5 +54,9 @@ public class Ec2Client {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void bootInstance(BootInstanceRequest request) {
+        bootInstance(request, null);
     }
 }

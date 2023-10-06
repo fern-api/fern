@@ -31,10 +31,6 @@ public class AdminClient {
         this.clientOptions = clientOptions;
     }
 
-    public void updateTestSubmissionStatus(UUID submissionId, TestSubmissionStatus request) {
-        updateTestSubmissionStatus(submissionId, request, null);
-    }
-
     public void updateTestSubmissionStatus(
             UUID submissionId, TestSubmissionStatus request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
@@ -70,8 +66,8 @@ public class AdminClient {
         }
     }
 
-    public void sendTestSubmissionUpdate(UUID submissionId, TestSubmissionUpdate request) {
-        sendTestSubmissionUpdate(submissionId, request, null);
+    public void updateTestSubmissionStatus(UUID submissionId, TestSubmissionStatus request) {
+        updateTestSubmissionStatus(submissionId, request, null);
     }
 
     public void sendTestSubmissionUpdate(
@@ -109,8 +105,8 @@ public class AdminClient {
         }
     }
 
-    public void updateWorkspaceSubmissionStatus(UUID submissionId, WorkspaceSubmissionStatus request) {
-        updateWorkspaceSubmissionStatus(submissionId, request, null);
+    public void sendTestSubmissionUpdate(UUID submissionId, TestSubmissionUpdate request) {
+        sendTestSubmissionUpdate(submissionId, request, null);
     }
 
     public void updateWorkspaceSubmissionStatus(
@@ -148,8 +144,8 @@ public class AdminClient {
         }
     }
 
-    public void sendWorkspaceSubmissionUpdate(UUID submissionId, WorkspaceSubmissionUpdate request) {
-        sendWorkspaceSubmissionUpdate(submissionId, request, null);
+    public void updateWorkspaceSubmissionStatus(UUID submissionId, WorkspaceSubmissionStatus request) {
+        updateWorkspaceSubmissionStatus(submissionId, request, null);
     }
 
     public void sendWorkspaceSubmissionUpdate(
@@ -187,8 +183,8 @@ public class AdminClient {
         }
     }
 
-    public void storeTracedTestCase(UUID submissionId, String testCaseId, StoreTracedTestCaseRequest request) {
-        storeTracedTestCase(submissionId, testCaseId, request, null);
+    public void sendWorkspaceSubmissionUpdate(UUID submissionId, WorkspaceSubmissionUpdate request) {
+        sendWorkspaceSubmissionUpdate(submissionId, request, null);
     }
 
     public void storeTracedTestCase(
@@ -228,8 +224,8 @@ public class AdminClient {
         }
     }
 
-    public void storeTracedTestCaseV2(UUID submissionId, String testCaseId, List<TraceResponseV2> request) {
-        storeTracedTestCaseV2(submissionId, testCaseId, request, null);
+    public void storeTracedTestCase(UUID submissionId, String testCaseId, StoreTracedTestCaseRequest request) {
+        storeTracedTestCase(submissionId, testCaseId, request, null);
     }
 
     public void storeTracedTestCaseV2(
@@ -269,8 +265,8 @@ public class AdminClient {
         }
     }
 
-    public void storeTracedWorkspace(UUID submissionId, StoreTracedWorkspaceRequest request) {
-        storeTracedWorkspace(submissionId, request, null);
+    public void storeTracedTestCaseV2(UUID submissionId, String testCaseId, List<TraceResponseV2> request) {
+        storeTracedTestCaseV2(submissionId, testCaseId, request, null);
     }
 
     public void storeTracedWorkspace(
@@ -308,8 +304,8 @@ public class AdminClient {
         }
     }
 
-    public void storeTracedWorkspaceV2(UUID submissionId, List<TraceResponseV2> request) {
-        storeTracedWorkspaceV2(submissionId, request, null);
+    public void storeTracedWorkspace(UUID submissionId, StoreTracedWorkspaceRequest request) {
+        storeTracedWorkspace(submissionId, request, null);
     }
 
     public void storeTracedWorkspaceV2(
@@ -345,5 +341,9 @@ public class AdminClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void storeTracedWorkspaceV2(UUID submissionId, List<TraceResponseV2> request) {
+        storeTracedWorkspaceV2(submissionId, request, null);
     }
 }

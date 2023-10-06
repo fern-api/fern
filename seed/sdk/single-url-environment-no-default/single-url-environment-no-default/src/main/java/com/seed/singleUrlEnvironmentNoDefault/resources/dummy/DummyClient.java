@@ -20,10 +20,6 @@ public class DummyClient {
         this.clientOptions = clientOptions;
     }
 
-    public String getDummy() {
-        return getDummy(null);
-    }
-
     public String getDummy(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -47,5 +43,9 @@ public class DummyClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String getDummy() {
+        return getDummy(null);
     }
 }

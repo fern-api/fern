@@ -23,10 +23,6 @@ public class EnumClient {
         this.clientOptions = clientOptions;
     }
 
-    public WeatherReport getAndReturnEnum(WeatherReport request) {
-        return getAndReturnEnum(request, null);
-    }
-
     public WeatherReport getAndReturnEnum(WeatherReport request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -57,5 +53,9 @@ public class EnumClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public WeatherReport getAndReturnEnum(WeatherReport request) {
+        return getAndReturnEnum(request, null);
     }
 }

@@ -30,10 +30,6 @@ public class V2Client {
         this.v3Client = Suppliers.memoize(() -> new V3Client(clientOptions));
     }
 
-    public void test() {
-        test(null);
-    }
-
     public void test(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -55,6 +51,10 @@ public class V2Client {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void test() {
+        test(null);
     }
 
     public ProblemClient problem() {

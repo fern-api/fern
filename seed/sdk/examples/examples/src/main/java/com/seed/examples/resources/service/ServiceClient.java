@@ -25,10 +25,6 @@ public class ServiceClient {
         this.clientOptions = clientOptions;
     }
 
-    public Movie getMovie(String movieId) {
-        return getMovie(movieId, null);
-    }
-
     public Movie getMovie(String movieId, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -55,8 +51,8 @@ public class ServiceClient {
         }
     }
 
-    public String createMovie(Movie request) {
-        return createMovie(request, null);
+    public Movie getMovie(String movieId) {
+        return getMovie(movieId, null);
     }
 
     public String createMovie(Movie request, RequestOptions requestOptions) {
@@ -91,8 +87,8 @@ public class ServiceClient {
         }
     }
 
-    public Metadata getMetadata(GetMetadataRequest request) {
-        return getMetadata(request, null);
+    public String createMovie(Movie request) {
+        return createMovie(request, null);
     }
 
     public Metadata getMetadata(GetMetadataRequest request, RequestOptions requestOptions) {
@@ -124,5 +120,9 @@ public class ServiceClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Metadata getMetadata(GetMetadataRequest request) {
+        return getMetadata(request, null);
     }
 }

@@ -210,6 +210,7 @@ public abstract class AbstractEndpointWriter {
         MethodSpec endpointWithoutRequest = null;
         if (sdkRequest().isPresent() && sdkRequest().get().getShape().visit(new SdkRequestIsOptional())) {
             MethodSpec.Builder endpointWithoutRequestBldr = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
+                    .addJavadoc(endpointWithRequestOptions.javadoc)
                     .addModifiers(Modifier.PUBLIC)
                     .addParameters(pathParameters)
                     .returns(endpointWithoutRequestOptions.returnType);
@@ -507,7 +508,7 @@ public abstract class AbstractEndpointWriter {
             return justRequestBody.visit(new SdkRequestBodyType.Visitor<Boolean>() {
                 @Override
                 public Boolean visitTypeReference(HttpRequestBodyReference typeReference) {
-                    return typeReference.getRequestBodyType().visit(new TypeReferenceIsOptional());
+                    return typeReference.getRequestBodyType().visit(new TypeReferenceIsOptional(true));
                 }
 
                 @Override
@@ -530,12 +531,12 @@ public abstract class AbstractEndpointWriter {
             }
             if (!httpEndpoint.getHeaders().isEmpty() && isOptional) {
                 isOptional = httpEndpoint.getHeaders().stream()
-                        .allMatch(httpHeader -> httpHeader.getValueType().visit(new TypeReferenceIsOptional()));
+                        .allMatch(httpHeader -> httpHeader.getValueType().visit(new TypeReferenceIsOptional(false)));
             }
             if (!httpEndpoint.getQueryParameters().isEmpty() && isOptional) {
                 isOptional = httpEndpoint.getQueryParameters().stream()
-                        .allMatch(
-                                queryParameter -> queryParameter.getValueType().visit(new TypeReferenceIsOptional()));
+                        .allMatch(queryParameter ->
+                                queryParameter.getValueType().visit(new TypeReferenceIsOptional(false)));
             }
             return isOptional;
         }
@@ -548,6 +549,12 @@ public abstract class AbstractEndpointWriter {
 
     private class TypeReferenceIsOptional implements com.fern.ir.model.types.TypeReference.Visitor<Boolean> {
 
+        private final boolean visitNmaedType;
+
+        TypeReferenceIsOptional(boolean visitNamedType) {
+            this.visitNmaedType = visitNamedType;
+        }
+
         @Override
         public Boolean visitContainer(ContainerType container) {
             return container.isOptional();
@@ -555,9 +562,12 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public Boolean visitNamed(DeclaredTypeName named) {
-            TypeDeclaration typeDeclaration =
-                    clientGeneratorContext.getTypeDeclarations().get(named.getTypeId());
-            return typeDeclaration.getShape().visit(new TypeDeclarationIsOptional());
+            if (visitNmaedType) {
+                TypeDeclaration typeDeclaration =
+                        clientGeneratorContext.getTypeDeclarations().get(named.getTypeId());
+                return typeDeclaration.getShape().visit(new TypeDeclarationIsOptional());
+            }
+            return false;
         }
 
         @Override
@@ -580,7 +590,7 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public Boolean visitAlias(AliasTypeDeclaration alias) {
-            return alias.getAliasOf().visit(new TypeReferenceIsOptional());
+            return alias.getAliasOf().visit(new TypeReferenceIsOptional(true));
         }
 
         @Override
@@ -591,7 +601,8 @@ public abstract class AbstractEndpointWriter {
         @Override
         public Boolean visitObject(ObjectTypeDeclaration object) {
             boolean allPropertiesOptional = object.getProperties().stream()
-                    .allMatch(objectProperty -> objectProperty.getValueType().visit(new TypeReferenceIsOptional()));
+                    .allMatch(
+                            objectProperty -> objectProperty.getValueType().visit(new TypeReferenceIsOptional(false)));
             boolean allExtendsAreOptional = object.getExtends().stream().allMatch(declaredTypeName -> {
                 TypeDeclaration typeDeclaration =
                         clientGeneratorContext.getTypeDeclarations().get(declaredTypeName.getTypeId());
@@ -621,7 +632,8 @@ public abstract class AbstractEndpointWriter {
         @Override
         public Boolean visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
             boolean allPropertiesOptional = inlinedRequestBody.getProperties().stream()
-                    .allMatch(objectProperty -> objectProperty.getValueType().visit(new TypeReferenceIsOptional()));
+                    .allMatch(
+                            objectProperty -> objectProperty.getValueType().visit(new TypeReferenceIsOptional(false)));
             boolean allExtendsAreOptional = inlinedRequestBody.getExtends().stream()
                     .allMatch(declaredTypeName -> {
                         TypeDeclaration typeDeclaration =
@@ -633,7 +645,7 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public Boolean visitReference(HttpRequestBodyReference reference) {
-            return reference.getRequestBodyType().visit(new TypeReferenceIsOptional());
+            return reference.getRequestBodyType().visit(new TypeReferenceIsOptional(true));
         }
 
         @Override
@@ -663,7 +675,7 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public Boolean visitBodyProperty(InlinedRequestBodyProperty bodyProperty) {
-            return bodyProperty.getValueType().visit(new TypeReferenceIsOptional());
+            return bodyProperty.getValueType().visit(new TypeReferenceIsOptional(false));
         }
 
         @Override

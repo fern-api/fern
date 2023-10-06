@@ -23,10 +23,6 @@ public class S3Client {
         this.clientOptions = clientOptions;
     }
 
-    public String getPresignedUrl(GetPresignedUrlRequest request) {
-        return getPresignedUrl(request, null);
-    }
-
     public String getPresignedUrl(GetPresignedUrlRequest request, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().gets3URL())
                 .newBuilder()
@@ -58,5 +54,9 @@ public class S3Client {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String getPresignedUrl(GetPresignedUrlRequest request) {
+        return getPresignedUrl(request, null);
     }
 }

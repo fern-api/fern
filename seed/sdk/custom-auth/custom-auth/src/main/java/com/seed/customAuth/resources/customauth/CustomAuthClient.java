@@ -25,13 +25,6 @@ public class CustomAuthClient {
     /**
      * GET request with custom auth scheme
      */
-    public boolean getWithCustomAuth() {
-        return getWithCustomAuth(null);
-    }
-
-    /**
-     * GET request with custom auth scheme
-     */
     public boolean getWithCustomAuth(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -58,10 +51,10 @@ public class CustomAuthClient {
     }
 
     /**
-     * POST request with custom auth scheme
+     * GET request with custom auth scheme
      */
-    public boolean postWithCustomAuth(Object request) {
-        return postWithCustomAuth(request, null);
+    public boolean getWithCustomAuth() {
+        return getWithCustomAuth(null);
     }
 
     /**
@@ -97,5 +90,12 @@ public class CustomAuthClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * POST request with custom auth scheme
+     */
+    public boolean postWithCustomAuth(Object request) {
+        return postWithCustomAuth(request, null);
     }
 }

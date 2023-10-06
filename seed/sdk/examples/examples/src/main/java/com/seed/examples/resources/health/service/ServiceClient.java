@@ -20,10 +20,6 @@ public class ServiceClient {
         this.clientOptions = clientOptions;
     }
 
-    public void check(String id) {
-        check(id, null);
-    }
-
     public void check(String id, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -49,8 +45,8 @@ public class ServiceClient {
         }
     }
 
-    public boolean ping() {
-        return ping(null);
+    public void check(String id) {
+        check(id, null);
     }
 
     public boolean ping(RequestOptions requestOptions) {
@@ -76,5 +72,9 @@ public class ServiceClient {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public boolean ping() {
+        return ping(null);
     }
 }
