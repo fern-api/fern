@@ -645,7 +645,7 @@ public abstract class AbstractEndpointWriter {
 
         @Override
         public Boolean visitReference(HttpRequestBodyReference reference) {
-            return reference.getRequestBodyType().visit(new TypeReferenceIsOptional(true));
+            return reference.getRequestBodyType().visit(new TypeReferenceIsOptional(false));
         }
 
         @Override
