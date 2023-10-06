@@ -167,6 +167,15 @@ export function convertSchemaObject(
             });
         }
 
+        const maybeConstValue = getProperty<string>(schema, "const");
+        if (maybeConstValue != null) {
+            return wrapLiteral({
+                literal: maybeConstValue,
+                wrapAsNullable,
+                description,
+            });
+        }
+
         return wrapPrimitive({
             primitive: PrimitiveSchemaValue.string({
                 maxLength: schema.maxLength,
@@ -463,6 +472,30 @@ function isAllOfElementEmpty(schema: OpenAPIV3.ReferenceObject | OpenAPIV3.Schem
     return isEqual(keys, DEFAULT_KEY) || isEqual(keys, DESCRIPTION_KEY) || isEqual(keys, DEFAULT_DESCRIPTION_KEYS);
 }
 
+export function wrapLiteral({
+    literal,
+    wrapAsNullable,
+    description,
+}: {
+    literal: string;
+    wrapAsNullable: boolean;
+    description: string | undefined;
+}): Schema {
+    if (wrapAsNullable) {
+        return Schema.nullable({
+            value: Schema.literal({
+                value: literal,
+                description,
+            }),
+            description,
+        });
+    }
+    return Schema.literal({
+        value: literal,
+        description,
+    });
+}
+
 export function wrapPrimitive({
     primitive,
     wrapAsNullable,
@@ -570,4 +603,13 @@ function getPossibleDiscriminants({
         }
     }
     return possibleDiscrimimants;
+}
+
+export function getProperty<T>(object: object, property: string): T | undefined {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const extensionValue = (object as any)[property];
+    if (extensionValue != null) {
+        return extensionValue as T;
+    }
+    return undefined;
 }
