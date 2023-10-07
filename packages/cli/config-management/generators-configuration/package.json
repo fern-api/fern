@@ -35,7 +35,7 @@
     "@fern-fern/fiddle-sdk": "^0.0.290",
     "immer": "^9.0.15",
     "js-yaml": "^4.1.0",
-    "zod": "^3.22.2"
+    "zod": "^3.22.3"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
