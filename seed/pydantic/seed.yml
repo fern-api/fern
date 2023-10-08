@@ -1,0 +1,4 @@
+irVersion: v25
+docker: fernapi/fern-pydantic-model:latest
+language: python
+generatorType: model

@@ -1,0 +1,17 @@
+irVersion: v25
+docker: fernapi/fern-python-sdk:latest
+language: python
+generatorType: sdk
+fixtures:
+  exhaustive:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        timeout_in_seconds: infinity
+      outputFolder: infinite-timeout
+    - customConfig:
+        timeout_in_seconds: 5
+      outputFolder: five-second-timeout
+    - customConfig:
+        include_union_utils: true
+      outputFolder: union-utils

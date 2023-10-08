@@ -1,0 +1,4 @@
+irVersion: v25
+docker: fernapi/fern-fastapi-server:latest
+language: python
+generatorType: server

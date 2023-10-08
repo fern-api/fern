@@ -4,49 +4,61 @@ orbs:
   python: circleci/python@2.1.1
 
 jobs:
-  seed-sdk-test:
-    machine:
-      image: ubuntu-2004:current
-    steps:
-      - checkout
-      - run:
-          name: Install Node.js
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y nodejs npm
-      - run:
-          name: Install Python 3.8.16
-          command: |
-            sudo apt update
-            sudo apt install -y software-properties-common
-            sudo add-apt-repository -y ppa:deadsnakes/ppa
-            sudo apt update
-            sudo apt install -y python3.8 python3.8-dev python3.8-venv
-
-            # Install Poetry
-            curl -sSL https://install.python-poetry.org | python3.8 -
-      - run:
-          name: Build docker and run seed
-          command: |
-            # Setup Poetry Path
-            export PATH="/home/circleci/.local/bin:$PATH"
-
-            # Build docker
-            docker build -f ./docker/sdk/Dockerfile -t fernapi/fern-python-sdk:latest .
-
-            # Run seed
-            npm install -g @fern-api/seed-cli@0.15.0-rc27
-            seed test --docker fernapi/fern-python-sdk:latest --irVersion v26 --language python --compile-command 'poetry install && poetry run mypy .'
-
-            git --no-pager diff --exit-code
-
-  check:
+  compile:
     docker:
       - image: cimg/python:3.8.16-node
     steps:
       - checkout
       - python/install-packages:
           pkg-manager: poetry
+      - persist_to_workspace:
+          root: /home/circleci
+          paths: [ project, .cache ]
+
+  seed-sdk-test:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - attach_workspace: { at: /home/circleci }
+      - run:
+          name: Install and run seed
+          command: |
+            npm install -g @fern-api/seed-cli@0.15.0-rc35 
+            docker build -f ./docker/sdk/Dockerfile -t fernapi/fern-python-sdk:latest .
+            seed test --workspace sdk --parallel 10
+            git --no-pager diff --exit-code
+  
+  seed-fastapi-test:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - attach_workspace: { at: /home/circleci }
+      - run:
+          name: Install and run seed
+          command: |
+            npm install -g @fern-api/seed-cli@0.15.0-rc35
+            docker build -f ./docker/fastapi/Dockerfile -t fernapi/fern-fastapi-server:latest .
+            seed test --workspace fastapi --parallel 10
+            git --no-pager diff --exit-code
+  
+  seed-pydantic-test:
+    machine:
+      image: ubuntu-2004:current
+    steps:
+      - attach_workspace: { at: /home/circleci }
+      - run:
+          name: Install and run seed
+          command: |
+            npm install -g @fern-api/seed-cli@0.15.0-rc35
+            docker build -f ./docker/fastapi/Dockerfile -t fernapi/fern-pydantic-model:latest .
+            seed test --workspace pydantic --parallel 10
+            git --no-pager diff --exit-code
+
+  check:
+    docker:
+      - image: cimg/python:3.8.16-node
+    steps:
+      - attach_workspace: { at: /home/circleci }
       - run:
           name: Type check
           command: poetry run mypy
@@ -58,9 +70,7 @@ jobs:
     docker:
       - image: cimg/python:3.8.16-node
     steps:
-      - checkout
-      - python/install-packages:
-          pkg-manager: poetry
+      - attach_workspace: { at: /home/circleci }
       - run:
           name: Run tests
           command: poetry run pytest -sv
@@ -69,7 +79,7 @@ jobs:
     machine:
       image: ubuntu-2004:current
     steps:
-      - checkout
+      - attach_workspace: { at: /home/circleci }
       - run:
           name: Setup Buildx
           command: |
@@ -96,18 +106,42 @@ jobs:
 workflows:
   build:
     jobs:
+
+      - compile:
+          filters:
+            tags:
+              only: /.*/
+
       - seed-sdk-test:
           filters:
             tags:
               only: /.*/
+          requires: [ compile ]    
+      
+      - seed-fastapi-test:
+          filters:
+            tags:
+              only: /.*/
+          requires: [ compile ]    
+
+      - seed-pydantic-test:
+          filters:
+            tags:
+              only: /.*/
+          requires: [ compile ]
+
       - check:
           filters:
             tags:
               only: /.*/
+          requires: [ compile ]
+          
       - test:
           filters:
             tags:
               only: /.*/
+          requires: [ compile ]
+
       - publish-dockers:
           filters:
             branches:
