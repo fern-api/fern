@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "seed"
+version = "0.0.0"
+description = ""
+readme = "README.md"
+authors = []
+packages = [
+    { include = "seed/exhaustive", from = "src"}
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+fastapi = "^0.79.0"
+pydantic = ">= 1.9.2, < 3"
+starlette = "^0.21.0"
+
+[tool.poetry.dev-dependencies]
+mypy = "0.971"
+pytest = "^7.4.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

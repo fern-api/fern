@@ -12,6 +12,8 @@ class ReferenceImport:
     module: Module
     named_import: Optional[str] = None
     alias: Optional[str] = None
+    # Used if there is an alternative way to import the dependency (e.g pydantic v1 vs v2)
+    alternative_import: Optional[ReferenceImport] = None
 
 
 @dataclass(frozen=True)

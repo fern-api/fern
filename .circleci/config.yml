@@ -23,8 +23,7 @@ jobs:
       - run:
           name: Install and run seed
           command: |
-            npm install -g @fern-api/seed-cli@0.15.0-rc35 
-            docker build -f ./docker/sdk/Dockerfile -t fernapi/fern-python-sdk:latest .
+            npm install -g @fern-api/seed-cli@0.15.0-rc36
             seed test --workspace sdk --parallel 10
             git --no-pager diff --exit-code
   
@@ -36,8 +35,7 @@ jobs:
       - run:
           name: Install and run seed
           command: |
-            npm install -g @fern-api/seed-cli@0.15.0-rc35
-            docker build -f ./docker/fastapi/Dockerfile -t fernapi/fern-fastapi-server:latest .
+            npm install -g @fern-api/seed-cli@0.15.0-rc36
             seed test --workspace fastapi --parallel 10
             git --no-pager diff --exit-code
   
@@ -49,8 +47,7 @@ jobs:
       - run:
           name: Install and run seed
           command: |
-            npm install -g @fern-api/seed-cli@0.15.0-rc35
-            docker build -f ./docker/fastapi/Dockerfile -t fernapi/fern-pydantic-model:latest .
+            npm install -g @fern-api/seed-cli@0.15.0-rc36
             seed test --workspace pydantic --parallel 10
             git --no-pager diff --exit-code
 

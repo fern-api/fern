@@ -90,6 +90,15 @@ class ImportsManager:
         if self._has_written_any_statements:
             s += " # noqa: E402"
 
+        if import_.alternative_import is not None:
+            alternative_import = self._get_import_as_string(import_.alternative_import)
+            s = f"""
+try:
+    {s}
+except ImportError:
+    {alternative_import}
+            """
+
         return s
 
 

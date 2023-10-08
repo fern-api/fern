@@ -1,6 +1,6 @@
 from fern_python.codegen import AST
 
-PYDANTIC_DEPENDENCY = AST.Dependency(name="pydantic", version="^1.9.2")
+PYDANTIC_DEPENDENCY = AST.Dependency(name="pydantic", version=">= 1.9.2, < 3")
 
 
 def _export(*export: str) -> AST.ClassReference:
@@ -8,8 +8,15 @@ def _export(*export: str) -> AST.ClassReference:
         import_=AST.ReferenceImport(
             module=AST.Module.external(
                 dependency=PYDANTIC_DEPENDENCY,
-                module_path=("pydantic",),
-            )
+                module_path=("pydantic", "v1"),
+            ),
+            alias="pydantic",
+            alternative_import=AST.ReferenceImport(
+                module=AST.Module.external(
+                    dependency=PYDANTIC_DEPENDENCY,
+                    module_path=("pydantic",),
+                ),
+            ),
         ),
         qualified_name_excluding_import=export,
     )

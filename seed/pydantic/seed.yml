@@ -1,4 +1,5 @@
 irVersion: v25
 docker: fernapi/fern-pydantic-model:latest
+dockerCommand: docker build -f ./docker/fastapi/Dockerfile -t fernapi/fern-pydantic-model:latest .
 language: python
 generatorType: model
