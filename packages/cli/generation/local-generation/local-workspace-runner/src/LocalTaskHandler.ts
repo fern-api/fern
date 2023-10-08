@@ -3,7 +3,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { FERNIGNORE_FILENAME, SNIPPET_JSON_FILENAME } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import decompress from "decompress";
-import { cp, readdir, readFile } from "fs/promises";
+import { cp, readdir, readFile, rm } from "fs/promises";
 import tmp from "tmp-promise";
 
 export declare namespace LocalTaskHandler {
@@ -90,6 +90,7 @@ export class LocalTaskHandler {
      */
     private async copyGeneratedFilesNoFernIgnore(): Promise<void> {
         this.context.logger.debug(`rm -rf ${this.absolutePathToLocalOutput}`);
+        await rm(this.absolutePathToLocalOutput, { force: true, recursive: true });
         await this.copyGeneratedFilesToDirectory(this.absolutePathToLocalOutput);
     }
 

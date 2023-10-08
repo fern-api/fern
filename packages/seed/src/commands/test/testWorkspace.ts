@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { CONSOLE_LOGGER, LogLevel } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
@@ -163,7 +163,7 @@ export async function acquireLocksAndRunTest({
     customConfig: unknown;
     compileCommand: string | undefined;
     taskContext: TaskContext;
-    outputDir: string;
+    outputDir: AbsoluteFilePath;
 }): Promise<TestResult> {
     taskContext.logger.debug("Acquiring lock...");
     await lock.acquire();
@@ -203,7 +203,7 @@ async function testWithWriteToDisk({
     customConfig: unknown;
     compileCommand: string | undefined;
     taskContext: TaskContext;
-    outputDir: string;
+    outputDir: AbsoluteFilePath;
 }): Promise<TestResult> {
     try {
         const absolutePathToWorkspace = AbsoluteFilePath.of(
@@ -233,9 +233,8 @@ async function testWithWriteToDisk({
                 fixture,
             };
         }
-        const absolutePathToOutput = AbsoluteFilePath.of(resolve(cwd(), outputDir, fixture));
         await runDockerForWorkspace({
-            absolutePathToOutput,
+            absolutePathToOutput: outputDir,
             docker,
             workspace: workspace.workspace,
             language,
@@ -254,7 +253,7 @@ async function testWithWriteToDisk({
                     spaceDelimitedCommand[0] ?? command,
                     spaceDelimitedCommand.slice(1),
                     {
-                        cwd: absolutePathToOutput,
+                        cwd: outputDir,
                         doNotPipeOutput: true,
                     }
                 );
