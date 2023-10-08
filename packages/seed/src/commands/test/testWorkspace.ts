@@ -53,6 +53,7 @@ export async function testWorkspace({
     language,
     fixtures,
     docker,
+    dockerCommand,
     compileCommand,
     logLevel,
     numDockers,
@@ -63,12 +64,28 @@ export async function testWorkspace({
     language: GenerationLanguage;
     fixtures: string[];
     docker: ParsedDockerName;
+    dockerCommand: string | undefined;
     compileCommand: string | undefined;
     logLevel: LogLevel;
     numDockers: number;
 }): Promise<void> {
     const lock = new Semaphore(numDockers);
     const taskContextFactory = new TaskContextFactory(logLevel);
+
+    if (dockerCommand != null) {
+        const workspaceTaskContext = taskContextFactory.create(workspace.workspaceName);
+        const spaceDelimitedCommand = dockerCommand.split(" ");
+        await loggingExeca(
+            workspaceTaskContext.logger,
+            spaceDelimitedCommand[0] ?? dockerCommand,
+            spaceDelimitedCommand.slice(1),
+            {
+                cwd: path.dirname(path.dirname(workspace.absolutePathToWorkspace)),
+                doNotPipeOutput: false,
+            }
+        );
+    }
+
     const testCases = [];
     for (const fixture of fixtures) {
         const fixtureConfig = workspace.workspaceConfig.fixtures?.[fixture];
@@ -84,7 +101,9 @@ export async function testWorkspace({
                         docker,
                         compileCommand,
                         customConfig: fixtureConfigInstance.customConfig,
-                        taskContext: taskContextFactory.create(fixture),
+                        taskContext: taskContextFactory.create(
+                            `${workspace.workspaceName}:${fixture} - ${fixtureConfigInstance.outputFolder}`
+                        ),
                         outputDir: join(
                             workspace.absolutePathToWorkspace,
                             RelativeFilePath.of(fixture),
@@ -104,7 +123,7 @@ export async function testWorkspace({
                     docker,
                     compileCommand,
                     customConfig: undefined,
-                    taskContext: taskContextFactory.create(fixture),
+                    taskContext: taskContextFactory.create(`${workspace.workspaceName}:${fixture}`),
                     outputDir: join(workspace.absolutePathToWorkspace, RelativeFilePath.of(fixture)),
                 })
             );

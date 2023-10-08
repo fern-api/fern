@@ -66,6 +66,7 @@ function addTestCommand(cli: Argv) {
                 language: workspace.workspaceConfig.language,
                 generatorType: workspace.workspaceConfig.generatorType,
                 docker: parsedDockerImage,
+                dockerCommand: workspace.workspaceConfig.dockerCommand,
                 compileCommand: undefined,
                 logLevel: argv["log-level"],
                 numDockers: argv.parallel,
