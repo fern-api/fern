@@ -44,7 +44,7 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/fiddle-sdk": "^0.0.290",
-    "@fern-fern/seed-config": "0.0.2",
+    "@fern-fern/seed-config": "0.0.6",
     "chalk": "^5.0.1",
     "find-up": "^6.3.0",
     "js-yaml": "^4.1.0",
