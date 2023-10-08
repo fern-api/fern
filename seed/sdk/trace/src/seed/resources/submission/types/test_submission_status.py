@@ -2,11 +2,6 @@
 
 from __future__ import annotations
 
-try:
-    import pydantic.v1 as pydantic
-except ImportError:
-    import pydantic
-
 import typing
 
 import typing_extensions
@@ -30,6 +25,11 @@ from .test_case_non_hidden_grade import TestCaseNonHiddenGrade
 from .test_case_result import TestCaseResult
 from .test_case_result_with_stdout import TestCaseResultWithStdout
 from .traced_test_case import TracedTestCase
+
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
 
 
 class TestSubmissionStatus_Stopped(pydantic.BaseModel):

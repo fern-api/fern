@@ -2,8 +2,12 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
+import typing_extensions
+
+from ....core.datetime_utils import serialize_datetime
 from .initialize_problem_request import (
     InitializeProblemRequest as resources_submission_types_initialize_problem_request_InitializeProblemRequest,
 )
@@ -12,15 +16,9 @@ from .submit_request_v_2 import SubmitRequestV2
 from .workspace_submit_request import WorkspaceSubmitRequest
 
 try:
-    import pydantic.v1 as pydantic
+    import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
-    import pydantic
-
-import datetime as dt
-
-import typing_extensions
-
-from ....core.datetime_utils import serialize_datetime
+    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 

@@ -2,17 +2,17 @@
 
 from __future__ import annotations
 
-try:
-    import pydantic.v1 as pydantic
-except ImportError:
-    import pydantic
-
 import typing
 
 import typing_extensions
 
 from .exception_info import ExceptionInfo
 from .exception_v_2 import ExceptionV2
+
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
 
 
 class ActualResult_Value(pydantic.BaseModel):

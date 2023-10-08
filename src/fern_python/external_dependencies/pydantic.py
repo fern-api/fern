@@ -16,7 +16,9 @@ def _export(*export: str) -> AST.ClassReference:
                     dependency=PYDANTIC_DEPENDENCY,
                     module_path=("pydantic",),
                 ),
+                mypy_ignore=True,
             ),
+            mypy_ignore=True,
         ),
         qualified_name_excluding_import=export,
     )

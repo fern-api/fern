@@ -2,20 +2,19 @@
 
 from __future__ import annotations
 
-from .cat import Cat as resources_types_resources_union_types_cat_Cat
-from .dog import Dog as resources_types_resources_union_types_dog_Dog
-
-try:
-    import pydantic.v1 as pydantic
-except ImportError:
-    import pydantic
-
 import datetime as dt
 import typing
 
 import typing_extensions
 
 from ......core.datetime_utils import serialize_datetime
+from .cat import Cat as resources_types_resources_union_types_cat_Cat
+from .dog import Dog as resources_types_resources_union_types_dog_Dog
+
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 

@@ -2,20 +2,19 @@
 
 from __future__ import annotations
 
-import typing_extensions
-
-from .basic_custom_files import BasicCustomFiles
-
-try:
-    import pydantic.v1 as pydantic
-except ImportError:
-    import pydantic
-
 import typing
 
+import typing_extensions
+
 from .....commons.types.language import Language
+from .basic_custom_files import BasicCustomFiles
 from .file_info_v_2 import FileInfoV2
 from .files import Files
+
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
 
 
 class CustomFiles_Basic(BasicCustomFiles):

@@ -2,14 +2,14 @@
 
 from __future__ import annotations
 
+import typing
+
 import typing_extensions
 
 try:
-    import pydantic.v1 as pydantic
+    import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
-    import pydantic
-
-import typing
+    import pydantic  # type: ignore
 
 
 class Test_And(pydantic.BaseModel):

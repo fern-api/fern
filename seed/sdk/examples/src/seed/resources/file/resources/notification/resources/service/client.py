@@ -3,16 +3,14 @@
 import urllib.parse
 from json.decoder import JSONDecodeError
 
-from .......core.client_wrapper import SyncClientWrapper
+from .......core.api_error import ApiError
+from .......core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ......types.types.exception import Exception
 
 try:
-    import pydantic.v1 as pydantic
+    import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
-    import pydantic
-
-from .......core.api_error import ApiError
-from .......core.client_wrapper import AsyncClientWrapper
+    import pydantic  # type: ignore
 
 
 class ServiceClient:

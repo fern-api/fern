@@ -2,26 +2,23 @@
 
 import typing
 import urllib.parse
-
-from ...core.api_error import ApiError
-from ...core.client_wrapper import SyncClientWrapper
-from ..commons.types.problem_id import ProblemId
-from ..commons.types.variable_type import VariableType
-from .types.create_problem_response import CreateProblemResponse
-
-try:
-    import pydantic.v1 as pydantic
-except ImportError:
-    import pydantic
-
 from json.decoder import JSONDecodeError
 
-from ...core.client_wrapper import AsyncClientWrapper
+from ...core.api_error import ApiError
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
+from ..commons.types.problem_id import ProblemId
+from ..commons.types.variable_type import VariableType
 from .types.create_problem_request import CreateProblemRequest
+from .types.create_problem_response import CreateProblemResponse
 from .types.get_default_starter_files_response import GetDefaultStarterFilesResponse
 from .types.update_problem_response import UpdateProblemResponse
 from .types.variable_type_and_name import VariableTypeAndName
+
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)

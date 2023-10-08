@@ -2,11 +2,6 @@
 
 from __future__ import annotations
 
-try:
-    import pydantic.v1 as pydantic
-except ImportError:
-    import pydantic
-
 import typing
 
 import typing_extensions
@@ -14,6 +9,11 @@ import typing_extensions
 from .error_info import ErrorInfo
 from .running_submission_state import RunningSubmissionState
 from .workspace_run_details import WorkspaceRunDetails
+
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
 
 
 class WorkspaceSubmissionStatus_Stopped(pydantic.BaseModel):

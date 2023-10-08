@@ -2,6 +2,12 @@
 
 from __future__ import annotations
 
+import datetime as dt
+import typing
+
+import typing_extensions
+
+from ....core.datetime_utils import serialize_datetime
 from .building_executor_response import BuildingExecutorResponse
 from .errored_response import ErroredResponse
 from .finished_response import FinishedResponse
@@ -15,16 +21,9 @@ from .stopped_response import StoppedResponse
 from .workspace_ran_response import WorkspaceRanResponse
 
 try:
-    import pydantic.v1 as pydantic
+    import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
-    import pydantic
-
-import datetime as dt
-import typing
-
-import typing_extensions
-
-from ....core.datetime_utils import serialize_datetime
+    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 

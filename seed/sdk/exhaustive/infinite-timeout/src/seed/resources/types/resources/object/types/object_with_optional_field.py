@@ -2,15 +2,14 @@
 
 import datetime as dt
 import typing
+import uuid
 
 from ......core.datetime_utils import serialize_datetime
 
 try:
-    import pydantic.v1 as pydantic
+    import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
-    import pydantic
-
-import uuid
+    import pydantic  # type: ignore
 
 
 class ObjectWithOptionalField(pydantic.BaseModel):

@@ -2,16 +2,16 @@
 
 from __future__ import annotations
 
-try:
-    import pydantic.v1 as pydantic
-except ImportError:
-    import pydantic
-
 import typing
 
 import typing_extensions
 
 from .playlist_id import PlaylistId
+
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
 
 
 class PlaylistIdNotFoundErrorBody_PlaylistId(pydantic.BaseModel):

@@ -6,14 +6,14 @@ import urllib.parse
 import uuid
 from json.decoder import JSONDecodeError
 
-try:
-    import pydantic.v1 as pydantic
-except ImportError:
-    import pydantic
-
 from .....core.api_error import ApiError
 from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .....core.jsonable_encoder import jsonable_encoder
+
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)

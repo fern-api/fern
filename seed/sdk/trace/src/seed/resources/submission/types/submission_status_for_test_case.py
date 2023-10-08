@@ -2,19 +2,18 @@
 
 from __future__ import annotations
 
-import typing_extensions
-
-from .test_case_result_with_stdout import TestCaseResultWithStdout
-
-try:
-    import pydantic.v1 as pydantic
-except ImportError:
-    import pydantic
-
 import typing
 
+import typing_extensions
+
 from .test_case_grade import TestCaseGrade
+from .test_case_result_with_stdout import TestCaseResultWithStdout
 from .traced_test_case import TracedTestCase
+
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
 
 
 class SubmissionStatusForTestCase_Graded(TestCaseResultWithStdout):

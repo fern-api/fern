@@ -5,23 +5,18 @@ from json.decoder import JSONDecodeError
 
 import httpx
 
-from .core.client_wrapper import SyncClientWrapper
+from .core.api_error import ApiError
+from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.jsonable_encoder import jsonable_encoder
 from .environment import SeedExamplesEnvironment
-from .resources.file.client import FileClient
-from .resources.health.client import HealthClient
-from .resources.service.client import ServiceClient
+from .resources.file.client import AsyncFileClient, FileClient
+from .resources.health.client import AsyncHealthClient, HealthClient
+from .resources.service.client import AsyncServiceClient, ServiceClient
 
 try:
-    import pydantic.v1 as pydantic
+    import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
-    import pydantic
-
-from .core.api_error import ApiError
-from .core.client_wrapper import AsyncClientWrapper
-from .resources.file.client import AsyncFileClient
-from .resources.health.client import AsyncHealthClient
-from .resources.service.client import AsyncServiceClient
+    import pydantic  # type: ignore
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)

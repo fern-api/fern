@@ -2,15 +2,15 @@
 
 from __future__ import annotations
 
-try:
-    import pydantic.v1 as pydantic
-except ImportError:
-    import pydantic
-
 import datetime as dt
 import typing
 
 from ....core.datetime_utils import serialize_datetime
+
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
 
 
 class Node(pydantic.BaseModel):

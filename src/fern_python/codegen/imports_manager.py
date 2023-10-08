@@ -14,6 +14,8 @@ class ImportsManager:
             AST.ReferenceImport, Set[StatementId]
         ] = defaultdict(set)
 
+        self._bottom_imports: DefaultDict[AST.ReferenceImport, Set[None]] = defaultdict(set)
+
         self._postponed_annotations = False
         self._has_written_top_imports = False
         self._has_written_any_statements = False
@@ -26,6 +28,8 @@ class ImportsManager:
                 if reference.must_import_after_current_declaration:
                     self._import_to_statements_that_must_precede_it[reference.import_].add(statement_id)
                     self._postponed_annotations = True
+                elif reference.import_.alternative_import is not None:
+                    self._bottom_imports[reference.import_].add(None)
                 elif reference.import_ not in self._import_to_statements_that_must_precede_it:
                     # even if there's no constraints, we still store the import
                     # so that we write it to the file.
@@ -52,6 +56,13 @@ class ImportsManager:
                 statements_that_must_precede_it.remove(statement_id)
         for import_ in written_imports:
             del self._import_to_statements_that_must_precede_it[import_]
+
+        bottom_written_imports: Set[AST.ReferenceImport] = set()
+        for import_, _unused in self._bottom_imports.items():
+            self._write_import(import_=import_, writer=writer, reference_resolver=reference_resolver)
+            bottom_written_imports.add(import_)
+        for import_ in bottom_written_imports:
+            del self._bottom_imports[import_]
 
         self._has_written_any_statements = True
 
@@ -94,9 +105,9 @@ class ImportsManager:
             alternative_import = self._get_import_as_string(import_.alternative_import)
             s = f"""
 try:
-    {s}
+    {s} # type: ignore
 except ImportError:
-    {alternative_import}
+    {alternative_import} # type: ignore
             """
 
         return s

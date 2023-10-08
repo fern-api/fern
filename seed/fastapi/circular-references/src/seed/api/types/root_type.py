@@ -3,12 +3,12 @@
 import datetime as dt
 import typing
 
-try:
-    import pydantic.v1 as pydantic
-except ImportError:
-    import pydantic
-
 from ..core.datetime_utils import serialize_datetime
+
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
 
 
 class RootType(pydantic.BaseModel):

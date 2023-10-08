@@ -2,21 +2,20 @@
 
 from __future__ import annotations
 
-from .non_void_function_signature import NonVoidFunctionSignature
-from .void_function_signature import VoidFunctionSignature
-from .void_function_signature_that_takes_actual_result import VoidFunctionSignatureThatTakesActualResult
-
-try:
-    import pydantic.v1 as pydantic
-except ImportError:
-    import pydantic
-
 import datetime as dt
 import typing
 
 import typing_extensions
 
 from ......core.datetime_utils import serialize_datetime
+from .non_void_function_signature import NonVoidFunctionSignature
+from .void_function_signature import VoidFunctionSignature
+from .void_function_signature_that_takes_actual_result import VoidFunctionSignatureThatTakesActualResult
+
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 

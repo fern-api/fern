@@ -5,18 +5,16 @@ import urllib.parse
 from json.decoder import JSONDecodeError
 
 from ...core.api_error import ApiError
-from ...core.client_wrapper import SyncClientWrapper
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ..errors.errors.bad_request import BadRequest
 from ..errors.errors.unauthorized_request import UnauthorizedRequest
 from ..errors.types.unauthorized_request_error_body import UnauthorizedRequestErrorBody
 
 try:
-    import pydantic.v1 as pydantic
+    import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
-    import pydantic
-
-from ...core.client_wrapper import AsyncClientWrapper
+    import pydantic  # type: ignore
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)

@@ -2,21 +2,18 @@
 
 import json
 import typing
-
-from ...core.client_wrapper import SyncClientWrapper
-
-try:
-    import pydantic.v1 as pydantic
-except ImportError:
-    import pydantic
-
 import urllib.parse
 from json.decoder import JSONDecodeError
 
 from ...core.api_error import ApiError
-from ...core.client_wrapper import AsyncClientWrapper
+from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from .types.stream_response import StreamResponse
+
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)

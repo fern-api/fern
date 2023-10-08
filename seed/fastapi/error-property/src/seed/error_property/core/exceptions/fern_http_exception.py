@@ -4,16 +4,15 @@ from __future__ import annotations
 
 import abc
 import http
+import typing
+import uuid
 
 import fastapi
 
 try:
-    import pydantic.v1 as pydantic
+    import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
-    import pydantic
-
-import typing
-import uuid
+    import pydantic  # type: ignore
 
 
 class FernHTTPException(abc.ABC, fastapi.HTTPException):

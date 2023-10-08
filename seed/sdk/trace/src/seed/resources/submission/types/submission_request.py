@@ -2,20 +2,19 @@
 
 from __future__ import annotations
 
+import typing
+
 import typing_extensions
 
 from .initialize_problem_request import InitializeProblemRequest
-
-try:
-    import pydantic.v1 as pydantic
-except ImportError:
-    import pydantic
-
-import typing
-
 from .stop_request import StopRequest
 from .submit_request_v_2 import SubmitRequestV2
 from .workspace_submit_request import WorkspaceSubmitRequest
+
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
 
 
 class SubmissionRequest_InitializeProblemRequest(InitializeProblemRequest):

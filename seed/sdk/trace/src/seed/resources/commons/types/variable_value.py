@@ -2,11 +2,6 @@
 
 from __future__ import annotations
 
-try:
-    import pydantic.v1 as pydantic
-except ImportError:
-    import pydantic
-
 import typing
 
 import typing_extensions
@@ -18,6 +13,11 @@ from .doubly_linked_list_value import DoublyLinkedListValue
 from .node_id import NodeId
 from .singly_linked_list_node_value import SinglyLinkedListNodeValue
 from .singly_linked_list_value import SinglyLinkedListValue
+
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
 
 
 class VariableValue_IntegerValue(pydantic.BaseModel):

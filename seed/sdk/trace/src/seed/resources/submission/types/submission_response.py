@@ -2,11 +2,6 @@
 
 from __future__ import annotations
 
-try:
-    import pydantic.v1 as pydantic
-except ImportError:
-    import pydantic
-
 import typing
 
 import typing_extensions
@@ -15,6 +10,11 @@ from ...commons.types.problem_id import ProblemId
 from .code_execution_update import CodeExecutionUpdate
 from .exception_info import ExceptionInfo
 from .terminated_response import TerminatedResponse
+
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
 
 
 class SubmissionResponse_ServerInitialized(pydantic.BaseModel):

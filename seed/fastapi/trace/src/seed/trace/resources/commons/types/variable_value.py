@@ -2,8 +2,12 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import typing
 
+import typing_extensions
+
+from ....core.datetime_utils import serialize_datetime
 from .binary_tree_value import BinaryTreeValue as resources_commons_types_binary_tree_value_BinaryTreeValue
 from .doubly_linked_list_value import (
     DoublyLinkedListValue as resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue,
@@ -13,15 +17,9 @@ from .singly_linked_list_value import (
 )
 
 try:
-    import pydantic.v1 as pydantic
+    import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
-    import pydantic
-
-import datetime as dt
-
-import typing_extensions
-
-from ....core.datetime_utils import serialize_datetime
+    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 

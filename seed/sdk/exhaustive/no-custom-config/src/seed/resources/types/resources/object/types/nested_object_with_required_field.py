@@ -7,9 +7,9 @@ from ......core.datetime_utils import serialize_datetime
 from .object_with_optional_field import ObjectWithOptionalField
 
 try:
-    import pydantic.v1 as pydantic
+    import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
-    import pydantic
+    import pydantic  # type: ignore
 
 
 class NestedObjectWithRequiredField(pydantic.BaseModel):

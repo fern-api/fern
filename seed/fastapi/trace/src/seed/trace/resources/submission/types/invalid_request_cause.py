@@ -2,6 +2,12 @@
 
 from __future__ import annotations
 
+import datetime as dt
+import typing
+
+import typing_extensions
+
+from ....core.datetime_utils import serialize_datetime
 from .custom_test_cases_unsupported import (
     CustomTestCasesUnsupported as resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported,
 )
@@ -11,16 +17,9 @@ from .submission_id_not_found import (
 from .unexpected_language_error import UnexpectedLanguageError
 
 try:
-    import pydantic.v1 as pydantic
+    import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
-    import pydantic
-
-import datetime as dt
-import typing
-
-import typing_extensions
-
-from ....core.datetime_utils import serialize_datetime
+    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 

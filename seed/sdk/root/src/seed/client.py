@@ -6,18 +6,15 @@ from json.decoder import JSONDecodeError
 
 import httpx
 
-from .core.client_wrapper import SyncClientWrapper
+from .core.api_error import ApiError
+from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.jsonable_encoder import jsonable_encoder
-from .resources.service.client import ServiceClient
+from .resources.service.client import AsyncServiceClient, ServiceClient
 
 try:
-    import pydantic.v1 as pydantic
+    import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
-    import pydantic
-
-from .core.api_error import ApiError
-from .core.client_wrapper import AsyncClientWrapper
-from .resources.service.client import AsyncServiceClient
+    import pydantic  # type: ignore
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)

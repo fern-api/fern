@@ -5,17 +5,15 @@ import urllib.parse
 from json.decoder import JSONDecodeError
 
 from .......core.api_error import ApiError
-from .......core.client_wrapper import SyncClientWrapper
+from .......core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ......commons.types.problem_id import ProblemId
+from .types.lightweight_problem_info_v_2 import LightweightProblemInfoV2
 from .types.problem_info_v_2 import ProblemInfoV2
 
 try:
-    import pydantic.v1 as pydantic
+    import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
-    import pydantic
-
-from .......core.client_wrapper import AsyncClientWrapper
-from .types.lightweight_problem_info_v_2 import LightweightProblemInfoV2
+    import pydantic  # type: ignore
 
 
 class ProblemClient:

@@ -2,22 +2,20 @@
 
 import typing
 import urllib.parse
-
-from ....types.resources.object.types.nested_object_with_optional_field import NestedObjectWithOptionalField
-from ....types.resources.object.types.nested_object_with_required_field import NestedObjectWithRequiredField
-
-try:
-    import pydantic.v1 as pydantic
-except ImportError:
-    import pydantic
-
 from json.decoder import JSONDecodeError
 
 from .....core.api_error import ApiError
 from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .....core.jsonable_encoder import jsonable_encoder
+from ....types.resources.object.types.nested_object_with_optional_field import NestedObjectWithOptionalField
+from ....types.resources.object.types.nested_object_with_required_field import NestedObjectWithRequiredField
 from ....types.resources.object.types.object_with_optional_field import ObjectWithOptionalField
 from ....types.resources.object.types.object_with_required_field import ObjectWithRequiredField
+
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)

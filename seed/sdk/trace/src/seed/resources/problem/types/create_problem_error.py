@@ -2,16 +2,16 @@
 
 from __future__ import annotations
 
+import typing
+
 import typing_extensions
 
 from .generic_create_problem_error import GenericCreateProblemError
 
 try:
-    import pydantic.v1 as pydantic
+    import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
-    import pydantic
-
-import typing
+    import pydantic  # type: ignore
 
 
 class CreateProblemError_Generic(GenericCreateProblemError):

@@ -6,9 +6,9 @@ import typing
 from ......core.datetime_utils import serialize_datetime
 
 try:
-    import pydantic.v1 as pydantic
+    import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
-    import pydantic
+    import pydantic  # type: ignore
 
 
 class Dog(pydantic.BaseModel):

@@ -6,13 +6,13 @@ import typing
 
 import typing_extensions
 
-try:
-    import pydantic.v1 as pydantic
-except ImportError:
-    import pydantic
-
 from .object_value import ObjectValue
 from .primitive_value import PrimitiveValue
+
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
 
 
 class ContainerValue_List(pydantic.BaseModel):

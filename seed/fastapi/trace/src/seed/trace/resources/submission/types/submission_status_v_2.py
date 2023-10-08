@@ -2,20 +2,19 @@
 
 from __future__ import annotations
 
-from .test_submission_status_v_2 import TestSubmissionStatusV2
-from .workspace_submission_status_v_2 import WorkspaceSubmissionStatusV2
-
-try:
-    import pydantic.v1 as pydantic
-except ImportError:
-    import pydantic
-
 import datetime as dt
 import typing
 
 import typing_extensions
 
 from ....core.datetime_utils import serialize_datetime
+from .test_submission_status_v_2 import TestSubmissionStatusV2
+from .workspace_submission_status_v_2 import WorkspaceSubmissionStatusV2
+
+try:
+    import pydantic.v1 as pydantic  # type: ignore
+except ImportError:
+    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 

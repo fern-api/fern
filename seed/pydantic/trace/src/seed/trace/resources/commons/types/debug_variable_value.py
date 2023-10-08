@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
 from .binary_tree_node_and_tree_value import BinaryTreeNodeAndTreeValue
 from .doubly_linked_list_node_and_list_value import DoublyLinkedListNodeAndListValue
@@ -12,11 +14,9 @@ from .generic_value import GenericValue as resources_commons_types_generic_value
 from .singly_linked_list_node_and_list_value import SinglyLinkedListNodeAndListValue
 
 try:
-    import pydantic.v1 as pydantic
+    import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
-    import pydantic
-
-import typing_extensions
+    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
