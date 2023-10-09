@@ -33,7 +33,7 @@
     "@fern-api/project-configuration": "workspace:*",
     "execa": "^5.1.1",
     "js-yaml": "^4.1.0",
-    "strip-ansi": "^7.0.1",
+    "strip-ansi": "^7.1.0",
     "tmp-promise": "^3.0.3"
   },
   "devDependencies": {
