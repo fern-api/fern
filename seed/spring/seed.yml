@@ -1,4 +1,5 @@
 irVersion: v25
 docker: java-spring:latest
+dockerCommand: ./gradlew :spring-server-generator:dockerTagLatest
 language: java
 generatorType: Server

@@ -1,5 +1,6 @@
 irVersion: v25
 docker: java-client:latest
+dockerCommand: ./gradlew :client-generator:dockerTagLatest
 language: java
 generatorType: SDK
 fixtures:

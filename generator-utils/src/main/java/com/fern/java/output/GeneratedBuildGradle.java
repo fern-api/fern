@@ -85,6 +85,11 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
         writer.endControlFlow();
         writer.addNewLine();
 
+        writer.addNewLine();
+        writer.addLine("sourceCompatibility = 11");
+        writer.addLine("targetCompatibility = 1.8");
+        writer.addNewLine();
+
         customBlocks().forEach(writer::addLine);
 
         // add publishing
