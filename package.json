@@ -44,7 +44,7 @@
   "devDependencies": {
     "@babel/core": "^7.19.1",
     "@babel/preset-env": "^7.22.15",
-    "@babel/preset-typescript": "^7.18.6",
+    "@babel/preset-typescript": "^7.23.0",
     "@blueprintjs/eslint-plugin": "^2.1.2",
     "@blueprintjs/stylelint-plugin": "^2.0.8",
     "@types/is-ci": "^3.0.0",
