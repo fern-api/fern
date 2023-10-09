@@ -86,7 +86,7 @@ public abstract class GeneratedBuildGradle extends GeneratedFile {
         writer.addNewLine();
 
         writer.addNewLine();
-        writer.addLine("sourceCompatibility = 11");
+        writer.addLine("sourceCompatibility = 1.8");
         writer.addLine("targetCompatibility = 1.8");
         writer.addNewLine();
 
