@@ -4,6 +4,13 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator";
 
+export interface RemoteGenerationForAPIWorkspaceResponse {
+    // TODO: Ideally we'd return all the SDKs that wrote snippets right here.
+    //
+    // For now, we just use the index of the GeneratorInvocation in the given GeneratorGroup.
+    generatorsWroteSnippets: number[];
+}
+
 export async function runRemoteGenerationForAPIWorkspace({
     organization,
     workspace,
@@ -31,7 +38,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     interactiveTasks.push(
         ...generatorGroup.generators.map((generatorInvocation) =>
             context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
-                await runRemoteGenerationForGenerator({
+                const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({
                     organization,
                     workspace,
                     interactiveTaskContext,
