@@ -32,7 +32,7 @@ export async function registerApi({
     const response = await fdrService.api.v1.register.registerApiDefinition({
         orgId: FernRegistry.OrgId(organization),
         apiId: FernRegistry.ApiId(ir.apiName.originalName),
-        definition: convertIrToFdrApi(ir),
+        definition: convertIrToFdrApi(ir), // TODO: Determine sdksWithSnippets
     });
 
     if (response.ok) {
