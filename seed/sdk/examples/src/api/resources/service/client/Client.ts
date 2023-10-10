@@ -8,7 +8,6 @@ import * as SeedExamples from "../../..";
 import * as serializers from "../../../../serialization";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors";
-import { default as URLSearchParams } from "@ungap/url-search-params";
 
 export declare namespace Service {
     interface Options {
@@ -130,18 +129,18 @@ export class Service {
         requestOptions?: Service.RequestOptions
     ): Promise<SeedExamples.Metadata> {
         const { shallow, tag, xApiVersion } = request;
-        const _queryParams = new URLSearchParams();
+        const _queryParams: Record<string, string> = {};
         if (shallow != null) {
-            _queryParams.append("shallow", shallow.toString());
+            _queryParams["shallow"] = shallow.toString();
         }
 
         if (tag != null) {
             if (Array.isArray(tag)) {
                 for (const _item of tag) {
-                    _queryParams.append("tag", _item);
+                    _queryParams["tag"] = _item;
                 }
             } else {
-                _queryParams.append("tag", tag);
+                _queryParams["tag"] = tag;
             }
         }
 

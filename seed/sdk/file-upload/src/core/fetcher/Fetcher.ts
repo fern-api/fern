@@ -1,6 +1,6 @@
-import { default as URLSearchParams } from "@ungap/url-search-params";
 import axios, { AxiosAdapter, AxiosError } from "axios";
 import axiosRetry from "axios-retry";
+import qs from "qs";
 import { APIResponse } from "./APIResponse";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
@@ -11,7 +11,7 @@ export declare namespace Fetcher {
         method: string;
         contentType?: string;
         headers?: Record<string, string | undefined>;
-        queryParameters?: URLSearchParams;
+        queryParameters?: Record<string, string>;
         body?: unknown;
         timeoutMs?: number;
         maxRetries?: number;
@@ -83,6 +83,9 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
         const response = await AXIOS.request({
             url: args.url,
             params: args.queryParameters,
+            paramsSerializer: (params) => {
+                return qs.stringify(params);
+            },
             method: args.method,
             headers,
             data: args.body,

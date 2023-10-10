@@ -5,7 +5,6 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as SeedTrace from "../../..";
-import { default as URLSearchParams } from "@ungap/url-search-params";
 import * as serializers from "../../../../serialization";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors";
@@ -35,10 +34,10 @@ export class Playlist {
         requestOptions?: Playlist.RequestOptions
     ): Promise<SeedTrace.Playlist> {
         const { datetime, optionalDatetime, body: _body } = request;
-        const _queryParams = new URLSearchParams();
-        _queryParams.append("datetime", datetime.toISOString());
+        const _queryParams: Record<string, string> = {};
+        _queryParams["datetime"] = datetime.toISOString();
         if (optionalDatetime != null) {
-            _queryParams.append("optionalDatetime", optionalDatetime.toISOString());
+            _queryParams["optionalDatetime"] = optionalDatetime.toISOString();
         }
 
         const _response = await core.fetcher({
@@ -103,29 +102,29 @@ export class Playlist {
         requestOptions?: Playlist.RequestOptions
     ): Promise<SeedTrace.Playlist[]> {
         const { limit, otherField, multiLineDocs, optionalMultipleField, multipleField } = request;
-        const _queryParams = new URLSearchParams();
+        const _queryParams: Record<string, string> = {};
         if (limit != null) {
-            _queryParams.append("limit", limit.toString());
+            _queryParams["limit"] = limit.toString();
         }
 
-        _queryParams.append("otherField", otherField);
-        _queryParams.append("multiLineDocs", multiLineDocs);
+        _queryParams["otherField"] = otherField;
+        _queryParams["multiLineDocs"] = multiLineDocs;
         if (optionalMultipleField != null) {
             if (Array.isArray(optionalMultipleField)) {
                 for (const _item of optionalMultipleField) {
-                    _queryParams.append("optionalMultipleField", _item);
+                    _queryParams["optionalMultipleField"] = _item;
                 }
             } else {
-                _queryParams.append("optionalMultipleField", optionalMultipleField);
+                _queryParams["optionalMultipleField"] = optionalMultipleField;
             }
         }
 
         if (Array.isArray(multipleField)) {
             for (const _item of multipleField) {
-                _queryParams.append("multipleField", _item);
+                _queryParams["multipleField"] = _item;
             }
         } else {
-            _queryParams.append("multipleField", multipleField);
+            _queryParams["multipleField"] = multipleField;
         }
 
         const _response = await core.fetcher({

@@ -31,8 +31,11 @@ export class GeneratedQueryParams {
                                 ts.factory.createVariableDeclaration(
                                     GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME,
                                     undefined,
-                                    undefined,
-                                    context.externalDependencies.URLSearchParams.instantiate()
+                                    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Record"), [
+                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                                    ]),
+                                    ts.factory.createObjectLiteralExpression([], false)
                                 ),
                             ],
                             ts.NodeFlags.Const
@@ -47,17 +50,20 @@ export class GeneratedQueryParams {
                             (referenceToQueryParameter) => {
                                 return [
                                     ts.factory.createExpressionStatement(
-                                        context.externalDependencies.URLSearchParams.append({
-                                            key: ts.factory.createStringLiteral(queryParameter.name.wireValue),
-                                            value: context.type.stringify(
+                                        ts.factory.createBinaryExpression(
+                                            ts.factory.createElementAccessExpression(
+                                                ts.factory.createIdentifier(
+                                                    GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME
+                                                ),
+                                                ts.factory.createStringLiteral(queryParameter.name.wireValue)
+                                            ),
+                                            ts.factory.createToken(ts.SyntaxKind.EqualsToken),
+                                            context.type.stringify(
                                                 referenceToQueryParameter,
                                                 queryParameter.valueType,
                                                 { includeNullCheckIfOptional: false }
-                                            ),
-                                            referenceToUrlSearchParams: ts.factory.createIdentifier(
-                                                GeneratedQueryParams.QUERY_PARAMS_VARIABLE_NAME
-                                            ),
-                                        })
+                                            )
+                                        )
                                     ),
                                 ];
                             }

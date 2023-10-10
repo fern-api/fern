@@ -24,8 +24,8 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@ungap/url-search-params": "0.2.2",
-    "axios": "0.27.2"
+    "axios": "0.27.2",
+    "qs": "^6.11.2"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
@@ -33,6 +33,7 @@
     "@babel/preset-typescript": "^7.18.6",
     "@types/jest": "^28.1.6",
     "@types/node": "^18.7.18",
+    "@types/qs": "^6.9.8",
     "depcheck": "^1.4.3",
     "eslint": "^8.50.0",
     "jest": "^28.1.3",

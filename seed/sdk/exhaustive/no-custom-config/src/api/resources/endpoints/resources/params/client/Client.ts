@@ -7,7 +7,6 @@ import urlJoin from "url-join";
 import * as serializers from "../../../../../../serialization";
 import * as errors from "../../../../../../errors";
 import * as SeedExhaustive from "../../../../..";
-import { default as URLSearchParams } from "@ungap/url-search-params";
 
 export declare namespace Params {
     interface Options {
@@ -80,9 +79,9 @@ export class Params {
         requestOptions?: Params.RequestOptions
     ): Promise<void> {
         const { query, number: number_ } = request;
-        const _queryParams = new URLSearchParams();
-        _queryParams.append("query", query);
-        _queryParams.append("number", number_.toString());
+        const _queryParams: Record<string, string> = {};
+        _queryParams["query"] = query;
+        _queryParams["number"] = number_.toString();
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "/params"),
             method: "GET",
@@ -131,21 +130,21 @@ export class Params {
         requestOptions?: Params.RequestOptions
     ): Promise<void> {
         const { query, numer } = request;
-        const _queryParams = new URLSearchParams();
+        const _queryParams: Record<string, string> = {};
         if (Array.isArray(query)) {
             for (const _item of query) {
-                _queryParams.append("query", _item);
+                _queryParams["query"] = _item;
             }
         } else {
-            _queryParams.append("query", query);
+            _queryParams["query"] = query;
         }
 
         if (Array.isArray(numer)) {
             for (const _item of numer) {
-                _queryParams.append("numer", _item.toString());
+                _queryParams["numer"] = _item.toString();
             }
         } else {
-            _queryParams.append("numer", numer.toString());
+            _queryParams["numer"] = numer.toString();
         }
 
         const _response = await core.fetcher({
@@ -197,8 +196,8 @@ export class Params {
         requestOptions?: Params.RequestOptions
     ): Promise<void> {
         const { query } = request;
-        const _queryParams = new URLSearchParams();
-        _queryParams.append("query", query);
+        const _queryParams: Record<string, string> = {};
+        _queryParams["query"] = query;
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), `/params/path/${param}`),
             method: "GET",
