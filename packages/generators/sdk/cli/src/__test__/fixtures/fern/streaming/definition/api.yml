@@ -1,5 +1,0 @@
-name: nursery-api
-
-environments:
-  Production: https://www.production.com
-default-environment: Production

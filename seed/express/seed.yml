@@ -1,0 +1,26 @@
+irVersion: v23
+docker: fernapi/fern-typescript-express:local
+dockerCommand: yarn workspace @fern-typescript/express-generator-cli dockerTagLocal
+language: typescript
+generatorType: server
+fixtures:
+  trace: 
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        noSerdeLayer: true
+      outputFolder: no-zurg-trace
+  imdb: 
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig: 
+        outputSourceFiles: true
+      outputFolder: output-source-files
+  exhaustive:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig: 
+        doNotHandleUnrecognizedErrors: true
+        includeUtilsOnUnionMembers: true
+        includeOtherInUnionTypes: true
+      outputFolder: union-utils

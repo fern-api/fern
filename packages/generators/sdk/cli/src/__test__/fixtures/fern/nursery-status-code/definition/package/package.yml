@@ -1,8 +1,0 @@
-service:
-  url: ServerA
-  auth: false
-  base-path: /
-  endpoints:
-    get:
-      path: /test
-      method: GET

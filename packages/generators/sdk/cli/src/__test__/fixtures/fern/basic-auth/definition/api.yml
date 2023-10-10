@@ -1,9 +1,0 @@
-name: workspace
-auth: BasicAuth
-auth-schemes:
-  BasicAuth:
-    scheme: basic
-    username:
-      name: clientId
-    password:
-      name: clientSecret

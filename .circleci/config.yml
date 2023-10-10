@@ -43,17 +43,12 @@ jobs:
       docker_layer_caching: true
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: yarn-berry
-      - run:
-          name: Build fern-typescript-node-sdk Docker
-          command: yarn workspace @fern-typescript/sdk-generator-cli dockerTagLocal:node
       - run:
           name: Install seed
-          command: npm install -g @fern-api/seed-cli@0.15.0-rc29
+          command: npm install -g @fern-api/seed-cli@0.15.0-rc38
       - run:
           name: Run seed
-          command: seed test --docker fernapi/fern-typescript-node-sdk:local --output-dir seed/sdk --parallel-dockers 10 --irVersion v23 --language typescript
+          command: seed test --workspace sdk --parallel-dockers 10
       - run:
           name: Compare diffs
           command: git --no-pager diff --exit-code
@@ -64,17 +59,12 @@ jobs:
       docker_layer_caching: true
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: yarn-berry
-      - run:
-          name: Build fern-typescript-express Docker
-          command: yarn workspace @fern-typescript/express-generator-cli dockerTagLocal
       - run:
           name: Install seed
-          command: npm install -g @fern-api/seed-cli@0.15.0-rc29
+          command: npm install -g @fern-api/seed-cli@0.15.0-rc38
       - run:
           name: Run seed
-          command: seed test --docker fernapi/fern-typescript-express:local --output-dir seed/express --parallel-dockers 10 --irVersion v23 --language typescript
+          command: seed test --workspace express --parallel-dockers 10
       - run:
           name: Compare diffs
           command: git --no-pager diff --exit-code

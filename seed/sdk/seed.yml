@@ -1,0 +1,68 @@
+irVersion: v23
+docker: fernapi/fern-typescript-node-sdk:local
+dockerCommand: yarn workspace @fern-typescript/sdk-generator-cli dockerTagLocal:node
+language: typescript
+generatorType: SDK
+fixtures:
+  streaming: 
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig: 
+        allowCustomFetcher: true
+        timeoutInSeconds: 2
+      outputFolder: allow-custom-fetcher
+  exhaustive: 
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig: 
+        useBrandedStringAliases: true
+        neverThrowErrors: true
+        namespaceExport: "Fiddle"
+        bundle: true
+        includeUtilsOnUnionMembers: true
+        includeOtherInUnionTypes: true
+        extraDependencies: 
+            lodash-es: "^4.17.21"
+      outputFolder: bundle
+  error-property: 
+    - customConfig: 
+        private: true
+        includeUtilsOnUnionMembers: true
+        includeOtherInUnionTypes: true
+      outputFolder: union-utils
+  undiscriminated-unions: 
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        skipResponseValidation: true
+      outputFolder: skip-response-validation
+  file-download: 
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        includeContentHeadersOnFileDownloadResponse: true
+      outputFolder: file-download-reponse-headers
+  unknown: 
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        treatUnknownAsAny: true
+      outputFolder: unknown-as-any
+  trace: 
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        noSerdeLayer: true
+      outputFolder: no-zurg-trace
+    - customConfig:
+        noSerdeLayer: true
+        neverThrowErrors: true
+      outputFolder: no-zurg-no-throwing
+    - customConfig:
+        useBrandedStringAliases: true
+        neverThrowErrors: true
+        includeCredentialsOnCrossOriginRequests: true
+        includeUtilsOnUnionMembers: true
+        includeOtherInUnionTypes: true
+        timeoutInSeconds: "infinity"
+      outputFolder: exhaustive

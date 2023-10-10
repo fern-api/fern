@@ -1,0 +1,1 @@
+export { SeedVariablesError } from "./SeedVariablesError";

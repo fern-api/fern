@@ -1,7 +1,0 @@
-service:
-  auth: true
-  base-path: /api/health
-  endpoints:
-    status:
-      method: GET
-      path: ""

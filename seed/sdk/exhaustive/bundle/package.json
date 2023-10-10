@@ -1,0 +1,57 @@
+{
+    "name": "",
+    "version": "0.0.1",
+    "private": false,
+    "repository": "https://github.com/fern-api/seed-typescript",
+    "files": [
+        "dist",
+        "types",
+        "core.d.ts",
+        "serialization.d.ts"
+    ],
+    "exports": {
+        ".": {
+            "node": "./dist/node/index.js",
+            "import": "./dist/browser/esm/index.js",
+            "require": "./dist/browser/cjs/index.js",
+            "default": "./dist/browser/cjs/index.js",
+            "types": "./types/index.d.ts"
+        },
+        "./core": {
+            "node": "./dist/node/core.js",
+            "import": "./dist/browser/esm/core.js",
+            "require": "./dist/browser/cjs/core.js",
+            "default": "./dist/browser/cjs/core.js",
+            "types": "./types/core/index.d.ts"
+        },
+        "./serialization": {
+            "node": "./dist/node/serialization.js",
+            "import": "./dist/browser/esm/serialization.js",
+            "require": "./dist/browser/cjs/serialization.js",
+            "default": "./dist/browser/cjs/serialization.js",
+            "types": "./types/serialization/index.d.ts"
+        }
+    },
+    "types": "./types/index.d.ts",
+    "scripts": {
+        "format": "prettier --write 'src/**/*.ts'",
+        "compile": "tsc",
+        "bundle": "node build.js",
+        "build": "yarn compile && yarn bundle"
+    },
+    "dependencies": {
+        "url-join": "4.0.1",
+        "@types/url-join": "4.0.1",
+        "@ungap/url-search-params": "0.2.2",
+        "axios": "0.27.2",
+        "axios-retry": "3.2.0",
+        "js-base64": "3.7.2",
+        "lodash-es": "^4.17.21"
+    },
+    "devDependencies": {
+        "@types/node": "17.0.33",
+        "esbuild": "0.16.15",
+        "prettier": "2.7.1",
+        "typescript": "4.6.4"
+    }
+}

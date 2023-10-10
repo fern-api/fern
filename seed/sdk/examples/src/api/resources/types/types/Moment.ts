@@ -7,7 +7,7 @@
  *     {
  *         id: "656f12d6-f592-444c-a1d3-a3cfd46d5b39",
  *         date: "1994-01-01",
- *         datetime: new Date("1994-01-01T06:01:01.000Z")
+ *         datetime: new Date("1994-01-01T01:01:01.000Z")
  *     }
  */
 export interface Moment {

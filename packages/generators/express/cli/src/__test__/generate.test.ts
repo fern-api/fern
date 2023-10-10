@@ -24,55 +24,10 @@ interface FixtureInfo {
 
 const FIXTURES: FixtureInfo[] = [
     {
-        path: "trace",
-        orgName: "trace",
-        outputMode: "local",
-        apiName: "api",
-        customConfig: {
-            includeUtilsOnUnionMembers: true,
-            includeOtherInUnionTypes: true,
-        },
-    },
-    {
-        path: "simple",
-        orgName: "fern",
-        outputMode: "local",
-        apiName: "api",
-        customConfig: {
-            doNotHandleUnrecognizedErrors: true,
-            includeUtilsOnUnionMembers: true,
-            includeOtherInUnionTypes: true,
-        },
-    },
-    {
-        path: "output-source-files-simple",
-        orgName: "fern",
-        outputMode: "local",
-        apiName: "api",
-        customConfig: {
-            outputSourceFiles: true,
-        },
-    },
-    {
         path: "folders",
         orgName: "fern",
         outputMode: "local",
         apiName: "api",
-    },
-    {
-        path: "no-zurg-trace",
-        orgName: "fern",
-        outputMode: "local",
-        apiName: "api",
-        customConfig: {
-            noSerdeLayer: true,
-        },
-        additionalAssertions: async (outputPath) => {
-            // eslint-disable-next-line jest/no-standalone-expect
-            expect(await doesPathExist(path.join(outputPath, "serialization"))).toBe(false);
-            // eslint-disable-next-line jest/no-standalone-expect
-            expect(await doesPathExist(path.join(outputPath, "core", "schemas"))).toBe(false);
-        },
     },
 ];
 const FIXTURES_PATH = path.join(__dirname, "fixtures");
