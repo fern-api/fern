@@ -4073,7 +4073,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/ir-sdk", "npm:0.0.2921"],\
-            ["@fern-fern/registry-node", "npm:0.26.0-1-g7cf6a78"],\
+            ["@fern-fern/registry-node", "npm:0.32.0-10-g20f80b7"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
@@ -4108,7 +4108,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/docs-config", "npm:0.0.50"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.290"],\
             ["@fern-fern/ir-sdk", "npm:0.0.2921"],\
-            ["@fern-fern/registry-node", "npm:0.26.0-1-g7cf6a78"],\
+            ["@fern-fern/registry-node", "npm:0.32.0-10-g20f80b7"],\
             ["@types/decompress", "npm:4.2.4"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.6"],\
@@ -4230,7 +4230,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/venus-api-sdk", "npm:0.0.20-7-g6ea8dc4"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.290"],\
-            ["@fern-fern/registry-node", "npm:0.26.0-1-g7cf6a78"],\
+            ["@fern-fern/registry-node", "npm:0.32.0-10-g20f80b7"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
@@ -4709,10 +4709,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/registry-node", [\
-        ["npm:0.26.0-1-g7cf6a78", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-registry-node-npm-0.26.0-1-g7cf6a78-361415ddcb-9ab8b5b3e7.zip/node_modules/@fern-fern/registry-node/",\
+        ["npm:0.32.0-10-g20f80b7", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-registry-node-npm-0.32.0-10-g20f80b7-d90d88e6ef-105706944e.zip/node_modules/@fern-fern/registry-node/",\
           "packageDependencies": [\
-            ["@fern-fern/registry-node", "npm:0.26.0-1-g7cf6a78"],\
+            ["@fern-fern/registry-node", "npm:0.32.0-10-g20f80b7"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["@ungap/url-search-params", "npm:0.2.2"],\
             ["axios", "npm:0.27.2"],\
