@@ -23,14 +23,20 @@ export const FIXTURES = {
     EXHAUSTIVE: "exhaustive",
     FILE_DOWNLOAD: "file-download",
     FILE_UPLOAD: "file-upload",
+    IMDB: "imdb",
+    LITERAL_HEADERS: "literal-headers",
     MULTI_URL_ENVIRONMENT: "multi-url-environment",
     NO_ENVIRONMENT: "no-environment",
     PLAIN_TEXT: "plain-text",
     ROOT: "root",
+    ROOT_BASE_PATH: "root-base-path",
     SINGLE_URL_ENVIRONMENT: "single-url-environment-default",
     SINGLE_URL_ENVIRONMENT_NO_DEFAULT: "single-url-environment-no-default",
     STREAMING: "streaming",
     TRACE: "trace",
+    UNDISCRIMINATED_UNIONS: "undiscriminated-unions",
+    UNKNOWN: "unknown",
+    VARIABLES: "variables",
 } as const;
 
 type TestResult = TestSuccess | TestFailure;

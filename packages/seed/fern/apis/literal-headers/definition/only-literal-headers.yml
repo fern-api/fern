@@ -1,0 +1,13 @@
+service:
+  auth: false
+  base-path: /only-literal-headers
+  headers:
+    literalServiceHeader: literal<"service header">
+  endpoints:
+    get:
+      path: ""
+      method: POST
+      request:
+        name: OnlyLiteralHeadersRequest
+        headers:
+          literalEndpointHeader: literal<"endpoint header">
