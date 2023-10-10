@@ -15,6 +15,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         addDependencies: (dependencyManager: DependencyManager): void => {
             dependencyManager.addDependency("axios", "0.27.2");
             dependencyManager.addDependency("qs", "6.11.2");
+            dependencyManager.addDependency("@types/qs", "6.9.8");
             dependencyManager.addDependency("axios-retry", "3.2.0");
         },
     };
