@@ -21,6 +21,7 @@ export const FIXTURES = {
     ERROR_PROPERTY: "error-property",
     EXAMPLES: "examples",
     EXHAUSTIVE: "exhaustive",
+    FOLDERS: "folders",
     FILE_DOWNLOAD: "file-download",
     FILE_UPLOAD: "file-upload",
     IMDB: "imdb",
