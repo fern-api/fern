@@ -38,7 +38,7 @@ export class RemoteTaskHandler {
 
     public async processUpdate(
         remoteTask: FernFiddle.remoteGen.Task | undefined
-    ): Promise<RemoteTaskHandler.Response | null> {
+    ): Promise<RemoteTaskHandler.Response | undefined> {
         if (remoteTask == null) {
             this.context.failAndThrow("Task is missing on job status");
         }
@@ -106,7 +106,7 @@ export class RemoteTaskHandler {
             },
         });
 
-        return this.#isFinished ? { createdSnippets: this.#createdSnippets } : null;
+        return this.#isFinished ? { createdSnippets: this.#createdSnippets } : undefined;
     }
 
     #isFinished = false;
