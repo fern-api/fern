@@ -54,7 +54,7 @@
     "@types/find-up": "^4.0.0",
     "@types/jest": "^29.0.3",
     "@types/js-yaml": "^4.0.6",
-    "@types/node": "^18.7.18",
+    "@types/node": "^20.8.4",
     "@types/yargs": "^17.0.28",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.6",
