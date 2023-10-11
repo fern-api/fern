@@ -11,7 +11,7 @@ export function convertIrToFdrApi(ir: IntermediateRepresentation): FernRegistry.
         subpackages: {},
         rootPackage: convertPackage(ir.rootPackage, ir),
         auth: convertAuth(ir.auth),
-        sdksWithSnippets: [], // TODO: Fill this in.
+        sdksWithSnippets: [], // TODO(amckinney): Pass in the SDKs returned from the remote generator.
     };
 
     for (const [typeId, type] of entries(ir.types)) {

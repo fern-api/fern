@@ -1,14 +1,11 @@
 import { FernToken } from "@fern-api/auth";
-import { GeneratorGroup } from "@fern-api/generators-configuration";
+import { GeneratorGroup, GeneratorInvocation } from "@fern-api/generators-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator";
 
 export interface RemoteGenerationForAPIWorkspaceResponse {
-    // TODO: Ideally we'd return all the SDKs that wrote snippets right here.
-    //
-    // For now, we just use the index of the GeneratorInvocation in the given GeneratorGroup.
-    generatorsWroteSnippets: number[];
+    snippetsProducedBy: GeneratorInvocation[];
 }
 
 export async function runRemoteGenerationForAPIWorkspace({
@@ -27,13 +24,14 @@ export async function runRemoteGenerationForAPIWorkspace({
     version: string | undefined;
     shouldLogS3Url: boolean;
     token: FernToken;
-}): Promise<void> {
+}): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
-        return;
+        return null;
     }
 
     const interactiveTasks: Promise<boolean>[] = [];
+    const snippetsProducedBy: GeneratorInvocation[] = [];
 
     interactiveTasks.push(
         ...generatorGroup.generators.map((generatorInvocation) =>
@@ -48,6 +46,9 @@ export async function runRemoteGenerationForAPIWorkspace({
                     shouldLogS3Url,
                     token,
                 });
+                if (remoteTaskHandlerResponse != null && remoteTaskHandlerResponse.createdSnippets) {
+                    snippetsProducedBy.push(generatorInvocation);
+                }
             })
         )
     );
@@ -56,4 +57,8 @@ export async function runRemoteGenerationForAPIWorkspace({
     if (results.some((didSucceed) => !didSucceed)) {
         context.failAndThrow();
     }
+
+    return {
+        snippetsProducedBy,
+    };
 }
