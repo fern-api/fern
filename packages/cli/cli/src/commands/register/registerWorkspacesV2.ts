@@ -25,7 +25,7 @@ export async function registerWorkspacesV2({
                         context,
                         token,
                         audiences: { type: "all" },
-                        snippetsConfig: undefined,
+                        snippetsConfig: {},
                     });
                     context.logger.info(chalk.green("Registered API"));
                 }

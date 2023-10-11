@@ -20,7 +20,7 @@ export async function registerApi({
     context: TaskContext;
     token: FernToken;
     audiences: Audiences;
-    snippetsConfig: FernRegistry.api.v1.register.SnippetsConfig | undefined;
+    snippetsConfig: FernRegistry.api.v1.register.SnippetsConfig;
 }): Promise<FernRegistry.ApiDefinitionId> {
     const ir = await generateIntermediateRepresentation({
         workspace,

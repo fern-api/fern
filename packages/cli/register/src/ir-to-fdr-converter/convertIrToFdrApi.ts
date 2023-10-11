@@ -7,7 +7,7 @@ import { convertAuth } from "./covertAuth";
 
 export function convertIrToFdrApi(
     ir: IntermediateRepresentation,
-    snippetsConfig: FernRegistry.api.v1.register.SnippetsConfig | undefined
+    snippetsConfig: FernRegistry.api.v1.register.SnippetsConfig
 ): FernRegistry.api.v1.register.ApiDefinition {
     const fdrApi: FernRegistry.api.v1.register.ApiDefinition = {
         types: {},

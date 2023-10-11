@@ -599,12 +599,9 @@ async function convertNavigationItem({
                 context,
                 token,
                 audiences: item.audiences,
-                snippetsConfig:
-                    item.snippetsConfiguration != null
-                        ? convertDocsSnippetsConfigurationToFdr({
-                              snippetsConfiguration: item.snippetsConfiguration,
-                          })
-                        : undefined,
+                snippetsConfig: convertDocsSnippetsConfigurationToFdr({
+                    snippetsConfiguration: item.snippetsConfiguration ?? {},
+                }),
             });
             return FernRegistry.docs.v1.write.NavigationItem.api({
                 title: item.title,
