@@ -123,5 +123,13 @@ export declare namespace DocsNavigationItem {
         apiName: string | undefined;
         audiences: Audiences;
         showErrors: boolean;
+        snippetsConfiguration: SnippetsConfiguration | undefined;
+    }
+
+    export interface SnippetsConfiguration {
+        python: string | undefined;
+        typescript: string | undefined;
+        go: string | undefined;
+        java: string | undefined;
     }
 }

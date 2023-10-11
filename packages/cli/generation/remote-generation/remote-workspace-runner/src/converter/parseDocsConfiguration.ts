@@ -319,9 +319,18 @@ async function convertNavigationItem({
             audiences:
                 rawConfig.audiences != null ? { type: "select", audiences: rawConfig.audiences } : { type: "all" },
             showErrors: rawConfig.displayErrors ?? false,
+            sinppetsConfiguration: convertSnippetsConfiguration(rawConfig.snippetsConfiguration),
         };
     }
     assertNever(rawConfig);
+}
+
+function convertSnippetsConfiguration({
+    rawConfig,
+}: {
+    rawConfig: RawDocs.SnippetsConfiguration;
+}): SnippetsConfiguration | undefined {
+    return undefined;
 }
 
 function isRawPageConfig(item: RawDocs.NavigationItem): item is RawDocs.PageConfiguration {
