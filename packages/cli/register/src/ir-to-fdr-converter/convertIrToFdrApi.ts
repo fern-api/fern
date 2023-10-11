@@ -5,13 +5,16 @@ import { convertPackage, convertSubpackageId } from "./convertPackage";
 import { convertTypeId, convertTypeShape } from "./convertTypeShape";
 import { convertAuth } from "./covertAuth";
 
-export function convertIrToFdrApi(ir: IntermediateRepresentation): FernRegistry.api.v1.register.ApiDefinition {
+export function convertIrToFdrApi(
+    ir: IntermediateRepresentation,
+    snippetsConfig: FernRegistry.api.v1.register.SnippetsConfig | undefined
+): FernRegistry.api.v1.register.ApiDefinition {
     const fdrApi: FernRegistry.api.v1.register.ApiDefinition = {
         types: {},
         subpackages: {},
         rootPackage: convertPackage(ir.rootPackage, ir),
         auth: convertAuth(ir.auth),
-        snippetsConfiguration: undefined, // TODO(amckinney): Pass in the SDKs returned from the remote generator.
+        snippetsConfiguration: snippetsConfig,
     };
 
     for (const [typeId, type] of entries(ir.types)) {
