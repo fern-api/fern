@@ -319,9 +319,26 @@ async function convertNavigationItem({
             audiences:
                 rawConfig.audiences != null ? { type: "select", audiences: rawConfig.audiences } : { type: "all" },
             showErrors: rawConfig.displayErrors ?? false,
+            snippetsConfiguration:
+                rawConfig.snippets != null
+                    ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets })
+                    : undefined,
         };
     }
     assertNever(rawConfig);
+}
+
+function convertSnippetsConfiguration({
+    rawConfig,
+}: {
+    rawConfig: RawDocs.SnippetsConfiguration;
+}): DocsNavigationItem.SnippetsConfiguration {
+    return {
+        python: rawConfig.python,
+        typescript: rawConfig.typescript,
+        go: rawConfig.go,
+        java: rawConfig.java,
+    };
 }
 
 function isRawPageConfig(item: RawDocs.NavigationItem): item is RawDocs.PageConfiguration {

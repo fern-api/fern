@@ -13,12 +13,14 @@ export async function registerApi({
     context,
     token,
     audiences,
+    snippetsConfig,
 }: {
     organization: string;
     workspace: FernWorkspace;
     context: TaskContext;
     token: FernToken;
     audiences: Audiences;
+    snippetsConfig: FernRegistry.api.v1.register.SnippetsConfig;
 }): Promise<FernRegistry.ApiDefinitionId> {
     const ir = await generateIntermediateRepresentation({
         workspace,
@@ -32,7 +34,7 @@ export async function registerApi({
     const response = await fdrService.api.v1.register.registerApiDefinition({
         orgId: FernRegistry.OrgId(organization),
         apiId: FernRegistry.ApiId(ir.apiName.originalName),
-        definition: convertIrToFdrApi(ir),
+        definition: convertIrToFdrApi(ir, snippetsConfig),
     });
 
     if (response.ok) {

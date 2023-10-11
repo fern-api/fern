@@ -662,6 +662,6 @@ exports[`fdr {"name":"simple"} 1`] = `
             "subpackage_imdb"
         ]
     },
-    "sdksWithSnippets": []
+    "snippetsConfiguration": {}
 }"
 `;

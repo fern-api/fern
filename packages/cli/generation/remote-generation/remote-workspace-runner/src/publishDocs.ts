@@ -5,7 +5,7 @@ import { registerApi } from "@fern-api/register";
 import { createFdrService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
-import { TabConfig, VersionAvailability } from "@fern-fern/docs-config/api";
+import { SnippetsConfiguration, TabConfig, VersionAvailability } from "@fern-fern/docs-config/api";
 import { FernRegistry } from "@fern-fern/registry-node";
 import { VersionedNavigationConfigData } from "@fern-fern/registry-node/api/resources/docs/resources/v1/resources/write";
 import axios from "axios";
@@ -599,6 +599,9 @@ async function convertNavigationItem({
                 context,
                 token,
                 audiences: item.audiences,
+                snippetsConfig: convertDocsSnippetsConfigurationToFdr({
+                    snippetsConfiguration: item.snippetsConfiguration ?? {},
+                }),
             });
             return FernRegistry.docs.v1.write.NavigationItem.api({
                 title: item.title,
@@ -609,6 +612,39 @@ async function convertNavigationItem({
         default:
             assertNever(item);
     }
+}
+
+function convertDocsSnippetsConfigurationToFdr({
+    snippetsConfiguration,
+}: {
+    snippetsConfiguration: SnippetsConfiguration;
+}): FernRegistry.api.v1.register.SnippetsConfig {
+    return {
+        pythonSdk:
+            snippetsConfiguration.python != null
+                ? {
+                      package: snippetsConfiguration.python,
+                  }
+                : undefined,
+        typescriptSdk:
+            snippetsConfiguration.typescript != null
+                ? {
+                      package: snippetsConfiguration.typescript,
+                  }
+                : undefined,
+        goSdk:
+            snippetsConfiguration.go != null
+                ? {
+                      githubRepo: snippetsConfiguration.go,
+                  }
+                : undefined,
+        javaSdk:
+            snippetsConfiguration.java != null
+                ? {
+                      coordinate: snippetsConfiguration.java,
+                  }
+                : undefined,
+    };
 }
 
 function getFernWorkspaceForApiSection({
