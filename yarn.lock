@@ -1867,7 +1867,7 @@ __metadata:
     "@fern-api/yaml-formatter": "workspace:*"
     "@fern-api/yaml-migrations": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.290
+    "@fern-fern/fiddle-sdk": ^0.0.351
     "@fern-fern/ir-sdk": 0.0.2921
     "@types/axios": ^0.14.0
     "@types/boxen": ^3.0.1
@@ -2110,7 +2110,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.290
+    "@fern-fern/fiddle-sdk": ^0.0.351
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.6
     "@types/node": ^18.7.18
@@ -2515,7 +2515,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/ir-sdk": 0.0.2921
-    "@fern-fern/registry-node": 0.26.0-1-g7cf6a78
+    "@fern-fern/registry-node": 0.32.0-10-g20f80b7
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -2546,9 +2546,9 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/docs-config": 0.0.50
-    "@fern-fern/fiddle-sdk": ^0.0.290
+    "@fern-fern/fiddle-sdk": ^0.0.351
     "@fern-fern/ir-sdk": 0.0.2921
-    "@fern-fern/registry-node": 0.26.0-1-g7cf6a78
+    "@fern-fern/registry-node": 0.32.0-10-g20f80b7
     "@types/decompress": ^4.2.4
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.6
@@ -2619,7 +2619,7 @@ __metadata:
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/fiddle-sdk": ^0.0.290
+    "@fern-fern/fiddle-sdk": ^0.0.351
     "@fern-fern/seed-config": 0.0.6
     "@types/find-up": ^4.0.0
     "@types/jest": ^29.0.3
@@ -2665,8 +2665,8 @@ __metadata:
   resolution: "@fern-api/services@workspace:packages/cli/services"
   dependencies:
     "@fern-api/venus-api-sdk": 0.0.20-7-g6ea8dc4
-    "@fern-fern/fiddle-sdk": ^0.0.290
-    "@fern-fern/registry-node": 0.26.0-1-g7cf6a78
+    "@fern-fern/fiddle-sdk": ^0.0.351
+    "@fern-fern/registry-node": 0.32.0-10-g20f80b7
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -2750,7 +2750,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@fern-fern/docs-config": 0.0.50
-    "@fern-fern/fiddle-sdk": ^0.0.290
+    "@fern-fern/fiddle-sdk": ^0.0.351
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.6
     "@types/lodash-es": ^4.17.7
@@ -2855,9 +2855,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/fiddle-sdk@npm:^0.0.290":
-  version: 0.0.290
-  resolution: "@fern-fern/fiddle-sdk@npm:0.0.290"
+"@fern-fern/fiddle-sdk@npm:^0.0.351":
+  version: 0.0.351
+  resolution: "@fern-fern/fiddle-sdk@npm:0.0.351"
   dependencies:
     "@types/basic-auth": ^1.1.3
     "@types/url-join": 4.0.1
@@ -2866,7 +2866,7 @@ __metadata:
     buffer: ^6.0.3
     js-base64: ^3.7.2
     url-join: 4.0.1
-  checksum: b4418c12e655c6aceaaec531098aa715363eca5d14847ad963c6126019e4100b4f4c90d5b916100f27e45cea49debbb1b0b40d4e5b909d34f5e58c3c4203a764
+  checksum: dfaf05c6c0268b965bb7f614e7049d3b946a106d92ddaec4c67c269a8948b0a4771fe06a02b76b36200d6cc968aa0fecc64756f568eb83f451eae910feda38e8
   languageName: node
   linkType: hard
 
@@ -3072,16 +3072,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/registry-node@npm:0.26.0-1-g7cf6a78":
-  version: 0.26.0-1-g7cf6a78
-  resolution: "@fern-fern/registry-node@npm:0.26.0-1-g7cf6a78"
+"@fern-fern/registry-node@npm:0.32.0-10-g20f80b7":
+  version: 0.32.0-10-g20f80b7
+  resolution: "@fern-fern/registry-node@npm:0.32.0-10-g20f80b7"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
     js-base64: 3.7.2
     url-join: 4.0.1
-  checksum: 9ab8b5b3e714756733a5a9688a142a88a592f1ac75fe6616c0342056d233265e217871881074b38c89d4c24fcb59966c0cd233cdb3c3f37b93298775f631ab21
+  checksum: 105706944e8e2855278bb1be545138f360db494cc60b0843f1ce0e7104294da38ec4f3d003199ba7f77a79b9f8c06e611fb1ce2b83f7ca422cc5b3267974217f
   languageName: node
   linkType: hard
 
