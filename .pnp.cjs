@@ -4113,7 +4113,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.6"],\
             ["@types/lodash-es", "npm:4.17.7"],\
-            ["@types/mime-types", "npm:2.1.1"],\
+            ["@types/mime-types", "npm:2.1.2"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/terminal-link", "npm:1.2.0"],\
             ["axios", "npm:0.27.2"],\
@@ -5892,10 +5892,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/mime-types", [\
-        ["npm:2.1.1", {\
-          "packageLocation": "./.yarn/cache/@types-mime-types-npm-2.1.1-2f761de0b8-106b5d556a.zip/node_modules/@types/mime-types/",\
+        ["npm:2.1.2", {\
+          "packageLocation": "./.yarn/cache/@types-mime-types-npm-2.1.2-da52892816-9e3c78f1c6.zip/node_modules/@types/mime-types/",\
           "packageDependencies": [\
-            ["@types/mime-types", "npm:2.1.1"]\
+            ["@types/mime-types", "npm:2.1.2"]\
           ],\
           "linkType": "HARD"\
         }]\
