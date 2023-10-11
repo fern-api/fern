@@ -119,6 +119,14 @@ types:
       display-errors:
         type: optional<boolean>
         docs: Defaults to false
+      snippets: optional<SnippetsConfiguration>
+
+  SnippetsConfiguration:
+    properties:
+      python: optional<string>
+      typescript: optional<string>
+      go: optional<string>
+      java: optional<string>
 
   ColorsConfiguration:
     properties:
