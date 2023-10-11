@@ -15,7 +15,7 @@ export function pollJobAndReportStatus({
     taskId: FernFiddle.remoteGen.RemoteGenTaskId;
     taskHandler: RemoteTaskHandler;
     context: TaskContext;
-}): Promise<RemoteTaskHandler.Response | null> {
+}): Promise<RemoteTaskHandler.Response | undefined> {
     let numConsecutiveFailed = 0;
 
     const fetchTaskStatus = async () => {

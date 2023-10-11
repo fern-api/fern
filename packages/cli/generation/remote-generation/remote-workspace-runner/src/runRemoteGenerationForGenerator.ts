@@ -26,7 +26,7 @@ export async function runRemoteGenerationForGenerator({
     audiences: Audiences;
     shouldLogS3Url: boolean;
     token: FernToken;
-}): Promise<RemoteTaskHandler.Response | null> {
+}): Promise<RemoteTaskHandler.Response | undefined> {
     const intermediateRepresentation = await generateIntermediateRepresentation({
         workspace,
         generationLanguage: generatorInvocation.language,
@@ -48,7 +48,7 @@ export async function runRemoteGenerationForGenerator({
     const taskId = job.taskIds[0];
     if (taskId == null) {
         interactiveTaskContext.failAndThrow("Did not receive a task ID.");
-        return null;
+        return undefined;
     }
     interactiveTaskContext.logger.debug(`Task ID: ${taskId}`);
 
