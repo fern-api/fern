@@ -599,6 +599,7 @@ async function convertNavigationItem({
                 context,
                 token,
                 audiences: item.audiences,
+                // TODO(amckinney): Add snippets here.
             });
             return FernRegistry.docs.v1.write.NavigationItem.api({
                 title: item.title,
