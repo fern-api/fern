@@ -26,7 +26,7 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "strip-ansi": "^7.0.1",
+    "strip-ansi": "^7.1.0",
     "ua-parser-js": "^1.0.36"
   },
   "devDependencies": {
