@@ -33,6 +33,9 @@ export class ExampleTypeFactory {
         if (partialExample.type === "partialObject") {
             return this.buildExampleFromPartialObject(partialExample);
         }
+        if (partialExample.type === "partialOneOf") {
+            return this.buildExampleFromPartialObject(partialExample);
+        }
         if (partialExample.type === "reference") {
             return this.buildExampleFromReference(partialExample);
         }

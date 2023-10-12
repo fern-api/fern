@@ -314,6 +314,7 @@ types:
       enum: EnumExample
       reference: ReferencedExample
       literal: LiteralExample
+      partialOneOf: PartialOneOfExample
       oneOf: OneOfExample
       nullable: NullableExample
       unknown: {}
@@ -324,8 +325,8 @@ types:
 
   PartialObjectExample:
     properties:
-      includedProperties: map<string, Example>
-      excludedProperties: list<string>
+      includedProperties: map<string, PartialExample>
+      excludedProperties: list<SchemaId>
 
   ArrayExample:
     properties:
@@ -370,6 +371,19 @@ types:
   UnDiscriminatedOneOfExample:
     properties:
       examples: list<Example>
+
+  PartialOneOfExample:
+    union:
+      discriminated: PartialDiscriminatedOneOfExample
+      undisciminated: PartialUnDiscriminatedOneOfExample
+
+  PartialDiscriminatedOneOfExample:
+    properties:
+      examples: map<string, PartialExample>
+
+  PartialUnDiscriminatedOneOfExample:
+    properties:
+      examples: list<PartialExample>
 
   NullableExample:
     properties:
