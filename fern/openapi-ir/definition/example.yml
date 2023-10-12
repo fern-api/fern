@@ -1,0 +1,117 @@
+types:
+  SchemaInstanceId:
+    docs: |
+      Uniquely identifies an instance of a schema. For nested instances,
+      the id will be a dot-delimited path, e.g. foo.bar.baz.
+    type: string
+
+  IntExample: integer
+  Int64Example: long
+  FloatExample: double
+  DoubleExample: double
+  StringExample: string
+  DatetimeExample: datetime
+  DateExample: date
+  Base64Example: base64
+  BooleanExample: boolean
+  LiteralExample: string
+
+  Example:
+    docs: |
+      An OpenAPI example, which is either fully specified, partially
+      specified, or a reference to another schema instance's example.
+    union:
+      full: FullExample
+      partial: PartialExample
+      reference: ReferencedExample
+
+  FullExample:
+    union:
+      primitive: PrimitiveExample
+      object: FullObjectExample
+      array: ArrayExample
+      map: MapExample
+      optional: FullExample
+      enum: EnumExample
+      reference: FullExample
+      literal: LiteralExample
+      oneOf: FullOneOfExample
+      nullable: FullExample
+      unknown: {}
+
+  PrimitiveExample:
+    union:
+      int: IntExample
+      int64: Int64Example
+      float: FloatExample
+      double: DoubleExample
+      string: StringExample
+      datetime: DatetimeExample
+      date: DateExample
+      base64: Base64Example
+      boolean: BooleanExample
+
+  FullObjectExample:
+    properties:
+      properties: map<string, FullExample>
+
+  ArrayExample:
+    properties:
+      elements: list<FullExample>
+
+  MapExample:
+    properties:
+      pairs: list<MapExamplePair>
+
+  MapExamplePair:
+    properties:
+      key: PrimitiveExample
+      value: FullExample
+
+  EnumExample:
+    properties:
+      examples: list<EnumValueExample>
+
+  EnumValueExample:
+    properties:
+      value: string
+
+  FullOneOfExample:
+    union:
+      discriminated: FullDiscriminatedOneOfExample
+      undisciminated: FullUnDiscriminatedOneOfExample
+
+  FullDiscriminatedOneOfExample:
+    properties:
+      examples: map<string, FullExample>
+
+  FullUnDiscriminatedOneOfExample:
+    properties:
+      examples: list<FullExample>
+
+  ReferencedExample:
+    properties:
+      reference: string
+
+  PartialExample:
+    union:
+      object: PartialObjectExample
+      oneOf: PartialOneOfExample
+
+  PartialObjectExample:
+    properties:
+      includedProperties: map<string, PartialExample>
+      excludedProperties: list<SchemaInstanceId>
+
+  PartialOneOfExample:
+    union:
+      discriminated: PartialDiscriminatedOneOfExample
+      undisciminated: PartialUnDiscriminatedOneOfExample
+
+  PartialDiscriminatedOneOfExample:
+    properties:
+      examples: map<string, PartialExample>
+
+  PartialUnDiscriminatedOneOfExample:
+    properties:
+      examples: list<PartialExample>

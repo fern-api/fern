@@ -17,11 +17,13 @@ export class ExampleTypeFactory {
 
     public get(schemaId: SchemaId): Example {
         if (this.examples[schemaId] !== undefined) {
-            return this.examples[schemaId];
+            return this.examples[schemaId] ?? { type: "unknown" };
         }
         const partialExample: PartialExample | undefined = this.context.exampleCollector.get(schemaId);
         if (partialExample === undefined) {
             // TODO: There isn't an example for this schema, so we need to generate one.
+            //       We need to reference the schema's type in order to do so (which comes
+            //       from the association between the schemaInstanceID -> Schema).
             return {
                 type: "unknown",
             };
@@ -31,9 +33,6 @@ export class ExampleTypeFactory {
 
     private buildExample(partialExample: PartialExample): Example {
         if (partialExample.type === "partialObject") {
-            return this.buildExampleFromPartialObject(partialExample);
-        }
-        if (partialExample.type === "partialOneOf") {
             return this.buildExampleFromPartialObject(partialExample);
         }
         if (partialExample.type === "reference") {
