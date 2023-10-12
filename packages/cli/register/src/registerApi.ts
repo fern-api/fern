@@ -31,10 +31,13 @@ export async function registerApi({
     const fdrService = createFdrService({
         token: token.value,
     });
+
+    const apiDefinition = convertIrToFdrApi(ir, snippetsConfig);
+    context.logger.debug("Calling registerAPI... ", JSON.stringify(apiDefinition, undefined, 4));
     const response = await fdrService.api.v1.register.registerApiDefinition({
         orgId: FernRegistry.OrgId(organization),
         apiId: FernRegistry.ApiId(ir.apiName.originalName),
-        definition: convertIrToFdrApi(ir, snippetsConfig),
+        definition: apiDefinition,
     });
 
     if (response.ok) {
