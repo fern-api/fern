@@ -22,7 +22,7 @@ export abstract class AbstractOpenAPIV3ParserContext {
     public taskContext: TaskContext;
     public authHeaders: Set<string>;
     public refOccurrences: Record<string, number>;
-    public refToSchemaInstanceId: Record<string, SchemaInstanceId>;
+    public schemaIdToSchemaInstanceId: Record<SchemaId, SchemaInstanceId>;
     public schemaInstanceIdToSchema: Record<SchemaInstanceId, Schema>;
     public exampleCollector: ExampleCollector;
 
@@ -40,7 +40,7 @@ export abstract class AbstractOpenAPIV3ParserContext {
         this.taskContext = taskContext;
         this.authHeaders = authHeaders;
         this.refOccurrences = getReferenceOccurrences(document);
-        this.refToSchemaInstanceId = {};
+        this.schemaIdToSchemaInstanceId = {};
         this.schemaInstanceIdToSchema = {};
         this.exampleCollector = new ExampleCollector();
     }
