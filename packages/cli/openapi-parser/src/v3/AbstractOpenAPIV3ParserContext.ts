@@ -1,6 +1,6 @@
 import { Logger } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
-import { HttpError, Schema, SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/ir";
+import { HttpError, Schema, SchemaId, SchemaInstanceId, StatusCode } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { SCHEMA_REFERENCE_PREFIX } from "./converters/convertSchemas";
 import { getReferenceOccurrences } from "./utils/getReferenceOccurrences";
@@ -22,9 +22,8 @@ export abstract class AbstractOpenAPIV3ParserContext {
     public taskContext: TaskContext;
     public authHeaders: Set<string>;
     public refOccurrences: Record<string, number>;
-    public refToSchemaInstanceId: Record<string, SchemaId>;
-    public schemaInstanceIdToSchema: Record<string, Schema>;
-    public schemaIdToSchemaInstanceId: Record<SchemaId, string>;
+    public refToSchemaInstanceId: Record<string, SchemaInstanceId>;
+    public schemaInstanceIdToSchema: Record<SchemaInstanceId, Schema>;
     public exampleCollector: ExampleCollector;
 
     constructor({
