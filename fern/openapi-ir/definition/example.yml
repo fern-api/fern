@@ -5,17 +5,6 @@ types:
       the id will be a dot-delimited path, e.g. foo.bar.baz.
     type: string
 
-  IntExample: integer
-  Int64Example: long
-  FloatExample: double
-  DoubleExample: double
-  StringExample: string
-  DatetimeExample: datetime
-  DateExample: date
-  Base64Example: base64
-  BooleanExample: boolean
-  LiteralExample: string
-
   Example:
     docs: |
       An OpenAPI example, which is either fully specified, partially
@@ -24,6 +13,15 @@ types:
       full: FullExample
       partial: PartialExample
       reference: ReferencedExample
+
+  FullOrPartialExample:
+    docs: |
+      Specifically designed for the PartialObjectExample.
+      The included properties can either be full or partial
+      examples, but not references.
+    union:
+      full: FullExample
+      partial: PartialExample
 
   FullExample:
     union:
@@ -41,15 +39,15 @@ types:
 
   PrimitiveExample:
     union:
-      int: IntExample
-      int64: Int64Example
-      float: FloatExample
-      double: DoubleExample
-      string: StringExample
-      datetime: DatetimeExample
-      date: DateExample
-      base64: Base64Example
-      boolean: BooleanExample
+      int: integer
+      int64: long
+      float: double
+      double: double
+      string: string
+      datetime: datetime
+      date: date
+      base64: base64
+      boolean: boolean
 
   FullObjectExample:
     properties:
@@ -91,7 +89,7 @@ types:
 
   ReferencedExample:
     properties:
-      reference: string
+      reference: SchemaInstanceId
 
   PartialExample:
     union:
@@ -100,18 +98,15 @@ types:
 
   PartialObjectExample:
     properties:
-      includedProperties: map<string, PartialExample>
-      excludedProperties: list<SchemaInstanceId>
+      includedProperties: map<string, FullOrPartialExample>
+      excludedProperties: map<string, SchemaInstanceId>
 
   PartialOneOfExample:
     union:
       discriminated: PartialDiscriminatedOneOfExample
-      undisciminated: PartialUnDiscriminatedOneOfExample
+      undisciminated: PartialExample
 
   PartialDiscriminatedOneOfExample:
     properties:
-      examples: map<string, PartialExample>
-
-  PartialUnDiscriminatedOneOfExample:
-    properties:
-      examples: list<PartialExample>
+      discriminant: string
+      value: PartialExample
