@@ -20,6 +20,10 @@ types:
     properties:
       description: optional<string>
 
+  WithSchemaId:
+    properties:
+      schemaId: SchemaId
+
   WithName:
     properties:
       nameOverride:
@@ -62,7 +66,9 @@ types:
 
   SchemaId:
     type: string
-    docs: The name of the schema.
+    docs: |
+      The name of the schema. For nested properties, the name of the schema will
+      be the dot-delimited form of the property, e.g. foo.bar.baz.
 
   SecuritySchemeId:
     type: string
@@ -152,6 +158,34 @@ types:
       response: optional<Response>
       errorStatusCode: list<StatusCode>
       server: list<Server>
+      examples: list<EndpointExample>
+
+  EndpointExample:
+    docs: |
+      A complete example associated with the endpoint. All child
+      examples will be fully complete (i.e. there will be no
+      PartialObjectExamples).
+    properties:
+      pathParameters: optional<list<PathParameterExample>>
+      queryParameters: optional<list<QueryParameterExample>>
+      headers: optional<list<HeaderExample>>
+      request: optional<Example>
+      response: optional<Example>
+
+  PathParameterExample:
+    properties:
+      name: string
+      value: Example
+
+  QueryParameterExample:
+    properties:
+      name: string
+      value: Example
+
+  HeaderExample:
+    properties:
+      name: string
+      value: Example
 
   EndpointSdkName:
     properties:
@@ -179,18 +213,21 @@ types:
       name: string
       schema: Schema
       variableReference: optional<string>
+      examples: optional<list<Example>>
 
   QueryParameter:
     extends: WithDescription
     properties:
       name: string
       schema: Schema
+      examples: optional<list<Example>>
 
   Header:
     extends: WithDescription
     properties:
       name: string
       schema: Schema
+      examples: optional<list<Example>>
 
   Request:
     union:
@@ -207,6 +244,7 @@ types:
     properties:
       schema: Schema
       contentType: optional<string>
+      examples: optional<list<Example>>
 
   MultipartRequest:
     extends: WithDescription
@@ -247,8 +285,120 @@ types:
     extends: WithDescription
     properties:
       schema: Schema
+      examples: optional<list<Example>>
+
+  Example:
+    docs: A complete example associated with a SchemaId.
+    union:
+      primitive: PrimitiveExample
+      object: ObjectExample
+      array: ArrayExample
+      map: MapExample
+      optional: OptionalExample
+      enum: EnumExample
+      reference: Example
+      literal: LiteralExample
+      oneOf: OneOfExample
+      nullable: NullableExample
+      unknown: {}
+
+  PartialExample:
+    docs: A (potentially) partial example associated with a SchemaId.
+    union:
+      primitive: PrimitiveExample
+      object: ObjectExample
+      partialObject: PartialObjectExample
+      array: ArrayExample
+      map: MapExample
+      optional: OptionalExample
+      enum: EnumExample
+      reference: ReferencedExample
+      literal: LiteralExample
+      oneOf: OneOfExample
+      nullable: NullableExample
+      unknown: {}
+
+  ObjectExample:
+    properties:
+      properties: map<string, Example>
+
+  PartialObjectExample:
+    properties:
+      includedProperties: map<string, Example>
+      excludedProperties: list<string>
+
+  ArrayExample:
+    properties:
+      elements: list<Example>
+
+  MapExample:
+    properties:
+      pairs: list<MapExamplePair>
+
+  MapExamplePair:
+    properties:
+      key: PrimitiveExample
+      value: Example
+
+  OptionalExample:
+    properties:
+      example: Example
+
+  EnumExample:
+    properties:
+      examples: list<EnumValueExample>
+
+  EnumValueExample:
+    properties:
+      value: string
+
+  ReferencedExample:
+    properties:
+      reference: string
+
+  LiteralExample: string
+
+  OneOfExample:
+    union:
+      discriminated: DiscriminatedOneOfExample
+      undisciminated: UnDiscriminatedOneOfExample
+
+  DiscriminatedOneOfExample:
+    properties:
+      examples: map<string, Example>
+
+  UnDiscriminatedOneOfExample:
+    properties:
+      examples: list<Example>
+
+  NullableExample:
+    properties:
+      example: Example
+
+  PrimitiveExample:
+    union:
+      int: IntExample
+      int64: Int64Example
+      float: FloatExample
+      double: DoubleExample
+      string: StringExample
+      datetime: DatetimeExample
+      date: DateExample
+      base64: Base64Example
+      boolean: BooleanExample
+
+  IntExample: integer
+  Int64Example: long
+  FloatExample: double
+  DoubleExample: double
+  StringExample: string
+  DatetimeExample: datetime
+  DateExample: date
+  Base64Example: base64
+  BooleanExample: boolean
 
   Schema:
+    docs: All instances of a Schema define a SchemaId.
     union:
       primitive: PrimitiveSchema
       object: ObjectSchema
@@ -260,43 +410,83 @@ types:
       literal: LiteralSchema
       oneOf: OneOfSchema
       nullable: NullableSchema
-      unknown: {}
+      unknown: UnknownSchema
 
   PrimitiveSchema:
-    extends: WithDescription
+    extends:
+      - WithDescription
+      - WithSchemaId
     properties:
       schema: PrimitiveSchemaValue
 
   PrimitiveSchemaValue:
     union:
-      int: {}
-      int64: {}
-      float: {}
-      double: {}
+      int: IntSchema
+      int64: Int64Schema
+      float: FloatSchema
+      double: DoubleSchema
       string: StringSchema
-      datetime: {}
-      date: {}
-      base64: {}
-      boolean: {}
+      datetime: DatetimeSchema
+      date: DateSchema
+      base64: Base64Schema
+      boolean: BooleanSchema
+
+  IntSchema:
+    properties:
+      examples: list<IntExample>
+
+  Int64Schema:
+    properties:
+      examples: list<Int64Example>
+
+  FloatSchema:
+    properties:
+      examples: list<FloatExample>
+
+  DoubleSchema:
+    properties:
+      examples: list<DoubleExample>
 
   StringSchema:
     properties:
       minLength: optional<integer>
       maxLength: optional<integer>
+      examples: list<StringExample>
+
+  DatetimeSchema:
+    properties:
+      examples: list<DatetimeExample>
+
+  DateSchema:
+    properties:
+      examples: list<DateExample>
+
+  Base64Schema:
+    properties:
+      examples: list<Base64Example>
+
+  BooleanSchema:
+    properties:
+      examples: list<BooleanExample>
 
   LiteralSchema:
-    extends: WithDescription
+    extends:
+      - WithDescription
+      - WithSchemaId
     properties:
       value: string
+      examples: list<LiteralExample>
 
   ObjectSchema:
     extends:
       - WithDescription
       - WithName
+      - WithSchemaId
     properties:
       allOf: list<ReferencedSchema>
       properties: list<ObjectProperty>
       allOfPropertyConflicts: list<AllOfPropertyConflict>
+      examples: list<PartialObjectExample>
 
   # OpenAPI IR to Fern:
   # For every allOfPropertyConflict, we will inline the SchemaIds that conflict.
@@ -328,23 +518,39 @@ types:
       differentSchema: boolean
 
   ArraySchema:
-    extends: WithDescription
+    extends:
+      - WithDescription
+      - WithSchemaId
     properties:
       value: Schema
+      examples: optional<list<ArrayExample>>
 
   MapSchema:
-    extends: WithDescription
+    extends:
+      - WithDescription
+      - WithSchemaId
     properties:
-      key: PrimitiveSchemaValue
+      key: PrimitiveSchema
       value: Schema
 
   OptionalSchema:
-    extends: WithDescription
+    extends:
+      - WithDescription
+      - WithSchemaId
     properties:
       value: Schema
 
   NullableSchema:
-    extends: WithDescription
+    extends:
+      - WithDescription
+      - WithSchemaId
+    properties:
+      value: Schema
+
+  UnknownSchema:
+    extends:
+      - WithDescription
+      - WithSchemaId
     properties:
       value: Schema
 
@@ -352,6 +558,7 @@ types:
     extends:
       - WithDescription
       - WithName
+      - WithSchemaId
     properties:
       values: list<EnumValue>
 
@@ -373,8 +580,7 @@ types:
     extends:
       - WithDescription
       - WithName
-    properties:
-      schema: SchemaId
+      - WithSchemaId
 
   OneOfSchema:
     union:
@@ -385,6 +591,7 @@ types:
     extends:
       - WithDescription
       - WithName
+      - WithSchemaId
     properties:
       discriminantProperty: string
       commonProperties: list<CommonProperty>
@@ -399,5 +606,6 @@ types:
     extends:
       - WithDescription
       - WithName
+      - WithSchemaId
     properties:
       schemas: list<Schema>

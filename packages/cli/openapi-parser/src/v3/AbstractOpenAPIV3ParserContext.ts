@@ -5,6 +5,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { SCHEMA_REFERENCE_PREFIX } from "./converters/convertSchemas";
 import { getReferenceOccurrences } from "./utils/getReferenceOccurrences";
 import { isReferenceObject } from "./utils/isReferenceObject";
+import { ExampleCollector } from "./ExampleCollector";
 
 export const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/";
 export const RESPONSE_REFERENCE_PREFIX = "#/components/responses/";
@@ -19,8 +20,10 @@ export abstract class AbstractOpenAPIV3ParserContext {
     public logger: Logger;
     public document: OpenAPIV3.Document;
     public taskContext: TaskContext;
-    public refOccurrences: Record<string, number>;
     public authHeaders: Set<string>;
+    public refOccurrences: Record<string, number>;
+    public refToSchemaId: Record<string, SchemaId>;
+    public exampleCollector: ExampleCollector;
 
     constructor({
         document,
@@ -36,6 +39,8 @@ export abstract class AbstractOpenAPIV3ParserContext {
         this.taskContext = taskContext;
         this.authHeaders = authHeaders;
         this.refOccurrences = getReferenceOccurrences(document);
+        this.refToSchemaId = {};
+        this.exampleCollector = new ExampleCollector();
     }
 
     public getNumberOfOccurrencesForRef(schema: OpenAPIV3.ReferenceObject): number {

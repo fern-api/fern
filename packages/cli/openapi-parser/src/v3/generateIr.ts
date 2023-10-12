@@ -16,6 +16,22 @@ import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 
 export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext): OpenAPIIntermediateRepresentation {
+    const ir: OpenAPIIntermediateRepresentation = generateIrWithoutExamples(openApi, taskContext);
+    return addExamplesToIr(openApi, taskContext, ir);
+}
+
+function addExamplesToIr(
+    _openApi: OpenAPIV3.Document,
+    _taskContext: TaskContext,
+    ir: OpenAPIIntermediateRepresentation
+): OpenAPIIntermediateRepresentation {
+    return ir;
+}
+
+export function generateIrWithoutExamples(
+    openApi: OpenAPIV3.Document,
+    taskContext: TaskContext
+): OpenAPIIntermediateRepresentation {
     const securitySchemes: Record<string, SecurityScheme> = Object.fromEntries(
         Object.entries(openApi.components?.securitySchemes ?? {}).map(([key, securityScheme]) => {
             const convertedSecurityScheme = convertSecurityScheme(securityScheme);
