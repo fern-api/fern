@@ -112,7 +112,7 @@ export async function publishDocs({
         uploadUrls,
         version,
     });
-    context.logger.debug(JSON.stringify(registerDocsRequest));
+    context.logger.debug("Calling registerDocs... ", JSON.stringify(registerDocsRequest, undefined, 4));
     const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(docsRegistrationId, registerDocsRequest);
     if (registerDocsResponse.ok) {
         const url = domain.startsWith("https://") ? domain : `https://${domain}`;
