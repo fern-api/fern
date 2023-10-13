@@ -62,13 +62,8 @@ types:
 
   FullOneOfExample:
     union:
-      discriminated: FullDiscriminatedOneOfExample
+      discriminated: map<PropertyKey, FullExample>
       undisciminated: FullExample
-
-  FullDiscriminatedOneOfExample:
-    properties:
-      discriminant: string
-      value: FullExample
 
   ReferencedExample:
     properties:
