@@ -105,6 +105,9 @@ groups:
         version: 0.5.7
       - name: fernapi/fern-postman
         version: 0.0.45
+        output:
+          location: local-file-system
+          path: ../generated/postman
 ",
         "name": "generators.yml",
         "type": "file",
