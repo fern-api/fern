@@ -188,11 +188,6 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("openapi", {
                     type: "string",
                     description: "Filepath or url to an existing OpenAPI spec",
-                })
-                .option("organization", {
-                    alias: "org",
-                    type: "string",
-                    description: "Organization name",
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
