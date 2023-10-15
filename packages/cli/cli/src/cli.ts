@@ -187,16 +187,26 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("openapi", {
                     type: "string",
                     description: "Filepath or url to an existing OpenAPI spec",
+                })
+                .option("url", {
+                    type: "string",
+                    description: "The url for the docs website (e.g. --url https://buildwithfern.com/docs)",
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
             } else if (argv.docs != null) {
+                if (argv.url != null && !isURL(argv.url)) {
+                    return cliContext.failWithoutThrowing("--url must be a valid url");
+                }
+                console.log("Initializing docs 1");
                 await cliContext.runTask(async (context) => {
+                    console.log("Initializing docs");
                     await initializeDocs({
                         organization: argv.organization,
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
                         taskContext: context,
+                        docsUrl: argv.url,
                     });
                 });
             } else {
