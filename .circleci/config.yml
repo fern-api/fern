@@ -114,7 +114,10 @@ jobs:
           pkg-manager: yarn-berry
       - run:
           name: Run ETE tests
-          command: yarn test:ete
+          command: |
+            echo 'export FERN_TOKEN="$FERN_ORG_TOKEN_DEV"' >> $BASH_ENV
+            source "$BASH_ENV"
+            yarn test:ete
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff --exit-code
