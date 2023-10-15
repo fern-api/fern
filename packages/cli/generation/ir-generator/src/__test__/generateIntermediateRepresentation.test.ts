@@ -1,75 +1,55 @@
 import { Audiences } from "@fern-api/config-management-commons";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { loadAPIWorkspace } from "@fern-api/workspace-loader";
+import { loadApis } from "@fern-api/project-loader";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
+import path from "path";
 import { generateIntermediateRepresentation } from "../generateIntermediateRepresentation";
+import { APIWorkspace } from "@fern-api/workspace-loader";
 
-const FIXTURES: Fixture[] = [
-    {
-        name: "audiences",
-        generationLanguage: undefined,
+require("jest-specific-snapshot");
+
+const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../../test-definitions");
+
+const TEST_DEFINITION_CONFIG: Record<string, TestConfig> = {
+    audiences: {
         audiences: { type: "select", audiences: ["public"] },
     },
-    {
-        name: "packages",
-        generationLanguage: undefined,
-        audiences: { type: "all" },
-    },
-    {
-        name: "undiscriminated-union-examples",
-        generationLanguage: undefined,
-        audiences: { type: "all" },
-    },
-    {
-        name: "headers-sdk-request",
-        generationLanguage: undefined,
-        audiences: { type: "all" },
-    },
-];
+};
 
-interface Fixture {
-    name: string;
-    generationLanguage: GenerationLanguage | undefined;
-    audiences: Audiences;
+interface TestConfig {
+    audiences?: Audiences;
 }
 
-describe("generateIntermediateRepresentation", () => {
-    for (const fixture of FIXTURES) {
-        // eslint-disable-next-line jest/valid-title
-        it(fixture.name, async () => {
-            const workspace = await loadAPIWorkspace({
-                absolutePathToWorkspace: join(
-                    AbsoluteFilePath.of(__dirname),
-                    RelativeFilePath.of("fixtures/fern"),
-                    RelativeFilePath.of(fixture.name)
-                ),
-                context: createMockTaskContext(),
-                cliVersion: "0.0.0",
-                workspaceName: undefined,
-            });
-            if (!workspace.didSucceed) {
-                throw new Error("Failed to load workspace: " + JSON.stringify(workspace.failures, undefined, 4));
-            }
+it("generate IR", async () => {
+    let apiWorkspaces: APIWorkspace[] = [];
 
-            if (workspace.workspace.type === "openapi") {
-                throw new Error("Convert openapi workspace to fern before generating IR");
-            }
+    apiWorkspaces = await loadApis({
+        fernDirectory: join(AbsoluteFilePath.of(TEST_DEFINITIONS_DIR), RelativeFilePath.of("fern")),
+        context: createMockTaskContext(),
+        cliVersion: "0.0.0",
+        cliName: "fern",
+        commandLineApiWorkspace: undefined,
+        defaultToAllApiWorkspaces: true,
+    });
 
-            const intermediateRepresentation = await generateIntermediateRepresentation({
-                workspace: workspace.workspace,
-                generationLanguage: fixture.generationLanguage,
-                audiences: fixture.audiences,
-            });
+    for (const workspace of apiWorkspaces) {
+        if (workspace.type === "openapi") {
+            throw new Error("Convert OpenAPI to Fern workspace before generating IR");
+        }
 
-            const intermediateRepresentationJson = await IrSerialization.IntermediateRepresentation.jsonOrThrow(
-                intermediateRepresentation,
-                {
-                    unrecognizedObjectKeys: "strip",
-                }
-            );
-            expect(intermediateRepresentationJson).toMatchSnapshot();
+        const intermediateRepresentation = await generateIntermediateRepresentation({
+            workspace,
+            generationLanguage: undefined,
+            audiences: TEST_DEFINITION_CONFIG[workspace.name]?.audiences ?? { type: "all" },
         });
+
+        const intermediateRepresentationJson = await IrSerialization.IntermediateRepresentation.jsonOrThrow(
+            intermediateRepresentation,
+            {
+                unrecognizedObjectKeys: "strip",
+            }
+        );
+        expect(intermediateRepresentationJson).toMatchSpecificSnapshot(`__snapshots__/${workspace.name}.txt`);
     }
 });

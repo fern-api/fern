@@ -1,0 +1,25 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  commons: commons.yml
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    find:
+      audiences:
+        - public
+      path: ""
+      method: POST
+      request:
+        name: FindRequest
+        query-parameters:
+          optionalString: OptionalString
+      response: ImportingType
+
+types:
+  ImportingType:
+    properties:
+      imported: commons.Imported
+  OptionalString: optional<string>
