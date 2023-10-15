@@ -26,10 +26,10 @@ jobs:
           name: fern check
           command: npx fern-api check
       - run:
-          name: fern check seed definitons
+          name: fern check test definitons
           command: |
             yarn workspace @fern-api/cli dist:cli:dev
-            cd packages/seed
+            cd test-definitions
             node $(yarn workspace @fern-api/cli bin fern:dev) check
       - run:
           name: generate (dev) JSON Schema
