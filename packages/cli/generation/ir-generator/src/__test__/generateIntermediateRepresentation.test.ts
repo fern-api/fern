@@ -1,11 +1,11 @@
 import { Audiences } from "@fern-api/config-management-commons";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { createMockTaskContext } from "@fern-api/task-context";
 import { loadApis } from "@fern-api/project-loader";
+import { createMockTaskContext } from "@fern-api/task-context";
+import { APIWorkspace } from "@fern-api/workspace-loader";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import path from "path";
 import { generateIntermediateRepresentation } from "../generateIntermediateRepresentation";
-import { APIWorkspace } from "@fern-api/workspace-loader";
 
 require("jest-specific-snapshot");
 
