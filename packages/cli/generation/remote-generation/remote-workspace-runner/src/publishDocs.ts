@@ -32,6 +32,7 @@ export async function publishDocs({
     fernWorkspaces,
     context,
     version,
+    preview,
 }: {
     token: FernToken;
     organization: string;
@@ -41,6 +42,7 @@ export async function publishDocs({
     fernWorkspaces: FernWorkspace[];
     context: TaskContext;
     version: string | undefined;
+    preview: boolean;
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
 
@@ -59,13 +61,25 @@ export async function publishDocs({
     );
     context.logger.debug("Relative filepaths to upload: [", relativeFilepathsToUpload.join(", "));
 
-    const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsRegister({
-        domain,
-        customDomains,
-        apiId: FernRegistry.ApiId(""),
-        orgId: FernRegistry.OrgId(organization),
-        filepaths: relativeFilepathsToUpload,
-    });
+    let urlToOutput = customDomains[0] ?? domain;
+    let startDocsRegisterResponse;
+    if (preview) {
+        startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
+            orgId: FernRegistry.OrgId(organization),
+            filepaths: relativeFilepathsToUpload,
+        });
+        if (startDocsRegisterResponse.ok) {
+            urlToOutput = startDocsRegisterResponse.body.previewUrl;
+        }
+    } else {
+        startDocsRegisterResponse = await fdr.docs.v2.write.startDocsRegister({
+            domain,
+            customDomains,
+            apiId: FernRegistry.ApiId(""),
+            orgId: FernRegistry.OrgId(organization),
+            filepaths: relativeFilepathsToUpload,
+        });
+    }
 
     if (!startDocsRegisterResponse.ok) {
         return startDocsRegisterResponse.error._visit<never>({
@@ -115,7 +129,7 @@ export async function publishDocs({
     context.logger.debug("Calling registerDocs... ", JSON.stringify(registerDocsRequest, undefined, 4));
     const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(docsRegistrationId, registerDocsRequest);
     if (registerDocsResponse.ok) {
-        const url = domain.startsWith("https://") ? domain : `https://${domain}`;
+        const url = wrapWithHttps(urlToOutput);
         context.logger.info(chalk.green(`Published docs to ${url}`));
     } else {
         registerDocsResponse.error._visit<never>({
@@ -707,4 +721,8 @@ function getFilepathsToUpload(parsedDocsConfig: ParsedDocsConfiguration): Absolu
 
 function convertAbsoluteFilepathToFdrFilepath(filepath: AbsoluteFilePath, parsedDocsConfig: ParsedDocsConfiguration) {
     return FernRegistry.docs.v1.write.FilePath(relative(dirname(parsedDocsConfig.absoluteFilepath), filepath));
+}
+
+function wrapWithHttps(url: string): string {
+    return url.startsWith("https://") ? url : `https://${url}`;
 }
