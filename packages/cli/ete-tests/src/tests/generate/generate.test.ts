@@ -4,6 +4,7 @@ import { runFernCli } from "../../utils/runFernCli";
 import { init } from "../init/init";
 
 const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
+const FIXTURES = ["docs"];
 
 describe("fern generate", () => {
     it("default api (fern init)", async () => {
@@ -28,4 +29,21 @@ describe("fern generate", () => {
                 .trim()
         ).toMatchSnapshot();
     });
+
+    for (const fixtureName of FIXTURES) {
+        // eslint-disable-next-line jest/expect-expect
+        it(
+            // eslint-disable-next-line jest/valid-title
+            fixtureName,
+            async () => {
+                await runFernCli(["generate", "--docs"], {
+                    cwd: join(fixturesDir, RelativeFilePath.of(fixtureName)),
+                });
+                await runFernCli(["generate", "--docs", "--preview"], {
+                    cwd: join(fixturesDir, RelativeFilePath.of(fixtureName)),
+                });
+            },
+            180_000
+        );
+    }
 });
