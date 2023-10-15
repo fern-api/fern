@@ -30,20 +30,22 @@ describe("fern generate", () => {
         ).toMatchSnapshot();
     });
 
-    for (const fixtureName of FIXTURES) {
-        // eslint-disable-next-line jest/expect-expect
-        it(
-            // eslint-disable-next-line jest/valid-title
-            fixtureName,
-            async () => {
-                await runFernCli(["generate", "--docs", "--log-level", "debug"], {
-                    cwd: join(fixturesDir, RelativeFilePath.of(fixtureName)),
-                });
-                await runFernCli(["generate", "--docs", "--preview", "--log-level", "debug"], {
-                    cwd: join(fixturesDir, RelativeFilePath.of(fixtureName)),
-                });
-            },
-            180_000
-        );
+    if (process.env.CIRCLE_BRANCH === "main") {
+        for (const fixtureName of FIXTURES) {
+            // eslint-disable-next-line jest/expect-expect
+            it(
+                // eslint-disable-next-line jest/valid-title
+                fixtureName,
+                async () => {
+                    await runFernCli(["generate", "--docs", "--log-level", "debug"], {
+                        cwd: join(fixturesDir, RelativeFilePath.of(fixtureName)),
+                    });
+                    await runFernCli(["generate", "--docs", "--preview", "--log-level", "debug"], {
+                        cwd: join(fixturesDir, RelativeFilePath.of(fixtureName)),
+                    });
+                },
+                180_000
+            );
+        }
     }
 });
