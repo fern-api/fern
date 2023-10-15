@@ -2157,6 +2157,7 @@ __metadata:
     "@types/js-yaml": ^4.0.6
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
+    axios: ^0.27.2
     chalk: ^5.0.1
     depcheck: ^1.4.6
     eslint: ^8.26.0
@@ -2166,6 +2167,7 @@ __metadata:
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
+    tmp-promise: ^3.0.3
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
