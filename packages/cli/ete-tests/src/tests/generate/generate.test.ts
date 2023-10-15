@@ -36,10 +36,10 @@ describe("fern generate", () => {
             // eslint-disable-next-line jest/valid-title
             fixtureName,
             async () => {
-                await runFernCli(["generate", "--docs"], {
+                await runFernCli(["generate", "--docs", "--log-level", "debug"], {
                     cwd: join(fixturesDir, RelativeFilePath.of(fixtureName)),
                 });
-                await runFernCli(["generate", "--docs", "--preview"], {
+                await runFernCli(["generate", "--docs", "--preview", "--log-level", "debug"], {
                     cwd: join(fixturesDir, RelativeFilePath.of(fixtureName)),
                 });
             },
