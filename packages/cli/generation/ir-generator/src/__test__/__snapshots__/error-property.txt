@@ -1,0 +1,741 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generate IR 1`] = `
+{
+  "apiDisplayName": null,
+  "apiDocs": null,
+  "apiName": {
+    "camelCase": {
+      "safeName": "errorProperty",
+      "unsafeName": "errorProperty",
+    },
+    "originalName": "error-property",
+    "pascalCase": {
+      "safeName": "ErrorProperty",
+      "unsafeName": "ErrorProperty",
+    },
+    "screamingSnakeCase": {
+      "safeName": "ERROR_PROPERTY",
+      "unsafeName": "ERROR_PROPERTY",
+    },
+    "snakeCase": {
+      "safeName": "error_property",
+      "unsafeName": "error_property",
+    },
+  },
+  "auth": {
+    "docs": null,
+    "requirement": "ALL",
+    "schemes": [],
+  },
+  "basePath": null,
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "environments": null,
+  "errorDiscriminationStrategy": {
+    "contentProperty": {
+      "name": {
+        "camelCase": {
+          "safeName": "content",
+          "unsafeName": "content",
+        },
+        "originalName": "content",
+        "pascalCase": {
+          "safeName": "Content",
+          "unsafeName": "Content",
+        },
+        "screamingSnakeCase": {
+          "safeName": "CONTENT",
+          "unsafeName": "CONTENT",
+        },
+        "snakeCase": {
+          "safeName": "content",
+          "unsafeName": "content",
+        },
+      },
+      "wireValue": "content",
+    },
+    "discriminant": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorName",
+          "unsafeName": "errorName",
+        },
+        "originalName": "errorName",
+        "pascalCase": {
+          "safeName": "ErrorName",
+          "unsafeName": "ErrorName",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_NAME",
+          "unsafeName": "ERROR_NAME",
+        },
+        "snakeCase": {
+          "safeName": "error_name",
+          "unsafeName": "error_name",
+        },
+      },
+      "wireValue": "errorName",
+    },
+    "type": "property",
+  },
+  "errors": {
+    "error_errors:PropertyBasedErrorTest": {
+      "discriminantValue": {
+        "name": {
+          "camelCase": {
+            "safeName": "propertyBasedErrorTest",
+            "unsafeName": "propertyBasedErrorTest",
+          },
+          "originalName": "PropertyBasedErrorTest",
+          "pascalCase": {
+            "safeName": "PropertyBasedErrorTest",
+            "unsafeName": "PropertyBasedErrorTest",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PROPERTY_BASED_ERROR_TEST",
+            "unsafeName": "PROPERTY_BASED_ERROR_TEST",
+          },
+          "snakeCase": {
+            "safeName": "property_based_error_test",
+            "unsafeName": "property_based_error_test",
+          },
+        },
+        "wireValue": "PropertyBasedErrorTest",
+      },
+      "docs": null,
+      "name": {
+        "errorId": "error_errors:PropertyBasedErrorTest",
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "errors",
+                "unsafeName": "errors",
+              },
+              "originalName": "errors",
+              "pascalCase": {
+                "safeName": "Errors",
+                "unsafeName": "Errors",
+              },
+              "screamingSnakeCase": {
+                "safeName": "ERRORS",
+                "unsafeName": "ERRORS",
+              },
+              "snakeCase": {
+                "safeName": "errors",
+                "unsafeName": "errors",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "errors",
+              "unsafeName": "errors",
+            },
+            "originalName": "errors",
+            "pascalCase": {
+              "safeName": "Errors",
+              "unsafeName": "Errors",
+            },
+            "screamingSnakeCase": {
+              "safeName": "ERRORS",
+              "unsafeName": "ERRORS",
+            },
+            "snakeCase": {
+              "safeName": "errors",
+              "unsafeName": "errors",
+            },
+          },
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "propertyBasedErrorTest",
+            "unsafeName": "propertyBasedErrorTest",
+          },
+          "originalName": "PropertyBasedErrorTest",
+          "pascalCase": {
+            "safeName": "PropertyBasedErrorTest",
+            "unsafeName": "PropertyBasedErrorTest",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PROPERTY_BASED_ERROR_TEST",
+            "unsafeName": "PROPERTY_BASED_ERROR_TEST",
+          },
+          "snakeCase": {
+            "safeName": "property_based_error_test",
+            "unsafeName": "property_based_error_test",
+          },
+        },
+      },
+      "statusCode": 400,
+      "type": {
+        "_type": "named",
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "errors",
+                "unsafeName": "errors",
+              },
+              "originalName": "errors",
+              "pascalCase": {
+                "safeName": "Errors",
+                "unsafeName": "Errors",
+              },
+              "screamingSnakeCase": {
+                "safeName": "ERRORS",
+                "unsafeName": "ERRORS",
+              },
+              "snakeCase": {
+                "safeName": "errors",
+                "unsafeName": "errors",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "errors",
+              "unsafeName": "errors",
+            },
+            "originalName": "errors",
+            "pascalCase": {
+              "safeName": "Errors",
+              "unsafeName": "Errors",
+            },
+            "screamingSnakeCase": {
+              "safeName": "ERRORS",
+              "unsafeName": "ERRORS",
+            },
+            "snakeCase": {
+              "safeName": "errors",
+              "unsafeName": "errors",
+            },
+          },
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "propertyBasedErrorTestBody",
+            "unsafeName": "propertyBasedErrorTestBody",
+          },
+          "originalName": "PropertyBasedErrorTestBody",
+          "pascalCase": {
+            "safeName": "PropertyBasedErrorTestBody",
+            "unsafeName": "PropertyBasedErrorTestBody",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PROPERTY_BASED_ERROR_TEST_BODY",
+            "unsafeName": "PROPERTY_BASED_ERROR_TEST_BODY",
+          },
+          "snakeCase": {
+            "safeName": "property_based_error_test_body",
+            "unsafeName": "property_based_error_test_body",
+          },
+        },
+        "typeId": "type_errors:PropertyBasedErrorTestBody",
+      },
+    },
+  },
+  "headers": [],
+  "pathParameters": [],
+  "rootPackage": {
+    "docs": null,
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": null,
+      "packagePath": [],
+    },
+    "hasEndpointsInTree": true,
+    "navigationConfig": null,
+    "service": null,
+    "subpackages": [
+      "subpackage_errors",
+      "subpackage_property-based-error",
+    ],
+    "types": [],
+    "webhooks": null,
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasStreamingEndpoints": false,
+    "isAuthMandatory": false,
+    "platformHeaders": {
+      "language": "X-Fern-Language",
+      "sdkName": "X-Fern-SDK-Name",
+      "sdkVersion": "X-Fern-SDK-Version",
+    },
+  },
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [
+      "type_errors:PropertyBasedErrorTestBody",
+    ],
+    "typesReferencedOnlyByService": {},
+  },
+  "services": {
+    "service_property-based-error": {
+      "availability": null,
+      "basePath": {
+        "head": "",
+        "parts": [],
+      },
+      "displayName": null,
+      "endpoints": [
+        {
+          "allPathParameters": [],
+          "auth": false,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": "GET request that always throws an error",
+          "errors": [
+            {
+              "docs": null,
+              "error": {
+                "errorId": "error_errors:PropertyBasedErrorTest",
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "errors",
+                        "unsafeName": "errors",
+                      },
+                      "originalName": "errors",
+                      "pascalCase": {
+                        "safeName": "Errors",
+                        "unsafeName": "Errors",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "ERRORS",
+                        "unsafeName": "ERRORS",
+                      },
+                      "snakeCase": {
+                        "safeName": "errors",
+                        "unsafeName": "errors",
+                      },
+                    },
+                  ],
+                  "file": {
+                    "camelCase": {
+                      "safeName": "errors",
+                      "unsafeName": "errors",
+                    },
+                    "originalName": "errors",
+                    "pascalCase": {
+                      "safeName": "Errors",
+                      "unsafeName": "Errors",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "ERRORS",
+                      "unsafeName": "ERRORS",
+                    },
+                    "snakeCase": {
+                      "safeName": "errors",
+                      "unsafeName": "errors",
+                    },
+                  },
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "propertyBasedErrorTest",
+                    "unsafeName": "propertyBasedErrorTest",
+                  },
+                  "originalName": "PropertyBasedErrorTest",
+                  "pascalCase": {
+                    "safeName": "PropertyBasedErrorTest",
+                    "unsafeName": "PropertyBasedErrorTest",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "PROPERTY_BASED_ERROR_TEST",
+                    "unsafeName": "PROPERTY_BASED_ERROR_TEST",
+                  },
+                  "snakeCase": {
+                    "safeName": "property_based_error_test",
+                    "unsafeName": "property_based_error_test",
+                  },
+                },
+              },
+            },
+          ],
+          "examples": [],
+          "fullPath": {
+            "head": "property-based-error",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_property-based-error.ThrowError",
+          "method": "GET",
+          "name": {
+            "camelCase": {
+              "safeName": "throwError",
+              "unsafeName": "throwError",
+            },
+            "originalName": "ThrowError",
+            "pascalCase": {
+              "safeName": "ThrowError",
+              "unsafeName": "ThrowError",
+            },
+            "screamingSnakeCase": {
+              "safeName": "THROW_ERROR",
+              "unsafeName": "THROW_ERROR",
+            },
+            "snakeCase": {
+              "safeName": "throw_error",
+              "unsafeName": "throw_error",
+            },
+          },
+          "path": {
+            "head": "/property-based-error",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": null,
+          "response": {
+            "docs": null,
+            "responseBodyType": {
+              "_type": "primitive",
+              "primitive": "STRING",
+            },
+            "type": "json",
+          },
+          "sdkRequest": null,
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "propertyBasedError",
+                "unsafeName": "propertyBasedError",
+              },
+              "originalName": "property-based-error",
+              "pascalCase": {
+                "safeName": "PropertyBasedError",
+                "unsafeName": "PropertyBasedError",
+              },
+              "screamingSnakeCase": {
+                "safeName": "PROPERTY_BASED_ERROR",
+                "unsafeName": "PROPERTY_BASED_ERROR",
+              },
+              "snakeCase": {
+                "safeName": "property_based_error",
+                "unsafeName": "property_based_error",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "propertyBasedError",
+              "unsafeName": "propertyBasedError",
+            },
+            "originalName": "property-based-error",
+            "pascalCase": {
+              "safeName": "PropertyBasedError",
+              "unsafeName": "PropertyBasedError",
+            },
+            "screamingSnakeCase": {
+              "safeName": "PROPERTY_BASED_ERROR",
+              "unsafeName": "PROPERTY_BASED_ERROR",
+            },
+            "snakeCase": {
+              "safeName": "property_based_error",
+              "unsafeName": "property_based_error",
+            },
+          },
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+    },
+  },
+  "subpackages": {
+    "subpackage_errors": {
+      "docs": null,
+      "errors": [
+        "error_errors:PropertyBasedErrorTest",
+      ],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "errors",
+              "unsafeName": "errors",
+            },
+            "originalName": "errors",
+            "pascalCase": {
+              "safeName": "Errors",
+              "unsafeName": "Errors",
+            },
+            "screamingSnakeCase": {
+              "safeName": "ERRORS",
+              "unsafeName": "ERRORS",
+            },
+            "snakeCase": {
+              "safeName": "errors",
+              "unsafeName": "errors",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "errors",
+            "unsafeName": "errors",
+          },
+          "originalName": "errors",
+          "pascalCase": {
+            "safeName": "Errors",
+            "unsafeName": "Errors",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ERRORS",
+            "unsafeName": "ERRORS",
+          },
+          "snakeCase": {
+            "safeName": "errors",
+            "unsafeName": "errors",
+          },
+        },
+        "packagePath": [],
+      },
+      "hasEndpointsInTree": false,
+      "name": {
+        "camelCase": {
+          "safeName": "errors",
+          "unsafeName": "errors",
+        },
+        "originalName": "errors",
+        "pascalCase": {
+          "safeName": "Errors",
+          "unsafeName": "Errors",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERRORS",
+          "unsafeName": "ERRORS",
+        },
+        "snakeCase": {
+          "safeName": "errors",
+          "unsafeName": "errors",
+        },
+      },
+      "navigationConfig": null,
+      "service": null,
+      "subpackages": [],
+      "types": [
+        "type_errors:PropertyBasedErrorTestBody",
+      ],
+      "webhooks": null,
+    },
+    "subpackage_property-based-error": {
+      "docs": null,
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "propertyBasedError",
+              "unsafeName": "propertyBasedError",
+            },
+            "originalName": "property-based-error",
+            "pascalCase": {
+              "safeName": "PropertyBasedError",
+              "unsafeName": "PropertyBasedError",
+            },
+            "screamingSnakeCase": {
+              "safeName": "PROPERTY_BASED_ERROR",
+              "unsafeName": "PROPERTY_BASED_ERROR",
+            },
+            "snakeCase": {
+              "safeName": "property_based_error",
+              "unsafeName": "property_based_error",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "propertyBasedError",
+            "unsafeName": "propertyBasedError",
+          },
+          "originalName": "property-based-error",
+          "pascalCase": {
+            "safeName": "PropertyBasedError",
+            "unsafeName": "PropertyBasedError",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PROPERTY_BASED_ERROR",
+            "unsafeName": "PROPERTY_BASED_ERROR",
+          },
+          "snakeCase": {
+            "safeName": "property_based_error",
+            "unsafeName": "property_based_error",
+          },
+        },
+        "packagePath": [],
+      },
+      "hasEndpointsInTree": true,
+      "name": {
+        "camelCase": {
+          "safeName": "propertyBasedError",
+          "unsafeName": "propertyBasedError",
+        },
+        "originalName": "property-based-error",
+        "pascalCase": {
+          "safeName": "PropertyBasedError",
+          "unsafeName": "PropertyBasedError",
+        },
+        "screamingSnakeCase": {
+          "safeName": "PROPERTY_BASED_ERROR",
+          "unsafeName": "PROPERTY_BASED_ERROR",
+        },
+        "snakeCase": {
+          "safeName": "property_based_error",
+          "unsafeName": "property_based_error",
+        },
+      },
+      "navigationConfig": null,
+      "service": "service_property-based-error",
+      "subpackages": [],
+      "types": [],
+      "webhooks": null,
+    },
+  },
+  "types": {
+    "type_errors:PropertyBasedErrorTestBody": {
+      "availability": null,
+      "docs": null,
+      "examples": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "errors",
+                "unsafeName": "errors",
+              },
+              "originalName": "errors",
+              "pascalCase": {
+                "safeName": "Errors",
+                "unsafeName": "Errors",
+              },
+              "screamingSnakeCase": {
+                "safeName": "ERRORS",
+                "unsafeName": "ERRORS",
+              },
+              "snakeCase": {
+                "safeName": "errors",
+                "unsafeName": "errors",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "errors",
+              "unsafeName": "errors",
+            },
+            "originalName": "errors",
+            "pascalCase": {
+              "safeName": "Errors",
+              "unsafeName": "Errors",
+            },
+            "screamingSnakeCase": {
+              "safeName": "ERRORS",
+              "unsafeName": "ERRORS",
+            },
+            "snakeCase": {
+              "safeName": "errors",
+              "unsafeName": "errors",
+            },
+          },
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "propertyBasedErrorTestBody",
+            "unsafeName": "propertyBasedErrorTestBody",
+          },
+          "originalName": "PropertyBasedErrorTestBody",
+          "pascalCase": {
+            "safeName": "PropertyBasedErrorTestBody",
+            "unsafeName": "PropertyBasedErrorTestBody",
+          },
+          "screamingSnakeCase": {
+            "safeName": "PROPERTY_BASED_ERROR_TEST_BODY",
+            "unsafeName": "PROPERTY_BASED_ERROR_TEST_BODY",
+          },
+          "snakeCase": {
+            "safeName": "property_based_error_test_body",
+            "unsafeName": "property_based_error_test_body",
+          },
+        },
+        "typeId": "type_errors:PropertyBasedErrorTestBody",
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+                "originalName": "message",
+                "pascalCase": {
+                  "safeName": "Message",
+                  "unsafeName": "Message",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "MESSAGE",
+                  "unsafeName": "MESSAGE",
+                },
+                "snakeCase": {
+                  "safeName": "message",
+                  "unsafeName": "message",
+                },
+              },
+              "wireValue": "message",
+            },
+            "valueType": {
+              "_type": "primitive",
+              "primitive": "STRING",
+            },
+          },
+        ],
+      },
+    },
+  },
+  "variables": [],
+  "webhookGroups": {},
+}
+`;

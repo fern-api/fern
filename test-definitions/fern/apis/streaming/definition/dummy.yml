@@ -1,0 +1,20 @@
+types:
+  StreamResponse:
+    properties:
+      id: string
+      name: optional<string>
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    generate-stream:
+      path: /generate-stream
+      method: POST
+      request:
+        name: GenerateStreamRequestzs
+        body:
+          properties:
+            num_events: integer
+      response-stream:
+        type: StreamResponse

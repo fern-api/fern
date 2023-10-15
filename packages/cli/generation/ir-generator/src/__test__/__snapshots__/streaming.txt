@@ -1,0 +1,614 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generate IR 1`] = `
+{
+  "apiDisplayName": null,
+  "apiDocs": null,
+  "apiName": {
+    "camelCase": {
+      "safeName": "streaming",
+      "unsafeName": "streaming",
+    },
+    "originalName": "streaming",
+    "pascalCase": {
+      "safeName": "Streaming",
+      "unsafeName": "Streaming",
+    },
+    "screamingSnakeCase": {
+      "safeName": "STREAMING",
+      "unsafeName": "STREAMING",
+    },
+    "snakeCase": {
+      "safeName": "streaming",
+      "unsafeName": "streaming",
+    },
+  },
+  "auth": {
+    "docs": null,
+    "requirement": "ALL",
+    "schemes": [],
+  },
+  "basePath": null,
+  "constants": {
+    "errorInstanceIdKey": {
+      "name": {
+        "camelCase": {
+          "safeName": "errorInstanceId",
+          "unsafeName": "errorInstanceId",
+        },
+        "originalName": "errorInstanceId",
+        "pascalCase": {
+          "safeName": "ErrorInstanceId",
+          "unsafeName": "ErrorInstanceId",
+        },
+        "screamingSnakeCase": {
+          "safeName": "ERROR_INSTANCE_ID",
+          "unsafeName": "ERROR_INSTANCE_ID",
+        },
+        "snakeCase": {
+          "safeName": "error_instance_id",
+          "unsafeName": "error_instance_id",
+        },
+      },
+      "wireValue": "errorInstanceId",
+    },
+  },
+  "environments": null,
+  "errorDiscriminationStrategy": {
+    "type": "statusCode",
+  },
+  "errors": {},
+  "headers": [],
+  "pathParameters": [],
+  "rootPackage": {
+    "docs": null,
+    "errors": [],
+    "fernFilepath": {
+      "allParts": [],
+      "file": null,
+      "packagePath": [],
+    },
+    "hasEndpointsInTree": true,
+    "navigationConfig": null,
+    "service": null,
+    "subpackages": [
+      "subpackage_dummy",
+    ],
+    "types": [],
+    "webhooks": null,
+  },
+  "sdkConfig": {
+    "hasFileDownloadEndpoints": false,
+    "hasStreamingEndpoints": true,
+    "isAuthMandatory": false,
+    "platformHeaders": {
+      "language": "X-Fern-Language",
+      "sdkName": "X-Fern-SDK-Name",
+      "sdkVersion": "X-Fern-SDK-Version",
+    },
+  },
+  "serviceTypeReferenceInfo": {
+    "sharedTypes": [],
+    "typesReferencedOnlyByService": {
+      "service_dummy": [
+        "type_dummy:StreamResponse",
+      ],
+    },
+  },
+  "services": {
+    "service_dummy": {
+      "availability": null,
+      "basePath": {
+        "head": "",
+        "parts": [],
+      },
+      "displayName": null,
+      "endpoints": [
+        {
+          "allPathParameters": [],
+          "auth": false,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
+          "errors": [],
+          "examples": [],
+          "fullPath": {
+            "head": "generate-stream",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_dummy.generate-stream",
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "generateStream",
+              "unsafeName": "generateStream",
+            },
+            "originalName": "generate-stream",
+            "pascalCase": {
+              "safeName": "GenerateStream",
+              "unsafeName": "GenerateStream",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GENERATE_STREAM",
+              "unsafeName": "GENERATE_STREAM",
+            },
+            "snakeCase": {
+              "safeName": "generate_stream",
+              "unsafeName": "generate_stream",
+            },
+          },
+          "path": {
+            "head": "/generate-stream",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": {
+            "contentType": null,
+            "extends": [],
+            "name": {
+              "camelCase": {
+                "safeName": "generateStreamRequestzs",
+                "unsafeName": "generateStreamRequestzs",
+              },
+              "originalName": "GenerateStreamRequestzs",
+              "pascalCase": {
+                "safeName": "GenerateStreamRequestzs",
+                "unsafeName": "GenerateStreamRequestzs",
+              },
+              "screamingSnakeCase": {
+                "safeName": "GENERATE_STREAM_REQUESTZS",
+                "unsafeName": "GENERATE_STREAM_REQUESTZS",
+              },
+              "snakeCase": {
+                "safeName": "generate_stream_requestzs",
+                "unsafeName": "generate_stream_requestzs",
+              },
+            },
+            "properties": [
+              {
+                "docs": null,
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "numEvents",
+                      "unsafeName": "numEvents",
+                    },
+                    "originalName": "num_events",
+                    "pascalCase": {
+                      "safeName": "NumEvents",
+                      "unsafeName": "NumEvents",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "NUM_EVENTS",
+                      "unsafeName": "NUM_EVENTS",
+                    },
+                    "snakeCase": {
+                      "safeName": "num_events",
+                      "unsafeName": "num_events",
+                    },
+                  },
+                  "wireValue": "num_events",
+                },
+                "valueType": {
+                  "_type": "primitive",
+                  "primitive": "INTEGER",
+                },
+              },
+            ],
+            "type": "inlinedRequestBody",
+          },
+          "response": {
+            "dataEventType": {
+              "json": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "dummy",
+                        "unsafeName": "dummy",
+                      },
+                      "originalName": "dummy",
+                      "pascalCase": {
+                        "safeName": "Dummy",
+                        "unsafeName": "Dummy",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "DUMMY",
+                        "unsafeName": "DUMMY",
+                      },
+                      "snakeCase": {
+                        "safeName": "dummy",
+                        "unsafeName": "dummy",
+                      },
+                    },
+                  ],
+                  "file": {
+                    "camelCase": {
+                      "safeName": "dummy",
+                      "unsafeName": "dummy",
+                    },
+                    "originalName": "dummy",
+                    "pascalCase": {
+                      "safeName": "Dummy",
+                      "unsafeName": "Dummy",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "DUMMY",
+                      "unsafeName": "DUMMY",
+                    },
+                    "snakeCase": {
+                      "safeName": "dummy",
+                      "unsafeName": "dummy",
+                    },
+                  },
+                  "packagePath": [],
+                },
+                "name": {
+                  "camelCase": {
+                    "safeName": "streamResponse",
+                    "unsafeName": "streamResponse",
+                  },
+                  "originalName": "StreamResponse",
+                  "pascalCase": {
+                    "safeName": "StreamResponse",
+                    "unsafeName": "StreamResponse",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "STREAM_RESPONSE",
+                    "unsafeName": "STREAM_RESPONSE",
+                  },
+                  "snakeCase": {
+                    "safeName": "stream_response",
+                    "unsafeName": "stream_response",
+                  },
+                },
+                "typeId": "type_dummy:StreamResponse",
+              },
+              "type": "json",
+            },
+            "docs": null,
+            "terminator": null,
+            "type": "streaming",
+          },
+          "sdkRequest": {
+            "requestParameterName": {
+              "camelCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+              "originalName": "request",
+              "pascalCase": {
+                "safeName": "Request",
+                "unsafeName": "Request",
+              },
+              "screamingSnakeCase": {
+                "safeName": "REQUEST",
+                "unsafeName": "REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+            },
+            "shape": {
+              "bodyKey": {
+                "camelCase": {
+                  "safeName": "body",
+                  "unsafeName": "body",
+                },
+                "originalName": "body",
+                "pascalCase": {
+                  "safeName": "Body",
+                  "unsafeName": "Body",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "BODY",
+                  "unsafeName": "BODY",
+                },
+                "snakeCase": {
+                  "safeName": "body",
+                  "unsafeName": "body",
+                },
+              },
+              "type": "wrapper",
+              "wrapperName": {
+                "camelCase": {
+                  "safeName": "generateStreamRequestzs",
+                  "unsafeName": "generateStreamRequestzs",
+                },
+                "originalName": "GenerateStreamRequestzs",
+                "pascalCase": {
+                  "safeName": "GenerateStreamRequestzs",
+                  "unsafeName": "GenerateStreamRequestzs",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "GENERATE_STREAM_REQUESTZS",
+                  "unsafeName": "GENERATE_STREAM_REQUESTZS",
+                },
+                "snakeCase": {
+                  "safeName": "generate_stream_requestzs",
+                  "unsafeName": "generate_stream_requestzs",
+                },
+              },
+            },
+          },
+        },
+      ],
+      "headers": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "dummy",
+                "unsafeName": "dummy",
+              },
+              "originalName": "dummy",
+              "pascalCase": {
+                "safeName": "Dummy",
+                "unsafeName": "Dummy",
+              },
+              "screamingSnakeCase": {
+                "safeName": "DUMMY",
+                "unsafeName": "DUMMY",
+              },
+              "snakeCase": {
+                "safeName": "dummy",
+                "unsafeName": "dummy",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "dummy",
+              "unsafeName": "dummy",
+            },
+            "originalName": "dummy",
+            "pascalCase": {
+              "safeName": "Dummy",
+              "unsafeName": "Dummy",
+            },
+            "screamingSnakeCase": {
+              "safeName": "DUMMY",
+              "unsafeName": "DUMMY",
+            },
+            "snakeCase": {
+              "safeName": "dummy",
+              "unsafeName": "dummy",
+            },
+          },
+          "packagePath": [],
+        },
+      },
+      "pathParameters": [],
+    },
+  },
+  "subpackages": {
+    "subpackage_dummy": {
+      "docs": null,
+      "errors": [],
+      "fernFilepath": {
+        "allParts": [
+          {
+            "camelCase": {
+              "safeName": "dummy",
+              "unsafeName": "dummy",
+            },
+            "originalName": "dummy",
+            "pascalCase": {
+              "safeName": "Dummy",
+              "unsafeName": "Dummy",
+            },
+            "screamingSnakeCase": {
+              "safeName": "DUMMY",
+              "unsafeName": "DUMMY",
+            },
+            "snakeCase": {
+              "safeName": "dummy",
+              "unsafeName": "dummy",
+            },
+          },
+        ],
+        "file": {
+          "camelCase": {
+            "safeName": "dummy",
+            "unsafeName": "dummy",
+          },
+          "originalName": "dummy",
+          "pascalCase": {
+            "safeName": "Dummy",
+            "unsafeName": "Dummy",
+          },
+          "screamingSnakeCase": {
+            "safeName": "DUMMY",
+            "unsafeName": "DUMMY",
+          },
+          "snakeCase": {
+            "safeName": "dummy",
+            "unsafeName": "dummy",
+          },
+        },
+        "packagePath": [],
+      },
+      "hasEndpointsInTree": true,
+      "name": {
+        "camelCase": {
+          "safeName": "dummy",
+          "unsafeName": "dummy",
+        },
+        "originalName": "dummy",
+        "pascalCase": {
+          "safeName": "Dummy",
+          "unsafeName": "Dummy",
+        },
+        "screamingSnakeCase": {
+          "safeName": "DUMMY",
+          "unsafeName": "DUMMY",
+        },
+        "snakeCase": {
+          "safeName": "dummy",
+          "unsafeName": "dummy",
+        },
+      },
+      "navigationConfig": null,
+      "service": "service_dummy",
+      "subpackages": [],
+      "types": [
+        "type_dummy:StreamResponse",
+      ],
+      "webhooks": null,
+    },
+  },
+  "types": {
+    "type_dummy:StreamResponse": {
+      "availability": null,
+      "docs": null,
+      "examples": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "dummy",
+                "unsafeName": "dummy",
+              },
+              "originalName": "dummy",
+              "pascalCase": {
+                "safeName": "Dummy",
+                "unsafeName": "Dummy",
+              },
+              "screamingSnakeCase": {
+                "safeName": "DUMMY",
+                "unsafeName": "DUMMY",
+              },
+              "snakeCase": {
+                "safeName": "dummy",
+                "unsafeName": "dummy",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "dummy",
+              "unsafeName": "dummy",
+            },
+            "originalName": "dummy",
+            "pascalCase": {
+              "safeName": "Dummy",
+              "unsafeName": "Dummy",
+            },
+            "screamingSnakeCase": {
+              "safeName": "DUMMY",
+              "unsafeName": "DUMMY",
+            },
+            "snakeCase": {
+              "safeName": "dummy",
+              "unsafeName": "dummy",
+            },
+          },
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "streamResponse",
+            "unsafeName": "streamResponse",
+          },
+          "originalName": "StreamResponse",
+          "pascalCase": {
+            "safeName": "StreamResponse",
+            "unsafeName": "StreamResponse",
+          },
+          "screamingSnakeCase": {
+            "safeName": "STREAM_RESPONSE",
+            "unsafeName": "STREAM_RESPONSE",
+          },
+          "snakeCase": {
+            "safeName": "stream_response",
+            "unsafeName": "stream_response",
+          },
+        },
+        "typeId": "type_dummy:StreamResponse",
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "wireValue": "id",
+            },
+            "valueType": {
+              "_type": "primitive",
+              "primitive": "STRING",
+            },
+          },
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+                "originalName": "name",
+                "pascalCase": {
+                  "safeName": "Name",
+                  "unsafeName": "Name",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "NAME",
+                  "unsafeName": "NAME",
+                },
+                "snakeCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+              },
+              "wireValue": "name",
+            },
+            "valueType": {
+              "_type": "container",
+              "container": {
+                "_type": "optional",
+                "optional": {
+                  "_type": "primitive",
+                  "primitive": "STRING",
+                },
+              },
+            },
+          },
+        ],
+      },
+    },
+  },
+  "variables": [],
+  "webhookGroups": {},
+}
+`;

@@ -14,7 +14,7 @@
   "rules": {
     "package-json": {
       "scripts": {
-        "dist:cli": "yarn compile && node build.cjs && cp -R ./fern dist",
+        "dist:cli": "yarn compile && node build.cjs && cp -R ../../test-definitions/fern dist",
         "publish:cli": "yarn dist:cli && cd dist && yarn npm publish --access public"
       }
     }

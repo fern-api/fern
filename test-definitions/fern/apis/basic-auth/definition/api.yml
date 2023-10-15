@@ -1,0 +1,4 @@
+name: basic-auth
+auth: basic
+error-discrimination:
+  strategy: status-code

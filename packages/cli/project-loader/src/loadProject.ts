@@ -49,7 +49,7 @@ export async function loadProject({
     };
 }
 
-async function loadApis({
+export async function loadApis({
     cliName,
     fernDirectory,
     context,

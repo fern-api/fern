@@ -1,0 +1,6 @@
+name: nursery-api
+
+headers:
+  X-API-Header:
+    name: apiHeader
+    type: literal<"api header value">

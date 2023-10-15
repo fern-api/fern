@@ -1,7 +1,0 @@
-service:
-  auth: false
-  base-path: /no-headers
-  endpoints:
-    get:
-      path: ""
-      method: POST
