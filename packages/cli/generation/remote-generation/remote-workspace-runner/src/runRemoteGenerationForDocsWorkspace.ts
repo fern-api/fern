@@ -10,6 +10,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     context,
     token,
     instanceUrl,
+    preview,
 }: {
     organization: string;
     fernWorkspaces: FernWorkspace[];
@@ -17,6 +18,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     context: TaskContext;
     token: FernToken;
     instanceUrl: string | undefined;
+    preview: boolean;
 }): Promise<void> {
     const instances = docsWorkspace.config.instances;
 
@@ -37,6 +39,7 @@ export async function runRemoteGenerationForDocsWorkspace({
                 context,
                 fernWorkspaces,
                 version: "",
+                preview,
             });
         });
         return;
@@ -64,6 +67,7 @@ export async function runRemoteGenerationForDocsWorkspace({
             context,
             fernWorkspaces,
             version: "",
+            preview,
         });
     });
     return;

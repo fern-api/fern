@@ -277,6 +277,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     string: true,
                     description: "The url for the instance of docs (e.g. --instance acme.docs.buildwithfern.com)",
                 })
+                .option("preview", {
+                    boolean: true,
+                    default: false,
+                    description: "Whether to generate a preview link for the docs",
+                })
                 .option("group", {
                     type: "string",
                     description: "The group to generate",
@@ -334,6 +339,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     ),
                     cliContext,
                     instance: argv.instance,
+                    preview: argv.preview,
                 });
             } else {
                 // default to loading api workspace to preserve legacy behavior

@@ -10,10 +10,12 @@ export async function generateDocsWorkspace({
     project,
     cliContext,
     instance,
+    preview,
 }: {
     project: Project;
     cliContext: CliContext;
     instance: string | undefined;
+    preview: boolean;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
@@ -57,6 +59,7 @@ export async function generateDocsWorkspace({
             context,
             token,
             instanceUrl: instance,
+            preview,
         });
     });
 }
