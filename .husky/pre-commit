@@ -2,5 +2,3 @@
 . "$(dirname "$0")/_/husky.sh"
 
 yarn lint-staged
-yarn organize-imports
-yarn format:fix
