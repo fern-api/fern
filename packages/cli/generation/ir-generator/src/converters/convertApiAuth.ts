@@ -68,6 +68,7 @@ function convertSchemeReference({
                     }),
                     valueType: file.parseTypeReference(rawHeader.type ?? "string"),
                     prefix: rawHeader.prefix,
+                    headerEnvVar: rawHeader.env,
                 }),
             basic: (rawScheme) =>
                 generateBasicAuth({
@@ -113,7 +114,11 @@ function generateBearerAuth({
     rawScheme: RawSchemas.BearerAuthSchemeSchema | undefined;
     file: FernFileContext;
 }): AuthScheme.Bearer {
-    return AuthScheme.bearer({ docs, token: file.casingsGenerator.generateName(rawScheme?.token?.name ?? "token") });
+    return AuthScheme.bearer({
+        docs,
+        token: file.casingsGenerator.generateName(rawScheme?.token?.name ?? "token"),
+        tokenEnvVar: rawScheme?.token?.env,
+    });
 }
 
 function generateBasicAuth({
@@ -128,6 +133,8 @@ function generateBasicAuth({
     return AuthScheme.basic({
         docs,
         username: file.casingsGenerator.generateName(rawScheme?.username?.name ?? "username"),
+        usernameEnvVar: rawScheme?.username?.env,
         password: file.casingsGenerator.generateName(rawScheme?.password?.name ?? "password"),
+        passwordEnvVar: rawScheme?.password?.env,
     });
 }
