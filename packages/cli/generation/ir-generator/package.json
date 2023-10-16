@@ -47,7 +47,7 @@
     "@types/node": "^18.7.18",
     "@types/url-join": "^4.0.1",
     "depcheck": "^1.4.6",
-    "eslint": "^8.26.0",
+    "eslint": "^8.51.0",
     "jest": "^29.4.0",
     "jest-specific-snapshot": "^8.0.0",
     "organize-imports-cli": "^0.10.0",
