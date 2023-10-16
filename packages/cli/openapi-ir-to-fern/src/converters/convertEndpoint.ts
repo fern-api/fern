@@ -1,7 +1,10 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
+import { ExampleTypeReferenceSchema } from "@fern-api/yaml-schema/src/schemas";
+import { FullExample, FullOneOfExample, KeyValuePair, PrimitiveExample } from "@fern-fern/openapi-ir-model/example";
 import {
     Endpoint,
     EndpointAvailability,
+    EndpointExample,
     HttpError,
     Request,
     Response,
@@ -226,11 +229,131 @@ export function convertEndpoint({
     });
     convertedEndpoint.errors = isPackageYml ? errorsThrown : errorsThrown.map((error) => `${ROOT_PREFIX}.${error}`);
 
+    if (endpoint.examples.length > 0) {
+        convertedEndpoint.examples = convertEndpointExamples(endpoint.examples);
+    }
+
     return {
         value: convertedEndpoint,
         schemaIdsToExclude,
         additionalTypeDeclarations,
     };
+}
+
+interface NamedFullExample {
+    name: string;
+    value: FullExample;
+}
+
+function convertEndpointExamples(endpointExamples: EndpointExample[]): RawSchemas.ExampleEndpointCallSchema[] {
+    return endpointExamples.map((endpointExample) => {
+        return convertEndpointExample(endpointExample);
+    });
+}
+
+function convertEndpointExample(endpointExample: EndpointExample): RawSchemas.ExampleEndpointCallSchema {
+    return {
+        "path-parameters":
+            endpointExample.pathParameters != null
+                ? convertNamedFullExamplesToExampleTypeReferenceSchemas(endpointExample.pathParameters)
+                : undefined,
+        "query-parameters":
+            endpointExample.queryParameters != null
+                ? convertNamedFullExamplesToExampleTypeReferenceSchemas(endpointExample.queryParameters)
+                : undefined,
+        headers:
+            endpointExample.headers != null
+                ? convertNamedFullExamplesToExampleTypeReferenceSchemas(endpointExample.headers)
+                : undefined,
+        request:
+            endpointExample.request != null
+                ? convertFullExampleToExampleTypeReferenceSchema(endpointExample.request)
+                : undefined,
+        response:
+            endpointExample.response != null
+                ? { body: convertFullExampleToExampleTypeReferenceSchema(endpointExample.response) }
+                : undefined,
+    };
+}
+
+function convertNamedFullExamplesToExampleTypeReferenceSchemas(
+    namedFullExamples: NamedFullExample[]
+): Record<string, ExampleTypeReferenceSchema> {
+    const result: Record<string, ExampleTypeReferenceSchema> = {};
+    namedFullExamples.map(
+        (namedFullExample) =>
+            (result[namedFullExample.name] = convertFullExampleToExampleTypeReferenceSchema(namedFullExample.value))
+    );
+    return result;
+}
+
+function convertFullExampleToExampleTypeReferenceSchema(fullExample: FullExample): ExampleTypeReferenceSchema {
+    if (fullExample.type === "primitive") {
+        return convertPrimitiveExampleToExampleTypeReferenceSchema(fullExample.primitive);
+    } else if (fullExample.type === "object") {
+        return convertFullExamplePropertiesToExampleTypeReferenceSchema(fullExample.properties);
+    } else if (fullExample.type === "array") {
+        return convertFullArrayExampleToExampleTypeReferenceSchema(fullExample.array);
+    } else if (fullExample.type === "map") {
+        return convertFullMapExampleToExampleTypeReferenceSchema(fullExample.map);
+    } else if (fullExample.type === "oneOf") {
+        return convertFullOneOfExampleToExampleTypeReferenceSchema(fullExample.oneOf);
+    } else if (fullExample.type === "enum") {
+        return fullExample.enum;
+    } else if (fullExample.type === "literal") {
+        return fullExample.literal;
+    }
+    return convertFullExampleToExampleTypeReferenceSchema(fullExample.unknown);
+}
+
+function convertPrimitiveExampleToExampleTypeReferenceSchema(
+    primitiveExample: PrimitiveExample
+): ExampleTypeReferenceSchema {
+    return PrimitiveExample._visit<ExampleTypeReferenceSchema>(primitiveExample, {
+        int: (value: number) => value.toString(),
+        int64: (value: number) => value.toString(),
+        float: (value: number) => value.toString(),
+        double: (value: number) => value.toString(),
+        string: (value: string) => value,
+        datetime: (value: string) => value,
+        date: (value: string) => value,
+        base64: (value: string) => value,
+        boolean: (value: boolean) => value.toString(),
+        _unknown: () => "unknown",
+    });
+}
+
+function convertFullExamplePropertiesToExampleTypeReferenceSchema(
+    fullExampleProperties: Record<PropertyKey, FullExample>
+): ExampleTypeReferenceSchema {
+    const properties: Record<string, ExampleTypeReferenceSchema> = {};
+    Object.entries(fullExampleProperties).forEach(
+        ([propertyKey, fullExample]) =>
+            (properties[propertyKey] = convertFullExampleToExampleTypeReferenceSchema(fullExample))
+    );
+    return properties;
+}
+
+function convertFullArrayExampleToExampleTypeReferenceSchema(fullExamples: FullExample[]): ExampleTypeReferenceSchema {
+    return fullExamples.map((fullExample) => {
+        return convertFullExampleToExampleTypeReferenceSchema(fullExample);
+    });
+}
+
+function convertFullMapExampleToExampleTypeReferenceSchema(pairs: KeyValuePair[]): ExampleTypeReferenceSchema {
+    return pairs.map((pair) => {
+        return [
+            convertPrimitiveExampleToExampleTypeReferenceSchema(pair.key),
+            convertFullExampleToExampleTypeReferenceSchema(pair.value),
+        ];
+    });
+}
+
+function convertFullOneOfExampleToExampleTypeReferenceSchema(oneOf: FullOneOfExample): ExampleTypeReferenceSchema {
+    if (oneOf.type === "discriminated") {
+        return convertFullExamplePropertiesToExampleTypeReferenceSchema(oneOf.discriminated);
+    }
+    return convertFullExampleToExampleTypeReferenceSchema(oneOf.undisciminated);
 }
 
 interface ConvertedRequest {
