@@ -55,9 +55,13 @@ export class ExampleTypeFactory {
                 case "full":
                     fullExample[propertyKey] = propertyExample.full;
                     break;
-                case "partial":
-                    this.logger.error("Skipping nested partial example");
+                case "partial": {
+                    const partialExample = this.buildFromPartialExample(propertyExample.partial);
+                    if (partialExample != null) {
+                        fullExample[propertyKey] = partialExample;
+                    }
                     break;
+                }
                 case "reference": {
                     const referencedExample = this.buildFromReference(propertyExample);
                     if (referencedExample != null) {
