@@ -3904,7 +3904,148 @@ exports[`open api parser merge parse open api 1`] = `
           "request": {
             "properties": {
               "model": {
-                "properties": {},
+                "properties": {
+                  "avatar": {
+                    "primitive": {
+                      "string": "http://alturl.com/h2h8m",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "company": {
+                    "primitive": {
+                      "string": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "date_of_birth": {
+                    "primitive": {
+                      "datetime": "1990-11-10T00:00:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_full_name": {
+                    "primitive": {
+                      "string": "Cousin Greg Hirsch",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "employee_number": {
+                    "primitive": {
+                      "string": "2",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "first_name": {
+                    "primitive": {
+                      "string": "Greg",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "hire_date": {
+                    "primitive": {
+                      "datetime": "2020-10-10T00:00:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "home_location": {
+                    "primitive": {
+                      "string": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "last_name": {
+                    "primitive": {
+                      "string": "Hirsch",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "manager": {
+                    "primitive": {
+                      "string": "0048ea5b-911e-4dff-9364-92070dea62ff",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "mobile_phone_number": {
+                    "primitive": {
+                      "string": "+1234567890",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "pay_group": {
+                    "primitive": {
+                      "string": "ad1264e2-39be-4787-b749-f1aade9e3405",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "personal_email": {
+                    "primitive": {
+                      "string": "greg@gmail.com",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "ssn": {
+                    "primitive": {
+                      "string": "1234567890",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "start_date": {
+                    "primitive": {
+                      "datetime": "2020-10-11T00:00:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "team": {
+                    "primitive": {
+                      "string": "249c9faa-3045-4a31-953b-8f22d3613301",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "termination_date": {
+                    "primitive": {
+                      "datetime": "2021-10-12T00:00:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "username": {
+                    "primitive": {
+                      "string": "cousingreg",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "work_email": {
+                    "primitive": {
+                      "string": "greg@merge.dev",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "work_location": {
+                    "primitive": {
+                      "string": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
                 "type": "object",
               },
             },
@@ -10232,7 +10373,43 @@ exports[`open api parser merge parse open api 1`] = `
           "request": {
             "properties": {
               "model": {
-                "properties": {},
+                "properties": {
+                  "approver": {
+                    "primitive": {
+                      "string": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "employee": {
+                    "primitive": {
+                      "string": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "employee_note": {
+                    "primitive": {
+                      "string": "Moving into the new apartment Kendall Roy gave me!",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "end_time": {
+                    "primitive": {
+                      "datetime": "2020-11-17T00:00:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "start_time": {
+                    "primitive": {
+                      "datetime": "2020-11-10T00:00:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                },
                 "type": "object",
               },
             },

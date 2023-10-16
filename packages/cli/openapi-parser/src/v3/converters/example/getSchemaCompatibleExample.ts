@@ -28,29 +28,31 @@ export function getSchemaCompatiableExample({
 }
 
 function isSchemaBoolean({ schema }: { schema: Schema }) {
-    if (schema.type === "optional" || schema.type === "nullable") {
-        return schema.value.type === "primitive" && schema.value.schema.type === "boolean";
-    }
-    return schema.type === "primitive" && schema.schema.type === "boolean";
+    const unwrappedSchema = unwrapOptionalOrNullable(schema);
+    return unwrappedSchema.type === "primitive" && unwrappedSchema.schema.type === "boolean";
 }
 
 function isSchemaString({ schema }: { schema: Schema }) {
-    if (schema.type === "optional" || schema.type === "nullable") {
-        return schema.value.type === "primitive" && schema.value.schema.type === "string";
-    }
-    return schema.type === "primitive" && schema.schema.type === "string";
+    const unwrappedSchema = unwrapOptionalOrNullable(schema);
+    return unwrappedSchema.type === "primitive" && unwrappedSchema.schema.type === "string";
 }
 
 function isSchemaDatetime({ schema }: { schema: Schema }) {
-    if (schema.type === "optional" || schema.type === "nullable") {
-        return schema.value.type === "primitive" && schema.value.schema.type === "datetime";
-    }
-    return schema.type === "primitive" && schema.schema.type === "datetime";
+    const unwrappedSchema = unwrapOptionalOrNullable(schema);
+    return unwrappedSchema.type === "primitive" && unwrappedSchema.schema.type === "datetime";
 }
 
 function isSchemaEnum({ schema }: { schema: Schema }) {
-    if (schema.type === "optional" || schema.type === "nullable") {
-        return schema.value.type === "enum";
+    const unwrappedSchema = unwrapOptionalOrNullable(schema);
+    return unwrappedSchema.type === "enum";
+}
+
+function unwrapOptionalOrNullable(schema: Schema): Schema {
+    if (schema.type === "nullable") {
+        return unwrapOptionalOrNullable(schema.value);
     }
-    return schema.type === "enum";
+    if (schema.type === "optional") {
+        return unwrapOptionalOrNullable(schema.value);
+    }
+    return schema;
 }

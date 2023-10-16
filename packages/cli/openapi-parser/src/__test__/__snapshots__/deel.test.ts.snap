@@ -1385,6 +1385,13 @@ exports[`open api parser deel parse open api 1`] = `
             "properties": {
               "data": {
                 "properties": {
+                  "reason": {
+                    "primitive": {
+                      "string": "Excited!",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "status": {
                     "enum": "approved",
                     "type": "enum",

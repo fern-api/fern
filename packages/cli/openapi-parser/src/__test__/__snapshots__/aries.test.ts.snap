@@ -841,6 +841,13 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "imageUrl": {
+                "primitive": {
+                  "string": "http://192.168.56.101/img/logo.jpg",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "label": {
                 "primitive": {
                   "string": "Bob",
@@ -3928,7 +3935,15 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "holder_did": {
+                "primitive": {
+                  "string": "did:key:ahsdkjahsdkjhaskjdhakjshdkajhsdkjahs",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -4276,6 +4291,13 @@ exports[`open api parser aries parse open api 1`] = `
               "connection_id": {
                 "primitive": {
                   "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "holder_did": {
+                "primitive": {
+                  "string": "did:key:ahsdkjahsdkjhaskjdhakjshdkajhsdkjahs",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -7529,6 +7551,13 @@ exports[`open api parser aries parse open api 1`] = `
               "@type": {
                 "primitive": {
                   "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "imageUrl": {
+                "primitive": {
+                  "string": "http://192.168.56.101/img/logo.jpg",
                   "type": "string",
                 },
                 "type": "primitive",

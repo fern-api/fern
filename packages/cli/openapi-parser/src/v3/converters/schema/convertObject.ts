@@ -125,6 +125,12 @@ export function convertObject({
                 value: convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName]),
             });
             const parsedExample = example != null ? getSchemaCompatiableExample({ schema, example }) : undefined;
+            // eslint-disable-next-line no-console
+            console.log(
+                `Example is ${example}. Property schemas is ${JSON.stringify(
+                    schema
+                )}. Parsed example is ${JSON.stringify(parsedExample)}`
+            );
             if (parsedExample != null) {
                 includedProperties[propertyName] = Example.full(parsedExample);
             }

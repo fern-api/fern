@@ -1344,6 +1344,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                 },
                 "type": "primitive",
               },
+              "notify_party": {
+                "primitive": {
+                  "string": "John Doe, doe@example.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "origin_address_ref": {
                 "primitive": {
                   "string": "id-123456",
