@@ -1,5 +1,4 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { ExampleTypeReferenceSchema } from "@fern-api/yaml-schema/src/schemas";
 import { FullExample, FullOneOfExample, KeyValuePair, PrimitiveExample } from "@fern-fern/openapi-ir-model/example";
 import {
     Endpoint,
@@ -278,8 +277,8 @@ function convertEndpointExample(endpointExample: EndpointExample): RawSchemas.Ex
 
 function convertNamedFullExamplesToExampleTypeReferenceSchemas(
     namedFullExamples: NamedFullExample[]
-): Record<string, ExampleTypeReferenceSchema> {
-    const result: Record<string, ExampleTypeReferenceSchema> = {};
+): Record<string, RawSchemas.ExampleTypeReferenceSchema> {
+    const result: Record<string, RawSchemas.ExampleTypeReferenceSchema> = {};
     namedFullExamples.map(
         (namedFullExample) =>
             (result[namedFullExample.name] = convertFullExampleToExampleTypeReferenceSchema(namedFullExample.value))
@@ -287,8 +286,10 @@ function convertNamedFullExamplesToExampleTypeReferenceSchemas(
     return result;
 }
 
-function convertFullExampleToExampleTypeReferenceSchema(fullExample: FullExample): ExampleTypeReferenceSchema {
-    return FullExample._visit<ExampleTypeReferenceSchema>(fullExample, {
+function convertFullExampleToExampleTypeReferenceSchema(
+    fullExample: FullExample
+): RawSchemas.ExampleTypeReferenceSchema {
+    return FullExample._visit<RawSchemas.ExampleTypeReferenceSchema>(fullExample, {
         primitive: (primitive) => convertPrimitiveExampleToExampleTypeReferenceSchema(primitive),
         object: (object) => convertFullExamplePropertiesToExampleTypeReferenceSchema(object.properties),
         array: (array) => convertFullArrayExampleToExampleTypeReferenceSchema(array),
@@ -303,8 +304,8 @@ function convertFullExampleToExampleTypeReferenceSchema(fullExample: FullExample
 
 function convertPrimitiveExampleToExampleTypeReferenceSchema(
     primitiveExample: PrimitiveExample
-): ExampleTypeReferenceSchema {
-    return PrimitiveExample._visit<ExampleTypeReferenceSchema>(primitiveExample, {
+): RawSchemas.ExampleTypeReferenceSchema {
+    return PrimitiveExample._visit<RawSchemas.ExampleTypeReferenceSchema>(primitiveExample, {
         int: (value: number) => value.toString(),
         int64: (value: number) => value.toString(),
         float: (value: number) => value.toString(),
@@ -320,8 +321,8 @@ function convertPrimitiveExampleToExampleTypeReferenceSchema(
 
 function convertFullExamplePropertiesToExampleTypeReferenceSchema(
     fullExampleProperties: Record<PropertyKey, FullExample>
-): ExampleTypeReferenceSchema {
-    const properties: Record<string, ExampleTypeReferenceSchema> = {};
+): RawSchemas.ExampleTypeReferenceSchema {
+    const properties: Record<string, RawSchemas.ExampleTypeReferenceSchema> = {};
     Object.entries(fullExampleProperties).forEach(
         ([propertyKey, fullExample]) =>
             (properties[propertyKey] = convertFullExampleToExampleTypeReferenceSchema(fullExample))
@@ -329,13 +330,17 @@ function convertFullExamplePropertiesToExampleTypeReferenceSchema(
     return properties;
 }
 
-function convertFullArrayExampleToExampleTypeReferenceSchema(fullExamples: FullExample[]): ExampleTypeReferenceSchema {
+function convertFullArrayExampleToExampleTypeReferenceSchema(
+    fullExamples: FullExample[]
+): RawSchemas.ExampleTypeReferenceSchema {
     return fullExamples.map((fullExample) => {
         return convertFullExampleToExampleTypeReferenceSchema(fullExample);
     });
 }
 
-function convertFullMapExampleToExampleTypeReferenceSchema(pairs: KeyValuePair[]): ExampleTypeReferenceSchema {
+function convertFullMapExampleToExampleTypeReferenceSchema(
+    pairs: KeyValuePair[]
+): RawSchemas.ExampleTypeReferenceSchema {
     return pairs.map((pair) => {
         return [
             convertPrimitiveExampleToExampleTypeReferenceSchema(pair.key),
@@ -344,7 +349,9 @@ function convertFullMapExampleToExampleTypeReferenceSchema(pairs: KeyValuePair[]
     });
 }
 
-function convertFullOneOfExampleToExampleTypeReferenceSchema(oneOf: FullOneOfExample): ExampleTypeReferenceSchema {
+function convertFullOneOfExampleToExampleTypeReferenceSchema(
+    oneOf: FullOneOfExample
+): RawSchemas.ExampleTypeReferenceSchema {
     if (oneOf.type === "discriminated") {
         return convertFullExamplePropertiesToExampleTypeReferenceSchema(oneOf.discriminated);
     }
