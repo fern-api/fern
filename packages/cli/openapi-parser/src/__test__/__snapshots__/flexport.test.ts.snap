@@ -36,6 +36,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "schema": "CreateBookingAmendment",
           "type": "reference",
         },
+        "schemaInstanceId": "booking_amendment_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -452,6 +453,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "schema": "CreateBookingLineItem",
           "type": "reference",
         },
+        "schemaInstanceId": "booking_line_item_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1254,6 +1256,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "schema": "CreateBooking",
           "type": "reference",
         },
+        "schemaInstanceId": "booking_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1476,38 +1479,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "flight_type": {
-                "enum": "freighter",
-                "type": "enum",
-              },
-              "teus": {
-                "primitive": {
-                  "string": "2",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "transportation_mode": {
-                "enum": "ocean",
-                "type": "enum",
-              },
-              "trucking_service_type": {
-                "enum": "drayage",
-                "type": "enum",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CarbonCalculationCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -1526,6 +1498,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "schema": "CreateCarbonCalculation",
           "type": "reference",
         },
+        "schemaInstanceId": "carbon_calculation_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1935,6 +1908,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "schema": "CreateCommercialInvoice",
           "type": "reference",
         },
+        "schemaInstanceId": "commercial_invoices_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2035,40 +2009,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "currency_code": {
-                "primitive": {
-                  "string": "USD",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "invoice_number": {
-                "primitive": {
-                  "string": "INVOICE-04-05-2020",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "is_related_parties": {
-                "primitive": {
-                  "boolean": false,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CommercialInvoicesUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -2087,6 +2028,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "schema": "UpdateCommercialInvoice",
           "type": "reference",
         },
+        "schemaInstanceId": "commercial_invoices_update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3052,6 +2994,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "schema": "CreateDocument",
           "type": "reference",
         },
+        "schemaInstanceId": "documents_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -4632,33 +4575,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "name": {
-                "primitive": {
-                  "string": "Zoomit",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "ref": {
-                "primitive": {
-                  "string": "zoomit-ref",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "NetworkCompanyCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -4677,6 +4594,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "CreateCompany",
           "type": "reference",
         },
+        "schemaInstanceId": "network_company_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -4898,33 +4816,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "name": {
-                "primitive": {
-                  "string": "Updated Zoomit",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "ref": {
-                "primitive": {
-                  "string": "zoomit_ref",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "NetworkCompanyUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -4958,6 +4850,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "UpdateCompany",
           "type": "reference",
         },
+        "schemaInstanceId": "network_company_update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -5368,6 +5261,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "CreateCompanyEntity",
           "type": "reference",
         },
+        "schemaInstanceId": "network_company_entity_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -5591,33 +5485,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "name": {
-                "primitive": {
-                  "string": "Zoomit V2",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "ref": {
-                "primitive": {
-                  "string": "zoomit-us",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "NetworkCompanyEntityUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -5651,6 +5519,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "UpdateCompanyEntity",
           "type": "reference",
         },
+        "schemaInstanceId": "network_company_entity_update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -6042,47 +5911,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "company_id": {
-                "primitive": {
-                  "string": "2UXaj4xcHoW8nwh9UVOMpw",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "email": {
-                "primitive": {
-                  "string": "john@example.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "name": {
-                "primitive": {
-                  "string": "John Smith",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "phone_number": {
-                "primitive": {
-                  "string": "861-555-5555",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "NetworkContactCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -6101,6 +5930,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "CreateContact",
           "type": "reference",
         },
+        "schemaInstanceId": "network_contact_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -6324,40 +6154,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "email": {
-                "primitive": {
-                  "string": "john_new_email@example.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "name": {
-                "primitive": {
-                  "string": "John Smith",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "phone_number": {
-                "primitive": {
-                  "string": "861-555-7777",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "NetworkContactUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -6391,6 +6188,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "UpdateContact",
           "type": "reference",
         },
+        "schemaInstanceId": "network_contact_update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -6835,6 +6633,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "CreateLocation",
           "type": "reference",
         },
+        "schemaInstanceId": "network_location_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -7058,33 +6857,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "name": {
-                "primitive": {
-                  "string": "Zoomit V2",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "ref": {
-                "primitive": {
-                  "string": "zoomit-management-co",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "LocationUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -7118,6 +6891,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "UpdateLocation",
           "type": "reference",
         },
+        "schemaInstanceId": "location_update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -8654,61 +8428,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "client_verified": {
-                "primitive": {
-                  "boolean": true,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "country_of_origin": {
-                "primitive": {
-                  "string": "China",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "description": {
-                "primitive": {
-                  "string": "The best 12V AC Adapter on the market",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "name": {
-                "primitive": {
-                  "string": "AC Adapter 12V",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "product_category": {
-                "primitive": {
-                  "string": "Cosmetics",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "sku": {
-                "primitive": {
-                  "string": "WDVCDFD-RM00472",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ProductCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -8727,6 +8447,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "CreateProduct",
           "type": "reference",
         },
+        "schemaInstanceId": "product_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -8950,61 +8671,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "client_verified": {
-                "primitive": {
-                  "boolean": true,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "country_of_origin": {
-                "primitive": {
-                  "string": "China",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "description": {
-                "primitive": {
-                  "string": "The best 12V AC Adapter on the market",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "name": {
-                "primitive": {
-                  "string": "AC Adapter 12V",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "product_category": {
-                "primitive": {
-                  "string": "Cosmetics",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "sku": {
-                "primitive": {
-                  "string": "WDVCDFD-RM00472",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ProductUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -9038,6 +8705,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "UpdateProduct",
           "type": "reference",
         },
+        "schemaInstanceId": "product_update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -10118,6 +9786,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "CreateOrUpdatePurchaseOrder",
           "type": "reference",
         },
+        "schemaInstanceId": "purchase_order_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -10317,6 +9986,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "CreateOrUpdatePurchaseOrder",
           "type": "reference",
         },
+        "schemaInstanceId": "purchase_order_update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -11606,18 +11276,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ShipmentUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -11649,6 +11308,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "UpdateShipment",
           "type": "reference",
         },
+        "schemaInstanceId": "shipment_update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -11749,7 +11409,18 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ShipmentsShareableRequest",
       "headers": [],
       "internal": undefined,
@@ -11791,6 +11462,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
           "type": "object",
         },
+        "schemaInstanceId": "shipments_shareable_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,

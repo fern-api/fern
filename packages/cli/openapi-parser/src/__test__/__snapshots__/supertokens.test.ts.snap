@@ -140,6 +140,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           ],
           "type": "object",
         },
+        "schemaInstanceId": "createTotpDevice_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -330,6 +331,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           ],
           "type": "object",
         },
+        "schemaInstanceId": "updateTotpDeviceName_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -726,6 +728,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           ],
           "type": "object",
         },
+        "schemaInstanceId": "removeTotpDevice_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -912,6 +915,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           ],
           "type": "object",
         },
+        "schemaInstanceId": "verifyTotpCode_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1118,6 +1122,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           ],
           "type": "object",
         },
+        "schemaInstanceId": "verifyTotpDevice_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1580,6 +1585,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           ],
           "type": "object",
         },
+        "schemaInstanceId": "userIdMappingCreateMapping_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1816,6 +1822,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           ],
           "type": "object",
         },
+        "schemaInstanceId": "userIdMappingRemoveMapping_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2023,6 +2030,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           ],
           "type": "object",
         },
+        "schemaInstanceId": "userIdMappingUpateExternalUserIdInfo_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2235,6 +2243,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           },
           "type": "oneOf",
         },
+        "schemaInstanceId": "passwordlessTryUseCode_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2615,6 +2624,7 @@ Passing the optional deviceId signifies a resend code flow.
           },
           "type": "oneOf",
         },
+        "schemaInstanceId": "passwordlessStartSignIn_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2915,6 +2925,7 @@ Passing the optional deviceId signifies a resend code flow.
           ],
           "type": "object",
         },
+        "schemaInstanceId": "passwordlessRevokeCode_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3419,6 +3430,7 @@ Passing the optional deviceId signifies a resend code flow.
           },
           "type": "oneOf",
         },
+        "schemaInstanceId": "passwordlessRevokeAllCodesOfUser_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3843,6 +3855,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           ],
           "type": "object",
         },
+        "schemaInstanceId": "passwordlessPutUser_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3920,7 +3933,18 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "EmailPasswordSigninRequest",
       "headers": [
         {
@@ -4026,6 +4050,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           ],
           "type": "object",
         },
+        "schemaInstanceId": "emailPasswordSignin_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -4098,7 +4123,18 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "EmailPasswordSignupRequest",
       "headers": [
         {
@@ -4204,6 +4240,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           ],
           "type": "object",
         },
+        "schemaInstanceId": "emailPasswordSignup_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -4487,7 +4524,18 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "EmailPasswordPutUserRequest",
       "headers": [
         {
@@ -4609,6 +4657,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           ],
           "type": "object",
         },
+        "schemaInstanceId": "emailPasswordPutUser_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -4680,7 +4729,18 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "EmailPasswordGetPasswordResetTokenRequest",
       "headers": [
         {
@@ -4770,6 +4830,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           ],
           "type": "object",
         },
+        "schemaInstanceId": "emailPasswordGetPasswordResetToken_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -5051,7 +5112,26 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "newPassword": {
+                "primitive": {
+                  "string": "newpassword123",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "EmailPasswordGetPasswordResetRequest",
       "headers": [
         {
@@ -5173,6 +5253,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           ],
           "type": "object",
         },
+        "schemaInstanceId": "emailPasswordGetPasswordReset_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -5375,7 +5456,26 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "passwordHash": {
+                "primitive": {
+                  "string": "passwordHash",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "UserImportRequest",
       "headers": [
         {
@@ -5518,6 +5618,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           ],
           "type": "object",
         },
+        "schemaInstanceId": "userImport_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -5602,7 +5703,18 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ThirdPartySigninupRequest",
       "headers": [
         {
@@ -5724,6 +5836,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           ],
           "type": "object",
         },
+        "schemaInstanceId": "thirdPartySigninup_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -6519,18 +6632,7 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EmailVerificationVerifyTokenRequest",
       "headers": [
         {
@@ -6601,6 +6703,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "schema": "emailVerificationVerifyTokenRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "emailVerificationVerifyToken_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -6675,18 +6778,7 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EmailVerificationVerifyTokenRemoveRequest",
       "headers": [
         {
@@ -6757,6 +6849,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "schema": "emailVerificationVerifyTokenRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "emailVerificationVerifyTokenRemove_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -6970,7 +7063,18 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "EmailVerificationVerifyRequest",
       "headers": [
         {
@@ -7074,6 +7178,7 @@ Note that there is an invisible character at the end of the path, this was to av
           ],
           "type": "object",
         },
+        "schemaInstanceId": "emailVerificationVerify_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -7164,18 +7269,7 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EmailVerificationVerifyRemoveRequest",
       "headers": [
         {
@@ -7246,6 +7340,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "schema": "emailVerificationVerifyTokenRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "emailVerificationVerifyRemove_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -7446,7 +7541,18 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "UserMetadataUpdateRequest",
       "headers": [
         {
@@ -7552,6 +7658,7 @@ e.g.:
           ],
           "type": "object",
         },
+        "schemaInstanceId": "userMetadataUpdate_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -7620,7 +7727,18 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "UserMetadataDeleteRequest",
       "headers": [
         {
@@ -7710,6 +7828,7 @@ e.g.:
           ],
           "type": "object",
         },
+        "schemaInstanceId": "userMetadataDelete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -7860,6 +7979,7 @@ e.g.:
           ],
           "type": "object",
         },
+        "schemaInstanceId": "addUserRole_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -8030,6 +8150,7 @@ e.g.:
           ],
           "type": "object",
         },
+        "schemaInstanceId": "removeUserRole_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -8506,6 +8627,7 @@ e.g.:
           ],
           "type": "object",
         },
+        "schemaInstanceId": "putRole_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -8834,6 +8956,7 @@ e.g.:
           ],
           "type": "object",
         },
+        "schemaInstanceId": "removeRolePermissions_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -9123,6 +9246,7 @@ e.g.:
           ],
           "type": "object",
         },
+        "schemaInstanceId": "removeRole_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -9553,7 +9677,26 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "useDynamicSigningKey": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateNewSessionRequest",
       "headers": [
         {
@@ -9707,6 +9850,7 @@ e.g.:
           ],
           "type": "object",
         },
+        "schemaInstanceId": "createNewSession_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -9950,6 +10094,7 @@ e.g.:
           },
           "type": "oneOf",
         },
+        "schemaInstanceId": "deleteSession_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -10018,7 +10163,33 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "checkDatabase": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "doAntiCsrfCheck": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "VerifySessionRequest",
       "headers": [
         {
@@ -10172,6 +10343,7 @@ e.g.:
           ],
           "type": "object",
         },
+        "schemaInstanceId": "verifySession_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -10400,6 +10572,7 @@ e.g.:
           ],
           "type": "object",
         },
+        "schemaInstanceId": "refreshSession_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -10727,7 +10900,18 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RegenerateSessionRequest",
       "headers": [
         {
@@ -10833,6 +11017,7 @@ e.g.:
           ],
           "type": "object",
         },
+        "schemaInstanceId": "regenerateSession_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -11069,7 +11254,18 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PutSessionDataRequest",
       "headers": [
         {
@@ -11175,6 +11371,7 @@ e.g.:
           ],
           "type": "object",
         },
+        "schemaInstanceId": "putSessionData_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -11227,7 +11424,26 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "useStaticSigningKey": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateSignedJwtRequest",
       "headers": [
         {
@@ -11381,6 +11597,7 @@ e.g.:
           ],
           "type": "object",
         },
+        "schemaInstanceId": "createSignedJWT_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -11668,7 +11885,18 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PutJwtDataRequest",
       "headers": [
         {
@@ -11774,6 +12002,7 @@ e.g.:
           ],
           "type": "object",
         },
+        "schemaInstanceId": "putJWTData_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -11828,7 +12057,33 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "email": {
+                "primitive": {
+                  "string": "test@example.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password": {
+                "primitive": {
+                  "string": "password@123",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateDashboardUserRequest",
       "headers": [
         {
@@ -11938,6 +12193,7 @@ e.g.:
           ],
           "type": "object",
         },
+        "schemaInstanceId": "createDashboardUser_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -12307,6 +12563,7 @@ e.g.:
           },
           "type": "oneOf",
         },
+        "schemaInstanceId": "updateDashboardUser_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -12846,7 +13103,26 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "sessionId": {
+                "primitive": {
+                  "string": "rf32f-f32342f-32f-323r2f3-23",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "VerifyDashboardUserSessionRequest",
       "headers": [
         {
@@ -12938,6 +13214,7 @@ e.g.:
           ],
           "type": "object",
         },
+        "schemaInstanceId": "verifyDashboardUserSession_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -13153,7 +13430,33 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "email": {
+                "primitive": {
+                  "string": "test@example.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password": {
+                "primitive": {
+                  "string": "password@123",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SignInDashboardUserRequest",
       "headers": [
         {
@@ -13263,6 +13566,7 @@ e.g.:
           ],
           "type": "object",
         },
+        "schemaInstanceId": "signInDashboardUser_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -14730,7 +15034,18 @@ e.g.:
         401,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DeleteUserRequest",
       "headers": [
         {
@@ -14803,6 +15118,7 @@ e.g.:
           ],
           "type": "object",
         },
+        "schemaInstanceId": "deleteUser_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -15227,7 +15543,26 @@ e.g.:
         401,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "licenseKey": {
+                "primitive": {
+                  "string": "eyJhbGciOiJIUzI1NiIsIn...",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SetLicenseRequest",
       "headers": [
         {
@@ -15302,6 +15637,7 @@ e.g.:
           ],
           "type": "object",
         },
+        "schemaInstanceId": "setLicense_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,

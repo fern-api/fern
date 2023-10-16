@@ -235,6 +235,7 @@ types:
   JsonRequest:
     extends: WithDescription
     properties:
+      schemaInstanceId: example.SchemaInstanceId
       schema: Schema
       contentType: optional<string>
 

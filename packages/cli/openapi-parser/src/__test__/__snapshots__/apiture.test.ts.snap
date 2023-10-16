@@ -684,18 +684,7 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "OverdraftProtectionPatchOverdraftAccountsRequest",
       "headers": [],
       "internal": undefined,
@@ -727,6 +716,7 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
           "schema": "overdraftProtectionPatch",
           "type": "reference",
         },
+        "schemaInstanceId": "overdraftProtection_patchOverdraftAccounts_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -767,18 +757,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "JointOwnersCreateJointOwnerInvitationRequest",
       "headers": [],
       "internal": undefined,
@@ -810,6 +789,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
           "schema": "newJointOwnerInvitation",
           "type": "reference",
         },
+        "schemaInstanceId": "jointOwners_createJointOwnerInvitation_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1796,6 +1776,7 @@ Note: This operation requires an identity challenge if the financial institution
           "schema": "newTransfer",
           "type": "reference",
         },
+        "schemaInstanceId": "transfers_createTransfer_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1893,18 +1874,7 @@ Note: This operation requires an identity challenge if the financial institution
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TransfersPatchTransferRequest",
       "headers": [
         {
@@ -1952,6 +1922,7 @@ Note: This operation requires an identity challenge if the financial institution
           "schema": "transferPatch",
           "type": "reference",
         },
+        "schemaInstanceId": "transfers_patchTransfer_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,

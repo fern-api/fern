@@ -10,9 +10,8 @@ export class ExampleEndpointFactory {
     }
 
     public buildEndpointExample(endpoint: Omit<Endpoint, "examples">): EndpointExample | undefined {
-        if (endpoint.request?.type === "json" && endpoint.request.schema.type === "reference") {
-            const requestSchemaId = endpoint.request.schema.schema;
-            const requestExample = this.exampleTypeFactory.buildExample(requestSchemaId);
+        if (endpoint.request?.type === "json") {
+            const requestExample = this.exampleTypeFactory.buildExample(endpoint.request.schemaInstanceId);
             if (requestExample != null) {
                 return {
                     pathParameters: [],

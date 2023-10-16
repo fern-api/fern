@@ -2351,6 +2351,7 @@ In the [Embedded Flow](doc:embedded-flow), the \`inquiry-id\` is the first param
           ],
           "type": "object",
         },
+        "schemaInstanceId": "update-an-inquiry_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3557,7 +3558,18 @@ Note that this action will trigger any associated workflows and webhooks.",
       "errorStatusCode": [
         409,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ApproveAnInquiryRequest",
       "headers": [
         {
@@ -3666,6 +3678,7 @@ Note that this action will trigger any associated workflows and webhooks.",
           ],
           "type": "object",
         },
+        "schemaInstanceId": "approve-an-inquiry_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -4142,7 +4155,18 @@ Note that this action will trigger any associated workflows and webhooks.",
       "errorStatusCode": [
         409,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DeclineAnInquiryRequest",
       "headers": [
         {
@@ -4251,6 +4275,7 @@ Note that this action will trigger any associated workflows and webhooks.",
           ],
           "type": "object",
         },
+        "schemaInstanceId": "decline-an-inquiry_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -4924,7 +4949,18 @@ Note that this action will trigger any associated workflows and webhooks.",
       "errorStatusCode": [
         409,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "UpdateAnAccountRequest",
       "headers": [
         {
@@ -5382,6 +5418,7 @@ Note that this action will trigger any associated workflows and webhooks.",
           ],
           "type": "object",
         },
+        "schemaInstanceId": "update-an-account_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -7034,6 +7071,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-an-inquiry_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -7802,7 +7840,18 @@ After the Account is created, you can create Inquiries with the \`account-id\` t
       "errorStatusCode": [
         409,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateAnAccountRequest",
       "headers": [
         {
@@ -8245,6 +8294,7 @@ After the Account is created, you can create Inquiries with the \`account-id\` t
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-an-account_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -9511,6 +9561,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-document_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -9957,6 +10008,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           ],
           "type": "object",
         },
+        "schemaInstanceId": "update-a-document_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -11512,6 +11564,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-gov-id-verification_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -12177,6 +12230,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-phone-number-verification_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -12798,6 +12852,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-document-verification_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -13696,7 +13751,18 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ConsolidateIntoAnAccountRequest",
       "headers": [
         {
@@ -13809,6 +13875,7 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
           ],
           "type": "object",
         },
+        "schemaInstanceId": "consolidate-into-an-account_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -14058,7 +14125,18 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ImportAnAccountRequest",
       "headers": [],
       "internal": undefined,
@@ -14154,6 +14232,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "import-an-account_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -14360,7 +14439,18 @@ A match_type of 'email_address' will need to match the entire email address of a
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ImportEmailAddressListsRequest",
       "headers": [],
       "internal": undefined,
@@ -14493,6 +14583,7 @@ A match_type of 'email_address' will need to match the entire email address of a
           ],
           "type": "object",
         },
+        "schemaInstanceId": "import-email-address-lists_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -14698,7 +14789,18 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ImportGeolocationListsRequest",
       "headers": [],
       "internal": undefined,
@@ -14831,6 +14933,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "import-geolocation-lists_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -15037,7 +15140,18 @@ Common values for id_class include 'pp' for passport and 'dl' for driver license
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ImportGovernmentIdNumberListsRequest",
       "headers": [],
       "internal": undefined,
@@ -15170,6 +15284,7 @@ Common values for id_class include 'pp' for passport and 'dl' for driver license
           ],
           "type": "object",
         },
+        "schemaInstanceId": "import-government-id-number-lists_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -15375,7 +15490,18 @@ Both IPv4 and IPv6 are supported.",
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ImportIpAddressListsRequest",
       "headers": [],
       "internal": undefined,
@@ -15508,6 +15634,7 @@ Both IPv4 and IPv6 are supported.",
           ],
           "type": "object",
         },
+        "schemaInstanceId": "import-ip-address-lists_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -15712,7 +15839,18 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ImportNameListsRequest",
       "headers": [],
       "internal": undefined,
@@ -15845,6 +15983,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "import-name-lists_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -16048,7 +16187,18 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ImportPhoneNumberListsRequest",
       "headers": [],
       "internal": undefined,
@@ -16181,6 +16331,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "import-phone-number-lists_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -16654,6 +16805,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-government-id-document_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -17339,6 +17491,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "update-a-government-id-document_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -19109,6 +19262,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "update-a-government-id-verification_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -19949,7 +20103,18 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateABrowserFingerprintListRequest",
       "headers": [
         {
@@ -20062,6 +20227,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-browser-fingerprint-list_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -20091,7 +20257,18 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateACountryListRequest",
       "headers": [
         {
@@ -20204,6 +20381,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-country-list_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -20233,7 +20411,18 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateAnEmailAddressListRequest",
       "headers": [
         {
@@ -20346,6 +20535,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-an-email-address-list_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -20375,7 +20565,18 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateAGeolocationListRequest",
       "headers": [
         {
@@ -20488,6 +20689,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-geolocation-list_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -20517,7 +20719,18 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateAGovernmentIdNumberListRequest",
       "headers": [
         {
@@ -20630,6 +20843,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-government-id-number-list_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -20659,7 +20873,18 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateAnIpAddressListRequest",
       "headers": [
         {
@@ -20772,6 +20997,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-an-ip-address-list_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -20801,7 +21027,18 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateANameListRequest",
       "headers": [
         {
@@ -20930,6 +21167,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-name-list_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -20959,7 +21197,18 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateAPhoneNumberListRequest",
       "headers": [
         {
@@ -21072,6 +21321,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-phone-number-list_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -21101,7 +21351,18 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateABrowserFingerprintListItemRequest",
       "headers": [
         {
@@ -21232,6 +21493,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-browser-fingerprint-list-item_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -21486,7 +21748,18 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateACountyListItemRequest",
       "headers": [
         {
@@ -21617,6 +21890,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-county-list-item_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -21634,7 +21908,18 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateAnEmailAddressListItemRequest",
       "headers": [
         {
@@ -21783,6 +22068,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-an-email-address-list-item_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -22055,7 +22341,18 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateAGeolocationListItemRequest",
       "headers": [
         {
@@ -22216,6 +22513,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-geolocation-list-item_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -22500,7 +22798,18 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateAnIpAddressListItemRequest",
       "headers": [
         {
@@ -22631,6 +22940,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-an-ip-address-list-item_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -22648,7 +22958,18 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateAGovernmentIdNumberListItemRequest",
       "headers": [
         {
@@ -22797,6 +23118,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-government-id-number-list-item_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -23069,7 +23391,18 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateANameListItemRequest",
       "headers": [
         {
@@ -23218,6 +23551,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-name-list-item_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -23490,7 +23824,18 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateAPhoneNumberListItemRequest",
       "headers": [
         {
@@ -23621,6 +23966,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-phone-number-list-item_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -26118,6 +26464,7 @@ The columns we allow are
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-report_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -26868,6 +27215,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-case_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -29162,7 +29510,18 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "UpdateACaseRequest",
       "headers": [],
       "internal": undefined,
@@ -29333,6 +29692,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "type": "object",
         },
+        "schemaInstanceId": "update-a-case_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -30285,6 +30645,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-selfie-verification_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -31051,7 +31412,18 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AddATagRequest",
       "headers": [
         {
@@ -31160,6 +31532,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "type": "object",
         },
+        "schemaInstanceId": "add-a-tag_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -31177,7 +31550,18 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RemoveATagRequest",
       "headers": [
         {
@@ -31286,6 +31670,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "type": "object",
         },
+        "schemaInstanceId": "remove-a-tag_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -31303,7 +31688,18 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SetAllTagsRequest",
       "headers": [
         {
@@ -31416,6 +31812,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "type": "object",
         },
+        "schemaInstanceId": "set-all-tags_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -31433,7 +31830,18 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AddATag1Request",
       "headers": [
         {
@@ -31542,6 +31950,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "type": "object",
         },
+        "schemaInstanceId": "add-a-tag-1_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -31559,7 +31968,18 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RemoveATag1Request",
       "headers": [
         {
@@ -31668,6 +32088,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "type": "object",
         },
+        "schemaInstanceId": "remove-a-tag-1_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -31685,7 +32106,18 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SetAllTags1Request",
       "headers": [
         {
@@ -31798,6 +32230,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "type": "object",
         },
+        "schemaInstanceId": "set-all-tags-1_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -31929,7 +32362,18 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "BusinessLookupReport1Request",
       "headers": [],
       "internal": undefined,
@@ -32126,6 +32570,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "type": "object",
         },
+        "schemaInstanceId": "business-lookup-report-1_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -33476,7 +33921,18 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AddPersonaObjectsRequest",
       "headers": [],
       "internal": undefined,
@@ -33554,6 +34010,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "type": "object",
         },
+        "schemaInstanceId": "add-persona-objects_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -34275,6 +34732,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "type": "object",
         },
+        "schemaInstanceId": "assign-a-case_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -34924,7 +35382,18 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateAFaceListItemRequest",
       "headers": [
         {
@@ -35092,6 +35561,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-face-list-item_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -35109,7 +35579,18 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateAFaceListRequest",
       "headers": [
         {
@@ -35222,6 +35703,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-face-list_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -35326,7 +35808,18 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ImportFaceListsRequest",
       "headers": [],
       "internal": undefined,
@@ -35463,6 +35956,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "type": "object",
         },
+        "schemaInstanceId": "import-face-lists_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -35663,7 +36157,18 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ReportsAddATagRequest",
       "headers": [
         {
@@ -35772,6 +36277,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "type": "object",
         },
+        "schemaInstanceId": "reports-add-a-tag_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -36209,7 +36715,18 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ReportsRemoveATagRequest",
       "headers": [
         {
@@ -36318,6 +36835,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "type": "object",
         },
+        "schemaInstanceId": "reports-remove-a-tag_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -36755,7 +37273,18 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ReportsSetAllTagsRequest",
       "headers": [
         {
@@ -36868,6 +37397,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "type": "object",
         },
+        "schemaInstanceId": "reports-set-all-tags_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -37615,7 +38145,18 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SetStatusForACaseRequest",
       "headers": [],
       "internal": undefined,
@@ -37689,6 +38230,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "type": "object",
         },
+        "schemaInstanceId": "set-status-for-a-case_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -43100,7 +43642,18 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateATinDatabaseVerificationRequest",
       "headers": [
         {
@@ -43277,6 +43830,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-tin-database-verification_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -44042,6 +44596,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "type": "object",
         },
+        "schemaInstanceId": "confirm-a-phone-number-verification_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -45139,7 +45694,18 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SendAnSmsRequest",
       "headers": [],
       "internal": undefined,
@@ -45232,6 +45798,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           ],
           "type": "object",
         },
+        "schemaInstanceId": "send-an-sms_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -45510,7 +46077,18 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateAWorkflowRunRequest",
       "headers": [
         {
@@ -45637,6 +46215,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-workflow-run_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -46118,6 +46697,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-an-email-address-verification_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -46394,7 +46974,18 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SendAnEmailRequest",
       "headers": [],
       "internal": undefined,
@@ -46487,6 +47078,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "type": "object",
         },
+        "schemaInstanceId": "send-an-email_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -46830,6 +47422,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "type": "object",
         },
+        "schemaInstanceId": "confirm-a-phone-number-verification-1_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -47865,7 +48458,18 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateAnApiKeyRequest",
       "headers": [],
       "internal": undefined,
@@ -48063,6 +48667,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-an-api-key_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -48359,7 +48964,18 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ExpireAnApiKeyRequest",
       "headers": [],
       "internal": undefined,
@@ -48429,6 +49045,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "type": "object",
         },
+        "schemaInstanceId": "expire-an-api-key_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -49044,7 +49661,18 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "UpdateAnApiKeyRequest",
       "headers": [],
       "internal": undefined,
@@ -49257,6 +49885,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "type": "object",
         },
+        "schemaInstanceId": "update-an-api-key_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -50118,6 +50747,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "type": "object",
         },
+        "schemaInstanceId": "dismiss-matches_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -51458,6 +52088,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           ],
           "type": "object",
         },
+        "schemaInstanceId": "create-a-graph-query_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -51990,7 +52621,18 @@ The inquiry can still be resumed after expiry.",
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "GenerateAOneTimeLinkRequest",
       "headers": [
         {
@@ -52097,6 +52739,7 @@ The inquiry can still be resumed after expiry.",
           ],
           "type": "object",
         },
+        "schemaInstanceId": "generate-a-one-time-link_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,

@@ -9,6 +9,7 @@ import {
 } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { getSchemaInstanceIdFromBreadcrumbs } from "../../getSchemaInstanceIdFromBreadcrumbs";
 import { getGeneratedPropertyName } from "../../utils/getSchemaName";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { isSchemaEqual } from "../../utils/isSchemaEqual";
@@ -144,7 +145,7 @@ export function convertObject({
 
     if (excludedProperties.size === 0) {
         context.exampleCollector.collect(
-            breadcrumbs.join("_"),
+            getSchemaInstanceIdFromBreadcrumbs(breadcrumbs),
             Example.full(
                 FullExample.object({
                     properties: includedProperties,
