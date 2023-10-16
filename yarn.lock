@@ -1883,7 +1883,7 @@ __metadata:
     "@fern-fern/ir-sdk": 0.0.2924
     "@types/axios": ^0.14.0
     "@types/boxen": ^3.0.1
-    "@types/is-ci": ^3.0.0
+    "@types/is-ci": ^3.0.2
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.6
     "@types/latest-version": ^4.0.1
@@ -4032,12 +4032,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/is-ci@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@types/is-ci@npm:3.0.0"
+"@types/is-ci@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@types/is-ci@npm:3.0.2"
   dependencies:
     ci-info: ^3.1.0
-  checksum: 7c1f1f16c1fa2134de7400d82766c83fa76057261ba890628af77a09382ebb92d945bb077b98cfcf3d40ab1469c9ffbd2278112867edbe57aa655f53547eb139
+  checksum: 38ff40670403ecb90bdfc072aa17d0d8e7461f95613ffe5080b641fed218b93001c53fd8d0283b207d2c6353f08bafda514eaeb9f947759312160a01b95cc597
   languageName: node
   linkType: hard
 
@@ -7426,7 +7426,7 @@ env-cmd@toddbluhm/env-cmd:
     "@babel/preset-typescript": ^7.23.0
     "@blueprintjs/eslint-plugin": ^2.1.2
     "@blueprintjs/stylelint-plugin": ^2.0.8
-    "@types/is-ci": ^3.0.0
+    "@types/is-ci": ^3.0.2
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.7.18
