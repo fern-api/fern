@@ -593,7 +593,110 @@ in the DevPortal.
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "certificate": {
+                "primitive": {
+                  "string": "1234567890abcd=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "credentials_storage": {
+                "primitive": {
+                  "string": "store",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "external_id": {
+                "primitive": {
+                  "string": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "fetch_historical": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "institution": {
+                "primitive": {
+                  "string": "erebor_mx_retail",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password": {
+                "primitive": {
+                  "string": "password",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password2": {
+                "primitive": {
+                  "string": "pin",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "private_key": {
+                "primitive": {
+                  "string": "1234567890abcd=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "username": {
+                "primitive": {
+                  "string": "username",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "username2": {
+                "primitive": {
+                  "string": "secondusername",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "username3": {
+                "primitive": {
+                  "string": "thirdusername",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "username_type": {
+                "primitive": {
+                  "string": "001",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RegisterLinkRequest",
       "headers": [],
       "internal": undefined,
@@ -680,7 +783,40 @@ in the DevPortal.
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PatchLinksRequest",
       "headers": [],
       "internal": undefined,
@@ -858,7 +994,61 @@ in the DevPortal.
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "certificate": {
+                "primitive": {
+                  "string": "1234567890abcd=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password": {
+                "primitive": {
+                  "string": "password",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password2": {
+                "primitive": {
+                  "string": "pin",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "private_key": {
+                "primitive": {
+                  "string": "1234567890abcd=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "username_type": {
+                "primitive": {
+                  "string": "001",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "UpdateLinkRequest",
       "headers": [],
       "internal": undefined,
@@ -1816,7 +2006,33 @@ To delete links in bulk, we recommend looping through the list of links you want
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveAccountsRequest",
       "headers": [],
       "internal": undefined,
@@ -1922,7 +2138,47 @@ To delete links in bulk, we recommend looping through the list of links you want
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PatchAccountsRequest",
       "headers": [],
       "internal": undefined,
@@ -3187,7 +3443,54 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "account": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_from": {
+                "primitive": {
+                  "string": "2020-08-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2020-10-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveTransactionsRequest",
       "headers": [],
       "internal": undefined,
@@ -3282,7 +3585,54 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "account": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_from": {
+                "primitive": {
+                  "string": "2020-08-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2020-10-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveTransactionsAsyncRequest",
       "headers": [
         {
@@ -3380,7 +3730,47 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PatchTransactionsRequest",
       "headers": [],
       "internal": undefined,
@@ -4122,7 +4512,54 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "account": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_from": {
+                "primitive": {
+                  "string": "2021-01-18",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2021-02-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveBalancesRequest",
       "headers": [],
       "internal": undefined,
@@ -4214,7 +4651,47 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PatchBalancesRequest",
       "headers": [],
       "internal": undefined,
@@ -5109,7 +5586,33 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveOwnersRequest",
       "headers": [],
       "internal": undefined,
@@ -5201,7 +5704,47 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PatchOwnersRequest",
       "headers": [],
       "internal": undefined,
@@ -6102,7 +6645,47 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PatchInvoicesRequest",
       "headers": [],
       "internal": undefined,
@@ -7354,7 +7937,33 @@ If you try to access older information than what we can access, we will return a
         408,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveTaxStatusRequest",
       "headers": [],
       "internal": undefined,
@@ -7869,7 +8478,33 @@ If you try to access older information than what we can access, we will return a
         408,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveTaxComplianceStatusRequest",
       "headers": [],
       "internal": undefined,
@@ -8267,7 +8902,47 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "date_from": {
+                "primitive": {
+                  "string": "2020-08-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2020-12-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveIncomeRequest",
       "headers": [],
       "internal": undefined,
@@ -8355,7 +9030,47 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PatchIncomesRequest",
       "headers": [],
       "internal": undefined,
@@ -8795,7 +9510,47 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "date_from": {
+                "primitive": {
+                  "string": "2022-08-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2022-12-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveRecurringExpensesRequest",
       "headers": [],
       "internal": undefined,
@@ -8887,7 +9642,47 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PatchRecurringExpensesRequest",
       "headers": [],
       "internal": undefined,
@@ -9340,7 +10135,33 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrievePortfolioRequest",
       "headers": [],
       "internal": undefined,
@@ -9427,7 +10248,40 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PatchPortfolioRequest",
       "headers": [],
       "internal": undefined,
@@ -10011,7 +10865,47 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "date_from": {
+                "primitive": {
+                  "string": "2020-08-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2020-10-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveReceivableTransactionsRequest",
       "headers": [],
       "internal": undefined,
@@ -10408,7 +11302,33 @@ If you need to know the currency of the account, just do a GET Details to the ac
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveRiskInsightsRequest",
       "headers": [],
       "internal": undefined,
@@ -10500,7 +11420,47 @@ If you need to know the currency of the account, just do a GET Details to the ac
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PatchRiskInsightsRequest",
       "headers": [],
       "internal": undefined,
@@ -11556,7 +12516,54 @@ If you need to know the currency of the account, just do a GET Details to the ac
         408,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "attach_pdf": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "year_from": {
+                "primitive": {
+                  "string": "2018",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "year_to": {
+                "primitive": {
+                  "string": "2019",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveTaxDeclarationsRequest",
       "headers": [],
       "internal": undefined,
@@ -11921,7 +12928,26 @@ If you need to know the currency of the account, just do a GET Details to the ac
         428,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "d686c617-6d9e-4bc6-9801-5ac276ccb6a2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveEmploymentRecordDetailsRequest",
       "headers": [],
       "internal": undefined,
@@ -12389,7 +13415,47 @@ For example:
         408,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "auth_header": {
+                "primitive": {
+                  "string": "Authorization",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "auth_token": {
+                "primitive": {
+                  "string": "Bearer hv7alD71j0dzXf09iKfg7u",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "Your webhook name",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "url": {
+                "primitive": {
+                  "string": "https://mycompany.com/security/webhook",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RegisterPaymentWebhookRequest",
       "headers": [],
       "internal": undefined,

@@ -34,7 +34,18 @@ Here are some of the most used payload fields explained (you can find the full p
         401,
         429,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PostConsumerTransactionRequest",
       "headers": [],
       "internal": undefined,
@@ -283,7 +294,18 @@ Each consumer User entity needs three mandatory fields:
         401,
         429,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PostConsumerUserRequest",
       "headers": [],
       "internal": undefined,
@@ -445,7 +467,18 @@ Each consumer Business entity needs three mandatory fields:
         401,
         429,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PostBusinessUserRequest",
       "headers": [],
       "internal": undefined,

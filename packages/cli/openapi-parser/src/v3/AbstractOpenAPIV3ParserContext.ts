@@ -43,7 +43,7 @@ export abstract class AbstractOpenAPIV3ParserContext {
         this.refOccurrences = getReferenceOccurrences(document);
         this.schemaIdToSchemaInstanceId = {};
         this.schemaInstanceIdToSchema = {};
-        this.exampleCollector = new ExampleCollector();
+        this.exampleCollector = new ExampleCollector(taskContext.logger);
     }
 
     public getNumberOfOccurrencesForRef(schema: OpenAPIV3.ReferenceObject): number {

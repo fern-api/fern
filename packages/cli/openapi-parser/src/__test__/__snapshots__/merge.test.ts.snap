@@ -6762,7 +6762,26 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Create a remote key.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "name": {
+                "primitive": {
+                  "string": "Remote Deployment Key 1",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "GenerateKeyCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -8975,7 +8994,26 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Exchange remote keys.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "name": {
+                "primitive": {
+                  "string": "Remote Deployment Key 1",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RegenerateKeyCreateRequest",
       "headers": [],
       "internal": undefined,

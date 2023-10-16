@@ -134,7 +134,18 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "UpdateBuyerNameDescriptionRequest",
       "headers": [],
       "internal": undefined,
@@ -283,7 +294,18 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateOrUpdateDraftOfferRequest",
       "headers": [],
       "internal": undefined,
@@ -548,7 +570,18 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "UpdateEntitlementNameRequest",
       "headers": [],
       "internal": undefined,
@@ -1763,7 +1796,18 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateOfferRequest",
       "headers": [],
       "internal": undefined,

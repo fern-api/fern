@@ -684,7 +684,18 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "OverdraftProtectionPatchOverdraftAccountsRequest",
       "headers": [],
       "internal": undefined,
@@ -757,7 +768,18 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "JointOwnersCreateJointOwnerInvitationRequest",
       "headers": [],
       "internal": undefined,
@@ -1874,7 +1896,18 @@ Note: This operation requires an identity challenge if the financial institution
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "TransfersPatchTransferRequest",
       "headers": [
         {

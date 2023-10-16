@@ -6632,7 +6632,18 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "EmailVerificationVerifyTokenRequest",
       "headers": [
         {
@@ -6778,7 +6789,18 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "EmailVerificationVerifyTokenRemoveRequest",
       "headers": [
         {
@@ -7269,7 +7291,18 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "EmailVerificationVerifyRemoveRequest",
       "headers": [
         {

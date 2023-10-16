@@ -131,7 +131,18 @@ authenticated user.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AuthTokensCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -188,7 +199,18 @@ given Dev organization.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AuthTokensDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -397,7 +419,18 @@ authenticated user.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AuthTokensSelfDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -1074,7 +1107,26 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PartsDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -1477,7 +1529,26 @@ organization.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RevOrgsDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -1819,7 +1890,26 @@ them.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RevOrgsUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -1930,7 +2020,26 @@ and a logical concept denoted by the tag's name.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "TagsDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -2136,7 +2245,26 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "TagsUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -2520,7 +2648,26 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "WebhooksDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -2674,7 +2821,26 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "WebhooksUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -2785,7 +2951,26 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "WorksDeleteRequest",
       "headers": [],
       "internal": undefined,

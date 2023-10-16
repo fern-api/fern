@@ -176,7 +176,18 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "UpdateNumberRequest",
       "headers": [],
       "internal": undefined,
@@ -1071,7 +1082,18 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "UpdateAgentRequest",
       "headers": [],
       "internal": undefined,
@@ -1635,7 +1657,18 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "UpdateWebhookRequest",
       "headers": [],
       "internal": undefined,
