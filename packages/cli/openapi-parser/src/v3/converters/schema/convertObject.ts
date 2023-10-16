@@ -153,7 +153,7 @@ export function convertObject({
             getSchemaInstanceIdFromBreadcrumbs(breadcrumbs),
             Example.partial(
                 PartialExample.object({
-                    includedProperties: {},
+                    includedProperties,
                     excludedProperties: {},
                 })
             )

@@ -10,10 +10,16 @@ export class ExampleTypeFactory {
     }
 
     public buildExample(schemaInstanceId: SchemaInstanceId): FullExample | undefined {
+        // eslint-disable-next-line no-console
+        console.log(`Creating examples for schema ${schemaInstanceId}`);
         const example = this.exampleCollector.get(schemaInstanceId);
         if (example?.type === "full") {
+            // eslint-disable-next-line no-console
+            console.log(`The example is full ${JSON.stringify(example.full)}`);
             return example.full;
         } else if (example?.type === "partial") {
+            // eslint-disable-next-line no-console
+            console.log(`The example is partial ${JSON.stringify(example.partial)}`);
             if (example.partial.type === "object") {
                 const fullExample: Record<PropertyKey, FullExample> = {};
                 for (const [propertyKey, propertyExample] of Object.entries(example.partial.includedProperties)) {

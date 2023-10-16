@@ -223,7 +223,22 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "existingDeviceName": {
+                "primitive": {
+                  "string": "My Authy App",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "newDeviceName": {
+                "primitive": {
+                  "string": "A better name for my TOTP device",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -645,7 +660,15 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "deviceName": {
+                "primitive": {
+                  "string": "My Authy App",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -831,7 +854,22 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "allowUnverifiedDevices": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "totp": {
+                "primitive": {
+                  "string": "123456",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -1047,7 +1085,22 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "deviceName": {
+                "primitive": {
+                  "string": "My Authy App",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "totp": {
+                "primitive": {
+                  "string": "123456",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -1501,7 +1554,22 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "externalUserId": {
+                "primitive": {
+                  "string": "externalId",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "externalUserIdInfo": {
+                "primitive": {
+                  "string": "Info about external userId",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -1963,7 +2031,15 @@ exports[`open api parser supertokens parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "externalUserIdInfo": {
+                "primitive": {
+                  "string": "new external userId info",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -5217,7 +5293,15 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "newPassword": {
+                "primitive": {
+                  "string": "newpassword123",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -5553,7 +5637,15 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "passwordHash": {
+                "primitive": {
+                  "string": "passwordHash",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -9854,7 +9946,15 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "useDynamicSigningKey": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -10332,7 +10432,22 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "checkDatabase": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "doAntiCsrfCheck": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -11589,7 +11704,15 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "useStaticSigningKey": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -12214,7 +12337,22 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "email": {
+                "primitive": {
+                  "string": "test@example.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password": {
+                "primitive": {
+                  "string": "password@123",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -13245,7 +13383,15 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "sessionId": {
+                "primitive": {
+                  "string": "rf32f-f32342f-32f-323r2f3-23",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -13564,7 +13710,22 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "email": {
+                "primitive": {
+                  "string": "test@example.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password": {
+                "primitive": {
+                  "string": "password@123",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -15662,7 +15823,15 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "licenseKey": {
+                "primitive": {
+                  "string": "eyJhbGciOiJIUzI1NiIsIn...",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,

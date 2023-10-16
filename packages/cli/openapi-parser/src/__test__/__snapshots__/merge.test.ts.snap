@@ -6779,7 +6779,15 @@ exports[`open api parser merge parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "name": {
+                "primitive": {
+                  "string": "Remote Deployment Key 1",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -9003,7 +9011,15 @@ exports[`open api parser merge parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "name": {
+                "primitive": {
+                  "string": "Remote Deployment Key 1",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,

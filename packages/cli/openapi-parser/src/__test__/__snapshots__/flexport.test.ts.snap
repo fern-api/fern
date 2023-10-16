@@ -1243,7 +1243,110 @@ we still recommend setting the Content-Type header to the value \`application/js
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "cargo_ready_date": {
+                "primitive": {
+                  "string": "2019-06-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "consignee_entity_ref": {
+                "primitive": {
+                  "string": "consignee_company_name_llc",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "declared_as_strategy": {
+                "enum": "yes",
+                "type": "enum",
+              },
+              "delivery_date": {
+                "primitive": {
+                  "string": "2019-07-23",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "destination_address_ref": {
+                "primitive": {
+                  "string": "id-123456",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "eccn_codes": {
+                "primitive": {
+                  "string": "3A001, 5A002",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "flow_direct": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "PO 123",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "origin_address_ref": {
+                "primitive": {
+                  "string": "id-123456",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "shipper_entity_ref": {
+                "primitive": {
+                  "string": "shipper_company_name_ltd",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "special_instructions": {
+                "primitive": {
+                  "string": "Please book 40ft reefer container.",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "wants_bco": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "wants_export_customs_service": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "wants_flexport_freight": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "wants_import_customs_service": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -1496,7 +1599,27 @@ we still recommend setting the Content-Type header to the value \`application/js
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "flight_type": {
+                "enum": "freighter",
+                "type": "enum",
+              },
+              "teus": {
+                "primitive": {
+                  "string": "2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "transportation_mode": {
+                "enum": "ocean",
+                "type": "enum",
+              },
+              "trucking_service_type": {
+                "enum": "drayage",
+                "type": "enum",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -2037,7 +2160,29 @@ we still recommend setting the Content-Type header to the value \`application/js
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "currency_code": {
+                "primitive": {
+                  "string": "USD",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "invoice_number": {
+                "primitive": {
+                  "string": "INVOICE-04-05-2020",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "is_related_parties": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -4614,7 +4759,22 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "name": {
+                "primitive": {
+                  "string": "Zoomit",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "ref": {
+                "primitive": {
+                  "string": "zoomit-ref",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -4866,7 +5026,22 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "name": {
+                "primitive": {
+                  "string": "Updated Zoomit",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "ref": {
+                "primitive": {
+                  "string": "zoomit_ref",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -5546,7 +5721,22 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "name": {
+                "primitive": {
+                  "string": "Zoomit V2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "ref": {
+                "primitive": {
+                  "string": "zoomit-us",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -5983,7 +6173,36 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "company_id": {
+                "primitive": {
+                  "string": "2UXaj4xcHoW8nwh9UVOMpw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "email": {
+                "primitive": {
+                  "string": "john@example.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "John Smith",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "phone_number": {
+                "primitive": {
+                  "string": "861-555-5555",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -6237,7 +6456,29 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "email": {
+                "primitive": {
+                  "string": "john_new_email@example.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "John Smith",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "phone_number": {
+                "primitive": {
+                  "string": "861-555-7777",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -6708,7 +6949,29 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "company_id": {
+                "primitive": {
+                  "string": "xyz_123_ABC",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "Zoomit",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "ref": {
+                "primitive": {
+                  "string": "zoomit-management-co",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -6962,7 +7225,22 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "name": {
+                "primitive": {
+                  "string": "Zoomit V2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "ref": {
+                "primitive": {
+                  "string": "zoomit-management-co",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -8544,7 +8822,50 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "client_verified": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "country_of_origin": {
+                "primitive": {
+                  "string": "China",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "description": {
+                "primitive": {
+                  "string": "The best 12V AC Adapter on the market",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "AC Adapter 12V",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "product_category": {
+                "primitive": {
+                  "string": "Cosmetics",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "sku": {
+                "primitive": {
+                  "string": "WDVCDFD-RM00472",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -8798,7 +9119,50 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "client_verified": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "country_of_origin": {
+                "primitive": {
+                  "string": "China",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "description": {
+                "primitive": {
+                  "string": "The best 12V AC Adapter on the market",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "AC Adapter 12V",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "product_category": {
+                "primitive": {
+                  "string": "Cosmetics",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "sku": {
+                "primitive": {
+                  "string": "WDVCDFD-RM00472",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
             "type": "object",
           },
           "response": undefined,

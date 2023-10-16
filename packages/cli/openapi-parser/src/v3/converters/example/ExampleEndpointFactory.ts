@@ -10,6 +10,8 @@ export class ExampleEndpointFactory {
     }
 
     public buildEndpointExample(endpoint: Omit<Endpoint, "examples">): EndpointExample | undefined {
+        // eslint-disable-next-line no-console
+        console.log(`Creating examples for endpoint ${endpoint.operationId}`);
         if (endpoint.request?.type === "json") {
             const requestSchemaId =
                 endpoint.request.schema.type === "reference"
@@ -26,6 +28,8 @@ export class ExampleEndpointFactory {
                 };
             }
         }
+        // eslint-disable-next-line no-console
+        console.log(`Found no examples for ${endpoint.operationId}`);
         return undefined;
     }
 }
