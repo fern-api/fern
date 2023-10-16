@@ -157,7 +157,26 @@ in the DevPortal.
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListLinksRequest",
       "headers": [],
       "internal": undefined,
@@ -1007,7 +1026,68 @@ in the DevPortal.
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "created_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "created_by": {
+                "primitive": {
+                  "string": "bcef7f35-67f2-4b19-b009-cb38795faf09",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "external_id": {
+                "primitive": {
+                  "string": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "institution": {
+                "primitive": {
+                  "string": "erebor_mx_retail",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "institution_user_id": {
+                "primitive": {
+                  "string": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "last_accessed_at": {
+                "primitive": {
+                  "datetime": "2019-09-27T13:02:03.584Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DetailLinkRequest",
       "headers": [],
       "internal": undefined,
@@ -1483,7 +1563,15 @@ To delete links in bulk, we recommend looping through the list of links you want
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyLinkRequest",
       "headers": [],
       "internal": undefined,
@@ -1525,7 +1613,26 @@ To delete links in bulk, we recommend looping through the list of links you want
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListAccountsRequest",
       "headers": [],
       "internal": undefined,
@@ -2504,7 +2611,103 @@ To delete links in bulk, we recommend looping through the list of links you want
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "balance_type": {
+                "primitive": {
+                  "string": "ASSET",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "collected_at": {
+                "primitive": {
+                  "datetime": "2019-09-27T13:01:41.941Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "created_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "currency": {
+                "primitive": {
+                  "string": "MXN",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "last_accessed_at": {
+                "primitive": {
+                  "datetime": "2021-03-09T10:28:40.000Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "Cuenta Perfiles- M.N. - MXN-666",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "number": {
+                "primitive": {
+                  "string": "4057068115181",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "public_identification_name": {
+                "primitive": {
+                  "string": "CLABE",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "public_identification_value": {
+                "primitive": {
+                  "string": "150194683119900273",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "type": {
+                "primitive": {
+                  "string": "Cuentas de efectivo",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DetailAccountRequest",
       "headers": [],
       "internal": undefined,
@@ -2592,7 +2795,15 @@ To delete links in bulk, we recommend looping through the list of links you want
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyAccountRequest",
       "headers": [],
       "internal": undefined,
@@ -2634,7 +2845,26 @@ To delete links in bulk, we recommend looping through the list of links you want
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListTransactionsRequest",
       "headers": [],
       "internal": undefined,
@@ -4093,7 +4323,15 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DetailTransactionRequest",
       "headers": [],
       "internal": undefined,
@@ -4181,7 +4419,15 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyTransactionRequest",
       "headers": [],
       "internal": undefined,
@@ -4223,7 +4469,26 @@ If you try to access older information than what we can access, we will return a
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListBalancesRequest",
       "headers": [],
       "internal": undefined,
@@ -5014,7 +5279,33 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "value_date": {
+                "primitive": {
+                  "string": "2019-10-23",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DetailBalanceRequest",
       "headers": [],
       "internal": undefined,
@@ -5102,7 +5393,15 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyBalanceRequest",
       "headers": [],
       "internal": undefined,
@@ -5144,7 +5443,26 @@ If you try to access older information than what we can access, we will return a
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListInstitutionsRequest",
       "headers": [],
       "internal": undefined,
@@ -5437,7 +5755,68 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "display_name": {
+                "primitive": {
+                  "string": "Erebor Mexico",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "icon_logo": {
+                "primitive": {
+                  "string": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "logo": {
+                "primitive": {
+                  "string": "https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.png",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "erebor_mx_retail",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "primary_color": {
+                "primitive": {
+                  "string": "#056dae",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "text_logo": {
+                "primitive": {
+                  "string": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "website": {
+                "primitive": {
+                  "string": "https://www.erebor.com/",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DetailInstitutionRequest",
       "headers": [],
       "internal": undefined,
@@ -5524,7 +5903,26 @@ If you try to access older information than what we can access, we will return a
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListOwnersRequest",
       "headers": [],
       "internal": undefined,
@@ -6067,7 +6465,82 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "address": {
+                "primitive": {
+                  "string": "Carrer de la Llacuna, 162, 08018 Barcelona",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "collected_at": {
+                "primitive": {
+                  "datetime": "2019-09-27T13:01:41.941Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "created_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "display_name": {
+                "primitive": {
+                  "string": "John Doe",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "email": {
+                "primitive": {
+                  "string": "johndoe@belvo.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "c749315b-eec2-435d-a458-06912878564f",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "internal_identification": {
+                "primitive": {
+                  "string": "7e5838e4",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "phone_number": {
+                "primitive": {
+                  "string": "+52-XXX-XXX-XXXX",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DetailOwnerRequest",
       "headers": [],
       "internal": undefined,
@@ -6155,7 +6628,15 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyOwnerRequest",
       "headers": [],
       "internal": undefined,
@@ -6197,7 +6678,26 @@ If you try to access older information than what we can access, we will return a
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListInvoicesRequest",
       "headers": [],
       "internal": undefined,
@@ -7066,7 +7566,15 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DetailInvoiceRequest",
       "headers": [],
       "internal": undefined,
@@ -7172,7 +7680,15 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyInvoiceRequest",
       "headers": [],
       "internal": undefined,
@@ -7214,7 +7730,15 @@ If you try to access older information than what we can access, we will return a
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ListTaxReturnsRequest",
       "headers": [],
       "internal": undefined,
@@ -7646,7 +8170,15 @@ If you try to access older information than what we can access, we will return a
         408,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveTaxReturnsRequest",
       "headers": [],
       "internal": undefined,
@@ -7785,7 +8317,15 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DetailTaxReturnRequest",
       "headers": [],
       "internal": undefined,
@@ -7905,7 +8445,15 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyTaxReturnRequest",
       "headers": [],
       "internal": undefined,
@@ -7947,7 +8495,26 @@ If you try to access older information than what we can access, we will return a
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListTaxStatusRequest",
       "headers": [],
       "internal": undefined,
@@ -8340,7 +8907,15 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DetailTaxStatusRequest",
       "headers": [],
       "internal": undefined,
@@ -8446,7 +9021,15 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyTaxStatusRequest",
       "headers": [],
       "internal": undefined,
@@ -8488,7 +9071,26 @@ If you try to access older information than what we can access, we will return a
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListTaxComplianceStatusRequest",
       "headers": [],
       "internal": undefined,
@@ -8909,7 +9511,61 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "collected_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "created_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "91106968-1abd-4d64-85c1-4e73d96fb997",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "internal_identification": {
+                "primitive": {
+                  "string": "20NE1234567",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "pdf": {
+                "primitive": {
+                  "string": "=PDF-STRING=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "rfc": {
+                "primitive": {
+                  "string": "KDFC211118IS0",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DetailTaxComplianceStatusRequest",
       "headers": [],
       "internal": undefined,
@@ -8997,7 +9653,15 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyTaxComplianceStatusRequest",
       "headers": [],
       "internal": undefined,
@@ -9039,7 +9703,26 @@ If you try to access older information than what we can access, we will return a
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListIncomesRequest",
       "headers": [],
       "internal": undefined,
@@ -9479,7 +10162,15 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DetailIncomeRequest",
       "headers": [],
       "internal": undefined,
@@ -9571,7 +10262,15 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyIncomesRequest",
       "headers": [],
       "internal": undefined,
@@ -9613,7 +10312,26 @@ If you try to access older information than what we can access, we will return a
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListRecurringExpensesRequest",
       "headers": [],
       "internal": undefined,
@@ -10091,7 +10809,15 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DetailRecurringExpenseRequest",
       "headers": [],
       "internal": undefined,
@@ -10183,7 +10909,15 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyRecurringExpenseRequest",
       "headers": [],
       "internal": undefined,
@@ -10225,7 +10959,26 @@ If you try to access older information than what we can access, we will return a
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListPortfolioRequest",
       "headers": [],
       "internal": undefined,
@@ -10686,7 +11439,15 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DetailPortfolioRequest",
       "headers": [],
       "internal": undefined,
@@ -10774,7 +11535,15 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyPortfolioRequest",
       "headers": [],
       "internal": undefined,
@@ -10816,7 +11585,26 @@ If you try to access older information than what we can access, we will return a
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListReceivableTransactionsRequest",
       "headers": [],
       "internal": undefined,
@@ -11310,7 +12098,15 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DetailReceivableTransactionRequest",
       "headers": [],
       "internal": undefined,
@@ -11398,7 +12194,15 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyReceivableTransactionRequest",
       "headers": [],
       "internal": undefined,
@@ -11440,7 +12244,26 @@ If you try to access older information than what we can access, we will return a
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListRiskInsightsRequest",
       "headers": [],
       "internal": undefined,
@@ -11869,7 +12692,15 @@ If you need to know the currency of the account, just do a GET Details to the ac
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DetailRiskInsightsRequest",
       "headers": [],
       "internal": undefined,
@@ -11961,7 +12792,15 @@ If you need to know the currency of the account, just do a GET Details to the ac
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyRiskInsightsRequest",
       "headers": [],
       "internal": undefined,
@@ -12003,7 +12842,26 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListTaxRetentionsRequest",
       "headers": [],
       "internal": undefined,
@@ -12355,7 +13213,15 @@ If you need to know the currency of the account, just do a GET Details to the ac
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DetailTaxRetentionsRequest",
       "headers": [],
       "internal": undefined,
@@ -12443,7 +13309,15 @@ If you need to know the currency of the account, just do a GET Details to the ac
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyTaxRetentionRequest",
       "headers": [],
       "internal": undefined,
@@ -12485,7 +13359,15 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ListTaxDeclarationsRequest",
       "headers": [],
       "internal": undefined,
@@ -13023,7 +13905,15 @@ If you need to know the currency of the account, just do a GET Details to the ac
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DetailTaxDeclarationRequest",
       "headers": [],
       "internal": undefined,
@@ -13129,7 +14019,15 @@ If you need to know the currency of the account, just do a GET Details to the ac
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyTaxDeclarationRequest",
       "headers": [],
       "internal": undefined,
@@ -13171,7 +14069,26 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListEmploymentRecordsRequest",
       "headers": [],
       "internal": undefined,
@@ -13389,7 +14306,61 @@ If you need to know the currency of the account, just do a GET Details to the ac
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "collected_at": {
+                "primitive": {
+                  "datetime": "2020-04-23T21:32:55.336854+00:00",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "created_at": {
+                "primitive": {
+                  "datetime": "2020-04-23T21:32:55.336854+00:00",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "fef05fc8-7357-4a4a-9d29-55038ea31a04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "internal_identification": {
+                "primitive": {
+                  "string": "BLPM951331IONVGR54",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "27c1d5cf-e8fb-433a-a2f7-d246de199c01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "report_date": {
+                "primitive": {
+                  "string": "2023-01-19",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DetailEmploymentRecordRequest",
       "headers": [],
       "internal": undefined,
@@ -13477,7 +14448,15 @@ If you need to know the currency of the account, just do a GET Details to the ac
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyEmploymentRecordRequest",
       "headers": [],
       "internal": undefined,
@@ -13526,7 +14505,15 @@ If you need to know the currency of the account, just do a GET Details to the ac
         403,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "VerifyIncomeRequest",
       "headers": [],
       "internal": undefined,
@@ -13586,7 +14573,18 @@ If you need to know the currency of the account, just do a GET Details to the ac
         403,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CategorizeTransactionsRequest",
       "headers": [],
       "internal": undefined,
@@ -13638,7 +14636,26 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListSecretKeysRequest",
       "headers": [],
       "internal": undefined,
@@ -13686,7 +14703,15 @@ For example:
         400,
         408,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateSecretKeysRequest",
       "headers": [],
       "internal": undefined,
@@ -13727,7 +14752,26 @@ For example:
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListPaymentWebhooksRequest",
       "headers": [],
       "internal": undefined,
@@ -13862,7 +14906,15 @@ For example:
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DetailPaymentWebhooksRequest",
       "headers": [],
       "internal": undefined,
@@ -13915,7 +14967,15 @@ For example:
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DeletePaymentWebhooksRequest",
       "headers": [],
       "internal": undefined,
@@ -13957,7 +15017,26 @@ For example:
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://belvo.com/payments/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListPaymentInstitutionsRequest",
       "headers": [],
       "internal": undefined,
@@ -14147,7 +15226,89 @@ For example:
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "active": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "display_name": {
+                "primitive": {
+                  "string": "Wakanda National Bank",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "icon_logo": {
+                "primitive": {
+                  "string": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "bbaceead-7b96-46d8-9354-38dec9707004",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "legal_entity_name": {
+                "primitive": {
+                  "string": "Wakanda Bank, National Association",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "logo": {
+                "primitive": {
+                  "string": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "wakanda_national",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "primary_color": {
+                "primitive": {
+                  "string": "#fdbc24",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "text_logo": {
+                "primitive": {
+                  "string": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "website": {
+                "primitive": {
+                  "string": "https://www.wakandanational.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DetailPaymentInstitutionRequest",
       "headers": [],
       "internal": undefined,
@@ -14199,7 +15360,26 @@ For example:
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListCustomersRequest",
       "headers": [],
       "internal": undefined,
@@ -14413,7 +15593,15 @@ For example:
         401,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateCustomerRequest",
       "headers": [],
       "internal": undefined,
@@ -14499,7 +15687,15 @@ For example:
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DetailCustomerRequest",
       "headers": [],
       "internal": undefined,
@@ -14569,7 +15765,26 @@ For example:
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListBankAccountRequest",
       "headers": [],
       "internal": undefined,
@@ -14863,7 +16078,15 @@ For example:
         408,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateBankAccountRequest",
       "headers": [],
       "internal": undefined,
@@ -14949,7 +16172,15 @@ For example:
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DetailBankAccountRequest",
       "headers": [],
       "internal": undefined,
@@ -15019,7 +16250,26 @@ For example:
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListPaymentLinksRequest",
       "headers": [],
       "internal": undefined,
@@ -15276,7 +16526,15 @@ For example:
         408,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreatePaymentlinkRequest",
       "headers": [],
       "internal": undefined,
@@ -15362,7 +16620,15 @@ For example:
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DetailCreatePaymentlinkRequest",
       "headers": [],
       "internal": undefined,
@@ -15434,7 +16700,26 @@ For example:
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListPaymentIntentsRequest",
       "headers": [],
       "internal": undefined,
@@ -15796,7 +17081,15 @@ For example:
         408,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreatePaymentIntentRequest",
       "headers": [],
       "internal": undefined,
@@ -15846,7 +17139,15 @@ For example:
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DetailPaymentIntentRequest",
       "headers": [],
       "internal": undefined,
@@ -15901,7 +17202,15 @@ During the payment intent flow, you need to fill in the payment intent with requ
         400,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PatchPaymentIntentRequest",
       "headers": [],
       "internal": undefined,
@@ -15965,7 +17274,26 @@ During the payment intent flow, you need to fill in the payment intent with requ
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListPaymentTransactionsRequest",
       "headers": [],
       "internal": undefined,
@@ -16393,7 +17721,15 @@ During the payment intent flow, you need to fill in the payment intent with requ
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DetailPaymentTransactionsRequest",
       "headers": [],
       "internal": undefined,

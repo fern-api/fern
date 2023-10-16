@@ -31,16 +31,13 @@ export class ExampleEndpointFactory {
             responseSchemaIdResponse != null
                 ? this.exampleTypeFactory.buildExample(responseSchemaIdResponse.schemaInstanceId)
                 : undefined;
-        if (requestExample != null) {
-            return {
-                pathParameters: [],
-                queryParameters: [],
-                headers: [],
-                request: requestExample,
-                response: responseExample,
-            };
-        }
-        return undefined;
+        return {
+            pathParameters: [],
+            queryParameters: [],
+            headers: [],
+            request: requestExample,
+            response: responseExample,
+        };
     }
 }
 
