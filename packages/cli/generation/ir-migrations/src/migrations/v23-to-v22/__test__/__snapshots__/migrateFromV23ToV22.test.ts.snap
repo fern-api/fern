@@ -50,6 +50,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "unsafeName": "token",
           },
         },
+        "tokenEnvVar": undefined,
         "type": "bearer",
       },
     ],
