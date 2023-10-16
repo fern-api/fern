@@ -49,6 +49,7 @@ exports[`generate IR 1`] = `
             "unsafeName": "password",
           },
         },
+        "passwordEnvVar": null,
         "username": {
           "camelCase": {
             "safeName": "username",
@@ -68,6 +69,7 @@ exports[`generate IR 1`] = `
             "unsafeName": "username",
           },
         },
+        "usernameEnvVar": null,
       },
     ],
   },

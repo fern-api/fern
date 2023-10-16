@@ -16,6 +16,7 @@ import { TaskContextFactory } from "./TaskContextFactory";
 export const FIXTURES = {
     API_WIDE_BASE_PATH: "api-wide-base-path",
     AUDIENCES: "audiences",
+    AUTH_ENVIRONMENT_VARIABLES: "auth-environment-variables",
     BASIC_AUTH: "basic-auth",
     BYTES: "bytes",
     CIRCULAR_REFERENCES: "circular-references",
@@ -32,7 +33,6 @@ export const FIXTURES = {
     NO_ENVIRONMENT: "no-environment",
     PACKAGE_YML: "package-yml",
     PLAIN_TEXT: "plain-text",
-    ROOT_BASE_PATH: "root-base-path",
     SINGLE_URL_ENVIRONMENT: "single-url-environment-default",
     SINGLE_URL_ENVIRONMENT_NO_DEFAULT: "single-url-environment-no-default",
     STREAMING: "streaming",
