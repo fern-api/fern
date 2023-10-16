@@ -30,6 +30,7 @@ exports[`generate IR 1`] = `
       {
         "_type": "header",
         "docs": null,
+        "headerEnvVar": null,
         "name": {
           "name": {
             "camelCase": {
