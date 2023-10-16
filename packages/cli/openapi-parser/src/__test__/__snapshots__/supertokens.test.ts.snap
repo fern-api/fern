@@ -217,7 +217,18 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "UpdateTotpDeviceNameRequest",
       "headers": [
         {
@@ -628,7 +639,18 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RemoveTotpDeviceRequest",
       "headers": [
         {
@@ -803,7 +825,18 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "VerifyTotpCodeRequest",
       "headers": [
         {
@@ -1008,7 +1041,18 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "VerifyTotpDeviceRequest",
       "headers": [
         {
@@ -1451,7 +1495,18 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "UserIdMappingCreateMappingRequest",
       "headers": [
         {
@@ -1685,7 +1740,18 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "UserIdMappingRemoveMappingRequest",
       "headers": [
         {
@@ -1891,7 +1957,18 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "UserIdMappingUpateExternalUserIdInfoRequest",
       "headers": [
         {
@@ -2839,7 +2916,18 @@ Passing the optional deviceId signifies a resend code flow.
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PasswordlessRevokeCodeRequest",
       "headers": [
         {
@@ -3717,7 +3805,18 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PasswordlessPutUserRequest",
       "headers": [
         {
@@ -5118,15 +5217,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "newPassword": {
-                "primitive": {
-                  "string": "newpassword123",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -5462,15 +5553,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "passwordHash": {
-                "primitive": {
-                  "string": "passwordHash",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -7914,7 +7997,18 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AddUserRoleRequest",
       "headers": [
         {
@@ -8085,7 +8179,18 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RemoveUserRoleRequest",
       "headers": [
         {
@@ -8552,7 +8657,18 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PutRoleRequest",
       "headers": [
         {
@@ -8881,7 +8997,18 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RemoveRolePermissionsRequest",
       "headers": [
         {
@@ -9193,7 +9320,18 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RemoveRoleRequest",
       "headers": [
         {
@@ -9716,15 +9854,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "useDynamicSigningKey": {
-                "primitive": {
-                  "boolean": false,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -10202,22 +10332,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "checkDatabase": {
-                "primitive": {
-                  "boolean": false,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "doAntiCsrfCheck": {
-                "primitive": {
-                  "boolean": false,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -10491,7 +10606,18 @@ e.g.:
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RefreshSessionRequest",
       "headers": [
         {
@@ -11463,15 +11589,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "useStaticSigningKey": {
-                "primitive": {
-                  "boolean": true,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -12096,22 +12214,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "email": {
-                "primitive": {
-                  "string": "test@example.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "password": {
-                "primitive": {
-                  "string": "password@123",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -13142,15 +13245,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "sessionId": {
-                "primitive": {
-                  "string": "rf32f-f32342f-32f-323r2f3-23",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -13469,22 +13564,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "email": {
-                "primitive": {
-                  "string": "test@example.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "password": {
-                "primitive": {
-                  "string": "password@123",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -15582,15 +15662,7 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "licenseKey": {
-                "primitive": {
-                  "string": "eyJhbGciOiJIUzI1NiIsIn...",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,

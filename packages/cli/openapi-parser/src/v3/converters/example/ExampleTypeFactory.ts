@@ -11,8 +11,23 @@ export class ExampleTypeFactory {
 
     public buildExample(schemaInstanceId: SchemaInstanceId): FullExample | undefined {
         const example = this.exampleCollector.get(schemaInstanceId);
-        if (example != null && example.type === "full") {
+        if (example?.type === "full") {
             return example.full;
+        } else if (example?.type === "partial") {
+            if (example.partial.type === "object") {
+                const fullExample: Record<PropertyKey, FullExample> = {};
+                for (const [propertyKey, propertyExample] of Object.entries(example.partial.includedProperties)) {
+                    if (propertyExample.type === "full") {
+                        fullExample[propertyKey] = propertyExample.full;
+                    } else if (propertyExample.type === "reference") {
+                        const referencedExample = this.buildExample(propertyExample.reference);
+                        if (referencedExample != null) {
+                            fullExample[propertyKey] = referencedExample;
+                        }
+                    }
+                }
+                return FullExample.object({ properties: fullExample });
+            }
         }
         return undefined;
     }

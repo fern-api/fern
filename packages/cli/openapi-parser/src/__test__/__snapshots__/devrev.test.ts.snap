@@ -1113,15 +1113,7 @@ used.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -1535,15 +1527,7 @@ organization.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -1896,15 +1880,7 @@ them.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -2026,15 +2002,7 @@ and a logical concept denoted by the tag's name.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -2251,15 +2219,7 @@ used.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -2654,15 +2614,7 @@ used.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -2827,15 +2779,7 @@ used.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -2957,15 +2901,7 @@ used.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "id": {
-                "primitive": {
-                  "string": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,

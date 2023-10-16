@@ -1763,7 +1763,18 @@ Note: This operation requires an identity challenge if the financial institution
         403,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "TransfersCreateTransferRequest",
       "headers": [
         {

@@ -3896,7 +3896,18 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Creates an \`Employee\` object with the given values.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "EmployeesCreateRequest",
       "headers": [
         {
@@ -6768,15 +6779,7 @@ exports[`open api parser merge parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "name": {
-                "primitive": {
-                  "string": "Remote Deployment Key 1",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -9000,15 +9003,7 @@ exports[`open api parser merge parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "name": {
-                "primitive": {
-                  "string": "Remote Deployment Key 1",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -10208,7 +10203,18 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Creates a \`TimeOff\` object with the given values.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "TimeOffCreateRequest",
       "headers": [
         {

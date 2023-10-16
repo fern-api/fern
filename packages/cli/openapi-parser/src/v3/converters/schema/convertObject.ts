@@ -1,4 +1,4 @@
-import { Example, FullExample } from "@fern-fern/openapi-ir-model/example";
+import { Example, PartialExample } from "@fern-fern/openapi-ir-model/example";
 import {
     AllOfPropertyConflict,
     ObjectProperty,
@@ -98,21 +98,26 @@ export function convertObject({
         }
     }
 
-    const includedProperties: Record<string, FullExample> = {};
-    const excludedProperties: Set<string> = new Set();
+    const includedProperties: Record<string, Example> = {};
+    const excludedProperties: Set<string> = new Set<string>();
 
     const convertedProperties = Object.entries(propertiesToConvert).map(([propertyName, propertySchema]) => {
         const isRequired = allRequired.includes(propertyName);
+        const isReference = isReferenceObject(propertySchema);
         const example = isReferenceObject(propertySchema) ? undefined : propertySchema.example;
 
         let schema;
         if (isRequired) {
             schema = convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName]);
             const parsedExample = example != null ? getSchemaCompatiableExample({ schema, example }) : undefined;
-            if (parsedExample == null) {
+            if (parsedExample == null && isReference) {
+                includedProperties[propertyName] = Example.reference({
+                    reference: propertySchema.$ref,
+                });
+            } else if (parsedExample == null) {
                 excludedProperties.add(propertyName);
             } else {
-                includedProperties[propertyName] = parsedExample;
+                includedProperties[propertyName] = Example.full(parsedExample);
             }
         } else {
             schema = Schema.optional({
@@ -121,7 +126,7 @@ export function convertObject({
             });
             const parsedExample = example != null ? getSchemaCompatiableExample({ schema, example }) : undefined;
             if (parsedExample != null) {
-                includedProperties[propertyName] = parsedExample;
+                includedProperties[propertyName] = Example.full(parsedExample);
             }
         }
 
@@ -146,9 +151,10 @@ export function convertObject({
     if (excludedProperties.size === 0) {
         context.exampleCollector.collect(
             getSchemaInstanceIdFromBreadcrumbs(breadcrumbs),
-            Example.full(
-                FullExample.object({
-                    properties: includedProperties,
+            Example.partial(
+                PartialExample.object({
+                    includedProperties: {},
+                    excludedProperties: {},
                 })
             )
         );

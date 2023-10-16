@@ -116,15 +116,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "name": {
-                "primitive": {
-                  "string": "Query",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -241,7 +233,18 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SendMenuToConnIdRequest",
       "headers": [],
       "internal": undefined,
@@ -585,29 +588,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "mediation_id": {
-                "primitive": {
-                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "my_label": {
-                "primitive": {
-                  "string": "Bob",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "service_endpoint": {
-                "primitive": {
-                  "string": "http://192.168.56.102:8020",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -728,29 +709,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "my_did": {
-                "primitive": {
-                  "string": "WgWxqztrNooG92RXvxSTWv",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "their_did": {
-                "primitive": {
-                  "string": "WgWxqztrNooG92RXvxSTWv",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "their_endpoint": {
-                "primitive": {
-                  "string": "https://myhost:8021",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -808,43 +767,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "@id": {
-                "primitive": {
-                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "@type": {
-                "primitive": {
-                  "string": "https://didcomm.org/my-family/1.0/my-message-type",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "did": {
-                "primitive": {
-                  "string": "WgWxqztrNooG92RXvxSTWv",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "label": {
-                "primitive": {
-                  "string": "Bob",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "serviceEndpoint": {
-                "primitive": {
-                  "string": "http://192.168.56.101:8020",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -1466,15 +1389,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "content": {
-                "primitive": {
-                  "string": "Hello",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -1701,22 +1616,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "schema_id": {
-                "primitive": {
-                  "string": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "tag": {
-                "primitive": {
-                  "string": "default",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -2709,36 +2609,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "@id": {
-                "primitive": {
-                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "@type": {
-                "primitive": {
-                  "string": "https://didcomm.org/my-family/1.0/my-message-type",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "did": {
-                "primitive": {
-                  "string": "WgWxqztrNooG92RXvxSTWv",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "label": {
-                "primitive": {
-                  "string": "Request to connect with Bob",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -3307,7 +3178,18 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateCredentialRecordRequest",
       "headers": [],
       "internal": undefined,
@@ -3354,7 +3236,18 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateFreeCredentialOfferRequest",
       "headers": [],
       "internal": undefined,
@@ -4035,7 +3928,18 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SendFreeCredentialRequest",
       "headers": [],
       "internal": undefined,
@@ -4082,7 +3986,18 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SendFreeCredentialOfferRequest",
       "headers": [],
       "internal": undefined,
@@ -4129,7 +4044,18 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SendFreeCredentialProposalRequest",
       "headers": [],
       "internal": undefined,
@@ -4176,7 +4102,18 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SendFreeCredentialRequestRequest",
       "headers": [],
       "internal": undefined,
@@ -4223,7 +4160,18 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateCredentialRecordRequest",
       "headers": [],
       "internal": undefined,
@@ -4270,7 +4218,18 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateFreeCredentialOfferRequest",
       "headers": [],
       "internal": undefined,
@@ -4928,7 +4887,18 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SendFreeCredentialRequest",
       "headers": [],
       "internal": undefined,
@@ -4975,7 +4945,18 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SendFreeCredentialOfferRequest",
       "headers": [],
       "internal": undefined,
@@ -5028,57 +5009,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "connection_id": {
-                "primitive": {
-                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "cred_def_id": {
-                "primitive": {
-                  "string": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "issuer_did": {
-                "primitive": {
-                  "string": "WgWxqztrNooG92RXvxSTWv",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "schema_id": {
-                "primitive": {
-                  "string": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "schema_issuer_did": {
-                "primitive": {
-                  "string": "WgWxqztrNooG92RXvxSTWv",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "schema_name": {
-                "primitive": {
-                  "string": "preferences",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "schema_version": {
-                "primitive": {
-                  "string": "1.0",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -5177,7 +5108,18 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "VerifyRequest",
       "headers": [],
       "internal": undefined,
@@ -6519,15 +6461,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "mediation_id": {
-                "primitive": {
-                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -6650,48 +6584,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "image_url": {
-                "primitive": {
-                  "string": "https://aries.ca/images/sample.png",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "label": {
-                "primitive": {
-                  "string": "Alice",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "wallet_dispatch_type": {
-                "enum": "default",
-                "type": "enum",
-              },
-              "wallet_key": {
-                "primitive": {
-                  "string": "MySecretKey123",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "wallet_key_derivation": {
-                "enum": "RAW",
-                "type": "enum",
-              },
-              "wallet_name": {
-                "primitive": {
-                  "string": "MyNewWallet",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "wallet_type": {
-                "enum": "indy",
-                "type": "enum",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -6799,26 +6692,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "image_url": {
-                "primitive": {
-                  "string": "https://aries.ca/images/sample.png",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "label": {
-                "primitive": {
-                  "string": "Alice",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "wallet_dispatch_type": {
-                "enum": "default",
-                "type": "enum",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -6891,15 +6765,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "wallet_key": {
-                "primitive": {
-                  "string": "MySecretKey123",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -6972,15 +6838,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "wallet_key": {
-                "primitive": {
-                  "string": "MySecretKey123",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -7106,43 +6964,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "alias": {
-                "primitive": {
-                  "string": "Barry",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "mediation_id": {
-                "primitive": {
-                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "my_label": {
-                "primitive": {
-                  "string": "Invitation to Barry",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "protocol_version": {
-                "primitive": {
-                  "string": "1.1",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "use_public_did": {
-                "primitive": {
-                  "boolean": false,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -7231,29 +7053,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "@id": {
-                "primitive": {
-                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "@type": {
-                "primitive": {
-                  "string": "https://didcomm.org/my-family/1.0/my-message-type",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "label": {
-                "primitive": {
-                  "string": "Bob",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -7405,7 +7205,18 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateProofRequestRequest",
       "headers": [],
       "internal": undefined,
@@ -7978,22 +7789,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "auto_verify": {
-                "primitive": {
-                  "boolean": false,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "trace": {
-                "primitive": {
-                  "boolean": false,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -8110,7 +7906,18 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SendPresentationProposalRequest",
       "headers": [],
       "internal": undefined,
@@ -8157,7 +7964,18 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SendFreePresentationRequestRequest",
       "headers": [],
       "internal": undefined,
@@ -8204,7 +8022,18 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateFreeProofRequestRequest",
       "headers": [],
       "internal": undefined,
@@ -8772,22 +8601,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "auto_verify": {
-                "primitive": {
-                  "boolean": false,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-              "trace": {
-                "primitive": {
-                  "boolean": false,
-                  "type": "boolean",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -8904,7 +8718,18 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SendPresentationProposalRequest",
       "headers": [],
       "internal": undefined,
@@ -8951,7 +8776,18 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SendFreePresentationRequestRequest",
       "headers": [],
       "internal": undefined,
@@ -9162,15 +8998,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "credential_definition_id": {
-                "primitive": {
-                  "string": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -9592,15 +9420,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "tails_public_uri": {
-                "primitive": {
-                  "string": "http://192.168.56.133:6543/revocation/registry/WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0/tails-file",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -10237,36 +10057,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "connection_id": {
-                "primitive": {
-                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "cred_ex_id": {
-                "primitive": {
-                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "cred_rev_id": {
-                "primitive": {
-                  "string": "12345",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "rev_reg_id": {
-                "primitive": {
-                  "string": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -11573,22 +11364,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "method": {
-                "primitive": {
-                  "string": "sov",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "seed": {
-                "primitive": {
-                  "string": "000000000000000000000000Trustee1",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -11877,26 +11653,7 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "did": {
-                "primitive": {
-                  "string": "WgWxqztrNooG92RXvxSTWv",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "endpoint": {
-                "primitive": {
-                  "string": "https://myhost:8021",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "endpoint_type": {
-                "enum": "Endpoint",
-                "type": "enum",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
