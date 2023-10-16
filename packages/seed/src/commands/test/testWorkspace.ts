@@ -33,7 +33,6 @@ export const FIXTURES = {
     NO_ENVIRONMENT: "no-environment",
     PACKAGE_YML: "package-yml",
     PLAIN_TEXT: "plain-text",
-    ROOT_BASE_PATH: "root-base-path",
     SINGLE_URL_ENVIRONMENT: "single-url-environment-default",
     SINGLE_URL_ENVIRONMENT_NO_DEFAULT: "single-url-environment-no-default",
     STREAMING: "streaming",
