@@ -1,3 +1,5 @@
+imports:
+  example: example.yml
 types:
   OpenAPIIntermediateRepresentation:
     properties:
@@ -152,6 +154,34 @@ types:
       response: optional<Response>
       errorStatusCode: list<StatusCode>
       server: list<Server>
+      examples: list<EndpointExample>
+
+  EndpointExample:
+    docs: |
+      A complete example associated with the endpoint. All child
+      examples will be fully complete (i.e. there will be no
+      PartialObjectExamples).
+    properties:
+      pathParameters: optional<list<PathParameterExample>>
+      queryParameters: optional<list<QueryParameterExample>>
+      headers: optional<list<HeaderExample>>
+      request: optional<example.FullExample>
+      response: optional<example.FullExample>
+
+  PathParameterExample:
+    properties:
+      name: string
+      value: example.FullExample
+
+  QueryParameterExample:
+    properties:
+      name: string
+      value: example.FullExample
+
+  HeaderExample:
+    properties:
+      name: string
+      value: example.FullExample
 
   EndpointSdkName:
     properties:
@@ -205,6 +235,7 @@ types:
   JsonRequest:
     extends: WithDescription
     properties:
+      schemaInstanceId: example.SchemaInstanceId
       schema: Schema
       contentType: optional<string>
 

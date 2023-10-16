@@ -69,6 +69,15 @@ Transfers support recurring schedules, such as repeating every week or every mon
         403,
         422,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AccountsListAccountsRequest",
       "headers": [],
       "internal": undefined,
@@ -211,6 +220,15 @@ Transfers support recurring schedules, such as repeating every week or every mon
         403,
         404,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AccountsGetAccountRequest",
       "headers": [],
       "internal": undefined,
@@ -270,6 +288,15 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
         422,
         429,
         503,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "AccountsListAccountBalancesRequest",
       "headers": [],
@@ -346,6 +373,15 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
         403,
         404,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AccountJointOwnersListAccountJointOwnersRequest",
       "headers": [],
       "internal": undefined,
@@ -404,6 +440,15 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
         401,
         403,
         422,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "AccountsListEligibleAchAccountsRequest",
       "headers": [],
@@ -528,6 +573,15 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
         404,
         422,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "OverdraftProtectionListEligibleOverdraftAccountsRequest",
       "headers": [],
       "internal": undefined,
@@ -617,6 +671,15 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
         403,
         404,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "OverdraftProtectionGetOverdraftProtectionRequest",
       "headers": [],
       "internal": undefined,
@@ -677,6 +740,18 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
         404,
         422,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "OverdraftProtectionPatchOverdraftAccountsRequest",
       "headers": [],
       "internal": undefined,
@@ -708,6 +783,7 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
           "schema": "overdraftProtectionPatch",
           "type": "reference",
         },
+        "schemaInstanceId": "overdraftProtection_patchOverdraftAccounts_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -748,6 +824,21 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         404,
         422,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "JointOwnersCreateJointOwnerInvitationRequest",
       "headers": [],
       "internal": undefined,
@@ -779,6 +870,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
           "schema": "newJointOwnerInvitation",
           "type": "reference",
         },
+        "schemaInstanceId": "jointOwners_createJointOwnerInvitation_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -815,6 +907,15 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         401,
         403,
         422,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "InstitutionsLookUpInstitutionByLocatorRequest",
       "headers": [],
@@ -913,6 +1014,15 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
         403,
         404,
         422,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "InstitutionsListTransferScheduleRequest",
       "headers": [],
@@ -1043,6 +1153,15 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
         412,
         422,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "InstitutionsGetCutoffTimesRequest",
       "headers": [
         {
@@ -1136,6 +1255,18 @@ This information provides hints to clients, allowing bank customers to select tr
         403,
         404,
         422,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "InstitutionsGetTransferDateRestrictionsRequest",
       "headers": [],
@@ -1265,6 +1396,15 @@ The default response lists only recent transactions. Normally, this is transacti
         422,
         429,
         504,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "TransactionsListTransactionsRequest",
       "headers": [],
@@ -1522,6 +1662,15 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
         403,
         422,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "TransactionCategoriesListTransactionCategoriesRequest",
       "headers": [
         {
@@ -1583,6 +1732,15 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
         401,
         403,
         422,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "TransfersListTransfersRequest",
       "headers": [],
@@ -1723,6 +1881,26 @@ Note: This operation requires an identity challenge if the financial institution
         403,
         422,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "schedule": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TransfersCreateTransferRequest",
       "headers": [
         {
@@ -1757,6 +1935,7 @@ Note: This operation requires an identity challenge if the financial institution
           "schema": "newTransfer",
           "type": "reference",
         },
+        "schemaInstanceId": "transfers_createTransfer_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1792,6 +1971,18 @@ Note: This operation requires an identity challenge if the financial institution
         401,
         403,
         404,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "TransfersGetTransferRequest",
       "headers": [],
@@ -1853,6 +2044,21 @@ Note: This operation requires an identity challenge if the financial institution
         404,
         422,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TransfersPatchTransferRequest",
       "headers": [
         {
@@ -1900,6 +2106,7 @@ Note: This operation requires an identity challenge if the financial institution
           "schema": "transferPatch",
           "type": "reference",
         },
+        "schemaInstanceId": "transfers_patchTransfer_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1936,6 +2143,15 @@ Note: This operation requires an identity challenge if the financial institution
         403,
         404,
         409,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "TransfersDeleteTransferRequest",
       "headers": [],

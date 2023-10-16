@@ -15,6 +15,15 @@ exports[`open api parser dopt parse open api 1`] = `
         404,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "FindBlocksRequest",
       "headers": [],
       "internal": undefined,
@@ -430,6 +439,15 @@ exports[`open api parser dopt parse open api 1`] = `
         404,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "BlockTransitionsRequest",
       "headers": [],
       "internal": undefined,
@@ -532,6 +550,15 @@ exports[`open api parser dopt parse open api 1`] = `
         401,
         404,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "GetFlowRequest",
       "headers": [],
@@ -1111,6 +1138,15 @@ exports[`open api parser dopt parse open api 1`] = `
         401,
         404,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "FlowIntentRequest",
       "headers": [],

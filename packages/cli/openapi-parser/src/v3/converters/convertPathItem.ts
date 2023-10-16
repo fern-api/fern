@@ -451,6 +451,7 @@ function convertToEndpoint({
         description: operation.description,
         authed: isEndpointAuthed(operation, document),
         availability,
+        examples: [],
     };
 }
 

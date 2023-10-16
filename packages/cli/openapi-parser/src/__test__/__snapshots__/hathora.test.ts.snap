@@ -10,6 +10,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "GetAppsRequest",
       "headers": [],
       "internal": undefined,
@@ -50,6 +59,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "errorStatusCode": [
         422,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "CreateAppRequest",
       "headers": [],
@@ -166,6 +184,7 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "type": "object",
         },
+        "schemaInstanceId": "CreateApp_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -196,6 +215,15 @@ exports[`open api parser hathora parse open api 1`] = `
         404,
         422,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "UpdateAppRequest",
       "headers": [],
@@ -325,6 +353,7 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "type": "object",
         },
+        "schemaInstanceId": "UpdateApp_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -353,6 +382,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "description": undefined,
       "errorStatusCode": [
         404,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "GetAppInfoRequest",
       "headers": [],
@@ -404,6 +442,15 @@ exports[`open api parser hathora parse open api 1`] = `
         404,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DeleteAppRequest",
       "headers": [],
       "internal": undefined,
@@ -442,6 +489,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "description": undefined,
       "errorStatusCode": [
         404,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "LoginAnonymousRequest",
       "headers": [],
@@ -509,6 +565,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "LoginNicknameRequest",
       "headers": [],
       "internal": undefined,
@@ -557,6 +622,7 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "type": "object",
         },
+        "schemaInstanceId": "LoginNickname_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -603,6 +669,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "errorStatusCode": [
         401,
         404,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "LoginGoogleRequest",
       "headers": [],
@@ -652,6 +727,7 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "type": "object",
         },
+        "schemaInstanceId": "LoginGoogle_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -697,6 +773,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "description": undefined,
       "errorStatusCode": [
         404,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "GetBuildsRequest",
       "headers": [],
@@ -750,6 +835,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "description": undefined,
       "errorStatusCode": [
         404,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "GetBuildInfoRequest",
       "headers": [],
@@ -814,6 +908,15 @@ exports[`open api parser hathora parse open api 1`] = `
         422,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateBuildRequest",
       "headers": [],
       "internal": undefined,
@@ -861,6 +964,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "RunBuildRequest",
       "headers": [],
       "internal": undefined,
@@ -930,6 +1034,15 @@ exports[`open api parser hathora parse open api 1`] = `
         422,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DeleteBuildRequest",
       "headers": [],
       "internal": undefined,
@@ -980,6 +1093,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "description": undefined,
       "errorStatusCode": [
         404,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "GetDeploymentsRequest",
       "headers": [],
@@ -1033,6 +1155,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "description": undefined,
       "errorStatusCode": [
         404,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "GetDeploymentInfoRequest",
       "headers": [],
@@ -1097,6 +1228,15 @@ exports[`open api parser hathora parse open api 1`] = `
         422,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateDeploymentRequest",
       "headers": [],
       "internal": undefined,
@@ -1140,6 +1280,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": "DeploymentConfig",
           "type": "reference",
         },
+        "schemaInstanceId": "CreateDeployment_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1167,6 +1308,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "GetPingServiceEndpointsRequest",
       "headers": [],
       "internal": undefined,
@@ -1206,6 +1356,15 @@ exports[`open api parser hathora parse open api 1`] = `
         422,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "CreatePrivateLobbyDeprecatedRequest",
       "headers": [
@@ -1305,6 +1464,15 @@ exports[`open api parser hathora parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreatePublicLobbyDeprecatedRequest",
       "headers": [
         {
@@ -1399,6 +1567,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "errorStatusCode": [
         401,
         404,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "ListActivePublicLobbiesDeprecatedRequest",
       "headers": [
@@ -1502,6 +1679,15 @@ exports[`open api parser hathora parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreatePrivateLobbyRequest",
       "headers": [
         {
@@ -1595,6 +1781,7 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "type": "object",
         },
+        "schemaInstanceId": "CreatePrivateLobby_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1627,6 +1814,15 @@ exports[`open api parser hathora parse open api 1`] = `
         422,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "CreatePublicLobbyRequest",
       "headers": [
@@ -1721,6 +1917,7 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "type": "object",
         },
+        "schemaInstanceId": "CreatePublicLobby_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1753,6 +1950,15 @@ exports[`open api parser hathora parse open api 1`] = `
         422,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "CreateLocalLobbyRequest",
       "headers": [
@@ -1847,6 +2053,7 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "type": "object",
         },
+        "schemaInstanceId": "CreateLocalLobby_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1879,6 +2086,15 @@ exports[`open api parser hathora parse open api 1`] = `
         422,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "CreateLobbyRequest",
       "headers": [
@@ -2004,6 +2220,7 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "type": "object",
         },
+        "schemaInstanceId": "CreateLobby_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2031,6 +2248,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ListActivePublicLobbiesRequest",
       "headers": [],
       "internal": undefined,
@@ -2100,6 +2326,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "GetLobbyInfoRequest",
       "headers": [],
       "internal": undefined,
@@ -2161,6 +2396,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "errorStatusCode": [
         404,
         422,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "SetLobbyStateRequest",
       "headers": [],
@@ -2225,6 +2469,7 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "type": "object",
         },
+        "schemaInstanceId": "SetLobbyState_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2252,6 +2497,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "GetLogsForAppRequest",
       "headers": [],
       "internal": undefined,
@@ -2338,6 +2584,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "GetLogsForProcessRequest",
       "headers": [],
       "internal": undefined,
@@ -2421,6 +2668,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "GetLogsForDeploymentRequest",
       "headers": [],
       "internal": undefined,
@@ -2506,6 +2754,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "errorStatusCode": [
         404,
         422,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "GetMetricsRequest",
       "headers": [],
@@ -2633,6 +2890,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "GetRunningProcessesRequest",
       "headers": [],
       "internal": undefined,
@@ -2701,6 +2967,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "description": undefined,
       "errorStatusCode": [
         404,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "GetStoppedProcessesRequest",
       "headers": [],
@@ -2771,6 +3046,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "GetProcessInfoRequest",
       "headers": [],
       "internal": undefined,
@@ -2833,6 +3117,18 @@ exports[`open api parser hathora parse open api 1`] = `
         404,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateRoomRequest",
       "headers": [],
       "internal": undefined,
@@ -2879,6 +3175,7 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "type": "object",
         },
+        "schemaInstanceId": "CreateRoom_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2907,6 +3204,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "description": undefined,
       "errorStatusCode": [
         404,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "GetRoomInfoRequest",
       "headers": [],
@@ -2968,6 +3274,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "description": undefined,
       "errorStatusCode": [
         404,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "GetActiveRoomsForProcessRequest",
       "headers": [],
@@ -3033,6 +3348,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "description": undefined,
       "errorStatusCode": [
         404,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "GetInactiveRoomsForProcessRequest",
       "headers": [],
@@ -3100,6 +3424,15 @@ exports[`open api parser hathora parse open api 1`] = `
         404,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyRoomRequest",
       "headers": [],
       "internal": undefined,
@@ -3151,6 +3484,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "errorStatusCode": [
         404,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "SuspendRoomRequest",
       "headers": [],
@@ -3204,6 +3546,15 @@ exports[`open api parser hathora parse open api 1`] = `
         404,
         422,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "GetConnectionInfoRequest",
       "headers": [],

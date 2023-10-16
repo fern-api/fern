@@ -17,6 +17,31 @@ exports[`open api parser deel parse open api 1`] = `
         409,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "data": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "6733c95b-df52-419e-906d-6904d3117dab",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateDirectEmployeeRequest",
       "headers": [],
       "internal": undefined,
@@ -35,6 +60,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "HrisDirectEmployee",
           "type": "reference",
         },
+        "schemaInstanceId": "createDirectEmployee_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -66,6 +92,52 @@ exports[`open api parser deel parse open api 1`] = `
         403,
         404,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "data": {
+                "properties": {
+                  "adjustments_information_box": {
+                    "primitive": {
+                      "string": "Not allowed to contract people under 21.",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "currency": {
+                    "primitive": {
+                      "string": "BRL",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "hiring_guide_country_name": {
+                    "primitive": {
+                      "string": "brazil",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "insurance_fee": {
+                    "primitive": {
+                      "string": "15.00",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "GetEorCountryValidationsRequest",
       "headers": [],
@@ -119,6 +191,34 @@ exports[`open api parser deel parse open api 1`] = `
         404,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "data": {
+                "properties": {
+                  "job_title": {
+                    "primitive": {
+                      "string": "Designer",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateEorContractRequest",
       "headers": [],
       "internal": undefined,
@@ -137,6 +237,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "EorContractToCreateContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "createEorContract_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -172,6 +273,21 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateContractTimeBasedRequest",
       "headers": [],
       "internal": true,
@@ -190,6 +306,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "ContractToCreateContainer_pay_as_you_go_time_based",
           "type": "reference",
         },
+        "schemaInstanceId": "createContractTimeBased_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -225,6 +342,21 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateContractTaskBasedRequest",
       "headers": [],
       "internal": true,
@@ -243,6 +375,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "ContractToCreateContainer_payg_tasks",
           "type": "reference",
         },
+        "schemaInstanceId": "createContractTaskBased_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -278,6 +411,21 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateContractMilestoneBasedRequest",
       "headers": [],
       "internal": true,
@@ -296,6 +444,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "ContractToCreateContainer_payg_milestones",
           "type": "reference",
         },
+        "schemaInstanceId": "createContractMilestoneBased_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -331,6 +480,21 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateContractFixedRateRequest",
       "headers": [],
       "internal": true,
@@ -349,6 +513,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "ContractToCreateContainer_ongoing_time_based",
           "type": "reference",
         },
+        "schemaInstanceId": "createContractFixedRate_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -383,6 +548,18 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "GetContractListRequest",
       "headers": [],
@@ -598,6 +775,21 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateContractRequest",
       "headers": [],
       "internal": undefined,
@@ -616,6 +808,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "ContractToCreateContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "createContract_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -650,6 +843,18 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "GetContractByIdRequest",
       "headers": [],
@@ -708,6 +913,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AttachExternalIdRequest",
       "headers": [],
       "internal": undefined,
@@ -741,6 +958,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "InputToPatchContractExternalId",
           "type": "reference",
         },
+        "schemaInstanceId": "attachExternalId_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -776,6 +994,7 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "AddContractDocumentRequest",
       "headers": [],
       "internal": undefined,
@@ -846,6 +1065,7 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "EditContractDocumentRequest",
       "headers": [],
       "internal": undefined,
@@ -916,6 +1136,15 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "GetContractPreviewRequest",
       "headers": [],
       "internal": undefined,
@@ -981,6 +1210,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetTasksByContractRequest",
       "headers": [],
       "internal": undefined,
@@ -1038,6 +1279,38 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "data": {
+                "properties": {
+                  "amount": {
+                    "primitive": {
+                      "string": "123.45",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "description": {
+                    "primitive": {
+                      "string": "Make the button pop.",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateContractPgoTakRequest",
       "headers": [],
       "internal": undefined,
@@ -1071,6 +1344,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "InputToCreatePgoTask",
           "type": "reference",
         },
+        "schemaInstanceId": "createContractPgoTak_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1103,6 +1377,15 @@ exports[`open api parser deel parse open api 1`] = `
         403,
         404,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "GetAlternateEmailsByContractIdRequest",
       "headers": [],
@@ -1161,6 +1444,21 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateTaskManyReviewRequest",
       "headers": [],
       "internal": undefined,
@@ -1194,6 +1492,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "RequestBodyToCreatePgoTaskReviewsReviewsContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "createTaskManyReview_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1228,6 +1527,38 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "data": {
+                "properties": {
+                  "reason": {
+                    "primitive": {
+                      "string": "Excited!",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "status": {
+                    "enum": "approved",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "CreateTaskReviewByIdRequest",
       "headers": [],
@@ -1276,6 +1607,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "RequestBodyToCreatePgoTaskReviewsByIdReviewsContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "createTaskReviewById_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1310,6 +1642,15 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "DeleteContractPgoTakRequest",
       "headers": [],
@@ -1400,6 +1741,31 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "data": {
+                "properties": {
+                  "job_title_name": {
+                    "primitive": {
+                      "string": "3D Designer",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AmendContractDetailsRequest",
       "headers": [],
       "internal": undefined,
@@ -1433,6 +1799,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "ContractToAmendDetailsContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "amendContractDetails_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1468,6 +1835,31 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "data": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "data": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TerminateContractRequest",
       "headers": [],
       "internal": undefined,
@@ -1501,6 +1893,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "ContractToTerminateContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "terminateContract_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1536,6 +1929,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SignContractRequest",
       "headers": [],
       "internal": undefined,
@@ -1569,6 +1974,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "ContractSignatureToCreateContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "signContract_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1601,6 +2007,15 @@ exports[`open api parser deel parse open api 1`] = `
         403,
         404,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "ArchiveContractRequest",
       "headers": [],
@@ -1659,6 +2074,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "InviteToSignContractRequest",
       "headers": [],
       "internal": undefined,
@@ -1692,6 +2119,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "ContractInvitationToCreateContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "inviteToSignContract_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1726,6 +2154,15 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "UninviteToSignContractRequest",
       "headers": [],
@@ -1783,6 +2220,18 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "GetTimesheetsByContractRequest",
       "headers": [],
@@ -1947,6 +2396,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetMilestonesByContractRequest",
       "headers": [],
       "internal": undefined,
@@ -2004,6 +2465,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateMilestoneRequest",
       "headers": [],
       "internal": undefined,
@@ -2037,6 +2510,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "MilestoneToCreateContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "createMilestone_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2071,6 +2545,18 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "GetMilestonesByContractAndIdRequest",
       "headers": [],
@@ -2143,6 +2629,15 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DeleteMilestoneByIdRequest",
       "headers": [],
       "internal": undefined,
@@ -2214,6 +2709,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateMilestoneReviewRequest",
       "headers": [],
       "internal": undefined,
@@ -2261,6 +2768,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "MilestoneReviewToCreateContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "createMilestoneReview_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2296,6 +2804,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateMilestoneReviewsRequest",
       "headers": [],
       "internal": undefined,
@@ -2329,6 +2849,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "MilestoneReviewsToCreateContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "createMilestoneReviews_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2363,6 +2884,18 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "GetOffCyclePaymentsByContractRequest",
       "headers": [],
@@ -2421,6 +2954,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateOffCyclePaymentRequest",
       "headers": [],
       "internal": undefined,
@@ -2454,6 +2999,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "OffCyclePaymentToCreateContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "createOffCyclePayment_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2488,6 +3034,18 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "GetOffCyclePaymentByContractAndIdRequest",
       "headers": [],
@@ -2557,6 +3115,21 @@ exports[`open api parser deel parse open api 1`] = `
         404,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AddPremiumRequest",
       "headers": [],
       "internal": undefined,
@@ -2590,6 +3163,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "PremiumToAddContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "addPremium_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2624,6 +3198,15 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "RemovePremiumFromContractRequest",
       "headers": [],
@@ -2696,6 +3279,18 @@ exports[`open api parser deel parse open api 1`] = `
         403,
         404,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "CalculateFinalPaymentRequest",
       "headers": [],
@@ -2841,6 +3436,26 @@ exports[`open api parser deel parse open api 1`] = `
         404,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "data": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PostContractEstimateRequest",
       "headers": [],
       "internal": undefined,
@@ -2859,6 +3474,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "EstimateFirstPaymentContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "postContractEstimate_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2890,6 +3506,18 @@ exports[`open api parser deel parse open api 1`] = `
         403,
         404,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "GetEorTimeOffsRequest",
       "headers": [],
@@ -2945,6 +3573,21 @@ exports[`open api parser deel parse open api 1`] = `
         404,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateEorTimeOffsRequest",
       "headers": [],
       "internal": undefined,
@@ -2978,6 +3621,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "CreateTimeoffContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "createEorTimeOffs_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3009,6 +3653,21 @@ exports[`open api parser deel parse open api 1`] = `
         403,
         404,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "EditEorTimeOffsRequest",
       "headers": [],
@@ -3057,6 +3716,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "CreateTimeoffContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "editEorTimeOffs_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3088,6 +3748,15 @@ exports[`open api parser deel parse open api 1`] = `
         403,
         404,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "DeleteEorTimeOffsRequest",
       "headers": [],
@@ -3159,6 +3828,18 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "GetTimesheetsRequest",
       "headers": [],
@@ -3325,6 +4006,21 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateTimesheetRequest",
       "headers": [],
       "internal": undefined,
@@ -3343,6 +4039,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "TimesheetToCreateContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "createTimesheet_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3377,6 +4074,23 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "data": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "GetTimesheetByIdRequest",
       "headers": [],
@@ -3433,6 +4147,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "UpdateTimesheetByIdRequest",
       "headers": [],
       "internal": undefined,
@@ -3464,6 +4190,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "TimesheetToUpdateContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "updateTimesheetById_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3498,6 +4225,15 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "DeleteTimesheetByIdRequest",
       "headers": [],
@@ -3572,6 +4308,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateTimesheetReviewRequest",
       "headers": [],
       "internal": undefined,
@@ -3603,6 +4351,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "TimesheetReviewToCreateContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "createTimesheetReview_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3638,6 +4387,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateTimesheetReviewsRequest",
       "headers": [],
       "internal": undefined,
@@ -3656,6 +4417,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "TimesheetReviewsToCreateContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "createTimesheetReviews_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3690,6 +4452,18 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "GetInvoiceAdjustmentsByContractIdRequest",
       "headers": [],
@@ -3883,6 +4657,18 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "GetInvoiceAdjustmentsRequest",
       "headers": [],
@@ -4079,6 +4865,21 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateInvoiceAdjustmentRequest",
       "headers": [],
       "internal": undefined,
@@ -4097,6 +4898,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "InvoiceAdjustmentToCreateContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "createInvoiceAdjustment_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -4132,6 +4934,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "UpdateInvoiceAdjustmentByIdRequest",
       "headers": [],
       "internal": undefined,
@@ -4163,6 +4977,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "InvoiceAdjustmentToUpdateContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "updateInvoiceAdjustmentById_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -4197,6 +5012,15 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "DeleteInvoiceAdjustmentByIdRequest",
       "headers": [],
@@ -4271,6 +5095,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateInvoiceAdjustmentReviewRequest",
       "headers": [],
       "internal": undefined,
@@ -4302,6 +5138,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "InvoiceAdjustmentReviewToCreateContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "createInvoiceAdjustmentReview_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -4337,6 +5174,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateInvoiceAdjustmentReviewsRequest",
       "headers": [],
       "internal": undefined,
@@ -4355,6 +5204,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "InvoiceAdjustmentReviewsToCreateContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "createInvoiceAdjustmentReviews_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -4389,6 +5239,18 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "GetLegalEntityListRequest",
       "headers": [],
@@ -4432,6 +5294,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetCountriesRequest",
       "headers": [],
       "internal": undefined,
@@ -4474,6 +5348,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetCurrenciesRequest",
       "headers": [],
       "internal": undefined,
@@ -4515,6 +5401,15 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "GetJobTitleListRequest",
       "headers": [],
@@ -4591,6 +5486,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetSeniorityListRequest",
       "headers": [],
       "internal": undefined,
@@ -4649,6 +5556,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetTimeoffTypeListRequest",
       "headers": [],
       "internal": undefined,
@@ -4692,6 +5611,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetOrganizationsRequest",
       "headers": [],
       "internal": undefined,
@@ -4734,6 +5665,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetTeamsRequest",
       "headers": [],
       "internal": undefined,
@@ -4775,6 +5718,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateFileRefRequest",
       "headers": [],
       "internal": true,
@@ -4793,6 +5748,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "InputToCreateFileRef",
           "type": "reference",
         },
+        "schemaInstanceId": "createFileRef_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -4826,6 +5782,18 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "GetAgreementsRequest",
       "headers": [],
@@ -4916,6 +5884,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetContractTemplatesRequest",
       "headers": [],
       "internal": true,
@@ -4954,6 +5934,18 @@ exports[`open api parser deel parse open api 1`] = `
         403,
         404,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "GetEorEntitlementsRequest",
       "headers": [],
@@ -5009,6 +6001,18 @@ exports[`open api parser deel parse open api 1`] = `
         404,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetEorClientTimeOffsRequest",
       "headers": [],
       "internal": undefined,
@@ -5051,6 +6055,38 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "data": {
+                "properties": {
+                  "denial_reason": {
+                    "primitive": {
+                      "string": "Not allowed for this day.",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "is_approved": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ReviewTimeoffRequest",
       "headers": [],
       "internal": undefined,
@@ -5084,6 +6120,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "TimeoffToReviewContainer",
           "type": "reference",
         },
+        "schemaInstanceId": "reviewTimeoff_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -5116,6 +6153,23 @@ exports[`open api parser deel parse open api 1`] = `
         403,
         404,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "data": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "GetInvoiceListRequest",
       "headers": [],
@@ -5224,6 +6278,45 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "data": {
+                "properties": {
+                  "expires_at": {
+                    "primitive": {
+                      "datetime": "2020-03-31T10:58:49.780Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "12345",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "url": {
+                    "primitive": {
+                      "string": "https://s3URL/letsdeel.com/invoices/12345.pdf",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetInvoiceDownloadLinkRequest",
       "headers": [],
       "internal": undefined,
@@ -5279,6 +6372,45 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "data": {
+                "properties": {
+                  "expires_at": {
+                    "primitive": {
+                      "datetime": "2020-03-31T10:58:49.780Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "12345",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "url": {
+                    "primitive": {
+                      "string": "https://s3URL/letsdeel.com/invoices/12345.pdf",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetBillingInvoiceDownloadLinkRequest",
       "headers": [],
       "internal": undefined,
@@ -5331,6 +6463,23 @@ exports[`open api parser deel parse open api 1`] = `
         403,
         404,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "data": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "GetPaymentListRequest",
       "headers": [],
@@ -5450,6 +6599,15 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "GetPeopleListRequest",
       "headers": [],
       "internal": undefined,
@@ -5523,6 +6681,15 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "GetPeopleRequest",
       "headers": [],
       "internal": undefined,
@@ -5564,6 +6731,15 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "GetAllWebhooksRequest",
       "headers": [],
@@ -5607,6 +6783,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateWebhookRequest",
       "headers": [],
       "internal": undefined,
@@ -5625,6 +6813,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "CreateWebhookRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "createWebhook_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -5659,6 +6848,18 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "WebhookControllerGetByIdRequest",
       "headers": [],
@@ -5717,6 +6918,18 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "WebhookControllerEditByIdRequest",
       "headers": [],
       "internal": undefined,
@@ -5750,6 +6963,7 @@ exports[`open api parser deel parse open api 1`] = `
           "schema": "PatchWebhookRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "WebhookController_editById_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -5784,6 +6998,15 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "WebhookControllerDeleteByIdRequest",
       "headers": [],
@@ -5831,6 +7054,15 @@ exports[`open api parser deel parse open api 1`] = `
         405,
         429,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "GetPaymentsBreakDownByIdRequest",
       "headers": [],

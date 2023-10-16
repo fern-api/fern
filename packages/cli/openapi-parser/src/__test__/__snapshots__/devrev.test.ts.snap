@@ -18,6 +18,15 @@ exports[`open api parser devrev parse open api 1`] = `
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ArtifactsLocateRequest",
       "headers": [],
       "internal": undefined,
@@ -74,6 +83,15 @@ exports[`open api parser devrev parse open api 1`] = `
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ArtifactsPrepareRequest",
       "headers": [],
       "internal": undefined,
@@ -92,6 +110,7 @@ exports[`open api parser devrev parse open api 1`] = `
           "schema": "artifacts-prepare-request",
           "type": "reference",
         },
+        "schemaInstanceId": "artifacts-prepare_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -128,6 +147,18 @@ authenticated user.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AuthTokensCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -146,6 +177,7 @@ authenticated user.
           "schema": "auth-tokens-create-request",
           "type": "reference",
         },
+        "schemaInstanceId": "auth-tokens-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -183,6 +215,18 @@ given Dev organization.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AuthTokensDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -201,6 +245,7 @@ given Dev organization.
           "schema": "auth-tokens-delete-request",
           "type": "reference",
         },
+        "schemaInstanceId": "auth-tokens-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -227,6 +272,23 @@ given Dev organization.
         429,
         500,
         503,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "token": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "AuthTokensGetRequest",
       "headers": [],
@@ -286,6 +348,15 @@ token type issued for a given subject.
         429,
         500,
         503,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "AuthTokensListRequest",
       "headers": [],
@@ -388,6 +459,18 @@ authenticated user.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AuthTokensSelfDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -406,6 +489,7 @@ authenticated user.
           "schema": "auth-tokens-self-delete-request",
           "type": "reference",
         },
+        "schemaInstanceId": "auth-tokens-self-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -433,6 +517,23 @@ organization.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "token": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AuthTokensUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -451,6 +552,7 @@ organization.
           "schema": "auth-tokens-update-request",
           "type": "reference",
         },
+        "schemaInstanceId": "auth-tokens-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -491,6 +593,18 @@ enterprise connections can be created by an organization.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DevOrgAuthConnectionsCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -509,6 +623,7 @@ enterprise connections can be created by an organization.
           "schema": "dev-org-auth-connections-create-request",
           "type": "reference",
         },
+        "schemaInstanceId": "dev-org-auth-connections-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -548,6 +663,15 @@ connections can not be deleted using this method.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DevOrgAuthConnectionsDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -566,6 +690,7 @@ connections can not be deleted using this method.
           "schema": "dev-org-auth-connections-delete-request",
           "type": "reference",
         },
+        "schemaInstanceId": "dev-org-auth-connections-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -591,6 +716,18 @@ connections can not be deleted using this method.
         429,
         500,
         503,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "DevOrgAuthConnectionsGetRequest",
       "headers": [],
@@ -652,6 +789,15 @@ created by the user.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DevOrgAuthConnectionsListRequest",
       "headers": [],
       "internal": undefined,
@@ -700,6 +846,15 @@ disabled.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DevOrgAuthConnectionsToggleRequest",
       "headers": [],
       "internal": undefined,
@@ -718,6 +873,7 @@ disabled.
           "schema": "dev-org-auth-connections-toggle-request",
           "type": "reference",
         },
+        "schemaInstanceId": "dev-org-auth-connections-toggle_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -744,6 +900,18 @@ disabled.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DevOrgAuthConnectionsUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -762,6 +930,7 @@ disabled.
           "schema": "dev-org-auth-connections-update-request",
           "type": "reference",
         },
+        "schemaInstanceId": "dev-org-auth-connections-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -796,6 +965,15 @@ disabled.
         429,
         500,
         503,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "DevUsersListRequest",
       "headers": [],
@@ -953,6 +1131,23 @@ used.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "dev_user": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DevUsersSelfRequest",
       "headers": [],
       "internal": undefined,
@@ -994,6 +1189,18 @@ used.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PartsCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -1012,6 +1219,7 @@ used.
           "schema": "parts-create-request",
           "type": "reference",
         },
+        "schemaInstanceId": "parts-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1047,6 +1255,26 @@ used.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PartsDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -1065,6 +1293,7 @@ used.
           "schema": "parts-delete-request",
           "type": "reference",
         },
+        "schemaInstanceId": "parts-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1100,6 +1329,18 @@ used.
         429,
         500,
         503,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "PartsGetRequest",
       "headers": [],
@@ -1156,6 +1397,15 @@ used.
         429,
         500,
         503,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "PartsListRequest",
       "headers": [],
@@ -1335,6 +1585,18 @@ used.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PartsUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -1353,6 +1615,7 @@ used.
           "schema": "parts-update-request",
           "type": "reference",
         },
+        "schemaInstanceId": "parts-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1389,6 +1652,23 @@ organization.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "rev_org": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "RevOrgsCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -1407,6 +1687,7 @@ organization.
           "schema": "rev-orgs-create-request",
           "type": "reference",
         },
+        "schemaInstanceId": "rev-orgs-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1442,6 +1723,26 @@ organization.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RevOrgsDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -1460,6 +1761,7 @@ organization.
           "schema": "rev-orgs-delete-request",
           "type": "reference",
         },
+        "schemaInstanceId": "rev-orgs-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1494,6 +1796,23 @@ organization.
         429,
         500,
         503,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "rev_org": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "RevOrgsGetRequest",
       "headers": [],
@@ -1553,6 +1872,15 @@ to access.
         429,
         500,
         503,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "RevOrgsListRequest",
       "headers": [],
@@ -1780,6 +2108,34 @@ them.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "rev_org": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "RevOrgsUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -1798,6 +2154,7 @@ them.
           "schema": "rev-orgs-update-request",
           "type": "reference",
         },
+        "schemaInstanceId": "rev-orgs-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1834,6 +2191,18 @@ and a logical concept denoted by the tag's name.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TagsCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -1852,6 +2221,7 @@ and a logical concept denoted by the tag's name.
           "schema": "tags-create-request",
           "type": "reference",
         },
+        "schemaInstanceId": "tags-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1887,6 +2257,26 @@ and a logical concept denoted by the tag's name.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "TagsDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -1905,6 +2295,7 @@ and a logical concept denoted by the tag's name.
           "schema": "tags-delete-request",
           "type": "reference",
         },
+        "schemaInstanceId": "tags-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1939,6 +2330,18 @@ and a logical concept denoted by the tag's name.
         429,
         500,
         503,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "TagsGetRequest",
       "headers": [],
@@ -1994,6 +2397,15 @@ and a logical concept denoted by the tag's name.
         429,
         500,
         503,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "TagsListRequest",
       "headers": [],
@@ -2089,6 +2501,29 @@ used.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TagsUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -2107,6 +2542,7 @@ used.
           "schema": "tags-update-request",
           "type": "reference",
         },
+        "schemaInstanceId": "tags-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2141,6 +2577,18 @@ used.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TimelineEntriesCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -2159,6 +2607,7 @@ used.
           "schema": "timeline-entries-create-request",
           "type": "reference",
         },
+        "schemaInstanceId": "timeline-entries-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2193,6 +2642,18 @@ used.
         429,
         500,
         503,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "TimelineEntriesGetRequest",
       "headers": [],
@@ -2249,6 +2710,15 @@ used.
         429,
         500,
         503,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "TimelineEntriesListRequest",
       "headers": [],
@@ -2358,6 +2828,18 @@ used.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TimelineEntriesUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -2376,6 +2858,7 @@ used.
           "schema": "timeline-entries-update-request",
           "type": "reference",
         },
+        "schemaInstanceId": "timeline-entries-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2410,6 +2893,18 @@ used.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "WebhooksCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -2428,6 +2923,7 @@ used.
           "schema": "webhooks-create-request",
           "type": "reference",
         },
+        "schemaInstanceId": "webhooks-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2463,6 +2959,26 @@ used.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "WebhooksDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -2481,6 +2997,7 @@ used.
           "schema": "webhooks-delete-request",
           "type": "reference",
         },
+        "schemaInstanceId": "webhooks-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2515,6 +3032,18 @@ used.
         429,
         500,
         503,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "WebhooksGetRequest",
       "headers": [],
@@ -2571,6 +3100,15 @@ used.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "WebhooksListRequest",
       "headers": [],
       "internal": undefined,
@@ -2613,6 +3151,29 @@ used.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "WebhooksUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -2631,6 +3192,7 @@ used.
           "schema": "webhooks-update-request",
           "type": "reference",
         },
+        "schemaInstanceId": "webhooks-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2667,6 +3229,18 @@ used.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "WorksCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -2685,6 +3259,7 @@ used.
           "schema": "works-create-request",
           "type": "reference",
         },
+        "schemaInstanceId": "works-create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2720,6 +3295,26 @@ used.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "WorksDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -2738,6 +3333,7 @@ used.
           "schema": "works-delete-request",
           "type": "reference",
         },
+        "schemaInstanceId": "works-delete_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2771,6 +3367,15 @@ used.
         429,
         500,
         503,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "WorksExportRequest",
       "headers": [],
@@ -3018,6 +3623,18 @@ organizations.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "WorksGetRequest",
       "headers": [],
       "internal": undefined,
@@ -3072,6 +3689,15 @@ organizations.
         429,
         500,
         503,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "WorksListRequest",
       "headers": [],
@@ -3354,6 +3980,18 @@ organizations.
         500,
         503,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "WorksUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -3372,6 +4010,7 @@ organizations.
           "schema": "works-update-request",
           "type": "reference",
         },
+        "schemaInstanceId": "works-update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
