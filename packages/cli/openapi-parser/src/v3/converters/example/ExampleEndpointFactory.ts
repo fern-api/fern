@@ -1,19 +1,25 @@
+import { Logger } from "@fern-api/logger";
 import { Endpoint, EndpointExample, Request, Response } from "@fern-fern/openapi-ir-model/ir";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { ExampleTypeFactory } from "./ExampleTypeFactory";
 
 export class ExampleEndpointFactory {
+    private logger: Logger;
     private exampleTypeFactory: ExampleTypeFactory;
 
     constructor(context: AbstractOpenAPIV3ParserContext) {
+        this.logger = context.logger;
         this.exampleTypeFactory = new ExampleTypeFactory(context);
     }
 
     public buildEndpointExample(endpoint: Omit<Endpoint, "examples">): EndpointExample | undefined {
+        this.logger.info(`Constructing example for endpoint ${endpoint.method.toUpperCase()} ${endpoint.path}`);
+
         const requestSchemaIdResponse = getSchemaIdFromRequest(endpoint.request);
         const responseSchemaIdResponse = getSchemaIdFromResponse(endpoint.response);
 
         if (requestSchemaIdResponse?.type === "unsupported" || responseSchemaIdResponse?.type === "unsupported") {
+            this.logger.info("The request or response is unsupported!");
             return undefined;
         }
 
