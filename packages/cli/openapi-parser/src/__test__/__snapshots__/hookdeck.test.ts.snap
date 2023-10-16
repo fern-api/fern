@@ -25022,7 +25022,10 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "properties": {},
             "type": "object",
           },
-          "response": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
         },
       ],
       "generatedRequestName": "TestTransformationRequest",

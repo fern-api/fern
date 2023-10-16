@@ -6936,7 +6936,25 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
-          "response": undefined,
+          "response": {
+            "properties": {
+              "key": {
+                "primitive": {
+                  "string": "hXY57W0g0WkdRHjCaPvwijK63fwfN-o_Wh7f30SLTq_uPCOLo-WFcA",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "Remote Deployment Key 1",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
         },
       ],
       "generatedRequestName": "GenerateKeyCreateRequest",
@@ -9168,7 +9186,25 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
-          "response": undefined,
+          "response": {
+            "properties": {
+              "key": {
+                "primitive": {
+                  "string": "hXY57W0g0WkdRHjCaPvwijK63fwfN-o_Wh7f30SLTq_uPCOLo-WFcA",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "Remote Deployment Key 1",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
         },
       ],
       "generatedRequestName": "RegenerateKeyCreateRequest",

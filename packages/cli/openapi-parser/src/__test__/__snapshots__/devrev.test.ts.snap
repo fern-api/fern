@@ -1907,7 +1907,15 @@ them.
             },
             "type": "object",
           },
-          "response": undefined,
+          "response": {
+            "properties": {
+              "rev_org": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
         },
       ],
       "generatedRequestName": "RevOrgsUpdateRequest",
@@ -2262,7 +2270,10 @@ used.
             },
             "type": "object",
           },
-          "response": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
         },
       ],
       "generatedRequestName": "TagsUpdateRequest",
@@ -2838,7 +2849,10 @@ used.
             },
             "type": "object",
           },
-          "response": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
         },
       ],
       "generatedRequestName": "WebhooksUpdateRequest",

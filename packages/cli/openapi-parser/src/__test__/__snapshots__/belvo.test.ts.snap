@@ -694,7 +694,60 @@ in the DevPortal.
             },
             "type": "object",
           },
-          "response": undefined,
+          "response": {
+            "properties": {
+              "created_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "created_by": {
+                "primitive": {
+                  "string": "bcef7f35-67f2-4b19-b009-cb38795faf09",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "external_id": {
+                "primitive": {
+                  "string": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "institution": {
+                "primitive": {
+                  "string": "erebor_mx_retail",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "institution_user_id": {
+                "primitive": {
+                  "string": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "last_accessed_at": {
+                "primitive": {
+                  "datetime": "2019-09-27T13:02:03.584Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
         },
       ],
       "generatedRequestName": "RegisterLinkRequest",
@@ -814,7 +867,60 @@ in the DevPortal.
             },
             "type": "object",
           },
-          "response": undefined,
+          "response": {
+            "properties": {
+              "created_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "created_by": {
+                "primitive": {
+                  "string": "bcef7f35-67f2-4b19-b009-cb38795faf09",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "external_id": {
+                "primitive": {
+                  "string": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "institution": {
+                "primitive": {
+                  "string": "erebor_mx_retail",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "institution_user_id": {
+                "primitive": {
+                  "string": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "last_accessed_at": {
+                "primitive": {
+                  "datetime": "2019-09-27T13:02:03.584Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
         },
       ],
       "generatedRequestName": "PatchLinksRequest",
@@ -1046,7 +1152,60 @@ in the DevPortal.
             },
             "type": "object",
           },
-          "response": undefined,
+          "response": {
+            "properties": {
+              "created_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "created_by": {
+                "primitive": {
+                  "string": "bcef7f35-67f2-4b19-b009-cb38795faf09",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "external_id": {
+                "primitive": {
+                  "string": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "institution": {
+                "primitive": {
+                  "string": "erebor_mx_retail",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "institution_user_id": {
+                "primitive": {
+                  "string": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "last_accessed_at": {
+                "primitive": {
+                  "datetime": "2019-09-27T13:02:03.584Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
         },
       ],
       "generatedRequestName": "UpdateLinkRequest",
@@ -1161,7 +1320,60 @@ in the DevPortal.
             "properties": {},
             "type": "object",
           },
-          "response": undefined,
+          "response": {
+            "properties": {
+              "created_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "created_by": {
+                "primitive": {
+                  "string": "bcef7f35-67f2-4b19-b009-cb38795faf09",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "external_id": {
+                "primitive": {
+                  "string": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "institution": {
+                "primitive": {
+                  "string": "erebor_mx_retail",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "institution_user_id": {
+                "primitive": {
+                  "string": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "last_accessed_at": {
+                "primitive": {
+                  "datetime": "2019-09-27T13:02:03.584Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
         },
       ],
       "generatedRequestName": "ChangeLinkAccessModeRequest",
@@ -3641,7 +3853,18 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
-          "response": undefined,
+          "response": {
+            "properties": {
+              "request_id": {
+                "primitive": {
+                  "string": "b5d0106ac9cc43d5b36199fe831f6bbe",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
         },
       ],
       "generatedRequestName": "RetrieveTransactionsAsyncRequest",
@@ -8553,7 +8776,53 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
-          "response": undefined,
+          "response": {
+            "properties": {
+              "collected_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "created_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "91106968-1abd-4d64-85c1-4e73d96fb997",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "internal_identification": {
+                "primitive": {
+                  "string": "20NE1234567",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "pdf": {
+                "primitive": {
+                  "string": "=PDF-STRING=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "rfc": {
+                "primitive": {
+                  "string": "KDFC211118IS0",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
         },
       ],
       "generatedRequestName": "RetrieveTaxComplianceStatusRequest",
