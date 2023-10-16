@@ -7706,6 +7706,10 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "presentation_request": {
+                "properties": {},
+                "type": "object",
+              },
               "trace": {
                 "primitive": {
                   "boolean": false,
@@ -8437,6 +8441,10 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "presentation_proposal": {
+                "properties": {},
+                "type": "object",
+              },
               "trace": {
                 "primitive": {
                   "boolean": false,
@@ -8516,6 +8524,10 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "presentation_request": {
+                "properties": {},
+                "type": "object",
               },
               "trace": {
                 "primitive": {

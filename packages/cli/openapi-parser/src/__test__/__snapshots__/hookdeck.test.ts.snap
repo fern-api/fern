@@ -401,7 +401,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "channels": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": undefined,

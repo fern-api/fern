@@ -1144,7 +1144,27 @@ exports[`open api parser deel parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "amount": {
+                    "primitive": {
+                      "string": "123.45",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "description": {
+                    "primitive": {
+                      "string": "Make the button pop.",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -1362,7 +1382,17 @@ exports[`open api parser deel parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "status": {
+                    "enum": "approved",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -1547,7 +1577,20 @@ exports[`open api parser deel parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "job_title_name": {
+                    "primitive": {
+                      "string": "3D Designer",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -1628,7 +1671,12 @@ exports[`open api parser deel parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -5490,7 +5538,27 @@ exports[`open api parser deel parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "data": {
+                "properties": {
+                  "denial_reason": {
+                    "primitive": {
+                      "string": "Not allowed for this day.",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "is_approved": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": undefined,

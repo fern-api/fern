@@ -112,7 +112,7 @@ export function convertObject({
             const parsedExample = example != null ? getSchemaCompatiableExample({ schema, example }) : undefined;
             if (parsedExample == null && isReference) {
                 includedProperties[propertyName] = Example.reference({
-                    reference: propertySchema.$ref,
+                    reference: getSchemaIdFromReference(propertySchema),
                 });
             } else if (parsedExample == null) {
                 excludedProperties.add(propertyName);

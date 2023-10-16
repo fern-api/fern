@@ -1769,7 +1769,12 @@ Note: This operation requires an identity challenge if the financial institution
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "schedule": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": undefined,

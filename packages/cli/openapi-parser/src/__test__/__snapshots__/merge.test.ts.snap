@@ -3902,7 +3902,12 @@ exports[`open api parser merge parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "model": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -10225,7 +10230,12 @@ exports[`open api parser merge parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "model": {
+                "properties": {},
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": undefined,

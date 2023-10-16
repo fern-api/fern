@@ -1244,6 +1244,53 @@ we still recommend setting the Content-Type header to the value \`application/js
           "queryParameters": [],
           "request": {
             "properties": {
+              "cargo": {
+                "properties": {
+                  "contains_hazmat": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "contains_li_ion": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "contains_magnets": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "contains_non_li_ion_battery": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "contains_other_dangerous_goods": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "marks_and_numbers": {
+                    "primitive": {
+                      "string": "Fragile",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
               "cargo_ready_date": {
                 "primitive": {
                   "string": "2019-06-30",
@@ -6950,6 +6997,60 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "queryParameters": [],
           "request": {
             "properties": {
+              "address": {
+                "properties": {
+                  "city": {
+                    "primitive": {
+                      "string": "Albany",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "country_code": {
+                    "primitive": {
+                      "string": "US",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "state": {
+                    "primitive": {
+                      "string": "MN",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "street_address": {
+                    "primitive": {
+                      "string": "1641 Settlers Lane",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "street_address2": {
+                    "primitive": {
+                      "string": "STE 2918",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "unlocode": {
+                    "primitive": {
+                      "string": "USAL2",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "zip": {
+                    "primitive": {
+                      "string": "56307",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
               "company_id": {
                 "primitive": {
                   "string": "xyz_123_ABC",
