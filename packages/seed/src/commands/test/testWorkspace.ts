@@ -14,6 +14,8 @@ import { runDockerForWorkspace } from "./runDockerForWorkspace";
 import { TaskContextFactory } from "./TaskContextFactory";
 
 export const FIXTURES = {
+    API_WIDE_BASE_PATH: "api-wide-base-path",
+    AUDIENCES: "audiences",
     BASIC_AUTH: "basic-auth",
     BYTES: "bytes",
     CIRCULAR_REFERENCES: "circular-references",
@@ -28,8 +30,8 @@ export const FIXTURES = {
     LITERAL_HEADERS: "literal-headers",
     MULTI_URL_ENVIRONMENT: "multi-url-environment",
     NO_ENVIRONMENT: "no-environment",
+    PACKAGE_YML: "package-yml",
     PLAIN_TEXT: "plain-text",
-    ROOT: "root",
     ROOT_BASE_PATH: "root-base-path",
     SINGLE_URL_ENVIRONMENT: "single-url-environment-default",
     SINGLE_URL_ENVIRONMENT_NO_DEFAULT: "single-url-environment-no-default",
