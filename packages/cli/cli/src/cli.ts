@@ -14,6 +14,7 @@ import { FernCliError } from "@fern-api/task-context";
 import { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import yargs from "yargs/yargs";
+import { loadOpenAPIFromUrl, LoadOpenAPIStatus } from "../../init/src/utils/loadOpenApiFromUrl";
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
@@ -30,8 +31,6 @@ import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeD
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { isURL } from "./utils/isUrl";
-import { loadOpenAPIFromUrl } from "./utils/loadOpenAPIFromUrl";
-
 interface GlobalCliOptions {
     "log-level": LogLevel;
 }
@@ -204,7 +203,13 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
                 if (argv.openapi != null) {
                     if (isURL(argv.openapi)) {
-                        const tmpFilepath = await loadOpenAPIFromUrl({ url: argv.openapi, cliContext });
+                        const result = await loadOpenAPIFromUrl({ url: argv.openapi, logger: cliContext.logger });
+
+                        if (result.status === LoadOpenAPIStatus.Failure) {
+                            cliContext.failAndThrow(result.errorMessage);
+                        }
+
+                        const tmpFilepath = result.filePath;
                         absoluteOpenApiPath = AbsoluteFilePath.of(tmpFilepath);
                     } else {
                         absoluteOpenApiPath = AbsoluteFilePath.of(resolve(cwd(), argv.openapi));

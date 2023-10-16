@@ -4,7 +4,7 @@ orbs:
 jobs:
   check:
     docker:
-      - image: cimg/node:lts
+      - image: cimg/node:18.8.0
     resource_class: large
     steps:
       - checkout
@@ -26,10 +26,10 @@ jobs:
           name: fern check
           command: npx fern-api check
       - run:
-          name: fern check seed definitons
+          name: fern check test definitons
           command: |
             yarn workspace @fern-api/cli dist:cli:dev
-            cd packages/seed
+            cd test-definitions
             node $(yarn workspace @fern-api/cli bin fern:dev) check
       - run:
           name: generate (dev) JSON Schema
@@ -43,7 +43,7 @@ jobs:
 
   organize-imports:
     docker:
-      - image: cimg/node:lts
+      - image: cimg/node:18.8.0
     resource_class: large
     steps:
       - checkout
@@ -63,7 +63,7 @@ jobs:
 
   eslint:
     docker:
-      - image: cimg/node:lts
+      - image: cimg/node:18.8.0
     resource_class: large
     steps:
       - checkout
@@ -79,7 +79,7 @@ jobs:
 
   compile:
     docker:
-      - image: cimg/node:lts
+      - image: cimg/node:18.8.0
     resource_class: large
     steps:
       - checkout
@@ -114,14 +114,17 @@ jobs:
           pkg-manager: yarn-berry
       - run:
           name: Run ETE tests
-          command: yarn test:ete
+          command: |
+            echo 'export FERN_TOKEN="$FERN_ORG_TOKEN_DEV"' >> $BASH_ENV
+            source "$BASH_ENV"
+            yarn test:ete
       - run:
           name: Ensure no changes to git-tracked files
           command: git --no-pager diff --exit-code
 
   live-test-dev:
     docker:
-      - image: cimg/node:lts
+      - image: cimg/node:18.8.0
     steps:
       - checkout
       - node/install-packages:
@@ -135,7 +138,7 @@ jobs:
 
   live-test:
     docker:
-      - image: cimg/node:lts
+      - image: cimg/node:18.8.0
     steps:
       - checkout
       - node/install-packages:
@@ -149,7 +152,7 @@ jobs:
 
   publish-dev:
     docker:
-      - image: cimg/node:lts
+      - image: cimg/node:18.8.0
     resource_class: large
     steps:
       - checkout
@@ -183,7 +186,7 @@ jobs:
 
   publish-rc:
     docker:
-      - image: cimg/node:lts
+      - image: cimg/node:18.8.0
     resource_class: large
     steps:
       - checkout
@@ -221,7 +224,7 @@ jobs:
 
   publish:
     docker:
-      - image: cimg/node:lts
+      - image: cimg/node:18.8.0
     resource_class: large
     steps:
       - checkout
@@ -259,7 +262,7 @@ jobs:
 
   publish-ir-sdk:
     docker:
-      - image: cimg/node:lts
+      - image: cimg/node:18.8.0
     steps:
       - checkout
       - run:
@@ -270,7 +273,7 @@ jobs:
 
   check-cli-release-is-allowed:
     docker:
-      - image: cimg/node:lts
+      - image: cimg/node:18.8.0
     steps:
       - checkout
       - node/install-packages:

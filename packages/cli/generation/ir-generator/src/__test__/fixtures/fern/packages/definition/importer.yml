@@ -1,5 +1,0 @@
-imports:
-  root: __package__.yml
-
-types:
-  MyOtherAlias: root.MyAlias

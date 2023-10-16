@@ -37,10 +37,12 @@
     "@fern-api/yaml-formatter": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
     "@fern-fern/docs-config": "0.0.53",
+    "axios": "^0.27.2",
     "chalk": "^5.0.1",
     "fs-extra": "^11.1.1",
     "js-yaml": "^4.1.0",
-    "lodash-es": "^4.17.21"
+    "lodash-es": "^4.17.21",
+    "tmp-promise": "^3.0.3"
   },
   "devDependencies": {
     "@types/fs-extra": "^11.0.1",
