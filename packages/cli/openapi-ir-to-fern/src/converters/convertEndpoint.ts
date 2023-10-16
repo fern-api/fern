@@ -288,22 +288,17 @@ function convertNamedFullExamplesToExampleTypeReferenceSchemas(
 }
 
 function convertFullExampleToExampleTypeReferenceSchema(fullExample: FullExample): ExampleTypeReferenceSchema {
-    if (fullExample.type === "primitive") {
-        return convertPrimitiveExampleToExampleTypeReferenceSchema(fullExample.primitive);
-    } else if (fullExample.type === "object") {
-        return convertFullExamplePropertiesToExampleTypeReferenceSchema(fullExample.properties);
-    } else if (fullExample.type === "array") {
-        return convertFullArrayExampleToExampleTypeReferenceSchema(fullExample.array);
-    } else if (fullExample.type === "map") {
-        return convertFullMapExampleToExampleTypeReferenceSchema(fullExample.map);
-    } else if (fullExample.type === "oneOf") {
-        return convertFullOneOfExampleToExampleTypeReferenceSchema(fullExample.oneOf);
-    } else if (fullExample.type === "enum") {
-        return fullExample.enum;
-    } else if (fullExample.type === "literal") {
-        return fullExample.literal;
-    }
-    return convertFullExampleToExampleTypeReferenceSchema(fullExample.unknown);
+    return FullExample._visit<ExampleTypeReferenceSchema>(fullExample, {
+        primitive: (primitive) => convertPrimitiveExampleToExampleTypeReferenceSchema(primitive),
+        object: (object) => convertFullExamplePropertiesToExampleTypeReferenceSchema(object.properties),
+        array: (array) => convertFullArrayExampleToExampleTypeReferenceSchema(array),
+        map: (map) => convertFullMapExampleToExampleTypeReferenceSchema(map),
+        oneOf: (oneOf) => convertFullOneOfExampleToExampleTypeReferenceSchema(oneOf),
+        enum: (value) => value,
+        literal: (value) => value,
+        unknown: (unknown) => convertFullExampleToExampleTypeReferenceSchema(unknown),
+        _unknown: () => "unknown",
+    });
 }
 
 function convertPrimitiveExampleToExampleTypeReferenceSchema(
@@ -319,7 +314,7 @@ function convertPrimitiveExampleToExampleTypeReferenceSchema(
         date: (value: string) => value,
         base64: (value: string) => value,
         boolean: (value: boolean) => value.toString(),
-        _unknown: () => "<value>",
+        _unknown: () => "unknown",
     });
 }
 
