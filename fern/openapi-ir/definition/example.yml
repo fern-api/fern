@@ -76,7 +76,7 @@ types:
 
   PartialObjectExample:
     properties:
-      includedProperties: map<PropertyKey, FullOrPartialExample>
+      includedProperties: map<PropertyKey, Example>
       excludedProperties: map<PropertyKey, SchemaInstanceId>
 
   PartialOneOfExample:

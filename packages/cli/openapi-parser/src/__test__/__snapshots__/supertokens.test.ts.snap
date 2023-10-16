@@ -16,6 +16,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "CreateTotpDeviceRequest",
       "headers": [
         {
@@ -215,6 +216,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "UpdateTotpDeviceNameRequest",
       "headers": [
         {
@@ -403,6 +405,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetTotpDevicesRequest",
       "headers": [
         {
@@ -623,6 +626,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "RemoveTotpDeviceRequest",
       "headers": [
         {
@@ -796,6 +800,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "VerifyTotpCodeRequest",
       "headers": [
         {
@@ -999,6 +1004,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "VerifyTotpDeviceRequest",
       "headers": [
         {
@@ -1230,6 +1236,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "UserIdMappingGetMappingRequest",
       "headers": [
         {
@@ -1439,6 +1446,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "UserIdMappingCreateMappingRequest",
       "headers": [
         {
@@ -1671,6 +1679,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "UserIdMappingRemoveMappingRequest",
       "headers": [
         {
@@ -1875,6 +1884,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "UserIdMappingUpateExternalUserIdInfoRequest",
       "headers": [
         {
@@ -2070,6 +2080,7 @@ exports[`open api parser supertokens parse open api 1`] = `
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "PasswordlessTryUseCodeRequest",
       "headers": [
         {
@@ -2415,6 +2426,7 @@ Passing the optional deviceId signifies a resend code flow.
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "PasswordlessStartSignInRequest",
       "headers": [
         {
@@ -2817,6 +2829,7 @@ Passing the optional deviceId signifies a resend code flow.
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "PasswordlessRevokeCodeRequest",
       "headers": [
         {
@@ -2954,6 +2967,7 @@ Passing the optional deviceId signifies a resend code flow.
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "PasswordlessListCodesRequest",
       "headers": [
         {
@@ -3286,6 +3300,7 @@ Passing the optional deviceId signifies a resend code flow.
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "PasswordlessRevokeAllCodesOfUserRequest",
       "headers": [
         {
@@ -3457,6 +3472,7 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "PasswordlessGetUserRequest",
       "headers": [
         {
@@ -3689,6 +3705,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "PasswordlessPutUserRequest",
       "headers": [
         {
@@ -3903,6 +3920,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "EmailPasswordSigninRequest",
       "headers": [
         {
@@ -4080,6 +4098,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "EmailPasswordSignupRequest",
       "headers": [
         {
@@ -4259,6 +4278,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "EmailPasswordGetUserRequest",
       "headers": [
         {
@@ -4467,6 +4487,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "EmailPasswordPutUserRequest",
       "headers": [
         {
@@ -4659,6 +4680,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "EmailPasswordGetPasswordResetTokenRequest",
       "headers": [
         {
@@ -4820,6 +4842,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "EmailPasswordGetUsersRequest",
       "headers": [
         {
@@ -5028,6 +5051,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "EmailPasswordGetPasswordResetRequest",
       "headers": [
         {
@@ -5223,6 +5247,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "EmailPasswordGetUserCountRequest",
       "headers": [
         {
@@ -5350,6 +5375,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "UserImportRequest",
       "headers": [
         {
@@ -5576,6 +5602,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ThirdPartySigninupRequest",
       "headers": [
         {
@@ -5782,6 +5809,7 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ThirdPartyGetUserRequest",
       "headers": [
         {
@@ -6006,6 +6034,7 @@ Note that there is an invisible character at the end of the path, this was to av
         401,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ThirdPartyGetUsersByEmailRequest",
       "headers": [
         {
@@ -6152,6 +6181,7 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ThirdPartyGetUsersRequest",
       "headers": [
         {
@@ -6361,6 +6391,7 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ThirdPartyGetUserCountRequest",
       "headers": [
         {
@@ -6487,6 +6518,18 @@ Note that there is an invisible character at the end of the path, this was to av
         401,
         404,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "EmailVerificationVerifyTokenRequest",
       "headers": [
@@ -6632,6 +6675,18 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "EmailVerificationVerifyTokenRemoveRequest",
       "headers": [
         {
@@ -6752,6 +6807,7 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "EmailVerificationVerifyGetRequest",
       "headers": [
         {
@@ -6914,6 +6970,7 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "EmailVerificationVerifyRequest",
       "headers": [
         {
@@ -7107,6 +7164,18 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "EmailVerificationVerifyRemoveRequest",
       "headers": [
         {
@@ -7227,6 +7296,7 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "UserMetadataReadRequest",
       "headers": [
         {
@@ -7376,6 +7446,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "UserMetadataUpdateRequest",
       "headers": [
         {
@@ -7549,6 +7620,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "UserMetadataDeleteRequest",
       "headers": [
         {
@@ -7690,6 +7762,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "AddUserRoleRequest",
       "headers": [
         {
@@ -7859,6 +7932,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "RemoveUserRoleRequest",
       "headers": [
         {
@@ -8028,6 +8102,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetUserRolesRequest",
       "headers": [
         {
@@ -8173,6 +8248,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetRoleUsersRequest",
       "headers": [
         {
@@ -8322,6 +8398,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "PutRoleRequest",
       "headers": [
         {
@@ -8497,6 +8574,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetRolePermissionsRequest",
       "headers": [
         {
@@ -8648,6 +8726,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "RemoveRolePermissionsRequest",
       "headers": [
         {
@@ -8810,6 +8889,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetPermissionRolesRequest",
       "headers": [
         {
@@ -8957,6 +9037,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "RemoveRoleRequest",
       "headers": [
         {
@@ -9110,6 +9191,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetRolesRequest",
       "headers": [
         {
@@ -9243,6 +9325,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetSessionInfoRequest",
       "headers": [
         {
@@ -9470,6 +9553,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "CreateNewSessionRequest",
       "headers": [
         {
@@ -9739,6 +9823,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "DeleteSessionRequest",
       "headers": [
         {
@@ -9933,6 +10018,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "VerifySessionRequest",
       "headers": [
         {
@@ -10200,6 +10286,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "RefreshSessionRequest",
       "headers": [
         {
@@ -10494,6 +10581,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetUserSessionHandlesRequest",
       "headers": [
         {
@@ -10639,6 +10727,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "RegenerateSessionRequest",
       "headers": [
         {
@@ -10832,6 +10921,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetSessionDataRequest",
       "headers": [
         {
@@ -10979,6 +11069,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "PutSessionDataRequest",
       "headers": [
         {
@@ -11136,6 +11227,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "CreateSignedJwtRequest",
       "headers": [
         {
@@ -11364,6 +11456,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "RetrieveJwksRequest",
       "headers": [],
       "internal": undefined,
@@ -11427,6 +11520,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetJwtDataRequest",
       "headers": [
         {
@@ -11574,6 +11668,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "PutJwtDataRequest",
       "headers": [
         {
@@ -11733,6 +11828,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "CreateDashboardUserRequest",
       "headers": [
         {
@@ -12008,6 +12104,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "UpdateDashboardUserRequest",
       "headers": [
         {
@@ -12385,6 +12482,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "DeleteDashboardUserRequest",
       "headers": [
         {
@@ -12547,6 +12645,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetAllDashboardUsersRequest",
       "headers": [
         {
@@ -12747,6 +12846,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "VerifyDashboardUserSessionRequest",
       "headers": [
         {
@@ -12923,6 +13023,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "RevokeDashboardUsersSessionRequest",
       "headers": [
         {
@@ -13052,6 +13153,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "SignInDashboardUserRequest",
       "headers": [
         {
@@ -13265,6 +13367,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetAllSessionsForDashboardUserRequest",
       "headers": [
         {
@@ -13467,6 +13570,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetApiVersionRequest",
       "headers": [
         {
@@ -13550,6 +13654,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetConfigRequest",
       "headers": [
         {
@@ -13683,6 +13788,7 @@ e.g.:
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetHelloOnRootPathRequest",
       "headers": [],
       "internal": undefined,
@@ -13720,6 +13826,7 @@ e.g.:
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetHelloRequest",
       "headers": [],
       "internal": undefined,
@@ -13757,6 +13864,7 @@ e.g.:
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "PostHelloRequest",
       "headers": [],
       "internal": undefined,
@@ -13794,6 +13902,7 @@ e.g.:
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "PutHelloRequest",
       "headers": [],
       "internal": undefined,
@@ -13831,6 +13940,7 @@ e.g.:
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "DeleteHelloRequest",
       "headers": [],
       "internal": undefined,
@@ -13871,6 +13981,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetTelemetryRequest",
       "headers": [
         {
@@ -14022,6 +14133,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetUsersCountRequest",
       "headers": [
         {
@@ -14150,6 +14262,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetActiveUsersCountRequest",
       "headers": [
         {
@@ -14272,6 +14385,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetUsersRequest",
       "headers": [
         {
@@ -14616,6 +14730,7 @@ e.g.:
         401,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "DeleteUserRequest",
       "headers": [
         {
@@ -14740,6 +14855,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetSearchTagsRequest",
       "headers": [
         {
@@ -14856,6 +14972,7 @@ e.g.:
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetFeatureFlagRequest",
       "headers": [
         {
@@ -14992,6 +15109,7 @@ e.g.:
         401,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetLicenseRequest",
       "headers": [
         {
@@ -15109,6 +15227,7 @@ e.g.:
         401,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "SetLicenseRequest",
       "headers": [
         {
@@ -15248,6 +15367,7 @@ e.g.:
         401,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "DeleteLicenseRequest",
       "headers": [
         {

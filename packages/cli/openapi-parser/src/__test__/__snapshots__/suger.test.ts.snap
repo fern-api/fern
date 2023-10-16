@@ -12,6 +12,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListBuyersByOrganizationRequest",
       "headers": [],
       "internal": undefined,
@@ -67,6 +68,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetBuyerRequest",
       "headers": [],
       "internal": undefined,
@@ -131,6 +133,18 @@ exports[`open api parser suger parse open api 1`] = `
       "description": "update buyer name and description by the given organization and buyer id",
       "errorStatusCode": [
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "UpdateBuyerNameDescriptionRequest",
       "headers": [],
@@ -208,6 +222,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListEntitlementsByBuyerRequest",
       "headers": [],
       "internal": undefined,
@@ -278,6 +293,18 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CreateOrUpdateDraftOfferRequest",
       "headers": [],
       "internal": undefined,
@@ -340,6 +367,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListEntitlementsRequest",
       "headers": [],
       "internal": undefined,
@@ -395,6 +423,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetEntitlementRequest",
       "headers": [],
       "internal": undefined,
@@ -461,6 +490,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "AddEntitlementCreditRequest",
       "headers": [],
       "internal": undefined,
@@ -536,6 +566,18 @@ exports[`open api parser suger parse open api 1`] = `
       "description": "Update the name of the given Entitlement",
       "errorStatusCode": [
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "UpdateEntitlementNameRequest",
       "headers": [],
@@ -613,6 +655,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListEntitlementTermsRequest",
       "headers": [],
       "internal": undefined,
@@ -682,6 +725,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetEntitlementTermRequest",
       "headers": [],
       "internal": undefined,
@@ -762,6 +806,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListUsageRecordGroupsByEntitlementRequest",
       "headers": [],
       "internal": undefined,
@@ -894,6 +939,7 @@ exports[`open api parser suger parse open api 1`] = `
         409,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ReportUsageRecordGroupRequest",
       "headers": [],
       "internal": undefined,
@@ -971,6 +1017,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListUsageRecordReportsByEntitlementRequest",
       "headers": [],
       "internal": undefined,
@@ -1118,6 +1165,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListIntegrationsByOrganizationRequest",
       "headers": [],
       "internal": undefined,
@@ -1174,6 +1222,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "CreateIntegrationRequest",
       "headers": [],
       "internal": undefined,
@@ -1237,6 +1286,7 @@ exports[`open api parser suger parse open api 1`] = `
         404,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetIntegrationRequest",
       "headers": [],
       "internal": undefined,
@@ -1345,6 +1395,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "UpdateIntegrationRequest",
       "headers": [],
       "internal": undefined,
@@ -1463,6 +1514,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "DeleteIntegrationRequest",
       "headers": [],
       "internal": undefined,
@@ -1572,6 +1624,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "VerifyIntegrationRequest",
       "headers": [],
       "internal": undefined,
@@ -1679,6 +1732,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListOffersByOrganizationRequest",
       "headers": [],
       "internal": undefined,
@@ -1734,6 +1788,18 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         400,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "CreateOfferRequest",
       "headers": [],
@@ -1797,6 +1863,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetOfferRequest",
       "headers": [],
       "internal": undefined,
@@ -1862,6 +1929,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "DeleteOfferRequest",
       "headers": [],
       "internal": undefined,
@@ -1930,6 +1998,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "CancelOfferRequest",
       "headers": [],
       "internal": undefined,
@@ -1997,6 +2066,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListEntitlementsByOfferRequest",
       "headers": [],
       "internal": undefined,
@@ -2066,6 +2136,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListOperationsRequest",
       "headers": [],
       "internal": undefined,
@@ -2190,6 +2261,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListEntitlementsByPartnerRequest",
       "headers": [],
       "internal": undefined,
@@ -2276,6 +2348,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListOffersByPartnerRequest",
       "headers": [
         {
@@ -2376,6 +2449,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListProductsByPartnerRequest",
       "headers": [],
       "internal": undefined,
@@ -2463,6 +2537,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListRevenueRecordsRequest",
       "headers": [],
       "internal": undefined,
@@ -2662,6 +2737,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListRevenueRecordDetailsRequest",
       "headers": [],
       "internal": undefined,
@@ -2860,6 +2936,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListProductsByOrganizationRequest",
       "headers": [],
       "internal": undefined,
@@ -2915,6 +2992,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetProductRequest",
       "headers": [],
       "internal": undefined,
@@ -2980,6 +3058,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "UpdateProductRequest",
       "headers": [],
       "internal": undefined,
@@ -3056,6 +3135,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "DeleteProductRequest",
       "headers": [],
       "internal": undefined,
@@ -3123,6 +3203,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListProductMeteringDimensionsRequest",
       "headers": [],
       "internal": undefined,
@@ -3192,6 +3273,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListEntitlementsByProductRequest",
       "headers": [],
       "internal": undefined,
@@ -3261,6 +3343,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListOffersByProductRequest",
       "headers": [],
       "internal": undefined,
@@ -3331,6 +3414,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListUsageRecordGroupsByProductRequest",
       "headers": [],
       "internal": undefined,
@@ -3462,6 +3546,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListUsageRecordReportsByProductRequest",
       "headers": [],
       "internal": undefined,
@@ -3593,6 +3678,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetRevenueReportRequest",
       "headers": [],
       "internal": undefined,
@@ -3656,6 +3742,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListUsageRecordGroupsByOrganizationRequest",
       "headers": [],
       "internal": undefined,
@@ -3772,6 +3859,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetUsageRecordGroupRequest",
       "headers": [],
       "internal": undefined,
@@ -3838,6 +3926,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "ListUsageRecordReportsByOrganizationRequest",
       "headers": [],
       "internal": undefined,
@@ -3954,6 +4043,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetUsageRecordReportRequest",
       "headers": [],
       "internal": undefined,
@@ -4020,6 +4110,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetUsageReportRequest",
       "headers": [],
       "internal": undefined,
@@ -4082,6 +4173,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
+      "examples": [],
       "generatedRequestName": "GetApiClientAccessTokenRequest",
       "headers": [],
       "internal": undefined,

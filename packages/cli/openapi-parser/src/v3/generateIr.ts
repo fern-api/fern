@@ -12,26 +12,11 @@ import { convertPathItem } from "./converters/convertPathItem";
 import { convertSchema } from "./converters/convertSchemas";
 import { convertSecurityScheme } from "./converters/convertSecurityScheme";
 import { convertServer } from "./converters/convertServer";
+import { ExampleEndpointFactory } from "./converters/example/ExampleEndpointFactory";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 
 export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext): OpenAPIIntermediateRepresentation {
-    const ir: OpenAPIIntermediateRepresentation = generateIrWithoutExamples(openApi, taskContext);
-    return addExamplesToIr(openApi, taskContext, ir);
-}
-
-function addExamplesToIr(
-    _openApi: OpenAPIV3.Document,
-    _taskContext: TaskContext,
-    ir: OpenAPIIntermediateRepresentation
-): OpenAPIIntermediateRepresentation {
-    return ir;
-}
-
-export function generateIrWithoutExamples(
-    openApi: OpenAPIV3.Document,
-    taskContext: TaskContext
-): OpenAPIIntermediateRepresentation {
     const securitySchemes: Record<string, SecurityScheme> = Object.fromEntries(
         Object.entries(openApi.components?.securitySchemes ?? {}).map(([key, securityScheme]) => {
             const convertedSecurityScheme = convertSecurityScheme(securityScheme);
@@ -74,7 +59,7 @@ export function generateIrWithoutExamples(
         })
     );
 
-    return {
+    const ir: OpenAPIIntermediateRepresentation = {
         title: openApi.info.title,
         description: openApi.info.description,
         servers: (openApi.servers ?? []).map((server) => convertServer(server)),
@@ -92,6 +77,16 @@ export function generateIrWithoutExamples(
         nonRequestReferencedSchemas: Array.from(context.getReferencedSchemas()),
         variables,
     };
+
+    const exampleEndpointFactory = new ExampleEndpointFactory(context);
+    ir.endpoints.forEach((endpoint) => {
+        const endpointExample = exampleEndpointFactory.buildEndpointExample(endpoint);
+        if (endpointExample != null) {
+            endpoint.examples.push(endpointExample);
+        }
+    });
+
+    return ir;
 }
 
 function maybeRemoveDiscriminantsFromSchemas(

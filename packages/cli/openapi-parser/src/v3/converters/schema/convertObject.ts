@@ -1,3 +1,4 @@
+import { Example, FullExample } from "@fern-fern/openapi-ir-model/example";
 import {
     AllOfPropertyConflict,
     ObjectProperty,
@@ -12,6 +13,7 @@ import { getGeneratedPropertyName } from "../../utils/getSchemaName";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { isSchemaEqual } from "../../utils/isSchemaEqual";
 import { convertSchema, convertToReferencedSchema, getSchemaIdFromReference } from "../convertSchemas";
+import { getSchemaCompatiableExample } from "../example/getSchemaCompatibleExample";
 
 interface ReferencedAllOfInfo {
     schemaId: SchemaId;
@@ -95,14 +97,32 @@ export function convertObject({
         }
     }
 
+    const includedProperties: Record<string, FullExample> = {};
+    const excludedProperties: Set<string> = new Set();
+
     const convertedProperties = Object.entries(propertiesToConvert).map(([propertyName, propertySchema]) => {
         const isRequired = allRequired.includes(propertyName);
-        const schema = isRequired
-            ? convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName])
-            : Schema.optional({
-                  description: undefined,
-                  value: convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName]),
-              });
+        const example = isReferenceObject(propertySchema) ? undefined : propertySchema.example;
+
+        let schema;
+        if (isRequired) {
+            schema = convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName]);
+            const parsedExample = example != null ? getSchemaCompatiableExample({ schema, example }) : undefined;
+            if (parsedExample == null) {
+                excludedProperties.add(propertyName);
+            } else {
+                includedProperties[propertyName] = parsedExample;
+            }
+        } else {
+            schema = Schema.optional({
+                description: undefined,
+                value: convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName]),
+            });
+            const parsedExample = example != null ? getSchemaCompatiableExample({ schema, example }) : undefined;
+            if (parsedExample != null) {
+                includedProperties[propertyName] = parsedExample;
+            }
+        }
 
         const conflicts: Record<SchemaId, ObjectPropertyConflictInfo> = {};
         for (const parent of parents) {
@@ -121,6 +141,17 @@ export function convertObject({
             generatedName: getGeneratedPropertyName([...breadcrumbs, propertyName]),
         };
     });
+
+    if (excludedProperties.size === 0) {
+        context.exampleCollector.collect(
+            breadcrumbs.join("_"),
+            Example.full(
+                FullExample.object({
+                    properties: includedProperties,
+                })
+            )
+        );
+    }
 
     return wrapObject({
         nameOverride,

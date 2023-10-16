@@ -22,6 +22,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "ListNumbersRequest",
       "headers": [],
       "internal": undefined,
@@ -89,6 +90,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "GetNumberRequest",
       "headers": [],
       "internal": undefined,
@@ -137,6 +139,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "BuyNumberRequest",
       "headers": [],
       "internal": undefined,
@@ -172,6 +175,18 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "errorStatusCode": [
         422,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "UpdateNumberRequest",
       "headers": [],
@@ -234,6 +249,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "CancelNumberRequest",
       "headers": [],
       "internal": undefined,
@@ -284,6 +300,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "ListCallsRequest",
       "headers": [],
       "internal": undefined,
@@ -351,6 +368,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "GetCallRequest",
       "headers": [],
       "internal": undefined,
@@ -401,6 +419,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "EndCallRequest",
       "headers": [],
       "internal": undefined,
@@ -451,6 +470,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "CreateCallRequest",
       "headers": [],
       "internal": undefined,
@@ -498,6 +518,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "GetRecordingRequest",
       "headers": [],
       "internal": undefined,
@@ -542,6 +563,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "GetUsageRequest",
       "headers": [],
       "internal": undefined,
@@ -578,6 +600,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "GetActionRequest",
       "headers": [],
       "internal": undefined,
@@ -655,6 +678,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "ListActionsRequest",
       "headers": [],
       "internal": undefined,
@@ -722,6 +746,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "CreateActionRequest",
       "headers": [],
       "internal": undefined,
@@ -796,6 +821,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "UpdateActionRequest",
       "headers": [],
       "internal": undefined,
@@ -884,6 +910,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "GetAgentRequest",
       "headers": [],
       "internal": undefined,
@@ -934,6 +961,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "ListAgentsRequest",
       "headers": [],
       "internal": undefined,
@@ -1001,6 +1029,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "CreateAgentRequest",
       "headers": [],
       "internal": undefined,
@@ -1047,6 +1076,18 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "errorStatusCode": [
         422,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "UpdateAgentRequest",
       "headers": [],
@@ -1109,6 +1150,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "GetVoiceRequest",
       "headers": [],
       "internal": undefined,
@@ -1193,6 +1235,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "ListVoicesRequest",
       "headers": [],
       "internal": undefined,
@@ -1260,6 +1303,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "CreateVoiceRequest",
       "headers": [],
       "internal": undefined,
@@ -1341,6 +1385,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "UpdateVoiceRequest",
       "headers": [],
       "internal": undefined,
@@ -1436,6 +1481,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "GetWebhookRequest",
       "headers": [],
       "internal": undefined,
@@ -1486,6 +1532,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "ListWebhooksRequest",
       "headers": [],
       "internal": undefined,
@@ -1553,6 +1600,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "CreateWebhookRequest",
       "headers": [],
       "internal": undefined,
@@ -1599,6 +1647,18 @@ exports[`open api parser vocode parse open api 1`] = `
       "description": undefined,
       "errorStatusCode": [
         422,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "UpdateWebhookRequest",
       "headers": [],

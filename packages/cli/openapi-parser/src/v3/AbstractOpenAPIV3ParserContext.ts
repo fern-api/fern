@@ -1,11 +1,12 @@
 import { Logger } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
-import { HttpError, Schema, SchemaId, SchemaInstanceId, StatusCode } from "@fern-fern/openapi-ir-model/ir";
+import { HttpError, Schema, SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { SCHEMA_REFERENCE_PREFIX } from "./converters/convertSchemas";
 import { getReferenceOccurrences } from "./utils/getReferenceOccurrences";
 import { isReferenceObject } from "./utils/isReferenceObject";
 import { ExampleCollector } from "./ExampleCollector";
+import { SchemaInstanceId } from "@fern-fern/openapi-ir-model/example";
 
 export const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/";
 export const RESPONSE_REFERENCE_PREFIX = "#/components/responses/";
@@ -123,6 +124,10 @@ export abstract class AbstractOpenAPIV3ParserContext {
             return this.resolveResponseReference(resolvedResponse);
         }
         return resolvedResponse;
+    }
+
+    public registerSchemaInstanceId(schemaInstanceId: SchemaInstanceId, schema: Schema): void {
+        this.schemaInstanceIdToSchema[schemaInstanceId] = schema;
     }
 
     public abstract markSchemaAsReferencedByNonRequest(schemaId: SchemaId): void;

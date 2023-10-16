@@ -10,6 +10,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Get details for a linked account.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "AccountDetailsRetrieveRequest",
       "headers": [
         {
@@ -58,6 +59,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns the account token for the end user with the provided public token.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "AccountTokenRetrieveRequest",
       "headers": [],
       "internal": undefined,
@@ -107,6 +109,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of models and actions available for an account.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "AvailableActionsRetrieveRequest",
       "headers": [
         {
@@ -155,6 +158,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`BankInfo\` objects.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "BankInfoListRequest",
       "headers": [
         {
@@ -475,6 +479,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a \`BankInfo\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "BankInfoRetrieveRequest",
       "headers": [
         {
@@ -593,6 +598,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`Benefit\` objects.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "BenefitsListRequest",
       "headers": [
         {
@@ -811,6 +817,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a \`Benefit\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "BenefitsRetrieveRequest",
       "headers": [
         {
@@ -903,6 +910,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`Company\` objects.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "CompaniesListRequest",
       "headers": [
         {
@@ -1091,6 +1099,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a \`Company\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "CompaniesRetrieveRequest",
       "headers": [
         {
@@ -1170,6 +1179,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Delete a linked account.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "DeleteAccountCreateRequest",
       "headers": [
         {
@@ -1208,6 +1218,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`EmployeePayrollRun\` objects.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "EmployeePayrollRunsListRequest",
       "headers": [
         {
@@ -1524,6 +1535,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns an \`EmployeePayrollRun\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "EmployeePayrollRunsRetrieveRequest",
       "headers": [
         {
@@ -1637,6 +1649,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`Employee\` objects.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "EmployeesListRequest",
       "headers": [
         {
@@ -3883,6 +3896,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Creates an \`Employee\` object with the given values.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "EmployeesCreateRequest",
       "headers": [
         {
@@ -3973,6 +3987,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns an \`Employee\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "EmployeesRetrieveRequest",
       "headers": [
         {
@@ -5825,6 +5840,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Ignores a specific row based on the \`model_id\` in the url. These records will have their properties set to null, and will not be updated in future syncs. The "reason" and "message" fields in the request body will be stored for audit purposes.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "EmployeesIgnoreCreateRequest",
       "headers": [
         {
@@ -5889,6 +5905,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns metadata for \`Employee\` POSTs.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "EmployeesMetaPostRetrieveRequest",
       "headers": [
         {
@@ -5937,6 +5954,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`Employment\` objects.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "EmploymentsListRequest",
       "headers": [
         {
@@ -6416,6 +6434,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns an \`Employment\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "EmploymentsRetrieveRequest",
       "headers": [
         {
@@ -6741,6 +6760,26 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Create a remote key.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "name": {
+                "primitive": {
+                  "string": "Remote Deployment Key 1",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "GenerateKeyCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -6786,6 +6825,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`Group\` objects.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "GroupsListRequest",
       "headers": [
         {
@@ -7017,6 +7057,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a \`Group\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "GroupsRetrieveRequest",
       "headers": [
         {
@@ -7122,6 +7163,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Gets issues.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "IssuesListRequest",
       "headers": [],
       "internal": undefined,
@@ -7382,6 +7424,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Get a specific issue.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "IssuesRetrieveRequest",
       "headers": [],
       "internal": undefined,
@@ -7431,6 +7474,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Creates a link token to be used when linking a new end user.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "LinkTokenCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -7476,6 +7520,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "List linked accounts for your organization.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "LinkedAccountsListRequest",
       "headers": [],
       "internal": undefined,
@@ -7777,6 +7822,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`Location\` objects.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "LocationsListRequest",
       "headers": [
         {
@@ -7991,6 +8037,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a \`Location\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "LocationsRetrieveRequest",
       "headers": [
         {
@@ -8096,6 +8143,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Pull data from an endpoint not currently supported by Merge.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "PassthroughCreateRequest",
       "headers": [
         {
@@ -8155,6 +8203,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`PayGroup\` objects.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "PayGroupsListRequest",
       "headers": [
         {
@@ -8343,6 +8392,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a \`PayGroup\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "PayGroupsRetrieveRequest",
       "headers": [
         {
@@ -8422,6 +8472,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`PayrollRun\` objects.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "PayrollRunsListRequest",
       "headers": [
         {
@@ -8790,6 +8841,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a \`PayrollRun\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "PayrollRunsRetrieveRequest",
       "headers": [
         {
@@ -8937,6 +8989,26 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Exchange remote keys.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "name": {
+                "primitive": {
+                  "string": "Remote Deployment Key 1",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RegenerateKeyCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -8982,6 +9054,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Get a linked account's selective syncs.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "SelectiveSyncConfigurationsListRequest",
       "headers": [
         {
@@ -9034,6 +9107,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Replace a linked account's selective syncs.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "SelectiveSyncConfigurationsUpdateRequest",
       "headers": [
         {
@@ -9097,6 +9171,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Get metadata for the conditions available to a linked account.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "SelectiveSyncMetaListRequest",
       "headers": [
         {
@@ -9195,6 +9270,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Get syncing status. Possible values: \`DISABLED\`, \`DONE\`, \`FAILED\`, \`PARTIALLY_SYNCED\`, \`PAUSED\`, \`SYNCING\`",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "SyncStatusListRequest",
       "headers": [
         {
@@ -9276,6 +9352,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Core, Professional, or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "SyncStatusResyncCreateRequest",
       "headers": [
         {
@@ -9328,6 +9405,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`Team\` objects.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "TeamsListRequest",
       "headers": [
         {
@@ -9546,6 +9624,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a \`Team\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "TeamsRetrieveRequest",
       "headers": [
         {
@@ -9638,6 +9717,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`TimeOff\` objects.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "TimeOffListRequest",
       "headers": [
         {
@@ -10121,6 +10201,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Creates a \`TimeOff\` object with the given values.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "TimeOffCreateRequest",
       "headers": [
         {
@@ -10211,6 +10292,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`TimeOffBalance\` objects.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "TimeOffBalancesListRequest",
       "headers": [
         {
@@ -10514,6 +10596,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a \`TimeOffBalance\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "TimeOffBalancesRetrieveRequest",
       "headers": [
         {
@@ -10632,6 +10715,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a \`TimeOff\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "TimeOffRetrieveRequest",
       "headers": [
         {
@@ -10861,6 +10945,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns metadata for \`TimeOff\` POSTs.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "TimeOffMetaPostRetrieveRequest",
       "headers": [
         {
@@ -10909,6 +10994,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`WebhookReceiver\` objects.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "WebhookReceiversListRequest",
       "headers": [
         {
@@ -10961,6 +11047,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Creates a \`WebhookReceiver\` object with the given values.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "WebhookReceiversCreateRequest",
       "headers": [
         {
