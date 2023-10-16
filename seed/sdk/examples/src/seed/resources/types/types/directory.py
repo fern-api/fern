@@ -20,8 +20,23 @@ class Directory(pydantic.BaseModel):
 
     Directory(
         name="root",
-        files=[File(name="file.txt", contents="...")],
-        directories=[Directory(name="tmp", files=[File(name="another_file.txt", contents="...")])],
+        files=[
+            File(
+                name="file.txt",
+                contents="...",
+            )
+        ],
+        directories=[
+            Directory(
+                name="tmp",
+                files=[
+                    File(
+                        name="another_file.txt",
+                        contents="...",
+                    )
+                ],
+            )
+        ],
     )
     """
 

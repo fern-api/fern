@@ -29,8 +29,14 @@ class ServiceClient:
         from seed.client import SeedExamples
         from seed.environment import SeedExamplesEnvironment
 
-        client = SeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION)
-        client.file.get_file(filename="file.txt", x_file_api_version="0.0.2")
+        client = SeedExamples(
+            token="YOUR_TOKEN",
+            environment=SeedExamplesEnvironment.PRODUCTION,
+        )
+        client.file.get_file(
+            filename="file.txt",
+            x_file_api_version="0.0.2",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -65,8 +71,14 @@ class AsyncServiceClient:
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
 
-        client = AsyncSeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION)
-        await client.file.get_file(filename="file.txt", x_file_api_version="0.0.2")
+        client = AsyncSeedExamples(
+            token="YOUR_TOKEN",
+            environment=SeedExamplesEnvironment.PRODUCTION,
+        )
+        await client.file.get_file(
+            filename="file.txt",
+            x_file_api_version="0.0.2",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",

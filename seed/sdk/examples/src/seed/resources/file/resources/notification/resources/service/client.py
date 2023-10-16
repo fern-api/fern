@@ -25,8 +25,13 @@ class ServiceClient:
         from seed.client import SeedExamples
         from seed.environment import SeedExamplesEnvironment
 
-        client = SeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION)
-        client.file.notification.get_exception(notification_id="notification-hsy129x")
+        client = SeedExamples(
+            token="YOUR_TOKEN",
+            environment=SeedExamplesEnvironment.PRODUCTION,
+        )
+        client.file.notification.get_exception(
+            notification_id="notification-hsy129x",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -55,8 +60,13 @@ class AsyncServiceClient:
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
 
-        client = AsyncSeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION)
-        await client.file.notification.get_exception(notification_id="notification-hsy129x")
+        client = AsyncSeedExamples(
+            token="YOUR_TOKEN",
+            environment=SeedExamplesEnvironment.PRODUCTION,
+        )
+        await client.file.notification.get_exception(
+            notification_id="notification-hsy129x",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",

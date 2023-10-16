@@ -8,6 +8,8 @@ from typing import Optional, Type
 from . import AST
 
 TAB_LENGTH = 4
+DEFAULT_LINE_LENGTH = 120
+SNIPPET_LINE_LENGTH = 80
 
 
 class WriterImpl(AST.Writer):
@@ -15,6 +17,7 @@ class WriterImpl(AST.Writer):
         self,
         *,
         should_format: bool,
+        should_format_as_snippet: bool = False,
         should_include_header: bool = True,
         should_sort_imports: Optional[bool] = None,
     ):
@@ -23,6 +26,8 @@ class WriterImpl(AST.Writer):
         self._last_character_is_newline = False
         self._content = ""
         self._should_format = should_format
+        self._should_format_as_snippet = should_format_as_snippet
+        self._line_length = SNIPPET_LINE_LENGTH if should_format_as_snippet else DEFAULT_LINE_LENGTH
         self._should_include_header = should_include_header
         self._should_sort_imports = should_sort_imports if should_sort_imports is not None else should_format
 
@@ -95,7 +100,9 @@ class WriterImpl(AST.Writer):
                     content,
                     fast=True,
                     # todo read their config?
-                    mode=black.FileMode(magic_trailing_comma=False, line_length=120),
+                    mode=black.FileMode(
+                        magic_trailing_comma=self._should_format_as_snippet, line_length=self._line_length
+                    ),
                 )
             except black.report.NothingChanged:
                 pass

@@ -15,7 +15,9 @@ class Request(pydantic.BaseModel):
     """
     from seed.examples import Request
 
-    Request(request={})
+    Request(
+        request={},
+    )
     """
 
     request: typing.Any

@@ -34,8 +34,13 @@ class SeedRoot:
         ---
         from seed.client import SeedRoot
 
-        client = SeedRoot(base_url="https://yourhost.com/path/to/api")
-        client.echo(id="id-ksfd9c1", request="Hello world!")
+        client = SeedRoot(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.echo(
+            id="id-ksfd9c1",
+            request="Hello world!",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -67,8 +72,13 @@ class AsyncSeedRoot:
         ---
         from seed.client import AsyncSeedRoot
 
-        client = AsyncSeedRoot(base_url="https://yourhost.com/path/to/api")
-        await client.echo(id="id-ksfd9c1", request="Hello world!")
+        client = AsyncSeedRoot(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.echo(
+            id="id-ksfd9c1",
+            request="Hello world!",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",

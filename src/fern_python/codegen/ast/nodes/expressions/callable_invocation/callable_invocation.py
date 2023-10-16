@@ -41,6 +41,8 @@ class CallableInvocation(AstNode):
             writer.write(f"{name}=")
             value.write(writer=writer)
             just_wrote_argument = True
+        if just_wrote_argument and writer.should_format_as_snippet():
+            writer.write(", ")
         writer.write(")")
 
 

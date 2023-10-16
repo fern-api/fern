@@ -15,7 +15,9 @@ class Response(pydantic.BaseModel):
     """
     from seed.examples import Response
 
-    Response(response="Initializing...")
+    Response(
+        response="Initializing...",
+    )
     """
 
     response: typing.Any

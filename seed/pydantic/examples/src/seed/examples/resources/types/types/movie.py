@@ -18,7 +18,12 @@ class Movie(pydantic.BaseModel):
     """
     from seed.examples import Movie
 
-    Movie(id="movie-c06a4ad7", title="The Boy and the Heron", from_="Hayao Miyazaki", rating=8.0)
+    Movie(
+        id="movie-c06a4ad7",
+        title="The Boy and the Heron",
+        from_="Hayao Miyazaki",
+        rating=8.0,
+    )
     """
 
     id: MovieId

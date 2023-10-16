@@ -15,5 +15,9 @@ class NodeWriter(Writer):
     def write_reference(self, reference: Reference) -> None:
         ...
 
+    @abstractmethod
+    def should_format_as_snippet(self) -> bool:
+        ...
+
 
 from .ast_node import AstNode  # noqa: E402

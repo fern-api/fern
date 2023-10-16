@@ -27,6 +27,9 @@ class MetadataLoadingNodeWriter(NodeWriter):
     def write_reference(self, reference: Reference) -> None:
         self.metadata.references.add(reference)
 
+    def should_format_as_snippet(self) -> bool:
+        return False
+
     def indent(self) -> IndentableWriter:
         return NoopIndentableWriter()
 

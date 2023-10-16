@@ -15,7 +15,10 @@ class File(pydantic.BaseModel):
     """
     from seed import File
 
-    File(name="file.txt", contents="...")
+    File(
+        name="file.txt",
+        contents="...",
+    )
     """
 
     name: str

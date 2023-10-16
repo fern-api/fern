@@ -16,7 +16,10 @@ class Migration(pydantic.BaseModel):
     """
     from seed.examples import Migration, MigrationStatus
 
-    Migration(name="001_init", status=MigrationStatus.RUNNING)
+    Migration(
+        name="001_init",
+        status=MigrationStatus.RUNNING,
+    )
     """
 
     name: str

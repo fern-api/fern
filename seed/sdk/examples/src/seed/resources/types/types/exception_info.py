@@ -16,7 +16,9 @@ class ExceptionInfo(pydantic.BaseModel):
     from seed import ExceptionInfo
 
     ExceptionInfo(
-        exception_type="Unavailable", exception_message="This component is unavailable!", exception_stacktrace="<logs>"
+        exception_type="Unavailable",
+        exception_message="This component is unavailable!",
+        exception_stacktrace="<logs>",
     )
     """
 

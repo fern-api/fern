@@ -57,7 +57,10 @@ def test_generated_root_client_builder() -> None:
         == """from acme.client import Acme
 from acme.environments import AcmeEnvironments
 
-client = Acme(base_url="acme.io", environment=AcmeEnvironments.PRODUCTION)
+client = Acme(
+    base_url="acme.io",
+    environment=AcmeEnvironments.PRODUCTION,
+)
 """
     )
 
@@ -68,6 +71,9 @@ client = Acme(base_url="acme.io", environment=AcmeEnvironments.PRODUCTION)
         == """from acme.client import AcmeAsync
 from acme.environments import AcmeEnvironments
 
-client = AcmeAsync(base_url="acme.io", environment=AcmeEnvironments.PRODUCTION)
+client = AcmeAsync(
+    base_url="acme.io",
+    environment=AcmeEnvironments.PRODUCTION,
+)
 """
     )

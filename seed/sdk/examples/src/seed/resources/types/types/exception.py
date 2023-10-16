@@ -36,7 +36,9 @@ from seed import Exception_Generic, ExceptionInfo
 
 Exception_Generic(
     value=ExceptionInfo(
-        exception_type="Unavailable", exception_message="This component is unavailable!", exception_stacktrace="<logs>"
+        exception_type="Unavailable",
+        exception_message="This component is unavailable!",
+        exception_stacktrace="<logs>",
     )
 )
 """

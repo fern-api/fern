@@ -20,8 +20,13 @@ class ServiceClient:
         ---
         from seed.client import SeedRoot
 
-        client = SeedRoot(base_url="https://yourhost.com/path/to/api")
-        client.nop(id="id-a2ijs82", nested_id="id-219xca8")
+        client = SeedRoot(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.nop(
+            id="id-a2ijs82",
+            nested_id="id-219xca8",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -51,8 +56,13 @@ class AsyncServiceClient:
         ---
         from seed.client import AsyncSeedRoot
 
-        client = AsyncSeedRoot(base_url="https://yourhost.com/path/to/api")
-        await client.nop(id="id-a2ijs82", nested_id="id-219xca8")
+        client = AsyncSeedRoot(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        await client.nop(
+            id="id-a2ijs82",
+            nested_id="id-219xca8",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",

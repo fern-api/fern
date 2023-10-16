@@ -51,6 +51,7 @@ class SourceFileImpl(SourceFile):
         dependency_manager: DependencyManager,
         completion_listener: Callable[[SourceFileImpl], None] = None,
         should_format: bool,
+        should_format_as_snippet: bool = False,
         should_include_header: bool = True,
     ):
         self._module_path = module_path
@@ -62,6 +63,7 @@ class SourceFileImpl(SourceFile):
         self._footer_statements: List[TopLevelStatement] = []
         self._dependency_manager = dependency_manager
         self._should_format = should_format
+        self._should_format_as_snippet = should_format_as_snippet
         self._should_include_header = should_include_header
 
     def add_declaration(
@@ -177,6 +179,7 @@ class SourceFileImpl(SourceFile):
         writer = NodeWriterImpl(
             reference_resolver=self._reference_resolver,
             should_format=self._should_format,
+            should_format_as_snippet=self._should_format_as_snippet,
             should_include_header=self._should_include_header,
         )
         self._imports_manager.write_top_imports_for_file(writer=writer, reference_resolver=self._reference_resolver)

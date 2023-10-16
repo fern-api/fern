@@ -19,8 +19,26 @@ class Node(pydantic.BaseModel):
 
     Node(
         name="root",
-        nodes=[Node(name="left"), Node(name="right")],
-        trees=[Tree(nodes=[Node(name="left"), Node(name="right")])],
+        nodes=[
+            Node(
+                name="left",
+            ),
+            Node(
+                name="right",
+            ),
+        ],
+        trees=[
+            Tree(
+                nodes=[
+                    Node(
+                        name="left",
+                    ),
+                    Node(
+                        name="right",
+                    ),
+                ],
+            )
+        ],
     )
     """
 

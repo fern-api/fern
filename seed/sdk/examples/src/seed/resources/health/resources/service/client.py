@@ -24,8 +24,13 @@ class ServiceClient:
         from seed.client import SeedExamples
         from seed.environment import SeedExamplesEnvironment
 
-        client = SeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION)
-        client.health.check(id="id-2sdx82h")
+        client = SeedExamples(
+            token="YOUR_TOKEN",
+            environment=SeedExamplesEnvironment.PRODUCTION,
+        )
+        client.health.check(
+            id="id-2sdx82h",
+        )
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -46,7 +51,10 @@ class ServiceClient:
         from seed.client import SeedExamples
         from seed.environment import SeedExamplesEnvironment
 
-        client = SeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION)
+        client = SeedExamples(
+            token="YOUR_TOKEN",
+            environment=SeedExamplesEnvironment.PRODUCTION,
+        )
         client.health.ping()
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -76,8 +84,13 @@ class AsyncServiceClient:
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
 
-        client = AsyncSeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION)
-        await client.health.check(id="id-2sdx82h")
+        client = AsyncSeedExamples(
+            token="YOUR_TOKEN",
+            environment=SeedExamplesEnvironment.PRODUCTION,
+        )
+        await client.health.check(
+            id="id-2sdx82h",
+        )
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -98,7 +111,10 @@ class AsyncServiceClient:
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
 
-        client = AsyncSeedExamples(token="YOUR_TOKEN", environment=SeedExamplesEnvironment.PRODUCTION)
+        client = AsyncSeedExamples(
+            token="YOUR_TOKEN",
+            environment=SeedExamplesEnvironment.PRODUCTION,
+        )
         await client.health.ping()
         """
         _response = await self._client_wrapper.httpx_client.request(

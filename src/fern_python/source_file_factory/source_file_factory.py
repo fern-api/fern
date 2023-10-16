@@ -35,6 +35,7 @@ class SourceFileFactory:
             ),
             dependency_manager=DependencyManager(),
             should_format=True,
+            should_format_as_snippet=True,
             should_include_header=False,
         )
 
