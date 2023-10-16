@@ -6476,6 +6476,17 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/public/apiClient/accessToken",
             "request": {
@@ -6519,6 +6530,17 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/buyer/{buyerId}",
             "path-parameters": {
@@ -6543,6 +6565,15 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/buyer",
             "path-parameters": {
@@ -6562,6 +6593,17 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "update buyer name and description by the given organization and buyer id",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {},
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "PATCH",
             "path": "/org/{orgId}/buyer/{buyerId}",
@@ -6624,6 +6666,17 @@ the same customer, dimension, and time, but a different quantity.",
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/org/{orgId}/entitlement/{entitlementId}/addCredit",
             "path-parameters": {
@@ -6663,6 +6716,17 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}",
             "path-parameters": {
@@ -6687,6 +6751,15 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement",
             "path-parameters": {
@@ -6706,6 +6779,15 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "List all entitlements of the given buyer",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/buyer/{buyerId}/entitlement",
@@ -6731,6 +6813,15 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/offer/{offerId}/entitlement",
             "path-parameters": {
@@ -6754,6 +6845,15 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "List all entitlements under the given partner",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/partner/{partner}/entitlement",
@@ -6779,6 +6879,15 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}/entitlement",
             "path-parameters": {
@@ -6802,6 +6911,17 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "Update the name of the given Entitlement",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {},
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "PATCH",
             "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementName",
@@ -6859,6 +6979,17 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm/{entitlementTermId}",
             "path-parameters": {
@@ -6886,6 +7017,15 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "List all Entitlement Terms of the given Entitlement",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}/entitlementTerm",
@@ -6922,6 +7062,17 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "POST",
             "path": "/org/{orgId}/integration",
@@ -6966,6 +7117,15 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/org/{orgId}/integration/{partner}/{service}",
             "path-parameters": {
@@ -6995,6 +7155,17 @@ the same customer, dimension, and time, but a different quantity.",
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/integration/{partner}/{service}",
             "path-parameters": {
@@ -7023,6 +7194,15 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/integration",
             "path-parameters": {
@@ -7043,6 +7223,17 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "PATCH",
             "path": "/org/{orgId}/integration/{partner}/{service}",
@@ -7096,6 +7287,15 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/org/{orgId}/integration/{partner}/{service}/verify",
             "path-parameters": {
@@ -7135,6 +7335,17 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/usageRecordGroup/{usageRecordGroupId}",
             "path-parameters": {
@@ -7158,6 +7369,17 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "get the usageRecordReport for a given organization and usageRecordReport ID.",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/usageRecordReport/{usageRecordReportId}",
@@ -7183,6 +7405,17 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
@@ -7234,6 +7467,17 @@ the same customer, dimension, and time, but a different quantity.",
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/usageRecordGroup",
             "path-parameters": {
@@ -7279,6 +7523,17 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}/usageRecordGroup",
@@ -7329,6 +7584,17 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordReport",
@@ -7385,6 +7651,17 @@ the same customer, dimension, and time, but a different quantity.",
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/usageRecordReport",
             "path-parameters": {
@@ -7430,6 +7707,17 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}/usageRecordReport",
@@ -7481,6 +7769,17 @@ the same customer, dimension, and time, but a different quantity.",
               "root.BadRequestError",
               "root.ConflictError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "POST",
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
@@ -7541,6 +7840,15 @@ the same customer, dimension, and time, but a different quantity.",
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/org/{orgId}/offer/{offerId}/cancel",
             "path-parameters": {
@@ -7565,6 +7873,17 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {},
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "POST",
             "path": "/org/{orgId}/offer",
@@ -7593,6 +7912,17 @@ the same customer, dimension, and time, but a different quantity.",
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {},
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/org/{orgId}/draftOffer",
             "path-parameters": {
@@ -7619,6 +7949,15 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/org/{orgId}/offer/{offerId}",
             "path-parameters": {
@@ -7642,6 +7981,17 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "Get the offer by the given offer ID.",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/offer/{offerId}",
@@ -7667,6 +8017,15 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/offer",
             "path-parameters": {
@@ -7686,6 +8045,15 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "List all offers under the given organization & cloud partner.",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/partner/{partner}/offer",
@@ -7721,6 +8089,15 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}/offer",
             "path-parameters": {
@@ -7755,6 +8132,15 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "List all long running operations under the given organization, offer, entitlement, crmOpportunity or partnerOpportunity. Only provide one filter on a request.",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/operation",
@@ -7812,6 +8198,15 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/org/{orgId}/product/{productId}",
             "path-parameters": {
@@ -7835,6 +8230,17 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "get product by product id",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}",
@@ -7860,6 +8266,15 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}/dimension",
             "path-parameters": {
@@ -7884,6 +8299,15 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/product",
             "path-parameters": {
@@ -7903,6 +8327,15 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "list all products under the given organization and cloud partner",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/partner/{partner}/product",
@@ -7927,6 +8360,17 @@ the same customer, dimension, and time, but a different quantity.",
             "docs": "currently only the Fulfillment URL is allowed to update via this API.",
             "errors": [
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "PATCH",
             "path": "/org/{orgId}/product/{productId}",
@@ -7975,6 +8419,17 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "POST",
             "path": "/org/{orgId}/revenueReport",
@@ -8031,6 +8486,17 @@ the same customer, dimension, and time, but a different quantity.",
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/org/{orgId}/usageReport",
             "path-parameters": {
@@ -8062,6 +8528,17 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/partner/{partner}/revenueRecordDetail",
@@ -8127,6 +8604,17 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/partner/{partner}/revenueRecord",

@@ -465,6 +465,15 @@ exports[`open api parser axle simple 1`] = `
             "display-name": "Get Account",
             "docs": "The Get Account method will return an Account object including high-level account information (e.g., name) and any children objects (e.g., Policies) associated with the Account. Please note that this method will NOT refresh the Account object.",
             "errors": [],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/accounts/{id}",
             "path-parameters": {
@@ -504,6 +513,15 @@ exports[`open api parser axle simple 1`] = `
             "display-name": "Get Carrier",
             "docs": "The Get Carrier method returns a Carrier object that include additional details about an Axle-supported insurance carrier.",
             "errors": [],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/carriers/{id}",
             "path-parameters": {
@@ -522,6 +540,15 @@ exports[`open api parser axle simple 1`] = `
             "display-name": "Get Carriers",
             "docs": "The Get Carriers method returns an array of Carrier objects.",
             "errors": [],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/carriers",
             "response": {
@@ -545,6 +572,15 @@ exports[`open api parser axle simple 1`] = `
             "display-name": "Start Ignition",
             "docs": "Start an Ignition session. Returns the ignitionUri to direct the user to authenticate.",
             "errors": [],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {},
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/ignition",
             "request": {
@@ -593,6 +629,15 @@ exports[`open api parser axle simple 1`] = `
             "display-name": "Get Policy",
             "docs": "The Get Policy method returns a Policy object including high-level policy information (e.g., policy number) and any children objects (e.g., Coverages) associated with the Policy. Please note that this method will NOT refresh the Policy object.",
             "errors": [],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/policies/{id}",
             "path-parameters": {
@@ -634,6 +679,15 @@ exports[`open api parser axle simple 1`] = `
 
 Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not expire.",
             "errors": [],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/token/exchange",
             "request": {

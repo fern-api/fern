@@ -4922,6 +4922,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/attempts/{id}",
             "path-parameters": {
@@ -4942,6 +4951,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/attempts",
@@ -5006,6 +5026,15 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/bookmarks",
             "request": {
@@ -5045,6 +5074,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/bookmarks/{id}",
             "path-parameters": {
@@ -5064,6 +5102,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "docs": "",
             "errors": [
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/bookmarks/{id}",
@@ -5085,6 +5132,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/bookmarks",
@@ -5162,6 +5220,15 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {},
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/bookmarks/{id}/trigger",
             "path-parameters": {
@@ -5196,6 +5263,15 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.NotFoundError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {},
+                "response": undefined,
+              },
             ],
             "method": "PUT",
             "path": "/bookmarks/{id}",
@@ -5255,6 +5331,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/bulk/events/retry/{id}/cancel",
             "path-parameters": {
@@ -5275,6 +5360,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {},
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/bulk/events/retry",
@@ -5304,6 +5398,17 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/bulk/events/retry/plan",
             "response": {
@@ -5318,6 +5423,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/bulk/events/retry",
@@ -5393,6 +5509,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/bulk/events/retry/{id}",
             "path-parameters": {
@@ -5426,6 +5551,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/bulk/ignored-events/retry/{id}/cancel",
             "path-parameters": {
@@ -5446,6 +5580,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {},
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/bulk/ignored-events/retry",
@@ -5475,6 +5618,17 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/bulk/ignored-events/retry/plan",
             "response": {
@@ -5489,6 +5643,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/bulk/ignored-events/retry",
@@ -5564,6 +5729,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/bulk/ignored-events/retry/{id}",
             "path-parameters": {
@@ -5597,6 +5771,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/bulk/requests/retry/{id}/cancel",
             "path-parameters": {
@@ -5617,6 +5800,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {},
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/bulk/requests/retry",
@@ -5646,6 +5838,17 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/bulk/requests/retry/plan",
             "response": {
@@ -5660,6 +5863,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/bulk/requests/retry",
@@ -5735,6 +5949,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/bulk/requests/retry/{id}",
             "path-parameters": {
@@ -5768,6 +5991,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "PUT",
             "path": "/webhooks/{id}/archive",
             "path-parameters": {
@@ -5788,6 +6020,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/webhooks",
@@ -5844,6 +6085,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/webhooks/{id}",
             "path-parameters": {
@@ -5864,6 +6114,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/webhooks",
@@ -5949,6 +6210,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "PUT",
             "path": "/webhooks/{id}/pause",
             "path-parameters": {
@@ -5969,6 +6239,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "PUT",
             "path": "/webhooks/{id}/unarchive",
             "path-parameters": {
@@ -5988,6 +6267,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "docs": "",
             "errors": [
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "PUT",
             "path": "/webhooks/{id}/unpause",
@@ -6010,6 +6298,15 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.NotFoundError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {},
+                "response": undefined,
+              },
             ],
             "method": "PUT",
             "path": "/webhooks/{id}",
@@ -6056,6 +6353,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "PUT",
             "path": "/webhooks",
@@ -6125,6 +6431,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "PUT",
             "path": "/destinations/{id}/archive",
             "path-parameters": {
@@ -6145,6 +6460,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/destinations",
@@ -6193,6 +6517,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/destinations/{id}",
             "path-parameters": {
@@ -6213,6 +6546,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/destinations",
@@ -6288,6 +6632,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "PUT",
             "path": "/destinations/{id}/unarchive",
             "path-parameters": {
@@ -6309,6 +6662,15 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.NotFoundError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "PUT",
             "path": "/destinations/{id}",
@@ -6367,6 +6729,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "PUT",
             "path": "/destinations",
@@ -6428,6 +6799,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/events/{id}",
             "path-parameters": {
@@ -6448,6 +6828,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/events",
@@ -6598,6 +6989,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/events/{id}/raw_body",
             "path-parameters": {
@@ -6618,6 +7018,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "PUT",
             "path": "/events/{id}/mute",
             "path-parameters": {
@@ -6637,6 +7046,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "docs": "",
             "errors": [
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "POST",
             "path": "/events/{id}/retry",
@@ -6672,6 +7092,15 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "PUT",
             "path": "/integrations/{id}/attach/{source_id}",
             "path-parameters": {
@@ -6696,6 +7125,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/integrations",
@@ -6736,6 +7174,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/integrations/{id}",
             "path-parameters": {
@@ -6756,6 +7203,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "PUT",
             "path": "/integrations/{id}/detach/{source_id}",
@@ -6781,6 +7239,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/integrations/{id}",
             "path-parameters": {
@@ -6801,6 +7268,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/integrations",
@@ -6832,6 +7310,15 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.NotFoundError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {},
+                "response": undefined,
+              },
             ],
             "method": "PUT",
             "path": "/integrations/{id}",
@@ -6892,6 +7379,17 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "channels": {},
+                },
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/issue-triggers",
             "request": {
@@ -6931,6 +7429,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/issue-triggers/{id}",
             "path-parameters": {
@@ -6950,6 +7457,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "docs": "",
             "errors": [
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "PUT",
             "path": "/issue-triggers/{id}/disable",
@@ -6971,6 +7487,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "PUT",
             "path": "/issue-triggers/{id}/enable",
             "path-parameters": {
@@ -6990,6 +7515,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "docs": "",
             "errors": [
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/issue-triggers/{id}",
@@ -7011,6 +7545,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/issue-triggers",
@@ -7072,6 +7617,15 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {},
+                "response": undefined,
+              },
+            ],
             "method": "PUT",
             "path": "/issue-triggers/{id}",
             "path-parameters": {
@@ -7117,6 +7671,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "PUT",
             "path": "/issue-triggers",
@@ -7170,6 +7733,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/issues/{id}",
             "path-parameters": {
@@ -7190,6 +7762,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/issues/{id}",
             "path-parameters": {
@@ -7209,6 +7790,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "docs": "",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/issues/count",
@@ -7300,6 +7890,17 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/issues",
             "request": {
@@ -7390,6 +7991,15 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "PUT",
             "path": "/issues/{id}",
             "path-parameters": {
@@ -7434,6 +8044,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "display-name": "Toggle webhook notifications for the workspace",
             "docs": "",
             "errors": [],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {},
+                "response": undefined,
+              },
+            ],
             "method": "PUT",
             "path": "/notifications/webhooks",
             "request": {
@@ -7482,6 +8101,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/requests/{id}",
             "path-parameters": {
@@ -7503,6 +8131,17 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.NotFoundError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/requests/{id}/events",
@@ -7661,6 +8300,17 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/requests/{id}/ignored_events",
             "path-parameters": {
@@ -7716,6 +8366,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/requests/{id}/raw_body",
             "path-parameters": {
@@ -7736,6 +8395,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/requests",
@@ -7858,6 +8528,17 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/requests/{id}/retry",
             "path-parameters": {
@@ -7904,6 +8585,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "PUT",
             "path": "/rulesets/{id}/archive",
             "path-parameters": {
@@ -7924,6 +8614,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/rulesets",
@@ -7960,6 +8659,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/rulesets/{id}",
             "path-parameters": {
@@ -7980,6 +8688,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/rulesets",
@@ -8045,6 +8764,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "PUT",
             "path": "/rulesets/{id}/unarchive",
             "path-parameters": {
@@ -8066,6 +8794,15 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.NotFoundError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {},
+                "response": undefined,
+              },
             ],
             "method": "PUT",
             "path": "/rulesets/{id}",
@@ -8112,6 +8849,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "PUT",
             "path": "/rulesets",
@@ -8161,6 +8907,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "PUT",
             "path": "/sources/{id}/archive",
             "path-parameters": {
@@ -8181,6 +8936,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/sources",
@@ -8209,6 +8973,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/sources/{id}",
             "path-parameters": {
@@ -8229,6 +9002,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/sources",
@@ -8299,6 +9083,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "PUT",
             "path": "/sources/{id}/unarchive",
             "path-parameters": {
@@ -8320,6 +9113,15 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.NotFoundError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {},
+                "response": undefined,
+              },
             ],
             "method": "PUT",
             "path": "/sources/{id}",
@@ -8358,6 +9160,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "PUT",
             "path": "/sources",
@@ -8400,6 +9211,15 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/transformations",
             "request": {
@@ -8435,6 +9255,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/transformations/{id}",
             "path-parameters": {
@@ -8454,6 +9283,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "docs": "",
             "errors": [
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/transformations/{id}/executions/{execution_id}",
@@ -8479,6 +9317,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/transformations/{id}/executions",
@@ -8551,6 +9400,17 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/transformations",
             "request": {
@@ -8606,6 +9466,17 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.BadRequestError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {},
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "PUT",
             "path": "/transformations/run",
             "request": {
@@ -8655,6 +9526,15 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {},
+                "response": undefined,
+              },
+            ],
             "method": "PUT",
             "path": "/transformations/{id}",
             "path-parameters": {
@@ -8696,6 +9576,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "PUT",
             "path": "/transformations",

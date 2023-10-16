@@ -319,7 +319,7 @@ function convertPrimitiveExampleToExampleTypeReferenceSchema(
         date: (value: string) => value,
         base64: (value: string) => value,
         boolean: (value: boolean) => value.toString(),
-        _unknown: () => "unknown",
+        _unknown: () => "<value>",
     });
 }
 

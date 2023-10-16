@@ -34,6 +34,17 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
               "UnauthorizedError",
               "TooManyRequestsError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/business/users/{userId}",
             "path-parameters": {
@@ -59,6 +70,15 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
               "UnauthorizedError",
               "TooManyRequestsError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/transactions/{transactionId}",
             "path-parameters": {
@@ -83,6 +103,17 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
             "errors": [
               "UnauthorizedError",
               "TooManyRequestsError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/consumer/users/{userId}",
@@ -118,6 +149,15 @@ Each consumer Business entity needs three mandatory fields:
               "BadRequestError",
               "UnauthorizedError",
               "TooManyRequestsError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {},
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/business/users",
@@ -159,6 +199,17 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "BadRequestError",
               "UnauthorizedError",
               "TooManyRequestsError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "POST",
             "path": "/events/business/user",
@@ -229,6 +280,15 @@ Here are some of the most used payload fields explained (you can find the full p
               "UnauthorizedError",
               "TooManyRequestsError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {},
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/transactions",
             "request": {
@@ -276,6 +336,15 @@ Each consumer User entity needs three mandatory fields:
               "UnauthorizedError",
               "TooManyRequestsError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {},
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/consumer/users",
             "request": {
@@ -317,6 +386,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "BadRequestError",
               "UnauthorizedError",
               "TooManyRequestsError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/events/transaction",
@@ -393,6 +471,17 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "BadRequestError",
               "UnauthorizedError",
               "TooManyRequestsError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "POST",
             "path": "/events/consumer/user",

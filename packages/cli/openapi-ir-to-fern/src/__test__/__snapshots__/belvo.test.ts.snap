@@ -11391,6 +11391,15 @@ client.accounts.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/accounts/{id}",
             "path-parameters": {
@@ -11421,6 +11430,30 @@ client.accounts.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "balance_type": "ASSET",
+                    "collected_at": "2019-09-27T13:01:41.941Z",
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "currency": "MXN",
+                    "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                    "last_accessed_at": "2021-03-09T10:28:40.000Z",
+                    "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "name": "Cuenta Perfiles- M.N. - MXN-666",
+                    "number": "4057068115181",
+                    "public_identification_name": "CLABE",
+                    "public_identification_value": "150194683119900273",
+                    "type": "Cuentas de efectivo",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/accounts/{id}",
@@ -11456,6 +11489,19 @@ client.accounts.list(params: {
             "docs": "Get a paginated list of all existing accounts in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/accounts",
@@ -11690,6 +11736,20 @@ client.accounts.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "save_data": "true",
+                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "token": "1234ab",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "PATCH",
             "path": "/api/accounts",
             "request": {
@@ -11740,6 +11800,18 @@ client.accounts.list(params: {
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "token": "1234ab",
+                },
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/api/accounts",
@@ -11867,6 +11939,15 @@ client.balances.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/balances/{id}",
             "path-parameters": {
@@ -11883,6 +11964,20 @@ client.balances.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                    "value_date": "2019-10-23",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/balances/{id}",
@@ -11918,6 +12013,19 @@ client.balances.list(params: {
             "docs": "Get a paginated list of all existing balances in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/balances",
@@ -12091,6 +12199,20 @@ client.balances.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "save_data": "true",
+                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "token": "1234ab",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "PATCH",
             "path": "/api/balances",
             "request": {
@@ -12127,6 +12249,21 @@ client.balances.list(params: {
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "date_from": "2021-01-18",
+                  "date_to": "2021-02-15",
+                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "token": "1234ab",
+                },
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/api/balances",
@@ -12211,6 +12348,15 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "root.RequestTimeoutError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/payments/bank-accounts",
             "request": {
@@ -12232,6 +12378,15 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/payments/bank-accounts/{id}",
             "path-parameters": {
@@ -12251,6 +12406,19 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "docs": "List all bank accounts associated with your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/payments/bank-accounts",
@@ -12368,6 +12536,17 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "root.ForbiddenError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/api/categorization",
             "request": {
@@ -12417,6 +12596,15 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "root.UnauthorizedError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/payments/customers",
             "request": {
@@ -12438,6 +12626,15 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/payments/customers/{id}",
             "path-parameters": {
@@ -12457,6 +12654,19 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "docs": "List all customers associated with your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/payments/customers",
@@ -12560,6 +12770,15 @@ At the moment, the employment records resource is available for:
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/employment-records/{id}",
             "path-parameters": {
@@ -12576,6 +12795,24 @@ At the moment, the employment records resource is available for:
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                    "created_at": "2020-04-23T21:32:55.336854+00:00",
+                    "id": "fef05fc8-7357-4a4a-9d29-55038ea31a04",
+                    "internal_identification": "BLPM951331IONVGR54",
+                    "link": "27c1d5cf-e8fb-433a-a2f7-d246de199c01",
+                    "report_date": "2023-01-19",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/employment-records/{id}",
@@ -12611,6 +12848,19 @@ At the moment, the employment records resource is available for:
             "docs": "Get a paginated list of all existing employment records in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/employment-records",
@@ -12658,6 +12908,17 @@ At the moment, the employment records resource is available for:
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "link": "d686c617-6d9e-4bc6-9801-5ac276ccb6a2",
+                },
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/api/employment-records",
@@ -12729,6 +12990,15 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "root.UnauthorizedError",
               "root.ForbiddenError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/api/enrich/incomes",
@@ -12857,6 +13127,15 @@ client.incomes.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/incomes/{id}",
             "path-parameters": {
@@ -12873,6 +13152,15 @@ client.incomes.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/api/incomes/{id}",
@@ -12908,6 +13196,19 @@ client.incomes.list(params: {
             "docs": "Get a paginated list of all incomes in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/incomes",
@@ -12981,6 +13282,20 @@ client.incomes.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "save_data": "true",
+                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "token": "1234ab",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "PATCH",
             "path": "/api/incomes",
             "request": {
@@ -13017,6 +13332,20 @@ client.incomes.list(params: {
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "date_from": "2020-08-01",
+                  "date_to": "2020-12-30",
+                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "token": "1234ab",
+                },
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/api/incomes",
@@ -13110,6 +13439,25 @@ You can see a complete list of institutions by either consulting our [Institutio
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "display_name": "Erebor Mexico",
+                    "icon_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
+                    "logo": "https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.png",
+                    "name": "erebor_mx_retail",
+                    "primary_color": "#056dae",
+                    "text_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
+                    "website": "https://www.erebor.com/",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/institutions/{id}",
             "path-parameters": {
@@ -13144,6 +13492,19 @@ You can see a complete list of institutions by either consulting our [Institutio
             "docs": "Get a paginated list of all the institutions currently supported by Belvo. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/institutions",
@@ -13301,6 +13662,15 @@ client. investments_portfolio.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/investments/portfolios/{id}",
             "path-parameters": {
@@ -13317,6 +13687,15 @@ client. investments_portfolio.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/investments/portfolios/{id}",
@@ -13352,6 +13731,19 @@ client. investments_portfolio.list(params: {
             "docs": "Get a paginated list of all the existing portfolios (and their instruments) in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/investments/portfolios",
@@ -13436,6 +13828,19 @@ client. investments_portfolio.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "token": "1234ab",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "PATCH",
             "path": "/investments/portfolios",
             "request": {
@@ -13471,6 +13876,18 @@ client. investments_portfolio.list(params: {
               "root.UnauthorizedError",
               "root.PreconditionError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "token": "1234ab",
+                },
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/investments/portfolios",
@@ -13585,6 +14002,15 @@ client.invoices.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/invoices/{id}",
             "path-parameters": {
@@ -13601,6 +14027,15 @@ client.invoices.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/api/invoices/{id}",
@@ -13636,6 +14071,19 @@ client.invoices.list(params: {
             "docs": "Get a paginated list of all existing invoices in your Belvo account. By default, we return 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/invoices",
@@ -13821,6 +14269,20 @@ client.invoices.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "save_data": "true",
+                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "token": "1234ab",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "PATCH",
             "path": "/api/invoices",
             "request": {
@@ -13858,6 +14320,20 @@ client.invoices.list(params: {
               "root.UnauthorizedError",
               "root.RequestTimeoutError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "date_from": "2020-01-01",
+                  "date_to": "2020-02-01",
+                  "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "save_data": "true",
+                },
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/api/invoices",
@@ -13972,6 +14448,25 @@ For single links, you have to perform POST calls to an institution **every time*
               "root.PreconditionError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {},
+                "response": {
+                  "body": {
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
+                    "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                    "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "institution": "erebor_mx_retail",
+                    "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
+                    "last_accessed_at": "2019-09-27T13:02:03.584Z",
+                  },
+                },
+              },
+            ],
             "method": "PATCH",
             "path": "/api/links/{id}",
             "path-parameters": {
@@ -14025,6 +14520,15 @@ To delete links in bulk, we recommend looping through the list of links you want
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/links/{id}",
             "path-parameters": {
@@ -14041,6 +14545,25 @@ To delete links in bulk, we recommend looping through the list of links you want
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
+                    "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                    "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "institution": "erebor_mx_retail",
+                    "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
+                    "last_accessed_at": "2019-09-27T13:02:03.584Z",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/links/{id}",
@@ -14076,6 +14599,19 @@ To delete links in bulk, we recommend looping through the list of links you want
             "docs": "Get a paginated list of all the existing links in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/links",
@@ -14217,6 +14753,29 @@ To delete links in bulk, we recommend looping through the list of links you want
               "root.PreconditionError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "token": "1234ab",
+                },
+                "response": {
+                  "body": {
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
+                    "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                    "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "institution": "erebor_mx_retail",
+                    "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
+                    "last_accessed_at": "2019-09-27T13:02:03.584Z",
+                  },
+                },
+              },
+            ],
             "method": "PATCH",
             "path": "/api/links",
             "request": {
@@ -14257,6 +14816,39 @@ To delete links in bulk, we recommend looping through the list of links you want
               "root.UnauthorizedError",
               "root.PreconditionError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "certificate": "1234567890abcd=",
+                  "credentials_storage": "store",
+                  "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                  "fetch_historical": "true",
+                  "institution": "erebor_mx_retail",
+                  "password": "password",
+                  "password2": "pin",
+                  "private_key": "1234567890abcd=",
+                  "token": "1234ab",
+                  "username": "username",
+                  "username2": "secondusername",
+                  "username3": "thirdusername",
+                  "username_type": "001",
+                },
+                "response": {
+                  "body": {
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
+                    "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                    "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "institution": "erebor_mx_retail",
+                    "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
+                    "last_accessed_at": "2019-09-27T13:02:03.584Z",
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/api/links",
@@ -14424,6 +15016,32 @@ For a list of standards codes, see the table below.
               "root.NotFoundError",
               "root.PreconditionError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "certificate": "1234567890abcd=",
+                  "password": "password",
+                  "password2": "pin",
+                  "private_key": "1234567890abcd=",
+                  "token": "1234ab",
+                  "username_type": "001",
+                },
+                "response": {
+                  "body": {
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
+                    "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                    "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "institution": "erebor_mx_retail",
+                    "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
+                    "last_accessed_at": "2019-09-27T13:02:03.584Z",
+                  },
+                },
+              },
             ],
             "method": "PUT",
             "path": "/api/links/{id}",
@@ -14599,6 +15217,15 @@ client.owners.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/owners/{id}",
             "path-parameters": {
@@ -14615,6 +15242,27 @@ client.owners.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "address": "Carrer de la Llacuna, 162, 08018 Barcelona",
+                    "collected_at": "2019-09-27T13:01:41.941Z",
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "display_name": "John Doe",
+                    "email": "johndoe@belvo.com",
+                    "id": "c749315b-eec2-435d-a458-06912878564f",
+                    "internal_identification": "7e5838e4",
+                    "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "phone_number": "+52-XXX-XXX-XXXX",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/owners/{id}",
@@ -14650,6 +15298,19 @@ client.owners.list(params: {
             "docs": "Get a paginated list of all existing owners in your Belvo account. We return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/owners",
@@ -14752,6 +15413,20 @@ client.owners.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "save_data": "true",
+                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "token": "1234ab",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "PATCH",
             "path": "/api/owners",
             "request": {
@@ -14788,6 +15463,18 @@ client.owners.list(params: {
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "token": "1234ab",
+                },
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/api/owners",
@@ -14837,6 +15524,28 @@ client.owners.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "active": "true",
+                    "display_name": "Wakanda National Bank",
+                    "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
+                    "id": "bbaceead-7b96-46d8-9354-38dec9707004",
+                    "legal_entity_name": "Wakanda Bank, National Association",
+                    "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
+                    "name": "wakanda_national",
+                    "primary_color": "#fdbc24",
+                    "text_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png",
+                    "website": "https://www.wakandanational.com",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/payments/institutions/{id}",
             "path-parameters": {
@@ -14856,6 +15565,19 @@ client.owners.list(params: {
             "docs": "List all available payment institutions.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://belvo.com/payments/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/payments/institutions",
@@ -14941,6 +15663,15 @@ A payment intent captures all payment information (such as the amount to be char
               "root.RequestTimeoutError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/payments/payment-intents",
             "request": {
@@ -14962,6 +15693,15 @@ A payment intent captures all payment information (such as the amount to be char
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/payments/payment-intents/{id}",
             "path-parameters": {
@@ -14981,6 +15721,19 @@ A payment intent captures all payment information (such as the amount to be char
             "docs": "List all payment intents associated with your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/payments/payment-intents",
@@ -15099,6 +15852,15 @@ During the payment intent flow, you need to fill in the payment intent with requ
               "root.BadRequestError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "PATCH",
             "path": "/payments/payment-intents/{id}",
             "path-parameters": {
@@ -15155,6 +15917,15 @@ During the payment intent flow, you need to fill in the payment intent with requ
               "root.RequestTimeoutError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/payments/payment-links",
             "request": {
@@ -15175,6 +15946,15 @@ During the payment intent flow, you need to fill in the payment intent with requ
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/payments/payment-links/{access_token}",
@@ -15197,6 +15977,19 @@ During the payment intent flow, you need to fill in the payment intent with requ
             "docs": "List all payment links associated with your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/payments/payment-links",
@@ -15300,6 +16093,15 @@ You can use the Payment Transactions resource in order to get useful information
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "GET",
             "path": "/payments/transactions/{id}",
             "path-parameters": {
@@ -15319,6 +16121,19 @@ You can use the Payment Transactions resource in order to get useful information
             "docs": "List all payment transactions associated with your Belvo account.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/payments/transactions",
@@ -15470,6 +16285,15 @@ You can use the Payment Transactions resource in order to get useful information
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/payments/webhooks/{id}",
             "path-parameters": {
@@ -15486,6 +16310,15 @@ You can use the Payment Transactions resource in order to get useful information
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/payments/webhooks/{id}",
@@ -15507,6 +16340,19 @@ You can use the Payment Transactions resource in order to get useful information
             "errors": [
               "root.UnauthorizedError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/payments/webhooks",
             "response": {
@@ -15524,6 +16370,20 @@ You can use the Payment Transactions resource in order to get useful information
               "root.UnauthorizedError",
               "root.RequestTimeoutError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "auth_header": "Authorization",
+                  "auth_token": "Bearer hv7alD71j0dzXf09iKfg7u",
+                  "name": "Your webhook name",
+                  "url": "https://mycompany.com/security/webhook",
+                },
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/payments/webhooks",
@@ -15587,6 +16447,15 @@ You can use the Payment Transactions resource in order to get useful information
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/receivables/transactions/{id}",
             "path-parameters": {
@@ -15603,6 +16472,15 @@ You can use the Payment Transactions resource in order to get useful information
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/receivables/transactions/{id}",
@@ -15638,6 +16516,19 @@ You can use the Payment Transactions resource in order to get useful information
             "docs": "Get a paginated list of all the existing receivable transactions in your Belvo account. We return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/receivables/transactions",
@@ -15765,6 +16656,20 @@ You can use the Payment Transactions resource in order to get useful information
               "root.PreconditionError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "date_from": "2020-08-05",
+                  "date_to": "2020-10-05",
+                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "token": "1234ab",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/receivables/transactions",
             "request": {
@@ -15878,6 +16783,15 @@ client. recurring_expenses.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/recurring-expenses/{id}",
             "path-parameters": {
@@ -15894,6 +16808,15 @@ client. recurring_expenses.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/api/recurring-expenses/{id}",
@@ -15929,6 +16852,19 @@ client. recurring_expenses.list(params: {
             "docs": "Get a paginated list of all recurring expenses in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/recurring-expenses",
@@ -16012,6 +16948,20 @@ client. recurring_expenses.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "save_data": "true",
+                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "token": "1234ab",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "PATCH",
             "path": "/api/recurring-expenses",
             "request": {
@@ -16048,6 +16998,20 @@ client. recurring_expenses.list(params: {
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "date_from": "2022-08-01",
+                  "date_to": "2022-12-30",
+                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "token": "1234ab",
+                },
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/api/recurring-expenses",
@@ -16165,6 +17129,15 @@ client. risk_insights.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/risk-insights/{id}",
             "path-parameters": {
@@ -16181,6 +17154,15 @@ client. risk_insights.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/api/risk-insights/{id}",
@@ -16216,6 +17198,19 @@ client. risk_insights.list(params: {
             "docs": "Get a paginated list of all risk insight analyses in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/risk-insights",
@@ -16286,6 +17281,20 @@ client. risk_insights.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "save_data": "true",
+                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "token": "1234ab",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "PATCH",
             "path": "/api/risk-insights",
             "request": {
@@ -16324,6 +17333,18 @@ If you need to know the currency of the account, just do a GET Details to the ac
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "token": "1234ab",
+                },
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/api/risk-insights",
@@ -16408,6 +17429,15 @@ For example:
               "root.BadRequestError",
               "root.RequestTimeoutError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/payments/secret-keys",
             "response": {
@@ -16424,6 +17454,19 @@ For example:
   **Note**: We only return the ID of the secret keys.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/payments/secret-keys",
@@ -16506,6 +17549,15 @@ client.tax_compliance_status.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/tax-compliance-status/{id}",
             "path-parameters": {
@@ -16522,6 +17574,24 @@ client.tax_compliance_status.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "collected_at": "2022-02-09T08:45:50.406032Z",
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "id": "91106968-1abd-4d64-85c1-4e73d96fb997",
+                    "internal_identification": "20NE1234567",
+                    "pdf": "=PDF-STRING=",
+                    "rfc": "KDFC211118IS0",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/tax-compliance-status/{id}",
@@ -16557,6 +17627,19 @@ client.tax_compliance_status.list(params: {
             "docs": "Get a paginated list of all existing Tax compliance statuses in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/tax-compliance-status",
@@ -16651,6 +17734,27 @@ client.tax_compliance_status.list(params: {
               "root.RequestTimeoutError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "save_data": "true",
+                },
+                "response": {
+                  "body": {
+                    "collected_at": "2022-02-09T08:45:50.406032Z",
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "id": "91106968-1abd-4d64-85c1-4e73d96fb997",
+                    "internal_identification": "20NE1234567",
+                    "pdf": "=PDF-STRING=",
+                    "rfc": "KDFC211118IS0",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/api/tax-compliance-status",
             "request": {
@@ -16716,6 +17820,15 @@ At the moment, the Tax Declaration resource is available for:
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/tax-declarations/{id}",
             "path-parameters": {
@@ -16732,6 +17845,15 @@ At the moment, the Tax Declaration resource is available for:
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/api/tax-declarations/{id}",
@@ -16767,6 +17889,15 @@ At the moment, the Tax Declaration resource is available for:
             "docs": "Get a paginated list of all existing tax declarations in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/api/tax-declarations",
@@ -16890,6 +18021,21 @@ At the moment, the Tax Declaration resource is available for:
               "root.UnauthorizedError",
               "root.RequestTimeoutError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "attach_pdf": "false",
+                  "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "save_data": "true",
+                  "year_from": "2018",
+                  "year_to": "2019",
+                },
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/api/tax-declarations",
@@ -17022,6 +18168,15 @@ client.tax_retentions.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/tax-retentions/{id}",
             "path-parameters": {
@@ -17038,6 +18193,15 @@ client.tax_retentions.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/api/tax-retentions/{id}",
@@ -17073,6 +18237,19 @@ client.tax_retentions.list(params: {
             "docs": "Get a paginated list of all existing tax retentions in your Belvo account. We return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/tax-retentions",
@@ -17156,6 +18333,19 @@ client.tax_retentions.list(params: {
               "root.UnauthorizedError",
               "root.RequestTimeoutError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "date_from": "2020-01-01",
+                  "date_to": "2020-02-01",
+                  "link": "9e432f18-36ca-4bd6-a3f3-1971e58dc1e8",
+                },
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/api/tax-retentions",
@@ -17294,6 +18484,15 @@ client.tax_returns.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/tax-returns/{id}",
             "path-parameters": {
@@ -17310,6 +18509,15 @@ client.tax_returns.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/api/tax-returns/{id}",
@@ -17345,6 +18553,15 @@ client.tax_returns.list(params: {
             "docs": "Get a paginated list of all existing tax returns in your Belvo account. By default, we return up to 100 results per page. The results will include a mix of both monthly and yearly tax returns.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/api/tax-returns",
@@ -17479,6 +18696,15 @@ client.tax_returns.list(params: {
               "root.RequestTimeoutError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/api/tax-returns",
             "request": {
@@ -17565,6 +18791,15 @@ client.tax_status.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/tax-status/{id}",
             "path-parameters": {
@@ -17581,6 +18816,15 @@ client.tax_status.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/api/tax-status/{id}",
@@ -17616,6 +18860,19 @@ client.tax_status.list(params: {
             "docs": "Get a paginated list of all existing tax status in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/tax-status",
@@ -17709,6 +18966,18 @@ client.tax_status.list(params: {
               "root.UnauthorizedError",
               "root.RequestTimeoutError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "save_data": "true",
+                },
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/api/tax-status",
@@ -17841,6 +19110,15 @@ client.transactions.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/api/transactions/{id}",
             "path-parameters": {
@@ -17857,6 +19135,15 @@ client.transactions.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/api/transactions/{id}",
@@ -17892,6 +19179,19 @@ client.transactions.list(params: {
             "docs": "Get a paginated list of all existing transactions in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/api/transactions",
@@ -18215,6 +19515,20 @@ client.transactions.list(params: {
               "root.PreconditionError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "save_data": "true",
+                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "token": "1234ab",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "PATCH",
             "path": "/api/transactions",
             "request": {
@@ -18255,6 +19569,21 @@ If you try to access older information than what we can access, we will return a
               "root.PreconditionError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "date_from": "2020-08-05",
+                  "date_to": "2020-10-05",
+                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "token": "1234ab",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/api/transactions",
             "request": {
@@ -18294,6 +19623,25 @@ If you try to access older information than what we can access, we will return a
               "root.RequestTimeoutError",
               "root.PreconditionError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {},
+                "query-parameters": {},
+                "request": {
+                  "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "date_from": "2020-08-05",
+                  "date_to": "2020-10-05",
+                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "token": "1234ab",
+                },
+                "response": {
+                  "body": {
+                    "request_id": "b5d0106ac9cc43d5b36199fe831f6bbe",
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/api/transactions",
