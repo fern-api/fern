@@ -81,7 +81,7 @@ class PlaylistClient:
         limit: typing.Optional[int] = None,
         other_field: str,
         multi_line_docs: str,
-        optional_multiple_field: typing.Union[typing.Optional[str], typing.List[str]],
+        optional_multiple_field: typing.Optional[typing.Union[str, typing.List[str]]] = None,
         multiple_field: typing.Union[str, typing.List[str]],
     ) -> typing.List[Playlist]:
         """
@@ -97,7 +97,7 @@ class PlaylistClient:
             - multi_line_docs: str. I'm a multiline
                                     description
 
-            - optional_multiple_field: typing.Union[typing.Optional[str], typing.List[str]].
+            - optional_multiple_field: typing.Optional[typing.Union[str, typing.List[str]]].
 
             - multiple_field: typing.Union[str, typing.List[str]].
         """
@@ -271,7 +271,7 @@ class AsyncPlaylistClient:
         limit: typing.Optional[int] = None,
         other_field: str,
         multi_line_docs: str,
-        optional_multiple_field: typing.Union[typing.Optional[str], typing.List[str]],
+        optional_multiple_field: typing.Optional[typing.Union[str, typing.List[str]]] = None,
         multiple_field: typing.Union[str, typing.List[str]],
     ) -> typing.List[Playlist]:
         """
@@ -287,7 +287,7 @@ class AsyncPlaylistClient:
             - multi_line_docs: str. I'm a multiline
                                     description
 
-            - optional_multiple_field: typing.Union[typing.Optional[str], typing.List[str]].
+            - optional_multiple_field: typing.Optional[typing.Union[str, typing.List[str]]].
 
             - multiple_field: typing.Union[str, typing.List[str]].
         """

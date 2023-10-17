@@ -96,14 +96,14 @@ class ServiceClient:
         self,
         *,
         shallow: typing.Optional[bool] = None,
-        tag: typing.Union[typing.Optional[str], typing.List[str]],
+        tag: typing.Optional[typing.Union[str, typing.List[str]]] = None,
         x_api_version: str,
     ) -> Metadata:
         """
         Parameters:
             - shallow: typing.Optional[bool].
 
-            - tag: typing.Union[typing.Optional[str], typing.List[str]].
+            - tag: typing.Optional[typing.Union[str, typing.List[str]]].
 
             - x_api_version: str.
         ---
@@ -211,14 +211,14 @@ class AsyncServiceClient:
         self,
         *,
         shallow: typing.Optional[bool] = None,
-        tag: typing.Union[typing.Optional[str], typing.List[str]],
+        tag: typing.Optional[typing.Union[str, typing.List[str]]] = None,
         x_api_version: str,
     ) -> Metadata:
         """
         Parameters:
             - shallow: typing.Optional[bool].
 
-            - tag: typing.Union[typing.Optional[str], typing.List[str]].
+            - tag: typing.Optional[typing.Union[str, typing.List[str]]].
 
             - x_api_version: str.
         ---
