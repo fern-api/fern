@@ -161,15 +161,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
         401,
         429,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetConsumerTransactionRequest",
       "headers": [],
       "internal": undefined,
@@ -241,15 +233,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         401,
         429,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PostTransactionEventRequest",
       "headers": [],
       "internal": false,

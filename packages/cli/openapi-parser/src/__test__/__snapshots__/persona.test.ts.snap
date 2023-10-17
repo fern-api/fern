@@ -12,15 +12,7 @@ exports[`open api parser persona parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ResumeAnInquiryRequest",
       "headers": [
         {
@@ -591,15 +583,7 @@ In the [Embedded Flow](doc:embedded-flow), the \`inquiry-id\` is the first param
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveAnInquiryRequest",
       "headers": [
         {
@@ -2008,15 +1992,7 @@ In the [Embedded Flow](doc:embedded-flow), the \`inquiry-id\` is the first param
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateAnInquiryRequest",
       "headers": [
         {
@@ -2393,15 +2369,7 @@ In the [Embedded Flow](doc:embedded-flow), the \`inquiry-id\` is the first param
 
 This endpoint can be used to comply with privacy regulations such as GDPR / CCPA or to enforce data privacy.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RedactAnInquiryRequest",
       "headers": [
         {
@@ -2914,15 +2882,7 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
       "availability": undefined,
       "description": "Retrieve the details of a Report.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveAReportRequest",
       "headers": [
         {
@@ -3297,15 +3257,7 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
 
 Note that this will only delete the report -- it does not delete associated accounts, inquiries, or verifications.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RedactAReportRequest",
       "headers": [
         {
@@ -3546,15 +3498,7 @@ Note that this will only delete the report -- it does not delete associated acco
       "availability": undefined,
       "description": "Retrieve the details of a specific Verification",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveAVerificationRequest",
       "headers": [
         {
@@ -4806,15 +4750,7 @@ Note that this action will trigger any associated workflows and webhooks.",
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveAnAccountRequest",
       "headers": [
         {
@@ -5659,15 +5595,7 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
 
 Note: An account is still updatable after redaction. If you want to delete data continuously, please reach out to us to help you setup a retention policy.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RedactAnAccountRequest",
       "headers": [
         {
@@ -5972,15 +5900,7 @@ Note: An account is still updatable after redaction. If you want to delete data 
 
 Note that this endpoint aggregates inquiries across all <<glossary:template>>(s). See [Pagination](ref:pagination) for more details about handling the response.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ListAllInquiriesRequest",
       "headers": [
         {
@@ -6699,15 +6619,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAnInquiryRequest",
       "headers": [
         {
@@ -7626,15 +7538,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
       "availability": undefined,
       "description": "Returns a list of your organization's <<glossary:account>>(s).",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ListAllAccountsRequest",
       "headers": [
         {
@@ -8557,15 +8461,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DownloadAFileRequest",
       "headers": [],
       "internal": undefined,
@@ -8629,15 +8525,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "availability": undefined,
       "description": "",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ListAllApiLogsRequest",
       "headers": [
         {
@@ -8732,15 +8620,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveAnApiLogRequest",
       "headers": [
         {
@@ -9175,15 +9055,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveADocumentRequest",
       "headers": [
         {
@@ -9570,15 +9442,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateADocumentRequest",
       "headers": [
         {
@@ -10020,15 +9884,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateADocumentRequest",
       "headers": [
         {
@@ -10475,15 +10331,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SubmitADocumentRequest",
       "headers": [
         {
@@ -10861,15 +10709,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "availability": undefined,
       "description": "Create a new database verification",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateADatabaseVerificationRequest",
       "headers": [
         {
@@ -11447,15 +11287,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "availability": undefined,
       "description": "Create a new government ID verification",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAGovIdVerificationRequest",
       "headers": [
         {
@@ -12265,15 +12097,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "availability": undefined,
       "description": "Create a new phone number verification",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAPhoneNumberVerificationRequest",
       "headers": [
         {
@@ -12683,15 +12507,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ListAllEventsRequest",
       "headers": [
         {
@@ -12849,15 +12665,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveAnEventRequest",
       "headers": [
         {
@@ -12925,15 +12733,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "availability": undefined,
       "description": "Create a verification of a generic document.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateADocumentVerificationRequest",
       "headers": [
         {
@@ -13436,15 +13236,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SubmitADocumentVerificationRequest",
       "headers": [
         {
@@ -13895,15 +13687,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveADocumentVerificationRequest",
       "headers": [
         {
@@ -14109,15 +13893,7 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveAnImporterRequest",
       "headers": [],
       "internal": undefined,
@@ -16756,15 +16532,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAGovernmentIdDocumentRequest",
       "headers": [
         {
@@ -17463,15 +17231,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateAGovernmentIdDocumentRequest",
       "headers": [
         {
@@ -18157,15 +17917,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SubmitAGovernmentIdDocumentRequest",
       "headers": [
         {
@@ -18648,15 +18400,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SubmitAGovernmentIdVerificationRequest",
       "headers": [
         {
@@ -19258,15 +19002,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateAGovernmentIdVerificationRequest",
       "headers": [
         {
@@ -20086,15 +19822,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ListAllListsRequest",
       "headers": [
         {
@@ -20218,15 +19946,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveAListRequest",
       "headers": [
         {
@@ -20296,15 +20016,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ArchiveAListRequest",
       "headers": [
         {
@@ -24272,15 +23984,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ArchiveABrowserFingerprintListItemRequest",
       "headers": [
         {
@@ -24598,15 +24302,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ArchiveACountryListItemRequest",
       "headers": [
         {
@@ -24681,15 +24377,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ArchiveAnEmailAddressListItemRequest",
       "headers": [
         {
@@ -25025,15 +24713,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ArchiveAGeolocationListItemRequest",
       "headers": [
         {
@@ -25381,15 +25061,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ArchiveAGovernmentIdNumberListItemRequest",
       "headers": [
         {
@@ -25725,15 +25397,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ArchiveAnIpAddressListItemRequest",
       "headers": [
         {
@@ -25808,15 +25472,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ArchiveANameListItemRequest",
       "headers": [
         {
@@ -26152,15 +25808,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ArchiveAPhoneNumberListItemRequest",
       "headers": [
         {
@@ -26235,15 +25883,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ListAllReportsRequest",
       "headers": [
         {
@@ -26372,15 +26012,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAReportRequest",
       "headers": [
         {
@@ -26852,15 +26484,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ListAllCasesRequest",
       "headers": [
         {
@@ -27480,15 +27104,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateACaseRequest",
       "headers": [],
       "internal": undefined,
@@ -29049,15 +28665,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveCaseRequest",
       "headers": [
         {
@@ -30734,15 +30342,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateASelfieVerificationRequest",
       "headers": [
         {
@@ -31392,15 +30992,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SubmitASelfieVerificationRequest",
       "headers": [
         {
@@ -32654,15 +32246,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "availability": undefined,
       "description": "Prints an inquiry as PDF.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PrintAnInquiryPdfRequest",
       "headers": [],
       "internal": undefined,
@@ -32700,15 +32284,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "availability": undefined,
       "description": "Prints a verification in PDF format.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PrintAVerificationAsPdfRequest",
       "headers": [],
       "internal": undefined,
@@ -32746,15 +32322,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "availability": undefined,
       "description": "Prints a report in PDF format.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PrintReportPdfRequest",
       "headers": [],
       "internal": undefined,
@@ -35098,15 +34666,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AssignACaseRequest",
       "headers": [],
       "internal": undefined,
@@ -36173,15 +35733,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ArchiveAFaceListItemRequest",
       "headers": [
         {
@@ -38281,15 +37833,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "availability": undefined,
       "description": "",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ListAllUserAuditLogsRequest",
       "headers": [
         {
@@ -38384,15 +37928,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveAnUserAuditLogRequest",
       "headers": [
         {
@@ -39344,15 +38880,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveAGovernmentIdVerificationRequest",
       "headers": [
         {
@@ -40173,15 +39701,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveASelfieVerificationRequest",
       "headers": [
         {
@@ -40683,15 +40203,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "availability": undefined,
       "description": "Submit a database verification for processing. Can only submit \`initiated\` verifications",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateADatabaseVerification1Request",
       "headers": [
         {
@@ -41077,15 +40589,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveADatabaseVerificationRequest",
       "headers": [
         {
@@ -41547,15 +41051,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SubmitAPhoneCarrierDatabaseVerificationRequest",
       "headers": [
         {
@@ -41929,15 +41425,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAPhoneCarrierDatabaseVerificationRequest",
       "headers": [],
       "internal": undefined,
@@ -42416,15 +41904,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveAPhoneCarrierDatabaseVerificationRequest",
       "headers": [
         {
@@ -42903,15 +42383,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateASerproDatabaseVerificationRequest",
       "headers": [],
       "internal": undefined,
@@ -43290,15 +42762,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SubmitASerproDatabaseVerificationRequest",
       "headers": [
         {
@@ -43703,15 +43167,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveASerproDatabaseVerificationRequest",
       "headers": [
         {
@@ -44681,15 +44137,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SubmitATinDatabaseVerificationRequest",
       "headers": [
         {
@@ -45063,15 +44511,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ConfirmAPhoneNumberVerificationRequest",
       "headers": [],
       "internal": undefined,
@@ -45433,15 +44873,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveATinDatabaseVerificationRequest",
       "headers": [
         {
@@ -45885,15 +45317,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveAPhoneNumberVerificationRequest",
       "headers": [
         {
@@ -47140,15 +46564,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "availability": undefined,
       "description": "Create a new email address verification",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAnEmailAddressVerificationRequest",
       "headers": [
         {
@@ -47921,15 +47337,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ConfirmAPhoneNumberVerification1Request",
       "headers": [],
       "internal": undefined,
@@ -48273,15 +47681,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveAEmailAddressVerificationRequest",
       "headers": [
         {
@@ -48638,15 +48038,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "availability": undefined,
       "description": "Returns a list of your organization's API keys.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ListAllApiKeysRequest",
       "headers": [
         {
@@ -49950,15 +49342,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveAnApiKeyRequest",
       "headers": [],
       "internal": undefined,
@@ -50792,15 +50176,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ReportActionReRunReportRequest",
       "headers": [],
       "internal": undefined,
@@ -51200,15 +50576,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DismissMatchesRequest",
       "headers": [
         {
@@ -51757,15 +51125,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ReportActionResumeContinuousMonitoringRequest",
       "headers": [],
       "internal": undefined,
@@ -52165,15 +51525,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ReportActionPauseContinuousMonitoringRequest",
       "headers": [],
       "internal": undefined,
@@ -52571,15 +51923,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "availability": undefined,
       "description": "Retrieve a Graph Query",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RetrieveAGraphQueryRequest",
       "headers": [],
       "internal": undefined,
@@ -52619,15 +51963,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAGraphQueryRequest",
       "headers": [],
       "internal": undefined,
@@ -52770,15 +52106,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
 
 The inquiry can still be resumed after expiry.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ExpireAnInquiryRequest",
       "headers": [
         {
