@@ -684,18 +684,7 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "OverdraftProtectionPatchOverdraftAccountsRequest",
       "headers": [],
       "internal": undefined,
@@ -773,10 +762,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
+          "request": undefined,
           "response": {
             "properties": {},
             "type": "object",
@@ -1176,18 +1162,7 @@ This information provides hints to clients, allowing bank customers to select tr
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "InstitutionsGetTransferDateRestrictionsRequest",
       "headers": [],
       "internal": undefined,
@@ -1791,10 +1766,7 @@ Note: This operation requires an identity challenge if the financial institution
             },
             "type": "object",
           },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
+          "response": undefined,
         },
       ],
       "generatedRequestName": "TransfersCreateTransferRequest",
@@ -1868,18 +1840,7 @@ Note: This operation requires an identity challenge if the financial institution
         403,
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TransfersGetTransferRequest",
       "headers": [],
       "internal": undefined,
@@ -1940,21 +1901,7 @@ Note: This operation requires an identity challenge if the financial institution
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TransfersPatchTransferRequest",
       "headers": [
         {

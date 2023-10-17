@@ -1817,21 +1817,11 @@ exports[`open api parser deel parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "data": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
-            "properties": {
-              "data": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -3390,12 +3380,7 @@ exports[`open api parser deel parse open api 1`] = `
             "type": "object",
           },
           "response": {
-            "properties": {
-              "data": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -4018,12 +4003,7 @@ exports[`open api parser deel parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "data": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -5160,18 +5140,7 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetLegalEntityListRequest",
       "headers": [],
       "internal": undefined,
@@ -5796,18 +5765,7 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetContractTemplatesRequest",
       "headers": [],
       "internal": true,
@@ -6073,12 +6031,7 @@ exports[`open api parser deel parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "data": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -6383,12 +6336,7 @@ exports[`open api parser deel parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "data": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },

@@ -34,18 +34,7 @@ Here are some of the most used payload fields explained (you can find the full p
         401,
         429,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PostConsumerTransactionRequest",
       "headers": [],
       "internal": undefined,
@@ -294,18 +283,7 @@ Each consumer User entity needs three mandatory fields:
         401,
         429,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PostConsumerUserRequest",
       "headers": [],
       "internal": undefined,
@@ -402,18 +380,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
         401,
         429,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetConsumerUserRequest",
       "headers": [],
       "internal": undefined,
@@ -478,18 +445,7 @@ Each consumer Business entity needs three mandatory fields:
         401,
         429,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PostBusinessUserRequest",
       "headers": [],
       "internal": undefined,
@@ -586,18 +542,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
         401,
         429,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetBusinessUserUserIdRequest",
       "headers": [],
       "internal": undefined,
@@ -668,18 +613,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         401,
         429,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PostUserEventRequest",
       "headers": [],
       "internal": false,
@@ -747,18 +681,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         401,
         429,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PostBusinessUserEventRequest",
       "headers": [],
       "internal": false,

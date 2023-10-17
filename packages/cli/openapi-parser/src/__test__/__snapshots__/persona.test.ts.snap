@@ -3558,18 +3558,7 @@ Note that this action will trigger any associated workflows and webhooks.",
       "errorStatusCode": [
         409,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ApproveAnInquiryRequest",
       "headers": [
         {
@@ -4155,18 +4144,7 @@ Note that this action will trigger any associated workflows and webhooks.",
       "errorStatusCode": [
         409,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DeclineAnInquiryRequest",
       "headers": [
         {
@@ -4949,18 +4927,7 @@ Note that this action will trigger any associated workflows and webhooks.",
       "errorStatusCode": [
         409,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateAnAccountRequest",
       "headers": [
         {
@@ -7840,18 +7807,7 @@ After the Account is created, you can create Inquiries with the \`account-id\` t
       "errorStatusCode": [
         409,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAnAccountRequest",
       "headers": [
         {
@@ -13751,18 +13707,7 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ConsolidateIntoAnAccountRequest",
       "headers": [
         {
@@ -14125,18 +14070,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ImportAnAccountRequest",
       "headers": [],
       "internal": undefined,
@@ -14439,18 +14373,7 @@ A match_type of 'email_address' will need to match the entire email address of a
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ImportEmailAddressListsRequest",
       "headers": [],
       "internal": undefined,
@@ -14789,18 +14712,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ImportGeolocationListsRequest",
       "headers": [],
       "internal": undefined,
@@ -15140,18 +15052,7 @@ Common values for id_class include 'pp' for passport and 'dl' for driver license
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ImportGovernmentIdNumberListsRequest",
       "headers": [],
       "internal": undefined,
@@ -15490,18 +15391,7 @@ Both IPv4 and IPv6 are supported.",
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ImportIpAddressListsRequest",
       "headers": [],
       "internal": undefined,
@@ -15839,18 +15729,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ImportNameListsRequest",
       "headers": [],
       "internal": undefined,
@@ -16187,18 +16066,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ImportPhoneNumberListsRequest",
       "headers": [],
       "internal": undefined,
@@ -20103,18 +19971,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateABrowserFingerprintListRequest",
       "headers": [
         {
@@ -20257,18 +20114,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateACountryListRequest",
       "headers": [
         {
@@ -20411,18 +20257,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAnEmailAddressListRequest",
       "headers": [
         {
@@ -20565,18 +20400,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAGeolocationListRequest",
       "headers": [
         {
@@ -20719,18 +20543,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAGovernmentIdNumberListRequest",
       "headers": [
         {
@@ -20873,18 +20686,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAnIpAddressListRequest",
       "headers": [
         {
@@ -21027,18 +20829,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateANameListRequest",
       "headers": [
         {
@@ -21197,18 +20988,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAPhoneNumberListRequest",
       "headers": [
         {
@@ -21351,18 +21131,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateABrowserFingerprintListItemRequest",
       "headers": [
         {
@@ -21748,18 +21517,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateACountyListItemRequest",
       "headers": [
         {
@@ -21908,18 +21666,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAnEmailAddressListItemRequest",
       "headers": [
         {
@@ -22341,18 +22088,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAGeolocationListItemRequest",
       "headers": [
         {
@@ -22798,18 +22534,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAnIpAddressListItemRequest",
       "headers": [
         {
@@ -22958,18 +22683,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAGovernmentIdNumberListItemRequest",
       "headers": [
         {
@@ -23391,18 +23105,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateANameListItemRequest",
       "headers": [
         {
@@ -23824,18 +23527,7 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAPhoneNumberListItemRequest",
       "headers": [
         {
@@ -29510,18 +29202,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateACaseRequest",
       "headers": [],
       "internal": undefined,
@@ -31412,18 +31093,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AddATagRequest",
       "headers": [
         {
@@ -31550,18 +31220,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RemoveATagRequest",
       "headers": [
         {
@@ -31688,18 +31347,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SetAllTagsRequest",
       "headers": [
         {
@@ -31830,18 +31478,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AddATag1Request",
       "headers": [
         {
@@ -31968,18 +31605,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RemoveATag1Request",
       "headers": [
         {
@@ -32106,18 +31732,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SetAllTags1Request",
       "headers": [
         {
@@ -32362,18 +31977,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "BusinessLookupReport1Request",
       "headers": [],
       "internal": undefined,
@@ -33921,18 +33525,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AddPersonaObjectsRequest",
       "headers": [],
       "internal": undefined,
@@ -35382,18 +34975,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAFaceListItemRequest",
       "headers": [
         {
@@ -35579,18 +35161,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAFaceListRequest",
       "headers": [
         {
@@ -35808,18 +35379,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ImportFaceListsRequest",
       "headers": [],
       "internal": undefined,
@@ -36157,18 +35717,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ReportsAddATagRequest",
       "headers": [
         {
@@ -36715,18 +36264,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ReportsRemoveATagRequest",
       "headers": [
         {
@@ -37273,18 +36811,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ReportsSetAllTagsRequest",
       "headers": [
         {
@@ -38145,18 +37672,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SetStatusForACaseRequest",
       "headers": [],
       "internal": undefined,
@@ -43642,18 +43158,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateATinDatabaseVerificationRequest",
       "headers": [
         {
@@ -45694,18 +45199,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SendAnSmsRequest",
       "headers": [],
       "internal": undefined,
@@ -46077,18 +45571,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAWorkflowRunRequest",
       "headers": [
         {
@@ -46974,18 +46457,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SendAnEmailRequest",
       "headers": [],
       "internal": undefined,
@@ -48458,18 +47930,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateAnApiKeyRequest",
       "headers": [],
       "internal": undefined,
@@ -48964,18 +48425,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ExpireAnApiKeyRequest",
       "headers": [],
       "internal": undefined,
@@ -49661,18 +49111,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateAnApiKeyRequest",
       "headers": [],
       "internal": undefined,
@@ -52621,18 +52060,7 @@ The inquiry can still be resumed after expiry.",
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GenerateAOneTimeLinkRequest",
       "headers": [
         {

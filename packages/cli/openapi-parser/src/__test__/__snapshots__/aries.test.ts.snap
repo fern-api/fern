@@ -60,18 +60,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "FetchMenuByConnIdRequest",
       "headers": [],
       "internal": undefined,
@@ -325,18 +314,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetMatchingConnectionsRequest",
       "headers": [],
       "internal": undefined,
@@ -2053,18 +2031,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetConnectionMetadataRequest",
       "headers": [],
       "internal": undefined,
@@ -2132,18 +2099,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SetConnectionMetadataRequest",
       "headers": [],
       "internal": undefined,
@@ -2286,21 +2242,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SendPingRequest",
       "headers": [],
       "internal": undefined,
@@ -2467,10 +2409,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
+          "response": undefined,
         },
       ],
       "generatedRequestName": "PublishCredentialDefinitionRequest",
@@ -2552,18 +2491,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetCreatedCredDefsRequest",
       "headers": [],
       "internal": undefined,
@@ -2701,18 +2629,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetCredentialDefinitionRequest",
       "headers": [],
       "internal": undefined,
@@ -2762,18 +2679,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WriteCredentialDefinitionRequest",
       "headers": [],
       "internal": undefined,
@@ -2823,18 +2729,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetCredentialMimeTypesRequest",
       "headers": [],
       "internal": undefined,
@@ -2884,18 +2779,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetRevocationStatusRequest",
       "headers": [],
       "internal": undefined,
@@ -3260,18 +3144,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetCredentialsRequest",
       "headers": [],
       "internal": undefined,
@@ -3358,21 +3231,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetW3CCredentialsRequest",
       "headers": [],
       "internal": undefined,
@@ -4411,18 +4270,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetV20FeaturesQueriesRequest",
       "headers": [],
       "internal": undefined,
@@ -4509,18 +4357,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetV20FeatureRecordsRequest",
       "headers": [],
       "internal": undefined,
@@ -4700,18 +4537,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetV10FeatureRecordsRequest",
       "headers": [],
       "internal": undefined,
@@ -5024,18 +4850,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetMatchingCredExRecordsV2Request",
       "headers": [],
       "internal": undefined,
@@ -5215,18 +5030,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetCredExRecordRequest",
       "headers": [],
       "internal": undefined,
@@ -5326,21 +5130,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "IssueCredentialToHolderRequest",
       "headers": [],
       "internal": undefined,
@@ -5469,10 +5259,7 @@ exports[`open api parser aries parse open api 1`] = `
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
+          "request": undefined,
           "response": {
             "properties": {
               "auto_issue": {
@@ -5762,21 +5549,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "StoreReceivedCredentialRequest",
       "headers": [],
       "internal": undefined,
@@ -6763,18 +6536,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetMatchingCredExRecordsRequest",
       "headers": [],
       "internal": undefined,
@@ -7163,10 +6925,7 @@ exports[`open api parser aries parse open api 1`] = `
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
+          "request": undefined,
           "response": {
             "properties": {
               "auto_issue": {
@@ -7394,10 +7153,7 @@ exports[`open api parser aries parse open api 1`] = `
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
+          "request": undefined,
           "response": {
             "properties": {
               "auto_issue": {
@@ -7717,10 +7473,7 @@ exports[`open api parser aries parse open api 1`] = `
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
+          "request": undefined,
           "response": {
             "properties": {
               "auto_issue": {
@@ -8458,18 +8211,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SignRequest",
       "headers": [],
       "internal": undefined,
@@ -8844,18 +8586,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetWriteLedgerRequest",
       "headers": [],
       "internal": undefined,
@@ -9101,18 +8832,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetTaaRequest",
       "headers": [],
       "internal": undefined,
@@ -9147,18 +8867,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AcceptTaaRequest",
       "headers": [],
       "internal": undefined,
@@ -9275,18 +8984,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetKeylistsRequest",
       "headers": [],
       "internal": undefined,
@@ -9372,10 +9070,7 @@ exports[`open api parser aries parse open api 1`] = `
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
+          "request": undefined,
           "response": {
             "properties": {
               "@id": {
@@ -9494,10 +9189,7 @@ exports[`open api parser aries parse open api 1`] = `
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
+          "request": undefined,
           "response": {
             "properties": {
               "@id": {
@@ -9580,18 +9272,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RequestMediationForConnectionRequest",
       "headers": [],
       "internal": undefined,
@@ -9653,18 +9334,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetMatchingMediationRecordsRequest",
       "headers": [],
       "internal": undefined,
@@ -9898,10 +9568,7 @@ exports[`open api parser aries parse open api 1`] = `
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
+          "request": undefined,
           "response": {
             "properties": {
               "@id": {
@@ -10630,18 +10297,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetMatchingWalletsRequest",
       "headers": [],
       "internal": undefined,
@@ -11057,18 +10713,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetLoadedPluginsRequest",
       "headers": [],
       "internal": undefined,
@@ -11116,10 +10761,6 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
-              },
-              "presentation_request": {
-                "properties": {},
-                "type": "object",
               },
               "trace": {
                 "primitive": {
@@ -11231,18 +10872,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetMatchingPresExRecordsV2Request",
       "headers": [],
       "internal": undefined,
@@ -11753,10 +11383,7 @@ exports[`open api parser aries parse open api 1`] = `
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
+          "request": undefined,
           "response": {
             "properties": {
               "auto_present": {
@@ -12134,10 +11761,6 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "presentation_proposal": {
-                "properties": {},
-                "type": "object",
-              },
               "trace": {
                 "primitive": {
                   "boolean": false,
@@ -12268,10 +11891,6 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "presentation_request": {
-                "properties": {},
-                "type": "object",
               },
               "trace": {
                 "primitive": {
@@ -12514,18 +12133,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetMatchingPresExRecordsRequest",
       "headers": [],
       "internal": undefined,
@@ -13753,18 +13361,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetActiveRegistryForCredDefIdRequest",
       "headers": [],
       "internal": undefined,
@@ -13814,21 +13411,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ClearPendingRevocationsRequest",
       "headers": [],
       "internal": undefined,
@@ -13892,10 +13475,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
+          "response": undefined,
         },
       ],
       "generatedRequestName": "CreateRevocationRegistryRequest",
@@ -13944,18 +13524,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetCredentialRevocationRecordRequest",
       "headers": [],
       "internal": undefined,
@@ -14042,21 +13611,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PublishRevocationsRequest",
       "headers": [],
       "internal": undefined,
@@ -14103,18 +13658,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetCreatedRegistriesRequest",
       "headers": [],
       "internal": undefined,
@@ -14213,18 +13757,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DeleteTailsFileRequest",
       "headers": [],
       "internal": undefined,
@@ -14294,18 +13827,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetRevocationRegistryRequest",
       "headers": [],
       "internal": undefined,
@@ -14372,10 +13894,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
+          "response": undefined,
         },
       ],
       "generatedRequestName": "UpdateRevocationRegistryRequest",
@@ -14439,18 +13958,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PublishRevocationRegistryDefinitionRequest",
       "headers": [],
       "internal": undefined,
@@ -14533,18 +14041,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PublishRevocationRegistryEntryRequest",
       "headers": [],
       "internal": undefined,
@@ -14627,18 +14124,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateRevocationEntryStateRequest",
       "headers": [],
       "internal": undefined,
@@ -14700,18 +14186,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetIssuedCredentialsCountRequest",
       "headers": [],
       "internal": undefined,
@@ -14761,18 +14236,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetIssuedCredentialDetailsRequest",
       "headers": [],
       "internal": undefined,
@@ -14822,18 +14286,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetPublishedCredentialDetailsRequest",
       "headers": [],
       "internal": undefined,
@@ -14883,18 +14336,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SetRevocationRegistryStateRequest",
       "headers": [],
       "internal": undefined,
@@ -15167,18 +14609,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PublishSchemaRequest",
       "headers": [],
       "internal": undefined,
@@ -15258,18 +14689,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetMatchingCreatedSchemasRequest",
       "headers": [],
       "internal": undefined,
@@ -15373,18 +14793,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetSchemaRequest",
       "headers": [],
       "internal": undefined,
@@ -15434,18 +14843,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WriteSchemaRecordToWalletRequest",
       "headers": [],
       "internal": undefined,
@@ -15530,18 +14928,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetStatusRequest",
       "headers": [],
       "internal": undefined,
@@ -15576,18 +14963,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetConfigRequest",
       "headers": [],
       "internal": undefined,
@@ -15869,18 +15245,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetTransactionListRequest",
       "headers": [],
       "internal": undefined,
@@ -16126,18 +15491,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SetEndorserRoleForConnIdRequest",
       "headers": [],
       "internal": undefined,
@@ -16760,18 +16114,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetDidsRequest",
       "headers": [],
       "internal": undefined,
@@ -16955,10 +16298,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
+          "response": undefined,
         },
       ],
       "generatedRequestName": "CreateLocalDidRequest",
@@ -17056,18 +16396,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetPublicDidRequest",
       "headers": [],
       "internal": undefined,
@@ -17102,18 +16431,7 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SetPublicDidRequest",
       "headers": [],
       "internal": undefined,

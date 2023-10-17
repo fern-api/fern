@@ -131,18 +131,7 @@ authenticated user.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AuthTokensCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -199,18 +188,7 @@ given Dev organization.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AuthTokensDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -264,12 +242,7 @@ given Dev organization.
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "token": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -435,18 +408,7 @@ authenticated user.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AuthTokensSelfDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -500,12 +462,7 @@ organization.
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "token": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -1082,12 +1039,7 @@ used.
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "dev_user": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -1595,12 +1547,7 @@ organization.
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "rev_org": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -1740,12 +1687,7 @@ organization.
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "rev_org": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -2054,12 +1996,7 @@ them.
             "type": "object",
           },
           "response": {
-            "properties": {
-              "rev_org": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },

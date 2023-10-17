@@ -144,18 +144,7 @@ exports[`open api parser hume parse open api 1`] = `
       "availability": undefined,
       "description": "Start a new batch job.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "StartJobRequest",
       "headers": [],
       "internal": undefined,

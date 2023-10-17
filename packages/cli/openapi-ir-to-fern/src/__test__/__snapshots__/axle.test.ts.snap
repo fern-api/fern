@@ -545,15 +545,6 @@ exports[`open api parser axle simple 1`] = `
             "display-name": "Start Ignition",
             "docs": "Start an Ignition session. Returns the ignitionUri to direct the user to authenticate.",
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/ignition",
             "request": {

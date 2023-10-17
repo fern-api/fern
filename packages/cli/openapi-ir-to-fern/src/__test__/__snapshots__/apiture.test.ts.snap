@@ -2515,17 +2515,6 @@ This information provides hints to clients, allowing bank customers to select tr
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/institutions/{institutionId}/transferDateRestrictions",
             "path-parameters": {
@@ -2689,7 +2678,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {},
+                "request": undefined,
                 "response": {
                   "body": {},
                 },
@@ -2808,15 +2797,6 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
             ],
             "method": "PATCH",
             "path": "/accounts/{accountId}/overdraftProtection",
@@ -3019,9 +2999,7 @@ Note: This operation requires an identity challenge if the financial institution
                 "request": {
                   "schedule": {},
                 },
-                "response": {
-                  "body": {},
-                },
+                "response": undefined,
               },
             ],
             "method": "POST",
@@ -3081,17 +3059,6 @@ Note: This operation requires an identity challenge if the financial institution
               "root.UnauthorizedError",
               "root.ForbiddenError",
               "root.NotFoundError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
             ],
             "method": "GET",
             "path": "/transfers/{transferId}",
@@ -3170,17 +3137,6 @@ Note: This operation requires an identity challenge if the financial institution
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {},
-                "response": {
-                  "body": {},
-                },
-              },
             ],
             "method": "PATCH",
             "path": "/transfers/{transferId}",

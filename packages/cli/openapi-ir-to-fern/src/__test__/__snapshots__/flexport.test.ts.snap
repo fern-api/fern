@@ -11600,15 +11600,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/shipments_shareable",
             "request": {
@@ -11656,15 +11647,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
             ],
             "method": "PATCH",
             "path": "/shipments/{id}",

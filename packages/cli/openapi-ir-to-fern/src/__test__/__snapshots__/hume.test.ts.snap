@@ -79,15 +79,6 @@ exports[`open api parser hume simple 1`] = `
             "display-name": "Start Job",
             "docs": "Start a new batch job.",
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/v0/batch/jobs",
             "request": {

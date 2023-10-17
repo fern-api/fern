@@ -12500,17 +12500,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "root.ForbiddenError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/api/categorization",
             "request": {

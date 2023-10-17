@@ -3345,15 +3345,6 @@ authenticated user.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/auth-tokens.create",
             "request": {
@@ -3434,15 +3425,6 @@ given Dev organization.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/auth-tokens.delete",
             "request": {
@@ -3483,9 +3465,7 @@ given Dev organization.
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "token": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -3569,15 +3549,6 @@ authenticated user.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/auth-tokens.self.delete",
             "request": {
@@ -3615,9 +3586,7 @@ organization.
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "token": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -3736,9 +3705,7 @@ used.
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "dev_user": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -4015,9 +3982,7 @@ organization.
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "rev_org": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -4126,9 +4091,7 @@ records.
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "rev_org": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -4260,9 +4223,7 @@ them.
                   "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
                 },
                 "response": {
-                  "body": {
-                    "rev_org": {},
-                  },
+                  "body": {},
                 },
               },
             ],

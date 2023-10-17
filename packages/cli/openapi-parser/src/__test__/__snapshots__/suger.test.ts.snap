@@ -68,18 +68,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetBuyerRequest",
       "headers": [],
       "internal": undefined,
@@ -145,21 +134,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateBuyerNameDescriptionRequest",
       "headers": [],
       "internal": undefined,
@@ -308,21 +283,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateOrUpdateDraftOfferRequest",
       "headers": [],
       "internal": undefined,
@@ -442,18 +403,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetEntitlementRequest",
       "headers": [],
       "internal": undefined,
@@ -520,18 +470,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AddEntitlementCreditRequest",
       "headers": [],
       "internal": undefined,
@@ -609,21 +548,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateEntitlementNameRequest",
       "headers": [],
       "internal": undefined,
@@ -771,18 +696,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetEntitlementTermRequest",
       "headers": [],
       "internal": undefined,
@@ -863,18 +777,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ListUsageRecordGroupsByEntitlementRequest",
       "headers": [],
       "internal": undefined,
@@ -1007,18 +910,7 @@ exports[`open api parser suger parse open api 1`] = `
         409,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ReportUsageRecordGroupRequest",
       "headers": [],
       "internal": undefined,
@@ -1097,18 +989,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ListUsageRecordReportsByEntitlementRequest",
       "headers": [],
       "internal": undefined,
@@ -1313,18 +1194,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateIntegrationRequest",
       "headers": [],
       "internal": undefined,
@@ -1389,18 +1259,7 @@ exports[`open api parser suger parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetIntegrationRequest",
       "headers": [],
       "internal": undefined,
@@ -1509,18 +1368,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateIntegrationRequest",
       "headers": [],
       "internal": undefined,
@@ -1915,21 +1763,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateOfferRequest",
       "headers": [],
       "internal": undefined,
@@ -1993,18 +1827,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetOfferRequest",
       "headers": [],
       "internal": undefined,
@@ -2678,18 +2501,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ListRevenueRecordsRequest",
       "headers": [],
       "internal": undefined,
@@ -2889,18 +2701,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ListRevenueRecordDetailsRequest",
       "headers": [],
       "internal": undefined,
@@ -3155,18 +2956,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetProductRequest",
       "headers": [],
       "internal": undefined,
@@ -3232,18 +3022,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateProductRequest",
       "headers": [],
       "internal": undefined,
@@ -3600,18 +3379,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ListUsageRecordGroupsByProductRequest",
       "headers": [],
       "internal": undefined,
@@ -3743,18 +3511,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ListUsageRecordReportsByProductRequest",
       "headers": [],
       "internal": undefined,
@@ -3886,18 +3643,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetRevenueReportRequest",
       "headers": [],
       "internal": undefined,
@@ -3962,18 +3708,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ListUsageRecordGroupsByOrganizationRequest",
       "headers": [],
       "internal": undefined,
@@ -4090,18 +3825,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetUsageRecordGroupRequest",
       "headers": [],
       "internal": undefined,
@@ -4168,18 +3892,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ListUsageRecordReportsByOrganizationRequest",
       "headers": [],
       "internal": undefined,
@@ -4296,18 +4009,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetUsageRecordReportRequest",
       "headers": [],
       "internal": undefined,
@@ -4374,18 +4076,7 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetUsageReportRequest",
       "headers": [],
       "internal": undefined,
@@ -4449,18 +4140,7 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetApiClientAccessTokenRequest",
       "headers": [],
       "internal": undefined,

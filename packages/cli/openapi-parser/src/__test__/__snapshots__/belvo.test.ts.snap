@@ -14317,18 +14317,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         403,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CategorizeTransactionsRequest",
       "headers": [],
       "internal": undefined,

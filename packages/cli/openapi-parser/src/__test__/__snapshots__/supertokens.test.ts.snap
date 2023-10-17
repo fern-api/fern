@@ -4108,18 +4108,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EmailPasswordSigninRequest",
       "headers": [
         {
@@ -4298,18 +4287,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EmailPasswordSignupRequest",
       "headers": [
         {
@@ -4699,18 +4677,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EmailPasswordPutUserRequest",
       "headers": [
         {
@@ -4904,18 +4871,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EmailPasswordGetPasswordResetTokenRequest",
       "headers": [
         {
@@ -5878,18 +5834,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ThirdPartySigninupRequest",
       "headers": [
         {
@@ -6807,18 +6752,7 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EmailVerificationVerifyTokenRequest",
       "headers": [
         {
@@ -6964,18 +6898,7 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EmailVerificationVerifyTokenRemoveRequest",
       "headers": [
         {
@@ -7260,18 +7183,7 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EmailVerificationVerifyRequest",
       "headers": [
         {
@@ -7466,18 +7378,7 @@ Note that there is an invisible character at the end of the path, this was to av
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EmailVerificationVerifyRemoveRequest",
       "headers": [
         {
@@ -7749,18 +7650,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UserMetadataUpdateRequest",
       "headers": [
         {
@@ -7935,18 +7825,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UserMetadataDeleteRequest",
       "headers": [
         {
@@ -11174,18 +11053,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RegenerateSessionRequest",
       "headers": [
         {
@@ -11528,18 +11396,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PutSessionDataRequest",
       "headers": [
         {
@@ -12159,18 +12016,7 @@ e.g.:
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PutJwtDataRequest",
       "headers": [
         {
@@ -15308,18 +15154,7 @@ e.g.:
         401,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DeleteUserRequest",
       "headers": [
         {

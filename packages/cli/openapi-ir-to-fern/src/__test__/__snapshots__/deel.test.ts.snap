@@ -7115,9 +7115,7 @@ exports[`open api parser deel simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "data": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -7174,9 +7172,7 @@ exports[`open api parser deel simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "data": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -7767,13 +7763,9 @@ exports[`open api parser deel simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {
-                  "data": {},
-                },
+                "request": {},
                 "response": {
-                  "body": {
-                    "data": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -8198,17 +8190,6 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/contract-templates",
             "response": {
@@ -8286,9 +8267,7 @@ exports[`open api parser deel simple 1`] = `
                 "query-parameters": undefined,
                 "request": {},
                 "response": {
-                  "body": {
-                    "data": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -9664,17 +9643,6 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/legal-entities",
             "response": {
@@ -10516,9 +10484,7 @@ exports[`open api parser deel simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "data": {},
-                  },
+                  "body": {},
                 },
               },
             ],

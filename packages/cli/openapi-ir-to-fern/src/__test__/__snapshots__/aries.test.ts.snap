@@ -6474,17 +6474,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch the active menu",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/action-menu/{conn_id}/fetch",
             "path-parameters": {
@@ -7029,17 +7018,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch connection metadata",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/connections/{conn_id}/metadata",
             "path-parameters": {
@@ -7116,17 +7094,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Query agent-to-agent connections",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/connections",
             "request": {
@@ -7295,17 +7262,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Set connection metadata",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/connections/{conn_id}/metadata",
             "path-parameters": {
@@ -7372,17 +7328,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Search for matching credential definitions that agent originated",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/credential-definitions/created",
             "request": {
@@ -7430,17 +7375,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Gets a credential definition from the ledger",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/credential-definitions/{cred_def_id}",
             "path-parameters": {
@@ -7468,9 +7402,7 @@ exports[`open api parser aries simple 1`] = `
                   "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                   "tag": "default",
                 },
-                "response": {
-                  "body": {},
-                },
+                "response": undefined,
               },
             ],
             "method": "POST",
@@ -7521,17 +7453,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Writes a credential definition non-secret record to the wallet",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/credential-definitions/{cred_def_id}/write_record",
             "path-parameters": {
@@ -7599,17 +7520,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Get attribute MIME types from wallet",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/credential/mime-types/{credential_id}",
             "path-parameters": {
@@ -7663,17 +7573,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch credentials from wallet",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/credentials",
             "request": {
@@ -7706,17 +7605,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Query credential revocation status by id",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/credential/revoked/{credential_id}",
             "path-parameters": {
@@ -7783,17 +7671,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch W3C credentials from wallet",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {},
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/credentials/w3c",
             "request": {
@@ -8193,17 +8070,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Discover Features records",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/discover-features/records",
             "request": {
@@ -8287,17 +8153,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Discover Features v2.0 records",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/discover-features-2.0/records",
             "request": {
@@ -8320,17 +8175,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Query supported features",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/discover-features-2.0/queries",
             "request": {
@@ -8466,17 +8310,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Query transactions",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/transactions",
             "response": {
@@ -8666,17 +8499,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Set transaction jobs",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/transactions/{conn_id}/set-endorser-role",
             "path-parameters": {
@@ -8993,17 +8815,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch all credential exchange records",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/issue-credential/records",
             "request": {
@@ -9046,7 +8857,7 @@ exports[`open api parser aries simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {},
+                "request": undefined,
                 "response": {
                   "body": {
                     "auto_issue": "false",
@@ -9131,7 +8942,7 @@ exports[`open api parser aries simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {},
+                "request": undefined,
                 "response": {
                   "body": {
                     "auto_issue": "false",
@@ -9508,7 +9319,7 @@ exports[`open api parser aries simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {},
+                "request": undefined,
                 "response": {
                   "body": {
                     "auto_issue": "false",
@@ -9723,17 +9534,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch a single credential exchange record",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/issue-credential-2.0/records/{cred_ex_id}",
             "path-parameters": {
@@ -9752,17 +9552,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch all credential exchange records",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/issue-credential-2.0/records",
             "request": {
@@ -9800,17 +9589,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send holder a credential",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {},
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/issue-credential-2.0/records/{cred_ex_id}/issue",
             "path-parameters": {
@@ -9875,7 +9653,7 @@ exports[`open api parser aries simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {},
+                "request": undefined,
                 "response": {
                   "body": {
                     "auto_issue": "false",
@@ -10216,17 +9994,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Store a received credential",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {},
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/issue-credential-2.0/records/{cred_ex_id}/store",
             "path-parameters": {
@@ -10271,17 +10038,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Sign a JSON-LD structure and return it",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/jsonld/sign",
             "request": {
@@ -10362,15 +10118,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Accept the transaction author agreement",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/ledger/taa/accept",
             "request": {
@@ -10526,17 +10273,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch the current transaction author agreement, if any",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/ledger/taa",
             "response": {
@@ -10549,17 +10285,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch the current write ledger",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/ledger/multiple/get-write-ledger",
             "response": {
@@ -10692,7 +10417,7 @@ exports[`open api parser aries simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {},
+                "request": undefined,
                 "response": {
                   "body": {
                     "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -10748,17 +10473,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Retrieve keylists by connection or role",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/mediation/keylists",
             "request": {
@@ -10786,17 +10500,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Query mediation requests, returns list of all mediation records",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/mediation/requests",
             "request": {
@@ -10885,15 +10588,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Request mediation from connection",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {},
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/mediation/request/{conn_id}",
             "path-parameters": {
@@ -10934,7 +10628,7 @@ exports[`open api parser aries simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {},
+                "request": undefined,
                 "response": {
                   "body": {
                     "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -10990,7 +10684,7 @@ exports[`open api parser aries simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {},
+                "request": undefined,
                 "response": {
                   "body": {
                     "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -11270,17 +10964,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Query subwallets",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/multitenancy/wallets",
             "request": {
@@ -11638,17 +11321,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch all present-proof exchange records",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/present-proof/records",
             "request": {
@@ -12090,7 +11762,6 @@ exports[`open api parser aries simple 1`] = `
                 "query-parameters": undefined,
                 "request": {
                   "auto_verify": "false",
-                  "presentation_request": {},
                   "trace": "false",
                 },
                 "response": {
@@ -12162,17 +11833,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch all present-proof exchange records",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/present-proof-2.0/records",
             "request": {
@@ -12327,7 +11987,6 @@ exports[`open api parser aries simple 1`] = `
                 "request": {
                   "auto_verify": "false",
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "presentation_request": {},
                   "trace": "false",
                 },
                 "response": {
@@ -12392,7 +12051,6 @@ exports[`open api parser aries simple 1`] = `
                 "query-parameters": undefined,
                 "request": {
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "presentation_proposal": {},
                   "trace": "false",
                 },
                 "response": {
@@ -12455,7 +12113,7 @@ exports[`open api parser aries simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {},
+                "request": undefined,
                 "response": {
                   "body": {
                     "auto_present": "false",
@@ -12649,17 +12307,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Clear pending revocations",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {},
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/revocation/clear-pending-revocations",
             "request": {
@@ -12693,9 +12340,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": {
                   "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                 },
-                "response": {
-                  "body": {},
-                },
+                "response": undefined,
               },
             ],
             "method": "POST",
@@ -12727,17 +12372,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Delete the tail files",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "DELETE",
             "path": "/revocation/registry/delete-tails-file",
             "request": {
@@ -12783,17 +12417,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Get current active revocation registry by credential definition id",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/revocation/active-registry/{cred_def_id}",
             "path-parameters": {
@@ -12812,17 +12435,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Search for matching revocation registries that current agent created",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/revocation/registries/created",
             "request": {
@@ -12850,17 +12462,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Get credential revocation status",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/revocation/credential-record",
             "request": {
@@ -12893,17 +12494,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Get details of credentials issued against revocation registry",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/revocation/registry/{rev_reg_id}/issued/details",
             "path-parameters": {
@@ -12922,17 +12512,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Get number of credentials issued against revocation registry",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/revocation/registry/{rev_reg_id}/issued",
             "path-parameters": {
@@ -12951,17 +12530,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Get details of revoked credentials from ledger",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/revocation/registry/{rev_reg_id}/issued/indy_recs",
             "path-parameters": {
@@ -12980,17 +12548,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Get revocation registry by revocation registry id",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/revocation/registry/{rev_reg_id}",
             "path-parameters": {
@@ -13009,17 +12566,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send revocation registry definition to ledger",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/revocation/registry/{rev_reg_id}/definition",
             "path-parameters": {
@@ -13053,17 +12599,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send revocation registry entry to ledger",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/revocation/registry/{rev_reg_id}/entry",
             "path-parameters": {
@@ -13097,17 +12632,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Publish pending revocations to ledger",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {},
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/revocation/publish-revocations",
             "request": {
@@ -13197,17 +12721,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Set revocation registry state manually",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "PATCH",
             "path": "/revocation/registry/{rev_reg_id}/set-state",
             "path-parameters": {
@@ -13236,17 +12749,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fix revocation state in wallet and return number of updated entries",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "PUT",
             "path": "/revocation/registry/{rev_reg_id}/fix-revocation-entry-state",
             "path-parameters": {
@@ -13283,9 +12785,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": {
                   "tails_public_uri": "http://192.168.56.133:6543/revocation/registry/WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0/tails-file",
                 },
-                "response": {
-                  "body": {},
-                },
+                "response": undefined,
               },
             ],
             "method": "PATCH",
@@ -13350,17 +12850,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Search for matching schema that agent originated",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/schemas/created",
             "request": {
@@ -13398,17 +12887,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Gets a schema from the ledger",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/schemas/{schema_id}",
             "path-parameters": {
@@ -13427,17 +12905,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Sends a schema to the ledger",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/schemas",
             "request": {
@@ -13482,17 +12949,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Writes a schema non-secret record to the wallet",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/schemas/{schema_id}/write_record",
             "path-parameters": {
@@ -13522,17 +12978,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch the server configuration",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/status/config",
             "response": {
@@ -13570,17 +13015,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch the list of loaded plugins",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/plugins",
             "response": {
@@ -13618,17 +13052,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch the server status",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/status",
             "response": {
@@ -13678,17 +13101,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send a trust ping to a connection",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {},
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/connections/{conn_id}/send-ping",
             "path-parameters": {
@@ -13742,9 +13154,7 @@ exports[`open api parser aries simple 1`] = `
                   "method": "sov",
                   "seed": "000000000000000000000000Trustee1",
                 },
-                "response": {
-                  "body": {},
-                },
+                "response": undefined,
               },
             ],
             "method": "POST",
@@ -13816,17 +13226,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "List wallet DIDs",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/wallet/did",
             "request": {
@@ -13869,17 +13268,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch the current public DID",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "GET",
             "path": "/wallet/did/public",
             "response": {
@@ -13971,17 +13359,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Assign the current public DID",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
             "method": "POST",
             "path": "/wallet/did/public",
             "request": {

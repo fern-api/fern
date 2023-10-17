@@ -11976,18 +11976,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ShipmentUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -12120,18 +12109,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ShipmentsShareableRequest",
       "headers": [],
       "internal": undefined,
