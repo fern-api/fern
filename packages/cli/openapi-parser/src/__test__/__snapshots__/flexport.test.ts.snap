@@ -17,15 +17,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "BookingAmendmentCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -145,15 +137,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "BookingLineItemIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -450,15 +434,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "BookingLineItemCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -578,15 +554,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "BookingLineItemShowRequest",
       "headers": [],
       "internal": undefined,
@@ -707,15 +675,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "BookingsIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -1566,15 +1526,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "BookingShowRequest",
       "headers": [],
       "internal": undefined,
@@ -1844,15 +1796,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "availability": undefined,
       "description": "Returns a list of commercial invoices",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CommercialInvoicesIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -2144,15 +2088,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CommercialInvoicesCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -2425,15 +2361,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CommercialInvoicesShowRequest",
       "headers": [],
       "internal": undefined,
@@ -2556,15 +2484,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CustomsEntryIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -2805,15 +2725,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CustomsEntriesShowRequest",
       "headers": [],
       "internal": undefined,
@@ -2936,15 +2848,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DocumentsIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -3303,15 +3207,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DocumentsCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -3431,15 +3327,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DocumentsShowRequest",
       "headers": [],
       "internal": undefined,
@@ -3605,15 +3493,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EventsIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -3925,15 +3805,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EventsShowRequest",
       "headers": [],
       "internal": undefined,
@@ -4054,15 +3926,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "InvoiceIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -4546,15 +4410,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "InvoicesShowRequest",
       "headers": [],
       "internal": undefined,
@@ -4677,15 +4533,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "NetworkCompanyIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -5103,15 +4951,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "availability": undefined,
       "description": "Retrieves the details of a single company.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "NetworkCompanyShowRequest",
       "headers": [],
       "internal": undefined,
@@ -5395,15 +5235,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CompanyEntityIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -5694,15 +5526,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "NetworkCompanyEntityCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -5822,15 +5646,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "NetworkCompanyEntityShowRequest",
       "headers": [],
       "internal": undefined,
@@ -6114,15 +5930,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "NetworkContactIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -6573,15 +6381,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "NetworkContactShowRequest",
       "headers": [],
       "internal": undefined,
@@ -6872,15 +6672,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "LocationIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -7412,15 +7204,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "NetworkLocationShowRequest",
       "headers": [],
       "internal": undefined,
@@ -7704,15 +7488,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "NetworkCompanyMeRequest",
       "headers": [],
       "internal": undefined,
@@ -7820,15 +7596,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "OceanContainerLegsIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -8099,15 +7867,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "OceanContainerLegsShowRequest",
       "headers": [],
       "internal": undefined,
@@ -8228,15 +7988,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ContainerListRequest",
       "headers": [],
       "internal": undefined,
@@ -8509,15 +8261,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ContainerShowRequest",
       "headers": [],
       "internal": undefined,
@@ -8640,15 +8384,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PortsIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -8945,15 +8681,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ProductIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -9370,15 +9098,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ProductShowRequest",
       "headers": [],
       "internal": undefined,
@@ -9690,15 +9410,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PurchaseOrderLineItemIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -10006,15 +9718,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PurchaseOrderLineItemShowRequest",
       "headers": [],
       "internal": undefined,
@@ -10135,15 +9839,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PurchaseOrderIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -10773,15 +10469,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PurchaseOrderShowRequest",
       "headers": [],
       "internal": undefined,
@@ -11028,15 +10716,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ShipmentLegIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -11305,15 +10985,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ShipmentLegShowRequest",
       "headers": [],
       "internal": undefined,
@@ -11450,15 +11122,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ShipmentIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -12189,15 +11853,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ShipmentShowRequest",
       "headers": [],
       "internal": undefined,
@@ -12320,18 +11976,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ShipmentUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -12464,18 +12109,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ShipmentsShareableRequest",
       "headers": [],
       "internal": undefined,

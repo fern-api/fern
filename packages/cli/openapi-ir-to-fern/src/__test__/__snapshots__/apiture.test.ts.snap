@@ -2673,6 +2673,17 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/accounts/{accountId}/jointOwnerInvitations",
             "path-parameters": {
@@ -2979,6 +2990,17 @@ Note: This operation requires an identity challenge if the financial institution
               "root.UnauthorizedError",
               "root.ForbiddenError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "schedule": {},
+                },
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/transfers",

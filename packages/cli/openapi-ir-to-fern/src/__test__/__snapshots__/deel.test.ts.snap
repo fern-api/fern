@@ -7019,6 +7019,23 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "expires_at": "2020-03-31T10:58:49.780Z",
+                      "id": "12345",
+                      "url": "https://s3URL/letsdeel.com/invoices/12345.pdf",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/billing/{invoice_id}/download",
             "path-parameters": {
@@ -7047,6 +7064,23 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "expires_at": "2020-03-31T10:58:49.780Z",
+                      "id": "12345",
+                      "url": "https://s3URL/letsdeel.com/invoices/12345.pdf",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/invoices/{invoice_id}/download",
             "path-parameters": {
@@ -7073,6 +7107,17 @@ exports[`open api parser deel simple 1`] = `
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/invoices",
@@ -7119,6 +7164,17 @@ exports[`open api parser deel simple 1`] = `
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/payments",
@@ -7178,6 +7234,17 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "POST",
             "path": "/attachments",
@@ -7295,6 +7362,17 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/contracts/{contract_id}/premium",
             "path-parameters": {
@@ -7335,6 +7413,19 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "job_title_name": "3D Designer",
+                  },
+                },
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/contracts/{contract_id}/amendments",
@@ -7377,6 +7468,17 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/contracts",
             "request": {
@@ -7408,6 +7510,17 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "POST",
             "path": "/contracts/fixed-rate",
@@ -7441,6 +7554,17 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/contracts/milestone-based",
             "request": {
@@ -7473,6 +7597,17 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/contracts/task-based",
             "request": {
@@ -7504,6 +7639,17 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "POST",
             "path": "/contracts/time-based",
@@ -7611,6 +7757,17 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "POST",
             "path": "/contracts/{contract_id}/terminations",
@@ -7731,6 +7888,15 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": undefined,
+              },
+            ],
             "method": "PATCH",
             "path": "/contracts/{contract_id}",
             "path-parameters": {
@@ -7766,6 +7932,17 @@ exports[`open api parser deel simple 1`] = `
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/contracts/{contract_id}/final-payments",
@@ -7885,6 +8062,17 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/contracts/{contract_id}",
             "path-parameters": {
@@ -7912,6 +8100,17 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/contracts",
@@ -8013,6 +8212,15 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/contracts/{contract_id}/invitations",
             "path-parameters": {
@@ -8052,6 +8260,17 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/contracts/estimate",
             "request": {
@@ -8086,6 +8305,15 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/contracts/{contract_id}/signatures",
@@ -8167,6 +8395,21 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {
+                    "data": {
+                      "job_title": "Designer",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/eor",
             "request": {
@@ -8199,6 +8442,24 @@ exports[`open api parser deel simple 1`] = `
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "adjustments_information_box": "Not allowed to contract people under 21.",
+                      "currency": "BRL",
+                      "hiring_guide_country_name": "brazil",
+                      "insurance_fee": "15.00",
+                    },
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/eor/validations/{country_code}",
@@ -8241,6 +8502,21 @@ exports[`open api parser deel simple 1`] = `
               "root.ConflictError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "id": "6733c95b-df52-419e-906d-6904d3117dab",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/hris/direct-employees",
             "request": {
@@ -8282,6 +8558,17 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/invoice-adjustments",
             "request": {
@@ -8316,6 +8603,15 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/invoice-adjustments/{invoice_adjustment_id}/reviews",
@@ -8357,6 +8653,15 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/invoice-adjustments/many/reviews",
@@ -8430,6 +8735,17 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/invoice-adjustments",
@@ -8507,6 +8823,17 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/contracts/{contract_id}/invoice-adjustments",
@@ -8586,6 +8913,15 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": undefined,
+              },
+            ],
             "method": "PATCH",
             "path": "/invoice-adjustments/{invoice_adjustment_id}",
             "path-parameters": {
@@ -8640,6 +8976,17 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/lookups/countries",
             "response": {
@@ -8661,6 +9008,17 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/lookups/currencies",
@@ -8721,6 +9079,17 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/lookups/seniorities",
             "request": {
@@ -8752,6 +9121,17 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/lookups/time-off-types",
@@ -8787,6 +9167,15 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/contracts/{contract_id}/milestones",
@@ -8828,6 +9217,15 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/contracts/{contract_id}/milestones/{milestone_id}/reviews",
@@ -8873,6 +9271,15 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/contracts/{contract_id}/milestones/many/reviews",
@@ -8947,6 +9354,17 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/contracts/{contract_id}/milestones",
             "path-parameters": {
@@ -8974,6 +9392,17 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/contracts/{contract_id}/milestones/{milestone_id}",
@@ -9020,6 +9449,15 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/contracts/{contract_id}/off-cycle-payments",
             "path-parameters": {
@@ -9061,6 +9499,17 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/contracts/{contract_id}/off-cycle-payments/{offcycle_payment_id}",
             "path-parameters": {
@@ -9092,6 +9541,17 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/contracts/{contract_id}/off-cycle-payments",
@@ -9129,6 +9589,17 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/agreements",
@@ -9194,6 +9665,17 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/organizations",
             "response": {
@@ -9215,6 +9697,17 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/teams",
@@ -9250,6 +9743,20 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "amount": "123.45",
+                    "description": "Make the button pop.",
+                  },
+                },
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/contracts/{contract_id}/tasks",
@@ -9292,6 +9799,17 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/contracts/{contract_id}/tasks/many/reviews",
             "path-parameters": {
@@ -9332,6 +9850,22 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "reason": "Excited!",
+                    "status": "approved",
+                  },
+                },
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "POST",
             "path": "/contracts/{contract_id}/tasks/{task_id}/reviews",
@@ -9420,6 +9954,17 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/contracts/{contract_id}/tasks",
             "path-parameters": {
@@ -9458,6 +10003,17 @@ exports[`open api parser deel simple 1`] = `
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "POST",
             "path": "/contracts/{contract_id}/time-offs",
@@ -9521,6 +10077,17 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "PUT",
             "path": "/contracts/{contract_id}/time-offs/{timeoff_id}",
             "path-parameters": {
@@ -9557,6 +10124,17 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/time-offs",
             "response": {
@@ -9576,6 +10154,17 @@ exports[`open api parser deel simple 1`] = `
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/contracts/{contract_id}/entitlements",
@@ -9602,6 +10191,17 @@ exports[`open api parser deel simple 1`] = `
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/contracts/{contract_id}/time-offs",
@@ -9630,6 +10230,20 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "data": {
+                    "denial_reason": "Not allowed for this day.",
+                    "is_approved": true,
+                  },
+                },
+                "response": undefined,
+              },
             ],
             "method": "PATCH",
             "path": "/time-offs/{timeoff_id}/review",
@@ -9685,6 +10299,17 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/timesheets",
             "request": {
@@ -9719,6 +10344,15 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/timesheets/{timesheet_id}/reviews",
@@ -9760,6 +10394,15 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/timesheets/many/reviews",
@@ -9834,6 +10477,17 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/timesheets/{timesheet_id}",
             "path-parameters": {
@@ -9861,6 +10515,17 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/timesheets",
@@ -9929,6 +10594,17 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/contracts/{contract_id}/timesheets",
             "path-parameters": {
@@ -9996,6 +10672,15 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": undefined,
+              },
             ],
             "method": "PATCH",
             "path": "/timesheets/{timesheet_id}",
@@ -10073,6 +10758,17 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "PATCH",
             "path": "/webhooks/{id}",
             "path-parameters": {
@@ -10134,6 +10830,17 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/webhooks/{id}",
             "path-parameters": {
@@ -10161,6 +10868,17 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "POST",
             "path": "/webhooks",

@@ -6638,6 +6638,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/events/{id}/retry",
             "path-parameters": {
@@ -6891,6 +6902,15 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/issue-triggers",
@@ -7858,6 +7878,17 @@ exports[`open api parser hookdeck simple 1`] = `
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/requests/{id}/retry",
             "path-parameters": {
@@ -8605,6 +8636,17 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "PUT",
             "path": "/transformations/run",

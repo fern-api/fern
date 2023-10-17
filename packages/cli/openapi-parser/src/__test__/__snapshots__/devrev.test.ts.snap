@@ -18,15 +18,7 @@ exports[`open api parser devrev parse open api 1`] = `
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ArtifactsLocateRequest",
       "headers": [],
       "internal": undefined,
@@ -83,15 +75,7 @@ exports[`open api parser devrev parse open api 1`] = `
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ArtifactsPrepareRequest",
       "headers": [],
       "internal": undefined,
@@ -147,18 +131,7 @@ authenticated user.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AuthTokensCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -215,18 +188,7 @@ given Dev organization.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AuthTokensDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -280,12 +242,7 @@ given Dev organization.
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "token": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -349,15 +306,7 @@ token type issued for a given subject.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AuthTokensListRequest",
       "headers": [],
       "internal": undefined,
@@ -459,18 +408,7 @@ authenticated user.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AuthTokensSelfDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -524,12 +462,7 @@ organization.
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "token": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -663,15 +596,7 @@ connections can not be deleted using this method.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DevOrgAuthConnectionsDeleteRequest",
       "headers": [],
       "internal": undefined,
@@ -789,15 +714,7 @@ created by the user.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DevOrgAuthConnectionsListRequest",
       "headers": [],
       "internal": undefined,
@@ -846,15 +763,7 @@ disabled.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DevOrgAuthConnectionsToggleRequest",
       "headers": [],
       "internal": undefined,
@@ -966,15 +875,7 @@ disabled.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DevUsersListRequest",
       "headers": [],
       "internal": undefined,
@@ -1138,12 +1039,7 @@ used.
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "dev_user": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -1398,15 +1294,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PartsListRequest",
       "headers": [],
       "internal": undefined,
@@ -1659,12 +1547,7 @@ organization.
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "rev_org": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -1804,12 +1687,7 @@ organization.
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "rev_org": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -1873,15 +1751,7 @@ to access.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RevOrgsListRequest",
       "headers": [],
       "internal": undefined,
@@ -2126,12 +1996,7 @@ them.
             "type": "object",
           },
           "response": {
-            "properties": {
-              "rev_org": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -2398,15 +2263,7 @@ and a logical concept denoted by the tag's name.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TagsListRequest",
       "headers": [],
       "internal": undefined,
@@ -2711,15 +2568,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TimelineEntriesListRequest",
       "headers": [],
       "internal": undefined,
@@ -3100,15 +2949,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WebhooksListRequest",
       "headers": [],
       "internal": undefined,
@@ -3368,15 +3209,7 @@ used.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WorksExportRequest",
       "headers": [],
       "internal": undefined,
@@ -3690,15 +3523,7 @@ organizations.
         500,
         503,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WorksListRequest",
       "headers": [],
       "internal": undefined,

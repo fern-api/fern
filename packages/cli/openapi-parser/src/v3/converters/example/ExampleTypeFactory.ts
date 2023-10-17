@@ -49,6 +49,9 @@ export class ExampleTypeFactory {
     }
 
     private buildFromPartialObjectExample(partialObjectExample: PartialObjectExample): FullExample | undefined {
+        if (Object.keys(partialObjectExample.includedProperties).length === 0) {
+            return undefined;
+        }
         const fullExample: Record<PropertyKey, FullExample> = {};
         for (const [propertyKey, propertyExample] of Object.entries(partialObjectExample.includedProperties)) {
             switch (propertyExample.type) {
