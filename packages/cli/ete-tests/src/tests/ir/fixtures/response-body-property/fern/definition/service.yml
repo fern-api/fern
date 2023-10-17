@@ -17,4 +17,4 @@ service:
       request: string
       response:
         type: Response
-        responseBodyProperty: data
+        response-property: data

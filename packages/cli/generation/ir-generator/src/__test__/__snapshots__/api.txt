@@ -469,7 +469,7 @@ exports[`generate IR 1`] = `
               },
               "typeId": "type_imdb:MovieId",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -939,7 +939,7 @@ exports[`generate IR 1`] = `
               },
               "typeId": "type_imdb:Movie",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": null,

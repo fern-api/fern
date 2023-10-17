@@ -173,7 +173,7 @@ exports[`generate IR 1`] = `
               "_type": "primitive",
               "primitive": "STRING",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": null,

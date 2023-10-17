@@ -503,7 +503,7 @@ exports[`generate IR 1`] = `
               "_type": "primitive",
               "primitive": "BOOLEAN",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": null,
@@ -700,7 +700,7 @@ exports[`generate IR 1`] = `
               "_type": "primitive",
               "primitive": "BOOLEAN",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {

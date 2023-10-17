@@ -1777,7 +1777,7 @@ exports[`generate IR 1`] = `
                 },
               },
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -2090,7 +2090,7 @@ exports[`generate IR 1`] = `
                 },
               },
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -2302,7 +2302,7 @@ exports[`generate IR 1`] = `
                 },
               },
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -2615,7 +2615,7 @@ exports[`generate IR 1`] = `
                 },
               },
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -2835,7 +2835,7 @@ exports[`generate IR 1`] = `
                 },
               },
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -3160,7 +3160,7 @@ exports[`generate IR 1`] = `
                 },
               },
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -3578,7 +3578,7 @@ exports[`generate IR 1`] = `
                 },
               },
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -4076,7 +4076,7 @@ exports[`generate IR 1`] = `
               },
               "typeId": "type_types/enum:WeatherReport",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -4426,7 +4426,7 @@ exports[`generate IR 1`] = `
               "_type": "primitive",
               "primitive": "STRING",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": null,
@@ -4689,7 +4689,7 @@ exports[`generate IR 1`] = `
               },
               "typeId": "type_types/object:ObjectWithOptionalField",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -5153,7 +5153,7 @@ exports[`generate IR 1`] = `
               },
               "typeId": "type_types/object:ObjectWithOptionalField",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -5617,7 +5617,7 @@ exports[`generate IR 1`] = `
               },
               "typeId": "type_types/object:ObjectWithOptionalField",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -5871,7 +5871,7 @@ exports[`generate IR 1`] = `
               "_type": "primitive",
               "primitive": "BOOLEAN",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": null,
@@ -6230,7 +6230,7 @@ exports[`generate IR 1`] = `
               },
               "typeId": "type_types/object:ObjectWithOptionalField",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -6626,7 +6626,7 @@ exports[`generate IR 1`] = `
               },
               "typeId": "type_types/object:ObjectWithRequiredField",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -7022,7 +7022,7 @@ exports[`generate IR 1`] = `
               },
               "typeId": "type_types/object:NestedObjectWithOptionalField",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -7418,7 +7418,7 @@ exports[`generate IR 1`] = `
               },
               "typeId": "type_types/object:NestedObjectWithRequiredField",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -7768,7 +7768,7 @@ exports[`generate IR 1`] = `
               "_type": "primitive",
               "primitive": "STRING",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": null,
@@ -8441,7 +8441,7 @@ exports[`generate IR 1`] = `
               "_type": "primitive",
               "primitive": "STRING",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -8630,7 +8630,7 @@ exports[`generate IR 1`] = `
               "_type": "primitive",
               "primitive": "STRING",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -8723,7 +8723,7 @@ exports[`generate IR 1`] = `
               "_type": "primitive",
               "primitive": "INTEGER",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -8816,7 +8816,7 @@ exports[`generate IR 1`] = `
               "_type": "primitive",
               "primitive": "LONG",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -8909,7 +8909,7 @@ exports[`generate IR 1`] = `
               "_type": "primitive",
               "primitive": "DOUBLE",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -9002,7 +9002,7 @@ exports[`generate IR 1`] = `
               "_type": "primitive",
               "primitive": "BOOLEAN",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -9095,7 +9095,7 @@ exports[`generate IR 1`] = `
               "_type": "primitive",
               "primitive": "DATE_TIME",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -9188,7 +9188,7 @@ exports[`generate IR 1`] = `
               "_type": "primitive",
               "primitive": "DATE",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -9281,7 +9281,7 @@ exports[`generate IR 1`] = `
               "_type": "primitive",
               "primitive": "UUID",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -9374,7 +9374,7 @@ exports[`generate IR 1`] = `
               "_type": "primitive",
               "primitive": "BASE_64",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -9765,7 +9765,7 @@ exports[`generate IR 1`] = `
               },
               "typeId": "type_types/union:Animal",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -10430,7 +10430,7 @@ exports[`generate IR 1`] = `
               },
               "typeId": "type_types/object:ObjectWithOptionalField",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -10677,7 +10677,7 @@ exports[`generate IR 1`] = `
               "_type": "primitive",
               "primitive": "BOOLEAN",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -10919,7 +10919,7 @@ exports[`generate IR 1`] = `
               },
               "typeId": "type_types/object:ObjectWithOptionalField",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": null,
@@ -10972,7 +10972,7 @@ exports[`generate IR 1`] = `
               "_type": "primitive",
               "primitive": "STRING",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": null,

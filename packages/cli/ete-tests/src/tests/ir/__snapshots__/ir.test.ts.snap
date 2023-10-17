@@ -9481,7 +9481,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                             },
                             "typeId": "type_nested:Response"
                         },
-                        "returnResponseBodyProperty": null,
+                        "responseProperty": null,
                         "docs": null
                     },
                     "errors": [],
@@ -11801,7 +11801,25 @@ exports[`ir {"name":"response-body-property"} 1`] = `
                             },
                             "typeId": "type_service:Response"
                         },
-                        "returnResponseBodyProperty": "data",
+                        "responseProperty": {
+                            "originalName": "data",
+                            "camelCase": {
+                                "unsafeName": "data",
+                                "safeName": "data"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "data",
+                                "safeName": "data"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DATA",
+                                "safeName": "DATA"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Data",
+                                "safeName": "Data"
+                            }
+                        },
                         "docs": null
                     },
                     "errors": [],
@@ -12635,7 +12653,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                             "_type": "primitive",
                             "primitive": "STRING"
                         },
-                        "returnResponseBodyProperty": null,
+                        "responseProperty": null,
                         "docs": null
                     },
                     "errors": [
@@ -14140,7 +14158,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                             },
                             "typeId": "type_imdb:MovieId"
                         },
-                        "returnResponseBodyProperty": null,
+                        "responseProperty": null,
                         "docs": null
                     },
                     "errors": [
@@ -21672,7 +21690,7 @@ exports[`ir {"name":"simple"} 1`] = `
                             "_type": "primitive",
                             "primitive": "STRING"
                         },
-                        "returnResponseBodyProperty": null,
+                        "responseProperty": null,
                         "docs": null
                     },
                     "errors": [
@@ -22054,7 +22072,7 @@ exports[`ir {"name":"simple"} 1`] = `
                             },
                             "typeId": "type_imdb:MovieId"
                         },
-                        "returnResponseBodyProperty": null,
+                        "responseProperty": null,
                         "docs": null
                     },
                     "errors": [
@@ -23342,7 +23360,7 @@ exports[`ir {"name":"simple"} 1`] = `
                             },
                             "typeId": "type_imdb:Movie"
                         },
-                        "returnResponseBodyProperty": null,
+                        "responseProperty": null,
                         "docs": null
                     },
                     "errors": [

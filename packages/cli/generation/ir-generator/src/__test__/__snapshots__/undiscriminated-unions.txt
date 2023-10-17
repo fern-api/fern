@@ -284,7 +284,7 @@ exports[`generate IR 1`] = `
               },
               "typeId": "type_union:MyUnion",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {

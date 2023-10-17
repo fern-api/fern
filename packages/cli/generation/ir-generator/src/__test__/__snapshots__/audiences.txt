@@ -262,7 +262,7 @@ exports[`generate IR 1`] = `
               },
               "typeId": "type_folder-a/service:Response",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": null,
@@ -567,7 +567,7 @@ exports[`generate IR 1`] = `
               },
               "typeId": "type_foo:ImportingType",
             },
-            "returnResponseBodyProperty": null,
+            "responseProperty": null,
             "type": "json",
           },
           "sdkRequest": {

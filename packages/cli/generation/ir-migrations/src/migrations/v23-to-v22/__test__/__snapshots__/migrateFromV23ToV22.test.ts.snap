@@ -1802,7 +1802,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                 },
               },
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -2122,7 +2122,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                 },
               },
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -2339,7 +2339,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                 },
               },
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -2659,7 +2659,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                 },
               },
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -2884,7 +2884,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                 },
               },
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -3216,7 +3216,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
                 },
               },
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -3730,7 +3730,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "type": "named",
               "typeId": "type_types/enum:WeatherReport",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -4089,7 +4089,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "_type": "primitive",
               "primitive": "STRING",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": undefined,
@@ -4361,7 +4361,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "type": "named",
               "typeId": "type_types/object:ObjectWithOptionalField",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -4836,7 +4836,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "type": "named",
               "typeId": "type_types/object:ObjectWithOptionalField",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -5311,7 +5311,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "type": "named",
               "typeId": "type_types/object:ObjectWithOptionalField",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -5571,7 +5571,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "_type": "primitive",
               "primitive": "BOOLEAN",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": undefined,
@@ -5942,7 +5942,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "type": "named",
               "typeId": "type_types/object:ObjectWithOptionalField",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -6347,7 +6347,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "type": "named",
               "typeId": "type_types/object:ObjectWithRequiredField",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -6752,7 +6752,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "type": "named",
               "typeId": "type_types/object:NestedObjectWithOptionalField",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -7157,7 +7157,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "type": "named",
               "typeId": "type_types/object:NestedObjectWithRequiredField",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -7516,7 +7516,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "_type": "primitive",
               "primitive": "STRING",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": undefined,
@@ -8225,7 +8225,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "_type": "primitive",
               "primitive": "STRING",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -8420,7 +8420,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "_type": "primitive",
               "primitive": "STRING",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -8516,7 +8516,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "_type": "primitive",
               "primitive": "INTEGER",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -8612,7 +8612,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "_type": "primitive",
               "primitive": "LONG",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -8708,7 +8708,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "_type": "primitive",
               "primitive": "DOUBLE",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -8804,7 +8804,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "_type": "primitive",
               "primitive": "BOOLEAN",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -8900,7 +8900,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "_type": "primitive",
               "primitive": "DATE_TIME",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -8996,7 +8996,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "_type": "primitive",
               "primitive": "DATE",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -9092,7 +9092,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "_type": "primitive",
               "primitive": "UUID",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -9188,7 +9188,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "_type": "primitive",
               "primitive": "BASE_64",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -9589,7 +9589,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "type": "named",
               "typeId": "type_types/union:Animal",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -10266,7 +10266,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "type": "named",
               "typeId": "type_types/object:ObjectWithOptionalField",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -10522,7 +10522,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "_type": "primitive",
               "primitive": "BOOLEAN",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": {
@@ -10771,7 +10771,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
               "type": "named",
               "typeId": "type_types/object:ObjectWithOptionalField",
             },
-            "returnResponseBodyProperty": undefined,
+            "responseProperty": undefined,
             "type": "json",
           },
           "sdkRequest": undefined,
