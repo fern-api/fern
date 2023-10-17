@@ -469,7 +469,7 @@
                         "properties": {
                           "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
                           "type": { "type": "string" },
-                          "response-property": { "type": "string" }
+                          "property": { "type": "string" }
                         },
                         "required": ["type"],
                         "additionalProperties": false

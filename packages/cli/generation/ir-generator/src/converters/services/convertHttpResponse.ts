@@ -49,7 +49,7 @@ function convertJsonResponse(
     typeResolver: TypeResolver
 ): HttpResponse {
     const responseBodyType = file.parseTypeReference(response);
-    const responseProperty = typeof response !== "string" ? response["response-property"] : undefined;
+    const responseProperty = typeof response !== "string" ? response.property : undefined;
     if (
         responseProperty !== undefined &&
         !typeReferenceHasProperty(responseBodyType, responseProperty, file, typeResolver)

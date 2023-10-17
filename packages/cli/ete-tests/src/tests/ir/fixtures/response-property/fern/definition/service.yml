@@ -23,7 +23,7 @@ service:
       request: string
       response:
         type: Response
-        response-property: data
+        property: data
 
     getObjectDocs:
       method: POST
@@ -31,4 +31,4 @@ service:
       request: string
       response:
         type: Response
-        response-property: docs
+        property: docs

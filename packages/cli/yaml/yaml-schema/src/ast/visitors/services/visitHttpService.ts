@@ -228,7 +228,7 @@ async function visitEndpoint({
                             location: TypeReferenceLocation.Response,
                         });
                     },
-                    ["response-property"]: noop,
+                    property: noop,
                 });
             }
         },
