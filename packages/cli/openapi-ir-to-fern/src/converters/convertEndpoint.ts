@@ -254,66 +254,56 @@ function convertEndpointExample(endpointExample: EndpointExample): RawSchemas.Ex
     return {
         "path-parameters":
             endpointExample.pathParameters != null && endpointExample.pathParameters.length > 0
-                ? convertNamedFullExamplesToExampleTypeReferenceSchemas(endpointExample.pathParameters)
+                ? convertNamedFullExamplesToFerns(endpointExample.pathParameters)
                 : undefined,
         "query-parameters":
             endpointExample.queryParameters != null && endpointExample.queryParameters.length > 0
-                ? convertNamedFullExamplesToExampleTypeReferenceSchemas(endpointExample.queryParameters)
+                ? convertNamedFullExamplesToFerns(endpointExample.queryParameters)
                 : undefined,
         headers:
             endpointExample.headers != null && endpointExample.headers.length > 0
-                ? convertNamedFullExamplesToExampleTypeReferenceSchemas(endpointExample.headers)
+                ? convertNamedFullExamplesToFerns(endpointExample.headers)
                 : undefined,
-        request:
-            endpointExample.request != null
-                ? convertFullExampleToExampleTypeReferenceSchema(endpointExample.request)
-                : undefined,
+        request: endpointExample.request != null ? convertFullExampleToFern(endpointExample.request) : undefined,
         response:
-            endpointExample.response != null
-                ? { body: convertFullExampleToExampleTypeReferenceSchema(endpointExample.response) }
-                : undefined,
+            endpointExample.response != null ? { body: convertFullExampleToFern(endpointExample.response) } : undefined,
     };
 }
 
-function convertNamedFullExamplesToExampleTypeReferenceSchemas(
+function convertNamedFullExamplesToFerns(
     namedFullExamples: NamedFullExample[]
 ): Record<string, RawSchemas.ExampleTypeReferenceSchema> {
     const result: Record<string, RawSchemas.ExampleTypeReferenceSchema> = {};
     namedFullExamples.map(
-        (namedFullExample) =>
-            (result[namedFullExample.name] = convertFullExampleToExampleTypeReferenceSchema(namedFullExample.value))
+        (namedFullExample) => (result[namedFullExample.name] = convertFullExampleToFern(namedFullExample.value))
     );
     return result;
 }
 
-function convertFullExampleToExampleTypeReferenceSchema(
-    fullExample: FullExample
-): RawSchemas.ExampleTypeReferenceSchema {
+function convertFullExampleToFern(fullExample: FullExample): RawSchemas.ExampleTypeReferenceSchema {
     switch (fullExample.type) {
         case "primitive":
-            return convertPrimitiveExampleToExampleTypeReferenceSchema(fullExample.primitive);
+            return convertPrimitiveExampleToFern(fullExample.primitive);
         case "object":
-            return convertFullExamplePropertiesToExampleTypeReferenceSchema(fullExample.properties);
+            return convertFullExamplePropertiesToFern(fullExample.properties);
         case "array":
-            return convertFullArrayExampleToExampleTypeReferenceSchema(fullExample.array);
+            return convertFullArrayExampleToFern(fullExample.array);
         case "map":
-            return convertFullMapExampleToExampleTypeReferenceSchema(fullExample.map);
+            return convertFullMapExampleToFern(fullExample.map);
         case "oneOf":
-            return convertFullOneOfExampleToExampleTypeReferenceSchema(fullExample.oneOf);
+            return convertFullOneOfExampleToFern(fullExample.oneOf);
         case "enum":
             return fullExample.enum;
         case "literal":
             return fullExample.literal;
         case "unknown":
-            return convertFullExampleToExampleTypeReferenceSchema(fullExample.unknown);
+            return convertFullExampleToFern(fullExample.unknown);
         default:
             throw new Error("Cannot convert unsupported example type");
     }
 }
 
-function convertPrimitiveExampleToExampleTypeReferenceSchema(
-    primitiveExample: PrimitiveExample
-): RawSchemas.ExampleTypeReferenceSchema {
+function convertPrimitiveExampleToFern(primitiveExample: PrimitiveExample): RawSchemas.ExampleTypeReferenceSchema {
     switch (primitiveExample.type) {
         case "int":
             return primitiveExample.int;
@@ -338,43 +328,33 @@ function convertPrimitiveExampleToExampleTypeReferenceSchema(
     }
 }
 
-function convertFullExamplePropertiesToExampleTypeReferenceSchema(
+function convertFullExamplePropertiesToFern(
     fullExampleProperties: Record<PropertyKey, FullExample>
 ): RawSchemas.ExampleTypeReferenceSchema {
     const properties: Record<string, RawSchemas.ExampleTypeReferenceSchema> = {};
     Object.entries(fullExampleProperties).forEach(
-        ([propertyKey, fullExample]) =>
-            (properties[propertyKey] = convertFullExampleToExampleTypeReferenceSchema(fullExample))
+        ([propertyKey, fullExample]) => (properties[propertyKey] = convertFullExampleToFern(fullExample))
     );
     return properties;
 }
 
-function convertFullArrayExampleToExampleTypeReferenceSchema(
-    fullExamples: FullExample[]
-): RawSchemas.ExampleTypeReferenceSchema {
+function convertFullArrayExampleToFern(fullExamples: FullExample[]): RawSchemas.ExampleTypeReferenceSchema {
     return fullExamples.map((fullExample) => {
-        return convertFullExampleToExampleTypeReferenceSchema(fullExample);
+        return convertFullExampleToFern(fullExample);
     });
 }
 
-function convertFullMapExampleToExampleTypeReferenceSchema(
-    pairs: KeyValuePair[]
-): RawSchemas.ExampleTypeReferenceSchema {
+function convertFullMapExampleToFern(pairs: KeyValuePair[]): RawSchemas.ExampleTypeReferenceSchema {
     return pairs.map((pair) => {
-        return [
-            convertPrimitiveExampleToExampleTypeReferenceSchema(pair.key),
-            convertFullExampleToExampleTypeReferenceSchema(pair.value),
-        ];
+        return [convertPrimitiveExampleToFern(pair.key), convertFullExampleToFern(pair.value)];
     });
 }
 
-function convertFullOneOfExampleToExampleTypeReferenceSchema(
-    oneOf: FullOneOfExample
-): RawSchemas.ExampleTypeReferenceSchema {
+function convertFullOneOfExampleToFern(oneOf: FullOneOfExample): RawSchemas.ExampleTypeReferenceSchema {
     if (oneOf.type === "discriminated") {
-        return convertFullExamplePropertiesToExampleTypeReferenceSchema(oneOf.discriminated);
+        return convertFullExamplePropertiesToFern(oneOf.discriminated);
     }
-    return convertFullExampleToExampleTypeReferenceSchema(oneOf.undisciminated);
+    return convertFullExampleToFern(oneOf.undisciminated);
 }
 
 interface ConvertedRequest {
