@@ -229,7 +229,10 @@ export function convertEndpoint({
     convertedEndpoint.errors = isPackageYml ? errorsThrown : errorsThrown.map((error) => `${ROOT_PREFIX}.${error}`);
 
     if (endpoint.examples.length > 0) {
-        convertedEndpoint.examples = convertEndpointExamples(endpoint.examples);
+        const convertedExamples = convertEndpointExamples(endpoint.examples);
+        if (convertedExamples.length >= 1) {
+            convertedEndpoint.examples = convertedExamples;
+        }
     }
 
     return {
@@ -245,23 +248,38 @@ interface NamedFullExample {
 }
 
 function convertEndpointExamples(endpointExamples: EndpointExample[]): RawSchemas.ExampleEndpointCallSchema[] {
-    return endpointExamples.map((endpointExample) => {
-        return convertEndpointExample(endpointExample);
+    const convertedExamples: RawSchemas.ExampleEndpointCallSchema[] = [];
+    endpointExamples.forEach((endpointExample) => {
+        const convertedExample = convertEndpointExample(endpointExample);
+        if (!isExampleEndpointCallSchemaEmpty(convertedExample)) {
+            convertedExamples.push(convertedExample);
+        }
     });
+    return convertedExamples;
+}
+
+function isExampleEndpointCallSchemaEmpty(exampleEndpointCallSchema: RawSchemas.ExampleEndpointCallSchema): boolean {
+    return (
+        exampleEndpointCallSchema["path-parameters"] === undefined &&
+        exampleEndpointCallSchema["query-parameters"] === undefined &&
+        exampleEndpointCallSchema.headers === undefined &&
+        exampleEndpointCallSchema.request === undefined &&
+        exampleEndpointCallSchema.response === undefined
+    );
 }
 
 function convertEndpointExample(endpointExample: EndpointExample): RawSchemas.ExampleEndpointCallSchema {
     return {
         "path-parameters":
-            endpointExample.pathParameters != null
+            endpointExample.pathParameters != null && endpointExample.pathParameters.length > 0
                 ? convertNamedFullExamplesToExampleTypeReferenceSchemas(endpointExample.pathParameters)
                 : undefined,
         "query-parameters":
-            endpointExample.queryParameters != null
+            endpointExample.queryParameters != null && endpointExample.queryParameters.length > 0
                 ? convertNamedFullExamplesToExampleTypeReferenceSchemas(endpointExample.queryParameters)
                 : undefined,
         headers:
-            endpointExample.headers != null
+            endpointExample.headers != null && endpointExample.headers.length > 0
                 ? convertNamedFullExamplesToExampleTypeReferenceSchemas(endpointExample.headers)
                 : undefined,
         request:
