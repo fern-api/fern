@@ -89,6 +89,7 @@ exports[`generate IR 1`] = `
   },
   "serviceTypeReferenceInfo": {
     "sharedTypes": [
+      "type_service:WithDocs",
       "type_service:Object",
     ],
     "typesReferencedOnlyByService": {
@@ -279,6 +280,179 @@ exports[`generate IR 1`] = `
             },
           },
         },
+        {
+          "allPathParameters": [],
+          "auth": false,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
+          "errors": [],
+          "examples": [],
+          "fullPath": {
+            "head": "object",
+            "parts": [],
+          },
+          "headers": [],
+          "id": "endpoint_service.getObjectDocs",
+          "method": "POST",
+          "name": {
+            "camelCase": {
+              "safeName": "getObjectDocs",
+              "unsafeName": "getObjectDocs",
+            },
+            "originalName": "getObjectDocs",
+            "pascalCase": {
+              "safeName": "GetObjectDocs",
+              "unsafeName": "GetObjectDocs",
+            },
+            "screamingSnakeCase": {
+              "safeName": "GET_OBJECT_DOCS",
+              "unsafeName": "GET_OBJECT_DOCS",
+            },
+            "snakeCase": {
+              "safeName": "get_object_docs",
+              "unsafeName": "get_object_docs",
+            },
+          },
+          "path": {
+            "head": "/object",
+            "parts": [],
+          },
+          "pathParameters": [],
+          "queryParameters": [],
+          "requestBody": {
+            "contentType": null,
+            "docs": null,
+            "requestBodyType": {
+              "_type": "primitive",
+              "primitive": "STRING",
+            },
+            "type": "reference",
+          },
+          "response": {
+            "docs": null,
+            "responseBodyType": {
+              "_type": "named",
+              "fernFilepath": {
+                "allParts": [
+                  {
+                    "camelCase": {
+                      "safeName": "service",
+                      "unsafeName": "service",
+                    },
+                    "originalName": "service",
+                    "pascalCase": {
+                      "safeName": "Service",
+                      "unsafeName": "Service",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "SERVICE",
+                      "unsafeName": "SERVICE",
+                    },
+                    "snakeCase": {
+                      "safeName": "service",
+                      "unsafeName": "service",
+                    },
+                  },
+                ],
+                "file": {
+                  "camelCase": {
+                    "safeName": "service",
+                    "unsafeName": "service",
+                  },
+                  "originalName": "service",
+                  "pascalCase": {
+                    "safeName": "Service",
+                    "unsafeName": "Service",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "SERVICE",
+                    "unsafeName": "SERVICE",
+                  },
+                  "snakeCase": {
+                    "safeName": "service",
+                    "unsafeName": "service",
+                  },
+                },
+                "packagePath": [],
+              },
+              "name": {
+                "camelCase": {
+                  "safeName": "response",
+                  "unsafeName": "response",
+                },
+                "originalName": "Response",
+                "pascalCase": {
+                  "safeName": "Response",
+                  "unsafeName": "Response",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "RESPONSE",
+                  "unsafeName": "RESPONSE",
+                },
+                "snakeCase": {
+                  "safeName": "response",
+                  "unsafeName": "response",
+                },
+              },
+              "typeId": "type_service:Response",
+            },
+            "responseProperty": {
+              "camelCase": {
+                "safeName": "docs",
+                "unsafeName": "docs",
+              },
+              "originalName": "docs",
+              "pascalCase": {
+                "safeName": "Docs",
+                "unsafeName": "Docs",
+              },
+              "screamingSnakeCase": {
+                "safeName": "DOCS",
+                "unsafeName": "DOCS",
+              },
+              "snakeCase": {
+                "safeName": "docs",
+                "unsafeName": "docs",
+              },
+            },
+            "type": "json",
+          },
+          "sdkRequest": {
+            "requestParameterName": {
+              "camelCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+              "originalName": "request",
+              "pascalCase": {
+                "safeName": "Request",
+                "unsafeName": "Request",
+              },
+              "screamingSnakeCase": {
+                "safeName": "REQUEST",
+                "unsafeName": "REQUEST",
+              },
+              "snakeCase": {
+                "safeName": "request",
+                "unsafeName": "request",
+              },
+            },
+            "shape": {
+              "type": "justRequestBody",
+              "value": {
+                "contentType": null,
+                "docs": null,
+                "requestBodyType": {
+                  "_type": "primitive",
+                  "primitive": "STRING",
+                },
+                "type": "typeReference",
+              },
+            },
+          },
+        },
       ],
       "headers": [],
       "name": {
@@ -400,6 +574,7 @@ exports[`generate IR 1`] = `
       "service": "service_service",
       "subpackages": [],
       "types": [
+        "type_service:WithDocs",
         "type_service:Object",
         "type_service:Response",
       ],
@@ -630,6 +805,71 @@ exports[`generate IR 1`] = `
           },
           "name": {
             "camelCase": {
+              "safeName": "withDocs",
+              "unsafeName": "withDocs",
+            },
+            "originalName": "WithDocs",
+            "pascalCase": {
+              "safeName": "WithDocs",
+              "unsafeName": "WithDocs",
+            },
+            "screamingSnakeCase": {
+              "safeName": "WITH_DOCS",
+              "unsafeName": "WITH_DOCS",
+            },
+            "snakeCase": {
+              "safeName": "with_docs",
+              "unsafeName": "with_docs",
+            },
+          },
+          "typeId": "type_service:WithDocs",
+        },
+        {
+          "fernFilepath": {
+            "allParts": [
+              {
+                "camelCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+                "originalName": "service",
+                "pascalCase": {
+                  "safeName": "Service",
+                  "unsafeName": "Service",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SERVICE",
+                  "unsafeName": "SERVICE",
+                },
+                "snakeCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+              },
+            ],
+            "file": {
+              "camelCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+              "originalName": "service",
+              "pascalCase": {
+                "safeName": "Service",
+                "unsafeName": "Service",
+              },
+              "screamingSnakeCase": {
+                "safeName": "SERVICE",
+                "unsafeName": "SERVICE",
+              },
+              "snakeCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+            },
+            "packagePath": [],
+          },
+          "name": {
+            "camelCase": {
               "safeName": "object",
               "unsafeName": "object",
             },
@@ -652,7 +892,73 @@ exports[`generate IR 1`] = `
       ],
       "shape": {
         "_type": "object",
-        "extends": [],
+        "extends": [
+          {
+            "fernFilepath": {
+              "allParts": [
+                {
+                  "camelCase": {
+                    "safeName": "service",
+                    "unsafeName": "service",
+                  },
+                  "originalName": "service",
+                  "pascalCase": {
+                    "safeName": "Service",
+                    "unsafeName": "Service",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "SERVICE",
+                    "unsafeName": "SERVICE",
+                  },
+                  "snakeCase": {
+                    "safeName": "service",
+                    "unsafeName": "service",
+                  },
+                },
+              ],
+              "file": {
+                "camelCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+                "originalName": "service",
+                "pascalCase": {
+                  "safeName": "Service",
+                  "unsafeName": "Service",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "SERVICE",
+                  "unsafeName": "SERVICE",
+                },
+                "snakeCase": {
+                  "safeName": "service",
+                  "unsafeName": "service",
+                },
+              },
+              "packagePath": [],
+            },
+            "name": {
+              "camelCase": {
+                "safeName": "withDocs",
+                "unsafeName": "withDocs",
+              },
+              "originalName": "WithDocs",
+              "pascalCase": {
+                "safeName": "WithDocs",
+                "unsafeName": "WithDocs",
+              },
+              "screamingSnakeCase": {
+                "safeName": "WITH_DOCS",
+                "unsafeName": "WITH_DOCS",
+              },
+              "snakeCase": {
+                "safeName": "with_docs",
+                "unsafeName": "with_docs",
+              },
+            },
+            "typeId": "type_service:WithDocs",
+          },
+        ],
         "properties": [
           {
             "availability": null,
@@ -744,6 +1050,113 @@ exports[`generate IR 1`] = `
                 },
               },
               "typeId": "type_service:Object",
+            },
+          },
+        ],
+      },
+    },
+    "type_service:WithDocs": {
+      "availability": null,
+      "docs": null,
+      "examples": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+              "originalName": "service",
+              "pascalCase": {
+                "safeName": "Service",
+                "unsafeName": "Service",
+              },
+              "screamingSnakeCase": {
+                "safeName": "SERVICE",
+                "unsafeName": "SERVICE",
+              },
+              "snakeCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "service",
+              "unsafeName": "service",
+            },
+            "originalName": "service",
+            "pascalCase": {
+              "safeName": "Service",
+              "unsafeName": "Service",
+            },
+            "screamingSnakeCase": {
+              "safeName": "SERVICE",
+              "unsafeName": "SERVICE",
+            },
+            "snakeCase": {
+              "safeName": "service",
+              "unsafeName": "service",
+            },
+          },
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "withDocs",
+            "unsafeName": "withDocs",
+          },
+          "originalName": "WithDocs",
+          "pascalCase": {
+            "safeName": "WithDocs",
+            "unsafeName": "WithDocs",
+          },
+          "screamingSnakeCase": {
+            "safeName": "WITH_DOCS",
+            "unsafeName": "WITH_DOCS",
+          },
+          "snakeCase": {
+            "safeName": "with_docs",
+            "unsafeName": "with_docs",
+          },
+        },
+        "typeId": "type_service:WithDocs",
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "docs",
+                  "unsafeName": "docs",
+                },
+                "originalName": "docs",
+                "pascalCase": {
+                  "safeName": "Docs",
+                  "unsafeName": "Docs",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "DOCS",
+                  "unsafeName": "DOCS",
+                },
+                "snakeCase": {
+                  "safeName": "docs",
+                  "unsafeName": "docs",
+                },
+              },
+              "wireValue": "docs",
+            },
+            "valueType": {
+              "_type": "primitive",
+              "primitive": "STRING",
             },
           },
         ],
