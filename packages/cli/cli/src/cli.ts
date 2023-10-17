@@ -199,9 +199,7 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 if (argv.url != null && !isURL(argv.url)) {
                     return cliContext.failWithoutThrowing("--url must be a valid url");
                 }
-                console.log("Initializing docs 1");
                 await cliContext.runTask(async (context) => {
-                    console.log("Initializing docs");
                     await initializeDocs({
                         organization: argv.organization,
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
