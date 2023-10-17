@@ -229,10 +229,7 @@ export function convertEndpoint({
     convertedEndpoint.errors = isPackageYml ? errorsThrown : errorsThrown.map((error) => `${ROOT_PREFIX}.${error}`);
 
     if (endpoint.examples.length > 0) {
-        const convertedExamples = convertEndpointExamples(endpoint.examples);
-        if (convertedExamples.length >= 1) {
-            convertedEndpoint.examples = convertedExamples;
-        }
+        convertedEndpoint.examples = convertEndpointExamples(endpoint.examples);
     }
 
     return {
@@ -248,24 +245,9 @@ interface NamedFullExample {
 }
 
 function convertEndpointExamples(endpointExamples: EndpointExample[]): RawSchemas.ExampleEndpointCallSchema[] {
-    const convertedExamples: RawSchemas.ExampleEndpointCallSchema[] = [];
-    endpointExamples.forEach((endpointExample) => {
-        const convertedExample = convertEndpointExample(endpointExample);
-        if (!isExampleEndpointCallSchemaEmpty(convertedExample)) {
-            convertedExamples.push(convertedExample);
-        }
+    return endpointExamples.map((endpointExample) => {
+        return convertEndpointExample(endpointExample);
     });
-    return convertedExamples;
-}
-
-function isExampleEndpointCallSchemaEmpty(exampleEndpointCallSchema: RawSchemas.ExampleEndpointCallSchema): boolean {
-    return (
-        exampleEndpointCallSchema["path-parameters"] === undefined &&
-        exampleEndpointCallSchema["query-parameters"] === undefined &&
-        exampleEndpointCallSchema.headers === undefined &&
-        exampleEndpointCallSchema.request === undefined &&
-        exampleEndpointCallSchema.response === undefined
-    );
 }
 
 function convertEndpointExample(endpointExample: EndpointExample): RawSchemas.ExampleEndpointCallSchema {
