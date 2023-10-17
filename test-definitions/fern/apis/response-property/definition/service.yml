@@ -1,9 +1,15 @@
 types:
+  WithDocs:
+    properties:
+      docs: string
+
   Object:
     properties:
       id: string
 
   Response:
+    extends:
+      - WithDocs
     properties:
       data: Object
 
@@ -18,3 +24,11 @@ service:
       response:
         type: Response
         response-property: data
+
+    getObjectDocs:
+      method: POST
+      path: /object
+      request: string
+      response:
+        type: Response
+        response-property: docs

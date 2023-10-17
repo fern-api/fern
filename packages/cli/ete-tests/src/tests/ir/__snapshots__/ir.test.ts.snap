@@ -11254,6 +11254,113 @@ exports[`ir {"name":"response-property"} 1`] = `
     },
     "headers": [],
     "types": {
+        "type_service:WithDocs": {
+            "name": {
+                "name": {
+                    "originalName": "WithDocs",
+                    "camelCase": {
+                        "unsafeName": "withDocs",
+                        "safeName": "withDocs"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "with_docs",
+                        "safeName": "with_docs"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "WITH_DOCS",
+                        "safeName": "WITH_DOCS"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "WithDocs",
+                        "safeName": "WithDocs"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                },
+                "typeId": "type_service:WithDocs"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "docs",
+                                "camelCase": {
+                                    "unsafeName": "docs",
+                                    "safeName": "docs"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "docs",
+                                    "safeName": "docs"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "DOCS",
+                                    "safeName": "DOCS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Docs",
+                                    "safeName": "Docs"
+                                }
+                            },
+                            "wireValue": "docs"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [],
+            "examples": [],
+            "availability": null,
+            "docs": null
+        },
         "type_service:Object": {
             "name": {
                 "name": {
@@ -11429,7 +11536,73 @@ exports[`ir {"name":"response-property"} 1`] = `
             },
             "shape": {
                 "_type": "object",
-                "extends": [],
+                "extends": [
+                    {
+                        "name": {
+                            "originalName": "WithDocs",
+                            "camelCase": {
+                                "unsafeName": "withDocs",
+                                "safeName": "withDocs"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "with_docs",
+                                "safeName": "with_docs"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "WITH_DOCS",
+                                "safeName": "WITH_DOCS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "WithDocs",
+                                "safeName": "WithDocs"
+                            }
+                        },
+                        "fernFilepath": {
+                            "allParts": [
+                                {
+                                    "originalName": "service",
+                                    "camelCase": {
+                                        "unsafeName": "service",
+                                        "safeName": "service"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "service",
+                                        "safeName": "service"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "SERVICE",
+                                        "safeName": "SERVICE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Service",
+                                        "safeName": "Service"
+                                    }
+                                }
+                            ],
+                            "packagePath": [],
+                            "file": {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        },
+                        "typeId": "type_service:WithDocs"
+                    }
+                ],
                 "properties": [
                     {
                         "name": {
@@ -11526,6 +11699,71 @@ exports[`ir {"name":"response-property"} 1`] = `
                 ]
             },
             "referencedTypes": [
+                {
+                    "name": {
+                        "originalName": "WithDocs",
+                        "camelCase": {
+                            "unsafeName": "withDocs",
+                            "safeName": "withDocs"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "with_docs",
+                            "safeName": "with_docs"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "WITH_DOCS",
+                            "safeName": "WITH_DOCS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "WithDocs",
+                            "safeName": "WithDocs"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "service",
+                                "camelCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "service",
+                                    "safeName": "service"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "SERVICE",
+                                    "safeName": "SERVICE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Service",
+                                    "safeName": "Service"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    },
+                    "typeId": "type_service:WithDocs"
+                },
                 {
                     "name": {
                         "originalName": "Object",
@@ -11826,6 +12064,179 @@ exports[`ir {"name":"response-property"} 1`] = `
                     "examples": [],
                     "availability": null,
                     "docs": null
+                },
+                {
+                    "id": "endpoint_service.getObjectDocs",
+                    "name": {
+                        "originalName": "getObjectDocs",
+                        "camelCase": {
+                            "unsafeName": "getObjectDocs",
+                            "safeName": "getObjectDocs"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_object_docs",
+                            "safeName": "get_object_docs"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_OBJECT_DOCS",
+                            "safeName": "GET_OBJECT_DOCS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetObjectDocs",
+                            "safeName": "GetObjectDocs"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": false,
+                    "baseUrl": null,
+                    "method": "POST",
+                    "path": {
+                        "head": "/object",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "object",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "type": "reference",
+                        "requestBodyType": {
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "contentType": null,
+                        "docs": null
+                    },
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "justRequestBody",
+                            "value": {
+                                "type": "typeReference",
+                                "requestBodyType": {
+                                    "_type": "primitive",
+                                    "primitive": "STRING"
+                                },
+                                "contentType": null,
+                                "docs": null
+                            }
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        }
+                    },
+                    "response": {
+                        "type": "json",
+                        "responseBodyType": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "Response",
+                                "camelCase": {
+                                    "unsafeName": "response",
+                                    "safeName": "response"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "response",
+                                    "safeName": "response"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "RESPONSE",
+                                    "safeName": "RESPONSE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Response",
+                                    "safeName": "Response"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [
+                                    {
+                                        "originalName": "service",
+                                        "camelCase": {
+                                            "unsafeName": "service",
+                                            "safeName": "service"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "service",
+                                            "safeName": "service"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "SERVICE",
+                                            "safeName": "SERVICE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Service",
+                                            "safeName": "Service"
+                                        }
+                                    }
+                                ],
+                                "packagePath": [],
+                                "file": {
+                                    "originalName": "service",
+                                    "camelCase": {
+                                        "unsafeName": "service",
+                                        "safeName": "service"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "service",
+                                        "safeName": "service"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "SERVICE",
+                                        "safeName": "SERVICE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Service",
+                                        "safeName": "Service"
+                                    }
+                                }
+                            },
+                            "typeId": "type_service:Response"
+                        },
+                        "responseProperty": {
+                            "originalName": "docs",
+                            "camelCase": {
+                                "unsafeName": "docs",
+                                "safeName": "docs"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "docs",
+                                "safeName": "docs"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DOCS",
+                                "safeName": "DOCS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Docs",
+                                "safeName": "Docs"
+                            }
+                        },
+                        "docs": null
+                    },
+                    "errors": [],
+                    "examples": [],
+                    "availability": null,
+                    "docs": null
                 }
             ]
         }
@@ -11868,6 +12279,7 @@ exports[`ir {"name":"response-property"} 1`] = `
             ]
         },
         "sharedTypes": [
+            "type_service:WithDocs",
             "type_service:Object"
         ]
     },
@@ -11938,6 +12350,7 @@ exports[`ir {"name":"response-property"} 1`] = `
             },
             "service": "service_service",
             "types": [
+                "type_service:WithDocs",
                 "type_service:Object",
                 "type_service:Response"
             ],
