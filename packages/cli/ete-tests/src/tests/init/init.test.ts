@@ -121,4 +121,30 @@ describe("fern init", () => {
             )
         )).toBe(true);
     });
+
+    it("init docs url", async () => {
+        const pathOfDirectory = await init();
+
+        await runFernCli(
+            [
+                "init",
+                "--docs",
+                "--organization",
+                "oneschema",
+                "--url",
+                "https://docs.oneschema.co/",
+                "--log-level",
+                "debug",
+            ],
+            {
+                cwd: pathOfDirectory,
+            }
+        );
+
+        const command = await runFernCli(["check"], {
+            cwd: pathOfDirectory,
+        });
+
+        expect(command.exitCode).toBe(0);
+    }, 60_000);
 });

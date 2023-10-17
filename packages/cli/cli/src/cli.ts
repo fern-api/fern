@@ -1,6 +1,7 @@
 import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { initializeAPI, initializeDocs } from "@fern-api/init";
+import { ReadMeDocsWebsite } from "@fern-api/init/src/docsWebsite";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
 import {
@@ -187,16 +188,31 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("openapi", {
                     type: "string",
                     description: "Filepath or url to an existing OpenAPI spec",
+                })
+                .option("url", {
+                    type: "string",
+                    description: "The url for the docs website (e.g. --url https://buildwithfern.com/docs)",
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
             } else if (argv.docs != null) {
+                let docsUrl: ReadMeDocsWebsite;
+                if (argv.url != null) {
+                    docsUrl = new ReadMeDocsWebsite(argv.url, cliContext.logger);
+                    if (!docsUrl.isUrlValid()) {
+                        return cliContext.failWithoutThrowing("--url must be a valid url");
+                    }
+                    if (argv.organization == null) {
+                        return cliContext.failWithoutThrowing("--organization must be specified when using --url");
+                    }
+                }
                 await cliContext.runTask(async (context) => {
                     await initializeDocs({
                         organization: argv.organization,
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
                         taskContext: context,
+                        docsUrl,
                     });
                 });
             } else {
