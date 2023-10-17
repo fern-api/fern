@@ -49,18 +49,18 @@ function convertJsonResponse(
     typeResolver: TypeResolver
 ): HttpResponse {
     const responseBodyType = file.parseTypeReference(response);
-    const responseBodyProperty = typeof response !== "string" ? response.responseBodyProperty : undefined;
+    const responseProperty = typeof response !== "string" ? response["response-property"] : undefined;
     if (
-        responseBodyProperty !== undefined &&
-        !typeReferenceHasProperty(responseBodyType, responseBodyProperty, file, typeResolver)
+        responseProperty !== undefined &&
+        !typeReferenceHasProperty(responseBodyType, responseProperty, file, typeResolver)
     ) {
-        throw new Error(`Response does not have a property named ${responseBodyProperty}`);
+        throw new Error(`Response does not have a property named ${responseProperty}`);
     }
-    // TODO: Convert the responseBodyProperty to an IR commons.Name instead of just using a string.
     return HttpResponse.json({
         docs,
         responseBodyType,
-        returnResponseBodyProperty: responseBodyProperty,
+        responseProperty:
+            responseProperty !== undefined ? file.casingsGenerator.generateName(responseProperty) : undefined,
     });
 }
 
@@ -97,7 +97,7 @@ function typeReferenceHasProperty(
                 if (isRawObjectDefinition(resolvedType.declaration)) {
                     return rawObjectSchemaHasProperty(resolvedType.declaration, property, file, typeResolver);
                 }
-                throw new Error("A custom response body property is only supported for objects");
+                throw new Error("A custom response property is only supported for objects");
         }
     }
     return false;

@@ -145,16 +145,14 @@ types:
     extends: commons.WithDocs
     properties:
       responseBodyType: types.TypeReference
-      returnResponseBodyProperty:
+      responseProperty:
         docs: |
           If set, the SDK will return this property from
           the response, rather than the response itself.
 
           This is particularly useful for JSON API structures
           (e.g. configure 'data' to return 'response.data').
-
-        # TODO: This needs to be a commons.Name.
-        type: optional<string>
+        type: optional<commons.Name>
 
   FileDownloadResponse:
     extends: commons.WithDocs
