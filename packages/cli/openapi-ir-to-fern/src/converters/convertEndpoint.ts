@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { FullExample, FullOneOfExample, KeyValuePair, PrimitiveExample } from "@fern-fern/openapi-ir-model/example";
 import {
@@ -299,7 +300,7 @@ function convertFullExampleToFern(fullExample: FullExample): RawSchemas.ExampleT
         case "unknown":
             return convertFullExampleToFern(fullExample.unknown);
         default:
-            throw new Error("Cannot convert unsupported example type");
+            assertNever(fullExample);
     }
 }
 
@@ -324,7 +325,7 @@ function convertPrimitiveExampleToFern(primitiveExample: PrimitiveExample): RawS
         case "boolean":
             return primitiveExample.boolean;
         default:
-            throw new Error("Cannot convert unsupported primitive example type");
+            assertNever(primitiveExample);
     }
 }
 

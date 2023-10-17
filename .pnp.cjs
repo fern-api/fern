@@ -3987,6 +3987,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/cli/openapi-ir-to-fern/",\
           "packageDependencies": [\
             ["@fern-api/openapi-ir-to-fern", "workspace:packages/cli/openapi-ir-to-fern"],\
+            ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/openapi-parser", "workspace:packages/cli/openapi-parser"],\
