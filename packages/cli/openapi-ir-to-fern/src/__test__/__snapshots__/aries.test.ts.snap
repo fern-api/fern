@@ -24,7 +24,7 @@ exports[`open api parser aries simple 1`] = `
                   "body": {
                     "_type": "101",
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "endorser_write_txn": "true",
+                    "endorser_write_txn": true,
                     "state": "active",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -8230,7 +8230,7 @@ exports[`open api parser aries simple 1`] = `
                   "body": {
                     "_type": "101",
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "endorser_write_txn": "true",
+                    "endorser_write_txn": true,
                     "state": "active",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -8266,7 +8266,7 @@ exports[`open api parser aries simple 1`] = `
                   "body": {
                     "_type": "101",
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "endorser_write_txn": "true",
+                    "endorser_write_txn": true,
                     "state": "active",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -8332,7 +8332,7 @@ exports[`open api parser aries simple 1`] = `
                   "body": {
                     "_type": "101",
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "endorser_write_txn": "true",
+                    "endorser_write_txn": true,
                     "state": "active",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -8368,7 +8368,7 @@ exports[`open api parser aries simple 1`] = `
                   "body": {
                     "_type": "101",
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "endorser_write_txn": "true",
+                    "endorser_write_txn": true,
                     "state": "active",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -8404,7 +8404,7 @@ exports[`open api parser aries simple 1`] = `
                   "body": {
                     "_type": "101",
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "endorser_write_txn": "true",
+                    "endorser_write_txn": true,
                     "state": "active",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -8440,7 +8440,7 @@ exports[`open api parser aries simple 1`] = `
                   "body": {
                     "_type": "101",
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "endorser_write_txn": "true",
+                    "endorser_write_txn": true,
                     "state": "active",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -8601,9 +8601,9 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "auto_issue": "false",
-                    "auto_offer": "false",
-                    "auto_remove": "false",
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                     "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -8690,9 +8690,9 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "auto_issue": "false",
-                    "auto_offer": "false",
-                    "auto_remove": "false",
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                     "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -8779,9 +8779,9 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "auto_issue": "false",
-                    "auto_offer": "false",
-                    "auto_remove": "false",
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                     "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -8860,9 +8860,9 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "auto_issue": "false",
-                    "auto_offer": "false",
-                    "auto_remove": "false",
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                     "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -8945,9 +8945,9 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "auto_issue": "false",
-                    "auto_offer": "false",
-                    "auto_remove": "false",
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                     "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -9002,9 +9002,9 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "auto_issue": "false",
-                    "auto_offer": "false",
-                    "auto_remove": "false",
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                     "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -9054,9 +9054,9 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "auto_issue": "false",
-                    "auto_offer": "false",
-                    "auto_remove": "false",
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                     "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -9148,9 +9148,9 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "auto_issue": "false",
-                    "auto_offer": "false",
-                    "auto_remove": "false",
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                     "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -9231,9 +9231,9 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "auto_issue": "false",
-                    "auto_offer": "false",
-                    "auto_remove": "false",
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                     "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -9322,9 +9322,9 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "auto_issue": "false",
-                    "auto_offer": "false",
-                    "auto_remove": "false",
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                     "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -9392,9 +9392,9 @@ exports[`open api parser aries simple 1`] = `
                 "request": {},
                 "response": {
                   "body": {
-                    "auto_issue": "false",
-                    "auto_offer": "false",
-                    "auto_remove": "false",
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "The front fell off",
@@ -9456,9 +9456,9 @@ exports[`open api parser aries simple 1`] = `
                 "request": {},
                 "response": {
                   "body": {
-                    "auto_issue": "false",
-                    "auto_offer": "false",
-                    "auto_remove": "false",
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "The front fell off",
@@ -9656,9 +9656,9 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "auto_issue": "false",
-                    "auto_offer": "false",
-                    "auto_remove": "false",
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "The front fell off",
@@ -9716,9 +9716,9 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "auto_issue": "false",
-                    "auto_offer": "false",
-                    "auto_remove": "false",
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "The front fell off",
@@ -9772,9 +9772,9 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "auto_issue": "false",
-                    "auto_offer": "false",
-                    "auto_remove": "false",
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "The front fell off",
@@ -9815,9 +9815,9 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "auto_issue": "false",
-                    "auto_offer": "false",
-                    "auto_remove": "false",
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "The front fell off",
@@ -9889,9 +9889,9 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "auto_issue": "false",
-                    "auto_offer": "false",
-                    "auto_remove": "false",
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "The front fell off",
@@ -9930,13 +9930,13 @@ exports[`open api parser aries simple 1`] = `
                 "request": {
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "holder_did": "did:key:ahsdkjahsdkjhaskjdhakjshdkajhsdkjahs",
-                  "trace": "false",
+                  "trace": false,
                 },
                 "response": {
                   "body": {
-                    "auto_issue": "false",
-                    "auto_offer": "false",
-                    "auto_remove": "false",
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "The front fell off",
@@ -10305,7 +10305,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "success": "true",
+                    "success": true,
                   },
                 },
               },
@@ -11083,7 +11083,7 @@ exports[`open api parser aries simple 1`] = `
                   "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "my_label": "Invitation to Barry",
                   "protocol_version": "1.1",
-                  "use_public_did": "false",
+                  "use_public_did": false,
                 },
                 "response": {
                   "body": {
@@ -11248,12 +11248,12 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
-                  "auto_verify": "false",
-                  "trace": "false",
+                  "auto_verify": false,
+                  "trace": false,
                 },
                 "response": {
                   "body": {
-                    "auto_present": "false",
+                    "auto_present": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
@@ -11409,7 +11409,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "auto_present": "false",
+                    "auto_present": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
@@ -11474,13 +11474,13 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
-                  "auto_verify": "false",
+                  "auto_verify": false,
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "trace": "false",
+                  "trace": false,
                 },
                 "response": {
                   "body": {
-                    "auto_present": "false",
+                    "auto_present": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
@@ -11541,11 +11541,11 @@ exports[`open api parser aries simple 1`] = `
                 "query-parameters": undefined,
                 "request": {
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "trace": "false",
+                  "trace": false,
                 },
                 "response": {
                   "body": {
-                    "auto_present": "false",
+                    "auto_present": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
@@ -11607,7 +11607,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "auto_present": "false",
+                    "auto_present": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
@@ -11650,12 +11650,12 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
-                  "auto_verify": "false",
-                  "trace": "false",
+                  "auto_verify": false,
+                  "trace": false,
                 },
                 "response": {
                   "body": {
-                    "auto_present": "false",
+                    "auto_present": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
@@ -11711,7 +11711,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "auto_present": "false",
+                    "auto_present": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
@@ -11761,12 +11761,12 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
-                  "auto_verify": "false",
-                  "trace": "false",
+                  "auto_verify": false,
+                  "trace": false,
                 },
                 "response": {
                   "body": {
-                    "auto_present": "false",
+                    "auto_present": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
@@ -11921,7 +11921,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "auto_present": "false",
+                    "auto_present": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
@@ -11985,13 +11985,13 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
-                  "auto_verify": "false",
+                  "auto_verify": false,
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "trace": "false",
+                  "trace": false,
                 },
                 "response": {
                   "body": {
-                    "auto_present": "false",
+                    "auto_present": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
@@ -12051,11 +12051,11 @@ exports[`open api parser aries simple 1`] = `
                 "query-parameters": undefined,
                 "request": {
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "trace": "false",
+                  "trace": false,
                 },
                 "response": {
                   "body": {
-                    "auto_present": "false",
+                    "auto_present": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
@@ -12116,7 +12116,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "auto_present": "false",
+                    "auto_present": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
@@ -12173,12 +12173,12 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
-                  "auto_verify": "false",
-                  "trace": "false",
+                  "auto_verify": false,
+                  "trace": false,
                 },
                 "response": {
                   "body": {
-                    "auto_present": "false",
+                    "auto_present": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
@@ -12233,7 +12233,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "auto_present": "false",
+                    "auto_present": false,
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
@@ -12998,7 +12998,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "alive": "true",
+                    "alive": true,
                   },
                 },
               },
@@ -13035,7 +13035,7 @@ exports[`open api parser aries simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "ready": "true",
+                    "ready": true,
                   },
                 },
               },

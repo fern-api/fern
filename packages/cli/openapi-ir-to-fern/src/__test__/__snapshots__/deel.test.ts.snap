@@ -10239,7 +10239,7 @@ exports[`open api parser deel simple 1`] = `
                 "request": {
                   "data": {
                     "denial_reason": "Not allowed for this day.",
-                    "is_approved": "true",
+                    "is_approved": true,
                   },
                 },
                 "response": undefined,

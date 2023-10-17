@@ -11734,7 +11734,7 @@ client.accounts.list(params: {
                 "query-parameters": undefined,
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": "true",
+                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
                   "token": "1234ab",
                 },
@@ -12188,7 +12188,7 @@ client.balances.list(params: {
                 "query-parameters": undefined,
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": "true",
+                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
                   "token": "1234ab",
                 },
@@ -13188,7 +13188,7 @@ client.incomes.list(params: {
                 "query-parameters": undefined,
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": "true",
+                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
                   "token": "1234ab",
                 },
@@ -14139,7 +14139,7 @@ client.invoices.list(params: {
                 "query-parameters": undefined,
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": "true",
+                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
                   "token": "1234ab",
                 },
@@ -14193,7 +14193,7 @@ client.invoices.list(params: {
                   "date_from": "2020-01-01",
                   "date_to": "2020-02-01",
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": "true",
+                  "save_data": true,
                 },
                 "response": undefined,
               },
@@ -14680,7 +14680,7 @@ To delete links in bulk, we recommend looping through the list of links you want
                   "certificate": "1234567890abcd=",
                   "credentials_storage": "store",
                   "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
-                  "fetch_historical": "true",
+                  "fetch_historical": true,
                   "institution": "erebor_mx_retail",
                   "password": "password",
                   "password2": "pin",
@@ -15265,7 +15265,7 @@ client.owners.list(params: {
                 "query-parameters": undefined,
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": "true",
+                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
                   "token": "1234ab",
                 },
@@ -15377,7 +15377,7 @@ client.owners.list(params: {
                 "request": undefined,
                 "response": {
                   "body": {
-                    "active": "true",
+                    "active": true,
                     "display_name": "Wakanda National Bank",
                     "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
                     "id": "bbaceead-7b96-46d8-9354-38dec9707004",
@@ -16692,7 +16692,7 @@ client. recurring_expenses.list(params: {
                 "query-parameters": undefined,
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": "true",
+                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
                   "token": "1234ab",
                 },
@@ -17007,7 +17007,7 @@ client. risk_insights.list(params: {
                 "query-parameters": undefined,
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": "true",
+                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
                   "token": "1234ab",
                 },
@@ -17442,7 +17442,7 @@ client.tax_compliance_status.list(params: {
                 "query-parameters": undefined,
                 "request": {
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": "true",
+                  "save_data": true,
                 },
                 "response": {
                   "body": {
@@ -17702,9 +17702,9 @@ At the moment, the Tax Declaration resource is available for:
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
-                  "attach_pdf": "false",
+                  "attach_pdf": false,
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": "true",
+                  "save_data": true,
                   "year_from": "2018",
                   "year_to": "2019",
                 },
@@ -18576,7 +18576,7 @@ client.tax_status.list(params: {
                 "query-parameters": undefined,
                 "request": {
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": "true",
+                  "save_data": true,
                 },
                 "response": undefined,
               },
@@ -19106,7 +19106,7 @@ client.transactions.list(params: {
                 "query-parameters": undefined,
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": "true",
+                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
                   "token": "1234ab",
                 },

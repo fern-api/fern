@@ -289,34 +289,53 @@ function convertNamedFullExamplesToExampleTypeReferenceSchemas(
 function convertFullExampleToExampleTypeReferenceSchema(
     fullExample: FullExample
 ): RawSchemas.ExampleTypeReferenceSchema {
-    return FullExample._visit<RawSchemas.ExampleTypeReferenceSchema>(fullExample, {
-        primitive: (primitive) => convertPrimitiveExampleToExampleTypeReferenceSchema(primitive),
-        object: (object) => convertFullExamplePropertiesToExampleTypeReferenceSchema(object.properties),
-        array: (array) => convertFullArrayExampleToExampleTypeReferenceSchema(array),
-        map: (map) => convertFullMapExampleToExampleTypeReferenceSchema(map),
-        oneOf: (oneOf) => convertFullOneOfExampleToExampleTypeReferenceSchema(oneOf),
-        enum: (value) => value,
-        literal: (value) => value,
-        unknown: (unknown) => convertFullExampleToExampleTypeReferenceSchema(unknown),
-        _unknown: () => "unknown",
-    });
+    switch (fullExample.type) {
+        case "primitive":
+            return convertPrimitiveExampleToExampleTypeReferenceSchema(fullExample.primitive);
+        case "object":
+            return convertFullExamplePropertiesToExampleTypeReferenceSchema(fullExample.properties);
+        case "array":
+            return convertFullArrayExampleToExampleTypeReferenceSchema(fullExample.array);
+        case "map":
+            return convertFullMapExampleToExampleTypeReferenceSchema(fullExample.map);
+        case "oneOf":
+            return convertFullOneOfExampleToExampleTypeReferenceSchema(fullExample.oneOf);
+        case "enum":
+            return fullExample.enum;
+        case "literal":
+            return fullExample.literal;
+        case "unknown":
+            return convertFullExampleToExampleTypeReferenceSchema(fullExample.unknown);
+        default:
+            throw new Error("Cannot convert unsupported example type");
+    }
 }
 
 function convertPrimitiveExampleToExampleTypeReferenceSchema(
     primitiveExample: PrimitiveExample
 ): RawSchemas.ExampleTypeReferenceSchema {
-    return PrimitiveExample._visit<RawSchemas.ExampleTypeReferenceSchema>(primitiveExample, {
-        int: (value: number) => value,
-        int64: (value: number) => value,
-        float: (value: number) => value,
-        double: (value: number) => value,
-        string: (value: string) => value,
-        datetime: (value: string) => value,
-        date: (value: string) => value,
-        base64: (value: string) => value,
-        boolean: (value: boolean) => value,
-        _unknown: () => "unknown",
-    });
+    switch (primitiveExample.type) {
+        case "int":
+            return primitiveExample.int;
+        case "int64":
+            return primitiveExample.int64;
+        case "float":
+            return primitiveExample.float;
+        case "double":
+            return primitiveExample.double;
+        case "string":
+            return primitiveExample.string;
+        case "datetime":
+            return primitiveExample.datetime;
+        case "date":
+            return primitiveExample.date;
+        case "base64":
+            return primitiveExample.base64;
+        case "boolean":
+            return primitiveExample.boolean;
+        default:
+            throw new Error("Cannot convert unsupported primitive example type");
+    }
 }
 
 function convertFullExamplePropertiesToExampleTypeReferenceSchema(
