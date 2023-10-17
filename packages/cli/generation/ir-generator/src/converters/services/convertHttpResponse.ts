@@ -27,7 +27,7 @@ export function convertHttpResponse({
                 docs,
             });
         } else {
-            return convertJsonResponse(responseType, docs, file, typeResolver);
+            return convertJsonResponse(response, docs, file, typeResolver);
         }
     }
 
@@ -43,13 +43,13 @@ export function convertHttpResponse({
 }
 
 function convertJsonResponse(
-    responseType: RawSchemas.HttpResponseSchema | string,
+    response: RawSchemas.HttpResponseSchema | string,
     docs: string | undefined,
     file: FernFileContext,
     typeResolver: TypeResolver
 ): HttpResponse {
-    const responseBodyType = file.parseTypeReference(responseType);
-    const responseBodyProperty = typeof responseType !== "string" ? responseType.responseBodyProperty : undefined;
+    const responseBodyType = file.parseTypeReference(response);
+    const responseBodyProperty = typeof response !== "string" ? response.responseBodyProperty : undefined;
     if (
         responseBodyProperty !== undefined &&
         !typeReferenceHasProperty(responseBodyType, responseBodyProperty, file, typeResolver)

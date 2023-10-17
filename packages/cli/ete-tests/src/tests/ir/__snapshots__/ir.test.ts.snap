@@ -11801,7 +11801,7 @@ exports[`ir {"name":"response-body-property"} 1`] = `
                             },
                             "typeId": "type_service:Response"
                         },
-                        "returnResponseBodyProperty": null,
+                        "returnResponseBodyProperty": "data",
                         "docs": null
                     },
                     "errors": [],
