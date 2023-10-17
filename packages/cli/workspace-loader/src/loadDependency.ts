@@ -3,7 +3,7 @@ import {
     DependenciesConfiguration,
     Dependency,
     LocalApiDependency,
-    VersionedDependency,
+    VersionedDependency
 } from "@fern-api/dependencies-configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { ROOT_API_FILENAME } from "@fern-api/project-configuration";

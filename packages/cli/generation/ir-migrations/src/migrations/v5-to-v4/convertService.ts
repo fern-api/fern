@@ -7,7 +7,7 @@ import {
     convertNameAndWireValueToV1,
     convertNameAndWireValueToV2,
     convertNameToV1,
-    convertNameToV2,
+    convertNameToV2
 } from "./convertName";
 import { convertTypeReference } from "./convertTypeReference";
 import { ErrorResolver } from "./ErrorResolver";

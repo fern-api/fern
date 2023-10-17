@@ -5,7 +5,7 @@ import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
 import {
     getAllPropertiesForObject,
     getAllPropertiesForType,
-    ObjectPropertyWithPath,
+    ObjectPropertyWithPath
 } from "./getAllPropertiesForObject";
 
 export function getAllPropertiesForRequest({

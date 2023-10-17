@@ -6,7 +6,7 @@ import {
     doesRequestHaveNonBodyProperties,
     getHeaderName,
     getQueryParameterName,
-    TypeResolverImpl,
+    TypeResolverImpl
 } from "@fern-api/ir-generator";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { DefinitionFileSchema, isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
@@ -16,7 +16,7 @@ import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import {
     convertObjectPropertyWithPathToString,
     getAllPropertiesForObject,
-    ObjectPropertyWithPath,
+    ObjectPropertyWithPath
 } from "../../utils/getAllPropertiesForObject";
 
 export const NoConflictingRequestWrapperPropertiesRule: Rule = {

@@ -4,7 +4,7 @@ import { IrMigrationContext } from "../../IrMigrationContext";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
-    IrMigration,
+    IrMigration
 } from "../../types/IrMigration";
 
 export const V11_TO_V10_MIGRATION: IrMigration<

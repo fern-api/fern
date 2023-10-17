@@ -8,7 +8,7 @@ import {
     PosthogEvent,
     Startable,
     TaskContext,
-    TaskResult,
+    TaskResult
 } from "@fern-api/task-context";
 import chalk from "chalk";
 import { Log } from "./Log";

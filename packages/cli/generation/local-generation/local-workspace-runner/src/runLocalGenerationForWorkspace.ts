@@ -4,7 +4,7 @@ import { GeneratorGroup, GeneratorInvocation } from "@fern-api/generators-config
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import {
     migrateIntermediateRepresentationForGenerator,
-    migrateIntermediateRepresentationThroughVersion,
+    migrateIntermediateRepresentationThroughVersion
 } from "@fern-api/ir-migrations";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";

@@ -7,7 +7,7 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     getFernDirectory,
     loadProjectConfig,
-    PROJECT_CONFIG_FILENAME,
+    PROJECT_CONFIG_FILENAME
 } from "@fern-api/project-configuration";
 import { loadProject, Project } from "@fern-api/project-loader";
 import { FernCliError } from "@fern-api/task-context";

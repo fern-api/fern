@@ -3,7 +3,7 @@ import {
     AuthSchemeDeclarationSchema,
     BasicAuthSchemeSchema,
     BearerAuthSchemeSchema,
-    HeaderAuthSchemeSchema,
+    HeaderAuthSchemeSchema
 } from "../schemas";
 
 export interface AuthSchemeDeclarationVisitor<R> {

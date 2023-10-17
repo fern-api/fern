@@ -3,17 +3,17 @@ export {
     type DefinitionFileAstNodeTypes,
     type DefinitionFileAstNodeVisitor,
     type DefinitionFileAstVisitor,
-    type TypeDeclarationName,
+    type TypeDeclarationName
 } from "./ast/DefinitionFileAstVisitor";
 export {
     type PackageMarkerAstNodeTypes,
     type PackageMarkerAstNodeVisitor,
-    type PackageMarkerAstVisitor,
+    type PackageMarkerAstVisitor
 } from "./ast/PackageMarkerAstVisitor";
 export {
     type RootApiFileAstNodeTypes,
     type RootApiFileAstNodeVisitor,
-    type RootApiFileAstVisitor,
+    type RootApiFileAstVisitor
 } from "./ast/RootApiFileAstVisitor";
 export { visitDefinitionFileYamlAst } from "./ast/visitDefinitionFileYamlAst";
 export { visitPackageMarkerYamlAst } from "./ast/visitPackageMarkerYamlAst";
@@ -22,7 +22,7 @@ export { EXAMPLE_REFERENCE_PREFIX, YAML_SCHEMA_VERSION } from "./constants";
 export {
     type DocsConfigFileAstNodeTypes,
     type DocsConfigFileAstNodeVisitor,
-    type DocsConfigFileAstVisitor,
+    type DocsConfigFileAstVisitor
 } from "./docsAst/DocsConfigFileAstVisitor";
 export { validateVersionConfigFileSchema } from "./docsAst/validateVersionConfig";
 export { visitDocsConfigFileYamlAst } from "./docsAst/visitDocsConfigFileAst";
@@ -43,17 +43,17 @@ export { isAnyAuthSchemes, isSingleAuthScheme, visitRawApiAuth, type RawApiAuthV
 export {
     isHeaderAuthScheme,
     visitRawAuthSchemeDeclaration,
-    type AuthSchemeDeclarationVisitor,
+    type AuthSchemeDeclarationVisitor
 } from "./utils/visitRawAuthSchemeDeclaration";
 export {
     isRawMultipleBaseUrlsEnvironment,
     isRawSingleBaseUrlEnvironment,
-    visitRawEnvironmentDeclaration,
+    visitRawEnvironmentDeclaration
 } from "./utils/visitRawEnvironmentDeclaration";
 export {
     isVariablePathParameter,
     visitRawPathParameter,
-    type PathParameterDeclarationVisitor,
+    type PathParameterDeclarationVisitor
 } from "./utils/visitRawPathParameter";
 export {
     isRawAliasDefinition,
@@ -62,6 +62,6 @@ export {
     isRawObjectDefinition,
     isRawUndiscriminatedUnionDefinition,
     visitRawTypeDeclaration,
-    type RawTypeDeclarationVisitor,
+    type RawTypeDeclarationVisitor
 } from "./utils/visitRawTypeDeclaration";
 export { FernContainerRegex, visitRawTypeReference } from "./utils/visitRawTypeReference";

@@ -10,7 +10,7 @@ import {
     PrimitiveSchema,
     ReferencedSchema,
     Schema,
-    SchemaId,
+    SchemaId
 } from "@fern-fern/openapi-ir-model/ir";
 import {
     convertArrayToTypeReference,
@@ -20,7 +20,7 @@ import {
     convertPrimitiveToTypeReference,
     convertReferenceToTypeReference,
     convertToTypeReference,
-    convertUnknownToTypeReference,
+    convertUnknownToTypeReference
 } from "./convertToTypeReference";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 

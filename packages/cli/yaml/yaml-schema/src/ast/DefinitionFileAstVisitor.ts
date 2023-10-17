@@ -11,7 +11,7 @@ import {
     HttpPathParameterSchema,
     HttpQueryParameterSchema,
     HttpServiceSchema,
-    TypeDeclarationSchema,
+    TypeDeclarationSchema
 } from "../schemas";
 
 export type DefinitionFileAstVisitor<R = void | Promise<void>> = {

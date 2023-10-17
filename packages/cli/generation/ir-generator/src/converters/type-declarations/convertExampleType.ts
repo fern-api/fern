@@ -3,7 +3,7 @@ import {
     isRawObjectDefinition,
     RawSchemas,
     visitRawTypeDeclaration,
-    visitRawTypeReference,
+    visitRawTypeReference
 } from "@fern-api/yaml-schema";
 import {
     DeclaredTypeName,
@@ -14,7 +14,7 @@ import {
     ExampleTypeReference,
     ExampleTypeReferenceShape,
     ExampleTypeShape,
-    PrimitiveType,
+    PrimitiveType
 } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";

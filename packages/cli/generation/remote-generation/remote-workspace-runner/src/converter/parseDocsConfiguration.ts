@@ -17,7 +17,7 @@ import {
     TabbedDocsNavigation,
     TypographyConfig,
     UntabbedDocsNavigation,
-    VersionInfo,
+    VersionInfo
 } from "./ParsedDocsConfiguration";
 export async function parseDocsConfiguration({
     rawDocsConfiguration,

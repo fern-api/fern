@@ -12,7 +12,7 @@ import {
     HttpResponse,
     HttpService,
     StreamingResponseChunkType,
-    TypeReference,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { IdGenerator } from "../IdGenerator";
 import { FilteredIr, FilteredIrImpl } from "./FilteredIr";
@@ -25,7 +25,7 @@ import {
     ServiceId,
     SubpackageId,
     TypeId,
-    TypeNode,
+    TypeNode
 } from "./ids";
 
 export class IrGraph {

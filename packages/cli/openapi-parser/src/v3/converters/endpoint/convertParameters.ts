@@ -4,7 +4,7 @@ import {
     PathParameter,
     PrimitiveSchemaValue,
     QueryParameter,
-    Schema,
+    Schema
 } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";

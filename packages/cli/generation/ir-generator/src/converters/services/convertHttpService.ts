@@ -8,7 +8,7 @@ import {
     PathParameter,
     PathParameterLocation,
     ResponseErrors,
-    TypeReference,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 import urlJoin from "url-join";
 import { FernFileContext } from "../../FernFileContext";

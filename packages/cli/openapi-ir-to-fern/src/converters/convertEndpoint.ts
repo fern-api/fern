@@ -10,7 +10,7 @@ import {
     Response,
     Schema,
     SchemaId,
-    StatusCode,
+    StatusCode
 } from "@fern-fern/openapi-ir-model/ir";
 import { ROOT_PREFIX } from "../convertPackage";
 import { Environments } from "../getEnvironments";

@@ -3,7 +3,7 @@ import {
     FileUploadRequestProperty,
     HttpRequestBody,
     HttpRequestBodyReference,
-    InlinedRequestBodyProperty,
+    InlinedRequestBodyProperty
 } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { parseTypeName } from "../../utils/parseTypeName";

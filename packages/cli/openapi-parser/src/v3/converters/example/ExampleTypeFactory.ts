@@ -5,7 +5,7 @@ import {
     PartialExample,
     PartialObjectExample,
     ReferencedExample,
-    SchemaInstanceId,
+    SchemaInstanceId
 } from "@fern-fern/openapi-ir-model/example";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { ExampleCollector } from "../../ExampleCollector";

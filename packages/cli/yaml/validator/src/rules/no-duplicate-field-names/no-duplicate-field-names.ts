@@ -3,7 +3,7 @@ import {
     getEnumName,
     getSingleUnionTypeName,
     getUnionDiscriminantName,
-    TypeResolverImpl,
+    TypeResolverImpl
 } from "@fern-api/ir-generator";
 import { getDefinitionFile } from "@fern-api/workspace-loader";
 import { isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
@@ -12,7 +12,7 @@ import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 import {
     convertObjectPropertyWithPathToString,
-    getAllPropertiesForObject,
+    getAllPropertiesForObject
 } from "../../utils/getAllPropertiesForObject";
 import { getTypeDeclarationNameAsString } from "../../utils/getTypeDeclarationNameAsString";
 

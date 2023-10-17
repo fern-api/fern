@@ -4,7 +4,7 @@ import {
     isRawEnumDefinition,
     isRawObjectDefinition,
     isRawUndiscriminatedUnionDefinition,
-    RawSchemas,
+    RawSchemas
 } from "@fern-api/yaml-schema";
 import { ResolvedTypeReference, ShapeType, Type } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";

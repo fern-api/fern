@@ -4,7 +4,7 @@ import {
     ResolvedContainerType,
     ResolvedType,
     TypeResolver,
-    TypeResolverImpl,
+    TypeResolverImpl
 } from "@fern-api/ir-generator";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import {
@@ -12,7 +12,7 @@ import {
     isRawDiscriminatedUnionDefinition,
     isRawEnumDefinition,
     isRawObjectDefinition,
-    isRawUndiscriminatedUnionDefinition,
+    isRawUndiscriminatedUnionDefinition
 } from "@fern-api/yaml-schema";
 import { RuleRunnerArgs } from "./Rule";
 import { CASINGS_GENERATOR } from "./utils/casingsGenerator";

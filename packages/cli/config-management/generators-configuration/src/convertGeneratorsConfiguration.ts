@@ -7,7 +7,7 @@ import {
     GenerationLanguage,
     GeneratorGroup,
     GeneratorInvocation,
-    GeneratorsConfiguration,
+    GeneratorsConfiguration
 } from "./GeneratorsConfiguration";
 import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";

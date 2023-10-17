@@ -11,7 +11,7 @@ import {
     ResponseErrors,
     ServiceId,
     ServiceTypeReferenceInfo,
-    TypeId,
+    TypeId
 } from "@fern-fern/ir-sdk/api";
 import { mapValues, pickBy } from "lodash-es";
 import { constructCasingsGenerator } from "./casings/CasingsGenerator";

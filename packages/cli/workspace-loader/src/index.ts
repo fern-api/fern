@@ -9,7 +9,7 @@ export {
     type FernWorkspace,
     type OnDiskNamedDefinitionFile,
     type OpenAPIWorkspace,
-    type Workspace,
+    type Workspace
 } from "./types/Workspace";
 export * from "./utils";
 export { convertOpenApiWorkspaceToFernWorkspace } from "./utils/convertOpenApiWorkspaceToFernWorkspace";

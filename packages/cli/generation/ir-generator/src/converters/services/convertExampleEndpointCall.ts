@@ -6,7 +6,7 @@ import {
     ExampleInlinedRequestBodyProperty,
     ExamplePathParameter,
     ExampleRequestBody,
-    ExampleResponse,
+    ExampleResponse
 } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
@@ -16,7 +16,7 @@ import { VariableResolver } from "../../resolvers/VariableResolver";
 import { parseErrorName } from "../../utils/parseErrorName";
 import {
     convertTypeReferenceExample,
-    getOriginalTypeDeclarationForPropertyFromExtensions,
+    getOriginalTypeDeclarationForPropertyFromExtensions
 } from "../type-declarations/convertExampleType";
 import { resolvePathParameterOrThrow } from "./convertHttpService";
 

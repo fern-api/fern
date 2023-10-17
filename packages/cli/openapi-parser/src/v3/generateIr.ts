@@ -4,7 +4,7 @@ import {
     OpenAPIIntermediateRepresentation,
     Schema,
     SecurityScheme,
-    Webhook,
+    Webhook
 } from "@fern-fern/openapi-ir-model/ir/_types";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext";

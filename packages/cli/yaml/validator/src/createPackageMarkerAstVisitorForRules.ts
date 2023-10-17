@@ -4,7 +4,7 @@ import {
     PackageMarkerAstNodeTypes,
     PackageMarkerAstNodeVisitor,
     PackageMarkerAstVisitor,
-    PackageMarkerFileSchema,
+    PackageMarkerFileSchema
 } from "@fern-api/yaml-schema";
 import { RuleVisitors } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";

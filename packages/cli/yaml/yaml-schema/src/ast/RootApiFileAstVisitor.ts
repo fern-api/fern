@@ -4,7 +4,7 @@ import {
     HttpPathParameterSchema,
     MultipleBaseUrlsEnvironmentSchema,
     RootApiFileSchema,
-    SingleBaseUrlEnvironmentSchema,
+    SingleBaseUrlEnvironmentSchema
 } from "../schemas";
 import { VariableDeclarationSchema } from "../schemas/VariableDeclarationSchema";
 

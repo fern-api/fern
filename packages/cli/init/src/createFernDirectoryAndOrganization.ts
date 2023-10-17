@@ -5,7 +5,7 @@ import {
     FERN_DIRECTORY,
     loadProjectConfig,
     ProjectConfigSchema,
-    PROJECT_CONFIG_FILENAME,
+    PROJECT_CONFIG_FILENAME
 } from "@fern-api/project-configuration";
 import { createVenusService } from "@fern-api/services";
 import { TaskContext } from "@fern-api/task-context";

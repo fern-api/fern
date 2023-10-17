@@ -4,7 +4,7 @@ import {
     ExampleResolverImpl,
     resolvePathParameter,
     TypeResolverImpl,
-    VariableResolverImpl,
+    VariableResolverImpl
 } from "@fern-api/ir-generator";
 import { Rule } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";

@@ -3,7 +3,7 @@ import {
     DocsConfigFileAstNodeTypes,
     DocsConfigFileAstNodeVisitor,
     DocsConfigFileAstVisitor,
-    NodePath,
+    NodePath
 } from "@fern-api/yaml-schema";
 import { RuleVisitor } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";

@@ -5,7 +5,7 @@ import {
     MultipleBaseUrlsEnvironment,
     MultipleBaseUrlsEnvironments,
     SingleBaseUrlEnvironment,
-    SingleBaseUrlEnvironments,
+    SingleBaseUrlEnvironments
 } from "@fern-fern/ir-sdk/api";
 import { CasingsGenerator } from "../casings/CasingsGenerator";
 

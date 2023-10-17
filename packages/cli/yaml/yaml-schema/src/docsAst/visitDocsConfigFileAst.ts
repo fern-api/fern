@@ -5,7 +5,7 @@ import {
     NavigationItem,
     PageConfiguration,
     SectionConfiguration,
-    TabbedNavigationConfig,
+    TabbedNavigationConfig
 } from "@fern-fern/docs-config/api";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";

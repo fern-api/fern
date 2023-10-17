@@ -3,13 +3,13 @@ export { constructHttpPath } from "./converters/services/constructHttpPath";
 export {
     DEFAULT_BODY_PROPERTY_KEY_IN_WRAPPER,
     DEFAULT_REQUEST_PARAMETER_NAME,
-    doesRequestHaveNonBodyProperties,
+    doesRequestHaveNonBodyProperties
 } from "./converters/services/convertHttpSdkRequest";
 export { getHeaderName, getQueryParameterName, resolvePathParameter } from "./converters/services/convertHttpService";
 export {
     getSingleUnionTypeName,
     getUnionDiscriminant,
-    getUnionDiscriminantName,
+    getUnionDiscriminantName
 } from "./converters/type-declarations/convertDiscriminatedUnionTypeDeclaration";
 export { getEnumName } from "./converters/type-declarations/convertEnumTypeDeclaration";
 export { getPropertyName } from "./converters/type-declarations/convertObjectTypeDeclaration";

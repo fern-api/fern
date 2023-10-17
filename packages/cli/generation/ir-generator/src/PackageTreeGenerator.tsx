@@ -10,7 +10,7 @@ import {
     SubpackageId,
     TypeDeclaration,
     TypeId,
-    WebhookGroupId,
+    WebhookGroupId
 } from "@fern-fern/ir-sdk/api";
 import { mapValues } from "lodash-es";
 import { FilteredIr } from "./filtered-ir/FilteredIr";

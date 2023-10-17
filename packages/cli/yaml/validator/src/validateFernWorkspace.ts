@@ -8,7 +8,7 @@ import {
     RootApiFileSchema,
     visitDefinitionFileYamlAst,
     visitPackageMarkerYamlAst,
-    visitRootApiFileYamlAst,
+    visitRootApiFileYamlAst
 } from "@fern-api/yaml-schema";
 import { createDefinitionFileAstVisitorForRules } from "./createDefinitionFileAstVisitorForRules";
 import { createPackageMarkerAstVisitorForRules } from "./createPackageMarkerAstVisitorForRules";

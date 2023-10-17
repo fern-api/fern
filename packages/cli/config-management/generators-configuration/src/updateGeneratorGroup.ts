@@ -3,7 +3,7 @@ import produce from "immer";
 import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import {
     DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
-    GeneratorsConfigurationSchema,
+    GeneratorsConfigurationSchema
 } from "./schemas/GeneratorsConfigurationSchema";
 
 export function updateGeneratorGroup({

@@ -4,7 +4,7 @@ import {
     DefinitionFileAstNodeVisitor,
     DefinitionFileAstVisitor,
     DefinitionFileSchema,
-    NodePath,
+    NodePath
 } from "@fern-api/yaml-schema";
 import { RuleVisitors } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";

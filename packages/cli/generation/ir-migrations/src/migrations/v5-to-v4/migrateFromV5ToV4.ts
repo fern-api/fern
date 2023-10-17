@@ -3,7 +3,7 @@ import { IrVersions } from "../../ir-versions";
 import {
     GeneratorWasNeverUpdatedToConsumeNewIR,
     GeneratorWasNotCreatedYet,
-    IrMigration,
+    IrMigration
 } from "../../types/IrMigration";
 import { convertAuth } from "./convertAuth";
 import { convertEnvironment } from "./convertEnvironment";

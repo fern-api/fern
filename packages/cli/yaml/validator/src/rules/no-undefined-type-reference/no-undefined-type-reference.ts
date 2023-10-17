@@ -7,7 +7,7 @@ import {
     parseRawFileType,
     recursivelyVisitRawTypeReference,
     TypeReferenceLocation,
-    visitDefinitionFileYamlAst,
+    visitDefinitionFileYamlAst
 } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { mapValues } from "lodash-es";

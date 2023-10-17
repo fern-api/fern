@@ -11,12 +11,12 @@ import {
     PrimitiveSchemaValue,
     ReferencedSchema,
     Schema,
-    SchemaId,
+    SchemaId
 } from "@fern-fern/openapi-ir-model/ir";
 import {
     convertEnumToTypeDeclaration,
     convertObjectToTypeDeclaration,
-    convertOneOfToTypeDeclaration,
+    convertOneOfToTypeDeclaration
 } from "./convertToTypeDeclaration";
 import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 

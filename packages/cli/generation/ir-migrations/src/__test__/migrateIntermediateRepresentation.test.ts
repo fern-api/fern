@@ -9,7 +9,7 @@ import { migrateIntermediateRepresentationForGenerator } from "../migrateInterme
 import {
     GeneratorVersion,
     GeneratorWasNeverUpdatedToConsumeNewIR,
-    GeneratorWasNotCreatedYet,
+    GeneratorWasNotCreatedYet
 } from "../types/IrMigration";
 import { getIrForApi } from "./utils/getIrForApi";
 

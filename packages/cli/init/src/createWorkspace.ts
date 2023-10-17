@@ -4,7 +4,7 @@ import {
     DEFINITION_DIRECTORY,
     GENERATORS_CONFIGURATION_FILENAME,
     OPENAPI_DIRECTORY,
-    ROOT_API_FILENAME,
+    ROOT_API_FILENAME
 } from "@fern-api/project-configuration";
 import { formatDefinitionFile } from "@fern-api/yaml-formatter";
 import { RootApiFileSchema } from "@fern-api/yaml-schema";

@@ -19,7 +19,7 @@ import {
     ImageReference,
     ParsedDocsConfiguration,
     TypographyConfig,
-    UnversionedNavigationConfiguration,
+    UnversionedNavigationConfiguration
 } from "./converter/ParsedDocsConfiguration";
 import { parseDocsConfiguration } from "./converter/parseDocsConfiguration";
 

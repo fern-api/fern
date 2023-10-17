@@ -2,7 +2,7 @@ import {
     DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
     GeneratorName,
     GeneratorsConfigurationSchema,
-    updateGeneratorGroup,
+    updateGeneratorGroup
 } from "@fern-api/generators-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { GENERATOR_INVOCATIONS } from "./generatorInvocations";

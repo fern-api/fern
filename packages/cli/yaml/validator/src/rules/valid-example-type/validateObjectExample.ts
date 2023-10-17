@@ -6,7 +6,7 @@ import { keyBy } from "lodash-es";
 import { RuleViolation } from "../../Rule";
 import {
     convertObjectPropertyWithPathToString,
-    getAllPropertiesForObject,
+    getAllPropertiesForObject
 } from "../../utils/getAllPropertiesForObject";
 import { getRuleViolationsForMisshapenExample } from "./getRuleViolationsForMisshapenExample";
 import { validateTypeReferenceExample } from "./validateTypeReferenceExample";

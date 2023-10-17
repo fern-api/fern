@@ -4,7 +4,7 @@ import {
     RootApiFileAstNodeTypes,
     RootApiFileAstNodeVisitor,
     RootApiFileAstVisitor,
-    RootApiFileSchema,
+    RootApiFileSchema
 } from "@fern-api/yaml-schema";
 import { RuleVisitors } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
