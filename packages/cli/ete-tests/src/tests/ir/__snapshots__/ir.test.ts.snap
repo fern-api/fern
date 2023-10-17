@@ -11224,25 +11224,25 @@ exports[`ir {"name":"packages"} 1`] = `
 }"
 `;
 
-exports[`ir {"name":"response-body-property"} 1`] = `
+exports[`ir {"name":"response-property"} 1`] = `
 "{
     "apiName": {
-        "originalName": "response-body-property",
+        "originalName": "response-property",
         "camelCase": {
-            "unsafeName": "responseBodyProperty",
-            "safeName": "responseBodyProperty"
+            "unsafeName": "responseProperty",
+            "safeName": "responseProperty"
         },
         "snakeCase": {
-            "unsafeName": "response_body_property",
-            "safeName": "response_body_property"
+            "unsafeName": "response_property",
+            "safeName": "response_property"
         },
         "screamingSnakeCase": {
-            "unsafeName": "RESPONSE_BODY_PROPERTY",
-            "safeName": "RESPONSE_BODY_PROPERTY"
+            "unsafeName": "RESPONSE_PROPERTY",
+            "safeName": "RESPONSE_PROPERTY"
         },
         "pascalCase": {
-            "unsafeName": "ResponseBodyProperty",
-            "safeName": "ResponseBodyProperty"
+            "unsafeName": "ResponseProperty",
+            "safeName": "ResponseProperty"
         }
     },
     "apiDisplayName": null,

@@ -6,21 +6,21 @@ exports[`generate IR 1`] = `
   "apiDocs": null,
   "apiName": {
     "camelCase": {
-      "safeName": "responseBodyProperty",
-      "unsafeName": "responseBodyProperty",
+      "safeName": "responseProperty",
+      "unsafeName": "responseProperty",
     },
-    "originalName": "response-body-property",
+    "originalName": "response-property",
     "pascalCase": {
-      "safeName": "ResponseBodyProperty",
-      "unsafeName": "ResponseBodyProperty",
+      "safeName": "ResponseProperty",
+      "unsafeName": "ResponseProperty",
     },
     "screamingSnakeCase": {
-      "safeName": "RESPONSE_BODY_PROPERTY",
-      "unsafeName": "RESPONSE_BODY_PROPERTY",
+      "safeName": "RESPONSE_PROPERTY",
+      "unsafeName": "RESPONSE_PROPERTY",
     },
     "snakeCase": {
-      "safeName": "response_body_property",
-      "unsafeName": "response_body_property",
+      "safeName": "response_property",
+      "unsafeName": "response_property",
     },
   },
   "auth": {

@@ -52,7 +52,7 @@ const FIXTURES: Fixture[] = [
         name: "webhooks",
     },
     {
-        name: "response-body-property",
+        name: "response-property",
     },
 ];
 
