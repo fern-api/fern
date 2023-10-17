@@ -2271,15 +2271,6 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "root.ForbiddenError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/accounts/{accountId}/jointOwners",
             "path-parameters": {
@@ -2313,15 +2304,6 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "root.ForbiddenError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/accounts/{accountId}",
             "path-parameters": {
@@ -2347,15 +2329,6 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
               "root.UnprocessableEntityError",
               "root.TooManyRequestsError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/accountBalances",
@@ -2388,15 +2361,6 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
               "root.UnauthorizedError",
               "root.ForbiddenError",
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/accounts",
@@ -2446,15 +2410,6 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
               "root.UnauthorizedError",
               "root.ForbiddenError",
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/achEligibleAccounts",
@@ -2517,15 +2472,6 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/institutions/{institutionId}/cutoffTimes",
             "path-parameters": {
@@ -2571,9 +2517,9 @@ This information provides hints to clients, allowing bank customers to select tr
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -2629,15 +2575,6 @@ This information provides hints to clients, allowing bank customers to select tr
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/institutions/{institutionId}/transferSchedule",
             "path-parameters": {
@@ -2690,15 +2627,6 @@ This information provides hints to clients, allowing bank customers to select tr
               "root.UnauthorizedError",
               "root.ForbiddenError",
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/institutionByLocator",
@@ -2758,9 +2686,9 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {},
@@ -2812,15 +2740,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               "root.ForbiddenError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/accounts/{accountId}/overdraftProtection",
             "path-parameters": {
@@ -2848,15 +2767,6 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/accounts/{accountId}/eligibleOverdraftAccounts",
@@ -2901,9 +2811,9 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -2956,15 +2866,6 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
               "root.ForbiddenError",
               "root.UnprocessableEntityError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/transactionCategories",
             "request": {
@@ -3008,15 +2909,6 @@ The default response lists only recent transactions. Normally, this is transacti
               "root.NotFoundError",
               "root.UnprocessableEntityError",
               "root.TooManyRequestsError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/accounts/{accountId}/transactions",
@@ -3121,9 +3013,9 @@ Note: This operation requires an identity challenge if the financial institution
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "schedule": {},
                 },
@@ -3172,15 +3064,6 @@ Note: This operation requires an identity challenge if the financial institution
               "root.NotFoundError",
               "root.ConflictError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/transfers/{transferId}",
             "path-parameters": {
@@ -3201,9 +3084,9 @@ Note: This operation requires an identity challenge if the financial institution
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -3232,15 +3115,6 @@ Note: This operation requires an identity challenge if the financial institution
               "root.UnauthorizedError",
               "root.ForbiddenError",
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/transfers",
@@ -3299,9 +3173,9 @@ Note: This operation requires an identity challenge if the financial institution
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {},

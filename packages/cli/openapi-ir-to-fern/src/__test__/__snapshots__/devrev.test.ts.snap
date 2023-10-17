@@ -3047,15 +3047,6 @@ empty.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/artifacts.locate",
             "request": {
@@ -3084,15 +3075,6 @@ empty.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/artifacts.prepare",
@@ -3146,9 +3128,9 @@ enterprise connections can be created by an organization.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -3184,15 +3166,6 @@ connections can not be deleted using this method.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/dev-orgs.auth-connections.delete",
             "request": {
@@ -3223,9 +3196,9 @@ connections can not be deleted using this method.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -3264,15 +3237,6 @@ created by the user.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/dev-orgs.auth-connections.list",
             "response": {
@@ -3296,15 +3260,6 @@ disabled.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/dev-orgs.auth-connections.toggle",
@@ -3340,9 +3295,9 @@ disabled.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -3392,9 +3347,9 @@ authenticated user.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -3481,9 +3436,9 @@ given Dev organization.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -3523,9 +3478,9 @@ given Dev organization.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -3565,15 +3520,6 @@ token type issued for a given subject.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/auth-tokens.list",
@@ -3625,9 +3571,9 @@ authenticated user.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -3664,9 +3610,9 @@ organization.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -3723,15 +3669,6 @@ organization.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/dev-users.list",
@@ -3794,9 +3731,9 @@ used.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -3838,9 +3775,9 @@ used.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -3874,9 +3811,9 @@ used.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                 },
@@ -3918,9 +3855,9 @@ used.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -3955,15 +3892,6 @@ used.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/parts.list",
@@ -4032,9 +3960,9 @@ used.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -4082,9 +4010,9 @@ organization.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -4150,9 +4078,9 @@ records.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
                 },
@@ -4193,9 +4121,9 @@ records.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -4235,15 +4163,6 @@ to access.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/rev-orgs.list",
@@ -4334,9 +4253,9 @@ them.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
                 },
@@ -4422,9 +4341,9 @@ and a logical concept denoted by the tag's name.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -4476,9 +4395,9 @@ permitted.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
                 },
@@ -4519,9 +4438,9 @@ permitted.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -4555,15 +4474,6 @@ permitted.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/tags.list",
@@ -4610,9 +4520,9 @@ used.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
                 },
@@ -4681,9 +4591,9 @@ tags.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -4717,9 +4627,9 @@ tags.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -4754,15 +4664,6 @@ tags.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/timeline-entries.list",
@@ -4815,9 +4716,9 @@ used.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -4863,9 +4764,9 @@ used.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -4918,9 +4819,9 @@ response.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
                 },
@@ -4961,9 +4862,9 @@ response.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -4998,15 +4899,6 @@ response.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/webhooks.list",
             "response": {
@@ -5028,9 +4920,9 @@ response.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
                 },
@@ -5111,9 +5003,9 @@ won't receive any object events until successfully verified.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -5147,9 +5039,9 @@ won't receive any object events until successfully verified.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
                 },
@@ -5186,15 +5078,6 @@ won't receive any object events until successfully verified.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/works.export",
@@ -5277,9 +5160,9 @@ organizations.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -5313,15 +5196,6 @@ organizations.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/works.list",
@@ -5417,9 +5291,9 @@ organizations.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},

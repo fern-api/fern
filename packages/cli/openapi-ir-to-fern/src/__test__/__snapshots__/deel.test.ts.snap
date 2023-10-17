@@ -6991,15 +6991,6 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/payments/{payment_id}/breakdown",
             "path-parameters": {
@@ -7030,9 +7021,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -7075,9 +7066,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -7119,9 +7110,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -7178,9 +7169,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -7250,9 +7241,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -7305,15 +7296,6 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/people/me",
             "response": {
@@ -7335,15 +7317,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/people",
@@ -7395,9 +7368,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {},
@@ -7447,9 +7420,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "job_title_name": "3D Designer",
@@ -7501,9 +7474,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {},
@@ -7544,9 +7517,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {},
@@ -7587,9 +7560,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {},
@@ -7630,9 +7603,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {},
@@ -7673,9 +7646,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {},
@@ -7717,15 +7690,6 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/contracts/{contract_id}/preview",
             "path-parameters": {
@@ -7759,15 +7723,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "DELETE",
             "path": "/contracts/{contract_id}/premium",
@@ -7809,9 +7764,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "data": {},
                 },
@@ -7913,15 +7868,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/contracts/{contract_id}/archive",
             "path-parameters": {
@@ -7952,9 +7898,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -7997,9 +7943,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -8096,15 +8042,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/contracts/{contract_id}/alternate_emails",
             "path-parameters": {
@@ -8135,9 +8072,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -8174,9 +8111,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -8263,9 +8200,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -8296,9 +8233,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -8344,9 +8281,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -8392,9 +8329,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -8440,15 +8377,6 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/contracts/{contract_id}/invitations",
             "path-parameters": {
@@ -8490,9 +8418,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -8538,9 +8466,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -8597,9 +8525,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -8653,9 +8581,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {},
@@ -8699,9 +8627,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -8749,9 +8677,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -8790,15 +8718,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "DELETE",
             "path": "/invoice-adjustments/{invoice_adjustment_id}",
@@ -8840,9 +8759,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -8928,9 +8847,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -9017,9 +8936,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -9080,9 +8999,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -9113,9 +9032,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -9143,15 +9062,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/lookups/job-titles",
@@ -9192,9 +9102,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -9235,9 +9145,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -9281,9 +9191,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -9331,9 +9241,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -9385,9 +9295,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -9433,15 +9343,6 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/contracts/{contract_id}/milestones/{milestone_id}",
             "path-parameters": {
@@ -9476,9 +9377,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -9515,9 +9416,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -9571,9 +9472,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -9621,9 +9522,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -9664,9 +9565,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -9712,9 +9613,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -9765,9 +9666,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -9798,9 +9699,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -9831,9 +9732,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -9877,9 +9778,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "amount": "123.45",
@@ -9932,9 +9833,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {},
@@ -9984,9 +9885,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "reason": "Excited!",
@@ -10043,15 +9944,6 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/contracts/{contract_id}/tasks/{task_id}",
             "path-parameters": {
@@ -10096,9 +9988,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -10146,9 +10038,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {},
@@ -10187,15 +10079,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/contracts/{contract_id}/time-offs/{timeoff_id}",
             "path-parameters": {
@@ -10228,9 +10111,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {},
@@ -10275,9 +10158,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -10306,9 +10189,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -10343,9 +10226,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -10382,9 +10265,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "denial_reason": "Not allowed for this day.",
@@ -10450,9 +10333,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {},
@@ -10496,9 +10379,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -10546,9 +10429,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -10587,15 +10470,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "DELETE",
             "path": "/timesheets/{timesheet_id}",
@@ -10637,9 +10511,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -10678,9 +10552,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -10756,9 +10630,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -10835,9 +10709,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -10894,15 +10768,6 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/webhooks/{id}",
             "path-parameters": {
@@ -10929,9 +10794,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -11001,9 +10866,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -11040,9 +10905,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -11107,15 +10972,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/webhooks",

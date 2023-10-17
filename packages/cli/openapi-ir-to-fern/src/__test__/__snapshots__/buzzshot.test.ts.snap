@@ -548,15 +548,6 @@ exports[`open api parser buzzshot simple 1`] = `
             "auth": false,
             "docs": "",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/v2/accounts",
             "request": {
@@ -578,15 +569,6 @@ exports[`open api parser buzzshot simple 1`] = `
             "auth": false,
             "docs": "",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/v2/games",
             "request": {
@@ -628,15 +610,6 @@ exports[`open api parser buzzshot simple 1`] = `
             "auth": false,
             "docs": "",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/v2/groups",
             "request": {
@@ -668,15 +641,6 @@ exports[`open api parser buzzshot simple 1`] = `
             "auth": false,
             "docs": "",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/v2/rooms",
             "request": {
@@ -698,15 +662,6 @@ exports[`open api parser buzzshot simple 1`] = `
             "auth": false,
             "docs": "",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/v2/photos",
             "request": {
@@ -728,15 +683,6 @@ exports[`open api parser buzzshot simple 1`] = `
             "auth": false,
             "docs": "",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/v2/players",
             "request": {
@@ -758,15 +704,6 @@ exports[`open api parser buzzshot simple 1`] = `
             "auth": false,
             "docs": "",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/v2/accounts/{id}",
             "path-parameters": {
@@ -784,15 +721,6 @@ exports[`open api parser buzzshot simple 1`] = `
             "auth": false,
             "docs": "",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/v2/games/{id}",
             "path-parameters": {
@@ -835,15 +763,6 @@ exports[`open api parser buzzshot simple 1`] = `
             "auth": false,
             "docs": "",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/v2/groups/{id}",
             "path-parameters": {
@@ -876,15 +795,6 @@ exports[`open api parser buzzshot simple 1`] = `
             "auth": false,
             "docs": "",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/v2/rooms/{id}",
             "path-parameters": {
@@ -902,15 +812,6 @@ exports[`open api parser buzzshot simple 1`] = `
             "auth": false,
             "docs": "",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/v2/photos/{photo_id}",
             "path-parameters": {
@@ -928,15 +829,6 @@ exports[`open api parser buzzshot simple 1`] = `
             "auth": false,
             "docs": "",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/v2/players/{id}",
             "path-parameters": {

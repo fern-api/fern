@@ -11391,15 +11391,6 @@ client.accounts.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/accounts/{id}",
             "path-parameters": {
@@ -11433,9 +11424,9 @@ client.accounts.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -11492,9 +11483,9 @@ client.accounts.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -11738,9 +11729,9 @@ client.accounts.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "save_data": "true",
@@ -11803,9 +11794,9 @@ client.accounts.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
                   "token": "1234ab",
@@ -11939,15 +11930,6 @@ client.balances.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/balances/{id}",
             "path-parameters": {
@@ -11967,9 +11949,9 @@ client.balances.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -12016,9 +11998,9 @@ client.balances.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -12201,9 +12183,9 @@ client.balances.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "save_data": "true",
@@ -12252,9 +12234,9 @@ client.balances.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "date_from": "2021-01-18",
@@ -12348,15 +12330,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "root.RequestTimeoutError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/payments/bank-accounts",
             "request": {
@@ -12377,15 +12350,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/payments/bank-accounts/{id}",
@@ -12409,9 +12373,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -12538,9 +12502,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -12596,15 +12560,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "root.UnauthorizedError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/payments/customers",
             "request": {
@@ -12625,15 +12580,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/payments/customers/{id}",
@@ -12657,9 +12603,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -12770,15 +12716,6 @@ At the moment, the employment records resource is available for:
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/employment-records/{id}",
             "path-parameters": {
@@ -12798,9 +12735,9 @@ At the moment, the employment records resource is available for:
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -12851,9 +12788,9 @@ At the moment, the employment records resource is available for:
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -12911,9 +12848,9 @@ At the moment, the employment records resource is available for:
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "link": "d686c617-6d9e-4bc6-9801-5ac276ccb6a2",
                 },
@@ -12990,15 +12927,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               "root.UnauthorizedError",
               "root.ForbiddenError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/enrich/incomes",
@@ -13127,15 +13055,6 @@ client.incomes.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/incomes/{id}",
             "path-parameters": {
@@ -13152,15 +13071,6 @@ client.incomes.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/incomes/{id}",
@@ -13199,9 +13109,9 @@ client.incomes.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -13284,9 +13194,9 @@ client.incomes.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "save_data": "true",
@@ -13335,9 +13245,9 @@ client.incomes.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "date_from": "2020-08-01",
                   "date_to": "2020-12-30",
@@ -13441,9 +13351,9 @@ You can see a complete list of institutions by either consulting our [Institutio
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -13495,9 +13405,9 @@ You can see a complete list of institutions by either consulting our [Institutio
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -13662,15 +13572,6 @@ client. investments_portfolio.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/investments/portfolios/{id}",
             "path-parameters": {
@@ -13687,15 +13588,6 @@ client. investments_portfolio.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/investments/portfolios/{id}",
@@ -13734,9 +13626,9 @@ client. investments_portfolio.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -13830,9 +13722,9 @@ client. investments_portfolio.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
@@ -13879,9 +13771,9 @@ client. investments_portfolio.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
                   "token": "1234ab",
@@ -14002,15 +13894,6 @@ client.invoices.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/invoices/{id}",
             "path-parameters": {
@@ -14027,15 +13910,6 @@ client.invoices.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/invoices/{id}",
@@ -14074,9 +13948,9 @@ client.invoices.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -14271,9 +14145,9 @@ client.invoices.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "save_data": "true",
@@ -14323,9 +14197,9 @@ client.invoices.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "date_from": "2020-01-01",
                   "date_to": "2020-02-01",
@@ -14450,9 +14324,9 @@ For single links, you have to perform POST calls to an institution **every time*
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -14520,15 +14394,6 @@ To delete links in bulk, we recommend looping through the list of links you want
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/links/{id}",
             "path-parameters": {
@@ -14548,9 +14413,9 @@ To delete links in bulk, we recommend looping through the list of links you want
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -14602,9 +14467,9 @@ To delete links in bulk, we recommend looping through the list of links you want
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -14755,9 +14620,9 @@ To delete links in bulk, we recommend looping through the list of links you want
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
@@ -14819,9 +14684,9 @@ To delete links in bulk, we recommend looping through the list of links you want
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "certificate": "1234567890abcd=",
                   "credentials_storage": "store",
@@ -15019,9 +14884,9 @@ For a list of standards codes, see the table below.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "certificate": "1234567890abcd=",
                   "password": "password",
@@ -15217,15 +15082,6 @@ client.owners.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/owners/{id}",
             "path-parameters": {
@@ -15245,9 +15101,9 @@ client.owners.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -15301,9 +15157,9 @@ client.owners.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -15415,9 +15271,9 @@ client.owners.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "save_data": "true",
@@ -15466,9 +15322,9 @@ client.owners.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
                   "token": "1234ab",
@@ -15526,9 +15382,9 @@ client.owners.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -15568,9 +15424,9 @@ client.owners.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -15663,15 +15519,6 @@ A payment intent captures all payment information (such as the amount to be char
               "root.RequestTimeoutError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/payments/payment-intents",
             "request": {
@@ -15692,15 +15539,6 @@ A payment intent captures all payment information (such as the amount to be char
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/payments/payment-intents/{id}",
@@ -15724,9 +15562,9 @@ A payment intent captures all payment information (such as the amount to be char
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -15852,15 +15690,6 @@ During the payment intent flow, you need to fill in the payment intent with requ
               "root.BadRequestError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/payments/payment-intents/{id}",
             "path-parameters": {
@@ -15917,15 +15746,6 @@ During the payment intent flow, you need to fill in the payment intent with requ
               "root.RequestTimeoutError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/payments/payment-links",
             "request": {
@@ -15946,15 +15766,6 @@ During the payment intent flow, you need to fill in the payment intent with requ
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/payments/payment-links/{access_token}",
@@ -15980,9 +15791,9 @@ During the payment intent flow, you need to fill in the payment intent with requ
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -16093,15 +15904,6 @@ You can use the Payment Transactions resource in order to get useful information
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/payments/transactions/{id}",
             "path-parameters": {
@@ -16124,9 +15926,9 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -16285,15 +16087,6 @@ You can use the Payment Transactions resource in order to get useful information
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/payments/webhooks/{id}",
             "path-parameters": {
@@ -16310,15 +16103,6 @@ You can use the Payment Transactions resource in order to get useful information
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/payments/webhooks/{id}",
@@ -16342,9 +16126,9 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -16373,9 +16157,9 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "auth_header": "Authorization",
                   "auth_token": "Bearer hv7alD71j0dzXf09iKfg7u",
@@ -16447,15 +16231,6 @@ You can use the Payment Transactions resource in order to get useful information
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/receivables/transactions/{id}",
             "path-parameters": {
@@ -16472,15 +16247,6 @@ You can use the Payment Transactions resource in order to get useful information
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/receivables/transactions/{id}",
@@ -16519,9 +16285,9 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -16658,9 +16424,9 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "date_from": "2020-08-05",
                   "date_to": "2020-10-05",
@@ -16783,15 +16549,6 @@ client. recurring_expenses.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/recurring-expenses/{id}",
             "path-parameters": {
@@ -16808,15 +16565,6 @@ client. recurring_expenses.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/recurring-expenses/{id}",
@@ -16855,9 +16603,9 @@ client. recurring_expenses.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -16950,9 +16698,9 @@ client. recurring_expenses.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "save_data": "true",
@@ -17001,9 +16749,9 @@ client. recurring_expenses.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "date_from": "2022-08-01",
                   "date_to": "2022-12-30",
@@ -17129,15 +16877,6 @@ client. risk_insights.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/risk-insights/{id}",
             "path-parameters": {
@@ -17154,15 +16893,6 @@ client. risk_insights.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/risk-insights/{id}",
@@ -17201,9 +16931,9 @@ client. risk_insights.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -17283,9 +17013,9 @@ client. risk_insights.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "save_data": "true",
@@ -17336,9 +17066,9 @@ If you need to know the currency of the account, just do a GET Details to the ac
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
                   "token": "1234ab",
@@ -17429,15 +17159,6 @@ For example:
               "root.BadRequestError",
               "root.RequestTimeoutError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/payments/secret-keys",
             "response": {
@@ -17457,9 +17178,9 @@ For example:
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -17549,15 +17270,6 @@ client.tax_compliance_status.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/tax-compliance-status/{id}",
             "path-parameters": {
@@ -17577,9 +17289,9 @@ client.tax_compliance_status.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -17630,9 +17342,9 @@ client.tax_compliance_status.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -17736,9 +17448,9 @@ client.tax_compliance_status.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "save_data": "true",
@@ -17820,15 +17532,6 @@ At the moment, the Tax Declaration resource is available for:
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/tax-declarations/{id}",
             "path-parameters": {
@@ -17845,15 +17548,6 @@ At the moment, the Tax Declaration resource is available for:
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/tax-declarations/{id}",
@@ -17889,15 +17583,6 @@ At the moment, the Tax Declaration resource is available for:
             "docs": "Get a paginated list of all existing tax declarations in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/tax-declarations",
@@ -18024,9 +17709,9 @@ At the moment, the Tax Declaration resource is available for:
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "attach_pdf": "false",
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
@@ -18168,15 +17853,6 @@ client.tax_retentions.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/tax-retentions/{id}",
             "path-parameters": {
@@ -18193,15 +17869,6 @@ client.tax_retentions.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/tax-retentions/{id}",
@@ -18240,9 +17907,9 @@ client.tax_retentions.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -18336,9 +18003,9 @@ client.tax_retentions.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "date_from": "2020-01-01",
                   "date_to": "2020-02-01",
@@ -18484,15 +18151,6 @@ client.tax_returns.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/tax-returns/{id}",
             "path-parameters": {
@@ -18509,15 +18167,6 @@ client.tax_returns.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/tax-returns/{id}",
@@ -18553,15 +18202,6 @@ client.tax_returns.list(params: {
             "docs": "Get a paginated list of all existing tax returns in your Belvo account. By default, we return up to 100 results per page. The results will include a mix of both monthly and yearly tax returns.",
             "errors": [
               "root.UnauthorizedError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/tax-returns",
@@ -18696,15 +18336,6 @@ client.tax_returns.list(params: {
               "root.RequestTimeoutError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/api/tax-returns",
             "request": {
@@ -18791,15 +18422,6 @@ client.tax_status.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/tax-status/{id}",
             "path-parameters": {
@@ -18816,15 +18438,6 @@ client.tax_status.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/tax-status/{id}",
@@ -18863,9 +18476,9 @@ client.tax_status.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -18969,9 +18582,9 @@ client.tax_status.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "save_data": "true",
@@ -19110,15 +18723,6 @@ client.transactions.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/transactions/{id}",
             "path-parameters": {
@@ -19135,15 +18739,6 @@ client.transactions.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/transactions/{id}",
@@ -19182,9 +18777,9 @@ client.transactions.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -19517,9 +19112,9 @@ client.transactions.list(params: {
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "save_data": "true",
@@ -19571,9 +19166,9 @@ If you try to access older information than what we can access, we will return a
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "date_from": "2020-08-05",
@@ -19626,9 +19221,9 @@ If you try to access older information than what we can access, we will return a
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "date_from": "2020-08-05",

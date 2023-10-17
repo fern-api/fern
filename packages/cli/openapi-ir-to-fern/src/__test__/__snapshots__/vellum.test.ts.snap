@@ -86,15 +86,6 @@ Generate a completion using a previously defined deployment.
               "NotFoundError",
               "InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/v1/generate",
             "request": {
@@ -186,15 +177,6 @@ Perform a search against a document index.
               "NotFoundError",
               "InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/v1/search",
             "request": {
@@ -239,15 +221,6 @@ Used to submit feedback regarding the quality of previously generated completion
               "BadRequestError",
               "NotFoundError",
               "InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/v1/submit-completion-actuals",
@@ -2199,15 +2172,6 @@ Used to submit feedback regarding the quality of previously generated completion
 Used to retrieve a deployment given its ID or name.
 ",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/v1/deployments/{id}",
             "path-parameters": {
@@ -2239,15 +2203,6 @@ Used to retrieve a deployment given its ID or name.
 
 Creates a new document index.",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/v1/document-indexes",
             "request": {
@@ -2317,9 +2272,9 @@ Used to list documents. Optionally filter on supported fields.
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -2425,15 +2380,6 @@ Upload a document to be indexed and used for search.
 
 Compiles the prompt backing the model version using the provided input values.",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/v1/model-versions/{id}/compile-prompt",
             "path-parameters": {
@@ -2469,15 +2415,6 @@ Compiles the prompt backing the model version using the provided input values.",
 Used to retrieve a model version given its ID.
 ",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/v1/model-versions/{id}",
             "path-parameters": {
@@ -2513,15 +2450,6 @@ partners, not directly by Vellum users.
 Under the hood, this endpoint creates a new sandbox, a new model version, and a new deployment.",
             "errors": [
               "root.ConflictError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/v1/registered-prompts/register",
@@ -2594,15 +2522,6 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/v1/sandboxes/{id}/scenarios/{scenario_id}",
             "path-parameters": {
@@ -2629,15 +2548,6 @@ is found, a new scenario will be appended to the end.
 Note that a full replacement of the scenario is performed, so any fields not provided will be removed
 or overwritten with default values.",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/v1/sandboxes/{id}/scenarios",
             "path-parameters": {
@@ -2694,15 +2604,6 @@ or overwritten with default values.",
 
 Deletes an existing test case for a test suite, keying off of the test case id.",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/v1/test-suites/{id}/test-cases/{test_case_id}",
             "path-parameters": {
@@ -2729,15 +2630,6 @@ is found, a new test case will be appended to the end.
 Note that a full replacement of the test case is performed, so any fields not provided will be removed
 or overwritten with default values.",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/v1/test-suites/{id}/test-cases",
             "path-parameters": {

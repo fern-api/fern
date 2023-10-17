@@ -8680,15 +8680,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/bookings",
             "request": {
@@ -8811,9 +8802,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "cargo": {
                     "contains_hazmat": "false",
@@ -8951,15 +8942,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/bookings/{id}",
             "path-parameters": {
@@ -8992,15 +8974,6 @@ exports[`open api parser flexport simple 1`] = `
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/booking_amendments",
@@ -9111,15 +9084,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/booking_line_items",
             "request": {
@@ -9154,15 +9118,6 @@ exports[`open api parser flexport simple 1`] = `
             "docs": "Returns a list of booking line items linked to submitted bookings",
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/booking_line_items",
@@ -9213,15 +9168,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/booking_line_items/{id}",
             "path-parameters": {
@@ -9257,9 +9203,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "flight_type": "freighter",
                   "teus": "2",
@@ -9365,15 +9311,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/commercial_invoices",
             "request": {
@@ -9435,15 +9372,6 @@ exports[`open api parser flexport simple 1`] = `
             "display-name": "List commercial invoices",
             "docs": "Returns a list of commercial invoices",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/commercial_invoices",
             "request": {
@@ -9493,15 +9421,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/commercial_invoices/{id}",
             "path-parameters": {
@@ -9524,9 +9443,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "currency_code": "USD",
                   "invoice_number": "INVOICE-04-05-2020",
@@ -9601,9 +9520,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "name": "Zoomit",
                   "ref": "zoomit-ref",
@@ -9641,15 +9560,6 @@ exports[`open api parser flexport simple 1`] = `
             "docs": "Returns a list of companies in the network.",
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/network/companies",
@@ -9690,15 +9600,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/network/me/companies",
             "response": {
@@ -9711,15 +9612,6 @@ exports[`open api parser flexport simple 1`] = `
             "display-name": "Retrieve a company",
             "docs": "Retrieves the details of a single company.",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/network/companies/{id}",
             "path-parameters": {
@@ -9742,9 +9634,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "name": "Updated Zoomit",
                   "ref": "zoomit_ref",
@@ -9802,15 +9694,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/network/company_entities",
             "request": {
@@ -9854,15 +9737,6 @@ exports[`open api parser flexport simple 1`] = `
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/network/company_entities",
@@ -9911,15 +9785,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/network/company_entities/{id}",
             "path-parameters": {
@@ -9942,9 +9807,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "name": "Zoomit V2",
                   "ref": "zoomit-us",
@@ -10012,9 +9877,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "company_id": "2UXaj4xcHoW8nwh9UVOMpw",
                   "email": "john@example.com",
@@ -10063,15 +9928,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/network/contacts",
             "request": {
@@ -10116,15 +9972,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/network/contacts/{id}",
             "path-parameters": {
@@ -10147,9 +9994,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "email": "john_new_email@example.com",
                   "name": "John Smith",
@@ -10212,15 +10059,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/ocean/shipment_containers",
             "request": {
@@ -10265,15 +10103,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/ocean/shipment_containers/{id}",
             "path-parameters": {
@@ -10306,15 +10135,6 @@ exports[`open api parser flexport simple 1`] = `
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/ocean/shipment_container_legs",
@@ -10360,15 +10180,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/ocean/shipment_container_legs/{id}",
             "path-parameters": {
@@ -10401,15 +10212,6 @@ exports[`open api parser flexport simple 1`] = `
             "docs": "Returns a list of customs entries.",
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/customs_entries",
@@ -10445,15 +10247,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/customs_entries/{id}",
             "path-parameters": {
@@ -10486,15 +10279,6 @@ exports[`open api parser flexport simple 1`] = `
             "docs": "Create a new document for this client using the request payload",
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/documents",
@@ -10533,15 +10317,6 @@ exports[`open api parser flexport simple 1`] = `
             "docs": "Returns a list of all documents associated with shipments.",
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/documents",
@@ -10607,15 +10382,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/documents/{id}",
             "path-parameters": {
@@ -10648,15 +10414,6 @@ exports[`open api parser flexport simple 1`] = `
             "docs": "Returns a list of all events delivered to any webhook registered by this client",
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/events",
@@ -10702,15 +10459,6 @@ exports[`open api parser flexport simple 1`] = `
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/events/{id}",
             "path-parameters": {
@@ -10743,15 +10491,6 @@ exports[`open api parser flexport simple 1`] = `
             "docs": "Returns a list of invoices.",
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/invoices",
@@ -10854,15 +10593,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/invoices/{id}",
             "path-parameters": {
@@ -10895,15 +10625,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "docs": "Returns a list of location objects in the network.",
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/network/locations",
@@ -10961,9 +10682,9 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "address": {
                     "city": "Albany",
@@ -11028,15 +10749,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/network/locations/{id}",
             "path-parameters": {
@@ -11059,9 +10771,9 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "name": "Zoomit V2",
                   "ref": "zoomit-management-co",
@@ -11131,15 +10843,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/ports",
             "request": {
@@ -11194,9 +10897,9 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "client_verified": "true",
                   "country_of_origin": "China",
@@ -11267,15 +10970,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/products",
             "request": {
@@ -11310,15 +11004,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/products/{id}",
             "path-parameters": {
@@ -11341,9 +11026,9 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "client_verified": "true",
                   "country_of_origin": "China",
@@ -11435,9 +11120,9 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -11470,15 +11155,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "docs": "Returns a list of purchase orders",
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/purchase_orders",
@@ -11575,15 +11251,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/purchase_orders/{id}",
             "path-parameters": {
@@ -11616,9 +11283,9 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -11670,15 +11337,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "docs": "Returns a list of purchase order line items",
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/purchase_order_line_items",
@@ -11734,15 +11392,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/purchase_order_line_items/{id}",
             "path-parameters": {
@@ -11775,15 +11424,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "docs": "Returns a list of shipments.",
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/shipments",
@@ -11962,9 +11602,9 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -11997,15 +11637,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/shipments/{id}",
             "path-parameters": {
@@ -12028,9 +11659,9 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -12081,15 +11712,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "errors": [
               "root.BadRequestError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/shipment_legs",
             "request": {
@@ -12133,15 +11755,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "docs": undefined,
             "errors": [
               "root.BadRequestError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/shipment_legs/{id}",

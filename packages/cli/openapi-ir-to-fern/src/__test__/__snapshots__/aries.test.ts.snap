@@ -16,9 +16,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -6456,15 +6456,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Close the active menu associated with a connection",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/action-menu/{conn_id}/close",
             "path-parameters": {
@@ -6485,9 +6476,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -6514,9 +6505,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "name": "Query",
                 },
@@ -6558,15 +6549,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Request the active menu",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/action-menu/{conn_id}/request",
             "path-parameters": {
@@ -6587,9 +6569,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -6640,9 +6622,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "content": "Hello",
                 },
@@ -6695,9 +6677,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -6763,9 +6745,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -6821,9 +6803,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "my_label": "Bob",
@@ -6905,9 +6887,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "my_did": "WgWxqztrNooG92RXvxSTWv",
                   "their_did": "WgWxqztrNooG92RXvxSTWv",
@@ -6997,15 +6979,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Remove an existing connection record",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/connections/{conn_id}",
             "path-parameters": {
@@ -7026,9 +6999,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -7058,9 +7031,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -7097,9 +7070,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -7145,9 +7118,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -7218,9 +7191,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "@type": "https://didcomm.org/my-family/1.0/my-message-type",
@@ -7324,9 +7297,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -7364,15 +7337,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Assign another connection as the inbound connection",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/connections/{conn_id}/establish-inbound/{ref_id}",
             "path-parameters": {
@@ -7410,9 +7374,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -7468,9 +7432,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -7497,9 +7461,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                   "tag": "default",
@@ -7559,9 +7523,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -7599,15 +7563,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Remove credential from wallet by id",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/credential/{credential_id}",
             "path-parameters": {
@@ -7626,15 +7581,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Remove W3C credential from wallet by id",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/credential/w3c/{credential_id}",
             "path-parameters": {
@@ -7655,9 +7601,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -7684,9 +7630,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -7719,9 +7665,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -7762,9 +7708,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -7806,9 +7752,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -7839,9 +7785,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {},
@@ -7936,9 +7882,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -7999,9 +7945,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -8062,9 +8008,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -8139,9 +8085,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "@type": "https://didcomm.org/my-family/1.0/my-message-type",
@@ -8249,9 +8195,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -8282,9 +8228,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -8343,9 +8289,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -8376,9 +8322,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -8432,9 +8378,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -8468,9 +8414,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -8522,9 +8468,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -8545,9 +8491,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -8581,9 +8527,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -8617,9 +8563,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -8653,9 +8599,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -8687,15 +8633,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Set Endorser Info",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/transactions/{conn_id}/set-endorser-info",
             "path-parameters": {
@@ -8731,9 +8668,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -8781,15 +8718,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Start an introduction between two connections",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/connections/{conn_id}/start-introduction",
             "path-parameters": {
@@ -8838,9 +8766,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                   "issuer_did": "WgWxqztrNooG92RXvxSTWv",
@@ -8932,9 +8860,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                 },
@@ -9003,15 +8931,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Remove an existing credential exchange record",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/issue-credential/records/{cred_ex_id}",
             "path-parameters": {
@@ -9032,9 +8951,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -9076,9 +8995,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -9124,9 +9043,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -9179,15 +9098,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send a problem report for credential exchange",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/issue-credential/records/{cred_ex_id}/problem-report",
             "path-parameters": {
@@ -9218,9 +9128,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -9275,9 +9185,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -9319,9 +9229,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
@@ -9418,9 +9328,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
@@ -9496,9 +9406,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
@@ -9595,9 +9505,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -9665,9 +9575,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -9729,9 +9639,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -9795,15 +9705,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Remove an existing credential exchange record",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/issue-credential-2.0/records/{cred_ex_id}",
             "path-parameters": {
@@ -9824,9 +9725,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -9853,9 +9754,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -9901,9 +9802,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {},
@@ -9941,15 +9842,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send a problem report for credential exchange",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/issue-credential-2.0/records/{cred_ex_id}/problem-report",
             "path-parameters": {
@@ -9980,9 +9872,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -10038,9 +9930,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "holder_did": "did:key:ahsdkjahsdkjhaskjdhakjshdkajhsdkjahs",
                 },
@@ -10094,9 +9986,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 },
@@ -10137,9 +10029,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 },
@@ -10211,9 +10103,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 },
@@ -10254,9 +10146,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "holder_did": "did:key:ahsdkjahsdkjhaskjdhakjshdkajhsdkjahs",
@@ -10326,9 +10218,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {},
@@ -10381,9 +10273,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -10421,9 +10313,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -10472,9 +10364,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -10514,9 +10406,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -10549,9 +10441,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -10582,15 +10474,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch the multiple ledger configuration currently in use",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/ledger/multiple/config",
             "response": {
@@ -10605,9 +10488,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -10645,9 +10528,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -10668,9 +10551,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -10691,9 +10574,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -10749,15 +10632,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Rotate key pair for public DID.",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/ledger/rotate-public-did-keypair",
             "response": {
@@ -10783,15 +10657,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Clear default mediator",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/mediation/default-mediator",
             "response": {
@@ -10804,15 +10669,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Delete mediation request by ID",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/mediation/requests/{mediation_id}",
             "path-parameters": {
@@ -10833,9 +10689,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -10880,15 +10736,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Get default mediator",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/mediation/default-mediator",
             "response": {
@@ -10903,9 +10750,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -10941,9 +10788,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -10987,15 +10834,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Retrieve mediation request record",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/mediation/requests/{mediation_id}",
             "path-parameters": {
@@ -11016,9 +10854,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -11049,9 +10887,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -11093,9 +10931,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -11149,9 +10987,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -11192,15 +11030,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Set default mediator",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PUT",
             "path": "/mediation/{mediation_id}/default-mediator",
             "path-parameters": {
@@ -11221,9 +11050,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 },
@@ -11281,9 +11110,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "image_url": "https://aries.ca/images/sample.png",
                   "label": "Alice",
@@ -11355,9 +11184,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "wallet_key": "MySecretKey123",
                 },
@@ -11397,9 +11226,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "wallet_key": "MySecretKey123",
                 },
@@ -11443,9 +11272,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -11474,15 +11303,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Get a single subwallet",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/multitenancy/wallet/{wallet_id}",
             "path-parameters": {
@@ -11503,9 +11323,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "image_url": "https://aries.ca/images/sample.png",
                   "label": "Alice",
@@ -11572,9 +11392,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "alias": "Barry",
                   "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -11663,9 +11483,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "@type": "https://didcomm.org/my-family/1.0/my-message-type",
@@ -11741,9 +11561,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "auto_verify": "false",
                   "trace": "false",
@@ -11800,15 +11620,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Remove an existing presentation exchange record",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/present-proof/records/{pres_ex_id}",
             "path-parameters": {
@@ -11829,9 +11640,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -11875,15 +11686,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch credentials for a presentation request from wallet",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/present-proof/records/{pres_ex_id}/credentials",
             "path-parameters": {
@@ -11929,9 +11731,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -11966,15 +11768,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send a problem report for presentation exchange",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/present-proof/records/{pres_ex_id}/problem-report",
             "path-parameters": {
@@ -12005,9 +11798,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "auto_verify": "false",
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -12071,9 +11864,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "trace": "false",
@@ -12136,9 +11929,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -12181,9 +11974,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "auto_verify": "false",
                   "trace": "false",
@@ -12240,9 +12033,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -12292,9 +12085,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "auto_verify": "false",
                   "presentation_request": {},
@@ -12351,15 +12144,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Remove an existing presentation exchange record",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/present-proof-2.0/records/{pres_ex_id}",
             "path-parameters": {
@@ -12380,9 +12164,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -12426,15 +12210,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch credentials from wallet for presentation request",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/present-proof-2.0/records/{pres_ex_id}/credentials",
             "path-parameters": {
@@ -12480,9 +12255,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -12516,15 +12291,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send a problem report for presentation exchange",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/present-proof-2.0/records/{pres_ex_id}/problem-report",
             "path-parameters": {
@@ -12555,9 +12321,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "auto_verify": "false",
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -12621,9 +12387,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "presentation_proposal": {},
@@ -12686,9 +12452,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -12745,9 +12511,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "auto_verify": "false",
                   "trace": "false",
@@ -12803,9 +12569,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -12852,15 +12618,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Retrieve doc for requested did",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/resolver/resolve/{did}",
             "path-parameters": {
@@ -12894,9 +12651,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {},
@@ -12930,9 +12687,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                 },
@@ -12972,9 +12729,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -13028,9 +12785,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -13057,9 +12814,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -13095,9 +12852,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -13138,9 +12895,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -13167,9 +12924,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -13196,9 +12953,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -13225,9 +12982,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -13254,9 +13011,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -13298,9 +13055,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -13342,9 +13099,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {},
@@ -13371,9 +13128,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -13442,9 +13199,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -13481,9 +13238,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -13520,9 +13277,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "tails_public_uri": "http://192.168.56.133:6543/revocation/registry/WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0/tails-file",
                 },
@@ -13562,15 +13319,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Upload local tails file to server",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PUT",
             "path": "/revocation/registry/{rev_reg_id}/tails-file",
             "path-parameters": {
@@ -13604,9 +13352,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -13652,9 +13400,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -13681,9 +13429,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -13736,9 +13484,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -13776,9 +13524,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -13799,9 +13547,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -13824,9 +13572,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -13847,9 +13595,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -13872,9 +13620,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -13893,15 +13641,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Reset statistics",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/status/reset",
             "response": {
@@ -13914,15 +13653,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Shut down server",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/shutdown",
             "response": {
@@ -13950,9 +13680,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {},
@@ -14005,9 +13735,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "method": "sov",
                   "seed": "000000000000000000000000Trustee1",
@@ -14052,9 +13782,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -14088,9 +13818,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -14141,9 +13871,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -14162,15 +13892,6 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Rotate keypair for a DID not posted to the ledger",
             "docs": undefined,
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/wallet/did/local/rotate-keypair",
             "request": {
@@ -14195,9 +13916,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {
                   "did": "WgWxqztrNooG92RXvxSTWv",
                   "endpoint": "https://myhost:8021",
@@ -14252,9 +13973,9 @@ exports[`open api parser aries simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},

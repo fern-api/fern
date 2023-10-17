@@ -4283,15 +4283,6 @@ exports[`open api parser squidex simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/apps/{app}",
             "path-parameters": {
@@ -4309,15 +4300,6 @@ exports[`open api parser squidex simple 1`] = `
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "DELETE",
             "path": "/api/apps/{app}/clients/{id}",
@@ -4345,15 +4327,6 @@ exports[`open api parser squidex simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/contributors/{id}",
             "path-parameters": {
@@ -4380,15 +4353,6 @@ exports[`open api parser squidex simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/image",
             "path-parameters": {
@@ -4410,15 +4374,6 @@ exports[`open api parser squidex simple 1`] = `
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "DELETE",
             "path": "/api/apps/{app}/languages/{language}",
@@ -4446,15 +4401,6 @@ exports[`open api parser squidex simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/contributors/me",
             "path-parameters": {
@@ -4476,15 +4422,6 @@ exports[`open api parser squidex simple 1`] = `
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "DELETE",
             "path": "/api/apps/{app}/roles/{roleName}",
@@ -4512,15 +4449,6 @@ exports[`open api parser squidex simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/workflows/{id}",
             "path-parameters": {
@@ -4546,15 +4474,6 @@ exports[`open api parser squidex simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/apps/{app}",
             "path-parameters": {
@@ -4576,15 +4495,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "errors": [
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/apps",
             "response": {
@@ -4599,15 +4509,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/apps/{app}/assets/scripts",
@@ -4630,15 +4531,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/apps/{app}/clients",
             "path-parameters": {
@@ -4659,15 +4551,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/apps/{app}/contributors",
@@ -4708,15 +4591,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/apps/{app}/languages",
             "path-parameters": {
@@ -4737,15 +4611,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/apps/{app}/roles/permissions",
@@ -4768,15 +4633,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/apps/{app}/roles",
             "path-parameters": {
@@ -4797,15 +4653,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/apps/{app}/settings",
@@ -4828,15 +4675,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "errors": [
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/teams/{team}/apps",
             "path-parameters": {
@@ -4857,15 +4695,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/apps/{app}/workflows",
@@ -4889,15 +4718,6 @@ You will be assigned as owner of the new app automatically.",
               "root.BadRequestError",
               "root.ConflictError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/apps",
@@ -4932,15 +4752,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/apps/{app}/clients",
@@ -4977,15 +4788,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/api/apps/{app}/contributors",
             "path-parameters": {
@@ -5013,15 +4815,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/apps/{app}/languages",
@@ -5058,15 +4851,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/api/apps/{app}/roles",
             "path-parameters": {
@@ -5101,15 +4885,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/apps/{app}/workflows",
@@ -5148,9 +4923,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -5196,9 +4971,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -5240,9 +5015,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -5308,9 +5083,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -5372,9 +5147,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -5426,15 +5201,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PUT",
             "path": "/api/apps/{app}/roles/{roleName}",
             "path-parameters": {
@@ -5477,15 +5243,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "PUT",
             "path": "/api/apps/{app}/settings",
@@ -5533,15 +5290,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "PUT",
             "path": "/api/apps/{app}/workflows/{id}",
@@ -5639,9 +5387,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -5693,15 +5441,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/assets/{id}",
             "path-parameters": {
@@ -5739,15 +5478,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/assets/folders/{id}",
             "path-parameters": {
@@ -5768,15 +5498,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/apps/{app}/assets/{id}",
@@ -5997,15 +5718,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/apps/{app}/assets/folders",
             "path-parameters": {
@@ -6041,15 +5753,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/apps/{app}/assets",
@@ -6115,9 +5818,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -6148,15 +5851,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/apps/{app}/assets/tags",
@@ -6228,15 +5922,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/apps/{app}/assets/folders",
@@ -6327,9 +6012,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -6426,15 +6111,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PUT",
             "path": "/api/apps/{app}/assets/folders/{id}",
             "path-parameters": {
@@ -6476,9 +6152,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -6524,9 +6200,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -6569,15 +6245,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "PUT",
             "path": "/api/apps/{app}/assets/tags/{name}",
@@ -6628,15 +6295,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "DELETE",
             "path": "/api/apps/{app}/backups/{id}",
@@ -6714,15 +6372,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/apps/{app}/backups",
             "path-parameters": {
@@ -6743,15 +6392,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/apps/restore",
             "response": {
@@ -6767,15 +6407,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/apps/{app}/backups",
@@ -6793,15 +6424,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/apps/restore",
@@ -6843,15 +6465,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/comments/{commentsId}/{commentId}",
             "path-parameters": {
@@ -6876,15 +6489,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/apps/{app}/comments/{commentsId}",
@@ -6921,15 +6525,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/apps/{app}/watching/{resource}",
             "path-parameters": {
@@ -6955,15 +6550,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/apps/{app}/comments/{commentsId}",
@@ -6996,15 +6582,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "PUT",
             "path": "/api/apps/{app}/comments/{commentsId}/{commentId}",
@@ -7048,15 +6625,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/content/{app}/{schema}/bulk",
@@ -7121,15 +6689,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/api/content/{app}/{schema}/{id}/draft",
             "path-parameters": {
@@ -7159,15 +6718,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "DELETE",
             "path": "/api/content/{app}/{schema}/{id}",
@@ -7210,15 +6760,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/content/{app}/{schema}/{id}/status",
             "path-parameters": {
@@ -7249,15 +6790,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/content/{app}/{schema}/{id}/draft",
             "path-parameters": {
@@ -7286,15 +6818,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/content/{app}/{schema}/{id}",
@@ -7335,15 +6858,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/content/{app}/{schema}/{id}/validity",
@@ -7400,15 +6914,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/content/{app}/{schema}",
             "path-parameters": {
@@ -7452,9 +6957,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -7489,15 +6994,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/content/{app}/{schema}/{id}/references",
@@ -7537,15 +7033,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/content/{app}/{schema}/{id}/referencing",
@@ -7587,15 +7074,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PATCH",
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
@@ -7631,15 +7109,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/content/{app}/{schema}",
@@ -7691,15 +7160,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/api/content/{app}/{schema}/import",
             "path-parameters": {
@@ -7750,15 +7210,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/content/{app}/{schema}/{id}",
@@ -7814,15 +7265,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PUT",
             "path": "/api/content/{app}/{schema}/{id}",
             "path-parameters": {
@@ -7858,15 +7300,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "PUT",
             "path": "/api/content/{app}/{schema}/{id}/status",
@@ -7929,15 +7362,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.InternalServerError",
               "root.NotImplementedError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/diagnostics/dump",
           },
@@ -7948,15 +7372,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.InternalServerError",
               "root.NotImplementedError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/diagnostics/gcdump",
@@ -7979,15 +7394,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/event-consumers",
             "response": {
@@ -8003,15 +7409,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "PUT",
             "path": "/api/event-consumers/{consumerName}/reset",
@@ -8035,15 +7432,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PUT",
             "path": "/api/event-consumers/{consumerName}/start",
             "path-parameters": {
@@ -8065,15 +7453,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "PUT",
             "path": "/api/event-consumers/{consumerName}/stop",
@@ -8107,15 +7486,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/apps/{app}/history",
             "path-parameters": {
@@ -8146,15 +7516,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/teams/{team}/history",
@@ -8197,15 +7558,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/languages",
             "response": {
@@ -8230,15 +7582,6 @@ The client secret is auto generated on the server and returned. The client does 
             "docs": undefined,
             "errors": [
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/news/features",
@@ -8277,15 +7620,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/users/{userId}/notifications/{commentId}",
             "path-parameters": {
@@ -8305,15 +7639,6 @@ The client secret is auto generated on the server and returned. The client does 
             "docs": "When passing in a version you can retrieve all updates since then.",
             "errors": [
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/users/{userId}/notifications",
@@ -8356,15 +7681,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/ping/{app}",
             "path-parameters": {
@@ -8381,15 +7697,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/info",
             "response": {
@@ -8403,15 +7710,6 @@ The client secret is auto generated on the server and returned. The client does 
             "docs": "Can be used to test, if the Squidex API is alive and responding.",
             "errors": [
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/ping",
@@ -8435,15 +7733,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/apps/{app}/plans",
             "path-parameters": {
@@ -8464,15 +7753,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/teams/{team}/plans",
@@ -8498,9 +7778,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -8537,9 +7817,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -8585,15 +7865,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/rules/events/{id}",
             "path-parameters": {
@@ -8615,15 +7886,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/rules/events",
             "path-parameters": {
@@ -8641,15 +7903,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "DELETE",
             "path": "/api/apps/{app}/rules/{id}",
@@ -8672,15 +7925,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/rules/{id}/events",
             "path-parameters": {
@@ -8702,15 +7946,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/rules/run",
             "path-parameters": {
@@ -8728,15 +7963,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "PUT",
             "path": "/api/apps/{app}/rules/{id}/disable",
@@ -8764,15 +7990,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PUT",
             "path": "/api/apps/{app}/rules/{id}/enable",
             "path-parameters": {
@@ -8797,15 +8014,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/rules/actions",
             "response": {
@@ -8820,15 +8028,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/rules/eventtypes/{type}",
@@ -8850,15 +8049,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/rules/eventtypes",
             "response": {
@@ -8873,15 +8063,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/apps/{app}/rules/events",
@@ -8924,15 +8105,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/apps/{app}/rules",
             "path-parameters": {
@@ -8957,9 +8129,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -8992,15 +8164,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PUT",
             "path": "/api/apps/{app}/rules/events/{id}",
             "path-parameters": {
@@ -9025,9 +8188,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -9082,15 +8245,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PUT",
             "path": "/api/apps/{app}/rules/{id}/run",
             "path-parameters": {
@@ -9122,15 +8276,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/apps/{app}/rules/{id}/simulate",
             "path-parameters": {
@@ -9159,9 +8304,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -9193,15 +8338,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "PUT",
             "path": "/api/apps/{app}/rules/{id}/trigger",
@@ -9236,15 +8372,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
             "path-parameters": {
@@ -9274,15 +8401,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "DELETE",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
@@ -9318,15 +8436,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/apps/{app}/schemas/{schema}",
             "path-parameters": {
@@ -9348,15 +8457,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/disable",
@@ -9387,15 +8487,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/disable",
@@ -9431,15 +8522,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/enable",
             "path-parameters": {
@@ -9469,15 +8551,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/enable",
@@ -9512,15 +8585,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/apps/{app}/schemas/{schema}",
             "path-parameters": {
@@ -9546,15 +8610,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/apps/{app}/schemas",
             "path-parameters": {
@@ -9576,15 +8631,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/hide",
@@ -9615,15 +8661,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/hide",
@@ -9659,15 +8696,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/lock",
             "path-parameters": {
@@ -9697,15 +8725,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/lock",
@@ -9742,15 +8761,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.ConflictError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/api/apps/{app}/schemas/{schema}/fields",
             "path-parameters": {
@@ -9783,15 +8793,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.ConflictError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested",
@@ -9828,15 +8829,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.ConflictError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/apps/{app}/schemas",
@@ -9884,15 +8876,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/publish",
             "path-parameters": {
@@ -9921,9 +8904,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -9969,9 +8952,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -10014,9 +8997,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -10061,15 +9044,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/ordering",
             "path-parameters": {
@@ -10106,15 +9080,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/preview-urls",
             "path-parameters": {
@@ -10149,9 +9114,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -10194,15 +9159,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}",
@@ -10267,15 +9223,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/ordering",
             "path-parameters": {
@@ -10307,15 +9254,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/sync",
@@ -10365,9 +9303,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -10417,9 +9355,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -10456,15 +9394,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/show",
             "path-parameters": {
@@ -10494,15 +9423,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/show",
@@ -10537,15 +9457,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/unpublish",
@@ -10582,15 +9493,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/apps/{app}/search",
@@ -10634,15 +9536,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/apps/{app}/usages/storage/today",
             "path-parameters": {
@@ -10666,9 +9559,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -10695,15 +9588,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/apps/{app}/usages/storage/{fromDate}/{toDate}",
@@ -10734,15 +9618,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/teams/{team}/usages/storage/{fromDate}/{toDate}",
             "path-parameters": {
@@ -10772,15 +9647,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/teams/{team}/usages/storage/today",
             "path-parameters": {
@@ -10801,15 +9667,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/apps/{app}/usages/calls/{fromDate}/{toDate}",
@@ -10839,15 +9696,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/teams/{team}/usages/calls/{fromDate}/{toDate}",
@@ -10890,15 +9738,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/teams/{team}/contributors/{id}",
             "path-parameters": {
@@ -10925,15 +9764,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/teams/{team}/contributors/me",
             "path-parameters": {
@@ -10954,15 +9784,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/teams/{team}/contributors",
@@ -10985,15 +9806,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/teams/{team}",
             "path-parameters": {
@@ -11015,15 +9827,6 @@ You will retrieve all teams, where you are assigned as a contributor.",
             "errors": [
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/teams",
             "response": {
@@ -11039,15 +9842,6 @@ You will retrieve all teams, where you are assigned as a contributor.",
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/teams/{team}/contributors",
@@ -11078,15 +9872,6 @@ You will be assigned as owner of the new team automatically.",
               "root.ConflictError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "POST",
             "path": "/api/teams",
             "request": {
@@ -11115,15 +9900,6 @@ You will be assigned as owner of the new team automatically.",
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "PUT",
             "path": "/api/teams/{team}",
@@ -11170,15 +9946,6 @@ You will be assigned as owner of the new team automatically.",
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/api/templates/{name}",
             "path-parameters": {
@@ -11198,15 +9965,6 @@ You will be assigned as owner of the new team automatically.",
             "docs": undefined,
             "errors": [
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/templates",
@@ -11236,9 +9994,9 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -11300,15 +10058,6 @@ You will be assigned as owner of the new team automatically.",
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "DELETE",
             "path": "/api/user-management/{id}",
             "path-parameters": {
@@ -11325,15 +10074,6 @@ You will be assigned as owner of the new team automatically.",
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/user-management/{id}",
@@ -11354,15 +10094,6 @@ You will be assigned as owner of the new team automatically.",
             "docs": undefined,
             "errors": [
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/user-management",
@@ -11401,15 +10132,6 @@ You will be assigned as owner of the new team automatically.",
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PUT",
             "path": "/api/user-management/{id}/lock",
             "path-parameters": {
@@ -11430,15 +10152,6 @@ You will be assigned as owner of the new team automatically.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "POST",
             "path": "/api/user-management",
@@ -11480,15 +10193,6 @@ You will be assigned as owner of the new team automatically.",
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "PUT",
             "path": "/api/user-management/{id}",
@@ -11538,15 +10242,6 @@ You will be assigned as owner of the new team automatically.",
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "PUT",
             "path": "/api/user-management/{id}/unlock",
             "path-parameters": {
@@ -11578,15 +10273,6 @@ You will be assigned as owner of the new team automatically.",
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/users/{id}",
@@ -11628,9 +10314,9 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -11650,15 +10336,6 @@ You will be assigned as owner of the new team automatically.",
             "docs": "Search the user by query that contains the email address or the part of the email address.",
             "errors": [
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
             ],
             "method": "GET",
             "path": "/api/users",

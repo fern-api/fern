@@ -14,15 +14,6 @@ exports[`open api parser hume simple 1`] = `
             "display-name": "Get Job Predictions",
             "docs": "Get the JSON predictions of a completed job.",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/v0/batch/jobs/{id}/predictions",
             "path-parameters": {
@@ -41,15 +32,6 @@ exports[`open api parser hume simple 1`] = `
             "display-name": "List Jobs",
             "docs": "Sort and filter jobs.",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/v0/batch/jobs",
             "request": {
@@ -99,9 +81,9 @@ exports[`open api parser hume simple 1`] = `
             "errors": [],
             "examples": [
               {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
                 "request": {},
                 "response": undefined,
               },
@@ -1321,15 +1303,6 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "display-name": "Get Job Details",
             "docs": "Get the request details and state of a given job.",
             "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {},
-                "query-parameters": {},
-                "request": undefined,
-                "response": undefined,
-              },
-            ],
             "method": "GET",
             "path": "/v0/batch/jobs/{id}",
             "path-parameters": {
