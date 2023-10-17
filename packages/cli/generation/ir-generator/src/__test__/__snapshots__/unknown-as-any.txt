@@ -163,6 +163,7 @@ exports[`generate IR 1`] = `
                 },
               },
             },
+            "returnResponseBodyProperty": null,
             "type": "json",
           },
           "sdkRequest": {

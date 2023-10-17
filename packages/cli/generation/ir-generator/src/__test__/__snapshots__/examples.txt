@@ -388,6 +388,7 @@ exports[`generate IR 1`] = `
               "_type": "primitive",
               "primitive": "STRING",
             },
+            "returnResponseBodyProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -1009,6 +1010,7 @@ exports[`generate IR 1`] = `
               },
               "typeId": "type_types:Exception",
             },
+            "returnResponseBodyProperty": null,
             "type": "json",
           },
           "sdkRequest": null,
@@ -1542,6 +1544,7 @@ exports[`generate IR 1`] = `
               },
               "typeId": "type_types:File",
             },
+            "returnResponseBodyProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -1952,6 +1955,7 @@ exports[`generate IR 1`] = `
               "_type": "primitive",
               "primitive": "BOOLEAN",
             },
+            "returnResponseBodyProperty": null,
             "type": "json",
           },
           "sdkRequest": null,
@@ -2926,6 +2930,7 @@ exports[`generate IR 1`] = `
               },
               "typeId": "type_types:Movie",
             },
+            "returnResponseBodyProperty": null,
             "type": "json",
           },
           "sdkRequest": null,
@@ -3678,6 +3683,7 @@ exports[`generate IR 1`] = `
               },
               "typeId": "type_types:MovieId",
             },
+            "returnResponseBodyProperty": null,
             "type": "json",
           },
           "sdkRequest": {
@@ -4164,6 +4170,7 @@ exports[`generate IR 1`] = `
               },
               "typeId": "type_types:Metadata",
             },
+            "returnResponseBodyProperty": null,
             "type": "json",
           },
           "sdkRequest": {
