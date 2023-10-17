@@ -1,19 +1,18 @@
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { FernDocsConfig, FernDocsConfig as RawDocs } from "@fern-fern/docs-config";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization";
-import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "./utils/loadOpenApiFromUrl";
-import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { initializeAPI } from "./initializeAPI";
+import { loadOpenAPIFromUrl, LoadOpenAPIStatus } from "./utils/loadOpenApiFromUrl";
 
 export async function initializeDocs({
     organization,
     taskContext,
     versionOfCli,
-    docsUrl
+    docsUrl,
 }: {
     organization: string | undefined;
     taskContext: TaskContext;
@@ -25,19 +24,22 @@ export async function initializeDocs({
         versionOfCli,
         taskContext,
     });
-
-    console.log(`Initializing docs for ${createDirectoryResponse.organization}`);
-
-    const docsCfg = await getDocsConfig(createDirectoryResponse.organization, docsUrl, taskContext, versionOfCli);
+    taskContext.logger.info(`Initializing docs for ${createDirectoryResponse.organization}`);
+    const docsConfig = await getDocsConfig(createDirectoryResponse.organization, docsUrl, taskContext, versionOfCli);
     await writeFile(
         join(createDirectoryResponse.absolutePathToFernDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME)),
-        yaml.dump(docsCfg)
+        yaml.dump(docsConfig)
     );
 }
 
-async function loadOpenApiAndGetApiSectionFromUrl(docsUrl: string, organization: string, taskContext: TaskContext, versionOfCli: string): Promise<FernDocsConfig.ApiSectionConfiguration[]> {
+async function loadOpenApiAndGetApiSectionFromUrl(
+    docsUrl: string,
+    organization: string,
+    taskContext: TaskContext,
+    versionOfCli: string
+): Promise<FernDocsConfig.ApiSectionConfiguration[]> {
     const result = await loadOpenAPIFromUrl({ url: docsUrl, logger: taskContext.logger });
-    
+
     let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
 
     if (result.status === LoadOpenAPIStatus.Failure) {
@@ -50,24 +52,32 @@ async function loadOpenApiAndGetApiSectionFromUrl(docsUrl: string, organization:
             taskContext.failAndThrow(`${absoluteOpenApiPath} does not exist`);
         }
 
-        console.log(`Loaded OpenAPI spec from ${docsUrl} into file ${absoluteOpenApiPath}`);
+        taskContext.logger.debug(`Loaded OpenAPI spec from ${docsUrl} into file ${absoluteOpenApiPath}`);
         await initializeAPI({
             organization,
             versionOfCli,
             context: taskContext,
-            openApiPath: absoluteOpenApiPath
+            openApiPath: absoluteOpenApiPath,
         });
     }
-    
+
     return [
         {
             api: "API Reference",
-        }
+        },
     ];
 }
 
-async function getDocsConfig(organization: string, docsUrl: string | undefined | null, taskContext: TaskContext, versionOfCli: string): Promise<RawDocs.DocsConfiguration> {
-    const apiSection = (docsUrl != null) ? await loadOpenApiAndGetApiSectionFromUrl(docsUrl, organization, taskContext, versionOfCli) : [{ api: "API Reference" }];
+async function getDocsConfig(
+    organization: string,
+    docsUrl: string | undefined | null,
+    taskContext: TaskContext,
+    versionOfCli: string
+): Promise<RawDocs.DocsConfiguration> {
+    const apiSection =
+        docsUrl != null
+            ? await loadOpenApiAndGetApiSectionFromUrl(docsUrl, organization, taskContext, versionOfCli)
+            : [{ api: "API Reference" }];
     return {
         instances: [
             {
