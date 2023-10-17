@@ -1,5 +1,37 @@
-import { EnumValue, ObjectSchema, OneOfSchema, PrimitiveSchemaValue, Schema } from "@fern-fern/openapi-ir-model/ir";
+import {
+    EnumValue,
+    ObjectSchema,
+    OneOfSchema,
+    PrimitiveSchemaValue,
+    Schema,
+} from "@fern-fern/openapi-ir-model/finalIr";
+import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { isEqual } from "lodash-es";
+
+export function isSchemaEqual(a: Schema, b: SchemaWithExample): boolean {
+    if (a.type === "primitive" && b.type === "primitive") {
+        return isPrimitiveSchemaValueEqual(a.schema, b.schema);
+    } else if (a.type === "enum" && b.type === "enum") {
+        return areEnumValuesEqual(a.values, b.values);
+    } else if (a.type === "array" && b.type === "array") {
+        return isSchemaEqual(a.value, b.value);
+    } else if (a.type === "unknown" && b.type === "unknown") {
+        return true;
+    } else if (a.type === "reference" && b.type === "reference") {
+        return a.schema === b.schema;
+    } else if (a.type === "optional" && b.type === "optional") {
+        return isSchemaEqual(a.value, b.value);
+    } else if (a.type === "oneOf" && b.type === "oneOf") {
+        return isOneOfEqual(a.oneOf, b.oneOf);
+    } else if (a.type === "object" && b.type === "object") {
+        return isObjectEqual(a, b);
+    } else if (a.type === "map" && b.type === "map") {
+        return isPrimitiveSchemaValueEqual(a.key, b.key) && isSchemaEqual(a.value, b.value);
+    } else if (a.type === "literal" && b.type === "literal") {
+        return a.value === b.value;
+    }
+    return false;
+}
 
 export function isSchemaEqual(a: Schema, b: Schema): boolean {
     if (a.type === "primitive" && b.type === "primitive") {

@@ -1,5 +1,5 @@
-import { EnumValue } from "@fern-fern/openapi-ir-model/ir";
-import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parse-stage/ir";
+import { EnumValue } from "@fern-fern/openapi-ir-model/finalIr";
+import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { camelCase, upperFirst } from "lodash-es";
 import { FernEnumConfig } from "../../extensions/getFernEnum";
 

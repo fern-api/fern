@@ -1,4 +1,4 @@
-import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parse-stage/ir";
+import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 
 export function convertLiteral({
     wrapAsNullable,

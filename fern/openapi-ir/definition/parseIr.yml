@@ -25,7 +25,7 @@ types:
   MapSchemaWithExample:
     extends: commons.WithDescription
     properties:
-      key: SchemaWithExample
+      key: PrimitiveSchemaWithExample
       value: SchemaWithExample
 
   OptionalSchemaWithExample:

@@ -1,4 +1,4 @@
-import { Schema } from "@fern-fern/openapi-ir-model/ir";
+import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { difference } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
@@ -23,14 +23,14 @@ export function convertUndiscriminatedOneOf({
     wrapAsNullable: boolean;
     context: AbstractOpenAPIV3ParserContext;
     subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[];
-}): Schema {
+}): SchemaWithExample {
     const subtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
 
     const convertedSubtypes = subtypes.map((schema, index) => {
         return convertSchema(schema, false, context, [...breadcrumbs, subtypePrefixes[index] ?? `${index}`]);
     });
 
-    const uniqueSubtypes: Schema[] = [];
+    const uniqueSubtypes: SchemaWithExample[] = [];
     for (let i = 0; i < convertedSubtypes.length; ++i) {
         const a = convertedSubtypes[i];
         let isDuplicate = false;
@@ -155,11 +155,11 @@ export function wrapUndiscriminantedOneOf({
     nameOverride: string | undefined;
     generatedName: string;
     description: string | undefined;
-    subtypes: Schema[];
-}): Schema {
+    subtypes: SchemaWithExample[];
+}): SchemaWithExample {
     if (wrapAsNullable) {
-        return Schema.nullable({
-            value: Schema.oneOf({
+        return SchemaWithExample.nullable({
+            value: SchemaWithExample.oneOf({
                 type: "undisciminated",
                 description,
                 nameOverride,
@@ -169,7 +169,7 @@ export function wrapUndiscriminantedOneOf({
             description,
         });
     }
-    return Schema.oneOf({
+    return SchemaWithExample.oneOf({
         type: "undisciminated",
         description,
         nameOverride,

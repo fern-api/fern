@@ -1,4 +1,4 @@
-import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parse-stage/ir";
+import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { convertSchema } from "../convertSchemas";
@@ -18,7 +18,7 @@ export function convertArray({
 }): SchemaWithExample {
     const itemSchema =
         item == null
-            ? SchemaWithExample.unknown({ example: undefined })
+            ? SchemaWithExample.unknown({ description: undefined, example: undefined })
             : convertSchema(item, false, context, [...breadcrumbs, "Item"]);
     return wrapArray({
         itemSchema,

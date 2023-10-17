@@ -1,4 +1,8 @@
-import { PrimitiveSchemaValue, SchemaWithExample } from "@fern-fern/openapi-ir-model/parse-stage/ir";
+import {
+    PrimitiveSchemaValueWithExample,
+    PrimitiveSchemaWithExample,
+    SchemaWithExample,
+} from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { isReferenceObject } from "../../utils/isReferenceObject";
@@ -21,11 +25,14 @@ export function convertAdditionalProperties({
         return wrapMap({
             wrapAsNullable,
             description,
-            keySchema: PrimitiveSchemaValue.string({
-                minLength: undefined,
-                maxLength: undefined,
-                example: undefined,
-            }),
+            keySchema: {
+                description: undefined,
+                schema: PrimitiveSchemaValueWithExample.string({
+                    minLength: undefined,
+                    maxLength: undefined,
+                    example: undefined,
+                }),
+            },
             valueSchema: SchemaWithExample.unknown({
                 description: undefined,
                 example: undefined,
@@ -35,11 +42,14 @@ export function convertAdditionalProperties({
     return wrapMap({
         wrapAsNullable,
         description,
-        keySchema: PrimitiveSchemaValue.string({
-            minLength: undefined,
-            maxLength: undefined,
-            example: undefined,
-        }),
+        keySchema: {
+            description: undefined,
+            schema: PrimitiveSchemaValueWithExample.string({
+                minLength: undefined,
+                maxLength: undefined,
+                example: undefined,
+            }),
+        },
         valueSchema: convertSchema(additionalProperties, wrapAsNullable, context, [...breadcrumbs, "Value"]),
     });
 }
@@ -56,7 +66,7 @@ export function wrapMap({
     wrapAsNullable,
     description,
 }: {
-    keySchema: PrimitiveSchemaValue;
+    keySchema: PrimitiveSchemaWithExample;
     valueSchema: SchemaWithExample;
     wrapAsNullable: boolean;
     description: string | undefined;

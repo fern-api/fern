@@ -1,5 +1,5 @@
-import { ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/ir";
-import { PrimitiveSchemaValue, SchemaWithExample } from "@fern-fern/openapi-ir-model/parse-stage/ir";
+import { ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/finalIr";
+import { PrimitiveSchemaValueWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { isEqual } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
@@ -78,7 +78,7 @@ export function convertSchemaObject(
             // If enum is not a list of strings, just type as a string.
             // TODO(dsinghvi): Emit a warning we are doing this.
             return wrapPrimitive({
-                primitive: PrimitiveSchemaValue.string({
+                primitive: PrimitiveSchemaValueWithExample.string({
                     minLength: undefined,
                     maxLength: undefined,
                     example: undefined,
@@ -145,7 +145,7 @@ export function convertSchemaObject(
     // primitive types
     if (schema === "boolean" || schema.type === "boolean") {
         return wrapPrimitive({
-            primitive: PrimitiveSchemaValue.boolean({
+            primitive: PrimitiveSchemaValueWithExample.boolean({
                 example: undefined,
             }),
             wrapAsNullable,
@@ -157,7 +157,7 @@ export function convertSchemaObject(
     }
     if (schema === "integer" || schema.type === "integer") {
         return wrapPrimitive({
-            primitive: PrimitiveSchemaValue.int({
+            primitive: PrimitiveSchemaValueWithExample.int({
                 example: undefined,
             }),
             wrapAsNullable,
@@ -167,7 +167,7 @@ export function convertSchemaObject(
     if (schema === "string" || schema.type === "string") {
         if (schema.format === "date-time") {
             return wrapPrimitive({
-                primitive: PrimitiveSchemaValue.datetime({
+                primitive: PrimitiveSchemaValueWithExample.datetime({
                     example: undefined,
                 }),
                 wrapAsNullable,
@@ -185,7 +185,7 @@ export function convertSchemaObject(
         }
 
         return wrapPrimitive({
-            primitive: PrimitiveSchemaValue.string({
+            primitive: PrimitiveSchemaValueWithExample.string({
                 maxLength: schema.maxLength,
                 minLength: schema.minLength,
                 example: undefined,
@@ -372,9 +372,10 @@ export function convertSchemaObject(
         return wrapMap({
             description,
             wrapAsNullable,
-            keySchema: PrimitiveSchemaValue.string({
+            keySchema: PrimitiveSchemaValueWithExample.string({
                 minLength: undefined,
                 maxLength: undefined,
+                example: undefined,
             }),
             valueSchema: Schema.unknown(),
         });
@@ -429,21 +430,21 @@ function isListOfStrings(x: unknown): x is string[] {
     return Array.isArray(x) && x.every((item) => typeof item === "string");
 }
 
-function maybeInjectDescription(schema: Schema, description: string | undefined): Schema {
+function maybeInjectDescription(schema: SchemaWithExample, description: string | undefined): SchemaWithExample {
     if (schema.type === "reference") {
         return Schema.reference({
             ...schema,
             description,
         });
     } else if (schema.type === "optional" && schema.value.type === "reference") {
-        return Schema.optional({
+        return SchemaWithExample.optional({
             value: Schema.reference({
                 ...schema.value,
             }),
             description,
         });
     } else if (schema.type === "nullable" && schema.value.type === "reference") {
-        return Schema.nullable({
+        return SchemaWithExample.nullable({
             value: Schema.reference({
                 ...schema.value,
             }),
@@ -513,7 +514,7 @@ export function wrapPrimitive({
     wrapAsNullable,
     description,
 }: {
-    primitive: PrimitiveSchemaValue;
+    primitive: PrimitiveSchemaValueWithExample;
     wrapAsNullable: boolean;
     description: string | undefined;
 }): SchemaWithExample {
