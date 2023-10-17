@@ -55,6 +55,7 @@ exports[`ir {"name":"auth-header-prefix"} 1`] = `
                     "primitive": "STRING"
                 },
                 "prefix": "ApiKey",
+                "headerEnvVar": null,
                 "docs": null
             }
         ],
@@ -176,6 +177,7 @@ exports[`ir {"name":"extended-examples"} 1`] = `
                         "safeName": "Token"
                     }
                 },
+                "tokenEnvVar": null,
                 "docs": null
             }
         ],
@@ -8804,6 +8806,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                         "safeName": "ClientId"
                     }
                 },
+                "usernameEnvVar": null,
                 "password": {
                     "originalName": "clientSecret",
                     "camelCase": {
@@ -8823,6 +8826,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                         "safeName": "ClientSecret"
                     }
                 },
+                "passwordEnvVar": null,
                 "docs": null
             }
         ],

@@ -17,6 +17,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "BookingAmendmentCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -35,6 +36,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "schema": "CreateBookingAmendment",
           "type": "reference",
         },
+        "schemaInstanceId": "booking_amendment_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -135,6 +137,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "BookingLineItemIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -431,6 +434,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "BookingLineItemCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -449,6 +453,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "schema": "CreateBookingLineItem",
           "type": "reference",
         },
+        "schemaInstanceId": "booking_line_item_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -549,6 +554,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "BookingLineItemShowRequest",
       "headers": [],
       "internal": undefined,
@@ -669,6 +675,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "BookingsIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -1230,6 +1237,175 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "cargo": {
+                "properties": {
+                  "contains_hazmat": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "contains_li_ion": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "contains_magnets": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "contains_non_li_ion_battery": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "contains_other_dangerous_goods": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "marks_and_numbers": {
+                    "primitive": {
+                      "string": "Fragile",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "cargo_ready_date": {
+                "primitive": {
+                  "string": "2019-06-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "consignee_entity_ref": {
+                "primitive": {
+                  "string": "consignee_company_name_llc",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "declared_as_strategy": {
+                "enum": "yes",
+                "type": "enum",
+              },
+              "delivery_date": {
+                "primitive": {
+                  "string": "2019-07-23",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "destination_address_ref": {
+                "primitive": {
+                  "string": "id-123456",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "eccn_codes": {
+                "primitive": {
+                  "string": "3A001, 5A002",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "flow_direct": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "PO 123",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "notify_party": {
+                "primitive": {
+                  "string": "John Doe, doe@example.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "origin_address_ref": {
+                "primitive": {
+                  "string": "id-123456",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "shipper_entity_ref": {
+                "primitive": {
+                  "string": "shipper_company_name_ltd",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "special_instructions": {
+                "primitive": {
+                  "string": "Please book 40ft reefer container.",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "wants_bco": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "wants_export_customs_service": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "wants_flexport_freight": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "wants_import_customs_service": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "BookingCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -1248,6 +1424,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "schema": "CreateBooking",
           "type": "reference",
         },
+        "schemaInstanceId": "booking_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1349,6 +1526,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "BookingShowRequest",
       "headers": [],
       "internal": undefined,
@@ -1469,6 +1647,38 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "flight_type": {
+                "enum": "freighter",
+                "type": "enum",
+              },
+              "teus": {
+                "primitive": {
+                  "string": "2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "transportation_mode": {
+                "enum": "ocean",
+                "type": "enum",
+              },
+              "trucking_service_type": {
+                "enum": "drayage",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CarbonCalculationCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -1487,6 +1697,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "schema": "CreateCarbonCalculation",
           "type": "reference",
         },
+        "schemaInstanceId": "carbon_calculation_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1585,6 +1796,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "availability": undefined,
       "description": "Returns a list of commercial invoices",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "CommercialInvoicesIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -1876,6 +2088,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "CommercialInvoicesCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -1894,6 +2107,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "schema": "CreateCommercialInvoice",
           "type": "reference",
         },
+        "schemaInstanceId": "commercial_invoices_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1994,6 +2208,40 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "currency_code": {
+                "primitive": {
+                  "string": "USD",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "invoice_number": {
+                "primitive": {
+                  "string": "INVOICE-04-05-2020",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "is_related_parties": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "CommercialInvoicesUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -2012,6 +2260,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "schema": "UpdateCommercialInvoice",
           "type": "reference",
         },
+        "schemaInstanceId": "commercial_invoices_update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2112,6 +2361,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "CommercialInvoicesShowRequest",
       "headers": [],
       "internal": undefined,
@@ -2234,6 +2484,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "CustomsEntryIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -2474,6 +2725,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "CustomsEntriesShowRequest",
       "headers": [],
       "internal": undefined,
@@ -2596,6 +2848,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "DocumentsIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -2954,6 +3207,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "DocumentsCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -2972,6 +3226,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "schema": "CreateDocument",
           "type": "reference",
         },
+        "schemaInstanceId": "documents_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3072,6 +3327,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "DocumentsShowRequest",
       "headers": [],
       "internal": undefined,
@@ -3192,6 +3448,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "availability": undefined,
       "description": "Retrieves the contents of a specified file. Returns the file as a stream of bytes.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "DocumentsDownloadRequest",
       "headers": [],
       "internal": undefined,
@@ -3236,6 +3493,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "EventsIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -3547,6 +3805,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "EventsShowRequest",
       "headers": [],
       "internal": undefined,
@@ -3667,6 +3926,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "InvoiceIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -4150,6 +4410,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "InvoicesShowRequest",
       "headers": [],
       "internal": undefined,
@@ -4272,6 +4533,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "NetworkCompanyIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -4545,6 +4807,33 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "name": {
+                "primitive": {
+                  "string": "Zoomit",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "ref": {
+                "primitive": {
+                  "string": "zoomit-ref",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "NetworkCompanyCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -4563,6 +4852,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "CreateCompany",
           "type": "reference",
         },
+        "schemaInstanceId": "network_company_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -4661,6 +4951,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "availability": undefined,
       "description": "Retrieves the details of a single company.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "NetworkCompanyShowRequest",
       "headers": [],
       "internal": undefined,
@@ -4783,6 +5074,33 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "name": {
+                "primitive": {
+                  "string": "Updated Zoomit",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "ref": {
+                "primitive": {
+                  "string": "zoomit_ref",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "NetworkCompanyUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -4816,6 +5134,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "UpdateCompany",
           "type": "reference",
         },
+        "schemaInstanceId": "network_company_update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -4916,6 +5235,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "CompanyEntityIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -5206,6 +5526,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "NetworkCompanyEntityCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -5224,6 +5545,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "CreateCompanyEntity",
           "type": "reference",
         },
+        "schemaInstanceId": "network_company_entity_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -5324,6 +5646,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "NetworkCompanyEntityShowRequest",
       "headers": [],
       "internal": undefined,
@@ -5446,6 +5769,33 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "name": {
+                "primitive": {
+                  "string": "Zoomit V2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "ref": {
+                "primitive": {
+                  "string": "zoomit-us",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "NetworkCompanyEntityUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -5479,6 +5829,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "UpdateCompanyEntity",
           "type": "reference",
         },
+        "schemaInstanceId": "network_company_entity_update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -5579,6 +5930,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "NetworkContactIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -5869,6 +6221,47 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "company_id": {
+                "primitive": {
+                  "string": "2UXaj4xcHoW8nwh9UVOMpw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "email": {
+                "primitive": {
+                  "string": "john@example.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "John Smith",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "phone_number": {
+                "primitive": {
+                  "string": "861-555-5555",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "NetworkContactCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -5887,6 +6280,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "CreateContact",
           "type": "reference",
         },
+        "schemaInstanceId": "network_contact_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -5987,6 +6381,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "NetworkContactShowRequest",
       "headers": [],
       "internal": undefined,
@@ -6109,6 +6504,40 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "email": {
+                "primitive": {
+                  "string": "john_new_email@example.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "John Smith",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "phone_number": {
+                "primitive": {
+                  "string": "861-555-7777",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "NetworkContactUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -6142,6 +6571,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "UpdateContact",
           "type": "reference",
         },
+        "schemaInstanceId": "network_contact_update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -6242,6 +6672,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "LocationIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -6566,6 +6997,94 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "address": {
+                "properties": {
+                  "city": {
+                    "primitive": {
+                      "string": "Albany",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "country_code": {
+                    "primitive": {
+                      "string": "US",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "state": {
+                    "primitive": {
+                      "string": "MN",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "street_address": {
+                    "primitive": {
+                      "string": "1641 Settlers Lane",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "street_address2": {
+                    "primitive": {
+                      "string": "STE 2918",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "unlocode": {
+                    "primitive": {
+                      "string": "USAL2",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "zip": {
+                    "primitive": {
+                      "string": "56307",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "company_id": {
+                "primitive": {
+                  "string": "xyz_123_ABC",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "Zoomit",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "ref": {
+                "primitive": {
+                  "string": "zoomit-management-co",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "NetworkLocationCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -6584,6 +7103,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "CreateLocation",
           "type": "reference",
         },
+        "schemaInstanceId": "network_location_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -6684,6 +7204,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "NetworkLocationShowRequest",
       "headers": [],
       "internal": undefined,
@@ -6806,6 +7327,33 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "name": {
+                "primitive": {
+                  "string": "Zoomit V2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "ref": {
+                "primitive": {
+                  "string": "zoomit-management-co",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "LocationUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -6839,6 +7387,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "UpdateLocation",
           "type": "reference",
         },
+        "schemaInstanceId": "location_update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -6939,6 +7488,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "NetworkCompanyMeRequest",
       "headers": [],
       "internal": undefined,
@@ -7046,6 +7596,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "OceanContainerLegsIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -7316,6 +7867,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "OceanContainerLegsShowRequest",
       "headers": [],
       "internal": undefined,
@@ -7436,6 +7988,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "ContainerListRequest",
       "headers": [],
       "internal": undefined,
@@ -7708,6 +8261,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "ContainerShowRequest",
       "headers": [],
       "internal": undefined,
@@ -7830,6 +8384,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "PortsIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -8126,6 +8681,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "ProductIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -8368,6 +8924,61 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "client_verified": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "country_of_origin": {
+                "primitive": {
+                  "string": "China",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "description": {
+                "primitive": {
+                  "string": "The best 12V AC Adapter on the market",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "AC Adapter 12V",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "product_category": {
+                "primitive": {
+                  "string": "Cosmetics",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "sku": {
+                "primitive": {
+                  "string": "WDVCDFD-RM00472",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ProductCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -8386,6 +8997,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "CreateProduct",
           "type": "reference",
         },
+        "schemaInstanceId": "product_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -8486,6 +9098,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "ProductShowRequest",
       "headers": [],
       "internal": undefined,
@@ -8608,6 +9221,61 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "client_verified": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "country_of_origin": {
+                "primitive": {
+                  "string": "China",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "description": {
+                "primitive": {
+                  "string": "The best 12V AC Adapter on the market",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "AC Adapter 12V",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "product_category": {
+                "primitive": {
+                  "string": "Cosmetics",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "sku": {
+                "primitive": {
+                  "string": "WDVCDFD-RM00472",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ProductUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -8641,6 +9309,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "UpdateProduct",
           "type": "reference",
         },
+        "schemaInstanceId": "product_update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -8741,6 +9410,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "PurchaseOrderLineItemIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -9048,6 +9718,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "PurchaseOrderLineItemShowRequest",
       "headers": [],
       "internal": undefined,
@@ -9168,6 +9839,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "PurchaseOrderIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -9699,6 +10371,55 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "_object": {
+                "primitive": {
+                  "string": "/booking",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "incoterm": {
+                "enum": "FOB",
+                "type": "enum",
+              },
+              "memo": {
+                "primitive": {
+                  "string": "This message is written in invisible ink",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "PO 12345 - "shipment"",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "order_type": {
+                "primitive": {
+                  "string": "Apparel",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "status": {
+                "enum": "open",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PurchaseOrderCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -9717,6 +10438,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "CreateOrUpdatePurchaseOrder",
           "type": "reference",
         },
+        "schemaInstanceId": "purchase_order_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -9747,6 +10469,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "PurchaseOrderShowRequest",
       "headers": [],
       "internal": undefined,
@@ -9883,6 +10606,55 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "_object": {
+                "primitive": {
+                  "string": "/booking",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "incoterm": {
+                "enum": "FOB",
+                "type": "enum",
+              },
+              "memo": {
+                "primitive": {
+                  "string": "This message is written in invisible ink",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "PO 12345 - "shipment"",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "order_type": {
+                "primitive": {
+                  "string": "Apparel",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "status": {
+                "enum": "open",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PurchaseOrderUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -9914,6 +10686,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "CreateOrUpdatePurchaseOrder",
           "type": "reference",
         },
+        "schemaInstanceId": "purchase_order_update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -9943,6 +10716,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "ShipmentLegIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -10211,6 +10985,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "ShipmentLegShowRequest",
       "headers": [],
       "internal": undefined,
@@ -10347,6 +11122,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "ShipmentIndexRequest",
       "headers": [],
       "internal": undefined,
@@ -11077,6 +11853,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "ShipmentShowRequest",
       "headers": [],
       "internal": undefined,
@@ -11199,6 +11976,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "ShipmentUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -11230,6 +12008,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "schema": "UpdateShipment",
           "type": "reference",
         },
+        "schemaInstanceId": "shipment_update_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -11330,6 +12109,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "errorStatusCode": [
         400,
       ],
+      "examples": [],
       "generatedRequestName": "ShipmentsShareableRequest",
       "headers": [],
       "internal": undefined,
@@ -11371,6 +12151,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           ],
           "type": "object",
         },
+        "schemaInstanceId": "shipments_shareable_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,

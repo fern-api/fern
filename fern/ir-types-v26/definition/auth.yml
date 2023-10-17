@@ -4,6 +4,7 @@ imports:
   types: types.yml
   commons: commons.yml
 types:
+  EnvironmentVariable: string
   ApiAuth:
     extends: commons.WithDocs
     properties:
@@ -25,14 +26,26 @@ types:
     extends: commons.WithDocs
     properties:
       token: commons.Name
+      tokenEnvVar:
+        type: optional<EnvironmentVariable>
+        docs: The environment variable the SDK should use to read the token.
   BasicAuthScheme:
     extends: commons.WithDocs
     properties:
       username: commons.Name
+      usernameEnvVar:
+        type: optional<EnvironmentVariable>
+        docs: The environment variable the SDK should use to read the username.
       password: commons.Name
+      passwordEnvVar:
+        type: optional<EnvironmentVariable>
+        docs: The environment variable the SDK should use to read the password.
   HeaderAuthScheme:
     extends: commons.WithDocs
     properties:
       name: commons.NameAndWireValue
       valueType: types.TypeReference
       prefix: optional<string>
+      headerEnvVar:
+        type: optional<EnvironmentVariable>
+        docs: The environment variable the SDK should use to read the header.

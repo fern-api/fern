@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { WithNameSchema } from "./WithNameSchema";
+import { AuthVariableSchema } from "./AuthVariableSchema";
 
-export const HeaderAuthSchemeSchema = WithNameSchema.extend({
+export const HeaderAuthSchemeSchema = AuthVariableSchema.extend({
     header: z.string(),
     type: z.optional(z.string()),
     prefix: z.optional(z.string()),

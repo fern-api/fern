@@ -10,6 +10,82 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Get details for a linked account.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "end_user_email_address": {
+                "primitive": {
+                  "string": "kendall.roy@waystar-royco.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "end_user_organization_name": {
+                "primitive": {
+                  "string": "Waystar Royco",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "end_user_origin_id": {
+                "primitive": {
+                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "0496d4c2-42e6-4072-80b3-7b69bfdc76fd",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "integration": {
+                "primitive": {
+                  "string": "BambooHR",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "integration_slug": {
+                "primitive": {
+                  "string": "bamboohr",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "is_duplicate": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "status": {
+                "primitive": {
+                  "string": "COMPLETE",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "webhook_listener_url": {
+                "primitive": {
+                  "string": "https://api.merge.dev/api/integrations/webhook-listener/7fc3mee0UW8ecV4",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AccountDetailsRetrieveRequest",
       "headers": [
         {
@@ -58,6 +134,26 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns the account token for the end user with the provided public token.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "account_token": {
+                "primitive": {
+                  "string": "T9klMDQrcHdm9jrtHuOS2Nf06BIHwMNjpPXPMB",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AccountTokenRetrieveRequest",
       "headers": [],
       "internal": undefined,
@@ -107,6 +203,26 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of models and actions available for an account.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "passthrough_available": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AvailableActionsRetrieveRequest",
       "headers": [
         {
@@ -155,6 +271,33 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`BankInfo\` objects.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "previous": {
+                "primitive": {
+                  "string": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "BankInfoListRequest",
       "headers": [
         {
@@ -475,6 +618,75 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a \`BankInfo\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "account_number": {
+                "primitive": {
+                  "string": "439291590",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "bank_name": {
+                "primitive": {
+                  "string": "Chase",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "employee": {
+                "primitive": {
+                  "string": "a3617eb4-dfe3-426f-921e-a65fc1661e10",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "modified_at": {
+                "primitive": {
+                  "datetime": "2021-10-16T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "remote_created_at": {
+                "primitive": {
+                  "datetime": "2021-12-06T10:11:26Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "remote_id": {
+                "primitive": {
+                  "string": "123234",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "routing_number": {
+                "primitive": {
+                  "string": "089690059",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "BankInfoRetrieveRequest",
       "headers": [
         {
@@ -593,6 +805,33 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`Benefit\` objects.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "previous": {
+                "primitive": {
+                  "string": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "BenefitsListRequest",
       "headers": [
         {
@@ -811,6 +1050,68 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a \`Benefit\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "employee": {
+                "primitive": {
+                  "string": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "end_date": {
+                "primitive": {
+                  "datetime": "2021-10-15 00:23:25.309761+00:00",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "3fe5ae7a-f1ba-4529-b7af-84e86dc6d232",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "modified_at": {
+                "primitive": {
+                  "datetime": "2021-10-16T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "provider_name": {
+                "primitive": {
+                  "string": "Blue Shield of California",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "remote_id": {
+                "primitive": {
+                  "string": "19202938",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "start_date": {
+                "primitive": {
+                  "datetime": "2020-11-15 00:59:25.309761+00:00",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "BenefitsRetrieveRequest",
       "headers": [
         {
@@ -903,6 +1204,33 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`Company\` objects.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "previous": {
+                "primitive": {
+                  "string": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CompaniesListRequest",
       "headers": [
         {
@@ -1091,6 +1419,54 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a \`Company\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "display_name": {
+                "primitive": {
+                  "string": "Waystar Royco",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "legal_name": {
+                "primitive": {
+                  "string": "Waystar Royco, Inc.",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "modified_at": {
+                "primitive": {
+                  "datetime": "2021-10-16T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "remote_id": {
+                "primitive": {
+                  "string": "19202938",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CompaniesRetrieveRequest",
       "headers": [
         {
@@ -1170,6 +1546,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Delete a linked account.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "DeleteAccountCreateRequest",
       "headers": [
         {
@@ -1208,6 +1585,33 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`EmployeePayrollRun\` objects.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "previous": {
+                "primitive": {
+                  "string": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "EmployeePayrollRunsListRequest",
       "headers": [
         {
@@ -1524,6 +1928,75 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns an \`EmployeePayrollRun\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "check_date": {
+                "primitive": {
+                  "datetime": "2020-11-10T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "employee": {
+                "primitive": {
+                  "string": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "end_date": {
+                "primitive": {
+                  "datetime": "2020-11-09T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "fb8c55b6-1cb8-4b4c-9fb6-17924231619d",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "modified_at": {
+                "primitive": {
+                  "datetime": "2021-10-16T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "payroll_run": {
+                "primitive": {
+                  "string": "35347df1-95e7-46e2-93cc-66f1191edca5",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "remote_id": {
+                "primitive": {
+                  "string": "19202938",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "start_date": {
+                "primitive": {
+                  "datetime": "2020-11-08T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "EmployeePayrollRunsRetrieveRequest",
       "headers": [
         {
@@ -1637,6 +2110,33 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`Employee\` objects.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "previous": {
+                "primitive": {
+                  "string": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "EmployeesListRequest",
       "headers": [
         {
@@ -3883,6 +4383,164 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Creates an \`Employee\` object with the given values.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "model": {
+                "properties": {
+                  "avatar": {
+                    "primitive": {
+                      "string": "http://alturl.com/h2h8m",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "company": {
+                    "primitive": {
+                      "string": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "date_of_birth": {
+                    "primitive": {
+                      "datetime": "1990-11-10T00:00:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_full_name": {
+                    "primitive": {
+                      "string": "Cousin Greg Hirsch",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "employee_number": {
+                    "primitive": {
+                      "string": "2",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "first_name": {
+                    "primitive": {
+                      "string": "Greg",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "hire_date": {
+                    "primitive": {
+                      "datetime": "2020-10-10T00:00:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "home_location": {
+                    "primitive": {
+                      "string": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "last_name": {
+                    "primitive": {
+                      "string": "Hirsch",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "manager": {
+                    "primitive": {
+                      "string": "0048ea5b-911e-4dff-9364-92070dea62ff",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "mobile_phone_number": {
+                    "primitive": {
+                      "string": "+1234567890",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "pay_group": {
+                    "primitive": {
+                      "string": "ad1264e2-39be-4787-b749-f1aade9e3405",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "personal_email": {
+                    "primitive": {
+                      "string": "greg@gmail.com",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "ssn": {
+                    "primitive": {
+                      "string": "1234567890",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "start_date": {
+                    "primitive": {
+                      "datetime": "2020-10-11T00:00:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "team": {
+                    "primitive": {
+                      "string": "249c9faa-3045-4a31-953b-8f22d3613301",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "termination_date": {
+                    "primitive": {
+                      "datetime": "2021-10-12T00:00:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "username": {
+                    "primitive": {
+                      "string": "cousingreg",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "work_email": {
+                    "primitive": {
+                      "string": "greg@merge.dev",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "work_location": {
+                    "primitive": {
+                      "string": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "EmployeesCreateRequest",
       "headers": [
         {
@@ -3946,6 +4604,7 @@ exports[`open api parser merge parse open api 1`] = `
           "schema": "EmployeeEndpointRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "employees_create_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3973,6 +4632,187 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns an \`Employee\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "avatar": {
+                "primitive": {
+                  "string": "http://alturl.com/h2h8m",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "company": {
+                "primitive": {
+                  "string": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_of_birth": {
+                "primitive": {
+                  "datetime": "1990-11-10T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "display_full_name": {
+                "primitive": {
+                  "string": "Cousin Greg Hirsch",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "employee_number": {
+                "primitive": {
+                  "string": "2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "first_name": {
+                "primitive": {
+                  "string": "Greg",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "hire_date": {
+                "primitive": {
+                  "datetime": "2020-10-10T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "home_location": {
+                "primitive": {
+                  "string": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "0958cbc6-6040-430a-848e-aafacbadf4ae",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "last_name": {
+                "primitive": {
+                  "string": "Hirsch",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "manager": {
+                "primitive": {
+                  "string": "0048ea5b-911e-4dff-9364-92070dea62ff",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "mobile_phone_number": {
+                "primitive": {
+                  "string": "+1234567890",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "modified_at": {
+                "primitive": {
+                  "datetime": "2021-10-16T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "pay_group": {
+                "primitive": {
+                  "string": "ad1264e2-39be-4787-b749-f1aade9e3405",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "personal_email": {
+                "primitive": {
+                  "string": "greg@gmail.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "remote_created_at": {
+                "primitive": {
+                  "datetime": "2020-10-11T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "remote_id": {
+                "primitive": {
+                  "string": "19202938",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "ssn": {
+                "primitive": {
+                  "string": "1234567890",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "start_date": {
+                "primitive": {
+                  "datetime": "2020-10-11T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "team": {
+                "primitive": {
+                  "string": "249c9faa-3045-4a31-953b-8f22d3613301",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "termination_date": {
+                "primitive": {
+                  "datetime": "2021-10-12T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "username": {
+                "primitive": {
+                  "string": "cousingreg",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "work_email": {
+                "primitive": {
+                  "string": "greg@merge.dev",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "work_location": {
+                "primitive": {
+                  "string": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "EmployeesRetrieveRequest",
       "headers": [
         {
@@ -5825,6 +6665,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Ignores a specific row based on the \`model_id\` in the url. These records will have their properties set to null, and will not be updated in future syncs. The "reason" and "message" fields in the request body will be stored for audit purposes.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "EmployeesIgnoreCreateRequest",
       "headers": [
         {
@@ -5872,6 +6713,7 @@ exports[`open api parser merge parse open api 1`] = `
           "schema": "IgnoreCommonModelRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "employees_ignore_create_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -5889,6 +6731,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns metadata for \`Employee\` POSTs.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "EmployeesMetaPostRetrieveRequest",
       "headers": [
         {
@@ -5937,6 +6780,33 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`Employment\` objects.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "previous": {
+                "primitive": {
+                  "string": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "EmploymentsListRequest",
       "headers": [
         {
@@ -6416,6 +7286,68 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns an \`Employment\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "effective_date": {
+                "primitive": {
+                  "datetime": "2023-10-06T18:42:34Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "employee": {
+                "primitive": {
+                  "string": "0958cbc6-6040-430a-848e-aafacbadf4ae",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "65d8ffd0-211b-4ba4-b85a-fbe2ce220982",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "job_title": {
+                "primitive": {
+                  "string": "Executive Assistant to Tom Wambsgans",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "modified_at": {
+                "primitive": {
+                  "datetime": "2021-10-16T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "pay_group": {
+                "primitive": {
+                  "string": "d4e4837f-9900-484c-ac40-528365bb08ef",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "remote_id": {
+                "primitive": {
+                  "string": "19202938",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "EmploymentsRetrieveRequest",
       "headers": [
         {
@@ -6741,6 +7673,44 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Create a remote key.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "name": {
+                "primitive": {
+                  "string": "Remote Deployment Key 1",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "key": {
+                "primitive": {
+                  "string": "hXY57W0g0WkdRHjCaPvwijK63fwfN-o_Wh7f30SLTq_uPCOLo-WFcA",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "Remote Deployment Key 1",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GenerateKeyCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -6759,6 +7729,7 @@ exports[`open api parser merge parse open api 1`] = `
           "schema": "GenerateRemoteKeyRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "generate_key_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -6786,6 +7757,33 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`Group\` objects.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "previous": {
+                "primitive": {
+                  "string": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GroupsListRequest",
       "headers": [
         {
@@ -7017,6 +8015,54 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a \`Group\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "134e0111-0f67-44f6-98f0-597000290bb3",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "modified_at": {
+                "primitive": {
+                  "datetime": "2021-10-16T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "COST_CENTER_US",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "parent_group": {
+                "primitive": {
+                  "string": "2ef51b11-2c4e-4b02-8d1d-50592d9e96ef",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "remote_id": {
+                "primitive": {
+                  "string": "800293",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GroupsRetrieveRequest",
       "headers": [
         {
@@ -7122,6 +8168,33 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Gets issues.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "previous": {
+                "primitive": {
+                  "string": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "IssuesListRequest",
       "headers": [],
       "internal": undefined,
@@ -7382,6 +8455,54 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Get a specific issue.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "error_description": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "first_incident_time": {
+                "primitive": {
+                  "datetime": "2022-12-05T16:19:15.161Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "is_muted": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "last_incident_time": {
+                "primitive": {
+                  "datetime": "2022-12-05T16:19:15.161Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "IssuesRetrieveRequest",
       "headers": [],
       "internal": undefined,
@@ -7431,6 +8552,40 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Creates a link token to be used when linking a new end user.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "integration_name": {
+                "primitive": {
+                  "string": "Lever",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link_token": {
+                "primitive": {
+                  "string": "necdP7FtdASl1fQwm62be2_dM4wBG8_GactqoUV0",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "magic_link_url": {
+                "primitive": {
+                  "string": "https://link.merge.dev/asdfjkl12345jsndfgi2i83n",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "LinkTokenCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -7449,6 +8604,7 @@ exports[`open api parser merge parse open api 1`] = `
           "schema": "EndUserDetailsRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "link_token_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -7476,6 +8632,33 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "List linked accounts for your organization.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "previous": {
+                "primitive": {
+                  "string": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "LinkedAccountsListRequest",
       "headers": [],
       "internal": undefined,
@@ -7777,6 +8960,33 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`Location\` objects.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "previous": {
+                "primitive": {
+                  "string": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "LocationsListRequest",
       "headers": [
         {
@@ -7991,6 +9201,89 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a \`Location\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "city": {
+                "primitive": {
+                  "string": "New York ",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "f5e6a151-f44e-449a-afb1-8fd781905958",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "modified_at": {
+                "primitive": {
+                  "datetime": "2021-10-16T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "NYC Office",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "phone_number": {
+                "primitive": {
+                  "string": "+1111111111",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "remote_id": {
+                "primitive": {
+                  "string": "93018402",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "state": {
+                "primitive": {
+                  "string": "NY",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "street_1": {
+                "primitive": {
+                  "string": "2920 Broadway",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "street_2": {
+                "primitive": {
+                  "string": "2nd Floor",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "zip_code": {
+                "primitive": {
+                  "string": "10027",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "LocationsRetrieveRequest",
       "headers": [
         {
@@ -8096,6 +9389,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Pull data from an endpoint not currently supported by Merge.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "PassthroughCreateRequest",
       "headers": [
         {
@@ -8128,6 +9422,7 @@ exports[`open api parser merge parse open api 1`] = `
           "schema": "DataPassthroughRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "passthrough_create_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -8155,6 +9450,33 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`PayGroup\` objects.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "previous": {
+                "primitive": {
+                  "string": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PayGroupsListRequest",
       "headers": [
         {
@@ -8343,6 +9665,47 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a \`PayGroup\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "modified_at": {
+                "primitive": {
+                  "datetime": "2021-10-16T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "pay_group_name": {
+                "primitive": {
+                  "string": "contractor",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "remote_id": {
+                "primitive": {
+                  "string": "800293",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PayGroupsRetrieveRequest",
       "headers": [
         {
@@ -8422,6 +9785,33 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`PayrollRun\` objects.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "previous": {
+                "primitive": {
+                  "string": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PayrollRunsListRequest",
       "headers": [
         {
@@ -8790,6 +10180,61 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a \`PayrollRun\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "check_date": {
+                "primitive": {
+                  "datetime": "2020-11-15T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "end_date": {
+                "primitive": {
+                  "datetime": "2020-11-15T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "37336947-b3d4-4a4c-a310-ab6ab510e079",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "modified_at": {
+                "primitive": {
+                  "datetime": "2021-10-16T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "remote_id": {
+                "primitive": {
+                  "string": "19202938",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "start_date": {
+                "primitive": {
+                  "datetime": "2020-11-08T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PayrollRunsRetrieveRequest",
       "headers": [
         {
@@ -8937,6 +10382,44 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Exchange remote keys.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "name": {
+                "primitive": {
+                  "string": "Remote Deployment Key 1",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "key": {
+                "primitive": {
+                  "string": "hXY57W0g0WkdRHjCaPvwijK63fwfN-o_Wh7f30SLTq_uPCOLo-WFcA",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "Remote Deployment Key 1",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "RegenerateKeyCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -8955,6 +10438,7 @@ exports[`open api parser merge parse open api 1`] = `
           "schema": "RemoteKeyForRegenerationRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "regenerate_key_create_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -8982,6 +10466,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Get a linked account's selective syncs.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "SelectiveSyncConfigurationsListRequest",
       "headers": [
         {
@@ -9034,6 +10519,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Replace a linked account's selective syncs.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "SelectiveSyncConfigurationsUpdateRequest",
       "headers": [
         {
@@ -9066,6 +10552,7 @@ exports[`open api parser merge parse open api 1`] = `
           "schema": "LinkedAccountSelectiveSyncConfigurationListRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "selective_sync_configurations_update_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -9097,6 +10584,33 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Get metadata for the conditions available to a linked account.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "previous": {
+                "primitive": {
+                  "string": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "SelectiveSyncMetaListRequest",
       "headers": [
         {
@@ -9195,6 +10709,33 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Get syncing status. Possible values: \`DISABLED\`, \`DONE\`, \`FAILED\`, \`PARTIALLY_SYNCED\`, \`PAUSED\`, \`SYNCING\`",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "previous": {
+                "primitive": {
+                  "string": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "SyncStatusListRequest",
       "headers": [
         {
@@ -9276,6 +10817,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Core, Professional, or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "SyncStatusResyncCreateRequest",
       "headers": [
         {
@@ -9328,6 +10870,33 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`Team\` objects.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "previous": {
+                "primitive": {
+                  "string": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TeamsListRequest",
       "headers": [
         {
@@ -9546,6 +11115,54 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a \`Team\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "13a72919-9fae-4f54-81ca-ddfd8712a1ba",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "modified_at": {
+                "primitive": {
+                  "datetime": "2021-10-16T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "Engineering",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "parent_team": {
+                "primitive": {
+                  "string": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "remote_id": {
+                "primitive": {
+                  "string": "19202938",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TeamsRetrieveRequest",
       "headers": [
         {
@@ -9638,6 +11255,33 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`TimeOff\` objects.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "previous": {
+                "primitive": {
+                  "string": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TimeOffListRequest",
       "headers": [
         {
@@ -10121,6 +11765,59 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Creates a \`TimeOff\` object with the given values.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "model": {
+                "properties": {
+                  "approver": {
+                    "primitive": {
+                      "string": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "employee": {
+                    "primitive": {
+                      "string": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "employee_note": {
+                    "primitive": {
+                      "string": "Moving into the new apartment Kendall Roy gave me!",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "end_time": {
+                    "primitive": {
+                      "datetime": "2020-11-17T00:00:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "start_time": {
+                    "primitive": {
+                      "datetime": "2020-11-10T00:00:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "TimeOffCreateRequest",
       "headers": [
         {
@@ -10184,6 +11881,7 @@ exports[`open api parser merge parse open api 1`] = `
           "schema": "TimeOffEndpointRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "time_off_create_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -10211,6 +11909,33 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`TimeOffBalance\` objects.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "previous": {
+                "primitive": {
+                  "string": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TimeOffBalancesListRequest",
       "headers": [
         {
@@ -10514,6 +12239,47 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a \`TimeOffBalance\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "employee": {
+                "primitive": {
+                  "string": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "91b2b905-e866-40c8-8be2-efe53827a0aa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "modified_at": {
+                "primitive": {
+                  "datetime": "2021-10-16T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "remote_id": {
+                "primitive": {
+                  "string": "19202938",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TimeOffBalancesRetrieveRequest",
       "headers": [
         {
@@ -10632,6 +12398,75 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a \`TimeOff\` object with the given \`id\`.",
       "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "approver": {
+                "primitive": {
+                  "string": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "employee": {
+                "primitive": {
+                  "string": "d2f972d0-2526-434b-9409-4c3b468e08f0",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "employee_note": {
+                "primitive": {
+                  "string": "Moving into the new apartment Kendall Roy gave me!",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "end_time": {
+                "primitive": {
+                  "datetime": "2020-11-17T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "91b2b905-e866-40c8-8be2-efe53827a0aa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "modified_at": {
+                "primitive": {
+                  "datetime": "2021-10-16T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "remote_id": {
+                "primitive": {
+                  "string": "19202938",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "start_time": {
+                "primitive": {
+                  "datetime": "2020-11-10T00:00:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TimeOffRetrieveRequest",
       "headers": [
         {
@@ -10861,6 +12696,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns metadata for \`TimeOff\` POSTs.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "TimeOffMetaPostRetrieveRequest",
       "headers": [
         {
@@ -10909,6 +12745,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`WebhookReceiver\` objects.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "WebhookReceiversListRequest",
       "headers": [
         {
@@ -10961,6 +12798,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Creates a \`WebhookReceiver\` object with the given values.",
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "WebhookReceiversCreateRequest",
       "headers": [
         {
@@ -10993,6 +12831,7 @@ exports[`open api parser merge parse open api 1`] = `
           "schema": "WebhookReceiverRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "webhook_receivers_create_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,

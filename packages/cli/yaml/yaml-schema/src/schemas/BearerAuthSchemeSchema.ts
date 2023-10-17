@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { WithNameSchema } from "./WithNameSchema";
+import { AuthVariableSchema } from "./AuthVariableSchema";
 
 export const BearerAuthSchemeSchema = z.strictObject({
     scheme: z.literal("bearer"),
-    token: z.optional(WithNameSchema),
+    token: z.optional(AuthVariableSchema),
 });
 
 export type BearerAuthSchemeSchema = z.infer<typeof BearerAuthSchemeSchema>;

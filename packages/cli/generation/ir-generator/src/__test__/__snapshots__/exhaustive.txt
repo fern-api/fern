@@ -49,6 +49,7 @@ exports[`generate IR 1`] = `
             "unsafeName": "token",
           },
         },
+        "tokenEnvVar": null,
       },
     ],
   },

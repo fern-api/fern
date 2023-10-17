@@ -12,6 +12,7 @@ import { convertPathItem } from "./converters/convertPathItem";
 import { convertSchema } from "./converters/convertSchemas";
 import { convertSecurityScheme } from "./converters/convertSecurityScheme";
 import { convertServer } from "./converters/convertServer";
+import { ExampleEndpointFactory } from "./converters/example/ExampleEndpointFactory";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 
@@ -58,7 +59,7 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
         })
     );
 
-    return {
+    const ir: OpenAPIIntermediateRepresentation = {
         title: openApi.info.title,
         description: openApi.info.description,
         servers: (openApi.servers ?? []).map((server) => convertServer(server)),
@@ -76,6 +77,16 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
         nonRequestReferencedSchemas: Array.from(context.getReferencedSchemas()),
         variables,
     };
+
+    const exampleEndpointFactory = new ExampleEndpointFactory(context);
+    ir.endpoints.forEach((endpoint) => {
+        const endpointExample = exampleEndpointFactory.buildEndpointExample(endpoint);
+        if (endpointExample != null) {
+            endpoint.examples.push(endpointExample);
+        }
+    });
+
+    return ir;
 }
 
 function maybeRemoveDiscriminantsFromSchemas(

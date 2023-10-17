@@ -14,6 +14,24 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "For Endorser to endorse a particular transaction record",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_type": "101",
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "endorser_write_txn": true,
+                    "state": "active",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/transactions/{tran_id}/endorse",
             "path-parameters": {
@@ -6474,6 +6492,17 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Perform an action associated with the active menu",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "name": "Query",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/action-menu/{conn_id}/perform",
             "path-parameters": {
@@ -6527,6 +6556,15 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send an action menu to a connection",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/action-menu/{conn_id}/send-menu",
             "path-parameters": {
@@ -6571,6 +6609,17 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send a basic message to a connection",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "content": "Hello",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/connections/{conn_id}/send-message",
             "path-parameters": {
@@ -6615,6 +6664,36 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Accept a stored connection invitation",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "accept": "auto",
+                    "alias": "Bob, providing quotes",
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "connection_protocol": "connections/1.0",
+                    "error_msg": "No DIDDoc provided; cannot connect to public DID",
+                    "inbound_connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "invitation_key": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                    "invitation_mode": "once",
+                    "invitation_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "my_did": "WgWxqztrNooG92RXvxSTWv",
+                    "request_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "rfc23_state": "invitation-sent",
+                    "routing_state": "active",
+                    "state": "active",
+                    "their_did": "WgWxqztrNooG92RXvxSTWv",
+                    "their_label": "Bob",
+                    "their_public_did": "2cpBmR3FqGKWi5EyUbpRY8",
+                    "their_role": "requester",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/connections/{conn_id}/accept-invitation",
             "path-parameters": {
@@ -6653,6 +6732,36 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Accept a stored connection request",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "accept": "auto",
+                    "alias": "Bob, providing quotes",
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "connection_protocol": "connections/1.0",
+                    "error_msg": "No DIDDoc provided; cannot connect to public DID",
+                    "inbound_connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "invitation_key": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                    "invitation_mode": "once",
+                    "invitation_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "my_did": "WgWxqztrNooG92RXvxSTWv",
+                    "request_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "rfc23_state": "invitation-sent",
+                    "routing_state": "active",
+                    "state": "active",
+                    "their_did": "WgWxqztrNooG92RXvxSTWv",
+                    "their_label": "Bob",
+                    "their_public_did": "2cpBmR3FqGKWi5EyUbpRY8",
+                    "their_role": "requester",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/connections/{conn_id}/accept-request",
             "path-parameters": {
@@ -6681,6 +6790,24 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Create a new connection invitation",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "my_label": "Bob",
+                  "service_endpoint": "http://192.168.56.102:8020",
+                },
+                "response": {
+                  "body": {
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "invitation_url": "http://192.168.56.101:8020/invite?c_i=eyJAdHlwZSI6Li4ufQ==",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/connections/create-invitation",
             "request": {
@@ -6747,6 +6874,47 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Create a new static connection",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "my_did": "WgWxqztrNooG92RXvxSTWv",
+                  "their_did": "WgWxqztrNooG92RXvxSTWv",
+                  "their_endpoint": "https://myhost:8021",
+                },
+                "response": {
+                  "body": {
+                    "my_did": "WgWxqztrNooG92RXvxSTWv",
+                    "my_endpoint": "https://myhost:8021",
+                    "my_verkey": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                    "record": {
+                      "accept": "auto",
+                      "alias": "Bob, providing quotes",
+                      "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "connection_protocol": "connections/1.0",
+                      "error_msg": "No DIDDoc provided; cannot connect to public DID",
+                      "inbound_connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "invitation_key": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                      "invitation_mode": "once",
+                      "invitation_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "my_did": "WgWxqztrNooG92RXvxSTWv",
+                      "request_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "rfc23_state": "invitation-sent",
+                      "routing_state": "active",
+                      "state": "active",
+                      "their_did": "WgWxqztrNooG92RXvxSTWv",
+                      "their_label": "Bob",
+                      "their_public_did": "2cpBmR3FqGKWi5EyUbpRY8",
+                      "their_role": "requester",
+                    },
+                    "their_did": "WgWxqztrNooG92RXvxSTWv",
+                    "their_verkey": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/connections/create-static",
             "request": {
@@ -6818,6 +6986,20 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch connection remote endpoint",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "my_endpoint": "https://myhost:8021",
+                    "their_endpoint": "https://myhost:8021",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/connections/{conn_id}/endpoints",
             "path-parameters": {
@@ -6864,6 +7046,36 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch a single connection record",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "accept": "auto",
+                    "alias": "Bob, providing quotes",
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "connection_protocol": "connections/1.0",
+                    "error_msg": "No DIDDoc provided; cannot connect to public DID",
+                    "inbound_connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "invitation_key": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                    "invitation_mode": "once",
+                    "invitation_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "my_did": "WgWxqztrNooG92RXvxSTWv",
+                    "request_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "rfc23_state": "invitation-sent",
+                    "routing_state": "active",
+                    "state": "active",
+                    "their_did": "WgWxqztrNooG92RXvxSTWv",
+                    "their_label": "Bob",
+                    "their_public_did": "2cpBmR3FqGKWi5EyUbpRY8",
+                    "their_role": "requester",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/connections/{conn_id}",
             "path-parameters": {
@@ -6944,6 +7156,43 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Receive a new connection invitation",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                  "did": "WgWxqztrNooG92RXvxSTWv",
+                  "imageUrl": "http://192.168.56.101/img/logo.jpg",
+                  "label": "Bob",
+                  "serviceEndpoint": "http://192.168.56.101:8020",
+                },
+                "response": {
+                  "body": {
+                    "accept": "auto",
+                    "alias": "Bob, providing quotes",
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "connection_protocol": "connections/1.0",
+                    "error_msg": "No DIDDoc provided; cannot connect to public DID",
+                    "inbound_connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "invitation_key": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                    "invitation_mode": "once",
+                    "invitation_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "my_did": "WgWxqztrNooG92RXvxSTWv",
+                    "request_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "rfc23_state": "invitation-sent",
+                    "routing_state": "active",
+                    "state": "active",
+                    "their_did": "WgWxqztrNooG92RXvxSTWv",
+                    "their_label": "Bob",
+                    "their_public_did": "2cpBmR3FqGKWi5EyUbpRY8",
+                    "their_role": "requester",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/connections/receive-invitation",
             "request": {
@@ -7144,6 +7393,18 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Sends a credential definition to the ledger",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                  "tag": "default",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/credential-definitions",
             "request": {
@@ -7277,6 +7538,23 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch credential from wallet by id",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                    "cred_rev_id": "12345",
+                    "referent": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
+                    "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/credential/{credential_id}",
             "path-parameters": {
@@ -7360,6 +7638,21 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch W3C credential from wallet by id",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "given_id": "http://example.edu/credentials/3732",
+                    "issuer_id": "https://example.edu/issuers/14",
+                    "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/credential/w3c/{credential_id}",
             "path-parameters": {
@@ -7464,6 +7757,36 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Accept a stored connection invitation",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "accept": "auto",
+                    "alias": "Bob, providing quotes",
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "connection_protocol": "connections/1.0",
+                    "error_msg": "No DIDDoc provided; cannot connect to public DID",
+                    "inbound_connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "invitation_key": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                    "invitation_mode": "once",
+                    "invitation_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "my_did": "WgWxqztrNooG92RXvxSTWv",
+                    "request_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "rfc23_state": "invitation-sent",
+                    "routing_state": "active",
+                    "state": "active",
+                    "their_did": "WgWxqztrNooG92RXvxSTWv",
+                    "their_label": "Bob",
+                    "their_public_did": "2cpBmR3FqGKWi5EyUbpRY8",
+                    "their_role": "requester",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/didexchange/{conn_id}/accept-invitation",
             "path-parameters": {
@@ -7497,6 +7820,36 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Accept a stored connection request",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "accept": "auto",
+                    "alias": "Bob, providing quotes",
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "connection_protocol": "connections/1.0",
+                    "error_msg": "No DIDDoc provided; cannot connect to public DID",
+                    "inbound_connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "invitation_key": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                    "invitation_mode": "once",
+                    "invitation_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "my_did": "WgWxqztrNooG92RXvxSTWv",
+                    "request_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "rfc23_state": "invitation-sent",
+                    "routing_state": "active",
+                    "state": "active",
+                    "their_did": "WgWxqztrNooG92RXvxSTWv",
+                    "their_label": "Bob",
+                    "their_public_did": "2cpBmR3FqGKWi5EyUbpRY8",
+                    "their_role": "requester",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/didexchange/{conn_id}/accept-request",
             "path-parameters": {
@@ -7530,6 +7883,36 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Create and send a request against public DID's implicit invitation",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "accept": "auto",
+                    "alias": "Bob, providing quotes",
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "connection_protocol": "connections/1.0",
+                    "error_msg": "No DIDDoc provided; cannot connect to public DID",
+                    "inbound_connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "invitation_key": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                    "invitation_mode": "once",
+                    "invitation_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "my_did": "WgWxqztrNooG92RXvxSTWv",
+                    "request_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "rfc23_state": "invitation-sent",
+                    "routing_state": "active",
+                    "state": "active",
+                    "their_did": "WgWxqztrNooG92RXvxSTWv",
+                    "their_label": "Bob",
+                    "their_public_did": "2cpBmR3FqGKWi5EyUbpRY8",
+                    "their_role": "requester",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/didexchange/create-request",
             "request": {
@@ -7577,6 +7960,41 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Receive request against public DID's implicit invitation",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                  "did": "WgWxqztrNooG92RXvxSTWv",
+                  "label": "Request to connect with Bob",
+                },
+                "response": {
+                  "body": {
+                    "accept": "auto",
+                    "alias": "Bob, providing quotes",
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "connection_protocol": "connections/1.0",
+                    "error_msg": "No DIDDoc provided; cannot connect to public DID",
+                    "inbound_connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "invitation_key": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                    "invitation_mode": "once",
+                    "invitation_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "my_did": "WgWxqztrNooG92RXvxSTWv",
+                    "request_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "rfc23_state": "invitation-sent",
+                    "routing_state": "active",
+                    "state": "active",
+                    "their_did": "WgWxqztrNooG92RXvxSTWv",
+                    "their_label": "Bob",
+                    "their_public_did": "2cpBmR3FqGKWi5EyUbpRY8",
+                    "their_role": "requester",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/didexchange/receive-request",
             "request": {
@@ -7674,6 +8092,22 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Query supported features",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "state": "active",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/discover-features/query",
             "request": {
@@ -7786,6 +8220,24 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "For Author to cancel a particular transaction request",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_type": "101",
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "endorser_write_txn": true,
+                    "state": "active",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/transactions/{tran_id}/cancel",
             "path-parameters": {
@@ -7804,6 +8256,24 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "For author to send a transaction request",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_type": "101",
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "endorser_write_txn": true,
+                    "state": "active",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/transactions/create-request",
             "request": {
@@ -7852,6 +8322,24 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch a single transaction record",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_type": "101",
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "endorser_write_txn": true,
+                    "state": "active",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/transactions/{tran_id}",
             "path-parameters": {
@@ -7870,6 +8358,24 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "For Author / Endorser to write an endorsed transaction to the ledger",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_type": "101",
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "endorser_write_txn": true,
+                    "state": "active",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/transactions/{tran_id}/write",
             "path-parameters": {
@@ -7888,6 +8394,24 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "For Endorser to refuse a particular transaction record",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_type": "101",
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "endorser_write_txn": true,
+                    "state": "active",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/transactions/{tran_id}/refuse",
             "path-parameters": {
@@ -7906,6 +8430,24 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "For Author to resend a particular transaction request",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "_type": "101",
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "endorser_write_txn": true,
+                    "state": "active",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/transaction/{tran_id}/resend",
             "path-parameters": {
@@ -8044,6 +8586,39 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Create a credential record without sending (generally for use with Out-Of-Band)",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                  "issuer_did": "WgWxqztrNooG92RXvxSTWv",
+                  "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                  "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
+                  "schema_name": "preferences",
+                  "schema_version": "1.0",
+                },
+                "response": {
+                  "body": {
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                    "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "credential_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Credential definition identifier is not set in proposal",
+                    "initiator": "self",
+                    "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "issuer",
+                    "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                    "state": "credential_acked",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/issue-credential/create",
             "request": {
@@ -8105,6 +8680,34 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Create a credential offer, independent of any proposal or connection",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                },
+                "response": {
+                  "body": {
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                    "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "credential_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Credential definition identifier is not set in proposal",
+                    "initiator": "self",
+                    "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "issuer",
+                    "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                    "state": "credential_acked",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/issue-credential/create-offer",
             "request": {
@@ -8168,6 +8771,32 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch a single credential exchange record",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                    "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "credential_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Credential definition identifier is not set in proposal",
+                    "initiator": "self",
+                    "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "issuer",
+                    "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                    "state": "credential_acked",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/issue-credential/records/{cred_ex_id}",
             "path-parameters": {
@@ -8223,6 +8852,32 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send holder a credential",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                    "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "credential_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Credential definition identifier is not set in proposal",
+                    "initiator": "self",
+                    "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "issuer",
+                    "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                    "state": "credential_acked",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/issue-credential/records/{cred_ex_id}/issue",
             "path-parameters": {
@@ -8282,6 +8937,32 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send holder a credential offer in reference to a proposal with preview",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                    "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "credential_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Credential definition identifier is not set in proposal",
+                    "initiator": "self",
+                    "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "issuer",
+                    "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                    "state": "credential_acked",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/issue-credential/records/{cred_ex_id}/send-offer",
             "path-parameters": {
@@ -8313,6 +8994,32 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send issuer a credential request",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                    "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "credential_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Credential definition identifier is not set in proposal",
+                    "initiator": "self",
+                    "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "issuer",
+                    "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                    "state": "credential_acked",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/issue-credential/records/{cred_ex_id}/send-request",
             "path-parameters": {
@@ -8331,6 +9038,40 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send holder a credential, automating entire flow",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                  "issuer_did": "WgWxqztrNooG92RXvxSTWv",
+                  "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                  "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
+                  "schema_name": "preferences",
+                  "schema_version": "1.0",
+                },
+                "response": {
+                  "body": {
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                    "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "credential_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Credential definition identifier is not set in proposal",
+                    "initiator": "self",
+                    "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "issuer",
+                    "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                    "state": "credential_acked",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/issue-credential/send",
             "request": {
@@ -8396,6 +9137,35 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send holder a credential offer, independent of any proposal",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                },
+                "response": {
+                  "body": {
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                    "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "credential_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Credential definition identifier is not set in proposal",
+                    "initiator": "self",
+                    "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "issuer",
+                    "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                    "state": "credential_acked",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/issue-credential/send-offer",
             "request": {
@@ -8445,6 +9215,40 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send issuer a credential proposal",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                  "issuer_did": "WgWxqztrNooG92RXvxSTWv",
+                  "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                  "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
+                  "schema_name": "preferences",
+                  "schema_version": "1.0",
+                },
+                "response": {
+                  "body": {
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                    "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "credential_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Credential definition identifier is not set in proposal",
+                    "initiator": "self",
+                    "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "issuer",
+                    "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                    "state": "credential_acked",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/issue-credential/send-proposal",
             "request": {
@@ -8510,6 +9314,32 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Store a received credential",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                    "credential_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "credential_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Credential definition identifier is not set in proposal",
+                    "initiator": "self",
+                    "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "issuer",
+                    "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                    "state": "credential_acked",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/issue-credential/records/{cred_ex_id}/store",
             "path-parameters": {
@@ -8554,6 +9384,29 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Create a credential record without sending (generally for use with Out-Of-Band)",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "The front fell off",
+                    "initiator": "self",
+                    "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "issuer",
+                    "state": "done",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/issue-credential-2.0/create",
             "request": {
@@ -8595,6 +9448,29 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Create a credential offer, independent of any proposal or connection",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": {
+                  "body": {
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "The front fell off",
+                    "initiator": "self",
+                    "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "issuer",
+                    "state": "done",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/issue-credential-2.0/create-offer",
             "request": {
@@ -8772,6 +9648,29 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send holder a credential offer in reference to a proposal with preview",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "The front fell off",
+                    "initiator": "self",
+                    "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "issuer",
+                    "state": "done",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/issue-credential-2.0/records/{cred_ex_id}/send-offer",
             "path-parameters": {
@@ -8807,6 +9706,31 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send issuer a credential request",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "holder_did": "did:key:ahsdkjahsdkjhaskjdhakjshdkajhsdkjahs",
+                },
+                "response": {
+                  "body": {
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "The front fell off",
+                    "initiator": "self",
+                    "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "issuer",
+                    "state": "done",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/issue-credential-2.0/records/{cred_ex_id}/send-request",
             "path-parameters": {
@@ -8838,6 +9762,31 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send holder a credential, automating entire flow",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                },
+                "response": {
+                  "body": {
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "The front fell off",
+                    "initiator": "self",
+                    "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "issuer",
+                    "state": "done",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/issue-credential-2.0/send",
             "request": {
@@ -8856,6 +9805,31 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send holder a credential offer, independent of any proposal",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                },
+                "response": {
+                  "body": {
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "The front fell off",
+                    "initiator": "self",
+                    "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "issuer",
+                    "state": "done",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/issue-credential-2.0/send-offer",
             "request": {
@@ -8905,6 +9879,31 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send issuer a credential proposal",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                },
+                "response": {
+                  "body": {
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "The front fell off",
+                    "initiator": "self",
+                    "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "issuer",
+                    "state": "done",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/issue-credential-2.0/send-proposal",
             "request": {
@@ -8923,6 +9922,33 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send issuer a credential request not bound to an existing thread. Indy credentials cannot start at a request",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "holder_did": "did:key:ahsdkjahsdkjhaskjdhakjshdkajhsdkjahs",
+                  "trace": false,
+                },
+                "response": {
+                  "body": {
+                    "auto_issue": false,
+                    "auto_offer": false,
+                    "auto_remove": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "The front fell off",
+                    "initiator": "self",
+                    "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "issuer",
+                    "state": "done",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/issue-credential-2.0/send-request",
             "request": {
@@ -9041,6 +10067,15 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Verify a JSON-LD structure.",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/jsonld/verify",
             "request": {
@@ -9116,6 +10151,19 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Get the role from the NYM registration of a public DID.",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "role": "ENDORSER",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/ledger/get-nym-role",
             "request": {
@@ -9138,6 +10186,19 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Get the verkey for a DID from the ledger.",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "verkey": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/ledger/did-verkey",
             "request": {
@@ -9172,6 +10233,19 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Get the endpoint for a DID from the ledger.",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "endpoint": "https://myhost:8021",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/ledger/did-endpoint",
             "request": {
@@ -9223,6 +10297,19 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send a NYM registration to the ledger.",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "success": true,
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/ledger/register-nym",
             "request": {
@@ -9325,6 +10412,20 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Deny a stored mediation request",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/mediation/requests/{mediation_id}/deny",
             "path-parameters": {
@@ -9454,6 +10555,21 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Grant received mediation",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                    "endpoint": "http://192.168.56.102:8020/",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/mediation/requests/{mediation_id}/grant",
             "path-parameters": {
@@ -9507,6 +10623,20 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send keylist query to mediator",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/mediation/keylists/{mediation_id}/send-keylist-query",
             "path-parameters": {
@@ -9549,6 +10679,20 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Send keylist update to mediator",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/mediation/keylists/{mediation_id}/send-keylist-update",
             "path-parameters": {
@@ -9598,6 +10742,22 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Update keylist for a connection",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                },
+                "response": {
+                  "body": {
+                    "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/mediation/update-keylist/{conn_id}",
             "path-parameters": {
@@ -9642,6 +10802,23 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Create a subwallet",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "image_url": "https://aries.ca/images/sample.png",
+                  "label": "Alice",
+                  "wallet_dispatch_type": "default",
+                  "wallet_key": "MySecretKey123",
+                  "wallet_key_derivation": "RAW",
+                  "wallet_name": "MyNewWallet",
+                  "wallet_type": "indy",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/multitenancy/wallet",
             "request": {
@@ -9699,6 +10876,17 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Remove a subwallet",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "wallet_key": "MySecretKey123",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/multitenancy/wallet/{wallet_id}/remove",
             "path-parameters": {
@@ -9730,6 +10918,21 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Get auth token for a subwallet",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "wallet_key": "MySecretKey123",
+                },
+                "response": {
+                  "body": {
+                    "token": "eyJhbGciOiJFZERTQSJ9.eyJhIjogIjAifQ.dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/multitenancy/wallet/{wallet_id}/token",
             "path-parameters": {
@@ -9801,6 +11004,19 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Update a subwallet",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "image_url": "https://aries.ca/images/sample.png",
+                  "label": "Alice",
+                  "wallet_dispatch_type": "default",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "PUT",
             "path": "/multitenancy/wallet/{wallet_id}",
             "path-parameters": {
@@ -9857,6 +11073,29 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Create a new connection invitation",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "alias": "Barry",
+                  "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "my_label": "Invitation to Barry",
+                  "protocol_version": "1.1",
+                  "use_public_did": false,
+                },
+                "response": {
+                  "body": {
+                    "invi_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "invitation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "invitation_url": "https://example.com/endpoint?c_i=eyJAdHlwZSI6ICIuLi4iLCAiLi4uIjogIi4uLiJ9XX0=",
+                    "oob_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "state": "await_response",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/out-of-band/create-invitation",
             "request": {
@@ -9925,6 +11164,30 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Receive a new connection invitation",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                  "imageUrl": "http://192.168.56.101/img/logo.jpg",
+                  "label": "Bob",
+                },
+                "response": {
+                  "body": {
+                    "attach_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "invi_msg_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "oob_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "our_recipient_key": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "receiver",
+                    "state": "await-response",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/out-of-band/receive-invitation",
             "request": {
@@ -9979,6 +11242,30 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Creates a presentation request not bound to any proposal or connection",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "auto_verify": false,
+                  "trace": false,
+                },
+                "response": {
+                  "body": {
+                    "auto_present": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Invalid structure",
+                    "initiator": "self",
+                    "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "prover",
+                    "state": "verified",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "verified": "true",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/present-proof/create-request",
             "request": {
@@ -10114,6 +11401,27 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch a single presentation exchange record",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "auto_present": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Invalid structure",
+                    "initiator": "self",
+                    "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "prover",
+                    "state": "verified",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "verified": "true",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/present-proof/records/{pres_ex_id}",
             "path-parameters": {
@@ -10160,6 +11468,31 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Sends a free presentation request not bound to any proposal",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "auto_verify": false,
+                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "trace": false,
+                },
+                "response": {
+                  "body": {
+                    "auto_present": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Invalid structure",
+                    "initiator": "self",
+                    "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "prover",
+                    "state": "verified",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "verified": "true",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/present-proof/send-request",
             "request": {
@@ -10201,6 +11534,30 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Sends a presentation proposal",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "trace": false,
+                },
+                "response": {
+                  "body": {
+                    "auto_present": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Invalid structure",
+                    "initiator": "self",
+                    "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "prover",
+                    "state": "verified",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "verified": "true",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/present-proof/send-proposal",
             "request": {
@@ -10242,6 +11599,27 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Sends a proof presentation",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "auto_present": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Invalid structure",
+                    "initiator": "self",
+                    "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "prover",
+                    "state": "verified",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "verified": "true",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/present-proof/records/{pres_ex_id}/send-presentation",
             "path-parameters": {
@@ -10266,6 +11644,30 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Sends a presentation request in reference to a proposal",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "auto_verify": false,
+                  "trace": false,
+                },
+                "response": {
+                  "body": {
+                    "auto_present": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Invalid structure",
+                    "initiator": "self",
+                    "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "prover",
+                    "state": "verified",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "verified": "true",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/present-proof/records/{pres_ex_id}/send-request",
             "path-parameters": {
@@ -10301,6 +11703,27 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Verify a received presentation",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "auto_present": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Invalid structure",
+                    "initiator": "self",
+                    "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "prover",
+                    "state": "verified",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "verified": "true",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/present-proof/records/{pres_ex_id}/verify-presentation",
             "path-parameters": {
@@ -10332,6 +11755,29 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Creates a presentation request not bound to any proposal or connection",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "auto_verify": false,
+                  "trace": false,
+                },
+                "response": {
+                  "body": {
+                    "auto_present": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Invalid structure",
+                    "initiator": "self",
+                    "pres_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "prover",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "verified": "true",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/present-proof-2.0/create-request",
             "request": {
@@ -10467,6 +11913,26 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Fetch a single presentation exchange record",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "auto_present": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Invalid structure",
+                    "initiator": "self",
+                    "pres_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "prover",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "verified": "true",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/present-proof-2.0/records/{pres_ex_id}",
             "path-parameters": {
@@ -10513,6 +11979,30 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Sends a free presentation request not bound to any proposal",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "auto_verify": false,
+                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "trace": false,
+                },
+                "response": {
+                  "body": {
+                    "auto_present": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Invalid structure",
+                    "initiator": "self",
+                    "pres_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "prover",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "verified": "true",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/present-proof-2.0/send-request",
             "request": {
@@ -10554,6 +12044,29 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Sends a presentation proposal",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "trace": false,
+                },
+                "response": {
+                  "body": {
+                    "auto_present": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Invalid structure",
+                    "initiator": "self",
+                    "pres_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "prover",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "verified": "true",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/present-proof-2.0/send-proposal",
             "request": {
@@ -10595,6 +12108,26 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Sends a proof presentation",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "auto_present": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Invalid structure",
+                    "initiator": "self",
+                    "pres_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "prover",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "verified": "true",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/present-proof-2.0/records/{pres_ex_id}/send-presentation",
             "path-parameters": {
@@ -10634,6 +12167,29 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Sends a presentation request in reference to a proposal",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "auto_verify": false,
+                  "trace": false,
+                },
+                "response": {
+                  "body": {
+                    "auto_present": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Invalid structure",
+                    "initiator": "self",
+                    "pres_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "prover",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "verified": "true",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/present-proof-2.0/records/{pres_ex_id}/send-request",
             "path-parameters": {
@@ -10669,6 +12225,26 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Verify a received presentation",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "auto_present": false,
+                    "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "error_msg": "Invalid structure",
+                    "initiator": "self",
+                    "pres_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "role": "prover",
+                    "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "verified": "true",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/present-proof-2.0/records/{pres_ex_id}/verify-presentation",
             "path-parameters": {
@@ -10756,6 +12332,17 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Creates a new revocation registry",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/revocation/create-registry",
             "request": {
@@ -11063,6 +12650,20 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Revoke an issued credential",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                  "cred_rev_id": "12345",
+                  "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/revocation/revoke",
             "request": {
@@ -11176,6 +12777,17 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Update revocation registry with new public URI to its tails file",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "tails_public_uri": "http://192.168.56.133:6543/revocation/registry/WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0/tails-file",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "PATCH",
             "path": "/revocation/registry/{rev_reg_id}",
             "path-parameters": {
@@ -11378,6 +12990,19 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Liveliness check",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "alive": true,
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/status/live",
             "response": {
@@ -11402,6 +13027,19 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Readiness check",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "ready": true,
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/status/ready",
             "response": {
@@ -11507,6 +13145,18 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Create a local DID",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "method": "sov",
+                  "seed": "000000000000000000000000Trustee1",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/wallet/did/create",
             "request": {
@@ -11540,6 +13190,20 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Query DID endpoint in wallet",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "did": "WgWxqztrNooG92RXvxSTWv",
+                    "endpoint": "https://myhost:8021",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/wallet/get-did-endpoint",
             "request": {
@@ -11638,6 +13302,19 @@ exports[`open api parser aries simple 1`] = `
             "display-name": "Update endpoint in wallet and on ledger if posted to it",
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "did": "WgWxqztrNooG92RXvxSTWv",
+                  "endpoint": "https://myhost:8021",
+                  "endpoint_type": "Endpoint",
+                },
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/wallet/set-did-endpoint",
             "request": {

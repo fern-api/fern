@@ -157,6 +157,26 @@ in the DevPortal.
       "errorStatusCode": [
         401,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListLinksRequest",
       "headers": [],
       "internal": undefined,
@@ -592,6 +612,163 @@ in the DevPortal.
         428,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "certificate": {
+                "primitive": {
+                  "string": "1234567890abcd=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "credentials_storage": {
+                "primitive": {
+                  "string": "store",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "external_id": {
+                "primitive": {
+                  "string": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "fetch_historical": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "institution": {
+                "primitive": {
+                  "string": "erebor_mx_retail",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password": {
+                "primitive": {
+                  "string": "password",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password2": {
+                "primitive": {
+                  "string": "pin",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "private_key": {
+                "primitive": {
+                  "string": "1234567890abcd=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "username": {
+                "primitive": {
+                  "string": "username",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "username2": {
+                "primitive": {
+                  "string": "secondusername",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "username3": {
+                "primitive": {
+                  "string": "thirdusername",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "username_type": {
+                "primitive": {
+                  "string": "001",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "created_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "created_by": {
+                "primitive": {
+                  "string": "bcef7f35-67f2-4b19-b009-cb38795faf09",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "external_id": {
+                "primitive": {
+                  "string": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "institution": {
+                "primitive": {
+                  "string": "erebor_mx_retail",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "institution_user_id": {
+                "primitive": {
+                  "string": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "last_accessed_at": {
+                "primitive": {
+                  "datetime": "2019-09-27T13:02:03.584Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "RegisterLinkRequest",
       "headers": [],
       "internal": undefined,
@@ -645,6 +822,7 @@ in the DevPortal.
           "schema": "LinksRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "RegisterLink_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -676,6 +854,93 @@ in the DevPortal.
         401,
         428,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "created_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "created_by": {
+                "primitive": {
+                  "string": "bcef7f35-67f2-4b19-b009-cb38795faf09",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "external_id": {
+                "primitive": {
+                  "string": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "institution": {
+                "primitive": {
+                  "string": "erebor_mx_retail",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "institution_user_id": {
+                "primitive": {
+                  "string": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "last_accessed_at": {
+                "primitive": {
+                  "datetime": "2019-09-27T13:02:03.584Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "PatchLinksRequest",
       "headers": [],
@@ -730,6 +995,7 @@ in the DevPortal.
           "schema": "PatchBodyWithoutSaveData",
           "type": "reference",
         },
+        "schemaInstanceId": "PatchLinks_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -759,6 +1025,68 @@ in the DevPortal.
       "errorStatusCode": [
         401,
         404,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "created_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "created_by": {
+                "primitive": {
+                  "string": "bcef7f35-67f2-4b19-b009-cb38795faf09",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "external_id": {
+                "primitive": {
+                  "string": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "institution": {
+                "primitive": {
+                  "string": "erebor_mx_retail",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "institution_user_id": {
+                "primitive": {
+                  "string": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "last_accessed_at": {
+                "primitive": {
+                  "datetime": "2019-09-27T13:02:03.584Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "DetailLinkRequest",
       "headers": [],
@@ -852,6 +1180,114 @@ in the DevPortal.
         428,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "certificate": {
+                "primitive": {
+                  "string": "1234567890abcd=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password": {
+                "primitive": {
+                  "string": "password",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password2": {
+                "primitive": {
+                  "string": "pin",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "private_key": {
+                "primitive": {
+                  "string": "1234567890abcd=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "username_type": {
+                "primitive": {
+                  "string": "001",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "created_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "created_by": {
+                "primitive": {
+                  "string": "bcef7f35-67f2-4b19-b009-cb38795faf09",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "external_id": {
+                "primitive": {
+                  "string": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "institution": {
+                "primitive": {
+                  "string": "erebor_mx_retail",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "institution_user_id": {
+                "primitive": {
+                  "string": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "last_accessed_at": {
+                "primitive": {
+                  "datetime": "2019-09-27T13:02:03.584Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "UpdateLinkRequest",
       "headers": [],
       "internal": undefined,
@@ -920,6 +1356,7 @@ in the DevPortal.
           "schema": "LinksPutRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "UpdateLink_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -953,6 +1390,71 @@ in the DevPortal.
         404,
         428,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "created_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "created_by": {
+                "primitive": {
+                  "string": "bcef7f35-67f2-4b19-b009-cb38795faf09",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "external_id": {
+                "primitive": {
+                  "string": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "institution": {
+                "primitive": {
+                  "string": "erebor_mx_retail",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "institution_user_id": {
+                "primitive": {
+                  "string": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "last_accessed_at": {
+                "primitive": {
+                  "datetime": "2019-09-27T13:02:03.584Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ChangeLinkAccessModeRequest",
       "headers": [],
@@ -1022,6 +1524,7 @@ in the DevPortal.
           "schema": "ChangeAccessMode",
           "type": "reference",
         },
+        "schemaInstanceId": "ChangeLinkAccessMode_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1060,6 +1563,7 @@ To delete links in bulk, we recommend looping through the list of links you want
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DestroyLinkRequest",
       "headers": [],
       "internal": undefined,
@@ -1100,6 +1604,26 @@ To delete links in bulk, we recommend looping through the list of links you want
       "description": "Get a paginated list of all existing accounts in your Belvo account. By default, we return up to 100 results per page.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListAccountsRequest",
       "headers": [],
@@ -1804,6 +2328,33 @@ To delete links in bulk, we recommend looping through the list of links you want
         428,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveAccountsRequest",
       "headers": [],
       "internal": undefined,
@@ -1857,6 +2408,7 @@ To delete links in bulk, we recommend looping through the list of links you want
           "schema": "StandardRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "RetrieveAccounts_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1907,6 +2459,47 @@ To delete links in bulk, we recommend looping through the list of links you want
         408,
         428,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "PatchAccountsRequest",
       "headers": [],
@@ -1961,6 +2554,7 @@ To delete links in bulk, we recommend looping through the list of links you want
           "schema": "PatchBody",
           "type": "reference",
         },
+        "schemaInstanceId": "PatchAccounts_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -2008,6 +2602,103 @@ To delete links in bulk, we recommend looping through the list of links you want
       "errorStatusCode": [
         401,
         404,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "balance_type": {
+                "primitive": {
+                  "string": "ASSET",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "collected_at": {
+                "primitive": {
+                  "datetime": "2019-09-27T13:01:41.941Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "created_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "currency": {
+                "primitive": {
+                  "string": "MXN",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "last_accessed_at": {
+                "primitive": {
+                  "datetime": "2021-03-09T10:28:40.000Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "Cuenta Perfiles- M.N. - MXN-666",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "number": {
+                "primitive": {
+                  "string": "4057068115181",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "public_identification_name": {
+                "primitive": {
+                  "string": "CLABE",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "public_identification_value": {
+                "primitive": {
+                  "string": "150194683119900273",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "type": {
+                "primitive": {
+                  "string": "Cuentas de efectivo",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "DetailAccountRequest",
       "headers": [],
@@ -2096,6 +2787,7 @@ To delete links in bulk, we recommend looping through the list of links you want
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DestroyAccountRequest",
       "headers": [],
       "internal": undefined,
@@ -2136,6 +2828,26 @@ To delete links in bulk, we recommend looping through the list of links you want
       "description": "Get a paginated list of all existing transactions in your Belvo account. By default, we return up to 100 results per page.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListTransactionsRequest",
       "headers": [],
@@ -3168,6 +3880,54 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "account": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_from": {
+                "primitive": {
+                  "string": "2020-08-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2020-10-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveTransactionsRequest",
       "headers": [],
       "internal": undefined,
@@ -3221,6 +3981,7 @@ If you try to access older information than what we can access, we will return a
           "schema": "TransactionsRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "RetrieveTransactions_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3260,6 +4021,65 @@ If you try to access older information than what we can access, we will return a
         408,
         428,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "account": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_from": {
+                "primitive": {
+                  "string": "2020-08-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2020-10-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "request_id": {
+                "primitive": {
+                  "string": "b5d0106ac9cc43d5b36199fe831f6bbe",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "RetrieveTransactionsAsyncRequest",
       "headers": [
@@ -3324,6 +4144,7 @@ If you try to access older information than what we can access, we will return a
           "schema": "TransactionsRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "RetrieveTransactions_async_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3356,6 +4177,47 @@ If you try to access older information than what we can access, we will return a
         408,
         428,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "PatchTransactionsRequest",
       "headers": [],
@@ -3410,6 +4272,7 @@ If you try to access older information than what we can access, we will return a
           "schema": "PatchBody",
           "type": "reference",
         },
+        "schemaInstanceId": "PatchTransactions_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -3444,6 +4307,7 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DetailTransactionRequest",
       "headers": [],
       "internal": undefined,
@@ -3531,6 +4395,7 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DestroyTransactionRequest",
       "headers": [],
       "internal": undefined,
@@ -3571,6 +4436,26 @@ If you try to access older information than what we can access, we will return a
       "description": "Get a paginated list of all existing balances in your Belvo account. By default, we return up to 100 results per page.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListBalancesRequest",
       "headers": [],
@@ -4094,6 +4979,54 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "account": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_from": {
+                "primitive": {
+                  "string": "2021-01-18",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2021-02-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveBalancesRequest",
       "headers": [],
       "internal": undefined,
@@ -4147,6 +5080,7 @@ If you try to access older information than what we can access, we will return a
           "schema": "BalancesRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "RetrieveBalances_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -4183,6 +5117,47 @@ If you try to access older information than what we can access, we will return a
         408,
         428,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "PatchBalancesRequest",
       "headers": [],
@@ -4237,6 +5212,7 @@ If you try to access older information than what we can access, we will return a
           "schema": "PatchBody",
           "type": "reference",
         },
+        "schemaInstanceId": "PatchBalances_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -4270,6 +5246,33 @@ If you try to access older information than what we can access, we will return a
       "errorStatusCode": [
         401,
         404,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "id": {
+                "primitive": {
+                  "string": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "value_date": {
+                "primitive": {
+                  "string": "2019-10-23",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "DetailBalanceRequest",
       "headers": [],
@@ -4358,6 +5361,7 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DestroyBalanceRequest",
       "headers": [],
       "internal": undefined,
@@ -4398,6 +5402,26 @@ If you try to access older information than what we can access, we will return a
       "description": "Get a paginated list of all the institutions currently supported by Belvo. By default, we return up to 100 results per page.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListInstitutionsRequest",
       "headers": [],
@@ -4691,6 +5715,68 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "display_name": {
+                "primitive": {
+                  "string": "Erebor Mexico",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "icon_logo": {
+                "primitive": {
+                  "string": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "logo": {
+                "primitive": {
+                  "string": "https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.png",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "erebor_mx_retail",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "primary_color": {
+                "primitive": {
+                  "string": "#056dae",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "text_logo": {
+                "primitive": {
+                  "string": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "website": {
+                "primitive": {
+                  "string": "https://www.erebor.com/",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DetailInstitutionRequest",
       "headers": [],
       "internal": undefined,
@@ -4776,6 +5862,26 @@ If you try to access older information than what we can access, we will return a
       "description": "Get a paginated list of all existing owners in your Belvo account. We return up to 100 results per page.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListOwnersRequest",
       "headers": [],
@@ -5072,6 +6178,33 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveOwnersRequest",
       "headers": [],
       "internal": undefined,
@@ -5125,6 +6258,7 @@ If you try to access older information than what we can access, we will return a
           "schema": "StandardRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "RetrieveOwners_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -5161,6 +6295,47 @@ If you try to access older information than what we can access, we will return a
         408,
         428,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "PatchOwnersRequest",
       "headers": [],
@@ -5215,6 +6390,7 @@ If you try to access older information than what we can access, we will return a
           "schema": "PatchBody",
           "type": "reference",
         },
+        "schemaInstanceId": "PatchOwners_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -5248,6 +6424,82 @@ If you try to access older information than what we can access, we will return a
       "errorStatusCode": [
         401,
         404,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "address": {
+                "primitive": {
+                  "string": "Carrer de la Llacuna, 162, 08018 Barcelona",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "collected_at": {
+                "primitive": {
+                  "datetime": "2019-09-27T13:01:41.941Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "created_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "display_name": {
+                "primitive": {
+                  "string": "John Doe",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "email": {
+                "primitive": {
+                  "string": "johndoe@belvo.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "c749315b-eec2-435d-a458-06912878564f",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "internal_identification": {
+                "primitive": {
+                  "string": "7e5838e4",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "phone_number": {
+                "primitive": {
+                  "string": "+52-XXX-XXX-XXXX",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "DetailOwnerRequest",
       "headers": [],
@@ -5336,6 +6588,7 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DestroyOwnerRequest",
       "headers": [],
       "internal": undefined,
@@ -5376,6 +6629,26 @@ If you try to access older information than what we can access, we will return a
       "description": "Get a paginated list of all existing invoices in your Belvo account. By default, we return 100 results per page.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListInvoicesRequest",
       "headers": [],
@@ -5948,6 +7221,47 @@ If you try to access older information than what we can access, we will return a
         408,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "date_from": {
+                "primitive": {
+                  "string": "2020-01-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2020-02-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveInvoicesRequest",
       "headers": [],
       "internal": undefined,
@@ -6001,6 +7315,7 @@ If you try to access older information than what we can access, we will return a
           "schema": "InvoicesRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "RetrieveInvoices_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -6056,6 +7371,47 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "PatchInvoicesRequest",
       "headers": [],
       "internal": undefined,
@@ -6109,6 +7465,7 @@ If you try to access older information than what we can access, we will return a
           "schema": "PatchBody",
           "type": "reference",
         },
+        "schemaInstanceId": "PatchInvoices_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -6161,6 +7518,7 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DetailInvoiceRequest",
       "headers": [],
       "internal": undefined,
@@ -6266,6 +7624,7 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DestroyInvoiceRequest",
       "headers": [],
       "internal": undefined,
@@ -6307,6 +7666,7 @@ If you try to access older information than what we can access, we will return a
       "errorStatusCode": [
         401,
       ],
+      "examples": [],
       "generatedRequestName": "ListTaxReturnsRequest",
       "headers": [],
       "internal": undefined,
@@ -6738,6 +8098,7 @@ If you try to access older information than what we can access, we will return a
         408,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "RetrieveTaxReturnsRequest",
       "headers": [],
       "internal": undefined,
@@ -6809,6 +8170,7 @@ If you try to access older information than what we can access, we will return a
           },
           "type": "oneOf",
         },
+        "schemaInstanceId": "RetrieveTaxReturns_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -6875,6 +8237,7 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DetailTaxReturnRequest",
       "headers": [],
       "internal": undefined,
@@ -6994,6 +8357,7 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DestroyTaxReturnRequest",
       "headers": [],
       "internal": undefined,
@@ -7034,6 +8398,26 @@ If you try to access older information than what we can access, we will return a
       "description": "Get a paginated list of all existing tax status in your Belvo account. By default, we return up to 100 results per page.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListTaxStatusRequest",
       "headers": [],
@@ -7298,6 +8682,33 @@ If you try to access older information than what we can access, we will return a
         408,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveTaxStatusRequest",
       "headers": [],
       "internal": undefined,
@@ -7351,6 +8762,7 @@ If you try to access older information than what we can access, we will return a
           "schema": "TaxStatusRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "RetrieveTaxStatus_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -7399,6 +8811,7 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DetailTaxStatusRequest",
       "headers": [],
       "internal": undefined,
@@ -7504,6 +8917,7 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DestroyTaxStatusRequest",
       "headers": [],
       "internal": undefined,
@@ -7544,6 +8958,26 @@ If you try to access older information than what we can access, we will return a
       "description": "Get a paginated list of all existing Tax compliance statuses in your Belvo account. By default, we return up to 100 results per page.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListTaxComplianceStatusRequest",
       "headers": [],
@@ -7808,6 +9242,79 @@ If you try to access older information than what we can access, we will return a
         408,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "collected_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "created_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "91106968-1abd-4d64-85c1-4e73d96fb997",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "internal_identification": {
+                "primitive": {
+                  "string": "20NE1234567",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "pdf": {
+                "primitive": {
+                  "string": "=PDF-STRING=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "rfc": {
+                "primitive": {
+                  "string": "KDFC211118IS0",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "RetrieveTaxComplianceStatusRequest",
       "headers": [],
       "internal": undefined,
@@ -7861,6 +9368,7 @@ If you try to access older information than what we can access, we will return a
           "schema": "TaxComplianceStatusRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "RetrieveTaxComplianceStatus_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -7890,6 +9398,61 @@ If you try to access older information than what we can access, we will return a
       "errorStatusCode": [
         401,
         404,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "collected_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "created_at": {
+                "primitive": {
+                  "datetime": "2022-02-09T08:45:50.406032Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "91106968-1abd-4d64-85c1-4e73d96fb997",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "internal_identification": {
+                "primitive": {
+                  "string": "20NE1234567",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "pdf": {
+                "primitive": {
+                  "string": "=PDF-STRING=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "rfc": {
+                "primitive": {
+                  "string": "KDFC211118IS0",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "DetailTaxComplianceStatusRequest",
       "headers": [],
@@ -7978,6 +9541,7 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DestroyTaxComplianceStatusRequest",
       "headers": [],
       "internal": undefined,
@@ -8018,6 +9582,26 @@ If you try to access older information than what we can access, we will return a
       "description": "Get a paginated list of all incomes in your Belvo account. By default, we return up to 100 results per page.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListIncomesRequest",
       "headers": [],
@@ -8201,6 +9785,47 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "date_from": {
+                "primitive": {
+                  "string": "2020-08-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2020-12-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveIncomeRequest",
       "headers": [],
       "internal": undefined,
@@ -8254,6 +9879,7 @@ If you try to access older information than what we can access, we will return a
           "schema": "IncomesRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "RetrieveIncome_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -8286,6 +9912,47 @@ If you try to access older information than what we can access, we will return a
         408,
         428,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "PatchIncomesRequest",
       "headers": [],
@@ -8340,6 +10007,7 @@ If you try to access older information than what we can access, we will return a
           "schema": "PatchBody",
           "type": "reference",
         },
+        "schemaInstanceId": "PatchIncomes_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -8374,6 +10042,7 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DetailIncomeRequest",
       "headers": [],
       "internal": undefined,
@@ -8465,6 +10134,7 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DestroyIncomesRequest",
       "headers": [],
       "internal": undefined,
@@ -8505,6 +10175,26 @@ If you try to access older information than what we can access, we will return a
       "description": "Get a paginated list of all recurring expenses in your Belvo account. By default, we return up to 100 results per page.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListRecurringExpensesRequest",
       "headers": [],
@@ -8722,6 +10412,47 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "date_from": {
+                "primitive": {
+                  "string": "2022-08-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2022-12-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveRecurringExpensesRequest",
       "headers": [],
       "internal": undefined,
@@ -8775,6 +10506,7 @@ If you try to access older information than what we can access, we will return a
           "schema": "RecurringExpensesRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "RetrieveRecurringExpenses_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -8811,6 +10543,47 @@ If you try to access older information than what we can access, we will return a
         408,
         428,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "PatchRecurringExpensesRequest",
       "headers": [],
@@ -8865,6 +10638,7 @@ If you try to access older information than what we can access, we will return a
           "schema": "PatchBody",
           "type": "reference",
         },
+        "schemaInstanceId": "PatchRecurringExpenses_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -8899,6 +10673,7 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DetailRecurringExpenseRequest",
       "headers": [],
       "internal": undefined,
@@ -8990,6 +10765,7 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DestroyRecurringExpenseRequest",
       "headers": [],
       "internal": undefined,
@@ -9030,6 +10806,26 @@ If you try to access older information than what we can access, we will return a
       "description": "Get a paginated list of all the existing portfolios (and their instruments) in your Belvo account. By default, we return up to 100 results per page.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListPortfolioRequest",
       "headers": [],
@@ -9260,6 +11056,33 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrievePortfolioRequest",
       "headers": [],
       "internal": undefined,
@@ -9313,6 +11136,7 @@ If you try to access older information than what we can access, we will return a
           "schema": "StandardRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "RetrievePortfolio_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -9344,6 +11168,40 @@ If you try to access older information than what we can access, we will return a
         401,
         428,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "PatchPortfolioRequest",
       "headers": [],
@@ -9398,6 +11256,7 @@ If you try to access older information than what we can access, we will return a
           "schema": "PatchBodyWithoutSaveData",
           "type": "reference",
         },
+        "schemaInstanceId": "PatchPortfolio_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -9428,6 +11287,7 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DetailPortfolioRequest",
       "headers": [],
       "internal": undefined,
@@ -9515,6 +11375,7 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DestroyPortfolioRequest",
       "headers": [],
       "internal": undefined,
@@ -9555,6 +11416,26 @@ If you try to access older information than what we can access, we will return a
       "description": "Get a paginated list of all the existing receivable transactions in your Belvo account. We return up to 100 results per page.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListReceivableTransactionsRequest",
       "headers": [],
@@ -9924,6 +11805,47 @@ If you try to access older information than what we can access, we will return a
         428,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "date_from": {
+                "primitive": {
+                  "string": "2020-08-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2020-10-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveReceivableTransactionsRequest",
       "headers": [],
       "internal": undefined,
@@ -9977,6 +11899,7 @@ If you try to access older information than what we can access, we will return a
           "schema": "ReceivableTransactionRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "RetrieveReceivableTransactions_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -10007,6 +11930,7 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DetailReceivableTransactionRequest",
       "headers": [],
       "internal": undefined,
@@ -10094,6 +12018,7 @@ If you try to access older information than what we can access, we will return a
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DestroyReceivableTransactionRequest",
       "headers": [],
       "internal": undefined,
@@ -10134,6 +12059,26 @@ If you try to access older information than what we can access, we will return a
       "description": "Get a paginated list of all risk insight analyses in your Belvo account. By default, we return up to 100 results per page.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListRiskInsightsRequest",
       "headers": [],
@@ -10316,6 +12261,33 @@ If you need to know the currency of the account, just do a GET Details to the ac
         428,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveRiskInsightsRequest",
       "headers": [],
       "internal": undefined,
@@ -10369,6 +12341,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           "schema": "StandardRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "RetrieveRiskInsights_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -10405,6 +12378,47 @@ If you need to know the currency of the account, just do a GET Details to the ac
         408,
         428,
         500,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "session": {
+                "primitive": {
+                  "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
       ],
       "generatedRequestName": "PatchRiskInsightsRequest",
       "headers": [],
@@ -10459,6 +12473,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           "schema": "PatchBody",
           "type": "reference",
         },
+        "schemaInstanceId": "PatchRiskInsights_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -10493,6 +12508,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DetailRiskInsightsRequest",
       "headers": [],
       "internal": undefined,
@@ -10584,6 +12600,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DestroyRiskInsightsRequest",
       "headers": [],
       "internal": undefined,
@@ -10624,6 +12641,26 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "description": "Get a paginated list of all existing tax retentions in your Belvo account. We return up to 100 results per page.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListTaxRetentionsRequest",
       "headers": [],
@@ -10854,6 +12891,40 @@ If you need to know the currency of the account, just do a GET Details to the ac
         408,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "date_from": {
+                "primitive": {
+                  "string": "2020-01-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2020-02-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "9e432f18-36ca-4bd6-a3f3-1971e58dc1e8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveTaxRetentionsRequest",
       "headers": [],
       "internal": undefined,
@@ -10907,6 +12978,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           "schema": "TaxRetentionsRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "RetrieveTaxRetentions_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -10941,6 +13013,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DetailTaxRetentionsRequest",
       "headers": [],
       "internal": undefined,
@@ -11028,6 +13101,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DestroyTaxRetentionRequest",
       "headers": [],
       "internal": undefined,
@@ -11069,6 +13143,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "errorStatusCode": [
         401,
       ],
+      "examples": [],
       "generatedRequestName": "ListTaxDeclarationsRequest",
       "headers": [],
       "internal": undefined,
@@ -11452,6 +13527,54 @@ If you need to know the currency of the account, just do a GET Details to the ac
         408,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "attach_pdf": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "year_from": {
+                "primitive": {
+                  "string": "2018",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "year_to": {
+                "primitive": {
+                  "string": "2019",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveTaxDeclarationsRequest",
       "headers": [],
       "internal": undefined,
@@ -11505,6 +13628,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           "schema": "TaxDeclarationsRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "RetrieveTaxDeclarations_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -11557,6 +13681,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DetailTaxDeclarationRequest",
       "headers": [],
       "internal": undefined,
@@ -11662,6 +13787,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DestroyTaxDeclarationRequest",
       "headers": [],
       "internal": undefined,
@@ -11702,6 +13828,26 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "description": "Get a paginated list of all existing employment records in your Belvo account. By default, we return up to 100 results per page.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListEmploymentRecordsRequest",
       "headers": [],
@@ -11812,6 +13958,26 @@ If you need to know the currency of the account, just do a GET Details to the ac
         428,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "link": {
+                "primitive": {
+                  "string": "d686c617-6d9e-4bc6-9801-5ac276ccb6a2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RetrieveEmploymentRecordDetailsRequest",
       "headers": [],
       "internal": undefined,
@@ -11865,6 +14031,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           "schema": "EmploymentRecordRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "RetrieveEmploymentRecordDetails_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -11898,6 +14065,61 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "errorStatusCode": [
         401,
         404,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "collected_at": {
+                "primitive": {
+                  "datetime": "2020-04-23T21:32:55.336854+00:00",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "created_at": {
+                "primitive": {
+                  "datetime": "2020-04-23T21:32:55.336854+00:00",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "fef05fc8-7357-4a4a-9d29-55038ea31a04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "internal_identification": {
+                "primitive": {
+                  "string": "BLPM951331IONVGR54",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "link": {
+                "primitive": {
+                  "string": "27c1d5cf-e8fb-433a-a2f7-d246de199c01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "report_date": {
+                "primitive": {
+                  "string": "2023-01-19",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "DetailEmploymentRecordRequest",
       "headers": [],
@@ -11986,6 +14208,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DestroyEmploymentRecordRequest",
       "headers": [],
       "internal": undefined,
@@ -12034,6 +14257,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         403,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "VerifyIncomeRequest",
       "headers": [],
       "internal": undefined,
@@ -12052,6 +14276,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           "schema": "EyodIncomeVerificationRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "VerifyIncome_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -12092,6 +14317,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
         403,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "CategorizeTransactionsRequest",
       "headers": [],
       "internal": undefined,
@@ -12110,6 +14336,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
           "schema": "CategorizationRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "CategorizeTransactions_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -12141,6 +14368,26 @@ If you need to know the currency of the account, just do a GET Details to the ac
   **Note**: We only return the ID of the secret keys.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListSecretKeysRequest",
       "headers": [],
@@ -12189,6 +14436,7 @@ For example:
         400,
         408,
       ],
+      "examples": [],
       "generatedRequestName": "CreateSecretKeysRequest",
       "headers": [],
       "internal": undefined,
@@ -12228,6 +14476,26 @@ For example:
       "description": "List all payment webhooks associated with your Belvo account.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListPaymentWebhooksRequest",
       "headers": [],
@@ -12269,6 +14537,47 @@ For example:
         408,
         500,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "auth_header": {
+                "primitive": {
+                  "string": "Authorization",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "auth_token": {
+                "primitive": {
+                  "string": "Bearer hv7alD71j0dzXf09iKfg7u",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "Your webhook name",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "url": {
+                "primitive": {
+                  "string": "https://mycompany.com/security/webhook",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RegisterPaymentWebhookRequest",
       "headers": [],
       "internal": undefined,
@@ -12287,6 +14596,7 @@ For example:
           "schema": "PaymentWebhookRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "RegisterPaymentWebhook_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -12321,6 +14631,7 @@ For example:
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DetailPaymentWebhooksRequest",
       "headers": [],
       "internal": undefined,
@@ -12373,6 +14684,7 @@ For example:
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DeletePaymentWebhooksRequest",
       "headers": [],
       "internal": undefined,
@@ -12413,6 +14725,26 @@ For example:
       "description": "List all available payment institutions.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://belvo.com/payments/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListPaymentInstitutionsRequest",
       "headers": [],
@@ -12603,6 +14935,89 @@ For example:
         401,
         404,
       ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "active": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "display_name": {
+                "primitive": {
+                  "string": "Wakanda National Bank",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "icon_logo": {
+                "primitive": {
+                  "string": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "id": {
+                "primitive": {
+                  "string": "bbaceead-7b96-46d8-9354-38dec9707004",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "legal_entity_name": {
+                "primitive": {
+                  "string": "Wakanda Bank, National Association",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "logo": {
+                "primitive": {
+                  "string": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "name": {
+                "primitive": {
+                  "string": "wakanda_national",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "primary_color": {
+                "primitive": {
+                  "string": "#fdbc24",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "text_logo": {
+                "primitive": {
+                  "string": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "website": {
+                "primitive": {
+                  "string": "https://www.wakandanational.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DetailPaymentInstitutionRequest",
       "headers": [],
       "internal": undefined,
@@ -12653,6 +15068,26 @@ For example:
       "description": "List all customers associated with your Belvo account.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListCustomersRequest",
       "headers": [],
@@ -12867,6 +15302,7 @@ For example:
         401,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "CreateCustomerRequest",
       "headers": [],
       "internal": undefined,
@@ -12903,6 +15339,7 @@ For example:
           },
           "type": "oneOf",
         },
+        "schemaInstanceId": "CreateCustomer_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -12951,6 +15388,7 @@ For example:
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DetailCustomerRequest",
       "headers": [],
       "internal": undefined,
@@ -13019,6 +15457,26 @@ For example:
       "description": "List all bank accounts associated with your Belvo account.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListBankAccountRequest",
       "headers": [],
@@ -13313,6 +15771,7 @@ For example:
         408,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "CreateBankAccountRequest",
       "headers": [],
       "internal": undefined,
@@ -13349,6 +15808,7 @@ For example:
           },
           "type": "oneOf",
         },
+        "schemaInstanceId": "CreateBankAccount_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -13397,6 +15857,7 @@ For example:
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DetailBankAccountRequest",
       "headers": [],
       "internal": undefined,
@@ -13465,6 +15926,26 @@ For example:
       "description": "List all payment links associated with your Belvo account. By default, we return up to 100 results per page.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListPaymentLinksRequest",
       "headers": [],
@@ -13722,6 +16203,7 @@ For example:
         408,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "CreatePaymentlinkRequest",
       "headers": [],
       "internal": undefined,
@@ -13758,6 +16240,7 @@ For example:
           },
           "type": "oneOf",
         },
+        "schemaInstanceId": "CreatePaymentlink_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -13806,6 +16289,7 @@ For example:
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DetailCreatePaymentlinkRequest",
       "headers": [],
       "internal": undefined,
@@ -13876,6 +16360,26 @@ For example:
       "description": "List all payment intents associated with your Belvo account.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListPaymentIntentsRequest",
       "headers": [],
@@ -14238,6 +16742,7 @@ For example:
         408,
         500,
       ],
+      "examples": [],
       "generatedRequestName": "CreatePaymentIntentRequest",
       "headers": [],
       "internal": undefined,
@@ -14256,6 +16761,7 @@ For example:
           "schema": "CreatePaymentIntentPse",
           "type": "reference",
         },
+        "schemaInstanceId": "CreatePaymentIntent_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -14286,6 +16792,7 @@ For example:
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DetailPaymentIntentRequest",
       "headers": [],
       "internal": undefined,
@@ -14340,6 +16847,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
         400,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "PatchPaymentIntentRequest",
       "headers": [],
       "internal": undefined,
@@ -14373,6 +16881,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
           "schema": "PatchPaymentIntentPse",
           "type": "reference",
         },
+        "schemaInstanceId": "PatchPaymentIntent_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -14401,6 +16910,26 @@ During the payment intent flow, you need to fill in the payment intent with requ
       "description": "List all payment transactions associated with your Belvo account.",
       "errorStatusCode": [
         401,
+      ],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "next": {
+                "primitive": {
+                  "string": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
       ],
       "generatedRequestName": "ListPaymentTransactionsRequest",
       "headers": [],
@@ -14829,6 +17358,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
         401,
         404,
       ],
+      "examples": [],
       "generatedRequestName": "DetailPaymentTransactionsRequest",
       "headers": [],
       "internal": undefined,

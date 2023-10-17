@@ -22,6 +22,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "ListNumbersRequest",
       "headers": [],
       "internal": undefined,
@@ -89,6 +90,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "GetNumberRequest",
       "headers": [],
       "internal": undefined,
@@ -137,6 +139,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "BuyNumberRequest",
       "headers": [],
       "internal": undefined,
@@ -173,6 +176,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "UpdateNumberRequest",
       "headers": [],
       "internal": undefined,
@@ -205,6 +209,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": "UpdateNumberRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "update_number_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -234,6 +239,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "CancelNumberRequest",
       "headers": [],
       "internal": undefined,
@@ -284,6 +290,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "ListCallsRequest",
       "headers": [],
       "internal": undefined,
@@ -351,6 +358,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "GetCallRequest",
       "headers": [],
       "internal": undefined,
@@ -401,6 +409,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "EndCallRequest",
       "headers": [],
       "internal": undefined,
@@ -451,6 +460,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "CreateCallRequest",
       "headers": [],
       "internal": undefined,
@@ -469,6 +479,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": "CreateCallRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "create_call_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -498,6 +509,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "GetRecordingRequest",
       "headers": [],
       "internal": undefined,
@@ -542,6 +554,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
+      "examples": [],
       "generatedRequestName": "GetUsageRequest",
       "headers": [],
       "internal": undefined,
@@ -578,6 +591,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "GetActionRequest",
       "headers": [],
       "internal": undefined,
@@ -655,6 +669,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "ListActionsRequest",
       "headers": [],
       "internal": undefined,
@@ -722,6 +737,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "CreateActionRequest",
       "headers": [],
       "internal": undefined,
@@ -740,6 +756,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": "ActionParamsRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "create_action_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -796,6 +813,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "UpdateActionRequest",
       "headers": [],
       "internal": undefined,
@@ -828,6 +846,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": "ActionUpdateParamsRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "update_action_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -884,6 +903,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "GetAgentRequest",
       "headers": [],
       "internal": undefined,
@@ -934,6 +954,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "ListAgentsRequest",
       "headers": [],
       "internal": undefined,
@@ -1001,6 +1022,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "CreateAgentRequest",
       "headers": [],
       "internal": undefined,
@@ -1019,6 +1041,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": "AgentParams",
           "type": "reference",
         },
+        "schemaInstanceId": "create_agent_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1048,6 +1071,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "UpdateAgentRequest",
       "headers": [],
       "internal": undefined,
@@ -1080,6 +1104,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": "AgentUpdateParams",
           "type": "reference",
         },
+        "schemaInstanceId": "update_agent_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1109,6 +1134,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "GetVoiceRequest",
       "headers": [],
       "internal": undefined,
@@ -1193,6 +1219,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "ListVoicesRequest",
       "headers": [],
       "internal": undefined,
@@ -1260,6 +1287,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "CreateVoiceRequest",
       "headers": [],
       "internal": undefined,
@@ -1278,6 +1306,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": "VoiceParamsRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "create_voice_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1341,6 +1370,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "UpdateVoiceRequest",
       "headers": [],
       "internal": undefined,
@@ -1373,6 +1403,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": "VoiceUpdateParamsRequest",
           "type": "reference",
         },
+        "schemaInstanceId": "update_voice_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1436,6 +1467,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "GetWebhookRequest",
       "headers": [],
       "internal": undefined,
@@ -1486,6 +1518,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "ListWebhooksRequest",
       "headers": [],
       "internal": undefined,
@@ -1553,6 +1586,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "CreateWebhookRequest",
       "headers": [],
       "internal": undefined,
@@ -1571,6 +1605,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": "WebhookParams",
           "type": "reference",
         },
+        "schemaInstanceId": "create_webhook_Request",
         "type": "json",
       },
       "requestNameOverride": undefined,
@@ -1600,6 +1635,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
+      "examples": [],
       "generatedRequestName": "UpdateWebhookRequest",
       "headers": [],
       "internal": undefined,
@@ -1632,6 +1668,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "schema": "WebhookUpdateParams",
           "type": "reference",
         },
+        "schemaInstanceId": "update_webhook_Request_Body",
         "type": "json",
       },
       "requestNameOverride": undefined,

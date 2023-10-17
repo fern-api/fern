@@ -1,8 +1,10 @@
 import { Logger } from "@fern-api/logger";
 import { TaskContext } from "@fern-api/task-context";
-import { HttpError, SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/ir";
+import { SchemaInstanceId } from "@fern-fern/openapi-ir-model/example";
+import { HttpError, Schema, SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { SCHEMA_REFERENCE_PREFIX } from "./converters/convertSchemas";
+import { ExampleCollector } from "./ExampleCollector";
 import { getReferenceOccurrences } from "./utils/getReferenceOccurrences";
 import { isReferenceObject } from "./utils/isReferenceObject";
 
@@ -19,8 +21,11 @@ export abstract class AbstractOpenAPIV3ParserContext {
     public logger: Logger;
     public document: OpenAPIV3.Document;
     public taskContext: TaskContext;
-    public refOccurrences: Record<string, number>;
     public authHeaders: Set<string>;
+    public refOccurrences: Record<string, number>;
+    public schemaIdToSchemaInstanceId: Record<SchemaId, SchemaInstanceId>;
+    public schemaInstanceIdToSchema: Record<SchemaInstanceId, Schema>;
+    public exampleCollector: ExampleCollector;
 
     constructor({
         document,
@@ -36,6 +41,9 @@ export abstract class AbstractOpenAPIV3ParserContext {
         this.taskContext = taskContext;
         this.authHeaders = authHeaders;
         this.refOccurrences = getReferenceOccurrences(document);
+        this.schemaIdToSchemaInstanceId = {};
+        this.schemaInstanceIdToSchema = {};
+        this.exampleCollector = new ExampleCollector(taskContext.logger);
     }
 
     public getNumberOfOccurrencesForRef(schema: OpenAPIV3.ReferenceObject): number {
@@ -116,6 +124,10 @@ export abstract class AbstractOpenAPIV3ParserContext {
             return this.resolveResponseReference(resolvedResponse);
         }
         return resolvedResponse;
+    }
+
+    public registerSchemaInstanceId(schemaInstanceId: SchemaInstanceId, schema: Schema): void {
+        this.schemaInstanceIdToSchema[schemaInstanceId] = schema;
     }
 
     public abstract markSchemaAsReferencedByNonRequest(schemaId: SchemaId): void;
