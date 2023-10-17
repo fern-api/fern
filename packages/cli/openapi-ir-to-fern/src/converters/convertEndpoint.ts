@@ -306,15 +306,15 @@ function convertPrimitiveExampleToExampleTypeReferenceSchema(
     primitiveExample: PrimitiveExample
 ): RawSchemas.ExampleTypeReferenceSchema {
     return PrimitiveExample._visit<RawSchemas.ExampleTypeReferenceSchema>(primitiveExample, {
-        int: (value: number) => value.toString(),
-        int64: (value: number) => value.toString(),
-        float: (value: number) => value.toString(),
-        double: (value: number) => value.toString(),
+        int: (value: number) => value,
+        int64: (value: number) => value,
+        float: (value: number) => value,
+        double: (value: number) => value,
         string: (value: string) => value,
         datetime: (value: string) => value,
         date: (value: string) => value,
         base64: (value: string) => value,
-        boolean: (value: boolean) => value.toString(),
+        boolean: (value: boolean) => value,
         _unknown: () => "unknown",
     });
 }
