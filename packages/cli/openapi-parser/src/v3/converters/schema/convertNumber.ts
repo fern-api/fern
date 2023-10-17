@@ -1,4 +1,5 @@
-import { PrimitiveSchemaValue, Schema } from "@fern-fern/openapi-ir-model/ir";
+import { PrimitiveSchemaValue } from "@fern-fern/openapi-ir-model/ir";
+import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parse-stage/ir";
 import { wrapPrimitive } from "../convertSchemas";
 
 export function convertNumber({
@@ -9,7 +10,7 @@ export function convertNumber({
     format: string | undefined;
     description: string | undefined;
     wrapAsNullable: boolean;
-}): Schema {
+}): SchemaWithExample {
     if (format == null || format === "double") {
         return wrapPrimitive({
             primitive: PrimitiveSchemaValue.double(),

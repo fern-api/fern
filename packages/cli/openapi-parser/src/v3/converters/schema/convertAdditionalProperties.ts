@@ -1,4 +1,4 @@
-import { PrimitiveSchemaValue, Schema } from "@fern-fern/openapi-ir-model/ir";
+import { PrimitiveSchemaValue, SchemaWithExample } from "@fern-fern/openapi-ir-model/parse-stage/ir";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { isReferenceObject } from "../../utils/isReferenceObject";
@@ -16,7 +16,7 @@ export function convertAdditionalProperties({
     description: string | undefined;
     wrapAsNullable: boolean;
     context: AbstractOpenAPIV3ParserContext;
-}): Schema {
+}): SchemaWithExample {
     if (typeof additionalProperties === "boolean" || isAdditionalPropertiesEmptyDictionary(additionalProperties)) {
         return wrapMap({
             wrapAsNullable,
@@ -24,8 +24,12 @@ export function convertAdditionalProperties({
             keySchema: PrimitiveSchemaValue.string({
                 minLength: undefined,
                 maxLength: undefined,
+                example: undefined,
             }),
-            valueSchema: Schema.unknown(),
+            valueSchema: SchemaWithExample.unknown({
+                description: undefined,
+                example: undefined,
+            }),
         });
     }
     return wrapMap({
@@ -34,6 +38,7 @@ export function convertAdditionalProperties({
         keySchema: PrimitiveSchemaValue.string({
             minLength: undefined,
             maxLength: undefined,
+            example: undefined,
         }),
         valueSchema: convertSchema(additionalProperties, wrapAsNullable, context, [...breadcrumbs, "Value"]),
     });
@@ -52,13 +57,13 @@ export function wrapMap({
     description,
 }: {
     keySchema: PrimitiveSchemaValue;
-    valueSchema: Schema;
+    valueSchema: SchemaWithExample;
     wrapAsNullable: boolean;
     description: string | undefined;
-}): Schema {
+}): SchemaWithExample {
     if (wrapAsNullable) {
-        return Schema.nullable({
-            value: Schema.map({
+        return SchemaWithExample.nullable({
+            value: SchemaWithExample.map({
                 description,
                 key: keySchema,
                 value: valueSchema,
@@ -66,7 +71,7 @@ export function wrapMap({
             description,
         });
     }
-    return Schema.map({
+    return SchemaWithExample.map({
         description,
         key: keySchema,
         value: valueSchema,

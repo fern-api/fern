@@ -1,4 +1,5 @@
-import { EnumValue, Schema } from "@fern-fern/openapi-ir-model/ir";
+import { EnumValue } from "@fern-fern/openapi-ir-model/ir";
+import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parse-stage/ir";
 import { camelCase, upperFirst } from "lodash-es";
 import { FernEnumConfig } from "../../extensions/getFernEnum";
 
@@ -20,7 +21,7 @@ export function convertEnum({
     enumValues: string[];
     description: string | undefined;
     wrapAsNullable: boolean;
-}): Schema {
+}): SchemaWithExample {
     const strippedEnumVarNames = stripCommonPrefix(enumVarNames ?? []);
     const uniqueValues = new Set(enumValues);
     const values = Array.from(uniqueValues).map((value, index) => {
@@ -55,23 +56,25 @@ export function wrapEnum({
     generatedName: string;
     values: EnumValue[];
     description: string | undefined;
-}): Schema {
+}): SchemaWithExample {
     if (wrapAsNullable) {
-        return Schema.nullable({
-            value: Schema.enum({
+        return SchemaWithExample.nullable({
+            value: SchemaWithExample.enum({
                 nameOverride,
                 generatedName,
                 values,
                 description,
+                example: undefined,
             }),
             description,
         });
     }
-    return Schema.enum({
+    return SchemaWithExample.enum({
         nameOverride,
         generatedName,
         values,
         description,
+        example: undefined,
     });
 }
 

@@ -1,4 +1,5 @@
-import { PrimitiveSchemaValue, ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/ir";
+import { ReferencedSchema, Schema } from "@fern-fern/openapi-ir-model/ir";
+import { PrimitiveSchemaValue, SchemaWithExample } from "@fern-fern/openapi-ir-model/parse-stage/ir";
 import { isEqual } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
@@ -26,7 +27,7 @@ export function convertSchema(
     breadcrumbs: string[],
     referencedAsRequest = false,
     propertiesToExclude: Set<string> = new Set()
-): Schema {
+): SchemaWithExample {
     if (isReferenceObject(schema)) {
         if (!referencedAsRequest) {
             context.markSchemaAsReferencedByNonRequest(getSchemaIdFromReference(schema));
@@ -43,10 +44,10 @@ export function convertReferenceObject(
     schema: OpenAPIV3.ReferenceObject,
     wrapAsNullable: boolean,
     breadcrumbs: string[]
-): Schema {
-    const referenceSchema = Schema.reference(convertToReferencedSchema(schema, breadcrumbs));
+): SchemaWithExample {
+    const referenceSchema = SchemaWithExample.reference(convertToReferencedSchema(schema, breadcrumbs));
     if (wrapAsNullable) {
-        return Schema.nullable({
+        return SchemaWithExample.nullable({
             value: referenceSchema,
             description: undefined,
         });
@@ -61,7 +62,7 @@ export function convertSchemaObject(
     context: AbstractOpenAPIV3ParserContext,
     breadcrumbs: string[],
     propertiesToExclude: Set<string> = new Set()
-): Schema {
+): SchemaWithExample {
     const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;
@@ -80,6 +81,7 @@ export function convertSchemaObject(
                 primitive: PrimitiveSchemaValue.string({
                     minLength: undefined,
                     maxLength: undefined,
+                    example: undefined,
                 }),
                 wrapAsNullable,
                 description,
@@ -110,7 +112,7 @@ export function convertSchemaObject(
         const firstElement = schema.type[0];
         const secondElement = schema.type[1];
         if (firstElement === "null") {
-            return Schema.nullable({
+            return SchemaWithExample.nullable({
                 value: convertSchemaObject(
                     {
                         ...schema,
@@ -124,7 +126,7 @@ export function convertSchemaObject(
                 description: schema.description,
             });
         } else if (secondElement === "null") {
-            return Schema.nullable({
+            return SchemaWithExample.nullable({
                 value: convertSchemaObject(
                     {
                         ...schema,
@@ -143,7 +145,9 @@ export function convertSchemaObject(
     // primitive types
     if (schema === "boolean" || schema.type === "boolean") {
         return wrapPrimitive({
-            primitive: PrimitiveSchemaValue.boolean(),
+            primitive: PrimitiveSchemaValue.boolean({
+                example: undefined,
+            }),
             wrapAsNullable,
             description,
         });
@@ -153,7 +157,9 @@ export function convertSchemaObject(
     }
     if (schema === "integer" || schema.type === "integer") {
         return wrapPrimitive({
-            primitive: PrimitiveSchemaValue.int(),
+            primitive: PrimitiveSchemaValue.int({
+                example: undefined,
+            }),
             wrapAsNullable,
             description,
         });
@@ -161,7 +167,9 @@ export function convertSchemaObject(
     if (schema === "string" || schema.type === "string") {
         if (schema.format === "date-time") {
             return wrapPrimitive({
-                primitive: PrimitiveSchemaValue.datetime(),
+                primitive: PrimitiveSchemaValue.datetime({
+                    example: undefined,
+                }),
                 wrapAsNullable,
                 description,
             });
@@ -180,6 +188,7 @@ export function convertSchemaObject(
             primitive: PrimitiveSchemaValue.string({
                 maxLength: schema.maxLength,
                 minLength: schema.minLength,
+                example: undefined,
             }),
             wrapAsNullable,
             description,
@@ -372,7 +381,10 @@ export function convertSchemaObject(
     }
 
     if (schema.type == null) {
-        return Schema.unknown();
+        return SchemaWithExample.unknown({
+            description,
+            example: undefined,
+        });
     }
 
     throw new Error(
@@ -480,17 +492,17 @@ export function wrapLiteral({
     literal: string;
     wrapAsNullable: boolean;
     description: string | undefined;
-}): Schema {
+}): SchemaWithExample {
     if (wrapAsNullable) {
-        return Schema.nullable({
-            value: Schema.literal({
+        return SchemaWithExample.nullable({
+            value: SchemaWithExample.literal({
                 value: literal,
                 description,
             }),
             description,
         });
     }
-    return Schema.literal({
+    return SchemaWithExample.literal({
         value: literal,
         description,
     });
@@ -504,17 +516,17 @@ export function wrapPrimitive({
     primitive: PrimitiveSchemaValue;
     wrapAsNullable: boolean;
     description: string | undefined;
-}): Schema {
+}): SchemaWithExample {
     if (wrapAsNullable) {
-        return Schema.nullable({
-            value: Schema.primitive({
+        return SchemaWithExample.nullable({
+            value: SchemaWithExample.primitive({
                 schema: primitive,
                 description,
             }),
             description,
         });
     }
-    return Schema.primitive({
+    return SchemaWithExample.primitive({
         schema: primitive,
         description,
     });
