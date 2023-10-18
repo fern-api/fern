@@ -90,7 +90,7 @@ exports[`generate IR 1`] = `
   "serviceTypeReferenceInfo": {
     "sharedTypes": [
       "type_service:WithDocs",
-      "type_service:Object",
+      "type_service:Movie",
     ],
     "typesReferencedOnlyByService": {
       "service_service": [
@@ -117,33 +117,33 @@ exports[`generate IR 1`] = `
           "errors": [],
           "examples": [],
           "fullPath": {
-            "head": "object",
+            "head": "movie",
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_service.getObject",
+          "id": "endpoint_service.getMovie",
           "method": "POST",
           "name": {
             "camelCase": {
-              "safeName": "getObject",
-              "unsafeName": "getObject",
+              "safeName": "getMovie",
+              "unsafeName": "getMovie",
             },
-            "originalName": "getObject",
+            "originalName": "getMovie",
             "pascalCase": {
-              "safeName": "GetObject",
-              "unsafeName": "GetObject",
+              "safeName": "GetMovie",
+              "unsafeName": "GetMovie",
             },
             "screamingSnakeCase": {
-              "safeName": "GET_OBJECT",
-              "unsafeName": "GET_OBJECT",
+              "safeName": "GET_MOVIE",
+              "unsafeName": "GET_MOVIE",
             },
             "snakeCase": {
-              "safeName": "get_object",
-              "unsafeName": "get_object",
+              "safeName": "get_movie",
+              "unsafeName": "get_movie",
             },
           },
           "path": {
-            "head": "/object",
+            "head": "/movie",
             "parts": [],
           },
           "pathParameters": [],
@@ -293,33 +293,33 @@ exports[`generate IR 1`] = `
           "errors": [],
           "examples": [],
           "fullPath": {
-            "head": "object",
+            "head": "movie",
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_service.getObjectDocs",
+          "id": "endpoint_service.getMovieDocs",
           "method": "POST",
           "name": {
             "camelCase": {
-              "safeName": "getObjectDocs",
-              "unsafeName": "getObjectDocs",
+              "safeName": "getMovieDocs",
+              "unsafeName": "getMovieDocs",
             },
-            "originalName": "getObjectDocs",
+            "originalName": "getMovieDocs",
             "pascalCase": {
-              "safeName": "GetObjectDocs",
-              "unsafeName": "GetObjectDocs",
+              "safeName": "GetMovieDocs",
+              "unsafeName": "GetMovieDocs",
             },
             "screamingSnakeCase": {
-              "safeName": "GET_OBJECT_DOCS",
-              "unsafeName": "GET_OBJECT_DOCS",
+              "safeName": "GET_MOVIE_DOCS",
+              "unsafeName": "GET_MOVIE_DOCS",
             },
             "snakeCase": {
-              "safeName": "get_object_docs",
-              "unsafeName": "get_object_docs",
+              "safeName": "get_movie_docs",
+              "unsafeName": "get_movie_docs",
             },
           },
           "path": {
-            "head": "/object",
+            "head": "/movie",
             "parts": [],
           },
           "pathParameters": [],
@@ -581,14 +581,14 @@ exports[`generate IR 1`] = `
       "subpackages": [],
       "types": [
         "type_service:WithDocs",
-        "type_service:Object",
+        "type_service:Movie",
         "type_service:Response",
       ],
       "webhooks": null,
     },
   },
   "types": {
-    "type_service:Object": {
+    "type_service:Movie": {
       "availability": null,
       "docs": null,
       "examples": [],
@@ -638,24 +638,24 @@ exports[`generate IR 1`] = `
         },
         "name": {
           "camelCase": {
-            "safeName": "object",
-            "unsafeName": "object",
+            "safeName": "movie",
+            "unsafeName": "movie",
           },
-          "originalName": "Object",
+          "originalName": "Movie",
           "pascalCase": {
-            "safeName": "Object",
-            "unsafeName": "Object",
+            "safeName": "Movie",
+            "unsafeName": "Movie",
           },
           "screamingSnakeCase": {
-            "safeName": "OBJECT",
-            "unsafeName": "OBJECT",
+            "safeName": "MOVIE",
+            "unsafeName": "MOVIE",
           },
           "snakeCase": {
-            "safeName": "object",
-            "unsafeName": "object",
+            "safeName": "movie",
+            "unsafeName": "movie",
           },
         },
-        "typeId": "type_service:Object",
+        "typeId": "type_service:Movie",
       },
       "referencedTypes": [],
       "shape": {
@@ -876,24 +876,24 @@ exports[`generate IR 1`] = `
           },
           "name": {
             "camelCase": {
-              "safeName": "object",
-              "unsafeName": "object",
+              "safeName": "movie",
+              "unsafeName": "movie",
             },
-            "originalName": "Object",
+            "originalName": "Movie",
             "pascalCase": {
-              "safeName": "Object",
-              "unsafeName": "Object",
+              "safeName": "Movie",
+              "unsafeName": "Movie",
             },
             "screamingSnakeCase": {
-              "safeName": "OBJECT",
-              "unsafeName": "OBJECT",
+              "safeName": "MOVIE",
+              "unsafeName": "MOVIE",
             },
             "snakeCase": {
-              "safeName": "object",
-              "unsafeName": "object",
+              "safeName": "movie",
+              "unsafeName": "movie",
             },
           },
-          "typeId": "type_service:Object",
+          "typeId": "type_service:Movie",
         },
       ],
       "shape": {
@@ -1038,24 +1038,24 @@ exports[`generate IR 1`] = `
               },
               "name": {
                 "camelCase": {
-                  "safeName": "object",
-                  "unsafeName": "object",
+                  "safeName": "movie",
+                  "unsafeName": "movie",
                 },
-                "originalName": "Object",
+                "originalName": "Movie",
                 "pascalCase": {
-                  "safeName": "Object",
-                  "unsafeName": "Object",
+                  "safeName": "Movie",
+                  "unsafeName": "Movie",
                 },
                 "screamingSnakeCase": {
-                  "safeName": "OBJECT",
-                  "unsafeName": "OBJECT",
+                  "safeName": "MOVIE",
+                  "unsafeName": "MOVIE",
                 },
                 "snakeCase": {
-                  "safeName": "object",
-                  "unsafeName": "object",
+                  "safeName": "movie",
+                  "unsafeName": "movie",
                 },
               },
-              "typeId": "type_service:Object",
+              "typeId": "type_service:Movie",
             },
           },
         ],
