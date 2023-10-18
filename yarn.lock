@@ -2142,13 +2142,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/init@workspace:packages/cli/init"
   dependencies:
+    "@apidevtools/swagger-parser": ^10.1.0
     "@fern-api/auth": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/login": "workspace:*"
+    "@fern-api/openapi-parser": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
+    "@fern-api/project-loader": "workspace:*"
     "@fern-api/services": "workspace:*"
     "@fern-api/task-context": "workspace:*"
+    "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-formatter": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@fern-fern/docs-config": 0.0.53
@@ -2158,6 +2162,7 @@ __metadata:
     "@types/js-yaml": ^4.0.6
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
+    "@types/swagger2openapi": ^7.0.0
     axios: ^0.27.2
     chalk: ^5.0.1
     cheerio: 1.0.0-rc.12

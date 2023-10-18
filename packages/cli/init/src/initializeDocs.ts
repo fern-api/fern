@@ -1,14 +1,13 @@
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
-import { FernDocsConfig, FernDocsConfig as RawDocs } from "@fern-fern/docs-config";
+import { FernDocsConfig as RawDocs } from "@fern-fern/docs-config";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { createFernDirectoryAndWorkspace } from "./createFernDirectoryAndOrganization";
-import { LoadOpenAPIStatus, loadOpenAPIFromUrl } from "./utils/loadOpenApiFromUrl";
-import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
+import { ApiSection, DocsWebsite, Endpoint } from "./docsWebsite";
 import { initializeAPI } from "./initializeAPI";
-import { DocsWebsite } from "./docsWebsite";
+import { loadOpenAPIFromUrl, LoadOpenAPIStatus } from "./utils/loadOpenApiFromUrl";
 
 export async function initializeDocs({
     organization,
@@ -34,23 +33,64 @@ export async function initializeDocs({
     );
 }
 
-function getApiSection(): FernDocsConfig.ApiSectionConfiguration[] {
-    //todo (rishan): if multiple apis, crawl the /apis directory to get the api names
-    return [
-        {
-            api: "API Reference",
-        },
-    ];
-}
+// async function getApiSection(
+//     context: TaskContext,
+//     cliVersion: string
+// ): Promise<FernDocsConfig.ApiSectionConfiguration[]> {
+//     const apis: FernDocsConfig.ApiSectionConfiguration[] = [];
+
+//     try {
+//         let apiWorkspaces: APIWorkspace[] = [];
+//         const currentDirectory = process.cwd();
+//         apiWorkspaces = await loadApis({
+//             fernDirectory: join(AbsoluteFilePath.of(currentDirectory), RelativeFilePath.of(FERN_DIRECTORY)),
+//             context,
+//             cliVersion,
+//             cliName: "fern",
+//             commandLineApiWorkspace: undefined,
+//             defaultToAllApiWorkspaces: true,
+//         });
+
+//         for (const workspace of apiWorkspaces) {
+//             if (workspace.type === "openapi") {
+//                 apis.push({
+//                     // todo (rishan): parse openapi file and get title
+//                     api: workspace.name,
+//                     apiName: workspace.name,
+//                 });
+//             }
+//         }
+//         if (apis.length === 0) {
+//             return [
+//                 {
+//                     api: "API Reference",
+//                 }
+//             ];
+//         }
+//         return apis;
+//     } catch (error) {
+//         context.logger.error(`Error loading api sections: ${error}`);
+//         return [
+//             {
+//                 api: "API Reference",
+//             },
+//         ];
+//     }
+// }
 
 async function loadOpenApiAndInitApi(
     openApiUrl: string,
+    endpointToTagMapping: Map<Endpoint, ApiSection>,
     organization: string,
     taskContext: TaskContext,
     versionOfCli: string
 ): Promise<void> {
     try {
-        const result = await loadOpenAPIFromUrl({ url: openApiUrl, logger: taskContext.logger });
+        const result = await loadOpenAPIFromUrl({
+            url: openApiUrl,
+            endpointToDocsTagsMap: endpointToTagMapping,
+            logger: taskContext.logger,
+        });
 
         let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
 
@@ -84,12 +124,13 @@ async function getDocsConfig(
 ): Promise<RawDocs.DocsConfiguration> {
     if (docsUrl) {
         const urls = await docsUrl.getAllOpenApiUrls();
+        const mapping = await docsUrl.getGroupingStructure();
         if (urls.length === 0) {
             taskContext.failAndThrow(`Invalid docs url. No openapi urls found at ${docsUrl.url}.`);
         }
         // Executing in parallel causes a race-condition when creating the /openapi directory, so we do it sequentially
         for (const url of urls) {
-            await loadOpenApiAndInitApi(url, organization, taskContext, versionOfCli);
+            await loadOpenApiAndInitApi(url, mapping, organization, taskContext, versionOfCli);
         }
     }
 
@@ -100,7 +141,9 @@ async function getDocsConfig(
             },
         ],
         title: `${organization} | Documentation`,
-        navigation: getApiSection(),
+        navigation: [{
+            api: "API Reference",
+        }],
         colors: {
             accentPrimary: "#ffffff",
             background: "#000000",

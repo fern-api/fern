@@ -337,6 +337,26 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "openapi-types"\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["virtual:bc45f28a8c5ab2f2fd8941238e5d0fbde7cd28e712e53f9b5167d99b30f1ce23148375523b95cbcfdf0a04740cacb8534a0bef305b3a66fd03a65aaea28cfc30#npm:10.1.0", {\
+          "packageLocation": "./.yarn/__virtual__/@apidevtools-swagger-parser-virtual-5bfcb13668/0/cache/@apidevtools-swagger-parser-npm-10.1.0-97318b3580-c7c923755b.zip/node_modules/@apidevtools/swagger-parser/",\
+          "packageDependencies": [\
+            ["@apidevtools/swagger-parser", "virtual:bc45f28a8c5ab2f2fd8941238e5d0fbde7cd28e712e53f9b5167d99b30f1ce23148375523b95cbcfdf0a04740cacb8534a0bef305b3a66fd03a65aaea28cfc30#npm:10.1.0"],\
+            ["@apidevtools/json-schema-ref-parser", "npm:9.0.6"],\
+            ["@apidevtools/openapi-schemas", "npm:2.1.0"],\
+            ["@apidevtools/swagger-methods", "npm:3.0.2"],\
+            ["@jsdevtools/ono", "npm:7.1.3"],\
+            ["@types/openapi-types", null],\
+            ["ajv", "npm:8.12.0"],\
+            ["ajv-draft-04", "virtual:a01a7aca611211ff82a03c5bee6185e53f837adbba8875721424e2edcb5609b9ee50acd4e9db9547f36dcfc4f7dbcea4b832ef88083a005e328ccdbc9d1cfbec#npm:1.0.0"],\
+            ["call-me-maybe", "npm:1.0.2"],\
+            ["openapi-types", null]\
+          ],\
+          "packagePeers": [\
+            "@types/openapi-types",\
+            "openapi-types"\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@babel/code-frame", [\
@@ -3703,13 +3723,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/cli/init/",\
           "packageDependencies": [\
             ["@fern-api/init", "workspace:packages/cli/init"],\
+            ["@apidevtools/swagger-parser", "virtual:bc45f28a8c5ab2f2fd8941238e5d0fbde7cd28e712e53f9b5167d99b30f1ce23148375523b95cbcfdf0a04740cacb8534a0bef305b3a66fd03a65aaea28cfc30#npm:10.1.0"],\
             ["@fern-api/auth", "workspace:packages/cli/auth"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
             ["@fern-api/login", "workspace:packages/cli/login"],\
+            ["@fern-api/openapi-parser", "workspace:packages/cli/openapi-parser"],\
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
+            ["@fern-api/project-loader", "workspace:packages/cli/project-loader"],\
             ["@fern-api/services", "workspace:packages/cli/services"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
+            ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-api/yaml-formatter", "workspace:packages/cli/yaml/formatter"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@fern-fern/docs-config", "npm:0.0.53"],\
@@ -3719,6 +3743,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/js-yaml", "npm:4.0.6"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
+            ["@types/swagger2openapi", "npm:7.0.0"],\
             ["axios", "npm:0.27.2"],\
             ["chalk", "npm:5.0.1"],\
             ["cheerio", "npm:1.0.0-rc.12"],\

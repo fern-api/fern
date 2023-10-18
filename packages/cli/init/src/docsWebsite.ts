@@ -4,9 +4,12 @@ import { Logger } from "../../logger/src/Logger";
 
 export type DocsWebsite = ReadMeDocsWebsite | GenericDocsWebsite;
 
+export type Endpoint = string;
+export type ApiSection = string;
 export interface DocsWebsiteInterface {
     getAllOpenApiUrls(): Promise<string[]>;
     getBaseUrl(): string;
+    getGroupingStructure(): Promise<Map<Endpoint, ApiSection>>;
     isUrlValid(): boolean;
 }
 
@@ -40,6 +43,10 @@ class GenericDocsWebsite implements DocsWebsiteInterface {
             return false;
         }
     }
+
+    async getGroupingStructure(): Promise<Map<Endpoint, ApiSection>> {
+        return new Map<Endpoint, ApiSection>();
+    }
 }
 
 export class ReadMeDocsWebsite extends GenericDocsWebsite {
@@ -68,6 +75,49 @@ export class ReadMeDocsWebsite extends GenericDocsWebsite {
             return openApiUrls;
         } catch (error) {
             return [];
+        }
+    }
+
+    async getGroupingStructure(): Promise<Map<Endpoint, ApiSection>> {
+        try {
+            const origin = new URL(this.getBaseUrl());
+            const response = await axios.get(new URL("/reference", origin).toString());
+
+            if (response.status !== 200) {
+                this.logger.error(`Failed to fetch api grouping from ${this.url}, got error code ${response.status}`);
+                return new Map<Endpoint, ApiSection>();
+            }
+            const html = response.data;
+
+            const $ = load(html);
+            const apiTagMap = new Map<Endpoint, ApiSection>();
+
+            const sections = $("#Explorer").find("#reference-sidebar").find("section");
+
+            sections.each((_index: number, sectionElem: cheerio.Element) => {
+                $(sectionElem)
+                    .find("div")
+                    .each((_index: number, divElem: cheerio.Element) => {
+                        const apiSectionName = $(divElem).find("h3").text();
+                        $(divElem)
+                            .find("a")
+                            .each((_index: number, aElem: cheerio.Element) => {
+                                const href = $(aElem).attr("href");
+                                if (href != null) {
+                                    const link: string = href.toString();
+                                    if (link.includes("/reference")) {
+                                        const linkRemoveRef = link.replace("/reference/", "");
+                                        apiTagMap.set(linkRemoveRef, apiSectionName);
+                                    }
+                                }
+                            });
+                    });
+            });
+
+            return apiTagMap;
+        } catch (error) {
+            this.logger.error(`Failed to fetch api grouping from ${this.url}, got error ${error}`);
+            return new Map<Endpoint, ApiSection>();
         }
     }
 }

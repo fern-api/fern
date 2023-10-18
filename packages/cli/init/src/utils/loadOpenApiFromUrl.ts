@@ -1,9 +1,10 @@
 import axios from "axios";
 import { writeFile } from "fs/promises";
-import { dump } from "js-yaml";
+import yaml from "js-yaml";
 import { join } from "path";
 import tmp from "tmp-promise";
 import { Logger } from "../../../logger/src/Logger";
+import { ApiSection, Endpoint } from "../docsWebsite";
 
 export type LoadOpenAPIResult = SuccessLoadOpenAPI | FailedLoadOpenAPI;
 
@@ -21,11 +22,65 @@ export interface FailedLoadOpenAPI {
     errorMessage: string;
 }
 
-export async function loadOpenAPIFromUrl({ url, logger }: { url: string; logger: Logger }): Promise<LoadOpenAPIResult> {
+function injectTags(openApiJson: string, _endpointToDocsTagsMap: Map<Endpoint, ApiSection>, logger: Logger): Record<string, unknown> {
+    try {
+        let openApiObj = JSON.parse(openApiJson);
+        const paths = JSON.parse(openApiJson)["paths"];
+        for (const path in paths) {
+            for (const method in paths[path]) {
+                const containsOperationId = Object.keys(paths[path][method]).includes("operationId");
+                if (containsOperationId) {
+                    const containsTags = Object.keys(paths[path][method]).includes("tags");
+                    const opId = paths[path][method]["operationId"];
+                    const newTag = _endpointToDocsTagsMap.has(opId) ? _endpointToDocsTagsMap.get(opId) : null;
+
+                    if (!containsTags) { 
+                        if (newTag != null) {
+                            const existingMethodObj = paths[path][method];
+                            paths[path][method] = {
+                                ...existingMethodObj,
+                                tags: [newTag],
+                            };
+                            // actually inject method object back into openApiObj
+                            openApiObj = {
+                                ...openApiObj,
+                                paths: {
+                                    ...openApiObj["paths"],
+                                    [path]: {
+                                        ...openApiObj["paths"][path],
+                                        [method]: paths[path][method],
+                                    },
+                                },
+                            };
+                        }
+                    }
+                }
+            }
+        }
+
+
+        return openApiObj;
+    } catch (error) {
+        logger.error(`Encountered an error while injecting tags: ${JSON.stringify(error)}`);
+        return {};
+    }
+}
+export async function loadOpenAPIFromUrl({
+    url,
+    endpointToDocsTagsMap,
+    logger,
+}: {
+    url: string;
+    endpointToDocsTagsMap: Map<Endpoint, ApiSection> | undefined;
+    logger: Logger;
+}): Promise<LoadOpenAPIResult> {
     try {
         const response = await axios.get(url);
-        const jsonData = response.data;
-        const yamlData = dump(jsonData);
+        let jsonData = response.data;
+        if (endpointToDocsTagsMap) {
+            jsonData = injectTags(JSON.stringify(jsonData), endpointToDocsTagsMap, logger);
+        }
+        const yamlData = yaml.dump(jsonData);
         const tmpDir = await tmp.dir();
         const filePath = join(tmpDir.path, "openapi.yml");
         logger.debug("tmpDir", tmpDir.path);

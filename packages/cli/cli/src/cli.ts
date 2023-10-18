@@ -8,7 +8,7 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     getFernDirectory,
     loadProjectConfig,
-    PROJECT_CONFIG_FILENAME,
+    PROJECT_CONFIG_FILENAME
 } from "@fern-api/project-configuration";
 import { loadProject, Project } from "@fern-api/project-loader";
 import { FernCliError } from "@fern-api/task-context";
@@ -219,7 +219,7 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
                 if (argv.openapi != null) {
                     if (isURL(argv.openapi)) {
-                        const result = await loadOpenAPIFromUrl({ url: argv.openapi, logger: cliContext.logger });
+                        const result = await loadOpenAPIFromUrl({ url: argv.openapi, endpointToDocsTagsMap: undefined, logger: cliContext.logger });
 
                         if (result.status === LoadOpenAPIStatus.Failure) {
                             cliContext.failAndThrow(result.errorMessage);
