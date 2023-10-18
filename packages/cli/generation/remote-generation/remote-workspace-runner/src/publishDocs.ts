@@ -79,15 +79,6 @@ export async function publishDocs({
             orgId: FernRegistry.OrgId(organization),
             filepaths: relativeFilepathsToUpload,
         });
-        context.logger.debug(
-            JSON.stringify({
-                domain,
-                customDomains,
-                apiId: FernRegistry.ApiId(""),
-                orgId: FernRegistry.OrgId(organization),
-                filepaths: relativeFilepathsToUpload,
-            })
-        );
     }
 
     if (!startDocsRegisterResponse.ok) {
