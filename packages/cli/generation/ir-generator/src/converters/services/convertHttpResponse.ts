@@ -1,5 +1,5 @@
 import { isRawTextType, parseRawFileType, parseRawTextType, RawSchemas } from "@fern-api/yaml-schema";
-import { HttpResponse, StreamingResponseChunkType, TypeReference } from "@fern-fern/ir-sdk/api";
+import { HttpResponse, JsonResponse, StreamingResponseChunkType, TypeReference } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 
@@ -42,6 +42,18 @@ export function convertHttpResponse({
     return undefined;
 }
 
+function constructStreamingResponseChunkType(
+    responseStream: RawSchemas.HttpResponseStreamSchema | string,
+    file: FernFileContext
+): StreamingResponseChunkType {
+    const typeReference = typeof responseStream === "string" ? responseStream : responseStream.type;
+    if (isRawTextType(typeReference)) {
+        return StreamingResponseChunkType.text();
+    } else {
+        return StreamingResponseChunkType.json(file.parseTypeReference(typeReference));
+    }
+}
+
 function convertJsonResponse(
     response: RawSchemas.HttpResponseSchema | string,
     docs: string | undefined,
@@ -56,24 +68,22 @@ function convertJsonResponse(
     ) {
         throw new Error(`Response does not have a property named ${responseProperty}`);
     }
-    return HttpResponse.json({
-        docs,
-        responseBodyType,
-        responseProperty:
-            responseProperty !== undefined ? file.casingsGenerator.generateName(responseProperty) : undefined,
-    });
-}
-
-function constructStreamingResponseChunkType(
-    responseStream: RawSchemas.HttpResponseStreamSchema | string,
-    file: FernFileContext
-): StreamingResponseChunkType {
-    const typeReference = typeof responseStream === "string" ? responseStream : responseStream.type;
-    if (isRawTextType(typeReference)) {
-        return StreamingResponseChunkType.text();
-    } else {
-        return StreamingResponseChunkType.json(file.parseTypeReference(typeReference));
+    if (responseProperty !== undefined) {
+        return HttpResponse.json(
+            JsonResponse.nestedPropertyAsResponse({
+                docs,
+                responseBodyType,
+                responseProperty:
+                    responseProperty !== undefined ? file.casingsGenerator.generateName(responseProperty) : undefined,
+            })
+        );
     }
+    return HttpResponse.json(
+        JsonResponse.response({
+            docs,
+            responseBodyType,
+        })
+    );
 }
 
 function typeReferenceHasProperty(
