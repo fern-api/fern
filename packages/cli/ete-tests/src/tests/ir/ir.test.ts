@@ -85,7 +85,7 @@ describe("ir", () => {
     }
 
     it("works with latest version", async () => {
-        const { stdout } = await runFernCli(["ir", "ir.json", "--version", "v26"], {
+        const { stdout } = await runFernCli(["ir", "ir.json", "--version", "v27"], {
             cwd: join(FIXTURES_DIR, RelativeFilePath.of("migration")),
             reject: false,
         });
