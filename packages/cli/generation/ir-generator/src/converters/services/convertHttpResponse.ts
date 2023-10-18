@@ -63,8 +63,7 @@ function convertJsonResponse(
             JsonResponse.nestedPropertyAsResponse({
                 docs,
                 responseBodyType,
-                responseProperty:
-                    responseProperty != null ? file.casingsGenerator.generateName(responseProperty) : undefined,
+                responseProperty: file.casingsGenerator.generateName(responseProperty),
             })
         );
     }
