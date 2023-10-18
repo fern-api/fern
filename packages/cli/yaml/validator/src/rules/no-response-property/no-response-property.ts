@@ -1,7 +1,7 @@
 import { constructFernFileContext, FernFileContext, TypeResolver, TypeResolverImpl } from "@fern-api/ir-generator";
 import { parseRawFileType, parseRawTextType, RawSchemas } from "@fern-api/yaml-schema";
 import { TypeReference } from "@fern-fern/ir-sdk/api";
-import { Rule } from "../../Rule";
+import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 
 export const NoResponsePropertyRule: Rule = {
@@ -29,30 +29,50 @@ export const NoResponsePropertyRule: Rule = {
                     });
                     const responseBodyType = file.parseTypeReference(response);
                     const responseProperty = typeof response !== "string" ? response.property : undefined;
-                    if (
-                        responseProperty != null &&
-                        !typeReferenceHasProperty(responseBodyType, responseProperty, file, typeResolver)
-                    ) {
-                        return [
-                            {
-                                severity: "error",
-                                message: `Response does not have a property named ${responseProperty}.`,
-                            },
-                        ];
+                    if (responseProperty == null) {
+                        return [];
                     }
-                    return [];
+                    const result = typeReferenceHasProperty(responseBodyType, responseProperty, file, typeResolver);
+                    return resultToRuleViolations(result, responseProperty);
                 },
             },
         };
     },
 };
 
+enum Result {
+    ContainsProperty,
+    DoesNotContainProperty,
+    IsNotObject,
+}
+
+function resultToRuleViolations(result: Result, responseProperty: string): RuleViolation[] {
+    switch (result) {
+        case Result.ContainsProperty:
+            return [];
+        case Result.DoesNotContainProperty:
+            return [
+                {
+                    severity: "error",
+                    message: `Response does not have a property named ${responseProperty}.`,
+                },
+            ];
+        case Result.IsNotObject:
+            return [
+                {
+                    severity: "error",
+                    message: `Response does not have a property named ${responseProperty}.`,
+                },
+            ];
+    }
+}
+
 function typeReferenceHasProperty(
     typeReference: TypeReference,
     property: string,
     file: FernFileContext,
     typeResolver: TypeResolver
-): boolean {
+): Result {
     if (typeReference.type === "container" && typeReference.container.type === "optional") {
         return typeReferenceHasProperty(typeReference.container.optional, property, file, typeResolver);
     }
@@ -65,13 +85,15 @@ function typeReferenceHasProperty(
             case "container":
                 return typeReferenceHasProperty(resolvedType.originalTypeReference, property, file, typeResolver);
             case "named":
-                if (isRawObjectDefinition(resolvedType.declaration)) {
-                    return rawObjectSchemaHasProperty(resolvedType.declaration, property, file, typeResolver);
+                if (!isRawObjectDefinition(resolvedType.declaration)) {
+                    return Result.IsNotObject;
                 }
-                throw new Error("A custom response property is only supported for objects");
+                if (rawObjectSchemaHasProperty(resolvedType.declaration, property, file, typeResolver)) {
+                    return Result.ContainsProperty;
+                }
         }
     }
-    return false;
+    return Result.DoesNotContainProperty;
 }
 
 function rawObjectSchemaHasProperty(
@@ -122,8 +144,9 @@ function getAllPropertiesForExtendedType(
     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
         return getAllPropertiesForRawObjectSchema(resolvedType.declaration, file, typeResolver);
     }
-    // This should be unreachable; extended types must be named objects.
-    throw new Error(`Extended type ${extendedType} must be another named type`);
+    // Unreachable; extended types must be named objects. This should be handled
+    // by another rule, so we just return an empty set.
+    return new Set<string>();
 }
 
 type NamedDeclaration =
