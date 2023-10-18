@@ -61,7 +61,7 @@ function resultToRuleViolations(result: Result, responseProperty: string): RuleV
             return [
                 {
                     severity: "error",
-                    message: `Response does not have a property named ${responseProperty}.`,
+                    message: "Response must be an object in order to return a property as a response.",
                 },
             ];
     }
