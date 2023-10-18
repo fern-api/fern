@@ -153,18 +153,20 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "container",
-              "container": {
-                "_type": "list",
-                "list": {
-                  "_type": "unknown",
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "container",
+                "container": {
+                  "_type": "list",
+                  "list": {
+                    "_type": "unknown",
+                  },
                 },
               },
+              "type": "response",
             },
-            "responseProperty": null,
-            "type": "json",
           },
           "sdkRequest": {
             "requestParameterName": {

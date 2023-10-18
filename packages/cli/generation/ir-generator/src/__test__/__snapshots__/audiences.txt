@@ -156,31 +156,53 @@ exports[`generate IR 1`] = `
           "queryParameters": [],
           "requestBody": null,
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "named",
-              "fernFilepath": {
-                "allParts": [
-                  {
-                    "camelCase": {
-                      "safeName": "folderA",
-                      "unsafeName": "folderA",
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "folderA",
+                        "unsafeName": "folderA",
+                      },
+                      "originalName": "folder-a",
+                      "pascalCase": {
+                        "safeName": "FolderA",
+                        "unsafeName": "FolderA",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "FOLDER_A",
+                        "unsafeName": "FOLDER_A",
+                      },
+                      "snakeCase": {
+                        "safeName": "folder_a",
+                        "unsafeName": "folder_a",
+                      },
                     },
-                    "originalName": "folder-a",
-                    "pascalCase": {
-                      "safeName": "FolderA",
-                      "unsafeName": "FolderA",
+                    {
+                      "camelCase": {
+                        "safeName": "service",
+                        "unsafeName": "service",
+                      },
+                      "originalName": "service",
+                      "pascalCase": {
+                        "safeName": "Service",
+                        "unsafeName": "Service",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "SERVICE",
+                        "unsafeName": "SERVICE",
+                      },
+                      "snakeCase": {
+                        "safeName": "service",
+                        "unsafeName": "service",
+                      },
                     },
-                    "screamingSnakeCase": {
-                      "safeName": "FOLDER_A",
-                      "unsafeName": "FOLDER_A",
-                    },
-                    "snakeCase": {
-                      "safeName": "folder_a",
-                      "unsafeName": "folder_a",
-                    },
-                  },
-                  {
+                  ],
+                  "file": {
                     "camelCase": {
                       "safeName": "service",
                       "unsafeName": "service",
@@ -199,71 +221,51 @@ exports[`generate IR 1`] = `
                       "unsafeName": "service",
                     },
                   },
-                ],
-                "file": {
+                  "packagePath": [
+                    {
+                      "camelCase": {
+                        "safeName": "folderA",
+                        "unsafeName": "folderA",
+                      },
+                      "originalName": "folder-a",
+                      "pascalCase": {
+                        "safeName": "FolderA",
+                        "unsafeName": "FolderA",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "FOLDER_A",
+                        "unsafeName": "FOLDER_A",
+                      },
+                      "snakeCase": {
+                        "safeName": "folder_a",
+                        "unsafeName": "folder_a",
+                      },
+                    },
+                  ],
+                },
+                "name": {
                   "camelCase": {
-                    "safeName": "service",
-                    "unsafeName": "service",
+                    "safeName": "response",
+                    "unsafeName": "response",
                   },
-                  "originalName": "service",
+                  "originalName": "Response",
                   "pascalCase": {
-                    "safeName": "Service",
-                    "unsafeName": "Service",
+                    "safeName": "Response",
+                    "unsafeName": "Response",
                   },
                   "screamingSnakeCase": {
-                    "safeName": "SERVICE",
-                    "unsafeName": "SERVICE",
+                    "safeName": "RESPONSE",
+                    "unsafeName": "RESPONSE",
                   },
                   "snakeCase": {
-                    "safeName": "service",
-                    "unsafeName": "service",
+                    "safeName": "response",
+                    "unsafeName": "response",
                   },
                 },
-                "packagePath": [
-                  {
-                    "camelCase": {
-                      "safeName": "folderA",
-                      "unsafeName": "folderA",
-                    },
-                    "originalName": "folder-a",
-                    "pascalCase": {
-                      "safeName": "FolderA",
-                      "unsafeName": "FolderA",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "FOLDER_A",
-                      "unsafeName": "FOLDER_A",
-                    },
-                    "snakeCase": {
-                      "safeName": "folder_a",
-                      "unsafeName": "folder_a",
-                    },
-                  },
-                ],
+                "typeId": "type_folder-a/service:Response",
               },
-              "name": {
-                "camelCase": {
-                  "safeName": "response",
-                  "unsafeName": "response",
-                },
-                "originalName": "Response",
-                "pascalCase": {
-                  "safeName": "Response",
-                  "unsafeName": "Response",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "RESPONSE",
-                  "unsafeName": "RESPONSE",
-                },
-                "snakeCase": {
-                  "safeName": "response",
-                  "unsafeName": "response",
-                },
-              },
-              "typeId": "type_folder-a/service:Response",
+              "type": "response",
             },
-            "responseProperty": null,
-            "type": "json",
           },
           "sdkRequest": null,
         },
@@ -500,12 +502,34 @@ exports[`generate IR 1`] = `
           ],
           "requestBody": null,
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "named",
-              "fernFilepath": {
-                "allParts": [
-                  {
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "foo",
+                        "unsafeName": "foo",
+                      },
+                      "originalName": "foo",
+                      "pascalCase": {
+                        "safeName": "Foo",
+                        "unsafeName": "Foo",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "FOO",
+                        "unsafeName": "FOO",
+                      },
+                      "snakeCase": {
+                        "safeName": "foo",
+                        "unsafeName": "foo",
+                      },
+                    },
+                  ],
+                  "file": {
                     "camelCase": {
                       "safeName": "foo",
                       "unsafeName": "foo",
@@ -524,51 +548,31 @@ exports[`generate IR 1`] = `
                       "unsafeName": "foo",
                     },
                   },
-                ],
-                "file": {
+                  "packagePath": [],
+                },
+                "name": {
                   "camelCase": {
-                    "safeName": "foo",
-                    "unsafeName": "foo",
+                    "safeName": "importingType",
+                    "unsafeName": "importingType",
                   },
-                  "originalName": "foo",
+                  "originalName": "ImportingType",
                   "pascalCase": {
-                    "safeName": "Foo",
-                    "unsafeName": "Foo",
+                    "safeName": "ImportingType",
+                    "unsafeName": "ImportingType",
                   },
                   "screamingSnakeCase": {
-                    "safeName": "FOO",
-                    "unsafeName": "FOO",
+                    "safeName": "IMPORTING_TYPE",
+                    "unsafeName": "IMPORTING_TYPE",
                   },
                   "snakeCase": {
-                    "safeName": "foo",
-                    "unsafeName": "foo",
+                    "safeName": "importing_type",
+                    "unsafeName": "importing_type",
                   },
                 },
-                "packagePath": [],
+                "typeId": "type_foo:ImportingType",
               },
-              "name": {
-                "camelCase": {
-                  "safeName": "importingType",
-                  "unsafeName": "importingType",
-                },
-                "originalName": "ImportingType",
-                "pascalCase": {
-                  "safeName": "ImportingType",
-                  "unsafeName": "ImportingType",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "IMPORTING_TYPE",
-                  "unsafeName": "IMPORTING_TYPE",
-                },
-                "snakeCase": {
-                  "safeName": "importing_type",
-                  "unsafeName": "importing_type",
-                },
-              },
-              "typeId": "type_foo:ImportingType",
+              "type": "response",
             },
-            "responseProperty": null,
-            "type": "json",
           },
           "sdkRequest": {
             "requestParameterName": {
