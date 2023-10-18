@@ -142,6 +142,16 @@ types:
       streaming: StreamingResponse
 
   JsonResponse:
+    union:
+      response: JsonResponseBody
+      nestedPropertyAsResponse: JsonResponseBodyWithProperty
+
+  JsonResponseBody:
+    extends: commons.WithDocs
+    properties:
+      responseBodyType: types.TypeReference
+
+  JsonResponseBodyWithProperty:
     extends: commons.WithDocs
     properties:
       responseBodyType: types.TypeReference
