@@ -62,19 +62,16 @@ function convertJsonResponse(
 ): HttpResponse {
     const responseBodyType = file.parseTypeReference(response);
     const responseProperty = typeof response !== "string" ? response.property : undefined;
-    if (
-        responseProperty !== undefined &&
-        !typeReferenceHasProperty(responseBodyType, responseProperty, file, typeResolver)
-    ) {
+    if (responseProperty != null && !typeReferenceHasProperty(responseBodyType, responseProperty, file, typeResolver)) {
         throw new Error(`Response does not have a property named ${responseProperty}`);
     }
-    if (responseProperty !== undefined) {
+    if (responseProperty != null) {
         return HttpResponse.json(
             JsonResponse.nestedPropertyAsResponse({
                 docs,
                 responseBodyType,
                 responseProperty:
-                    responseProperty !== undefined ? file.casingsGenerator.generateName(responseProperty) : undefined,
+                    responseProperty != null ? file.casingsGenerator.generateName(responseProperty) : undefined,
             })
         );
     }
