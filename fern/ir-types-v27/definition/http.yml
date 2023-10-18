@@ -142,9 +142,27 @@ types:
       streaming: StreamingResponse
 
   JsonResponse:
+    union:
+      response: JsonResponseBody
+      nestedPropertyAsResponse: JsonResponseBodyWithProperty
+
+  JsonResponseBody:
     extends: commons.WithDocs
     properties:
       responseBodyType: types.TypeReference
+
+  JsonResponseBodyWithProperty:
+    extends: commons.WithDocs
+    properties:
+      responseBodyType: types.TypeReference
+      responseProperty:
+        docs: |
+          If set, the SDK will return this property from
+          the response, rather than the response itself.
+
+          This is particularly useful for JSON API structures
+          (e.g. configure 'data' to return 'response.data').
+        type: optional<commons.Name>
 
   FileDownloadResponse:
     extends: commons.WithDocs
