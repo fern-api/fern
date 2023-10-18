@@ -17,7 +17,7 @@ export * as V22 from "@fern-fern/ir-v22-model";
 export { FernIrV23 as V23 } from "@fern-fern/ir-v23-sdk";
 export { FernIrV24 as V24 } from "@fern-fern/ir-v24-sdk";
 export { FernIrV25 as V25 } from "@fern-fern/ir-v25-sdk";
-export { FernIr as V26 } from "@fern-fern/ir-v26-sdk";
+export { FernIrV26 as V26 } from "@fern-fern/ir-v26-sdk";
 export * as V3 from "@fern-fern/ir-v3-model";
 export * as V4 from "@fern-fern/ir-v4-model";
 export * as V5 from "@fern-fern/ir-v5-model";
