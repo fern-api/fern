@@ -1766,18 +1766,21 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "container",
-              "container": {
-                "_type": "list",
-                "list": {
-                  "_type": "primitive",
-                  "primitive": "STRING",
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "container",
+                "container": {
+                  "_type": "list",
+                  "list": {
+                    "_type": "primitive",
+                    "primitive": "STRING",
+                  },
                 },
               },
+              "type": "response",
             },
-            "type": "json",
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -1977,35 +1980,57 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "container",
-              "container": {
-                "_type": "list",
-                "list": {
-                  "_type": "named",
-                  "fernFilepath": {
-                    "allParts": [
-                      {
-                        "camelCase": {
-                          "safeName": "types",
-                          "unsafeName": "types",
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "container",
+                "container": {
+                  "_type": "list",
+                  "list": {
+                    "_type": "named",
+                    "fernFilepath": {
+                      "allParts": [
+                        {
+                          "camelCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                          "originalName": "types",
+                          "pascalCase": {
+                            "safeName": "Types",
+                            "unsafeName": "Types",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "TYPES",
+                            "unsafeName": "TYPES",
+                          },
+                          "snakeCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
                         },
-                        "originalName": "types",
-                        "pascalCase": {
-                          "safeName": "Types",
-                          "unsafeName": "Types",
+                        {
+                          "camelCase": {
+                            "safeName": "object",
+                            "unsafeName": "object",
+                          },
+                          "originalName": "object",
+                          "pascalCase": {
+                            "safeName": "Object",
+                            "unsafeName": "Object",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "OBJECT",
+                            "unsafeName": "OBJECT",
+                          },
+                          "snakeCase": {
+                            "safeName": "object",
+                            "unsafeName": "object",
+                          },
                         },
-                        "screamingSnakeCase": {
-                          "safeName": "TYPES",
-                          "unsafeName": "TYPES",
-                        },
-                        "snakeCase": {
-                          "safeName": "types",
-                          "unsafeName": "types",
-                        },
-                      },
-                      {
+                      ],
+                      "file": {
                         "camelCase": {
                           "safeName": "object",
                           "unsafeName": "object",
@@ -2024,72 +2049,53 @@ exports[`generate IR 1`] = `
                           "unsafeName": "object",
                         },
                       },
-                    ],
-                    "file": {
+                      "packagePath": [
+                        {
+                          "camelCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                          "originalName": "types",
+                          "pascalCase": {
+                            "safeName": "Types",
+                            "unsafeName": "Types",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "TYPES",
+                            "unsafeName": "TYPES",
+                          },
+                          "snakeCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                        },
+                      ],
+                    },
+                    "name": {
                       "camelCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
+                        "safeName": "objectWithRequiredField",
+                        "unsafeName": "objectWithRequiredField",
                       },
-                      "originalName": "object",
+                      "originalName": "ObjectWithRequiredField",
                       "pascalCase": {
-                        "safeName": "Object",
-                        "unsafeName": "Object",
+                        "safeName": "ObjectWithRequiredField",
+                        "unsafeName": "ObjectWithRequiredField",
                       },
                       "screamingSnakeCase": {
-                        "safeName": "OBJECT",
-                        "unsafeName": "OBJECT",
+                        "safeName": "OBJECT_WITH_REQUIRED_FIELD",
+                        "unsafeName": "OBJECT_WITH_REQUIRED_FIELD",
                       },
                       "snakeCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
+                        "safeName": "object_with_required_field",
+                        "unsafeName": "object_with_required_field",
                       },
                     },
-                    "packagePath": [
-                      {
-                        "camelCase": {
-                          "safeName": "types",
-                          "unsafeName": "types",
-                        },
-                        "originalName": "types",
-                        "pascalCase": {
-                          "safeName": "Types",
-                          "unsafeName": "Types",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "TYPES",
-                          "unsafeName": "TYPES",
-                        },
-                        "snakeCase": {
-                          "safeName": "types",
-                          "unsafeName": "types",
-                        },
-                      },
-                    ],
+                    "typeId": "type_types/object:ObjectWithRequiredField",
                   },
-                  "name": {
-                    "camelCase": {
-                      "safeName": "objectWithRequiredField",
-                      "unsafeName": "objectWithRequiredField",
-                    },
-                    "originalName": "ObjectWithRequiredField",
-                    "pascalCase": {
-                      "safeName": "ObjectWithRequiredField",
-                      "unsafeName": "ObjectWithRequiredField",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "OBJECT_WITH_REQUIRED_FIELD",
-                      "unsafeName": "OBJECT_WITH_REQUIRED_FIELD",
-                    },
-                    "snakeCase": {
-                      "safeName": "object_with_required_field",
-                      "unsafeName": "object_with_required_field",
-                    },
-                  },
-                  "typeId": "type_types/object:ObjectWithRequiredField",
                 },
               },
+              "type": "response",
             },
-            "type": "json",
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -2289,18 +2295,21 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "container",
-              "container": {
-                "_type": "set",
-                "set": {
-                  "_type": "primitive",
-                  "primitive": "STRING",
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "container",
+                "container": {
+                  "_type": "set",
+                  "set": {
+                    "_type": "primitive",
+                    "primitive": "STRING",
+                  },
                 },
               },
+              "type": "response",
             },
-            "type": "json",
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -2500,35 +2509,57 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "container",
-              "container": {
-                "_type": "set",
-                "set": {
-                  "_type": "named",
-                  "fernFilepath": {
-                    "allParts": [
-                      {
-                        "camelCase": {
-                          "safeName": "types",
-                          "unsafeName": "types",
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "container",
+                "container": {
+                  "_type": "set",
+                  "set": {
+                    "_type": "named",
+                    "fernFilepath": {
+                      "allParts": [
+                        {
+                          "camelCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                          "originalName": "types",
+                          "pascalCase": {
+                            "safeName": "Types",
+                            "unsafeName": "Types",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "TYPES",
+                            "unsafeName": "TYPES",
+                          },
+                          "snakeCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
                         },
-                        "originalName": "types",
-                        "pascalCase": {
-                          "safeName": "Types",
-                          "unsafeName": "Types",
+                        {
+                          "camelCase": {
+                            "safeName": "object",
+                            "unsafeName": "object",
+                          },
+                          "originalName": "object",
+                          "pascalCase": {
+                            "safeName": "Object",
+                            "unsafeName": "Object",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "OBJECT",
+                            "unsafeName": "OBJECT",
+                          },
+                          "snakeCase": {
+                            "safeName": "object",
+                            "unsafeName": "object",
+                          },
                         },
-                        "screamingSnakeCase": {
-                          "safeName": "TYPES",
-                          "unsafeName": "TYPES",
-                        },
-                        "snakeCase": {
-                          "safeName": "types",
-                          "unsafeName": "types",
-                        },
-                      },
-                      {
+                      ],
+                      "file": {
                         "camelCase": {
                           "safeName": "object",
                           "unsafeName": "object",
@@ -2547,72 +2578,53 @@ exports[`generate IR 1`] = `
                           "unsafeName": "object",
                         },
                       },
-                    ],
-                    "file": {
+                      "packagePath": [
+                        {
+                          "camelCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                          "originalName": "types",
+                          "pascalCase": {
+                            "safeName": "Types",
+                            "unsafeName": "Types",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "TYPES",
+                            "unsafeName": "TYPES",
+                          },
+                          "snakeCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                        },
+                      ],
+                    },
+                    "name": {
                       "camelCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
+                        "safeName": "objectWithRequiredField",
+                        "unsafeName": "objectWithRequiredField",
                       },
-                      "originalName": "object",
+                      "originalName": "ObjectWithRequiredField",
                       "pascalCase": {
-                        "safeName": "Object",
-                        "unsafeName": "Object",
+                        "safeName": "ObjectWithRequiredField",
+                        "unsafeName": "ObjectWithRequiredField",
                       },
                       "screamingSnakeCase": {
-                        "safeName": "OBJECT",
-                        "unsafeName": "OBJECT",
+                        "safeName": "OBJECT_WITH_REQUIRED_FIELD",
+                        "unsafeName": "OBJECT_WITH_REQUIRED_FIELD",
                       },
                       "snakeCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
+                        "safeName": "object_with_required_field",
+                        "unsafeName": "object_with_required_field",
                       },
                     },
-                    "packagePath": [
-                      {
-                        "camelCase": {
-                          "safeName": "types",
-                          "unsafeName": "types",
-                        },
-                        "originalName": "types",
-                        "pascalCase": {
-                          "safeName": "Types",
-                          "unsafeName": "Types",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "TYPES",
-                          "unsafeName": "TYPES",
-                        },
-                        "snakeCase": {
-                          "safeName": "types",
-                          "unsafeName": "types",
-                        },
-                      },
-                    ],
+                    "typeId": "type_types/object:ObjectWithRequiredField",
                   },
-                  "name": {
-                    "camelCase": {
-                      "safeName": "objectWithRequiredField",
-                      "unsafeName": "objectWithRequiredField",
-                    },
-                    "originalName": "ObjectWithRequiredField",
-                    "pascalCase": {
-                      "safeName": "ObjectWithRequiredField",
-                      "unsafeName": "ObjectWithRequiredField",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "OBJECT_WITH_REQUIRED_FIELD",
-                      "unsafeName": "OBJECT_WITH_REQUIRED_FIELD",
-                    },
-                    "snakeCase": {
-                      "safeName": "object_with_required_field",
-                      "unsafeName": "object_with_required_field",
-                    },
-                  },
-                  "typeId": "type_types/object:ObjectWithRequiredField",
                 },
               },
+              "type": "response",
             },
-            "type": "json",
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -2816,22 +2828,25 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "container",
-              "container": {
-                "_type": "map",
-                "keyType": {
-                  "_type": "primitive",
-                  "primitive": "STRING",
-                },
-                "valueType": {
-                  "_type": "primitive",
-                  "primitive": "STRING",
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "container",
+                "container": {
+                  "_type": "map",
+                  "keyType": {
+                    "_type": "primitive",
+                    "primitive": "STRING",
+                  },
+                  "valueType": {
+                    "_type": "primitive",
+                    "primitive": "STRING",
+                  },
                 },
               },
+              "type": "response",
             },
-            "type": "json",
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -3039,39 +3054,61 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "container",
-              "container": {
-                "_type": "map",
-                "keyType": {
-                  "_type": "primitive",
-                  "primitive": "STRING",
-                },
-                "valueType": {
-                  "_type": "named",
-                  "fernFilepath": {
-                    "allParts": [
-                      {
-                        "camelCase": {
-                          "safeName": "types",
-                          "unsafeName": "types",
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "container",
+                "container": {
+                  "_type": "map",
+                  "keyType": {
+                    "_type": "primitive",
+                    "primitive": "STRING",
+                  },
+                  "valueType": {
+                    "_type": "named",
+                    "fernFilepath": {
+                      "allParts": [
+                        {
+                          "camelCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                          "originalName": "types",
+                          "pascalCase": {
+                            "safeName": "Types",
+                            "unsafeName": "Types",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "TYPES",
+                            "unsafeName": "TYPES",
+                          },
+                          "snakeCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
                         },
-                        "originalName": "types",
-                        "pascalCase": {
-                          "safeName": "Types",
-                          "unsafeName": "Types",
+                        {
+                          "camelCase": {
+                            "safeName": "object",
+                            "unsafeName": "object",
+                          },
+                          "originalName": "object",
+                          "pascalCase": {
+                            "safeName": "Object",
+                            "unsafeName": "Object",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "OBJECT",
+                            "unsafeName": "OBJECT",
+                          },
+                          "snakeCase": {
+                            "safeName": "object",
+                            "unsafeName": "object",
+                          },
                         },
-                        "screamingSnakeCase": {
-                          "safeName": "TYPES",
-                          "unsafeName": "TYPES",
-                        },
-                        "snakeCase": {
-                          "safeName": "types",
-                          "unsafeName": "types",
-                        },
-                      },
-                      {
+                      ],
+                      "file": {
                         "camelCase": {
                           "safeName": "object",
                           "unsafeName": "object",
@@ -3090,72 +3127,53 @@ exports[`generate IR 1`] = `
                           "unsafeName": "object",
                         },
                       },
-                    ],
-                    "file": {
+                      "packagePath": [
+                        {
+                          "camelCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                          "originalName": "types",
+                          "pascalCase": {
+                            "safeName": "Types",
+                            "unsafeName": "Types",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "TYPES",
+                            "unsafeName": "TYPES",
+                          },
+                          "snakeCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                        },
+                      ],
+                    },
+                    "name": {
                       "camelCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
+                        "safeName": "objectWithRequiredField",
+                        "unsafeName": "objectWithRequiredField",
                       },
-                      "originalName": "object",
+                      "originalName": "ObjectWithRequiredField",
                       "pascalCase": {
-                        "safeName": "Object",
-                        "unsafeName": "Object",
+                        "safeName": "ObjectWithRequiredField",
+                        "unsafeName": "ObjectWithRequiredField",
                       },
                       "screamingSnakeCase": {
-                        "safeName": "OBJECT",
-                        "unsafeName": "OBJECT",
+                        "safeName": "OBJECT_WITH_REQUIRED_FIELD",
+                        "unsafeName": "OBJECT_WITH_REQUIRED_FIELD",
                       },
                       "snakeCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
+                        "safeName": "object_with_required_field",
+                        "unsafeName": "object_with_required_field",
                       },
                     },
-                    "packagePath": [
-                      {
-                        "camelCase": {
-                          "safeName": "types",
-                          "unsafeName": "types",
-                        },
-                        "originalName": "types",
-                        "pascalCase": {
-                          "safeName": "Types",
-                          "unsafeName": "Types",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "TYPES",
-                          "unsafeName": "TYPES",
-                        },
-                        "snakeCase": {
-                          "safeName": "types",
-                          "unsafeName": "types",
-                        },
-                      },
-                    ],
+                    "typeId": "type_types/object:ObjectWithRequiredField",
                   },
-                  "name": {
-                    "camelCase": {
-                      "safeName": "objectWithRequiredField",
-                      "unsafeName": "objectWithRequiredField",
-                    },
-                    "originalName": "ObjectWithRequiredField",
-                    "pascalCase": {
-                      "safeName": "ObjectWithRequiredField",
-                      "unsafeName": "ObjectWithRequiredField",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "OBJECT_WITH_REQUIRED_FIELD",
-                      "unsafeName": "OBJECT_WITH_REQUIRED_FIELD",
-                    },
-                    "snakeCase": {
-                      "safeName": "object_with_required_field",
-                      "unsafeName": "object_with_required_field",
-                    },
-                  },
-                  "typeId": "type_types/object:ObjectWithRequiredField",
                 },
               },
+              "type": "response",
             },
-            "type": "json",
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -3460,35 +3478,57 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "container",
-              "container": {
-                "_type": "optional",
-                "optional": {
-                  "_type": "named",
-                  "fernFilepath": {
-                    "allParts": [
-                      {
-                        "camelCase": {
-                          "safeName": "types",
-                          "unsafeName": "types",
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "container",
+                "container": {
+                  "_type": "optional",
+                  "optional": {
+                    "_type": "named",
+                    "fernFilepath": {
+                      "allParts": [
+                        {
+                          "camelCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                          "originalName": "types",
+                          "pascalCase": {
+                            "safeName": "Types",
+                            "unsafeName": "Types",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "TYPES",
+                            "unsafeName": "TYPES",
+                          },
+                          "snakeCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
                         },
-                        "originalName": "types",
-                        "pascalCase": {
-                          "safeName": "Types",
-                          "unsafeName": "Types",
+                        {
+                          "camelCase": {
+                            "safeName": "object",
+                            "unsafeName": "object",
+                          },
+                          "originalName": "object",
+                          "pascalCase": {
+                            "safeName": "Object",
+                            "unsafeName": "Object",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "OBJECT",
+                            "unsafeName": "OBJECT",
+                          },
+                          "snakeCase": {
+                            "safeName": "object",
+                            "unsafeName": "object",
+                          },
                         },
-                        "screamingSnakeCase": {
-                          "safeName": "TYPES",
-                          "unsafeName": "TYPES",
-                        },
-                        "snakeCase": {
-                          "safeName": "types",
-                          "unsafeName": "types",
-                        },
-                      },
-                      {
+                      ],
+                      "file": {
                         "camelCase": {
                           "safeName": "object",
                           "unsafeName": "object",
@@ -3507,72 +3547,53 @@ exports[`generate IR 1`] = `
                           "unsafeName": "object",
                         },
                       },
-                    ],
-                    "file": {
+                      "packagePath": [
+                        {
+                          "camelCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                          "originalName": "types",
+                          "pascalCase": {
+                            "safeName": "Types",
+                            "unsafeName": "Types",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "TYPES",
+                            "unsafeName": "TYPES",
+                          },
+                          "snakeCase": {
+                            "safeName": "types",
+                            "unsafeName": "types",
+                          },
+                        },
+                      ],
+                    },
+                    "name": {
                       "camelCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
+                        "safeName": "objectWithRequiredField",
+                        "unsafeName": "objectWithRequiredField",
                       },
-                      "originalName": "object",
+                      "originalName": "ObjectWithRequiredField",
                       "pascalCase": {
-                        "safeName": "Object",
-                        "unsafeName": "Object",
+                        "safeName": "ObjectWithRequiredField",
+                        "unsafeName": "ObjectWithRequiredField",
                       },
                       "screamingSnakeCase": {
-                        "safeName": "OBJECT",
-                        "unsafeName": "OBJECT",
+                        "safeName": "OBJECT_WITH_REQUIRED_FIELD",
+                        "unsafeName": "OBJECT_WITH_REQUIRED_FIELD",
                       },
                       "snakeCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
+                        "safeName": "object_with_required_field",
+                        "unsafeName": "object_with_required_field",
                       },
                     },
-                    "packagePath": [
-                      {
-                        "camelCase": {
-                          "safeName": "types",
-                          "unsafeName": "types",
-                        },
-                        "originalName": "types",
-                        "pascalCase": {
-                          "safeName": "Types",
-                          "unsafeName": "Types",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "TYPES",
-                          "unsafeName": "TYPES",
-                        },
-                        "snakeCase": {
-                          "safeName": "types",
-                          "unsafeName": "types",
-                        },
-                      },
-                    ],
+                    "typeId": "type_types/object:ObjectWithRequiredField",
                   },
-                  "name": {
-                    "camelCase": {
-                      "safeName": "objectWithRequiredField",
-                      "unsafeName": "objectWithRequiredField",
-                    },
-                    "originalName": "ObjectWithRequiredField",
-                    "pascalCase": {
-                      "safeName": "ObjectWithRequiredField",
-                      "unsafeName": "ObjectWithRequiredField",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "OBJECT_WITH_REQUIRED_FIELD",
-                      "unsafeName": "OBJECT_WITH_REQUIRED_FIELD",
-                    },
-                    "snakeCase": {
-                      "safeName": "object_with_required_field",
-                      "unsafeName": "object_with_required_field",
-                    },
-                  },
-                  "typeId": "type_types/object:ObjectWithRequiredField",
                 },
               },
+              "type": "response",
             },
-            "type": "json",
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -3963,31 +3984,53 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "named",
-              "fernFilepath": {
-                "allParts": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
                     },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
+                    {
+                      "camelCase": {
+                        "safeName": "enum",
+                        "unsafeName": "enum",
+                      },
+                      "originalName": "enum",
+                      "pascalCase": {
+                        "safeName": "Enum",
+                        "unsafeName": "Enum",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "ENUM",
+                        "unsafeName": "ENUM",
+                      },
+                      "snakeCase": {
+                        "safeName": "enum",
+                        "unsafeName": "enum",
+                      },
                     },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
-                  {
+                  ],
+                  "file": {
                     "camelCase": {
                       "safeName": "enum",
                       "unsafeName": "enum",
@@ -4006,70 +4049,51 @@ exports[`generate IR 1`] = `
                       "unsafeName": "enum",
                     },
                   },
-                ],
-                "file": {
+                  "packagePath": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                  ],
+                },
+                "name": {
                   "camelCase": {
-                    "safeName": "enum",
-                    "unsafeName": "enum",
+                    "safeName": "weatherReport",
+                    "unsafeName": "weatherReport",
                   },
-                  "originalName": "enum",
+                  "originalName": "WeatherReport",
                   "pascalCase": {
-                    "safeName": "Enum",
-                    "unsafeName": "Enum",
+                    "safeName": "WeatherReport",
+                    "unsafeName": "WeatherReport",
                   },
                   "screamingSnakeCase": {
-                    "safeName": "ENUM",
-                    "unsafeName": "ENUM",
+                    "safeName": "WEATHER_REPORT",
+                    "unsafeName": "WEATHER_REPORT",
                   },
                   "snakeCase": {
-                    "safeName": "enum",
-                    "unsafeName": "enum",
+                    "safeName": "weather_report",
+                    "unsafeName": "weather_report",
                   },
                 },
-                "packagePath": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
-                ],
+                "typeId": "type_types/enum:WeatherReport",
               },
-              "name": {
-                "camelCase": {
-                  "safeName": "weatherReport",
-                  "unsafeName": "weatherReport",
-                },
-                "originalName": "WeatherReport",
-                "pascalCase": {
-                  "safeName": "WeatherReport",
-                  "unsafeName": "WeatherReport",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "WEATHER_REPORT",
-                  "unsafeName": "WEATHER_REPORT",
-                },
-                "snakeCase": {
-                  "safeName": "weather_report",
-                  "unsafeName": "weather_report",
-                },
-              },
-              "typeId": "type_types/enum:WeatherReport",
+              "type": "response",
             },
-            "type": "json",
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -4413,12 +4437,15 @@ exports[`generate IR 1`] = `
           "queryParameters": [],
           "requestBody": null,
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "primitive",
-              "primitive": "STRING",
-            },
             "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "primitive",
+                "primitive": "STRING",
+              },
+              "type": "response",
+            },
           },
           "sdkRequest": null,
         },
@@ -4574,31 +4601,53 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "named",
-              "fernFilepath": {
-                "allParts": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
                     },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
+                    {
+                      "camelCase": {
+                        "safeName": "object",
+                        "unsafeName": "object",
+                      },
+                      "originalName": "object",
+                      "pascalCase": {
+                        "safeName": "Object",
+                        "unsafeName": "Object",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "OBJECT",
+                        "unsafeName": "OBJECT",
+                      },
+                      "snakeCase": {
+                        "safeName": "object",
+                        "unsafeName": "object",
+                      },
                     },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
-                  {
+                  ],
+                  "file": {
                     "camelCase": {
                       "safeName": "object",
                       "unsafeName": "object",
@@ -4617,70 +4666,51 @@ exports[`generate IR 1`] = `
                       "unsafeName": "object",
                     },
                   },
-                ],
-                "file": {
+                  "packagePath": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                  ],
+                },
+                "name": {
                   "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
+                    "safeName": "objectWithOptionalField",
+                    "unsafeName": "objectWithOptionalField",
                   },
-                  "originalName": "object",
+                  "originalName": "ObjectWithOptionalField",
                   "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
+                    "safeName": "ObjectWithOptionalField",
+                    "unsafeName": "ObjectWithOptionalField",
                   },
                   "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
+                    "safeName": "OBJECT_WITH_OPTIONAL_FIELD",
+                    "unsafeName": "OBJECT_WITH_OPTIONAL_FIELD",
                   },
                   "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
+                    "safeName": "object_with_optional_field",
+                    "unsafeName": "object_with_optional_field",
                   },
                 },
-                "packagePath": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
-                ],
+                "typeId": "type_types/object:ObjectWithOptionalField",
               },
-              "name": {
-                "camelCase": {
-                  "safeName": "objectWithOptionalField",
-                  "unsafeName": "objectWithOptionalField",
-                },
-                "originalName": "ObjectWithOptionalField",
-                "pascalCase": {
-                  "safeName": "ObjectWithOptionalField",
-                  "unsafeName": "ObjectWithOptionalField",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "OBJECT_WITH_OPTIONAL_FIELD",
-                  "unsafeName": "OBJECT_WITH_OPTIONAL_FIELD",
-                },
-                "snakeCase": {
-                  "safeName": "object_with_optional_field",
-                  "unsafeName": "object_with_optional_field",
-                },
-              },
-              "typeId": "type_types/object:ObjectWithOptionalField",
+              "type": "response",
             },
-            "type": "json",
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -5037,31 +5067,53 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "named",
-              "fernFilepath": {
-                "allParts": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
                     },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
+                    {
+                      "camelCase": {
+                        "safeName": "object",
+                        "unsafeName": "object",
+                      },
+                      "originalName": "object",
+                      "pascalCase": {
+                        "safeName": "Object",
+                        "unsafeName": "Object",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "OBJECT",
+                        "unsafeName": "OBJECT",
+                      },
+                      "snakeCase": {
+                        "safeName": "object",
+                        "unsafeName": "object",
+                      },
                     },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
-                  {
+                  ],
+                  "file": {
                     "camelCase": {
                       "safeName": "object",
                       "unsafeName": "object",
@@ -5080,70 +5132,51 @@ exports[`generate IR 1`] = `
                       "unsafeName": "object",
                     },
                   },
-                ],
-                "file": {
+                  "packagePath": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                  ],
+                },
+                "name": {
                   "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
+                    "safeName": "objectWithOptionalField",
+                    "unsafeName": "objectWithOptionalField",
                   },
-                  "originalName": "object",
+                  "originalName": "ObjectWithOptionalField",
                   "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
+                    "safeName": "ObjectWithOptionalField",
+                    "unsafeName": "ObjectWithOptionalField",
                   },
                   "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
+                    "safeName": "OBJECT_WITH_OPTIONAL_FIELD",
+                    "unsafeName": "OBJECT_WITH_OPTIONAL_FIELD",
                   },
                   "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
+                    "safeName": "object_with_optional_field",
+                    "unsafeName": "object_with_optional_field",
                   },
                 },
-                "packagePath": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
-                ],
+                "typeId": "type_types/object:ObjectWithOptionalField",
               },
-              "name": {
-                "camelCase": {
-                  "safeName": "objectWithOptionalField",
-                  "unsafeName": "objectWithOptionalField",
-                },
-                "originalName": "ObjectWithOptionalField",
-                "pascalCase": {
-                  "safeName": "ObjectWithOptionalField",
-                  "unsafeName": "ObjectWithOptionalField",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "OBJECT_WITH_OPTIONAL_FIELD",
-                  "unsafeName": "OBJECT_WITH_OPTIONAL_FIELD",
-                },
-                "snakeCase": {
-                  "safeName": "object_with_optional_field",
-                  "unsafeName": "object_with_optional_field",
-                },
-              },
-              "typeId": "type_types/object:ObjectWithOptionalField",
+              "type": "response",
             },
-            "type": "json",
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -5500,31 +5533,53 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "named",
-              "fernFilepath": {
-                "allParts": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
                     },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
+                    {
+                      "camelCase": {
+                        "safeName": "object",
+                        "unsafeName": "object",
+                      },
+                      "originalName": "object",
+                      "pascalCase": {
+                        "safeName": "Object",
+                        "unsafeName": "Object",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "OBJECT",
+                        "unsafeName": "OBJECT",
+                      },
+                      "snakeCase": {
+                        "safeName": "object",
+                        "unsafeName": "object",
+                      },
                     },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
-                  {
+                  ],
+                  "file": {
                     "camelCase": {
                       "safeName": "object",
                       "unsafeName": "object",
@@ -5543,70 +5598,51 @@ exports[`generate IR 1`] = `
                       "unsafeName": "object",
                     },
                   },
-                ],
-                "file": {
+                  "packagePath": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                  ],
+                },
+                "name": {
                   "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
+                    "safeName": "objectWithOptionalField",
+                    "unsafeName": "objectWithOptionalField",
                   },
-                  "originalName": "object",
+                  "originalName": "ObjectWithOptionalField",
                   "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
+                    "safeName": "ObjectWithOptionalField",
+                    "unsafeName": "ObjectWithOptionalField",
                   },
                   "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
+                    "safeName": "OBJECT_WITH_OPTIONAL_FIELD",
+                    "unsafeName": "OBJECT_WITH_OPTIONAL_FIELD",
                   },
                   "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
+                    "safeName": "object_with_optional_field",
+                    "unsafeName": "object_with_optional_field",
                   },
                 },
-                "packagePath": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
-                ],
+                "typeId": "type_types/object:ObjectWithOptionalField",
               },
-              "name": {
-                "camelCase": {
-                  "safeName": "objectWithOptionalField",
-                  "unsafeName": "objectWithOptionalField",
-                },
-                "originalName": "ObjectWithOptionalField",
-                "pascalCase": {
-                  "safeName": "ObjectWithOptionalField",
-                  "unsafeName": "ObjectWithOptionalField",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "OBJECT_WITH_OPTIONAL_FIELD",
-                  "unsafeName": "OBJECT_WITH_OPTIONAL_FIELD",
-                },
-                "snakeCase": {
-                  "safeName": "object_with_optional_field",
-                  "unsafeName": "object_with_optional_field",
-                },
-              },
-              "typeId": "type_types/object:ObjectWithOptionalField",
+              "type": "response",
             },
-            "type": "json",
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -5854,12 +5890,15 @@ exports[`generate IR 1`] = `
           "queryParameters": [],
           "requestBody": null,
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "primitive",
-              "primitive": "BOOLEAN",
-            },
             "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "primitive",
+                "primitive": "BOOLEAN",
+              },
+              "type": "response",
+            },
           },
           "sdkRequest": null,
         },
@@ -6111,31 +6150,53 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "named",
-              "fernFilepath": {
-                "allParts": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
                     },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
+                    {
+                      "camelCase": {
+                        "safeName": "object",
+                        "unsafeName": "object",
+                      },
+                      "originalName": "object",
+                      "pascalCase": {
+                        "safeName": "Object",
+                        "unsafeName": "Object",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "OBJECT",
+                        "unsafeName": "OBJECT",
+                      },
+                      "snakeCase": {
+                        "safeName": "object",
+                        "unsafeName": "object",
+                      },
                     },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
-                  {
+                  ],
+                  "file": {
                     "camelCase": {
                       "safeName": "object",
                       "unsafeName": "object",
@@ -6154,70 +6215,51 @@ exports[`generate IR 1`] = `
                       "unsafeName": "object",
                     },
                   },
-                ],
-                "file": {
+                  "packagePath": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                  ],
+                },
+                "name": {
                   "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
+                    "safeName": "objectWithOptionalField",
+                    "unsafeName": "objectWithOptionalField",
                   },
-                  "originalName": "object",
+                  "originalName": "ObjectWithOptionalField",
                   "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
+                    "safeName": "ObjectWithOptionalField",
+                    "unsafeName": "ObjectWithOptionalField",
                   },
                   "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
+                    "safeName": "OBJECT_WITH_OPTIONAL_FIELD",
+                    "unsafeName": "OBJECT_WITH_OPTIONAL_FIELD",
                   },
                   "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
+                    "safeName": "object_with_optional_field",
+                    "unsafeName": "object_with_optional_field",
                   },
                 },
-                "packagePath": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
-                ],
+                "typeId": "type_types/object:ObjectWithOptionalField",
               },
-              "name": {
-                "camelCase": {
-                  "safeName": "objectWithOptionalField",
-                  "unsafeName": "objectWithOptionalField",
-                },
-                "originalName": "ObjectWithOptionalField",
-                "pascalCase": {
-                  "safeName": "ObjectWithOptionalField",
-                  "unsafeName": "ObjectWithOptionalField",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "OBJECT_WITH_OPTIONAL_FIELD",
-                  "unsafeName": "OBJECT_WITH_OPTIONAL_FIELD",
-                },
-                "snakeCase": {
-                  "safeName": "object_with_optional_field",
-                  "unsafeName": "object_with_optional_field",
-                },
-              },
-              "typeId": "type_types/object:ObjectWithOptionalField",
+              "type": "response",
             },
-            "type": "json",
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -6506,31 +6548,53 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "named",
-              "fernFilepath": {
-                "allParts": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
                     },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
+                    {
+                      "camelCase": {
+                        "safeName": "object",
+                        "unsafeName": "object",
+                      },
+                      "originalName": "object",
+                      "pascalCase": {
+                        "safeName": "Object",
+                        "unsafeName": "Object",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "OBJECT",
+                        "unsafeName": "OBJECT",
+                      },
+                      "snakeCase": {
+                        "safeName": "object",
+                        "unsafeName": "object",
+                      },
                     },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
-                  {
+                  ],
+                  "file": {
                     "camelCase": {
                       "safeName": "object",
                       "unsafeName": "object",
@@ -6549,70 +6613,51 @@ exports[`generate IR 1`] = `
                       "unsafeName": "object",
                     },
                   },
-                ],
-                "file": {
+                  "packagePath": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                  ],
+                },
+                "name": {
                   "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
+                    "safeName": "objectWithRequiredField",
+                    "unsafeName": "objectWithRequiredField",
                   },
-                  "originalName": "object",
+                  "originalName": "ObjectWithRequiredField",
                   "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
+                    "safeName": "ObjectWithRequiredField",
+                    "unsafeName": "ObjectWithRequiredField",
                   },
                   "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
+                    "safeName": "OBJECT_WITH_REQUIRED_FIELD",
+                    "unsafeName": "OBJECT_WITH_REQUIRED_FIELD",
                   },
                   "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
+                    "safeName": "object_with_required_field",
+                    "unsafeName": "object_with_required_field",
                   },
                 },
-                "packagePath": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
-                ],
+                "typeId": "type_types/object:ObjectWithRequiredField",
               },
-              "name": {
-                "camelCase": {
-                  "safeName": "objectWithRequiredField",
-                  "unsafeName": "objectWithRequiredField",
-                },
-                "originalName": "ObjectWithRequiredField",
-                "pascalCase": {
-                  "safeName": "ObjectWithRequiredField",
-                  "unsafeName": "ObjectWithRequiredField",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "OBJECT_WITH_REQUIRED_FIELD",
-                  "unsafeName": "OBJECT_WITH_REQUIRED_FIELD",
-                },
-                "snakeCase": {
-                  "safeName": "object_with_required_field",
-                  "unsafeName": "object_with_required_field",
-                },
-              },
-              "typeId": "type_types/object:ObjectWithRequiredField",
+              "type": "response",
             },
-            "type": "json",
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -6901,31 +6946,53 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "named",
-              "fernFilepath": {
-                "allParts": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
                     },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
+                    {
+                      "camelCase": {
+                        "safeName": "object",
+                        "unsafeName": "object",
+                      },
+                      "originalName": "object",
+                      "pascalCase": {
+                        "safeName": "Object",
+                        "unsafeName": "Object",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "OBJECT",
+                        "unsafeName": "OBJECT",
+                      },
+                      "snakeCase": {
+                        "safeName": "object",
+                        "unsafeName": "object",
+                      },
                     },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
-                  {
+                  ],
+                  "file": {
                     "camelCase": {
                       "safeName": "object",
                       "unsafeName": "object",
@@ -6944,70 +7011,51 @@ exports[`generate IR 1`] = `
                       "unsafeName": "object",
                     },
                   },
-                ],
-                "file": {
+                  "packagePath": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                  ],
+                },
+                "name": {
                   "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
+                    "safeName": "nestedObjectWithOptionalField",
+                    "unsafeName": "nestedObjectWithOptionalField",
                   },
-                  "originalName": "object",
+                  "originalName": "NestedObjectWithOptionalField",
                   "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
+                    "safeName": "NestedObjectWithOptionalField",
+                    "unsafeName": "NestedObjectWithOptionalField",
                   },
                   "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
+                    "safeName": "NESTED_OBJECT_WITH_OPTIONAL_FIELD",
+                    "unsafeName": "NESTED_OBJECT_WITH_OPTIONAL_FIELD",
                   },
                   "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
+                    "safeName": "nested_object_with_optional_field",
+                    "unsafeName": "nested_object_with_optional_field",
                   },
                 },
-                "packagePath": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
-                ],
+                "typeId": "type_types/object:NestedObjectWithOptionalField",
               },
-              "name": {
-                "camelCase": {
-                  "safeName": "nestedObjectWithOptionalField",
-                  "unsafeName": "nestedObjectWithOptionalField",
-                },
-                "originalName": "NestedObjectWithOptionalField",
-                "pascalCase": {
-                  "safeName": "NestedObjectWithOptionalField",
-                  "unsafeName": "NestedObjectWithOptionalField",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "NESTED_OBJECT_WITH_OPTIONAL_FIELD",
-                  "unsafeName": "NESTED_OBJECT_WITH_OPTIONAL_FIELD",
-                },
-                "snakeCase": {
-                  "safeName": "nested_object_with_optional_field",
-                  "unsafeName": "nested_object_with_optional_field",
-                },
-              },
-              "typeId": "type_types/object:NestedObjectWithOptionalField",
+              "type": "response",
             },
-            "type": "json",
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -7296,31 +7344,53 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "named",
-              "fernFilepath": {
-                "allParts": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
                     },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
+                    {
+                      "camelCase": {
+                        "safeName": "object",
+                        "unsafeName": "object",
+                      },
+                      "originalName": "object",
+                      "pascalCase": {
+                        "safeName": "Object",
+                        "unsafeName": "Object",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "OBJECT",
+                        "unsafeName": "OBJECT",
+                      },
+                      "snakeCase": {
+                        "safeName": "object",
+                        "unsafeName": "object",
+                      },
                     },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
-                  {
+                  ],
+                  "file": {
                     "camelCase": {
                       "safeName": "object",
                       "unsafeName": "object",
@@ -7339,70 +7409,51 @@ exports[`generate IR 1`] = `
                       "unsafeName": "object",
                     },
                   },
-                ],
-                "file": {
+                  "packagePath": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                  ],
+                },
+                "name": {
                   "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
+                    "safeName": "nestedObjectWithRequiredField",
+                    "unsafeName": "nestedObjectWithRequiredField",
                   },
-                  "originalName": "object",
+                  "originalName": "NestedObjectWithRequiredField",
                   "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
+                    "safeName": "NestedObjectWithRequiredField",
+                    "unsafeName": "NestedObjectWithRequiredField",
                   },
                   "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
+                    "safeName": "NESTED_OBJECT_WITH_REQUIRED_FIELD",
+                    "unsafeName": "NESTED_OBJECT_WITH_REQUIRED_FIELD",
                   },
                   "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
+                    "safeName": "nested_object_with_required_field",
+                    "unsafeName": "nested_object_with_required_field",
                   },
                 },
-                "packagePath": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
-                ],
+                "typeId": "type_types/object:NestedObjectWithRequiredField",
               },
-              "name": {
-                "camelCase": {
-                  "safeName": "nestedObjectWithRequiredField",
-                  "unsafeName": "nestedObjectWithRequiredField",
-                },
-                "originalName": "NestedObjectWithRequiredField",
-                "pascalCase": {
-                  "safeName": "NestedObjectWithRequiredField",
-                  "unsafeName": "NestedObjectWithRequiredField",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "NESTED_OBJECT_WITH_REQUIRED_FIELD",
-                  "unsafeName": "NESTED_OBJECT_WITH_REQUIRED_FIELD",
-                },
-                "snakeCase": {
-                  "safeName": "nested_object_with_required_field",
-                  "unsafeName": "nested_object_with_required_field",
-                },
-              },
-              "typeId": "type_types/object:NestedObjectWithRequiredField",
+              "type": "response",
             },
-            "type": "json",
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -7746,12 +7797,15 @@ exports[`generate IR 1`] = `
           "queryParameters": [],
           "requestBody": null,
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "primitive",
-              "primitive": "STRING",
-            },
             "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "primitive",
+                "primitive": "STRING",
+              },
+              "type": "response",
+            },
           },
           "sdkRequest": null,
         },
@@ -8418,12 +8472,15 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "primitive",
-              "primitive": "STRING",
-            },
             "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "primitive",
+                "primitive": "STRING",
+              },
+              "type": "response",
+            },
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -8606,12 +8663,15 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "primitive",
-              "primitive": "STRING",
-            },
             "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "primitive",
+                "primitive": "STRING",
+              },
+              "type": "response",
+            },
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -8698,12 +8758,15 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "primitive",
-              "primitive": "INTEGER",
-            },
             "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "primitive",
+                "primitive": "INTEGER",
+              },
+              "type": "response",
+            },
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -8790,12 +8853,15 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "primitive",
-              "primitive": "LONG",
-            },
             "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "primitive",
+                "primitive": "LONG",
+              },
+              "type": "response",
+            },
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -8882,12 +8948,15 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "primitive",
-              "primitive": "DOUBLE",
-            },
             "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "primitive",
+                "primitive": "DOUBLE",
+              },
+              "type": "response",
+            },
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -8974,12 +9043,15 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "primitive",
-              "primitive": "BOOLEAN",
-            },
             "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "primitive",
+                "primitive": "BOOLEAN",
+              },
+              "type": "response",
+            },
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -9066,12 +9138,15 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "primitive",
-              "primitive": "DATE_TIME",
-            },
             "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "primitive",
+                "primitive": "DATE_TIME",
+              },
+              "type": "response",
+            },
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -9158,12 +9233,15 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "primitive",
-              "primitive": "DATE",
-            },
             "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "primitive",
+                "primitive": "DATE",
+              },
+              "type": "response",
+            },
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -9250,12 +9328,15 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "primitive",
-              "primitive": "UUID",
-            },
             "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "primitive",
+                "primitive": "UUID",
+              },
+              "type": "response",
+            },
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -9342,12 +9423,15 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "primitive",
-              "primitive": "BASE_64",
-            },
             "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "primitive",
+                "primitive": "BASE_64",
+              },
+              "type": "response",
+            },
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -9631,31 +9715,53 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "named",
-              "fernFilepath": {
-                "allParts": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
                     },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
+                    {
+                      "camelCase": {
+                        "safeName": "union",
+                        "unsafeName": "union",
+                      },
+                      "originalName": "union",
+                      "pascalCase": {
+                        "safeName": "Union",
+                        "unsafeName": "Union",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "UNION",
+                        "unsafeName": "UNION",
+                      },
+                      "snakeCase": {
+                        "safeName": "union",
+                        "unsafeName": "union",
+                      },
                     },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
-                  {
+                  ],
+                  "file": {
                     "camelCase": {
                       "safeName": "union",
                       "unsafeName": "union",
@@ -9674,70 +9780,51 @@ exports[`generate IR 1`] = `
                       "unsafeName": "union",
                     },
                   },
-                ],
-                "file": {
+                  "packagePath": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                  ],
+                },
+                "name": {
                   "camelCase": {
-                    "safeName": "union",
-                    "unsafeName": "union",
+                    "safeName": "animal",
+                    "unsafeName": "animal",
                   },
-                  "originalName": "union",
+                  "originalName": "Animal",
                   "pascalCase": {
-                    "safeName": "Union",
-                    "unsafeName": "Union",
+                    "safeName": "Animal",
+                    "unsafeName": "Animal",
                   },
                   "screamingSnakeCase": {
-                    "safeName": "UNION",
-                    "unsafeName": "UNION",
+                    "safeName": "ANIMAL",
+                    "unsafeName": "ANIMAL",
                   },
                   "snakeCase": {
-                    "safeName": "union",
-                    "unsafeName": "union",
+                    "safeName": "animal",
+                    "unsafeName": "animal",
                   },
                 },
-                "packagePath": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
-                ],
+                "typeId": "type_types/union:Animal",
               },
-              "name": {
-                "camelCase": {
-                  "safeName": "animal",
-                  "unsafeName": "animal",
-                },
-                "originalName": "Animal",
-                "pascalCase": {
-                  "safeName": "Animal",
-                  "unsafeName": "Animal",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "ANIMAL",
-                  "unsafeName": "ANIMAL",
-                },
-                "snakeCase": {
-                  "safeName": "animal",
-                  "unsafeName": "animal",
-                },
-              },
-              "typeId": "type_types/union:Animal",
+              "type": "response",
             },
-            "type": "json",
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -10295,31 +10382,53 @@ exports[`generate IR 1`] = `
             "type": "inlinedRequestBody",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "named",
-              "fernFilepath": {
-                "allParts": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
                     },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
+                    {
+                      "camelCase": {
+                        "safeName": "object",
+                        "unsafeName": "object",
+                      },
+                      "originalName": "object",
+                      "pascalCase": {
+                        "safeName": "Object",
+                        "unsafeName": "Object",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "OBJECT",
+                        "unsafeName": "OBJECT",
+                      },
+                      "snakeCase": {
+                        "safeName": "object",
+                        "unsafeName": "object",
+                      },
                     },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
-                  {
+                  ],
+                  "file": {
                     "camelCase": {
                       "safeName": "object",
                       "unsafeName": "object",
@@ -10338,70 +10447,51 @@ exports[`generate IR 1`] = `
                       "unsafeName": "object",
                     },
                   },
-                ],
-                "file": {
+                  "packagePath": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                  ],
+                },
+                "name": {
                   "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
+                    "safeName": "objectWithOptionalField",
+                    "unsafeName": "objectWithOptionalField",
                   },
-                  "originalName": "object",
+                  "originalName": "ObjectWithOptionalField",
                   "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
+                    "safeName": "ObjectWithOptionalField",
+                    "unsafeName": "ObjectWithOptionalField",
                   },
                   "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
+                    "safeName": "OBJECT_WITH_OPTIONAL_FIELD",
+                    "unsafeName": "OBJECT_WITH_OPTIONAL_FIELD",
                   },
                   "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
+                    "safeName": "object_with_optional_field",
+                    "unsafeName": "object_with_optional_field",
                   },
                 },
-                "packagePath": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
-                ],
+                "typeId": "type_types/object:ObjectWithOptionalField",
               },
-              "name": {
-                "camelCase": {
-                  "safeName": "objectWithOptionalField",
-                  "unsafeName": "objectWithOptionalField",
-                },
-                "originalName": "ObjectWithOptionalField",
-                "pascalCase": {
-                  "safeName": "ObjectWithOptionalField",
-                  "unsafeName": "ObjectWithOptionalField",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "OBJECT_WITH_OPTIONAL_FIELD",
-                  "unsafeName": "OBJECT_WITH_OPTIONAL_FIELD",
-                },
-                "snakeCase": {
-                  "safeName": "object_with_optional_field",
-                  "unsafeName": "object_with_optional_field",
-                },
-              },
-              "typeId": "type_types/object:ObjectWithOptionalField",
+              "type": "response",
             },
-            "type": "json",
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -10642,12 +10732,15 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "primitive",
-              "primitive": "BOOLEAN",
-            },
             "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "primitive",
+                "primitive": "BOOLEAN",
+              },
+              "type": "response",
+            },
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -10782,31 +10875,53 @@ exports[`generate IR 1`] = `
           "queryParameters": [],
           "requestBody": null,
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "named",
-              "fernFilepath": {
-                "allParts": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
+            "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
                     },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
+                    {
+                      "camelCase": {
+                        "safeName": "object",
+                        "unsafeName": "object",
+                      },
+                      "originalName": "object",
+                      "pascalCase": {
+                        "safeName": "Object",
+                        "unsafeName": "Object",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "OBJECT",
+                        "unsafeName": "OBJECT",
+                      },
+                      "snakeCase": {
+                        "safeName": "object",
+                        "unsafeName": "object",
+                      },
                     },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
-                  {
+                  ],
+                  "file": {
                     "camelCase": {
                       "safeName": "object",
                       "unsafeName": "object",
@@ -10825,70 +10940,51 @@ exports[`generate IR 1`] = `
                       "unsafeName": "object",
                     },
                   },
-                ],
-                "file": {
+                  "packagePath": [
+                    {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                  ],
+                },
+                "name": {
                   "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
+                    "safeName": "objectWithOptionalField",
+                    "unsafeName": "objectWithOptionalField",
                   },
-                  "originalName": "object",
+                  "originalName": "ObjectWithOptionalField",
                   "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
+                    "safeName": "ObjectWithOptionalField",
+                    "unsafeName": "ObjectWithOptionalField",
                   },
                   "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
+                    "safeName": "OBJECT_WITH_OPTIONAL_FIELD",
+                    "unsafeName": "OBJECT_WITH_OPTIONAL_FIELD",
                   },
                   "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
+                    "safeName": "object_with_optional_field",
+                    "unsafeName": "object_with_optional_field",
                   },
                 },
-                "packagePath": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
-                ],
+                "typeId": "type_types/object:ObjectWithOptionalField",
               },
-              "name": {
-                "camelCase": {
-                  "safeName": "objectWithOptionalField",
-                  "unsafeName": "objectWithOptionalField",
-                },
-                "originalName": "ObjectWithOptionalField",
-                "pascalCase": {
-                  "safeName": "ObjectWithOptionalField",
-                  "unsafeName": "ObjectWithOptionalField",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "OBJECT_WITH_OPTIONAL_FIELD",
-                  "unsafeName": "OBJECT_WITH_OPTIONAL_FIELD",
-                },
-                "snakeCase": {
-                  "safeName": "object_with_optional_field",
-                  "unsafeName": "object_with_optional_field",
-                },
-              },
-              "typeId": "type_types/object:ObjectWithOptionalField",
+              "type": "response",
             },
-            "type": "json",
           },
           "sdkRequest": null,
         },
@@ -10935,12 +11031,15 @@ exports[`generate IR 1`] = `
           "queryParameters": [],
           "requestBody": null,
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "primitive",
-              "primitive": "STRING",
-            },
             "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "primitive",
+                "primitive": "STRING",
+              },
+              "type": "response",
+            },
           },
           "sdkRequest": null,
         },

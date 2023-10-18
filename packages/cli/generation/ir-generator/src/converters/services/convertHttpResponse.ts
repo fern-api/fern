@@ -1,5 +1,5 @@
 import { isRawTextType, parseRawFileType, parseRawTextType, RawSchemas } from "@fern-api/yaml-schema";
-import { HttpResponse, StreamingResponseChunkType } from "@fern-fern/ir-sdk/api";
+import { HttpResponse, JsonResponse, StreamingResponseChunkType } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 
 export function convertHttpResponse({
@@ -24,10 +24,7 @@ export function convertHttpResponse({
                 docs,
             });
         } else {
-            return HttpResponse.json({
-                docs,
-                responseBodyType: file.parseTypeReference(response),
-            });
+            return convertJsonResponse(response, docs, file);
         }
     }
 
@@ -52,4 +49,28 @@ function constructStreamingResponseChunkType(
     } else {
         return StreamingResponseChunkType.json(file.parseTypeReference(typeReference));
     }
+}
+
+function convertJsonResponse(
+    response: RawSchemas.HttpResponseSchema | string,
+    docs: string | undefined,
+    file: FernFileContext
+): HttpResponse {
+    const responseBodyType = file.parseTypeReference(response);
+    const responseProperty = typeof response !== "string" ? response.property : undefined;
+    if (responseProperty != null) {
+        return HttpResponse.json(
+            JsonResponse.nestedPropertyAsResponse({
+                docs,
+                responseBodyType,
+                responseProperty: file.casingsGenerator.generateName(responseProperty),
+            })
+        );
+    }
+    return HttpResponse.json(
+        JsonResponse.response({
+            docs,
+            responseBodyType,
+        })
+    );
 }

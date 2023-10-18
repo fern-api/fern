@@ -5,6 +5,7 @@ export const HttpResponseSchema = z.union([
     z.string(),
     WithDocsSchema.extend({
         type: z.string(),
+        property: z.optional(z.string()),
     }),
 ]);
 
