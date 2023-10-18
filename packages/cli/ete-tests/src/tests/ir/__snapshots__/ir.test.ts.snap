@@ -9415,30 +9415,53 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                     "sdkRequest": null,
                     "response": {
                         "type": "json",
-                        "responseBodyType": {
-                            "_type": "named",
-                            "name": {
-                                "originalName": "Response",
-                                "camelCase": {
-                                    "unsafeName": "response",
-                                    "safeName": "response"
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "named",
+                                "name": {
+                                    "originalName": "Response",
+                                    "camelCase": {
+                                        "unsafeName": "response",
+                                        "safeName": "response"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "response",
+                                        "safeName": "response"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "RESPONSE",
+                                        "safeName": "RESPONSE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Response",
+                                        "safeName": "Response"
+                                    }
                                 },
-                                "snakeCase": {
-                                    "unsafeName": "response",
-                                    "safeName": "response"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "RESPONSE",
-                                    "safeName": "RESPONSE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Response",
-                                    "safeName": "Response"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [
-                                    {
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "nested",
+                                            "camelCase": {
+                                                "unsafeName": "nested",
+                                                "safeName": "nested"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "nested",
+                                                "safeName": "nested"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "NESTED",
+                                                "safeName": "NESTED"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Nested",
+                                                "safeName": "Nested"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
                                         "originalName": "nested",
                                         "camelCase": {
                                             "unsafeName": "nested",
@@ -9457,32 +9480,11 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                                             "safeName": "Nested"
                                         }
                                     }
-                                ],
-                                "packagePath": [],
-                                "file": {
-                                    "originalName": "nested",
-                                    "camelCase": {
-                                        "unsafeName": "nested",
-                                        "safeName": "nested"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "nested",
-                                        "safeName": "nested"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "NESTED",
-                                        "safeName": "NESTED"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Nested",
-                                        "safeName": "Nested"
-                                    }
-                                }
+                                },
+                                "typeId": "type_nested:Response"
                             },
-                            "typeId": "type_nested:Response"
-                        },
-                        "responseProperty": null,
-                        "docs": null
+                            "docs": null
+                        }
                     },
                     "errors": [],
                     "examples": [
@@ -11361,25 +11363,25 @@ exports[`ir {"name":"response-property"} 1`] = `
             "availability": null,
             "docs": null
         },
-        "type_service:Object": {
+        "type_service:Movie": {
             "name": {
                 "name": {
-                    "originalName": "Object",
+                    "originalName": "Movie",
                     "camelCase": {
-                        "unsafeName": "object",
-                        "safeName": "object"
+                        "unsafeName": "movie",
+                        "safeName": "movie"
                     },
                     "snakeCase": {
-                        "unsafeName": "object",
-                        "safeName": "object"
+                        "unsafeName": "movie",
+                        "safeName": "movie"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "OBJECT",
-                        "safeName": "OBJECT"
+                        "unsafeName": "MOVIE",
+                        "safeName": "MOVIE"
                     },
                     "pascalCase": {
-                        "unsafeName": "Object",
-                        "safeName": "Object"
+                        "unsafeName": "Movie",
+                        "safeName": "Movie"
                     }
                 },
                 "fernFilepath": {
@@ -11425,7 +11427,7 @@ exports[`ir {"name":"response-property"} 1`] = `
                         }
                     }
                 },
-                "typeId": "type_service:Object"
+                "typeId": "type_service:Movie"
             },
             "shape": {
                 "_type": "object",
@@ -11630,22 +11632,22 @@ exports[`ir {"name":"response-property"} 1`] = `
                         "valueType": {
                             "_type": "named",
                             "name": {
-                                "originalName": "Object",
+                                "originalName": "Movie",
                                 "camelCase": {
-                                    "unsafeName": "object",
-                                    "safeName": "object"
+                                    "unsafeName": "movie",
+                                    "safeName": "movie"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "object",
-                                    "safeName": "object"
+                                    "unsafeName": "movie",
+                                    "safeName": "movie"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "OBJECT",
-                                    "safeName": "OBJECT"
+                                    "unsafeName": "MOVIE",
+                                    "safeName": "MOVIE"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "Object",
-                                    "safeName": "Object"
+                                    "unsafeName": "Movie",
+                                    "safeName": "Movie"
                                 }
                             },
                             "fernFilepath": {
@@ -11691,7 +11693,7 @@ exports[`ir {"name":"response-property"} 1`] = `
                                     }
                                 }
                             },
-                            "typeId": "type_service:Object"
+                            "typeId": "type_service:Movie"
                         },
                         "availability": null,
                         "docs": null
@@ -11766,22 +11768,22 @@ exports[`ir {"name":"response-property"} 1`] = `
                 },
                 {
                     "name": {
-                        "originalName": "Object",
+                        "originalName": "Movie",
                         "camelCase": {
-                            "unsafeName": "object",
-                            "safeName": "object"
+                            "unsafeName": "movie",
+                            "safeName": "movie"
                         },
                         "snakeCase": {
-                            "unsafeName": "object",
-                            "safeName": "object"
+                            "unsafeName": "movie",
+                            "safeName": "movie"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "OBJECT",
-                            "safeName": "OBJECT"
+                            "unsafeName": "MOVIE",
+                            "safeName": "MOVIE"
                         },
                         "pascalCase": {
-                            "unsafeName": "Object",
-                            "safeName": "Object"
+                            "unsafeName": "Movie",
+                            "safeName": "Movie"
                         }
                     },
                     "fernFilepath": {
@@ -11827,7 +11829,7 @@ exports[`ir {"name":"response-property"} 1`] = `
                             }
                         }
                     },
-                    "typeId": "type_service:Object"
+                    "typeId": "type_service:Movie"
                 }
             ],
             "examples": [],
@@ -11893,24 +11895,24 @@ exports[`ir {"name":"response-property"} 1`] = `
             "pathParameters": [],
             "endpoints": [
                 {
-                    "id": "endpoint_service.getObject",
+                    "id": "endpoint_service.getMovie",
                     "name": {
-                        "originalName": "getObject",
+                        "originalName": "getMovie",
                         "camelCase": {
-                            "unsafeName": "getObject",
-                            "safeName": "getObject"
+                            "unsafeName": "getMovie",
+                            "safeName": "getMovie"
                         },
                         "snakeCase": {
-                            "unsafeName": "get_object",
-                            "safeName": "get_object"
+                            "unsafeName": "get_movie",
+                            "safeName": "get_movie"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "GET_OBJECT",
-                            "safeName": "GET_OBJECT"
+                            "unsafeName": "GET_MOVIE",
+                            "safeName": "GET_MOVIE"
                         },
                         "pascalCase": {
-                            "unsafeName": "GetObject",
-                            "safeName": "GetObject"
+                            "unsafeName": "GetMovie",
+                            "safeName": "GetMovie"
                         }
                     },
                     "displayName": null,
@@ -11918,11 +11920,11 @@ exports[`ir {"name":"response-property"} 1`] = `
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
-                        "head": "/object",
+                        "head": "/movie",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "object",
+                        "head": "movie",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -11973,30 +11975,53 @@ exports[`ir {"name":"response-property"} 1`] = `
                     },
                     "response": {
                         "type": "json",
-                        "responseBodyType": {
-                            "_type": "named",
-                            "name": {
-                                "originalName": "Response",
-                                "camelCase": {
-                                    "unsafeName": "response",
-                                    "safeName": "response"
+                        "value": {
+                            "type": "nestedPropertyAsResponse",
+                            "responseBodyType": {
+                                "_type": "named",
+                                "name": {
+                                    "originalName": "Response",
+                                    "camelCase": {
+                                        "unsafeName": "response",
+                                        "safeName": "response"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "response",
+                                        "safeName": "response"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "RESPONSE",
+                                        "safeName": "RESPONSE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Response",
+                                        "safeName": "Response"
+                                    }
                                 },
-                                "snakeCase": {
-                                    "unsafeName": "response",
-                                    "safeName": "response"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "RESPONSE",
-                                    "safeName": "RESPONSE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Response",
-                                    "safeName": "Response"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [
-                                    {
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "service",
+                                            "camelCase": {
+                                                "unsafeName": "service",
+                                                "safeName": "service"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "service",
+                                                "safeName": "service"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "SERVICE",
+                                                "safeName": "SERVICE"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Service",
+                                                "safeName": "Service"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
                                         "originalName": "service",
                                         "camelCase": {
                                             "unsafeName": "service",
@@ -12015,50 +12040,30 @@ exports[`ir {"name":"response-property"} 1`] = `
                                             "safeName": "Service"
                                         }
                                     }
-                                ],
-                                "packagePath": [],
-                                "file": {
-                                    "originalName": "service",
-                                    "camelCase": {
-                                        "unsafeName": "service",
-                                        "safeName": "service"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "service",
-                                        "safeName": "service"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "SERVICE",
-                                        "safeName": "SERVICE"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Service",
-                                        "safeName": "Service"
-                                    }
+                                },
+                                "typeId": "type_service:Response"
+                            },
+                            "responseProperty": {
+                                "originalName": "data",
+                                "camelCase": {
+                                    "unsafeName": "data",
+                                    "safeName": "data"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "data",
+                                    "safeName": "data"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "DATA",
+                                    "safeName": "DATA"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Data",
+                                    "safeName": "Data"
                                 }
                             },
-                            "typeId": "type_service:Response"
-                        },
-                        "responseProperty": {
-                            "originalName": "data",
-                            "camelCase": {
-                                "unsafeName": "data",
-                                "safeName": "data"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "data",
-                                "safeName": "data"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "DATA",
-                                "safeName": "DATA"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Data",
-                                "safeName": "Data"
-                            }
-                        },
-                        "docs": null
+                            "docs": null
+                        }
                     },
                     "errors": [],
                     "examples": [],
@@ -12066,24 +12071,24 @@ exports[`ir {"name":"response-property"} 1`] = `
                     "docs": null
                 },
                 {
-                    "id": "endpoint_service.getObjectDocs",
+                    "id": "endpoint_service.getMovieDocs",
                     "name": {
-                        "originalName": "getObjectDocs",
+                        "originalName": "getMovieDocs",
                         "camelCase": {
-                            "unsafeName": "getObjectDocs",
-                            "safeName": "getObjectDocs"
+                            "unsafeName": "getMovieDocs",
+                            "safeName": "getMovieDocs"
                         },
                         "snakeCase": {
-                            "unsafeName": "get_object_docs",
-                            "safeName": "get_object_docs"
+                            "unsafeName": "get_movie_docs",
+                            "safeName": "get_movie_docs"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "GET_OBJECT_DOCS",
-                            "safeName": "GET_OBJECT_DOCS"
+                            "unsafeName": "GET_MOVIE_DOCS",
+                            "safeName": "GET_MOVIE_DOCS"
                         },
                         "pascalCase": {
-                            "unsafeName": "GetObjectDocs",
-                            "safeName": "GetObjectDocs"
+                            "unsafeName": "GetMovieDocs",
+                            "safeName": "GetMovieDocs"
                         }
                     },
                     "displayName": null,
@@ -12091,11 +12096,11 @@ exports[`ir {"name":"response-property"} 1`] = `
                     "baseUrl": null,
                     "method": "POST",
                     "path": {
-                        "head": "/object",
+                        "head": "/movie",
                         "parts": []
                     },
                     "fullPath": {
-                        "head": "object",
+                        "head": "movie",
                         "parts": []
                     },
                     "pathParameters": [],
@@ -12146,30 +12151,53 @@ exports[`ir {"name":"response-property"} 1`] = `
                     },
                     "response": {
                         "type": "json",
-                        "responseBodyType": {
-                            "_type": "named",
-                            "name": {
-                                "originalName": "Response",
-                                "camelCase": {
-                                    "unsafeName": "response",
-                                    "safeName": "response"
+                        "value": {
+                            "type": "nestedPropertyAsResponse",
+                            "responseBodyType": {
+                                "_type": "named",
+                                "name": {
+                                    "originalName": "Response",
+                                    "camelCase": {
+                                        "unsafeName": "response",
+                                        "safeName": "response"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "response",
+                                        "safeName": "response"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "RESPONSE",
+                                        "safeName": "RESPONSE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Response",
+                                        "safeName": "Response"
+                                    }
                                 },
-                                "snakeCase": {
-                                    "unsafeName": "response",
-                                    "safeName": "response"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "RESPONSE",
-                                    "safeName": "RESPONSE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Response",
-                                    "safeName": "Response"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [
-                                    {
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "service",
+                                            "camelCase": {
+                                                "unsafeName": "service",
+                                                "safeName": "service"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "service",
+                                                "safeName": "service"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "SERVICE",
+                                                "safeName": "SERVICE"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Service",
+                                                "safeName": "Service"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
                                         "originalName": "service",
                                         "camelCase": {
                                             "unsafeName": "service",
@@ -12188,50 +12216,30 @@ exports[`ir {"name":"response-property"} 1`] = `
                                             "safeName": "Service"
                                         }
                                     }
-                                ],
-                                "packagePath": [],
-                                "file": {
-                                    "originalName": "service",
-                                    "camelCase": {
-                                        "unsafeName": "service",
-                                        "safeName": "service"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "service",
-                                        "safeName": "service"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "SERVICE",
-                                        "safeName": "SERVICE"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Service",
-                                        "safeName": "Service"
-                                    }
+                                },
+                                "typeId": "type_service:Response"
+                            },
+                            "responseProperty": {
+                                "originalName": "docs",
+                                "camelCase": {
+                                    "unsafeName": "docs",
+                                    "safeName": "docs"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "docs",
+                                    "safeName": "docs"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "DOCS",
+                                    "safeName": "DOCS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Docs",
+                                    "safeName": "Docs"
                                 }
                             },
-                            "typeId": "type_service:Response"
-                        },
-                        "responseProperty": {
-                            "originalName": "docs",
-                            "camelCase": {
-                                "unsafeName": "docs",
-                                "safeName": "docs"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "docs",
-                                "safeName": "docs"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "DOCS",
-                                "safeName": "DOCS"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Docs",
-                                "safeName": "Docs"
-                            }
-                        },
-                        "docs": null
+                            "docs": null
+                        }
                     },
                     "errors": [],
                     "examples": [],
@@ -12280,7 +12288,7 @@ exports[`ir {"name":"response-property"} 1`] = `
         },
         "sharedTypes": [
             "type_service:WithDocs",
-            "type_service:Object"
+            "type_service:Movie"
         ]
     },
     "webhookGroups": {},
@@ -12351,7 +12359,7 @@ exports[`ir {"name":"response-property"} 1`] = `
             "service": "service_service",
             "types": [
                 "type_service:WithDocs",
-                "type_service:Object",
+                "type_service:Movie",
                 "type_service:Response"
             ],
             "errors": [],
@@ -13062,12 +13070,14 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                     },
                     "response": {
                         "type": "json",
-                        "responseBodyType": {
-                            "_type": "primitive",
-                            "primitive": "STRING"
-                        },
-                        "responseProperty": null,
-                        "docs": null
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "docs": null
+                        }
                     },
                     "errors": [
                         {
@@ -14505,30 +14515,53 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                     },
                     "response": {
                         "type": "json",
-                        "responseBodyType": {
-                            "_type": "named",
-                            "name": {
-                                "originalName": "MovieId",
-                                "camelCase": {
-                                    "unsafeName": "movieId",
-                                    "safeName": "movieId"
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "named",
+                                "name": {
+                                    "originalName": "MovieId",
+                                    "camelCase": {
+                                        "unsafeName": "movieId",
+                                        "safeName": "movieId"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "movie_id",
+                                        "safeName": "movie_id"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "MOVIE_ID",
+                                        "safeName": "MOVIE_ID"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "MovieId",
+                                        "safeName": "MovieId"
+                                    }
                                 },
-                                "snakeCase": {
-                                    "unsafeName": "movie_id",
-                                    "safeName": "movie_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "MOVIE_ID",
-                                    "safeName": "MOVIE_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "MovieId",
-                                    "safeName": "MovieId"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [
-                                    {
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "imdb",
+                                            "camelCase": {
+                                                "unsafeName": "imdb",
+                                                "safeName": "imdb"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "imdb",
+                                                "safeName": "imdb"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "IMDB",
+                                                "safeName": "IMDB"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Imdb",
+                                                "safeName": "Imdb"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
                                         "originalName": "imdb",
                                         "camelCase": {
                                             "unsafeName": "imdb",
@@ -14547,32 +14580,11 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                             "safeName": "Imdb"
                                         }
                                     }
-                                ],
-                                "packagePath": [],
-                                "file": {
-                                    "originalName": "imdb",
-                                    "camelCase": {
-                                        "unsafeName": "imdb",
-                                        "safeName": "imdb"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "imdb",
-                                        "safeName": "imdb"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "IMDB",
-                                        "safeName": "IMDB"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Imdb",
-                                        "safeName": "Imdb"
-                                    }
-                                }
+                                },
+                                "typeId": "type_imdb:MovieId"
                             },
-                            "typeId": "type_imdb:MovieId"
-                        },
-                        "responseProperty": null,
-                        "docs": null
+                            "docs": null
+                        }
                     },
                     "errors": [
                         {
@@ -22099,12 +22111,14 @@ exports[`ir {"name":"simple"} 1`] = `
                     },
                     "response": {
                         "type": "json",
-                        "responseBodyType": {
-                            "_type": "primitive",
-                            "primitive": "STRING"
-                        },
-                        "responseProperty": null,
-                        "docs": null
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "docs": null
+                        }
                     },
                     "errors": [
                         {
@@ -22419,30 +22433,53 @@ exports[`ir {"name":"simple"} 1`] = `
                     },
                     "response": {
                         "type": "json",
-                        "responseBodyType": {
-                            "_type": "named",
-                            "name": {
-                                "originalName": "MovieId",
-                                "camelCase": {
-                                    "unsafeName": "movieId",
-                                    "safeName": "movieId"
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "named",
+                                "name": {
+                                    "originalName": "MovieId",
+                                    "camelCase": {
+                                        "unsafeName": "movieId",
+                                        "safeName": "movieId"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "movie_id",
+                                        "safeName": "movie_id"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "MOVIE_ID",
+                                        "safeName": "MOVIE_ID"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "MovieId",
+                                        "safeName": "MovieId"
+                                    }
                                 },
-                                "snakeCase": {
-                                    "unsafeName": "movie_id",
-                                    "safeName": "movie_id"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "MOVIE_ID",
-                                    "safeName": "MOVIE_ID"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "MovieId",
-                                    "safeName": "MovieId"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [
-                                    {
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "imdb",
+                                            "camelCase": {
+                                                "unsafeName": "imdb",
+                                                "safeName": "imdb"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "imdb",
+                                                "safeName": "imdb"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "IMDB",
+                                                "safeName": "IMDB"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Imdb",
+                                                "safeName": "Imdb"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
                                         "originalName": "imdb",
                                         "camelCase": {
                                             "unsafeName": "imdb",
@@ -22461,32 +22498,11 @@ exports[`ir {"name":"simple"} 1`] = `
                                             "safeName": "Imdb"
                                         }
                                     }
-                                ],
-                                "packagePath": [],
-                                "file": {
-                                    "originalName": "imdb",
-                                    "camelCase": {
-                                        "unsafeName": "imdb",
-                                        "safeName": "imdb"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "imdb",
-                                        "safeName": "imdb"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "IMDB",
-                                        "safeName": "IMDB"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Imdb",
-                                        "safeName": "Imdb"
-                                    }
-                                }
+                                },
+                                "typeId": "type_imdb:MovieId"
                             },
-                            "typeId": "type_imdb:MovieId"
-                        },
-                        "responseProperty": null,
-                        "docs": null
+                            "docs": null
+                        }
                     },
                     "errors": [
                         {
@@ -23707,30 +23723,53 @@ exports[`ir {"name":"simple"} 1`] = `
                     },
                     "response": {
                         "type": "json",
-                        "responseBodyType": {
-                            "_type": "named",
-                            "name": {
-                                "originalName": "Movie",
-                                "camelCase": {
-                                    "unsafeName": "movie",
-                                    "safeName": "movie"
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "named",
+                                "name": {
+                                    "originalName": "Movie",
+                                    "camelCase": {
+                                        "unsafeName": "movie",
+                                        "safeName": "movie"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "movie",
+                                        "safeName": "movie"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "MOVIE",
+                                        "safeName": "MOVIE"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Movie",
+                                        "safeName": "Movie"
+                                    }
                                 },
-                                "snakeCase": {
-                                    "unsafeName": "movie",
-                                    "safeName": "movie"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "MOVIE",
-                                    "safeName": "MOVIE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Movie",
-                                    "safeName": "Movie"
-                                }
-                            },
-                            "fernFilepath": {
-                                "allParts": [
-                                    {
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "imdb",
+                                            "camelCase": {
+                                                "unsafeName": "imdb",
+                                                "safeName": "imdb"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "imdb",
+                                                "safeName": "imdb"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "IMDB",
+                                                "safeName": "IMDB"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Imdb",
+                                                "safeName": "Imdb"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
                                         "originalName": "imdb",
                                         "camelCase": {
                                             "unsafeName": "imdb",
@@ -23749,32 +23788,11 @@ exports[`ir {"name":"simple"} 1`] = `
                                             "safeName": "Imdb"
                                         }
                                     }
-                                ],
-                                "packagePath": [],
-                                "file": {
-                                    "originalName": "imdb",
-                                    "camelCase": {
-                                        "unsafeName": "imdb",
-                                        "safeName": "imdb"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "imdb",
-                                        "safeName": "imdb"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "IMDB",
-                                        "safeName": "IMDB"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Imdb",
-                                        "safeName": "Imdb"
-                                    }
-                                }
+                                },
+                                "typeId": "type_imdb:Movie"
                             },
-                            "typeId": "type_imdb:Movie"
-                        },
-                        "responseProperty": null,
-                        "docs": null
+                            "docs": null
+                        }
                     },
                     "errors": [
                         {
