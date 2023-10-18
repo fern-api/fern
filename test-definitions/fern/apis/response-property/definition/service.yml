@@ -3,7 +3,7 @@ types:
     properties:
       docs: string
 
-  Object:
+  Movie:
     properties:
       id: string
 
@@ -11,23 +11,23 @@ types:
     extends:
       - WithDocs
     properties:
-      data: Object
+      data: Movie
 
 service:
   auth: false
   base-path: ""
   endpoints:
-    getObject:
+    getMovie:
       method: POST
-      path: /object
+      path: /movie
       request: string
       response:
         type: Response
         property: data
 
-    getObjectDocs:
+    getMovieDocs:
       method: POST
-      path: /object
+      path: /movie
       request: string
       response:
         type: Response
