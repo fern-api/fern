@@ -49,13 +49,27 @@ export const V27_TO_V26_MIGRATION: IrMigration<
 function convertHttpService(val: IrVersions.V27.HttpService): IrVersions.V26.HttpService {
     return {
         ...val,
-        endpoints: val.endpoints.map((endpoint) => convertEndpoint(endpoint)),
+        endpoints: val.endpoints.map((endpoint) => convertHttpEndpoint(endpoint)),
     };
 }
 
-function convertEndpoint(val: IrVersions.V27.HttpEndpoint): IrVersions.V26.HttpEndpoint {
-    // TODO: Convert from new JsonResponse to old JsonResponse.
+function convertHttpEndpoint(val: IrVersions.V27.HttpEndpoint): IrVersions.V26.HttpEndpoint {
     return {
         ...val,
+        response: val.response != null ? convertHttpResponse(val.response) : undefined,
     };
+}
+
+function convertHttpResponse(val: IrVersions.V27.HttpResponse): IrVersions.V26.HttpResponse {
+    if (val.type !== "json") {
+        return val;
+    }
+    const jsonResponse = val.value;
+    if (jsonResponse.type === "response") {
+        return IrVersions.V26.HttpResponse.json(jsonResponse);
+    }
+    return IrVersions.V26.HttpResponse.json({
+        docs: jsonResponse.docs,
+        responseBodyType: jsonResponse.responseBodyType,
+    });
 }
