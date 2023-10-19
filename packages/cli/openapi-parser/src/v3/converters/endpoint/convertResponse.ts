@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
-import { Response, StatusCode } from "@fern-fern/openapi-ir-model/ir";
+import { StatusCode } from "@fern-fern/openapi-ir-model/commons";
+import { Response } from "@fern-fern/openapi-ir-model/finalIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { isReferenceObject } from "../../utils/isReferenceObject";

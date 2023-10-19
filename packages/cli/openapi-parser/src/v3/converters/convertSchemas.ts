@@ -372,12 +372,15 @@ export function convertSchemaObject(
         return wrapMap({
             description,
             wrapAsNullable,
-            keySchema: PrimitiveSchemaValueWithExample.string({
-                minLength: undefined,
-                maxLength: undefined,
-                example: undefined,
-            }),
-            valueSchema: Schema.unknown(),
+            keySchema: {
+                description: undefined,
+                schema: PrimitiveSchemaValueWithExample.string({
+                    minLength: undefined,
+                    maxLength: undefined,
+                    example: undefined,
+                }),
+            },
+            valueSchema: SchemaWithExample.unknown({ description: undefined, example: undefined }),
         });
     }
 

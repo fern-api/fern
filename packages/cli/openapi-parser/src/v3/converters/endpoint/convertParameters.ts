@@ -5,7 +5,7 @@ import {
     PrimitiveSchemaValue,
     QueryParameter,
     Schema,
-} from "@fern-fern/openapi-ir-model/ir";
+} from "@fern-fern/openapi-ir-model/finalIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { getVariableReference } from "../../extensions/getVariableReference";

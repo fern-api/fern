@@ -1,7 +1,8 @@
-import { MultipartSchema, Request } from "@fern-fern/openapi-ir-model/ir";
+import { MultipartSchema, Request } from "@fern-fern/openapi-ir-model/finalIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { getSchemaInstanceIdFromBreadcrumbs } from "../../getSchemaInstanceIdFromBreadcrumbs";
+import { convertSchemaWithExampleToSchema } from "../../utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../convertSchemas";
 
@@ -132,9 +133,10 @@ export function convertRequest({
                         description: undefined,
                     };
                 }
+                const schemaWithExample = convertSchema(definition, false, context, []);
                 return {
                     key,
-                    schema: MultipartSchema.json(convertSchema(definition, false, context, [])),
+                    schema: MultipartSchema.json(convertSchemaWithExampleToSchema(schemaWithExample)),
                     description: undefined,
                 };
             }),
