@@ -1,5 +1,5 @@
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { Type } from "@fern-fern/ir-sdk/api";
+import { ObjectProperty, Type } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { convertDeclaration } from "../convertDeclaration";
@@ -13,18 +13,25 @@ export function convertObjectTypeDeclaration({
 }): Type {
     return Type.object({
         extends: getExtensionsAsList(object.extends).map((extended) => parseTypeName({ typeName: extended, file })),
-        properties:
-            object.properties != null
-                ? Object.entries(object.properties).map(([propertyKey, propertyDefinition]) => ({
-                      ...convertDeclaration(propertyDefinition),
-                      name: file.casingsGenerator.generateNameAndWireValue({
-                          wireValue: propertyKey,
-                          name: getPropertyName({ propertyKey, property: propertyDefinition }).name,
-                      }),
-                      valueType: file.parseTypeReference(propertyDefinition),
-                  }))
-                : [],
+        properties: getObjectPropertiesFromRawObjectSchema(object, file),
     });
+}
+
+export function getObjectPropertiesFromRawObjectSchema(
+    object: RawSchemas.ObjectSchema,
+    file: FernFileContext
+): ObjectProperty[] {
+    if (object.properties == null) {
+        return [];
+    }
+    return Object.entries(object.properties).map(([propertyKey, propertyDefinition]) => ({
+        ...convertDeclaration(propertyDefinition),
+        name: file.casingsGenerator.generateNameAndWireValue({
+            wireValue: propertyKey,
+            name: getPropertyName({ propertyKey, property: propertyDefinition }).name,
+        }),
+        valueType: file.parseTypeReference(propertyDefinition),
+    }));
 }
 
 export function getExtensionsAsList(extensions: string | string[] | undefined): string[] {

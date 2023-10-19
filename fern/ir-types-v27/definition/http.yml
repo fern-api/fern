@@ -162,7 +162,7 @@ types:
 
           This is particularly useful for JSON API structures
           (e.g. configure 'data' to return 'response.data').
-        type: optional<commons.Name>
+        type: optional<types.ObjectProperty>
 
   FileDownloadResponse:
     extends: commons.WithDocs
