@@ -12044,23 +12044,96 @@ exports[`ir {"name":"response-property"} 1`] = `
                                 "typeId": "type_service:Response"
                             },
                             "responseProperty": {
-                                "originalName": "data",
-                                "camelCase": {
-                                    "unsafeName": "data",
-                                    "safeName": "data"
+                                "name": {
+                                    "name": {
+                                        "originalName": "data",
+                                        "camelCase": {
+                                            "unsafeName": "data",
+                                            "safeName": "data"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "data",
+                                            "safeName": "data"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "DATA",
+                                            "safeName": "DATA"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Data",
+                                            "safeName": "Data"
+                                        }
+                                    },
+                                    "wireValue": "data"
                                 },
-                                "snakeCase": {
-                                    "unsafeName": "data",
-                                    "safeName": "data"
+                                "valueType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "Movie",
+                                        "camelCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MOVIE",
+                                            "safeName": "MOVIE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Movie",
+                                            "safeName": "Movie"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "service",
+                                                "camelCase": {
+                                                    "unsafeName": "service",
+                                                    "safeName": "service"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "service",
+                                                    "safeName": "service"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "SERVICE",
+                                                    "safeName": "SERVICE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Service",
+                                                    "safeName": "Service"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
+                                            "originalName": "service",
+                                            "camelCase": {
+                                                "unsafeName": "service",
+                                                "safeName": "service"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "service",
+                                                "safeName": "service"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "SERVICE",
+                                                "safeName": "SERVICE"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Service",
+                                                "safeName": "Service"
+                                            }
+                                        }
+                                    },
+                                    "typeId": "type_service:Movie"
                                 },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "DATA",
-                                    "safeName": "DATA"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Data",
-                                    "safeName": "Data"
-                                }
+                                "availability": null,
+                                "docs": null
                             },
                             "docs": null
                         }
@@ -12220,23 +12293,34 @@ exports[`ir {"name":"response-property"} 1`] = `
                                 "typeId": "type_service:Response"
                             },
                             "responseProperty": {
-                                "originalName": "docs",
-                                "camelCase": {
-                                    "unsafeName": "docs",
-                                    "safeName": "docs"
+                                "name": {
+                                    "name": {
+                                        "originalName": "docs",
+                                        "camelCase": {
+                                            "unsafeName": "docs",
+                                            "safeName": "docs"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "docs",
+                                            "safeName": "docs"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "DOCS",
+                                            "safeName": "DOCS"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Docs",
+                                            "safeName": "Docs"
+                                        }
+                                    },
+                                    "wireValue": "docs"
                                 },
-                                "snakeCase": {
-                                    "unsafeName": "docs",
-                                    "safeName": "docs"
+                                "valueType": {
+                                    "_type": "primitive",
+                                    "primitive": "STRING"
                                 },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "DOCS",
-                                    "safeName": "DOCS"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Docs",
-                                    "safeName": "Docs"
-                                }
+                                "availability": null,
+                                "docs": null
                             },
                             "docs": null
                         }

@@ -228,22 +228,95 @@ exports[`generate IR 1`] = `
                 "typeId": "type_service:Response",
               },
               "responseProperty": {
-                "camelCase": {
-                  "safeName": "data",
-                  "unsafeName": "data",
+                "availability": null,
+                "docs": null,
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "data",
+                      "unsafeName": "data",
+                    },
+                    "originalName": "data",
+                    "pascalCase": {
+                      "safeName": "Data",
+                      "unsafeName": "Data",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "DATA",
+                      "unsafeName": "DATA",
+                    },
+                    "snakeCase": {
+                      "safeName": "data",
+                      "unsafeName": "data",
+                    },
+                  },
+                  "wireValue": "data",
                 },
-                "originalName": "data",
-                "pascalCase": {
-                  "safeName": "Data",
-                  "unsafeName": "Data",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "DATA",
-                  "unsafeName": "DATA",
-                },
-                "snakeCase": {
-                  "safeName": "data",
-                  "unsafeName": "data",
+                "valueType": {
+                  "_type": "named",
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "service",
+                          "unsafeName": "service",
+                        },
+                        "originalName": "service",
+                        "pascalCase": {
+                          "safeName": "Service",
+                          "unsafeName": "Service",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "SERVICE",
+                          "unsafeName": "SERVICE",
+                        },
+                        "snakeCase": {
+                          "safeName": "service",
+                          "unsafeName": "service",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "service",
+                        "unsafeName": "service",
+                      },
+                      "originalName": "service",
+                      "pascalCase": {
+                        "safeName": "Service",
+                        "unsafeName": "Service",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "SERVICE",
+                        "unsafeName": "SERVICE",
+                      },
+                      "snakeCase": {
+                        "safeName": "service",
+                        "unsafeName": "service",
+                      },
+                    },
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "movie",
+                      "unsafeName": "movie",
+                    },
+                    "originalName": "Movie",
+                    "pascalCase": {
+                      "safeName": "Movie",
+                      "unsafeName": "Movie",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "MOVIE",
+                      "unsafeName": "MOVIE",
+                    },
+                    "snakeCase": {
+                      "safeName": "movie",
+                      "unsafeName": "movie",
+                    },
+                  },
+                  "typeId": "type_service:Movie",
                 },
               },
               "type": "nestedPropertyAsResponse",
@@ -404,22 +477,33 @@ exports[`generate IR 1`] = `
                 "typeId": "type_service:Response",
               },
               "responseProperty": {
-                "camelCase": {
-                  "safeName": "docs",
-                  "unsafeName": "docs",
+                "availability": null,
+                "docs": null,
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "docs",
+                      "unsafeName": "docs",
+                    },
+                    "originalName": "docs",
+                    "pascalCase": {
+                      "safeName": "Docs",
+                      "unsafeName": "Docs",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "DOCS",
+                      "unsafeName": "DOCS",
+                    },
+                    "snakeCase": {
+                      "safeName": "docs",
+                      "unsafeName": "docs",
+                    },
+                  },
+                  "wireValue": "docs",
                 },
-                "originalName": "docs",
-                "pascalCase": {
-                  "safeName": "Docs",
-                  "unsafeName": "Docs",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "DOCS",
-                  "unsafeName": "DOCS",
-                },
-                "snakeCase": {
-                  "safeName": "docs",
-                  "unsafeName": "docs",
+                "valueType": {
+                  "_type": "primitive",
+                  "primitive": "STRING",
                 },
               },
               "type": "nestedPropertyAsResponse",
