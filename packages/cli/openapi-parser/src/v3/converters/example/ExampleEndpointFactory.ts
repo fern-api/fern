@@ -1,3 +1,4 @@
+import { Logger } from "@fern-api/logger";
 import {
     EndpointExample,
     HeaderExample,
@@ -13,7 +14,9 @@ import {
     ResponseWithExample,
     SchemaWithExample,
 } from "@fern-fern/openapi-ir-model/parseIr";
-import { isSchemaRequired } from "../../utils/isSchemaRequrired";
+import { convertSchemaWithExampleToSchema } from "../../utils/convertSchemaWithExampleToSchema";
+import { isSchemaPrimitive } from "../../utils/isSchemaPrmitive";
+import { isSchemaRequired } from "../../utils/isSchemaRequired";
 import { DummyExampleFactory } from "./DummyExampleFactory";
 import { ExampleTypeFactory } from "./ExampleTypeFactory";
 
@@ -31,13 +34,17 @@ interface FailedGeneratedParamterExample {
 export class ExampleEndpointFactory {
     private exampleTypeFactory: ExampleTypeFactory;
     private dummyExampleFactory: DummyExampleFactory;
+    private logger: Logger;
 
-    constructor(schemas: Record<string, SchemaWithExample>) {
+    constructor(schemas: Record<string, SchemaWithExample>, logger: Logger) {
         this.exampleTypeFactory = new ExampleTypeFactory(schemas);
         this.dummyExampleFactory = new DummyExampleFactory(schemas);
+        this.logger = logger;
     }
 
     public buildEndpointExample(endpoint: EndpointWithExample): EndpointExample | undefined {
+        this.logger.debug(`Building endpoint example for ${endpoint.method.toUpperCase()} ${endpoint.path}`);
+
         const requestSchemaIdResponse = getRequestSchema(endpoint.request);
         const responseSchemaIdResponse = getResponseSchema(endpoint.response);
 
@@ -49,6 +56,11 @@ export class ExampleEndpointFactory {
         if (requestSchemaIdResponse != null) {
             requestExample = this.exampleTypeFactory.buildExample(requestSchemaIdResponse.schema);
             if (requestExample == null) {
+                this.logger.debug(
+                    `Not enough information to generate request example for ${endpoint.method.toUpperCase()} ${
+                        endpoint.path
+                    }. Skipping example.`
+                );
                 return undefined;
             }
         }
@@ -57,6 +69,11 @@ export class ExampleEndpointFactory {
         if (responseSchemaIdResponse != null) {
             responseExample = this.exampleTypeFactory.buildExample(responseSchemaIdResponse.schema);
             if (responseExample == null) {
+                this.logger.debug(
+                    `Not enough information to generate response example for ${endpoint.method.toUpperCase()} ${
+                        endpoint.path
+                    }. Skipping example.`
+                );
                 return undefined;
             }
         }
@@ -65,6 +82,11 @@ export class ExampleEndpointFactory {
         for (const pathParameter of endpoint.pathParameters) {
             const example = this.buildParameterExample(pathParameter);
             if (example.type === "failed") {
+                this.logger.debug(
+                    `Failed to generate example for path parameter ${
+                        pathParameter.name
+                    } in ${endpoint.method.toUpperCase()} ${endpoint.path}. Skipping example.`
+                );
                 return;
             } else if (example.value != null) {
                 pathParameters.push(example.value);
@@ -75,6 +97,11 @@ export class ExampleEndpointFactory {
         for (const queryParameter of endpoint.queryParameters) {
             const example = this.buildParameterExample(queryParameter);
             if (example.type === "failed") {
+                this.logger.debug(
+                    `Failed to generate example for query parameter ${
+                        queryParameter.name
+                    } in ${endpoint.method.toUpperCase()} ${endpoint.path}. Skipping example.`
+                );
                 return;
             } else if (example.value != null) {
                 queryParameters.push(example.value);
@@ -85,6 +112,11 @@ export class ExampleEndpointFactory {
         for (const header of endpoint.headers) {
             const example = this.buildParameterExample(header);
             if (example.type === "failed") {
+                this.logger.debug(
+                    `Failed to generate example for header ${header.name} in ${endpoint.method.toUpperCase()} ${
+                        endpoint.path
+                    }. Skipping example.`
+                );
                 return;
             } else if (example.value != null) {
                 headers.push(example.value);
@@ -114,7 +146,9 @@ export class ExampleEndpointFactory {
                     value: example,
                 },
             };
-        } else if (isSchemaRequired(parameter.schema) && parameter.schema.type === "primitive") {
+        }
+        const required = isSchemaRequired(parameter.schema);
+        if (required && isSchemaPrimitive(convertSchemaWithExampleToSchema(parameter.schema))) {
             const dummyExample = this.dummyExampleFactory.generateExample({
                 schema: parameter.schema,
                 name: parameter.name,
@@ -128,6 +162,11 @@ export class ExampleEndpointFactory {
                     name: parameter.name,
                     value: dummyExample,
                 },
+            };
+        } else if (!required) {
+            return {
+                type: "success",
+                value: undefined,
             };
         }
         return { type: "failed" };

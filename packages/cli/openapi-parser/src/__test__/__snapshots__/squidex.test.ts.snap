@@ -531,7 +531,18 @@ exports[`open api parser squidex parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "UsersGetUsersRequest",
       "headers": [],
       "internal": undefined,
@@ -2025,7 +2036,29 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "SearchGetSearchResultsRequest",
       "headers": [],
       "internal": undefined,
@@ -5526,7 +5559,36 @@ You will be assigned as owner of the new team automatically.",
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "RulesPutRuleRunRequest",
       "headers": [],
       "internal": undefined,
@@ -6899,7 +6961,29 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "HistoryGetAppHistoryRequest",
       "headers": [],
       "internal": undefined,
@@ -6979,7 +7063,29 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "team",
+              "value": {
+                "primitive": {
+                  "string": "team",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "HistoryGetTeamHistoryRequest",
       "headers": [],
       "internal": undefined,
@@ -8150,7 +8256,46 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "schema",
+              "value": {
+                "primitive": {
+                  "string": "schema",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "ContentsDeleteContentRequest",
       "headers": [],
       "internal": undefined,
@@ -9294,7 +9439,29 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "CommentsGetWatchingUsersRequest",
       "headers": [],
       "internal": undefined,
@@ -12206,7 +12373,36 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "primitive": {
+                  "string": "app",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "AssetsDeleteAssetRequest",
       "headers": [],
       "internal": undefined,

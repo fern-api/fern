@@ -2,7 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
 import { FullExample, PrimitiveExample } from "@fern-fern/openapi-ir-model/example";
 import { PrimitiveSchemaValueWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
-import { isSchemaRequired } from "../../utils/isSchemaRequrired";
+import { isSchemaRequired } from "../../utils/isSchemaRequired";
 
 export class ExampleTypeFactory {
     private schemas: Record<SchemaId, SchemaWithExample>;

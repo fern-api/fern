@@ -14686,6 +14686,81 @@ You can see a complete list of institutions by either consulting our [Institutio
             "errors": [
               "root.UnauthorizedError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": {
+                  "country_code": "MX",
+                  "country_code__in": "CO,BR",
+                  "display_name": "Erebor Bank",
+                  "fields": "link,balance,account",
+                  "name__in": "erebor_br_retail,gotham_co_business",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 100,
+                  "resources__allin": "ACCOUNTS,OWNERS,TRANSACTIONS",
+                  "status": "healthy",
+                  "status__in": "healthy,down",
+                  "type": "fiscal",
+                  "type__in": "fiscal,bank",
+                  "website": "https://www.erebor.mx",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "count": 130,
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "results": [
+                      {
+                        "country_codes": [
+                          "MX",
+                        ],
+                        "display_name": "Erebor Mexico",
+                        "features": [
+                          {
+                            "description": "The institution may require a token during link creation or login",
+                            "name": "token_required",
+                          },
+                        ],
+                        "form_fields": [
+                          {
+                            "label": "Client number",
+                            "name": "username",
+                            "placeholder": "ABC333333A33",
+                            "type": "text",
+                            "validation": "^.{1,}$",
+                            "validation_message": "Invalid client number",
+                            "values": [
+                              {
+                                "code": "001",
+                                "label": "Cédula de Ciudadanía",
+                                "placeholder": "DEF4444908M22",
+                                "validation": "^.{1,}$",
+                                "validation_message": "Invalid document number",
+                              },
+                            ],
+                          },
+                        ],
+                        "icon_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
+                        "id": 1003,
+                        "integration_type": "credentials",
+                        "logo": "https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.png",
+                        "name": "erebor_mx_retail",
+                        "primary_color": "#056dae",
+                        "resources": [
+                          "ACCOUNTS",
+                        ],
+                        "status": "healthy",
+                        "text_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
+                        "type": "bank",
+                        "website": "https://www.erebor.com/",
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/institutions",
             "request": {
@@ -14969,6 +15044,78 @@ client. investments_portfolio.list(params: {
             "docs": "Get a paginated list of all the existing portfolios (and their instruments) in your Belvo account. By default, we return up to 100 results per page.",
             "errors": [
               "root.UnauthorizedError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 100,
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "count": 130,
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "results": [
+                      {
+                        "balance_gross": 76000,
+                        "balance_net": 77370.69,
+                        "balance_type": "ASSET",
+                        "currency": "BRL",
+                        "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                        "instruments": [
+                          {
+                            "average_acquisition_price": 10.01,
+                            "balance_gross": 100.09,
+                            "balance_net": 99.09,
+                            "currency": "USD",
+                            "fees": [
+                              {
+                                "type": "OPERATION_FEE",
+                                "value": 123.09,
+                              },
+                            ],
+                            "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                            "interest_rates": [
+                              {
+                                "index": "CDI",
+                                "type": "yearly",
+                                "value": 11.31,
+                              },
+                            ],
+                            "name": "CBD DIGITAL ESPECIAL",
+                            "open_date": "2021-08-10",
+                            "price": 10.41,
+                            "profit": 3.08,
+                            "public_id": [
+                              {
+                                "type": "isin",
+                                "value": "435-3354.3333",
+                              },
+                            ],
+                            "quantity": 27.46,
+                            "redemption_conditions": [
+                              {
+                                "type": "due_date",
+                                "value": "12-02-2023",
+                              },
+                            ],
+                            "subtype": "CBD",
+                            "type": "BOND",
+                          },
+                        ],
+                        "name": "Investimento",
+                        "type": "FIXED_INCOME",
+                      },
+                    ],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/investments/portfolios",

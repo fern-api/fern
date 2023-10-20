@@ -7156,6 +7156,54 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": {
+                  "entities": [
+                    "individual",
+                  ],
+                  "statuses": [
+                    "pending",
+                  ],
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "rows": [
+                        {
+                          "amount": 1000,
+                          "contract": {
+                            "contract_type": "pay_as_you_go_time_based",
+                            "id": "rhCTiRd9Mad41RwjsFWw-",
+                            "name": "Lisandro Shanahan-Dynamic Web Specialist",
+                          },
+                          "created_at": "2022-05-24T09:38:46.235Z",
+                          "currency": "USD",
+                          "fee": 10,
+                          "id": 5586317,
+                          "invoice_id": "rhCTiRd9Mad41RwjsFWw-",
+                          "is_offcycle": true,
+                          "is_overdue": true,
+                          "label": "INVOICE-2022-11",
+                          "money_received_at": "2022-05-24T09:38:46.235Z",
+                          "paid_at": "2022-05-24T09:38:46.235Z",
+                          "payment_currency": "USD",
+                          "payment_method": "stripe_bacs_debit",
+                          "payment_processed_at": "2022-05-24T09:38:46.235Z",
+                          "status": "pending",
+                          "total": 1000,
+                          "vat_percentage": 21,
+                          "vat_total": 210,
+                        },
+                      ],
+                    },
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/invoices",
             "request": {
@@ -7368,6 +7416,19 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": [],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/people",
@@ -7661,6 +7722,17 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "contract_id": "contract-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "GET",
             "path": "/contracts/{contract_id}/preview",
@@ -9072,6 +9144,27 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": [
+                      {
+                        "id": 1,
+                        "name": "3D Artist",
+                      },
+                    ],
+                    "page": {
+                      "cursor": "eyJvZmZzZXQiOjEwMCwibGltaXQiOjEwMCwiZmlsdGVyVHlwZSI6ImFsbCJ9",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/lookups/job-titles",
             "request": {
@@ -9108,6 +9201,25 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": [
+                      {
+                        "id": 2,
+                        "level": 2,
+                        "name": "Mid (Individual Contributor Level 2)",
+                      },
+                    ],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/lookups/seniorities",
@@ -9610,6 +9722,19 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": [],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/agreements",

@@ -317,6 +317,19 @@ Here are some of the most used payload fields explained (you can find the full p
               "UnauthorizedError",
               "TooManyRequestsError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "transactionState": "CREATED",
+                },
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/transactions",
             "request": {

@@ -2330,6 +2330,19 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
               "root.TooManyRequestsError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "items": [],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/accountBalances",
             "request": {
@@ -2361,6 +2374,28 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
               "root.UnauthorizedError",
               "root.ForbiddenError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": {
+                  "allows": [
+                    "billPay",
+                  ],
+                  "location": "internal",
+                  "productType": [
+                    "savings",
+                  ],
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "items": [],
+                    "nextPage_url": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/accounts",
@@ -2410,6 +2445,25 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
               "root.UnauthorizedError",
               "root.ForbiddenError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": {
+                  "allows": [
+                    "billPay",
+                  ],
+                  "secCode": "arc",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "items": [],
+                    "nextPage_url": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/achEligibleAccounts",
@@ -2590,6 +2644,31 @@ This information provides hints to clients, allowing bank customers to select tr
               "root.ForbiddenError",
               "root.NotFoundError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "institutionId": "TIBURON",
+                },
+                "query-parameters": {
+                  "direction": "debit",
+                  "endsOn": "2022-07-04",
+                  "frequency": "once",
+                  "startsOn": "2022-07-04",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "items": [
+                      {
+                        "effectiveOn": "2022-07-05",
+                        "scheduledOn": "2022-07-04",
+                      },
+                    ],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/institutions/{institutionId}/transferSchedule",
@@ -2862,6 +2941,23 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
               "root.ForbiddenError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "items": [
+                      {
+                        "type": "credit",
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/transactionCategories",
             "request": {
@@ -3007,6 +3103,24 @@ Note: This operation requires an identity challenge if the financial institution
               "root.ForbiddenError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "amount": "3456.78",
+                  "schedule": {
+                    "amountLimit": "3456.78",
+                    "frequency": "once",
+                    "recurrenceType": "fixed",
+                  },
+                },
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "POST",
             "path": "/transfers",
             "request": {
@@ -3087,6 +3201,19 @@ Note: This operation requires an identity challenge if the financial institution
               "root.UnauthorizedError",
               "root.ForbiddenError",
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "items": [],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/transfers",

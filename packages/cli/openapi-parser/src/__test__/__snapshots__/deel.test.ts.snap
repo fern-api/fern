@@ -1471,7 +1471,26 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "contract_id",
+              "value": {
+                "primitive": {
+                  "string": "contract-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "GetContractPreviewRequest",
       "headers": [],
       "internal": undefined,
@@ -6421,7 +6440,55 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "data": {
+                "array": [
+                  {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "double": 1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "3D Artist",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "page": {
+                "properties": {
+                  "cursor": {
+                    "primitive": {
+                      "string": "eyJvZmZzZXQiOjEwMCwibGltaXQiOjEwMCwiZmlsdGVyVHlwZSI6ImFsbCJ9",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetJobTitleListRequest",
       "headers": [],
       "internal": undefined,
@@ -6497,7 +6564,50 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "data": {
+                "array": [
+                  {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "double": 2,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "level": {
+                        "primitive": {
+                          "double": 2,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "Mid (Individual Contributor Level 2)",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetSeniorityListRequest",
       "headers": [],
       "internal": undefined,
@@ -6786,7 +6896,23 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "data": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetAgreementsRequest",
       "headers": [],
       "internal": true,
@@ -7271,7 +7397,205 @@ exports[`open api parser deel parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "statuses",
+              "value": {
+                "array": [
+                  {
+                    "enum": "pending",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            {
+              "name": "entities",
+              "value": {
+                "array": [
+                  {
+                    "enum": "individual",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "data": {
+                "properties": {
+                  "rows": {
+                    "array": [
+                      {
+                        "properties": {
+                          "amount": {
+                            "primitive": {
+                              "double": 1000,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "contract": {
+                            "properties": {
+                              "contract_type": {
+                                "primitive": {
+                                  "string": "pay_as_you_go_time_based",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "id": {
+                                "primitive": {
+                                  "string": "rhCTiRd9Mad41RwjsFWw-",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "name": {
+                                "primitive": {
+                                  "string": "Lisandro Shanahan-Dynamic Web Specialist",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "created_at": {
+                            "primitive": {
+                              "datetime": "2022-05-24T09:38:46.235Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "currency": {
+                            "primitive": {
+                              "string": "USD",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "fee": {
+                            "primitive": {
+                              "double": 10,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "double": 5586317,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "invoice_id": {
+                            "primitive": {
+                              "string": "rhCTiRd9Mad41RwjsFWw-",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "is_offcycle": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "is_overdue": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "label": {
+                            "primitive": {
+                              "string": "INVOICE-2022-11",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "money_received_at": {
+                            "primitive": {
+                              "datetime": "2022-05-24T09:38:46.235Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "paid_at": {
+                            "primitive": {
+                              "datetime": "2022-05-24T09:38:46.235Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "payment_currency": {
+                            "primitive": {
+                              "string": "USD",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "payment_method": {
+                            "enum": "stripe_bacs_debit",
+                            "type": "enum",
+                          },
+                          "payment_processed_at": {
+                            "primitive": {
+                              "datetime": "2022-05-24T09:38:46.235Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "status": {
+                            "enum": "pending",
+                            "type": "enum",
+                          },
+                          "total": {
+                            "primitive": {
+                              "double": 1000,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "vat_percentage": {
+                            "primitive": {
+                              "double": 21,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "vat_total": {
+                            "primitive": {
+                              "double": 210,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetInvoiceListRequest",
       "headers": [],
       "internal": undefined,
@@ -7782,7 +8106,23 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "data": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetPeopleListRequest",
       "headers": [],
       "internal": undefined,

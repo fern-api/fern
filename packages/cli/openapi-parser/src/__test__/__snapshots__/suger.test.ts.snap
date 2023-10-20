@@ -3411,7 +3411,39 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "orgId",
+              "value": {
+                "primitive": {
+                  "string": "org-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "entitlementId",
+              "value": {
+                "primitive": {
+                  "string": "entitlement-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListUsageRecordGroupsByEntitlementRequest",
       "headers": [],
       "internal": undefined,
@@ -3622,7 +3654,112 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "orgId",
+              "value": {
+                "primitive": {
+                  "string": "org-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "entitlementId",
+              "value": {
+                "primitive": {
+                  "string": "entitlement-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "usageRecordReports": {
+                "array": [
+                  {
+                    "properties": {
+                      "info": {
+                        "properties": {
+                          "awsMeteringResponse": {
+                            "properties": {
+                              "results": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "status": {
+                                        "enum": "Success",
+                                        "type": "enum",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "azureMeteringResponse": {
+                            "properties": {
+                              "result": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "error": {
+                                        "properties": {
+                                          "additionalInfo": {
+                                            "properties": {
+                                              "acceptedMessage": {
+                                                "properties": {
+                                                  "status": {
+                                                    "enum": "Accepted",
+                                                    "type": "enum",
+                                                  },
+                                                },
+                                                "type": "object",
+                                              },
+                                            },
+                                            "type": "object",
+                                          },
+                                        },
+                                        "type": "object",
+                                      },
+                                      "status": {
+                                        "enum": "Accepted",
+                                        "type": "enum",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListUsageRecordReportsByEntitlementRequest",
       "headers": [],
       "internal": undefined,
@@ -7492,7 +7629,39 @@ exports[`open api parser suger parse open api 1`] = `
       "errorStatusCode": [
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "orgId",
+              "value": {
+                "primitive": {
+                  "string": "org-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [
+              {
+                "properties": {
+                  "type": {
+                    "literal": "TemporalWorkflow",
+                    "type": "literal",
+                  },
+                },
+                "type": "object",
+              },
+            ],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "ListOperationsRequest",
       "headers": [],
       "internal": undefined,
@@ -9193,7 +9362,36 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "orgId",
+              "value": {
+                "primitive": {
+                  "string": "org-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "partner",
+              "value": {
+                "enum": "AWS",
+                "type": "enum",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListRevenueRecordsRequest",
       "headers": [],
       "internal": undefined,
@@ -9393,7 +9591,36 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "orgId",
+              "value": {
+                "primitive": {
+                  "string": "org-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "partner",
+              "value": {
+                "enum": "AWS",
+                "type": "enum",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListRevenueRecordDetailsRequest",
       "headers": [],
       "internal": undefined,
@@ -11845,7 +12072,39 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "orgId",
+              "value": {
+                "primitive": {
+                  "string": "org-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "productId",
+              "value": {
+                "primitive": {
+                  "string": "product-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListUsageRecordGroupsByProductRequest",
       "headers": [],
       "internal": undefined,
@@ -11977,7 +12236,112 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "orgId",
+              "value": {
+                "primitive": {
+                  "string": "org-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "productId",
+              "value": {
+                "primitive": {
+                  "string": "product-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "usageRecordReports": {
+                "array": [
+                  {
+                    "properties": {
+                      "info": {
+                        "properties": {
+                          "awsMeteringResponse": {
+                            "properties": {
+                              "results": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "status": {
+                                        "enum": "Success",
+                                        "type": "enum",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "azureMeteringResponse": {
+                            "properties": {
+                              "result": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "error": {
+                                        "properties": {
+                                          "additionalInfo": {
+                                            "properties": {
+                                              "acceptedMessage": {
+                                                "properties": {
+                                                  "status": {
+                                                    "enum": "Accepted",
+                                                    "type": "enum",
+                                                  },
+                                                },
+                                                "type": "object",
+                                              },
+                                            },
+                                            "type": "object",
+                                          },
+                                        },
+                                        "type": "object",
+                                      },
+                                      "status": {
+                                        "enum": "Accepted",
+                                        "type": "enum",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListUsageRecordReportsByProductRequest",
       "headers": [],
       "internal": undefined,
@@ -12173,7 +12537,29 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "orgId",
+              "value": {
+                "primitive": {
+                  "string": "org-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListUsageRecordGroupsByOrganizationRequest",
       "headers": [],
       "internal": undefined,
@@ -12389,7 +12775,102 @@ exports[`open api parser suger parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "orgId",
+              "value": {
+                "primitive": {
+                  "string": "org-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "usageRecordReports": {
+                "array": [
+                  {
+                    "properties": {
+                      "info": {
+                        "properties": {
+                          "awsMeteringResponse": {
+                            "properties": {
+                              "results": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "status": {
+                                        "enum": "Success",
+                                        "type": "enum",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "azureMeteringResponse": {
+                            "properties": {
+                              "result": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "error": {
+                                        "properties": {
+                                          "additionalInfo": {
+                                            "properties": {
+                                              "acceptedMessage": {
+                                                "properties": {
+                                                  "status": {
+                                                    "enum": "Accepted",
+                                                    "type": "enum",
+                                                  },
+                                                },
+                                                "type": "object",
+                                              },
+                                            },
+                                            "type": "object",
+                                          },
+                                        },
+                                        "type": "object",
+                                      },
+                                      "status": {
+                                        "enum": "Accepted",
+                                        "type": "enum",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListUsageRecordReportsByOrganizationRequest",
       "headers": [],
       "internal": undefined,

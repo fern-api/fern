@@ -144,7 +144,40 @@ Creates a new document index.",
 Used to list documents. Optionally filter on supported fields.
 ",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "count": {
+                "primitive": {
+                  "int": 123,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "next": {
+                "primitive": {
+                  "string": "http://api.example.org/accounts/?offset=400&limit=100",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "previous": {
+                "primitive": {
+                  "string": "http://api.example.org/accounts/?offset=200&limit=100",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DocumentsListRequest",
       "headers": [],
       "internal": undefined,

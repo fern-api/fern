@@ -13493,7 +13493,397 @@ If you try to access older information than what we can access, we will return a
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "primitive": {
+                  "int": 100,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "country_code",
+              "value": {
+                "primitive": {
+                  "string": "MX",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "country_code__in",
+              "value": {
+                "primitive": {
+                  "string": "CO,BR",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "display_name",
+              "value": {
+                "primitive": {
+                  "string": "Erebor Bank",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "name__in",
+              "value": {
+                "primitive": {
+                  "string": "erebor_br_retail,gotham_co_business",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "resources__allin",
+              "value": {
+                "primitive": {
+                  "string": "ACCOUNTS,OWNERS,TRANSACTIONS",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "status",
+              "value": {
+                "primitive": {
+                  "string": "healthy",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "status__in",
+              "value": {
+                "primitive": {
+                  "string": "healthy,down",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "type",
+              "value": {
+                "primitive": {
+                  "string": "fiscal",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "type__in",
+              "value": {
+                "primitive": {
+                  "string": "fiscal,bank",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "website",
+              "value": {
+                "primitive": {
+                  "string": "https://www.erebor.mx",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "count": {
+                "primitive": {
+                  "int": 130,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "results": {
+                "array": [
+                  {
+                    "properties": {
+                      "country_codes": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "MX",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "display_name": {
+                        "primitive": {
+                          "string": "Erebor Mexico",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "features": {
+                        "array": [
+                          {
+                            "properties": {
+                              "description": {
+                                "primitive": {
+                                  "string": "The institution may require a token during link creation or login",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "name": {
+                                "primitive": {
+                                  "string": "token_required",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "form_fields": {
+                        "array": [
+                          {
+                            "properties": {
+                              "label": {
+                                "primitive": {
+                                  "string": "Client number",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "name": {
+                                "primitive": {
+                                  "string": "username",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "placeholder": {
+                                "primitive": {
+                                  "string": "ABC333333A33",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "type": {
+                                "primitive": {
+                                  "string": "text",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "validation": {
+                                "primitive": {
+                                  "string": "^.{1,}$",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "validation_message": {
+                                "primitive": {
+                                  "string": "Invalid client number",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "values": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "code": {
+                                        "primitive": {
+                                          "string": "001",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "label": {
+                                        "primitive": {
+                                          "string": "Cédula de Ciudadanía",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "placeholder": {
+                                        "primitive": {
+                                          "string": "DEF4444908M22",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "validation": {
+                                        "primitive": {
+                                          "string": "^.{1,}$",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "validation_message": {
+                                        "primitive": {
+                                          "string": "Invalid document number",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "icon_logo": {
+                        "primitive": {
+                          "string": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "int": 1003,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "integration_type": {
+                        "enum": "credentials",
+                        "type": "enum",
+                      },
+                      "logo": {
+                        "primitive": {
+                          "string": "https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.png",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "erebor_mx_retail",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "primary_color": {
+                        "primitive": {
+                          "string": "#056dae",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "resources": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "ACCOUNTS",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "status": {
+                        "enum": "healthy",
+                        "type": "enum",
+                      },
+                      "text_logo": {
+                        "primitive": {
+                          "string": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "enum": "bank",
+                        "type": "enum",
+                      },
+                      "website": {
+                        "primitive": {
+                          "string": "https://www.erebor.com/",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListInstitutionsRequest",
       "headers": [],
       "internal": undefined,
@@ -23479,7 +23869,334 @@ If you try to access older information than what we can access, we will return a
       "errorStatusCode": [
         401,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "primitive": {
+                  "int": 100,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "count": {
+                "primitive": {
+                  "int": 130,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "next": {
+                "primitive": {
+                  "string": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "results": {
+                "array": [
+                  {
+                    "properties": {
+                      "balance_gross": {
+                        "primitive": {
+                          "float": 76000,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                      "balance_net": {
+                        "primitive": {
+                          "float": 77370.69,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                      "balance_type": {
+                        "primitive": {
+                          "string": "ASSET",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "currency": {
+                        "primitive": {
+                          "string": "BRL",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "instruments": {
+                        "array": [
+                          {
+                            "properties": {
+                              "average_acquisition_price": {
+                                "primitive": {
+                                  "float": 10.01,
+                                  "type": "float",
+                                },
+                                "type": "primitive",
+                              },
+                              "balance_gross": {
+                                "primitive": {
+                                  "float": 100.09,
+                                  "type": "float",
+                                },
+                                "type": "primitive",
+                              },
+                              "balance_net": {
+                                "primitive": {
+                                  "float": 99.09,
+                                  "type": "float",
+                                },
+                                "type": "primitive",
+                              },
+                              "currency": {
+                                "primitive": {
+                                  "string": "USD",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "fees": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "type": {
+                                        "primitive": {
+                                          "string": "OPERATION_FEE",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "value": {
+                                        "primitive": {
+                                          "float": 123.09,
+                                          "type": "float",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "id": {
+                                "primitive": {
+                                  "string": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "interest_rates": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "index": {
+                                        "primitive": {
+                                          "string": "CDI",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "type": {
+                                        "primitive": {
+                                          "string": "yearly",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "value": {
+                                        "primitive": {
+                                          "float": 11.31,
+                                          "type": "float",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "name": {
+                                "primitive": {
+                                  "string": "CBD DIGITAL ESPECIAL",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "open_date": {
+                                "primitive": {
+                                  "string": "2021-08-10",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "price": {
+                                "primitive": {
+                                  "float": 10.41,
+                                  "type": "float",
+                                },
+                                "type": "primitive",
+                              },
+                              "profit": {
+                                "primitive": {
+                                  "float": 3.08,
+                                  "type": "float",
+                                },
+                                "type": "primitive",
+                              },
+                              "public_id": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "type": {
+                                        "primitive": {
+                                          "string": "isin",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "value": {
+                                        "primitive": {
+                                          "string": "435-3354.3333",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "quantity": {
+                                "primitive": {
+                                  "float": 27.46,
+                                  "type": "float",
+                                },
+                                "type": "primitive",
+                              },
+                              "redemption_conditions": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "type": {
+                                        "primitive": {
+                                          "string": "due_date",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "value": {
+                                        "primitive": {
+                                          "string": "12-02-2023",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "subtype": {
+                                "primitive": {
+                                  "string": "CBD",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "type": {
+                                "enum": "BOND",
+                                "type": "enum",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "Investimento",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "enum": "FIXED_INCOME",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "ListPortfolioRequest",
       "headers": [],
       "internal": undefined,

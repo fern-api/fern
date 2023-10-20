@@ -34,7 +34,26 @@ Here are some of the most used payload fields explained (you can find the full p
         401,
         429,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "transactionState": {
+                "enum": "CREATED",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PostConsumerTransactionRequest",
       "headers": [],
       "internal": undefined,

@@ -8008,6 +8008,20 @@ the same customer, dimension, and time, but a different quantity.",
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "entitlementId": "entitlement-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordGroup",
             "path-parameters": {
@@ -8058,6 +8072,19 @@ the same customer, dimension, and time, but a different quantity.",
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/usageRecordGroup",
             "path-parameters": {
@@ -8103,6 +8130,20 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "productId": "product-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}/usageRecordGroup",
@@ -8153,6 +8194,48 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "entitlementId": "entitlement-id",
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "usageRecordReports": [
+                      {
+                        "info": {
+                          "awsMeteringResponse": {
+                            "results": [
+                              {
+                                "status": "Success",
+                              },
+                            ],
+                          },
+                          "azureMeteringResponse": {
+                            "result": [
+                              {
+                                "error": {
+                                  "additionalInfo": {
+                                    "acceptedMessage": {
+                                      "status": "Accepted",
+                                    },
+                                  },
+                                },
+                                "status": "Accepted",
+                              },
+                            ],
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/entitlement/{entitlementId}/usageRecordReport",
@@ -8209,6 +8292,47 @@ the same customer, dimension, and time, but a different quantity.",
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "usageRecordReports": [
+                      {
+                        "info": {
+                          "awsMeteringResponse": {
+                            "results": [
+                              {
+                                "status": "Success",
+                              },
+                            ],
+                          },
+                          "azureMeteringResponse": {
+                            "result": [
+                              {
+                                "error": {
+                                  "additionalInfo": {
+                                    "acceptedMessage": {
+                                      "status": "Accepted",
+                                    },
+                                  },
+                                },
+                                "status": "Accepted",
+                              },
+                            ],
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/usageRecordReport",
             "path-parameters": {
@@ -8254,6 +8378,48 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "productId": "product-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "usageRecordReports": [
+                      {
+                        "info": {
+                          "awsMeteringResponse": {
+                            "results": [
+                              {
+                                "status": "Success",
+                              },
+                            ],
+                          },
+                          "azureMeteringResponse": {
+                            "result": [
+                              {
+                                "error": {
+                                  "additionalInfo": {
+                                    "acceptedMessage": {
+                                      "status": "Accepted",
+                                    },
+                                  },
+                                },
+                                "status": "Accepted",
+                              },
+                            ],
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/product/{productId}/usageRecordReport",
@@ -10317,6 +10483,23 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [
+                    {
+                      "type": "TemporalWorkflow",
+                    },
+                  ],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/operation",
             "path-parameters": {
@@ -11124,6 +11307,20 @@ the same customer, dimension, and time, but a different quantity.",
               "root.BadRequestError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "partner": "AWS",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/org/{orgId}/partner/{partner}/revenueRecordDetail",
             "path-parameters": {
@@ -11188,6 +11385,20 @@ the same customer, dimension, and time, but a different quantity.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "orgId": "org-id",
+                  "partner": "AWS",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "GET",
             "path": "/org/{orgId}/partner/{partner}/revenueRecord",

@@ -548,6 +548,21 @@ exports[`open api parser buzzshot simple 1`] = `
             "auth": false,
             "docs": "",
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "count": 123,
+                    "next": "http://api.example.org/accounts/?page=4",
+                    "previous": "http://api.example.org/accounts/?page=2",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v2/accounts",
             "request": {
@@ -569,6 +584,21 @@ exports[`open api parser buzzshot simple 1`] = `
             "auth": false,
             "docs": "",
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "count": 123,
+                    "next": "http://api.example.org/accounts/?page=4",
+                    "previous": "http://api.example.org/accounts/?page=2",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v2/games",
             "request": {
@@ -610,6 +640,21 @@ exports[`open api parser buzzshot simple 1`] = `
             "auth": false,
             "docs": "",
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "count": 123,
+                    "next": "http://api.example.org/accounts/?page=4",
+                    "previous": "http://api.example.org/accounts/?page=2",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v2/groups",
             "request": {
@@ -641,6 +686,21 @@ exports[`open api parser buzzshot simple 1`] = `
             "auth": false,
             "docs": "",
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "count": 123,
+                    "next": "http://api.example.org/accounts/?page=4",
+                    "previous": "http://api.example.org/accounts/?page=2",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v2/rooms",
             "request": {
@@ -662,6 +722,21 @@ exports[`open api parser buzzshot simple 1`] = `
             "auth": false,
             "docs": "",
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "count": 123,
+                    "next": "http://api.example.org/accounts/?page=4",
+                    "previous": "http://api.example.org/accounts/?page=2",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v2/photos",
             "request": {
@@ -683,6 +758,21 @@ exports[`open api parser buzzshot simple 1`] = `
             "auth": false,
             "docs": "",
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "count": 123,
+                    "next": "http://api.example.org/accounts/?page=4",
+                    "previous": "http://api.example.org/accounts/?page=2",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v2/players",
             "request": {

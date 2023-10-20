@@ -339,7 +339,45 @@ token type issued for a given subject.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "requested_token_type",
+              "value": {
+                "enum": "urn:devrev:params:oauth:token-type:aat",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "tokens": {
+                "array": [
+                  {
+                    "properties": {
+                      "requested_token_type": {
+                        "enum": "urn:devrev:params:oauth:token-type:aat",
+                        "type": "enum",
+                      },
+                      "status": {
+                        "enum": "active",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AuthTokensListRequest",
       "headers": [],
       "internal": undefined,
@@ -890,7 +928,53 @@ disabled.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "mode",
+              "value": {
+                "enum": "after",
+                "type": "enum",
+              },
+            },
+            {
+              "name": "state",
+              "value": {
+                "array": [
+                  {
+                    "enum": "active",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "dev_users": {
+                "array": [
+                  {
+                    "properties": {
+                      "state": {
+                        "enum": "active",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DevUsersListRequest",
       "headers": [],
       "internal": undefined,
@@ -1298,7 +1382,43 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "mode",
+              "value": {
+                "enum": "after",
+                "type": "enum",
+              },
+            },
+            {
+              "name": "type",
+              "value": {
+                "array": [
+                  {
+                    "enum": "capability",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "parts": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PartsListRequest",
       "headers": [],
       "internal": undefined,
@@ -1749,7 +1869,31 @@ to access.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "mode",
+              "value": {
+                "enum": "after",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "rev_orgs": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "RevOrgsListRequest",
       "headers": [],
       "internal": undefined,
@@ -2248,7 +2392,31 @@ and a logical concept denoted by the tag's name.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "mode",
+              "value": {
+                "enum": "after",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "tags": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TagsListRequest",
       "headers": [],
       "internal": undefined,
@@ -2507,7 +2675,41 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "object",
+              "value": {
+                "primitive": {
+                  "string": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "mode",
+              "value": {
+                "enum": "after",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "timeline_entries": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TimelineEntriesListRequest",
       "headers": [],
       "internal": undefined,
@@ -3098,7 +3300,60 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "issue.priority",
+              "value": {
+                "array": [
+                  {
+                    "enum": "p0",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            {
+              "name": "ticket.severity",
+              "value": {
+                "array": [
+                  {
+                    "enum": "blocker",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            {
+              "name": "type",
+              "value": {
+                "array": [
+                  {
+                    "enum": "issue",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "works": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "WorksExportRequest",
       "headers": [],
       "internal": undefined,
@@ -3401,7 +3656,67 @@ organizations.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "issue.priority",
+              "value": {
+                "array": [
+                  {
+                    "enum": "p0",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            {
+              "name": "mode",
+              "value": {
+                "enum": "after",
+                "type": "enum",
+              },
+            },
+            {
+              "name": "ticket.severity",
+              "value": {
+                "array": [
+                  {
+                    "enum": "blocker",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            {
+              "name": "type",
+              "value": {
+                "array": [
+                  {
+                    "enum": "issue",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "works": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "WorksListRequest",
       "headers": [],
       "internal": undefined,

@@ -10,7 +10,52 @@ exports[`open api parser hume parse open api 1`] = `
       "availability": undefined,
       "description": "Sort and filter jobs.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "status",
+              "value": {
+                "array": [
+                  {
+                    "enum": "QUEUED",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+            {
+              "name": "when",
+              "value": {
+                "enum": "created_before",
+                "type": "enum",
+              },
+            },
+            {
+              "name": "sort_by",
+              "value": {
+                "enum": "created",
+                "type": "enum",
+              },
+            },
+            {
+              "name": "direction",
+              "value": {
+                "enum": "asc",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "ListJobsRequest",
       "headers": [],
       "internal": undefined,
