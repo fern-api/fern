@@ -14,21 +14,23 @@ export class ExampleTypeFactory {
     public buildExampleFromSchemaId(schemaId: SchemaId): FullExample | undefined {
         const schema = this.schemas[schemaId];
         if (schema != null) {
-            return this.buildExampleFromSchema({ schema, isOptional: false });
+            return this.buildExampleFromSchema({ schema, isOptional: false, visitedSchemaIds: new Set() });
         }
         return undefined;
     }
 
     public buildExample(schema: SchemaWithExample): FullExample | undefined {
-        return this.buildExampleFromSchema({ schema, isOptional: false });
+        return this.buildExampleFromSchema({ schema, isOptional: false, visitedSchemaIds: new Set() });
     }
 
     public buildExampleFromSchema({
         schema,
         isOptional,
+        visitedSchemaIds,
     }: {
         schema: SchemaWithExample;
         isOptional: boolean;
+        visitedSchemaIds: Set<SchemaId>;
     }): FullExample | undefined {
         switch (schema.type) {
             case "enum":
@@ -36,25 +38,32 @@ export class ExampleTypeFactory {
             case "literal":
                 return FullExample.literal(schema.value);
             case "nullable":
-                return this.buildExampleFromSchema({ schema: schema.value, isOptional: true });
+                return this.buildExampleFromSchema({ schema: schema.value, isOptional: true, visitedSchemaIds });
             case "optional":
-                return this.buildExampleFromSchema({ schema: schema.value, isOptional: true });
+                return this.buildExampleFromSchema({ schema: schema.value, isOptional: true, visitedSchemaIds });
             case "primitive": {
                 const primitiveExample = this.buildExampleFromPrimitive(schema.schema);
                 return primitiveExample != null ? FullExample.primitive(primitiveExample) : undefined;
             }
             case "reference": {
                 const referencedSchemaWithExample = this.schemas[schema.schema];
-                return referencedSchemaWithExample != null
-                    ? this.buildExampleFromSchema({ schema: referencedSchemaWithExample, isOptional })
-                    : undefined;
+                if (referencedSchemaWithExample != null && !visitedSchemaIds.has(schema.schema)) {
+                    visitedSchemaIds.add(schema.schema);
+                    this.buildExampleFromSchema({ schema: referencedSchemaWithExample, isOptional, visitedSchemaIds });
+                    visitedSchemaIds.delete(schema.schema);
+                }
+                return undefined;
             }
             case "oneOf":
                 return undefined;
             case "unknown":
                 return undefined;
             case "array": {
-                const itemExample = this.buildExampleFromSchema({ schema: schema.value, isOptional: true });
+                const itemExample = this.buildExampleFromSchema({
+                    schema: schema.value,
+                    isOptional: true,
+                    visitedSchemaIds,
+                });
                 if (isOptional) {
                     return itemExample != null ? FullExample.array([itemExample]) : undefined;
                 }
@@ -62,7 +71,11 @@ export class ExampleTypeFactory {
             }
             case "map": {
                 const keyExample = this.buildExampleFromPrimitive(schema.key.schema);
-                const valueExample = this.buildExampleFromSchema({ schema: schema.value, isOptional: true });
+                const valueExample = this.buildExampleFromSchema({
+                    schema: schema.value,
+                    isOptional: true,
+                    visitedSchemaIds,
+                });
                 if (keyExample != null && valueExample != null) {
                     return FullExample.map([
                         {
@@ -83,6 +96,7 @@ export class ExampleTypeFactory {
                     const allOfExample = this.buildExampleFromSchema({
                         schema: allOfSchemaWithExample,
                         isOptional: false,
+                        visitedSchemaIds,
                     });
                     if (allOfExample?.type === "object") {
                         properties = {
@@ -95,6 +109,7 @@ export class ExampleTypeFactory {
                     const propertyExample = this.buildExampleFromSchema({
                         schema: objPropertyWithExample.schema,
                         isOptional: false,
+                        visitedSchemaIds,
                     });
                     if (isSchemaRequired(objPropertyWithExample.schema) && propertyExample == null) {
                         return undefined;
@@ -106,6 +121,7 @@ export class ExampleTypeFactory {
                     const propertyExample = this.buildExampleFromSchema({
                         schema: objPropertyWithExample.schema,
                         isOptional: false,
+                        visitedSchemaIds,
                     });
                     if (propertyExample != null) {
                         properties[objPropertyWithExample.key] = propertyExample;

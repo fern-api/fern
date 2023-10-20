@@ -92,24 +92,11 @@ Generate a completion using a previously defined deployment.
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
-                  "options": {
-                    "logprobs": "ALL",
-                  },
-                  "requests": [
-                    {
-                      "input_values": [],
-                    },
-                  ],
+                  "requests": [],
                 },
                 "response": {
                   "body": {
-                    "results": [
-                      {
-                        "data": {
-                          "completions": [],
-                        },
-                      },
-                    ],
+                    "results": [],
                   },
                 },
               },
@@ -269,9 +256,7 @@ Used to submit feedback regarding the quality of previously generated completion
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
-                  "actuals": [
-                    {},
-                  ],
+                  "actuals": [],
                 },
                 "response": undefined,
               },
@@ -2621,9 +2606,6 @@ or overwritten with default values.",
                 "query-parameters": undefined,
                 "request": {
                   "inputs": [],
-                  "metric_input_params": {
-                    "params": {},
-                  },
                 },
                 "response": undefined,
               },
@@ -2710,23 +2692,6 @@ is found, a new test case will be appended to the end.
 Note that a full replacement of the test case is performed, so any fields not provided will be removed
 or overwritten with default values.",
             "errors": [],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": {
-                  "evaluation_params": {},
-                  "input_values": [],
-                },
-                "response": {
-                  "body": {
-                    "evaluation_params": {},
-                    "input_values": [],
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/v1/test-suites/{id}/test-cases",
             "path-parameters": {

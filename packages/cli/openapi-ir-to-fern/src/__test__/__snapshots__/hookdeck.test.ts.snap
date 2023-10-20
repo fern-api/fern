@@ -4950,9 +4950,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "pagination": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -5106,9 +5104,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "pagination": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -5374,9 +5370,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "pagination": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -5569,9 +5563,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "pagination": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -5764,9 +5756,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "pagination": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -5981,9 +5971,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "pagination": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -6343,9 +6331,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "pagination": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -6591,9 +6577,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "pagination": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -6968,9 +6952,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "pagination": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -7191,9 +7173,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "pagination": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -7505,9 +7485,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "pagination": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -7722,9 +7700,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "pagination": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -7892,9 +7868,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "pagination": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -7981,9 +7955,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "pagination": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -8238,9 +8210,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "pagination": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -8500,9 +8470,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "pagination": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -8763,9 +8731,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "pagination": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -8847,9 +8813,7 @@ exports[`open api parser hookdeck simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "pagination": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -8907,19 +8871,6 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.BadRequestError",
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "log_level": "debug",
-                  },
-                },
-              },
             ],
             "method": "PUT",
             "path": "/transformations/run",

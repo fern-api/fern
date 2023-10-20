@@ -84,22 +84,7 @@ exports[`open api parser hume simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {
-                  "models": {
-                    "face": {},
-                    "language": {
-                      "granularity": "word",
-                    },
-                    "ner": {},
-                    "prosody": {
-                      "granularity": "word",
-                      "window": {},
-                    },
-                  },
-                  "transcription": {
-                    "language": "zh",
-                  },
-                },
+                "request": {},
                 "response": undefined,
               },
             ],

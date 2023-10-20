@@ -352,27 +352,8 @@ Generate a completion using a previously defined deployment.
           "queryParameters": [],
           "request": {
             "properties": {
-              "options": {
-                "properties": {
-                  "logprobs": {
-                    "enum": "ALL",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
               "requests": {
-                "array": [
-                  {
-                    "properties": {
-                      "input_values": {
-                        "map": [],
-                        "type": "map",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -381,22 +362,7 @@ Generate a completion using a previously defined deployment.
           "response": {
             "properties": {
               "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "data": {
-                        "properties": {
-                          "completions": {
-                            "array": [],
-                            "type": "array",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -723,15 +689,6 @@ or overwritten with default values.",
                 "array": [],
                 "type": "array",
               },
-              "metric_input_params": {
-                "properties": {
-                  "params": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
             },
             "type": "object",
           },
@@ -949,12 +906,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "request": {
             "properties": {
               "actuals": {
-                "array": [
-                  {
-                    "properties": {},
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -1012,39 +964,7 @@ is found, a new test case will be appended to the end.
 Note that a full replacement of the test case is performed, so any fields not provided will be removed
 or overwritten with default values.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "evaluation_params": {
-                "properties": {},
-                "type": "object",
-              },
-              "input_values": {
-                "map": [],
-                "type": "map",
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "evaluation_params": {
-                "properties": {},
-                "type": "object",
-              },
-              "input_values": {
-                "map": [],
-                "type": "map",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpsertTestSuiteTestCaseRequest",
       "headers": [],
       "internal": undefined,

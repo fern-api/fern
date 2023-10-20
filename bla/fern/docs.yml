@@ -1,8 +1,0 @@
-instances:
-  - url: https://dsinghvi.dev.docs.buildwithfern.com
-title: dsinghvi | Documentation
-navigation:
-  - api: API Reference
-colors:
-  accentPrimary: '#ffffff'
-  background: '#000000'

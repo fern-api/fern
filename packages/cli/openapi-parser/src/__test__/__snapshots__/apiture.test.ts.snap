@@ -1044,27 +1044,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
           "response": {
             "properties": {
               "items": {
-                "array": [
-                  {
-                    "properties": {
-                      "effectiveOn": {
-                        "primitive": {
-                          "string": "2022-07-05",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "scheduledOn": {
-                        "primitive": {
-                          "string": "2022-07-04",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -1307,43 +1287,7 @@ This information provides hints to clients, allowing bank customers to select tr
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "restrictedDates": {
-                "array": [
-                  {
-                    "properties": {
-                      "creditOn": {
-                        "primitive": {
-                          "string": "2022-07-05",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "debitOn": {
-                        "primitive": {
-                          "string": "2022-07-05",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "occursOn": {
-                        "primitive": {
-                          "string": "2019-04-05",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "reason": {
-                        "enum": "pastDate",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -1488,12 +1432,7 @@ The default response lists only recent transactions. Normally, this is transacti
           "response": {
             "properties": {
               "items": {
-                "array": [
-                  {
-                    "properties": {},
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -1771,17 +1710,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
           "response": {
             "properties": {
               "items": {
-                "array": [
-                  {
-                    "properties": {
-                      "type": {
-                        "enum": "credit",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -2016,38 +1945,7 @@ Note: This operation requires an identity challenge if the financial institution
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {
-              "amount": {
-                "primitive": {
-                  "string": "3456.78",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "schedule": {
-                "properties": {
-                  "amountLimit": {
-                    "primitive": {
-                      "string": "3456.78",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "frequency": {
-                    "enum": "once",
-                    "type": "enum",
-                  },
-                  "recurrenceType": {
-                    "enum": "fixed",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            },
-            "type": "object",
-          },
+          "request": undefined,
           "response": {
             "properties": {},
             "type": "object",
@@ -2202,35 +2100,7 @@ Note: This operation requires an identity challenge if the financial institution
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "amount": {
-                "primitive": {
-                  "string": "3456.78",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "schedule": {
-                "properties": {
-                  "amountLimit": {
-                    "primitive": {
-                      "string": "3456.78",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "frequency": {
-                    "enum": "once",
-                    "type": "enum",
-                  },
-                  "recurrenceType": {
-                    "enum": "fixed",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {

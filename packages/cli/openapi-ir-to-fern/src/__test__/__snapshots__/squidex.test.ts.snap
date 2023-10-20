@@ -4501,11 +4501,7 @@ exports[`open api parser squidex simple 1`] = `
                   "body": {
                     "_links": [],
                     "errors": [],
-                    "items": [
-                      {
-                        "_links": [],
-                      },
-                    ],
+                    "items": [],
                   },
                 },
               },
@@ -4809,11 +4805,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                   "body": {
                     "_links": [],
                     "errors": [],
-                    "items": [
-                      {
-                        "_links": [],
-                      },
-                    ],
+                    "items": [],
                   },
                 },
               },
@@ -5060,11 +5052,7 @@ The client secret is auto generated on the server and returned. The client does 
                   "body": {
                     "_links": [],
                     "errors": [],
-                    "items": [
-                      {
-                        "_links": [],
-                      },
-                    ],
+                    "items": [],
                   },
                 },
               },
@@ -5522,11 +5510,7 @@ The client secret is auto generated on the server and returned. The client does 
                   "body": {
                     "_links": [],
                     "errors": [],
-                    "items": [
-                      {
-                        "_links": [],
-                      },
-                    ],
+                    "items": [],
                   },
                 },
               },
@@ -5630,13 +5614,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {
-                  "jobs": [
-                    {
-                      "type": "Annotate",
-                    },
-                  ],
-                },
+                "request": {},
                 "response": undefined,
               },
             ],
@@ -6892,11 +6870,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
-                  "jobs": [
-                    {
-                      "type": "Upsert",
-                    },
-                  ],
+                  "jobs": [],
                 },
                 "response": undefined,
               },
@@ -8080,20 +8054,6 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "locked": "None",
-                    "plans": [],
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/api/apps/{app}/plans",
             "path-parameters": {
@@ -8114,20 +8074,6 @@ The client secret is auto generated on the server and returned. The client does 
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "locked": "None",
-                    "plans": [],
-                  },
-                },
-              },
             ],
             "method": "GET",
             "path": "/api/teams/{team}/plans",
@@ -10403,19 +10349,6 @@ You will be assigned as owner of the new team automatically.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "result": "Translated",
-                  },
-                },
-              },
             ],
             "method": "POST",
             "path": "/api/apps/{app}/translations",

@@ -6680,22 +6680,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "email": {
-                "primitive": {
-                  "string": "johndoe@gmail.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "userId": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -6854,22 +6839,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "email": {
-                "primitive": {
-                  "string": "johndoe@gmail.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "userId": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -7369,22 +7339,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "email": {
-                "primitive": {
-                  "string": "johndoe@gmail.com",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-              "userId": {
-                "primitive": {
-                  "string": "fa7a0841-b533-4478-95533-0fde890c3483",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
