@@ -469,7 +469,7 @@ exports[`open api parser hume parse open api 1`] = `
           "key": "models",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "BaseRequestModels",
@@ -485,7 +485,7 @@ exports[`open api parser hume parse open api 1`] = `
           "key": "transcription",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "BaseRequestTranscription",
@@ -501,7 +501,7 @@ exports[`open api parser hume parse open api 1`] = `
           "key": "urls",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
 
@@ -525,7 +525,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "callback_url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
               "schema": {
@@ -543,7 +543,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "notify",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Whether to send an email notification to the user upon job failure.",
               "schema": {
@@ -1083,7 +1083,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "fps_pred",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Number of frames per second to process. Other frames will be omitted from the response. Set to \`0\` to process every frame.",
               "schema": {
@@ -1099,7 +1099,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "prob_threshold",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Face detection probability threshold. Faces detected with a probability less than this threshold will be omitted from the response.",
               "schema": {
@@ -1115,7 +1115,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "identify_faces",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Whether to return identifiers for faces across frames. If \`true\`, unique identifiers will be assigned to face bounding boxes to differentiate different faces. If \`false\`, all faces will be tagged with an \`unknown\` ID.",
               "schema": {
@@ -1131,7 +1131,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "min_face_size",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Minimum bounding box side length in pixels to treat as a face. Faces detected with a bounding box side length in pixels less than this threshold will be omitted from the response.",
               "schema": {
@@ -1147,7 +1147,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "facs",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "FaceFacs",
@@ -1163,7 +1163,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "descriptions",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "FaceDescriptions",
@@ -1179,7 +1179,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "save_faces",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Whether to extract and save the detected faces in the artifacts zip created by each job.",
               "schema": {
@@ -1269,7 +1269,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "facs",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "FACS 2.0 features and their scores.",
               "type": "array",
@@ -1289,7 +1289,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "descriptions",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Modality-specific descriptive features and their scores.",
               "type": "array",
@@ -1443,7 +1443,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "filename",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The name of the file.",
               "schema": {
@@ -1461,7 +1461,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "content_type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The content type of the file.",
               "schema": {
@@ -1895,7 +1895,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "granularity",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "LanguageGranularity",
@@ -1911,7 +1911,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "identify_speakers",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
               "schema": {
@@ -1927,7 +1927,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "sentiment",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "LanguageSentiment",
@@ -1943,7 +1943,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "toxicity",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "LanguageToxicity",
@@ -1995,7 +1995,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "time",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "LanguagePredictionTime",
@@ -2011,7 +2011,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "confidence",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
               "schema": {
@@ -2027,7 +2027,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "speaker_confidence",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
               "schema": {
@@ -2059,7 +2059,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "sentiment",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Sentiment predictions returned as a distribution. This model predicts the probability that a given text could be interpreted as having each sentiment level from \`1\` (negative) to \`9\` (positive).
 
@@ -2081,7 +2081,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "toxicity",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Toxicity predictions returned as probabilities that the text can be classified into the following categories: \`toxic\`, \`severe_toxic\`, \`obscene\`, \`threat\`, \`insult\`, and \`identity_hate\`.",
               "type": "array",
@@ -2111,7 +2111,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "face",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsFace",
@@ -2127,7 +2127,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "burst",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsBurst",
@@ -2143,7 +2143,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "prosody",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsProsody",
@@ -2159,7 +2159,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "language",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsLanguage",
@@ -2175,7 +2175,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "ner",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsNer",
@@ -2191,7 +2191,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "facemesh",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsFacemesh",
@@ -2217,7 +2217,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "face",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsPredictionsFace",
@@ -2233,7 +2233,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "burst",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsPredictionsBurst",
@@ -2249,7 +2249,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "prosody",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsPredictionsProsody",
@@ -2265,7 +2265,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "language",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsPredictionsLanguage",
@@ -2281,7 +2281,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "ner",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsPredictionsNer",
@@ -2297,7 +2297,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "facemesh",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsPredictionsFacemesh",
@@ -2323,7 +2323,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "identify_speakers",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
               "schema": {
@@ -2427,7 +2427,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "time",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "NerPredictionTime",
@@ -2443,7 +2443,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "confidence",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
               "schema": {
@@ -2459,7 +2459,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "speaker_confidence",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
               "schema": {
@@ -2587,7 +2587,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "metadata",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PredictionsOptionalNullBurstPredictionMetadata",
@@ -2629,7 +2629,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "metadata",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PredictionsOptionalNullFacePredictionMetadata",
@@ -2671,7 +2671,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "metadata",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PredictionsOptionalNullFacemeshPredictionMetadata",
@@ -2713,7 +2713,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "metadata",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PredictionsOptionalTranscriptionMetadataLanguagePredictionMetadata",
@@ -2755,7 +2755,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "metadata",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PredictionsOptionalTranscriptionMetadataNerPredictionMetadata",
@@ -2797,7 +2797,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "metadata",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PredictionsOptionalTranscriptionMetadataProsodyPredictionMetadata",
@@ -2839,7 +2839,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "granularity",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ProsodyGranularity",
@@ -2855,7 +2855,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "identify_speakers",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
               "schema": {
@@ -2871,7 +2871,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "window",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ProsodyWindow",
@@ -2897,7 +2897,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "text",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "A segment of text (like a word or a sentence).",
               "schema": {
@@ -2927,7 +2927,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "confidence",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
               "schema": {
@@ -2943,7 +2943,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "speaker_confidence",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
               "schema": {
@@ -3007,7 +3007,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "models",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "RequestModels",
@@ -3023,7 +3023,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "transcription",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "RequestTranscription",
@@ -3039,7 +3039,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "key": "urls",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
 
@@ -3063,7 +3063,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "callback_url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
               "schema": {
@@ -3081,7 +3081,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "notify",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Whether to send an email notification to the user upon job completion/failure.",
               "schema": {
@@ -3268,7 +3268,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "results",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "SourceResultResults",
@@ -3284,7 +3284,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "error",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "An error message.",
               "schema": {
@@ -3559,7 +3559,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "language",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TranscriptionLanguage",
@@ -3597,7 +3597,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "detected_language",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TranscriptionMetadataDetectedLanguage",
@@ -3667,7 +3667,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "length",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The length of the sliding window.",
               "schema": {
@@ -3683,7 +3683,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "key": "step",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The step size of the sliding window.",
               "schema": {

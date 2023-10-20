@@ -3832,7 +3832,9 @@ used.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                },
                 "response": {
                   "body": [],
                 },
@@ -4090,7 +4092,9 @@ records.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
+                },
                 "response": {
                   "body": [],
                 },
@@ -4280,7 +4284,10 @@ them.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "environment": "production",
+                  "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
+                },
                 "response": {
                   "body": {
                     "rev_org": {},
@@ -4409,7 +4416,9 @@ permitted.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
+                },
                 "response": {
                   "body": [],
                 },
@@ -4530,6 +4539,18 @@ used.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "allowed_values": {},
+                  "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
+                },
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/tags.update",
@@ -4791,7 +4812,9 @@ response.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
+                },
                 "response": {
                   "body": [],
                 },
@@ -4888,6 +4911,29 @@ response.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "action": "activate",
+                  "event_types": {
+                    "add": [
+                      "part_created",
+                    ],
+                    "remove": [
+                      "part_created",
+                    ],
+                    "set": [
+                      "part_created",
+                    ],
+                  },
+                  "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
+                },
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/webhooks.update",
@@ -4989,7 +5035,9 @@ won't receive any object events until successfully verified.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
+                },
                 "response": {
                   "body": [],
                 },

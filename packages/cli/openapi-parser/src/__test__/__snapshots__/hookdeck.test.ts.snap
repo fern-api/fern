@@ -29315,7 +29315,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -29763,7 +29763,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "query",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Query object to filter records",
               "type": "nullable",
@@ -29840,7 +29840,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "cancelled_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Date the bulk retry was cancelled",
               "type": "nullable",
@@ -29860,7 +29860,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "completed_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Date the bulk retry was completed",
               "type": "nullable",
@@ -29880,7 +29880,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "estimated_batch",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Number of batches required to complete the bulk retry",
               "type": "nullable",
@@ -29900,7 +29900,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "estimated_count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Number of estimated events to be retried",
               "type": "nullable",
@@ -29920,7 +29920,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "processed_batch",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Number of batches currently processed",
               "type": "nullable",
@@ -29940,7 +29940,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "completed_count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Number of events that were successfully delivered",
               "type": "nullable",
@@ -29972,7 +29972,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "progress",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Progression of the batch operations, values 0 - 1",
               "type": "nullable",
@@ -29992,7 +29992,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "failed_count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Number of events that failed to be delivered",
               "type": "nullable",
@@ -30012,7 +30012,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "number",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -30042,7 +30042,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "pagination",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "BatchOperationPaginatedResultPagination",
@@ -30058,7 +30058,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -30074,7 +30074,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "models",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -30104,7 +30104,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "estimated_batch",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Number of batches required to complete the bulk retry",
               "type": "nullable",
@@ -30124,7 +30124,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "estimated_count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Number of estimated events to be retried",
               "type": "nullable",
@@ -30144,7 +30144,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "progress",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Progression of the batch operations, values 0 - 1",
               "type": "nullable",
@@ -30244,7 +30244,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "alias",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Alternate alias for the bookmark",
               "type": "nullable",
@@ -30266,7 +30266,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "BookmarkData",
@@ -30282,7 +30282,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "last_used_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Date the bookmark was last manually triggered",
               "type": "nullable",
@@ -30336,7 +30336,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "pagination",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "BookmarkPaginatedResultPagination",
@@ -30352,7 +30352,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -30368,7 +30368,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "models",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -30464,7 +30464,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "ruleset",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ConnectionRuleset",
@@ -30480,7 +30480,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "resolved_rules",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Array of rules applied to connection after factoring for the ruleset",
               "type": "nullable",
@@ -30504,7 +30504,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "rules",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Array of rules configured on the connection",
               "type": "nullable",
@@ -30528,7 +30528,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "archived_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Date the connection was archived",
               "type": "nullable",
@@ -30548,7 +30548,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "paused_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Date the connection was paused",
               "type": "nullable",
@@ -30653,7 +30653,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "pagination",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ConnectionPaginatedResultPagination",
@@ -30669,7 +30669,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -30685,7 +30685,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "models",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -30962,7 +30962,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "last_updated_by",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "ID of the team member who last updated the issue status",
               "type": "nullable",
@@ -30984,7 +30984,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "dismissed_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "ISO timestamp for when the issue was dismissed",
               "type": "nullable",
@@ -31004,7 +31004,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "auto_resolved_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -31024,7 +31024,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "merged_with",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -31171,7 +31171,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "trigger_event",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "generatedName": "DeliveryIssueDataTriggerEvent",
@@ -31187,7 +31187,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "trigger_attempt",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "generatedName": "DeliveryIssueDataTriggerAttempt",
@@ -31328,7 +31328,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "last_updated_by",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "ID of the team member who last updated the issue status",
               "type": "nullable",
@@ -31350,7 +31350,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "dismissed_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "ISO timestamp for when the issue was dismissed",
               "type": "nullable",
@@ -31370,7 +31370,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "auto_resolved_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -31390,7 +31390,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "merged_with",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -31464,7 +31464,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "DeliveryIssueWithDataData",
@@ -31532,7 +31532,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "path_forwarding_disabled",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -31552,7 +31552,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "HTTP endpoint of the destination",
               "type": "nullable",
@@ -31574,7 +31574,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "cli_path",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Path for the CLI destination",
               "type": "nullable",
@@ -31596,7 +31596,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "rate_limit",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Limit event attempts to receive per period. Max value is workspace plan's max attempts thoughput.",
               "type": "nullable",
@@ -31616,7 +31616,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "rate_limit_period",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "DestinationRateLimitPeriod",
@@ -31632,7 +31632,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "archived_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Date the destination was archived",
               "type": "nullable",
@@ -31686,7 +31686,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "pagination",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "DestinationPaginatedResultPagination",
@@ -31702,7 +31702,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -31718,7 +31718,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "models",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -31897,7 +31897,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -31928,7 +31928,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "key": "query",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "type": "nullable",
@@ -31950,7 +31950,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "key": "parsed_query",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "type": "nullable",
@@ -31996,7 +31996,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "key": "headers",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "type": "nullable",
@@ -32055,7 +32055,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "key": "body",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "type": "nullable",
@@ -32104,7 +32104,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "key": "is_large_payload",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "type": "nullable",
@@ -32130,7 +32130,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "last_attempt_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Date of the most recently attempted retry",
               "type": "nullable",
@@ -32150,7 +32150,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "next_attempt_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Date of the next scheduled retry",
               "type": "nullable",
@@ -32170,7 +32170,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "response_status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Event status",
               "type": "nullable",
@@ -32202,7 +32202,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "successful_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Date of the latest successful attempt",
               "type": "nullable",
@@ -32222,7 +32222,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "cli_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "ID of the CLI the event is sent to",
               "type": "nullable",
@@ -32268,7 +32268,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "created_at_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -32286,7 +32286,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "last_attempt_at_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -32370,7 +32370,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "response_status",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": "Attempt's HTTP response code",
                 "type": "nullable",
@@ -32390,7 +32390,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "attempt_number",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": "Sequential number of attempts (up to and including this one) made for the associated event",
                 "type": "nullable",
@@ -32410,7 +32410,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "trigger",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "generatedName": "EventAttemptTrigger",
@@ -32426,7 +32426,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "error_code",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "generatedName": "EventAttemptErrorCode",
@@ -32442,7 +32442,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "body",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": "Response body from the destination",
                 "type": "nullable",
@@ -32464,7 +32464,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "requested_url",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": "URL of the destination where delivery was attempted",
                 "type": "nullable",
@@ -32486,7 +32486,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "bulk_retry_id",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": "ID of associated bulk retry",
                 "type": "nullable",
@@ -32520,7 +32520,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "successful_at",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": "Date the attempt was successful",
                 "type": "nullable",
@@ -32540,7 +32540,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "delivered_at",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": "Date the attempt was delivered",
                 "type": "nullable",
@@ -32560,7 +32560,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "responded_at",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": "Date the destination responded to this attempt",
                 "type": "nullable",
@@ -32580,7 +32580,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "delivery_latency",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": "Time elapsed between attempt initiation and final delivery (in ms)",
                 "type": "nullable",
@@ -32600,7 +32600,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "response_latency",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": "Time elapsed between attempt initiation and a response from the destination (in ms)",
                 "type": "nullable",
@@ -32644,7 +32644,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "state",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "generatedName": "EventAttemptState",
@@ -32660,7 +32660,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "archived_at",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": "Date the attempt was archived",
                 "type": "nullable",
@@ -32682,7 +32682,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "destination_id",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "type": "nullable",
@@ -32715,7 +32715,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "pagination",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "EventAttemptPaginatedResultPagination",
@@ -32731,7 +32731,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -32747,7 +32747,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "models",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -32777,7 +32777,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "pagination",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "EventPaginatedResultPagination",
@@ -32793,7 +32793,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -32809,7 +32809,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "models",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -32887,7 +32887,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "headers",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "FilterRuleHeaders",
@@ -32903,7 +32903,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "body",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "FilterRuleBody",
@@ -32919,7 +32919,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "query",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "FilterRuleQuery",
@@ -32935,7 +32935,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "path",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "FilterRulePath",
@@ -33192,7 +33192,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "meta",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -33296,7 +33296,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "pagination",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "IgnoredEventPaginatedResultPagination",
@@ -33312,7 +33312,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -33328,7 +33328,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "models",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -33557,7 +33557,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "pagination",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "IntegrationPaginatedResultPagination",
@@ -33573,7 +33573,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -33589,7 +33589,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "models",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -33860,7 +33860,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "team_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "ID of the workspace",
               "type": "nullable",
@@ -33882,7 +33882,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Optional unique name to use as reference when using the API",
               "type": "nullable",
@@ -33928,7 +33928,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "channels",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "IssueTriggerChannels",
@@ -33944,7 +33944,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "disabled_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "ISO timestamp for when the issue trigger was disabled",
               "type": "nullable",
@@ -33988,7 +33988,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "deleted_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "ISO timestamp for when the issue trigger was deleted",
               "type": "nullable",
@@ -34088,7 +34088,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "slack",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "generatedName": "IssueTriggerChannelsSlack",
@@ -34104,7 +34104,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "opsgenie",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "generatedName": "IssueTriggerChannelsOpsgenie",
@@ -34120,7 +34120,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "email",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "generatedName": "IssueTriggerChannelsEmail",
@@ -34225,7 +34225,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "pagination",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "IssueTriggerPaginatedResultPagination",
@@ -34241,7 +34241,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -34257,7 +34257,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "models",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -34476,7 +34476,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "pagination",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "IssueWithDataPaginatedResultPagination",
@@ -34492,7 +34492,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -34508,7 +34508,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "models",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -34622,7 +34622,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "verified",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Whether or not the request was verified when received",
               "type": "nullable",
@@ -34642,7 +34642,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "original_event_data_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "ID of the request data",
               "type": "nullable",
@@ -34664,7 +34664,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "duplicate_hash",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Hash of the request data payload used to check for duplicates",
               "type": "nullable",
@@ -34686,7 +34686,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "duplicate_hits",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Count of duplicate hits found",
               "type": "nullable",
@@ -34706,7 +34706,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "rejection_cause",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "RequestRejectionCause",
@@ -34722,7 +34722,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "ingest_priority",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The priority attributed to the request when received",
               "type": "nullable",
@@ -34755,7 +34755,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "ingested_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The time the request was originally received",
               "type": "nullable",
@@ -34775,7 +34775,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "ingested_at_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -34807,7 +34807,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "events_count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The count of events created from this request (CLI events not included)",
               "type": "nullable",
@@ -34827,7 +34827,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "cli_events_count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The count of CLI events created from this request",
               "type": "nullable",
@@ -34847,7 +34847,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "ignored_count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -34867,7 +34867,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -34898,7 +34898,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "key": "query",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "type": "nullable",
@@ -34920,7 +34920,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "key": "parsed_query",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "type": "nullable",
@@ -34966,7 +34966,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "key": "headers",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "type": "nullable",
@@ -35025,7 +35025,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "key": "body",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "type": "nullable",
@@ -35074,7 +35074,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "key": "is_large_payload",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "type": "nullable",
@@ -35134,7 +35134,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "pagination",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "RequestPaginatedResultPagination",
@@ -35150,7 +35150,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -35166,7 +35166,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "models",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -35304,7 +35304,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "events",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -35360,7 +35360,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "interval",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Time in MS between each retry",
               "type": "nullable",
@@ -35380,7 +35380,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Maximum number of retries to attempt",
               "type": "nullable",
@@ -35549,7 +35549,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "archived_at",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": "Date the ruleset was archived",
                 "type": "nullable",
@@ -35604,7 +35604,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "pagination",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "RulesetPaginatedResultPagination",
@@ -35620,7 +35620,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -35636,7 +35636,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "models",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -35666,7 +35666,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "order_by",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -35708,7 +35708,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "dir",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -35746,7 +35746,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "limit",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -35762,7 +35762,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "prev",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -35780,7 +35780,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "next",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -35822,7 +35822,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "rate_limit_period",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -35855,7 +35855,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "rate_limit",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -35875,7 +35875,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "api_key",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -35897,7 +35897,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "api_secret",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -35919,7 +35919,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "shop",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -35968,7 +35968,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "query",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "type": "nullable",
@@ -35990,7 +35990,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "parsed_query",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "type": "nullable",
@@ -36036,7 +36036,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "headers",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "type": "nullable",
@@ -36095,7 +36095,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "body",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "type": "nullable",
@@ -36144,7 +36144,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "is_large_payload",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "type": "nullable",
@@ -36231,7 +36231,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "integration_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "ID of the integration",
               "type": "nullable",
@@ -36253,7 +36253,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "integration",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Integration object",
               "type": "nullable",
@@ -36332,7 +36332,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "archived_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Date the source was archived",
               "type": "nullable",
@@ -36386,7 +36386,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "pagination",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "SourcePaginatedResultPagination",
@@ -36402,7 +36402,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -36418,7 +36418,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "models",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -36460,7 +36460,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "topics",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -36550,7 +36550,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "transformation_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "ID of the attached transformation object. Optional input, always set once the rule is defined",
               "type": "nullable",
@@ -36572,7 +36572,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "transformation",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "allOf": [],
               "allOfPropertyConflicts": [],
@@ -36614,7 +36614,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "key": "env",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "A key-value object of environment variables to encrypt and expose to your transformation code",
                       "type": "nullable",
@@ -36783,7 +36783,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "encrypted_env",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -36805,7 +36805,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "iv",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -36827,7 +36827,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "env",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Key-value environment variables to be passed to the transformation",
               "type": "nullable",
@@ -37036,7 +37036,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "original_event_data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransformationExecutionOriginalEventData",
@@ -37052,7 +37052,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "transformed_event_data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransformationExecutionTransformedEventData",
@@ -37068,7 +37068,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "issue_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -37138,7 +37138,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "pagination",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransformationExecutionPaginatedResultPagination",
@@ -37154,7 +37154,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -37170,7 +37170,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "models",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -37200,7 +37200,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "request_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -37222,7 +37222,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "transformation_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -37244,7 +37244,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "execution_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -37278,7 +37278,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "request",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -37295,7 +37295,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "key": "headers",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "type": "nullable",
@@ -37358,7 +37358,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "key": "query",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "type": "nullable",
@@ -37404,7 +37404,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "key": "parsed_query",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "type": "nullable",
@@ -37450,7 +37450,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "key": "body",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "type": "nullable",
@@ -37502,7 +37502,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "console",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -37636,7 +37636,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "last_updated_by",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "ID of the team member who last updated the issue status",
               "type": "nullable",
@@ -37658,7 +37658,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "dismissed_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "ISO timestamp for when the issue was dismissed",
               "type": "nullable",
@@ -37678,7 +37678,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "auto_resolved_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -37698,7 +37698,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "merged_with",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -37837,7 +37837,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "key": "trigger_attempt",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "generatedName": "TransformationIssueDataTriggerAttempt",
@@ -37878,7 +37878,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "trigger_event_request_transformation_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Deprecated but still found on historical issues",
               "type": "nullable",
@@ -37986,7 +37986,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "last_updated_by",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "ID of the team member who last updated the issue status",
               "type": "nullable",
@@ -38008,7 +38008,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "dismissed_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "ISO timestamp for when the issue was dismissed",
               "type": "nullable",
@@ -38028,7 +38028,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "auto_resolved_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -38048,7 +38048,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "merged_with",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -38122,7 +38122,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransformationIssueWithDataData",
@@ -38148,7 +38148,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "pagination",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransformationPaginatedResultPagination",
@@ -38164,7 +38164,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -38180,7 +38180,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "key": "models",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",

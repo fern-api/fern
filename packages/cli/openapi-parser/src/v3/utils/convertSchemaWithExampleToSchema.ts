@@ -41,7 +41,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 value: convertSchemaWithExampleToSchema(schema.value),
             });
         case "optional":
-            return Schema.nullable({
+            return Schema.optional({
                 description: schema.description,
                 value: convertSchemaWithExampleToSchema(schema.value),
             });

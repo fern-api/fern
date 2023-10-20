@@ -2585,7 +2585,7 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "start",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The opaque cursor that specifies the starting location of this page of items.",
               "schema": {
@@ -2625,7 +2625,7 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "nextPage_url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The URL of the next page of resources. If this URL is omitted, there are no more resources in the collection.",
               "schema": {
@@ -2804,7 +2804,7 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "available",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The available balance: the funds available for use. This is the string representation of the exact decimal amount.",
               "generatedName": "AccountBalanceAvailable",
@@ -2820,7 +2820,7 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "current",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The current balance. This is the balance at the end of the previous business day. This is the string representation of the exact decimal amount.",
               "generatedName": "AccountBalanceCurrent",
@@ -2836,7 +2836,7 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "updatedAt",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The time when the balance values were last updated from the banking core.",
               "generatedName": "AccountBalanceUpdatedAt",
@@ -2852,7 +2852,7 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "currentWithPending",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The current balance, with posted transactions. This is the string representation of the exact decimal amount.",
               "generatedName": "AccountBalanceCurrentWithPending",
@@ -2950,7 +2950,7 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "nickname",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "AccountFieldsNickname",
@@ -3035,7 +3035,7 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The unique identifier for this account resource. This is an immutable opaque string.",
               "generatedName": "AccountItemId",
@@ -3055,7 +3055,7 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "label",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
               "schema": {
@@ -3077,7 +3077,7 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "nickname",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "AccountItemNickname",
@@ -3097,7 +3097,7 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "maskedNumber",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "AccountItemMaskedNumber",
@@ -3129,7 +3129,7 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "product",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "AccountItemProduct",
@@ -3149,7 +3149,7 @@ Note: This operation requires an identity challenge if the financial institution
           "key": "location",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates where an account is held.",
               "generatedName": "AccountItemLocation",
@@ -3411,7 +3411,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The total number of accounts for which the user has access. This value ignores any filters. This value is _optional_ and may be omitted if the count is not computable efficiently.",
               "schema": {
@@ -3427,7 +3427,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "primaryAccountId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The \`id\` of the customer's primary account. This property only exists for retail customers, and only if the customer has designated a primary account.",
               "generatedName": "AccountsPrimaryAccountId",
@@ -3447,7 +3447,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "nextPage_url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The URL of the next page of accounts. If this URL is omitted, there are no more accounts.",
               "schema": {
@@ -3653,7 +3653,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "regionName",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is not \`US\`. \`regionCode\` and \`regionName\` are mutually exclusive.",
               "schema": {
@@ -3671,7 +3671,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "regionCode",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is \`US\` \`regionCode\` and \`regionName\` are mutually exclusive.",
               "schema": {
@@ -3745,7 +3745,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "address2",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The second line of the street address. This should only be used if it has a value. Typical values include building numbers, suite numbers, and other identifying information beyond the first line of the postal address.",
               "schema": {
@@ -3810,7 +3810,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "A [URI reference (RFC3986)](https://tools.ietf.org/html/rfc3986) that identifies the problem type. If present, this is the URL of human-readable HTML documentation for the problem type. When this member is not present, its value is assumed to be \`"about:blank"\`.
 ",
@@ -3829,7 +3829,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "title",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "A short, human-readable summary of the problem type. The title is usually the same for all problem with the same \`type\`.
 ",
@@ -3848,7 +3848,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The [HTTP status code](https://datatracker.ietf.org/doc/html/rfc7231#section-6) for this occurrence of the problem.
 ",
@@ -3865,7 +3865,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "detail",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "A human-readable explanation specific to this occurrence of the problem.
 ",
@@ -3884,7 +3884,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "instance",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "A URI reference that identifies the specific occurrence of the problem. This is the URI of an API resource that the problem is related to, with a unique error correlation ID URI fragment
 ",
@@ -3903,7 +3903,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The unique identifier for this problem. This is an immutable opaque string.",
               "generatedName": "ApiProblemId",
@@ -3919,7 +3919,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "occurredAt",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The timestamp when the problem occurred, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC.",
               "generatedName": "ApiProblemOccurredAt",
@@ -3935,7 +3935,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "problems",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Optional root-causes if there are multiple problems in the request or API call processing.",
               "type": "array",
@@ -3955,7 +3955,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "attributes",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Additional optional attributes related to the problem. This data conforms to the schema associated with the error type.",
               "key": {
@@ -4002,7 +4002,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "labels",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "A list of text label which identifies the channel(s) though which the user completes the challenge. For an \`sms\` or \`voice\` challenge, the only label item is the last four digits of the corresponding phone number. For an \`email\` challenge, each label is the masked email address.",
               "type": "array",
@@ -4024,7 +4024,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "key": "securityQuestions",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ChallengeFactorSecurityQuestions",
@@ -4432,7 +4432,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "nextPage_url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The URL of the next page of eligible accounts. If this URL is omitted, there are no more accounts.",
               "schema": {
@@ -4728,7 +4728,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "institution",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The name and other information about the financial institution, if found.",
               "generatedName": "InstitutionLookupResultInstitution",
@@ -4744,7 +4744,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "intermediaryInstitutions",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Optional intermediary institutions, if requested and if intermediary institutions are required for for international wire transfers to the beneficiary institution. This array is omitted if there none are required.",
               "type": "array",
@@ -4839,7 +4839,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "taxId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The last 4 digits of the invitee's tax ID number (Social Security Number). This is not sent in the invitation email, but if the invitee enrolls in digital banking, this identification must match the last four digits of the tax ID they use to enroll.",
               "schema": {
@@ -4885,7 +4885,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "disallowDebitCardAccess",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "If \`true\`, the invitee is not allowed to order or manage debit cards for the account.",
               "schema": {
@@ -4990,7 +4990,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The unique ID of the account resource. Use this as the \`{accountId}\` in [\`getAccount\`](#op-getAccount) or [\`listAccountBalances\`](#op-listAccountBalances).",
               "generatedName": "OverdraftAccountFieldsId",
@@ -5006,7 +5006,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "label",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
               "schema": {
@@ -5024,7 +5024,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "maskedNumber",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "OverdraftAccountFieldsMaskedNumber",
@@ -5094,7 +5094,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "accounts",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "type": "unknown",
             },
@@ -5461,7 +5461,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "createdAt",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The date-time when this resource was created, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC. This is derived and immutable.",
               "schema": {
@@ -5477,7 +5477,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "updatedAt",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The date-time when the resource was last updated, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC. This is derived and immutable.",
               "schema": {
@@ -5663,7 +5663,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "imageFront_url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The URL for downloading the image of the front of the check.",
               "schema": {
@@ -5681,7 +5681,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "imageBack_url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The URL for downloading the image of the front of the check.",
               "schema": {
@@ -5761,7 +5761,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "createdOn",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The date when the transaction occurred in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.<br>**Warning**: The property \`createdOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`createdOn\` will be removed on version \`v3.0.0\` of the schema.",
               "schema": {
@@ -5779,7 +5779,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "postedOn",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date \`YYYY-MM-DD\` format, UTC. This is derived and immutable and only present if \`posted\` is \`true\`.<br>**Warning**: The property \`postedOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`postedOn\` will be removed on version \`v3.0.0\` of the schema.",
               "schema": {
@@ -5809,7 +5809,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "posted",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "If \`true\`, the transaction has been posted (cleared) and applied to the account. If \`false\`, the transaction is still pending and might be canceled. \`posted\` is only valid for credit and debit transactions and omitted for balance transactions.",
               "schema": {
@@ -5825,7 +5825,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "balance",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The account's running current balance as of this transaction. The \`balance\` may be omitted if the request includes filters which preclude the inclusion of a running balance.",
               "generatedName": "TransactionFieldsBalance",
@@ -5841,7 +5841,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "memo",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The user-settable transaction memo.",
               "schema": {
@@ -5859,7 +5859,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "description",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The transaction description assigned by the transaction cleansing service.",
               "schema": {
@@ -5877,7 +5877,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "category",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The transaction category, if assigned.",
               "generatedName": "TransactionFieldsCategory",
@@ -5893,7 +5893,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "merchant",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionFieldsMerchant",
@@ -5909,7 +5909,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "check",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionFieldsCheck",
@@ -5959,7 +5959,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The merchant\\'s name.",
               "schema": {
@@ -5977,7 +5977,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "website_url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The merchant's website URL.",
               "schema": {
@@ -5995,7 +5995,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "logo_url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional URL of the merchant's logo. This image must be an image resource (SVG, PNG, GIF, JPEG image) that does not require any authentication. The URL may contain query parameters.",
               "schema": {
@@ -6137,7 +6137,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The total number of transactions which satisfy the request filters. This is optional and only included if the service can calculate it.",
               "schema": {
@@ -6199,7 +6199,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "label",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
               "schema": {
@@ -6217,7 +6217,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The product type of the account.",
               "generatedName": "TransferAccountReferenceType",
@@ -6233,7 +6233,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "location",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates where an account is held.",
               "generatedName": "TransferAccountReferenceLocation",
@@ -6285,7 +6285,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "creditOn",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The date the local financial institution account is credited in [RFC 3339 \`YYYY-MM-DD\`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the \`date\` based on the \`risk\` level. The credit-on date normally falls one business day after the restricted \`date\`. This property is only returned if the payment \`type\` is \`achDebit\` or \`ach\`.",
               "schema": {
@@ -6303,7 +6303,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "key": "debitOn",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The date the local financial institution account is debited in [RFC 3339 \`YYYY-MM-DD\`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the \`date\` based on the \`risk\` level and the transfer direction (\`achDebit\` or \`achCredit\`). The debit-on date normally falls one to three business days before the restricted \`date\`. This property is only returned if the payment \`type\` is \`achCredit\` or \`ach\`.",
               "schema": {
@@ -6420,7 +6420,7 @@ The response may include dates prior to requested the start date, as that is use
           "key": "restrictedDates",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "A list of restricted transfer dates as determined by the requested transfer parameters, holidays, and scheduled closures. This includes dates that correspond to normal day-of-week restrictions as listed in \`restrictedDays\`.",
               "type": "array",
@@ -6440,7 +6440,7 @@ The response may include dates prior to requested the start date, as that is use
           "key": "accuracyEndsOn",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The service only knows [bank holidays](https://www.federalreserve.gov/aboutthefed/k8.htm) for about two to four years in advance. This date is the end of that known holiday schedule, although the requested dates may extend well beyond this date. Any dates in the response beyond this date may omit holidays but may include other restricted dates based on the financial institution's normal scheduled closures such as Saturdays and Sundays.",
               "schema": {
@@ -6468,7 +6468,7 @@ The response may include dates prior to requested the start date, as that is use
           "key": "amount",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The amount of money to transfer between accounts.",
               "generatedName": "TransferFieldsAmount",
@@ -6484,7 +6484,7 @@ The response may include dates prior to requested the start date, as that is use
           "key": "sourceAccount",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The source account where the funds are withdrawn.",
               "generatedName": "TransferFieldsSourceAccount",
@@ -6500,7 +6500,7 @@ The response may include dates prior to requested the start date, as that is use
           "key": "targetAccount",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The target account where the funds are deposited.",
               "generatedName": "TransferFieldsTargetAccount",
@@ -6516,7 +6516,7 @@ The response may include dates prior to requested the start date, as that is use
           "key": "memo",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "A customer-defined memo to describe the transfer.",
               "schema": {
@@ -6745,7 +6745,7 @@ The response may include dates prior to requested the start date, as that is use
           "key": "processedAt",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The date/time the transfer was processed.",
               "schema": {
@@ -6761,7 +6761,7 @@ The response may include dates prior to requested the start date, as that is use
           "key": "updatedBy",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The full name of the banking customer who last updated the transfer.",
               "schema": {
@@ -6797,7 +6797,7 @@ The response may include dates prior to requested the start date, as that is use
           "key": "debitsOn",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The effective date the transfer is scheduled to debit the source account, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived from the \`scheduledOn\` date, based on the financial institution's transfer rules.",
               "schema": {
@@ -6815,7 +6815,7 @@ The response may include dates prior to requested the start date, as that is use
           "key": "creditsOn",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The effective the transfer is scheduled to credit the target account, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived from the \`scheduledOn\` date, based on the financial institution's transfer rules.",
               "schema": {
@@ -6858,7 +6858,7 @@ The response may include dates prior to requested the start date, as that is use
           "key": "schedule",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "When the transfer should occur and any recurrence.",
               "generatedName": "TransferPatchSchedule",
@@ -6926,7 +6926,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "key": "scheduledOn",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The date the the customer scheduled the transfer to occur in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format.",
               "schema": {
@@ -6944,7 +6944,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "key": "recurrenceType",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransferScheduleRecurrenceType",
@@ -6972,7 +6972,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "key": "endsOn",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional date when the recurring transfer schedule ends, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. Subsequent recurring transfers may be scheduled up to and including this date, but not after. This property is ignored if \`frequency\` is \`once\`.",
               "schema": {
@@ -6990,7 +6990,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "key": "count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "For recurring schedules (\`frequency\` is not \`once\`), this is the total number of transfers to make, including the first transfer. This property is ignored if \`frequency\` is \`once\`.",
               "schema": {
@@ -7006,7 +7006,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "key": "amountLimit",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "For recurring schedules (\`frequency\` is not \`once\`), this is the total dollar amount limit including the first transfer. No transfers are scheduled if they would exceed this amount. This property is ignored if \`frequency\` is \`once\`.",
               "generatedName": "TransferScheduleAmountLimit",
@@ -7346,7 +7346,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "key": "count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The number of transfers that meet the filters in the \`listTransfers\` operation. This is optional and only included if the service can calculate it efficiently.",
               "schema": {
@@ -7380,7 +7380,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "key": "localClearingCode",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The clearing code used to identify the financial institution for select countries.",
               "schema": {

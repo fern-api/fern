@@ -2397,6 +2397,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                 "response": {
                   "body": {
                     "items": [],
+                    "nextPage_url": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
                   },
                 },
               },
@@ -2459,6 +2460,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
                 "response": {
                   "body": {
                     "items": [],
+                    "nextPage_url": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
                   },
                 },
               },
@@ -2574,7 +2576,16 @@ This information provides hints to clients, allowing bank customers to select tr
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "restrictedDates": [
+                      {
+                        "creditOn": "2022-07-05",
+                        "debitOn": "2022-07-05",
+                        "occursOn": "2019-04-05",
+                        "reason": "pastDate",
+                      },
+                    ],
+                  },
                 },
               },
             ],
@@ -2635,7 +2646,12 @@ This information provides hints to clients, allowing bank customers to select tr
                 "request": undefined,
                 "response": {
                   "body": {
-                    "items": [],
+                    "items": [
+                      {
+                        "effectiveOn": "2022-07-05",
+                        "scheduledOn": "2022-07-04",
+                      },
+                    ],
                   },
                 },
               },
@@ -3112,7 +3128,9 @@ Note: This operation requires an identity challenge if the financial institution
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
+                  "amount": "3456.78",
                   "schedule": {
+                    "amountLimit": "3456.78",
                     "frequency": "once",
                     "recurrenceType": "fixed",
                   },
@@ -3288,7 +3306,9 @@ Note: This operation requires an identity challenge if the financial institution
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
+                  "amount": "3456.78",
                   "schedule": {
+                    "amountLimit": "3456.78",
                     "frequency": "once",
                     "recurrenceType": "fixed",
                   },

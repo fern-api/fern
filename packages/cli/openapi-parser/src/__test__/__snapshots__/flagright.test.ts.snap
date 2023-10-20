@@ -2169,7 +2169,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "routingNumber",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Routing number of the bank",
               "schema": {
@@ -2187,7 +2187,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "accountNumber",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Bank account number of the individual",
               "schema": {
@@ -2205,7 +2205,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "bankName",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Name of the bank",
               "schema": {
@@ -2223,7 +2223,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Name of the account holder",
               "schema": {
@@ -2241,7 +2241,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "bankAddress",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "AchDetailsBankAddress",
@@ -2257,7 +2257,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "beneficiaryName",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Beneficiary name of the account",
               "schema": {
@@ -2374,7 +2374,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "state",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "State of the user's residence address",
               "schema": {
@@ -2406,7 +2406,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "tags",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
               "type": "array",
@@ -2436,7 +2436,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "alertId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -2454,7 +2454,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -2472,7 +2472,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reasons",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -2494,7 +2494,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reasonDescriptionForOther",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -2516,7 +2516,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "comment",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -2534,7 +2534,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -2552,7 +2552,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionIds",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -2574,7 +2574,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleName",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -2592,7 +2592,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleDescription",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -2610,7 +2610,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -2628,7 +2628,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleInstanceId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -2750,7 +2750,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "parentUserId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -2768,7 +2768,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "childUserIds",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -2800,7 +2800,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userStateDetails",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "BusinessOptionalUserStateDetails",
@@ -2816,7 +2816,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "kycStatusDetails",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "BusinessOptionalKycStatusDetails",
@@ -2832,7 +2832,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "legalEntity",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "BusinessOptionalLegalEntity",
@@ -2848,7 +2848,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "shareHolders",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Shareholders (beneficiaries) of the company that hold at least 25% ownership. Can be another company or an individual",
               "type": "array",
@@ -2868,7 +2868,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "directors",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Director(s) of the company. Must be at least one",
               "type": "array",
@@ -2888,7 +2888,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionLimits",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "BusinessOptionalTransactionLimits",
@@ -2904,7 +2904,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "riskLevel",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "BusinessOptionalRiskLevel",
@@ -2920,7 +2920,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "allowedPaymentMethods",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -2940,7 +2940,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "linkedEntities",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "BusinessOptionalLinkedEntities",
@@ -2956,7 +2956,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "acquisitionChannel",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "BusinessOptionalAcquisitionChannel",
@@ -2972,7 +2972,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "savedPaymentDetails",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -3061,7 +3061,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "mccDetails",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "BusinessOptionalMccDetails",
@@ -3077,7 +3077,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "tags",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
               "type": "array",
@@ -3133,7 +3133,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "eventId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Unique event ID",
               "schema": {
@@ -3151,7 +3151,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reason",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Reason for the event or a state change",
               "schema": {
@@ -3169,7 +3169,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "eventDescription",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Event description",
               "schema": {
@@ -3187,7 +3187,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "updatedBusinessUserAttributes",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "BusinessUserEventUpdatedBusinessUserAttributes",
@@ -3245,7 +3245,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "executedRules",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -3265,7 +3265,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "hitRules",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -3295,7 +3295,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "cardFingerprint",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Unique card fingerprint that helps identify a specific card without having to use explicit card number. This is likely available at your card payment scheme provider",
               "schema": {
@@ -3313,7 +3313,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "cardIssuedCountry",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "CardDetailsCardIssuedCountry",
@@ -3329,7 +3329,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionReferenceField",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Reference for the transaction",
               "schema": {
@@ -3347,7 +3347,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "3dsDone",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Whether 3ds was successfully enforced for the transaction",
               "schema": {
@@ -3363,7 +3363,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "nameOnCard",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "CardDetailsNameOnCard",
@@ -3379,7 +3379,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "cardExpiry",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "CardDetailsCardExpiry",
@@ -3395,7 +3395,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "cardLast4Digits",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Last 4 digits of Card",
               "schema": {
@@ -3413,7 +3413,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "cardBrand",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Brand of Card",
               "generatedName": "CardDetailsCardBrand",
@@ -3472,7 +3472,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "cardFunding",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Funding of Card",
               "generatedName": "CardDetailsCardFunding",
@@ -3507,7 +3507,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "cardAuthenticated",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Authentication of Card",
               "schema": {
@@ -3523,7 +3523,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "paymentChannel",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3541,7 +3541,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "cardType",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "CardDetailsCardType",
@@ -3570,7 +3570,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "merchantDetails",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "CardDetailsMerchantDetails",
@@ -3596,7 +3596,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "month",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3612,7 +3612,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "year",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3638,7 +3638,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3656,7 +3656,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "category",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3674,7 +3674,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "MCC",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3692,7 +3692,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "city",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3710,7 +3710,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "country",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3728,7 +3728,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "state",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3746,7 +3746,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "postCode",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3780,7 +3780,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "caseId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3798,7 +3798,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3816,7 +3816,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reasons",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -3838,7 +3838,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reasonDescriptionForOther",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -3860,7 +3860,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "comment",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3878,7 +3878,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3896,7 +3896,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionIds",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -4002,7 +4002,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Transaction ID the case pertains to",
               "schema": {
@@ -4020,7 +4020,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "User ID the case pertains to",
               "schema": {
@@ -4038,7 +4038,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "eventId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Event ID the case pertains to",
               "schema": {
@@ -4056,7 +4056,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "caseStatusReasonDescription",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Case status reason description",
               "schema": {
@@ -4084,7 +4084,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "checkNumber",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -4102,7 +4102,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "checkIdentifier",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -4120,7 +4120,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -4138,7 +4138,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "deliveryStatus",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "CheckDetailsDeliveryStatus",
@@ -4191,7 +4191,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "etaTimestamp",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -4207,7 +4207,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "shippingAddress",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "CheckDetailsShippingAddress",
@@ -4238,7 +4238,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "expectedTransactionAmountPerMonth",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "CompanyFinancialDetailsExpectedTransactionAmountPerMonth",
@@ -4254,7 +4254,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "expectedTurnoverPerMonth",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "CompanyFinancialDetailsExpectedTurnoverPerMonth",
@@ -4270,7 +4270,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "tags",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
               "type": "array",
@@ -4314,7 +4314,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "businessIndustry",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The industry the business operates in for a business customer",
               "type": "array",
@@ -4336,7 +4336,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "mainProductsServicesSold",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The key products and services provided by the company",
               "type": "array",
@@ -4358,7 +4358,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userSegment",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Segmentation of the business user",
               "generatedName": "CompanyGeneralDetailsUserSegment",
@@ -4411,7 +4411,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userRegistrationStatus",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "CompanyGeneralDetailsUserRegistrationStatus",
@@ -4427,7 +4427,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "tags",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
               "type": "array",
@@ -4483,7 +4483,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "taxIdentifier",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Tax ID number of the registered entity",
               "schema": {
@@ -4501,7 +4501,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "legalEntityType",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Type of legal entity. Ex: Limited Liability",
               "schema": {
@@ -4519,7 +4519,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "dateOfRegistration",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -4537,7 +4537,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "tags",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
               "type": "array",
@@ -4581,7 +4581,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "middleName",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Middle name of the user",
               "schema": {
@@ -4599,7 +4599,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "lastName",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Last name of the user",
               "schema": {
@@ -4653,7 +4653,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "eventId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Unique event ID",
               "schema": {
@@ -4671,7 +4671,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reason",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Reason for the event or a state change",
               "schema": {
@@ -4689,7 +4689,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "eventDescription",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Event description",
               "schema": {
@@ -4707,7 +4707,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "updatedConsumerUserAttributes",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ConsumerUserEventUpdatedConsumerUserAttributes",
@@ -4757,7 +4757,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "emailIds",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Email addresses of the contacts for a given business customer",
               "type": "array",
@@ -4779,7 +4779,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "contactNumbers",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Phone numbers to contact a given business customer",
               "type": "array",
@@ -4801,7 +4801,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "faxNumbers",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Fax numbers to contact a business customer",
               "type": "array",
@@ -4823,7 +4823,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "websites",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Website of the company",
               "type": "array",
@@ -4845,7 +4845,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "addresses",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Address(es) of the company",
               "type": "array",
@@ -8057,7 +8057,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "batteryLevel",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Battery level of the device used for a transaction or event at a given timestamp",
               "schema": {
@@ -8073,7 +8073,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "deviceLatitude",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Device latitude at a give timestamp for an event or transaction",
               "schema": {
@@ -8089,7 +8089,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "deviceLongitude",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Device longitude at a give timestamp for an event or transaction",
               "schema": {
@@ -8105,7 +8105,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ipAddress",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "IP address of the device at a given timestamp for an event or transaction",
               "schema": {
@@ -8123,7 +8123,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "deviceIdentifier",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Device identifier number",
               "schema": {
@@ -8141,7 +8141,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "vpnUsed",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Whether VPN was used at a given timestamp for an event or transaction",
               "schema": {
@@ -8157,7 +8157,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "operatingSystem",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Operating system of the device at a given timestamp for an event or transaction",
               "schema": {
@@ -8175,7 +8175,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "deviceMaker",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The maker of the device at a given timestamp for an event or transaction",
               "schema": {
@@ -8193,7 +8193,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "deviceModel",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The model of the device at a given timestamp for an event or transaction",
               "schema": {
@@ -8211,7 +8211,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "deviceYear",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The year the device was manufactured at a given timestamp for an event or transaction",
               "schema": {
@@ -8229,7 +8229,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "appVersion",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The version of the app your user is using on their device at a given timestamp for an event or transaction",
               "schema": {
@@ -8337,7 +8337,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleHitMeta",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ExecutedRulesResultRuleHitMeta",
@@ -8353,7 +8353,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "labels",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -8373,7 +8373,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "nature",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ExecutedRulesResultNature",
@@ -8502,7 +8502,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "accountNumber",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Bank account number",
               "schema": {
@@ -8520,7 +8520,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "accountType",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Bank account type. E.g. Checking, Savings etc.",
               "schema": {
@@ -8538,7 +8538,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "bankName",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Name of the bank",
               "schema": {
@@ -8556,7 +8556,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "bankCode",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Unique identifier of the bank. In some countries, this can be the same as the bank's SWIFT code",
               "schema": {
@@ -8574,7 +8574,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Name of the account holder",
               "schema": {
@@ -8592,7 +8592,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "bankAddress",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "GenericBankAccountDetailsBankAddress",
@@ -8608,7 +8608,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "specialInstructions",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Special instructions to be specified if any",
               "schema": {
@@ -8626,7 +8626,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "paymentChannel",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -8722,7 +8722,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "ruleHitMeta",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "HitRulesDetailsRuleHitMeta",
@@ -8738,7 +8738,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "labels",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -8758,7 +8758,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "nature",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "HitRulesDetailsNature",
@@ -8784,7 +8784,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "BIC",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Identifier for the bank. Can be routing number, BIK number, SWIFT code, BIC number etc.",
               "schema": {
@@ -8802,7 +8802,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "bankName",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Name of the bank",
               "schema": {
@@ -8820,7 +8820,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "bankAddress",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "IbanDetailsBankAddress",
@@ -8836,7 +8836,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "country",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "IbanDetailsCountry",
@@ -8852,7 +8852,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "IBAN",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Account number of the user. Can be account number, IBAN number etc.",
               "schema": {
@@ -8870,7 +8870,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Name of the bank account holder",
               "schema": {
@@ -8888,7 +8888,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "tags",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "IbanDetailsTags",
@@ -8904,7 +8904,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "bankBranchCode",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Branch code of the bank. In some countries, this can be the same as the bank's SWIFT code",
               "schema": {
@@ -8922,7 +8922,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "paymentChannel",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -8994,7 +8994,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reason",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -9012,7 +9012,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "KycStatusDetailsStatus",
@@ -9066,7 +9066,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "documentIssuedDate",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "User's identity document issuance date (UNIX timestamp in milliseconds)",
               "schema": {
@@ -9082,7 +9082,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "documentExpirationDate",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "User's identity document expiration date (UNIX timestamp in milliseconds)",
               "schema": {
@@ -9110,7 +9110,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "tags",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
               "type": "array",
@@ -9130,7 +9130,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "nameOnDocument",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "LegalDocumentNameOnDocument",
@@ -9168,7 +9168,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "companyFinancialDetails",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "LegalEntityCompanyFinancialDetails",
@@ -9184,7 +9184,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "companyRegistrationDetails",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "LegalEntityCompanyRegistrationDetails",
@@ -9200,7 +9200,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reasonForAccountOpening",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Reason for opening the account at financial institution",
               "type": "array",
@@ -9222,7 +9222,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "contactDetails",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "LegalEntityContactDetails",
@@ -9248,7 +9248,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "metadata",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ListDataMetadata",
@@ -9264,7 +9264,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "items",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "List items",
               "type": "array",
@@ -9384,7 +9384,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "metadata",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ListHeaderMetadata",
@@ -9448,7 +9448,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "metadata",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ListItemMetadata",
@@ -9490,7 +9490,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "List name",
               "schema": {
@@ -9508,7 +9508,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "description",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "List description",
               "schema": {
@@ -9526,7 +9526,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -9542,7 +9542,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "checksum",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -9682,7 +9682,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "description",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Merchant Description",
               "schema": {
@@ -9808,7 +9808,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "pepCountry",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -9910,7 +9910,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "legalDocuments",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "User's legal identity documents - See Document Model for details",
               "type": "array",
@@ -9930,7 +9930,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "contactDetails",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PersonContactDetails",
@@ -9946,7 +9946,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "pepStatus",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -9966,7 +9966,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "tags",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
               "type": "array",
@@ -10058,7 +10058,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "customerRiskAssessment",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Quantified dynamic risk score",
               "schema": {
@@ -10174,7 +10174,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "hitDirections",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -10194,7 +10194,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "falsePositiveDetails",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "RuleHitMetaFalsePositiveDetails",
@@ -10210,7 +10210,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "sanctionsDetails",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -10394,7 +10394,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "swiftCode",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "SWIFT code of the financial institution",
               "schema": {
@@ -10412,7 +10412,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "accountNumber",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Account number",
               "schema": {
@@ -10430,7 +10430,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "accountType",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Account type. E.g. Checking, Savings etc.",
               "schema": {
@@ -10448,7 +10448,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "bankName",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Name of the bank",
               "schema": {
@@ -10466,7 +10466,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Name of the account holder",
               "schema": {
@@ -10484,7 +10484,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "bankAddress",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "SwiftDetailsBankAddress",
@@ -10500,7 +10500,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "specialInstructions",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Special instructions if any",
               "schema": {
@@ -10561,7 +10561,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "entityType",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "SanctionsDetailsEntityType",
@@ -10729,7 +10729,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "country",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionAmountDetailsCountry",
@@ -10755,7 +10755,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "day",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionAmountLimitDay",
@@ -10771,7 +10771,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "week",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionAmountLimitWeek",
@@ -10787,7 +10787,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "month",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionAmountLimitMonth",
@@ -10803,7 +10803,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "year",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionAmountLimitYear",
@@ -10829,7 +10829,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionBaseType",
@@ -10871,7 +10871,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "originUserId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "UserId for where the transaction originates from",
               "schema": {
@@ -10889,7 +10889,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "destinationUserId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "UserId for transaction's destination. In other words, where the value is being transferred to.",
               "schema": {
@@ -10917,7 +10917,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "day",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -10933,7 +10933,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "week",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -10949,7 +10949,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "month",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -10965,7 +10965,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "year",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -11029,7 +11029,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "eventId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Unique event ID",
               "schema": {
@@ -11047,7 +11047,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reason",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Reason for the event or a state change",
               "schema": {
@@ -11065,7 +11065,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "eventDescription",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Event description",
               "schema": {
@@ -11083,7 +11083,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "updatedTransactionAttributes",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionEventUpdatedTransactionAttributes",
@@ -11099,7 +11099,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "metaData",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionEventMetaData",
@@ -11169,7 +11169,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionCountLimit",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionLimitTransactionCountLimit",
@@ -11185,7 +11185,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionAmountLimit",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionLimitTransactionAmountLimit",
@@ -11201,7 +11201,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "averageTransactionAmountLimit",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionLimitAverageTransactionAmountLimit",
@@ -11227,7 +11227,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "maximumDailyTransactionLimit",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionLimitsMaximumDailyTransactionLimit",
@@ -11243,7 +11243,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "maximumWeeklyTransactionLimit",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionLimitsMaximumWeeklyTransactionLimit",
@@ -11259,7 +11259,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "maximumMonthlyTransactionLimit",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionLimitsMaximumMonthlyTransactionLimit",
@@ -11275,7 +11275,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "maximumQuarterlyTransactionLimit",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionLimitsMaximumQuarterlyTransactionLimit",
@@ -11291,7 +11291,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "maximumTransactionLimit",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionLimitsMaximumTransactionLimit",
@@ -11307,7 +11307,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "maximumYearlyTransactionLimit",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionLimitsMaximumYearlyTransactionLimit",
@@ -11323,7 +11323,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "paymentMethodLimits",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "allOf": [],
               "allOfPropertyConflicts": [],
@@ -11337,7 +11337,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "key": "ACH",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": undefined,
                       "generatedName": "TransactionLimitsPaymentMethodLimitsAch",
@@ -11353,7 +11353,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "key": "CARD",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": undefined,
                       "generatedName": "TransactionLimitsPaymentMethodLimitsCard",
@@ -11369,7 +11369,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "key": "IBAN",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": undefined,
                       "generatedName": "TransactionLimitsPaymentMethodLimitsIban",
@@ -11385,7 +11385,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "key": "UPI",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": undefined,
                       "generatedName": "TransactionLimitsPaymentMethodLimitsUpi",
@@ -11401,7 +11401,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "key": "GENERIC_BANK_ACCOUNT",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": undefined,
                       "generatedName": "TransactionLimitsPaymentMethodLimitsGenericBankAccount",
@@ -11417,7 +11417,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "key": "MPESA",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": undefined,
                       "generatedName": "TransactionLimitsPaymentMethodLimitsMpesa",
@@ -11433,7 +11433,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "key": "SWIFT",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": undefined,
                       "generatedName": "TransactionLimitsPaymentMethodLimitsSwift",
@@ -11449,7 +11449,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "key": "WALLET",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": undefined,
                       "generatedName": "TransactionLimitsPaymentMethodLimitsWallet",
@@ -11465,7 +11465,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "key": "CHECK",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": undefined,
                       "generatedName": "TransactionLimitsPaymentMethodLimitsCheck",
@@ -11628,7 +11628,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionState",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionUpdatableTransactionState",
@@ -11644,7 +11644,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "originAmountDetails",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionUpdatableOriginAmountDetails",
@@ -11660,7 +11660,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "destinationAmountDetails",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionUpdatableDestinationAmountDetails",
@@ -11676,7 +11676,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "originPaymentDetails",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "commonProperties": [],
@@ -11761,7 +11761,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "destinationPaymentDetails",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "commonProperties": [],
@@ -11846,7 +11846,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "relatedTransactionIds",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "IDs of transactions related to this transaction. Ex: refund, split bills",
               "type": "array",
@@ -11868,7 +11868,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "productType",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Type of produce being used by the consumer (ex wallets, payments etc)",
               "schema": {
@@ -11886,7 +11886,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "promotionCodeUsed",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Whether a promotion code was used or not the transaction",
               "schema": {
@@ -11902,7 +11902,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reference",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Reference field for the transaction indicating the purpose of the transaction etc.",
               "schema": {
@@ -11920,7 +11920,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "deviceData",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TransactionUpdatableDeviceData",
@@ -11936,7 +11936,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "tags",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
               "type": "array",
@@ -12030,7 +12030,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "bankProvider",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Bank provider name",
               "schema": {
@@ -12048,7 +12048,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "interfaceProvider",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Interface provider name",
               "schema": {
@@ -12066,7 +12066,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Name of the account holder",
               "schema": {
@@ -12137,7 +12137,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userDetails",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "UserBaseUserDetails",
@@ -12187,7 +12187,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "dateOfBirth",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Date of birth of the user (YYYY-MM-DD)",
               "schema": {
@@ -12205,7 +12205,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "countryOfResidence",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "UserDetailsCountryOfResidence",
@@ -12221,7 +12221,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "countryOfNationality",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "UserDetailsCountryOfNationality",
@@ -12237,7 +12237,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "gender",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Gender of the individual - Male, Female or Non-Binary",
               "generatedName": "UserDetailsGender",
@@ -12314,7 +12314,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userStateDetails",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "UserOptionalUserStateDetails",
@@ -12330,7 +12330,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "kycStatusDetails",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "UserOptionalKycStatusDetails",
@@ -12346,7 +12346,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "legalDocuments",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "User's legal identity documents - See Document Model for details",
               "type": "array",
@@ -12366,7 +12366,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "contactDetails",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "UserOptionalContactDetails",
@@ -12382,7 +12382,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "transactionLimits",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "UserOptionalTransactionLimits",
@@ -12398,7 +12398,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "riskLevel",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "UserOptionalRiskLevel",
@@ -12414,7 +12414,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "acquisitionChannel",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "UserOptionalAcquisitionChannel",
@@ -12430,7 +12430,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reasonForAccountOpening",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -12452,7 +12452,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userSegment",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "UserOptionalUserSegment",
@@ -12481,7 +12481,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "pepStatus",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -12501,7 +12501,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "tags",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
               "type": "array",
@@ -12619,7 +12619,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "userId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -12637,7 +12637,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "reason",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -12685,7 +12685,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "executedRules",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -12705,7 +12705,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "hitRules",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -12749,7 +12749,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "walletId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Unique ID of the wallet",
               "schema": {
@@ -12767,7 +12767,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "paymentChannel",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Payment Channel used through wallet",
               "schema": {
@@ -12785,7 +12785,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Name of the account holder for a specific wallet",
               "schema": {
@@ -12803,7 +12803,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "tags",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "WalletDetailsTags",
@@ -12819,7 +12819,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "key": "walletPhoneNumber",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Phone number associated with the wallet, if any",
               "schema": {

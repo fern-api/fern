@@ -11096,7 +11096,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "page",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "AgreementListContainerPage",
@@ -11140,7 +11140,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "contract_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -11158,7 +11158,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "limit",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "AgreementsSearchFormLimit",
@@ -11174,7 +11174,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "offset",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "AgreementsSearchFormOffset",
@@ -11245,7 +11245,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "message",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "A description of the returned error",
               "schema": {
@@ -11263,7 +11263,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "path",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The JSON path where input validation failed",
               "schema": {
@@ -11291,7 +11291,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "request",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ApiErrorContainerRequest",
@@ -11307,7 +11307,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "errors",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -11337,7 +11337,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "method",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The HTTP method of the failed request",
               "schema": {
@@ -11355,7 +11355,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The relative URL of the failed request",
               "schema": {
@@ -11373,7 +11373,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The status code of the response",
               "schema": {
@@ -11389,7 +11389,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "api_req_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The request ID of the failed request",
               "schema": {
@@ -11407,7 +11407,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "docs",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "A link to the official documentation for the requested endpoint resource",
               "schema": {
@@ -11425,7 +11425,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "source",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The source handler which produced the returned error",
               "schema": {
@@ -11443,7 +11443,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "code",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The code of the source handler which produced the returned error",
               "schema": {
@@ -11617,7 +11617,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "notice_period",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "BasicContractNoticePeriod",
@@ -11633,7 +11633,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "who_reports",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "BasicContractWhoReports",
@@ -11649,7 +11649,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "external_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "A unique identifier for the object provided by an external system.",
               "type": "nullable",
@@ -11693,7 +11693,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "public_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "BasicInvoiceAdjustmentPublicId",
@@ -11813,7 +11813,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "scale",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -11835,7 +11835,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "custom_scale",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -12298,7 +12298,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "public_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "BasicTimesheetPublicId",
@@ -12422,7 +12422,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "scale",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -12444,7 +12444,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "custom_scale",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -12673,7 +12673,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "payment_cycle",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "allOf": [],
               "allOfPropertyConflicts": [],
@@ -12687,7 +12687,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "start_date",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": undefined,
                       "generatedName": "BasicTimesheetPaymentCycleStartDate",
@@ -12703,7 +12703,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "end_date",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": undefined,
                       "generatedName": "BasicTimesheetPaymentCycleEndDate",
@@ -12879,7 +12879,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "team",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ClientOfBasicContractTeam",
@@ -13113,7 +13113,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "amount",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Amount to be paid. This field can be excluded when creating a Pay-as-you-go task-based or Milestone contracts.",
               "schema": {
@@ -13201,7 +13201,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "pay_before_weekends",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "If the payment due is on a weekend, pay on Friday.",
               "schema": {
@@ -13217,7 +13217,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "first_payment_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "CompensationDetailsOfContractToCreateSharedFirstPaymentDate",
@@ -13233,7 +13233,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "first_payment",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "First payment amount.",
               "schema": {
@@ -13249,7 +13249,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "notice_period",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "CompensationDetailsOfContractToCreateSharedNoticePeriod",
@@ -13433,7 +13433,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "who_reports",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ContractWhoReports",
@@ -13449,7 +13449,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "scope_of_work",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -13593,7 +13593,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "notice_period",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ContractNoticePeriod",
@@ -13609,7 +13609,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "custom_fields",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -13629,7 +13629,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "external_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "A unique identifier for the object provided by an external system.",
               "type": "nullable",
@@ -13771,7 +13771,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Custom field property name.",
               "schema": {
@@ -13789,7 +13789,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "value",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Custom field property value.",
               "schema": {
@@ -13817,7 +13817,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "amount",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -13833,7 +13833,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "currency_code",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ContractDetailsToAmendCurrencyCode",
@@ -13849,7 +13849,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "scale",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ContractDetailsToAmendScale",
@@ -13865,7 +13865,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "effective_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ContractDetailsToAmendEffectiveDate",
@@ -13881,7 +13881,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "first_payment_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ContractDetailsToAmendFirstPaymentDate",
@@ -13897,7 +13897,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "first_payment",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -13913,7 +13913,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "frequency",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ContractDetailsToAmendFrequency",
@@ -13929,7 +13929,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "cycle_end",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -13945,7 +13945,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "cycle_end_type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ContractDetailsToAmendCycleEndType",
@@ -13961,7 +13961,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "payment_due_type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ContractDetailsToAmendPaymentDueType",
@@ -13977,7 +13977,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "payment_due_days",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -13993,7 +13993,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "pay_before_weekends",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "If the payment due is on a weekend, pay on Friday.",
               "schema": {
@@ -14009,7 +14009,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "job_title_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "You can enter new job title.",
               "schema": {
@@ -14027,7 +14027,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "job_title_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "If you want to use a predefined job title, please use a job title ID",
               "type": "nullable",
@@ -14047,7 +14047,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "seniority_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "You can use a predefined seniority level ID.",
               "schema": {
@@ -14063,7 +14063,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "special_clause",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Text to describe any special clause in contract.",
               "schema": {
@@ -14081,7 +14081,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "scope_of_work",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Text to describe the scope of work of the contract.",
               "schema": {
@@ -14341,7 +14341,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "after_cursor",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Return next page of results after given cursor.",
               "schema": {
@@ -14359,7 +14359,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "limit",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Return a page of results with given number of records.",
               "schema": {
@@ -14387,7 +14387,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "limit",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Return a page of results with given number of records.",
               "schema": {
@@ -14405,7 +14405,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "order_direction",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ContractSearchFormWithoutCursorOrderDirection",
@@ -14421,7 +14421,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "types",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -14455,7 +14455,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "statuses",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -14489,7 +14489,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "team_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Filter contracts for given team ID; NOTE: technically ALL query parameters are strings or array of strings",
               "schema": {
@@ -14507,7 +14507,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "external_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Filter contracts for given external ID",
               "schema": {
@@ -14525,7 +14525,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "countries",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -14559,7 +14559,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "currencies",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -14593,7 +14593,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "search",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Include a contract if by name or contractor name contains given search term.",
               "schema": {
@@ -14611,7 +14611,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "sort_by",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ContractSearchFormWithoutCursorSortBy",
@@ -14651,7 +14651,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "contract_template_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Please use null to use default Deel contract template; otherwise you can use the template you created and customized. If template ID is not in payload, template stays unchanged.",
               "type": "nullable",
@@ -14823,7 +14823,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ContractTemplateListContainerData",
@@ -14885,7 +14885,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Deel Contract ID.",
               "schema": {
@@ -14903,7 +14903,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "completion_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Date the contract is marked for completion",
               "generatedName": "ContractTerminationResultCompletionDate",
@@ -15136,7 +15136,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "country_code",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ContractToCreateSharedCountryCode",
@@ -15152,7 +15152,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "state_code",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The state or province code. Use country lookup endpoint to retrieve state codes.",
               "type": "nullable",
@@ -15174,7 +15174,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "scope_of_work",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Describe the work to be performed.",
               "type": "nullable",
@@ -15196,7 +15196,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "special_clause",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Enter any special clause you may have.",
               "type": "nullable",
@@ -15218,7 +15218,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "start_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ContractToCreateSharedStartDate",
@@ -15234,7 +15234,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "termination_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ContractToCreateSharedTerminationDate",
@@ -15330,7 +15330,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "id",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "Id of an predefined job title.",
                     "type": "nullable",
@@ -15350,7 +15350,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "name",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "Job title. Please leave it blank when entering an Id.",
                     "type": "nullable",
@@ -15376,7 +15376,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "seniority",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Job seniority level. Please use the seniority levels endpoint to retrieve the list of seniority levels.",
               "type": "nullable",
@@ -15393,7 +15393,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "id",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "type": "nullable",
@@ -15419,7 +15419,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "notice_period",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ContractToCreateSharedNoticePeriod",
@@ -15435,7 +15435,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "who_reports",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ContractToCreateSharedWhoReports",
@@ -15463,7 +15463,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "external_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "External Id.",
               "type": "nullable",
@@ -15485,7 +15485,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "worker",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Worker properties",
               "type": "nullable",
@@ -15502,7 +15502,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "expected_email",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "generatedName": "ContractToCreateSharedWorkerExpectedEmail",
@@ -15518,7 +15518,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "first_name",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": "Worker's first name",
                         "type": "nullable",
@@ -15540,7 +15540,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "last_name",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": "Worker's last name",
                         "type": "nullable",
@@ -15790,7 +15790,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "completion_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ContractToTerminateCompletionDate",
@@ -15806,7 +15806,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "terminate_now",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -15822,7 +15822,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "message",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "A message for the termination",
               "schema": {
@@ -16250,7 +16250,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "start_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Start date of employee's time off.",
               "schema": {
@@ -16268,7 +16268,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "end_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "End date of employee's time off.",
               "schema": {
@@ -16298,7 +16298,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "reason",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Description for employee's time off.",
               "schema": {
@@ -16316,7 +16316,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "is_start_date_half_day",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Is the start day a half day?",
               "schema": {
@@ -16332,7 +16332,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "is_end_date_half_day",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Is the start day a half day?",
               "schema": {
@@ -16348,7 +16348,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "other_timeoff_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Custom name for this time off.",
               "schema": {
@@ -16706,7 +16706,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -16724,7 +16724,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "first_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -16742,7 +16742,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "last_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -16760,7 +16760,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "full_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -16778,7 +16778,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "email",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -16796,7 +16796,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "timezone",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -16814,7 +16814,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "personal_email",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -16832,7 +16832,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "country",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -16850,7 +16850,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "birth_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -16868,7 +16868,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "pic_url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -16886,7 +16886,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "hiring_type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -16904,7 +16904,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "start_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -16922,7 +16922,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "team",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -16940,7 +16940,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "team_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -16956,7 +16956,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "job_title",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -16974,7 +16974,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "payments",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -16991,7 +16991,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "rate",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "schema": {
@@ -17007,7 +17007,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "scale",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "schema": {
@@ -17025,7 +17025,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "currency",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "schema": {
@@ -17043,7 +17043,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "contract_name",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "schema": {
@@ -17067,7 +17067,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "hourly_report_total",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -17085,7 +17085,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "client_legal_entity",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "allOf": [],
               "allOfPropertyConflicts": [],
@@ -17099,7 +17099,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "id",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": undefined,
                       "schema": {
@@ -17115,7 +17115,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "name",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": undefined,
                       "schema": {
@@ -17138,7 +17138,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "state",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -17156,7 +17156,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "seniority",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -17174,7 +17174,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "completion_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -17192,7 +17192,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "hiring_status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -17210,7 +17210,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "monthly_payment",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "allOf": [],
               "allOfPropertyConflicts": [],
@@ -17224,7 +17224,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "count",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": undefined,
                       "schema": {
@@ -17281,7 +17281,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Unique identifier for the employment.",
               "schema": {
@@ -17299,7 +17299,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The name of the employment.",
               "schema": {
@@ -17317,7 +17317,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "team",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The team associated with the employment.",
               "generatedName": "EmploymentTeam",
@@ -17333,7 +17333,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "email",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The email associated with the employment.",
               "schema": {
@@ -17351,7 +17351,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "state",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The state associated with the employment.",
               "schema": {
@@ -17369,7 +17369,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "country",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The country associated with the employment.",
               "schema": {
@@ -17387,7 +17387,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "payment",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The payment information associated with the employment.",
               "generatedName": "EmploymentPayment",
@@ -17403,7 +17403,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "is_ended",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates whether the employment has ended.",
               "schema": {
@@ -17419,7 +17419,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "timezone",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The timezone associated with the employment.",
               "schema": {
@@ -17437,7 +17437,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "job_title",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The job title associated with the employment.",
               "schema": {
@@ -17455,7 +17455,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "seniority",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The seniority level associated with the employment.",
               "schema": {
@@ -17473,7 +17473,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "start_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The start date of the employment.",
               "schema": {
@@ -17491,7 +17491,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "work_email",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The work email associated with the employment.",
               "schema": {
@@ -17509,7 +17509,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "hiring_type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The hiring type associated with the employment.",
               "schema": {
@@ -17527,7 +17527,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "hiring_status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The hiring status associated with the employment.",
               "schema": {
@@ -17545,7 +17545,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "completion_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The completion date of the employment.",
               "schema": {
@@ -17563,7 +17563,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "contract_status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The contract status associated with the employment.",
               "schema": {
@@ -17581,7 +17581,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "voluntarily_left",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates whether the employment was left voluntarily.",
               "schema": {
@@ -17597,7 +17597,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "client_legal_entity",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The client legal entity associated with the employment.",
               "generatedName": "EmploymentClientLegalEntity",
@@ -17613,7 +17613,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "has_eor_termination",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates whether the employment had an EOR termination.",
               "schema": {
@@ -17629,7 +17629,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "contract_is_archived",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates whether the employment's contract is archived.",
               "schema": {
@@ -17721,7 +17721,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "country",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "EmploymentDetailsOfContractCountry",
@@ -17737,7 +17737,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "state",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "State code.",
               "type": "nullable",
@@ -17769,7 +17769,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "year",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -17785,7 +17785,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "days_requested",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Days off requested by employee.",
               "schema": {
@@ -17801,7 +17801,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "current_approved",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Days off approved.",
               "schema": {
@@ -17817,7 +17817,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "yearly_limit",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Total number of days off allowed per year.",
               "schema": {
@@ -17833,7 +17833,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "over_annual_limit",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Too many days off requested by employee.",
               "schema": {
@@ -17849,7 +17849,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "yearly_requests",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Total number of time off requests this year.",
               "schema": {
@@ -17951,7 +17951,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Id of the contract quote created",
               "schema": {
@@ -17969,7 +17969,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "EorContractCreatedType",
@@ -17985,7 +17985,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "created_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "EorContractCreatedCreatedAt",
@@ -18001,7 +18001,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "EorContractCreatedStatus",
@@ -18017,7 +18017,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "job_title",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Employee's job title.",
               "schema": {
@@ -18035,7 +18035,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "employment",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "allOf": [],
               "allOfPropertyConflicts": [],
@@ -18049,7 +18049,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "scope_of_work",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Scope of work description.",
                       "schema": {
@@ -18067,7 +18067,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "start_date",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": undefined,
                       "generatedName": "EorContractCreatedEmploymentStartDate",
@@ -18083,7 +18083,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "end_date",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": undefined,
                       "generatedName": "EorContractCreatedEmploymentEndDate",
@@ -18099,7 +18099,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "country",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Country of employement.",
                       "schema": {
@@ -18117,7 +18117,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "state",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "State code of the state/province where the this person will be employed.",
                       "type": "nullable",
@@ -18139,7 +18139,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "work_visa_required",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Do you require Deel to apply for work visa for this person?",
                       "schema": {
@@ -18155,7 +18155,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "time_off_type",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "If you want to use standard number of holidays for this employee, choose "STANDARD". If you want to enter a specific number of holidays, choose "SPECIFIC" and enter the number of days in the holidays field.",
                       "schema": {
@@ -18173,7 +18173,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "probation_period",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Number of probation days.",
                       "type": "nullable",
@@ -18193,7 +18193,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "calculated_holidays",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Number of calculate holidays for this contract.",
                       "schema": {
@@ -18216,7 +18216,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "client",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "allOf": [],
               "allOfPropertyConflicts": [],
@@ -18230,7 +18230,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "legal_entity",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "allOf": [],
                       "allOfPropertyConflicts": [],
@@ -18244,7 +18244,7 @@ exports[`open api parser deel parse open api 1`] = `
                           "key": "name",
                           "schema": {
                             "description": undefined,
-                            "type": "nullable",
+                            "type": "optional",
                             "value": {
                               "description": "Legal entity name.",
                               "schema": {
@@ -18272,7 +18272,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "compensation_details",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "allOf": [],
               "allOfPropertyConflicts": [],
@@ -18286,7 +18286,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "salary",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Gross annual salary.",
                       "schema": {
@@ -18302,7 +18302,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "currency",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Currency of gross annual salary.",
                       "schema": {
@@ -18320,7 +18320,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "variable_compensation",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Variable compensation acount or percentage.",
                       "schema": {
@@ -18338,7 +18338,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "variable_compensation_type",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Type fo variable compensation.",
                       "type": "nullable",
@@ -18365,7 +18365,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "employee",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "allOf": [],
               "allOfPropertyConflicts": [],
@@ -18379,7 +18379,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "legal_name",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Employee's legal name.",
                       "schema": {
@@ -18397,7 +18397,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "first_name",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Employee's first name.",
                       "schema": {
@@ -18415,7 +18415,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "last_name",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Employee's last name.",
                       "schema": {
@@ -18433,7 +18433,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "email",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Employee's email.",
                       "schema": {
@@ -18456,7 +18456,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "health_plan",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -18473,7 +18473,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "id",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": "Health plan ID",
                         "schema": {
@@ -18491,7 +18491,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "name",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": "Health plan name",
                         "schema": {
@@ -18515,7 +18515,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "seniority",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "EorContractCreatedSeniority",
@@ -18563,7 +18563,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "employee",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "allOf": [],
               "allOfPropertyConflicts": [],
@@ -18605,7 +18605,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "email",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Employee's email address.",
                       "schema": {
@@ -18637,7 +18637,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "address",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": undefined,
                       "type": "nullable",
@@ -18654,7 +18654,7 @@ exports[`open api parser deel parse open api 1`] = `
                             "key": "street",
                             "schema": {
                               "description": undefined,
-                              "type": "nullable",
+                              "type": "optional",
                               "value": {
                                 "description": "Street and number.",
                                 "schema": {
@@ -18672,7 +18672,7 @@ exports[`open api parser deel parse open api 1`] = `
                             "key": "city",
                             "schema": {
                               "description": undefined,
-                              "type": "nullable",
+                              "type": "optional",
                               "value": {
                                 "description": "City name.",
                                 "schema": {
@@ -18690,7 +18690,7 @@ exports[`open api parser deel parse open api 1`] = `
                             "key": "state",
                             "schema": {
                               "description": undefined,
-                              "type": "nullable",
+                              "type": "optional",
                               "value": {
                                 "description": "State code.",
                                 "type": "nullable",
@@ -18712,7 +18712,7 @@ exports[`open api parser deel parse open api 1`] = `
                             "key": "zip",
                             "schema": {
                               "description": undefined,
-                              "type": "nullable",
+                              "type": "optional",
                               "value": {
                                 "description": "Zip code.",
                                 "schema": {
@@ -18730,7 +18730,7 @@ exports[`open api parser deel parse open api 1`] = `
                             "key": "country",
                             "schema": {
                               "description": undefined,
-                              "type": "nullable",
+                              "type": "optional",
                               "value": {
                                 "description": undefined,
                                 "generatedName": "EorContractToCreateEmployeeAddressCountry",
@@ -18768,7 +18768,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "country",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": undefined,
                     "generatedName": "EorContractToCreateEmploymentCountry",
@@ -18784,7 +18784,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "state",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "State code of the state/province where the this person will be employed.",
                     "type": "nullable",
@@ -18806,7 +18806,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "type",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "Is it a full-time contract or a part-time contract?",
                     "generatedName": "EorContractToCreateEmploymentType",
@@ -18835,7 +18835,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "work_visa_required",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "Do you require Deel to apply for work visa for this person?",
                     "schema": {
@@ -18851,7 +18851,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "start_date",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": undefined,
                     "generatedName": "EorContractToCreateEmploymentStartDate",
@@ -18867,7 +18867,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "end_date",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": undefined,
                     "generatedName": "EorContractToCreateEmploymentEndDate",
@@ -18883,7 +18883,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "probation_period",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "Number of probation days.",
                     "type": "nullable",
@@ -18903,7 +18903,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "scope_of_work",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "Scope of work description.",
                     "schema": {
@@ -18921,7 +18921,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "time_off_type",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "If you want to use standard number of holidays for this employee, choose "STANDARD". If you want to enter a specific number of holidays, choose "SPECIFIC" and enter the number of days in the holidays field.",
                     "generatedName": "EorContractToCreateEmploymentTimeOffType",
@@ -18950,7 +18950,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "holidays",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "Enter the number of holidays. Leave this field blank if you are chooseing "STANDARD" time_off_type.",
                     "type": "nullable",
@@ -19003,7 +19003,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "id",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "Enter the Id retrieved from the seniority lookup endpoint. Enter 34 for "Not Applicable".",
                     "schema": {
@@ -19034,7 +19034,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "legal_entity",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "allOf": [],
                     "allOfPropertyConflicts": [],
@@ -19048,7 +19048,7 @@ exports[`open api parser deel parse open api 1`] = `
                         "key": "id",
                         "schema": {
                           "description": undefined,
-                          "type": "nullable",
+                          "type": "optional",
                           "value": {
                             "description": "Enter the Id of legal entity under which you want to hire this person. Use /legal-entities endpoint to retrieve a list of legal entities in your organization.",
                             "schema": {
@@ -19069,7 +19069,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "team",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "allOf": [],
                     "allOfPropertyConflicts": [],
@@ -19083,7 +19083,7 @@ exports[`open api parser deel parse open api 1`] = `
                         "key": "id",
                         "schema": {
                           "description": undefined,
-                          "type": "nullable",
+                          "type": "optional",
                           "value": {
                             "description": "Enter the Id of team this person will be hired in. Use /teams endpoint to retrieve a list of teams in your organization.",
                             "type": "nullable",
@@ -19123,7 +19123,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "salary",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "Employee's gross annual salary.",
                     "schema": {
@@ -19139,7 +19139,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "currency",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "Salary currency.",
                     "schema": {
@@ -19157,7 +19157,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "variable_compensation",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "Varable compensation. For example, if the person will earn 5% of the gross annual salary as the variable compensation, enter 5.",
                     "type": "nullable",
@@ -19177,7 +19177,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "variable_compensation_type",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "Should be set only if variable_compensation is set. It can be PERCENTAGE or FIXED.",
                     "type": "nullable",
@@ -19203,7 +19203,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "quote_additional_fields",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Some countries require additional employee information for employment contracts.",
               "type": "nullable",
@@ -19220,7 +19220,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "gender",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": "Employee's gender.",
                         "schema": {
@@ -19238,7 +19238,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "worker_type",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": "Type of worker.",
                         "generatedName": "EorContractToCreateQuoteAdditionalFieldsWorkerType",
@@ -19267,7 +19267,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "dob",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": "Employee's date of birth.",
                         "schema": {
@@ -19291,7 +19291,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "health_plan_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Healthare plan Id. You can see available healthcare plans in the country guide endpoint.",
               "schema": {
@@ -19341,7 +19341,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "holiday",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "allOf": [],
               "allOfPropertyConflicts": [],
@@ -19355,7 +19355,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "min",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Minimum number of holidays required for a legally compliant contract.",
                       "schema": {
@@ -19378,7 +19378,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "part_time_holiday",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "allOf": [],
               "allOfPropertyConflicts": [],
@@ -19392,7 +19392,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "type",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": undefined,
                       "generatedName": "EorCountryValidationsPartTimeHolidayType",
@@ -19427,7 +19427,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "min",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Minimum number of holidays required for a legally compliant contract.",
                       "schema": {
@@ -19450,7 +19450,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "sick_days",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "allOf": [],
               "allOfPropertyConflicts": [],
@@ -19464,7 +19464,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "min",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Minimum number of sick days required for a legally compliant contract.",
                       "schema": {
@@ -19482,7 +19482,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "max",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Maximum number of sick days allowed for a legally compliant contract.",
                       "schema": {
@@ -19505,7 +19505,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "salary",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "allOf": [],
               "allOfPropertyConflicts": [],
@@ -19519,7 +19519,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "min",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Minimum wage for a legally compliant contract.",
                       "schema": {
@@ -19537,7 +19537,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "max",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Maximum wage allowed for a legally compliant contract.",
                       "schema": {
@@ -19560,7 +19560,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "probation",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "allOf": [],
               "allOfPropertyConflicts": [],
@@ -19574,7 +19574,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "min",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Minimum probation days required for a legally compliant contract.",
                       "schema": {
@@ -19592,7 +19592,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "max",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Maximum probation days allowed for a legally compliant contract.",
                       "schema": {
@@ -19613,7 +19613,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "part_time_probation",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "allOf": [],
               "allOfPropertyConflicts": [],
@@ -19627,7 +19627,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "min",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Minimum probation days required for a legally compliant contract.",
                       "schema": {
@@ -19643,7 +19643,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "max",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": "Maximum probation days allowed for a legally compliant contract.",
                       "schema": {
@@ -19664,7 +19664,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "work_schedule",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "allOf": [],
               "allOfPropertyConflicts": [],
@@ -19678,7 +19678,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "days",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "allOf": [],
                       "allOfPropertyConflicts": [],
@@ -19692,7 +19692,7 @@ exports[`open api parser deel parse open api 1`] = `
                           "key": "max",
                           "schema": {
                             "description": undefined,
-                            "type": "nullable",
+                            "type": "optional",
                             "value": {
                               "description": undefined,
                               "schema": {
@@ -19715,7 +19715,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "hours",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "allOf": [],
                       "allOfPropertyConflicts": [],
@@ -19729,7 +19729,7 @@ exports[`open api parser deel parse open api 1`] = `
                           "key": "max",
                           "schema": {
                             "description": undefined,
-                            "type": "nullable",
+                            "type": "optional",
                             "value": {
                               "description": undefined,
                               "schema": {
@@ -19757,7 +19757,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "insurance_fee",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Insurance fee.",
               "schema": {
@@ -19775,7 +19775,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "currency",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Country currency.",
               "schema": {
@@ -19793,7 +19793,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "hiring_guide_country_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Country name.",
               "schema": {
@@ -19811,7 +19811,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "start_date_buffer",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Calculate employee's minimum start date using the start date buffer. Today's date + (number of business days x start_date_buffer) = Minimum start date.",
               "schema": {
@@ -19827,7 +19827,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "definite_contract",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "allOf": [],
               "allOfPropertyConflicts": [],
@@ -19841,7 +19841,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "type",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": undefined,
                       "generatedName": "EorCountryValidationsDefiniteContractType",
@@ -19876,7 +19876,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "key": "maximum_limitation",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": undefined,
                       "schema": {
@@ -19897,7 +19897,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "adjustments_information_box",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Country specific notes and information.",
               "schema": {
@@ -19915,7 +19915,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "health_insurance",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -19932,7 +19932,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "status",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "generatedName": "EorCountryValidationsHealthInsuranceStatus",
@@ -19948,7 +19948,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "providers",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "type": "array",
@@ -20006,7 +20006,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "year",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -20022,7 +20022,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "vacation_allowed",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Minimum vacation allowed.",
               "schema": {
@@ -20040,7 +20040,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "sick_leave_allowed",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Maximum sick leave allowed.",
               "schema": {
@@ -20058,7 +20058,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "vacation_requested",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Vacation days requested by the employee.",
               "schema": {
@@ -20076,7 +20076,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "vacation_approved",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Vacation days approved.",
               "schema": {
@@ -20094,7 +20094,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "vacation_used",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Vacation days used by the employee.",
               "schema": {
@@ -20112,7 +20112,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "vacation_total",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Total number of vacation days requested, approved and used.",
               "schema": {
@@ -20130,7 +20130,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "sick_leave_requested",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Sick days requested by the employee.",
               "schema": {
@@ -20148,7 +20148,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "sick_leave_approved",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Sick days approved.",
               "schema": {
@@ -20166,7 +20166,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "sick_leave_used",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Sick days used by the employee.",
               "schema": {
@@ -20184,7 +20184,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "sick_leave_total",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Total number of sick days requested, approved and used.",
               "schema": {
@@ -20202,7 +20202,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "other_leave_requested",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Other type of time off requested by the employee.",
               "schema": {
@@ -20220,7 +20220,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "other_leave_approved",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Other type of time off days approved.",
               "schema": {
@@ -20238,7 +20238,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "other_leave_used",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Other type of time off days used by the employee.",
               "schema": {
@@ -20256,7 +20256,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "other_leave_total",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Total number of other type of time off days requested, approved and used.",
               "schema": {
@@ -20274,7 +20274,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "rollover_type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "EorEntitlementListItemRolloverType",
@@ -20290,7 +20290,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "max_rollover_yearly",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -20415,7 +20415,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "reason",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Reason for requesting time off.",
               "type": "nullable",
@@ -20461,7 +20461,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "reviewed_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Timestamp when time off was reviewed.",
               "type": "nullable",
@@ -20481,7 +20481,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "denial_reason",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Reason why time off was denied.",
               "type": "nullable",
@@ -20503,7 +20503,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "has_multiple_dates",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates if multiple time off days are requested.",
               "type": "nullable",
@@ -20535,7 +20535,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "other_timeoff_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Custom title for the time off. Only specify if type is "OTHER".",
               "type": "nullable",
@@ -20557,7 +20557,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "requester",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Employee who requested the time off.",
               "type": "nullable",
@@ -20577,7 +20577,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "reviewer",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "User who reviewed the time off.",
               "type": "nullable",
@@ -20597,7 +20597,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "days_used_start_year",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Days used at the start year.",
               "schema": {
@@ -20615,7 +20615,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "days_used_end_year",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Days used at the end year.",
               "schema": {
@@ -20633,7 +20633,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "total_days_used",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Total number of time off days used.",
               "schema": {
@@ -20651,7 +20651,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "start_date_is_half_day",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates if the first day of time off is a half day.",
               "schema": {
@@ -20667,7 +20667,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "end_date_is_half_day",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates if the last day of time off is a half day.",
               "schema": {
@@ -20683,7 +20683,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "single_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -20703,7 +20703,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "date_is_half_day",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "If true, only a single date was specified.",
               "type": "nullable",
@@ -20723,7 +20723,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "attachments",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -20919,7 +20919,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "contract_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -20949,7 +20949,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "updated_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -20985,7 +20985,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "end_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -21005,7 +21005,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "can_request_changes",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates if it is possible to make changes to the time off request.",
               "type": "nullable",
@@ -21025,7 +21025,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "is_updated",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "If true, an update to the original time off request was made.",
               "type": "nullable",
@@ -21045,7 +21045,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "change_request",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Only valid if the requester asks to change existing time off and it has been reviewed.",
               "type": "nullable",
@@ -21065,7 +21065,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "applied_changes",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "List of changes applied to the time off.",
               "type": "array",
@@ -21164,7 +21164,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "amount",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "Amount to be paid. Must be a positive number.",
                     "schema": {
@@ -21180,7 +21180,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "currency_code",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": undefined,
                     "generatedName": "EstimateFirstPaymentCompensationDetailsCurrencyCode",
@@ -21196,7 +21196,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "scale",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": undefined,
                     "generatedName": "EstimateFirstPaymentCompensationDetailsScale",
@@ -21212,7 +21212,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "cycle_end",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "Date invoice cycle ends.",
                     "schema": {
@@ -21228,7 +21228,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "cycle_end_type",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": undefined,
                     "generatedName": "EstimateFirstPaymentCompensationDetailsCycleEndType",
@@ -21244,7 +21244,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "payment_due_type",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": undefined,
                     "generatedName": "EstimateFirstPaymentCompensationDetailsPaymentDueType",
@@ -21260,7 +21260,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "payment_due_days",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": undefined,
                     "schema": {
@@ -21276,7 +21276,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "calculation_type",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "Either works days or calendar days",
                     "generatedName": "EstimateFirstPaymentCompensationDetailsCalculationType",
@@ -21317,7 +21317,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "work_week_start",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": undefined,
                     "generatedName": "EstimateFirstPaymentCompensationDetailsWorkWeekStart",
@@ -21333,7 +21333,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "work_week_end",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": undefined,
                     "generatedName": "EstimateFirstPaymentCompensationDetailsWorkWeekEnd",
@@ -21385,7 +21385,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "risk",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -21401,7 +21401,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "rates",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "key": {
@@ -21478,7 +21478,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "file",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Upload the file you want to attach to this entry.",
               "schema": {
@@ -21597,7 +21597,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "start",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": undefined,
                     "generatedName": "FinalPaymentCalculatedLastCycleStart",
@@ -21613,7 +21613,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "end",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": undefined,
                     "generatedName": "FinalPaymentCalculatedLastCycleEnd",
@@ -21629,7 +21629,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "completion_date",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": undefined,
                     "generatedName": "FinalPaymentCalculatedLastCycleCompletionDate",
@@ -21742,7 +21742,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "due",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "FirstPaymentDateDue",
@@ -21792,7 +21792,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "public_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "GenericReportReviewCreatedPublicId",
@@ -21962,7 +21962,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Name of insurance provider.",
               "schema": {
@@ -21980,7 +21980,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "is_unisure",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -21996,7 +21996,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "home_page_url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Insurance provider's home page url.",
               "schema": {
@@ -22014,7 +22014,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "currency",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Payment currency.",
               "schema": {
@@ -22032,7 +22032,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Insurance type.",
               "schema": {
@@ -22050,7 +22050,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "ending_rule",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Insurance cycle ending rule.",
               "schema": {
@@ -22068,7 +22068,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "days_to_cancel",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Days to cancel the insurance.",
               "schema": {
@@ -22086,7 +22086,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "pricing_info_link",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "URL to price info.",
               "schema": {
@@ -22104,7 +22104,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "fixed_price",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "URL to price info.",
               "schema": {
@@ -22120,7 +22120,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "attachments",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "File attachments.",
               "type": "array",
@@ -22137,7 +22137,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "id",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "schema": {
@@ -22153,7 +22153,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "label",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "schema": {
@@ -22177,7 +22177,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "client_info_banner",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Health insurance info banner.",
               "schema": {
@@ -22195,7 +22195,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "is_available_for_new_quotes",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -22211,7 +22211,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "plans",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -22228,7 +22228,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "id",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": "Insurance plan id.",
                         "schema": {
@@ -22244,7 +22244,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "name",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": "Insurance plan name.",
                         "schema": {
@@ -22262,7 +22262,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "price",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": "Insurance price.",
                         "type": "nullable",
@@ -22284,7 +22284,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "currency",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": "Insurance payment currency.",
                         "schema": {
@@ -22302,7 +22302,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "key": "is_enabled",
                     "schema": {
                       "description": undefined,
-                      "type": "nullable",
+                      "type": "optional",
                       "value": {
                         "description": undefined,
                         "schema": {
@@ -22422,7 +22422,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "employee_number",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -22438,7 +22438,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "end_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "HrisContractBaseEndDate",
@@ -22609,7 +22609,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "vacation_info",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -22774,7 +22774,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "state",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -22810,7 +22810,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The Hris Direct employee ID",
               "schema": {
@@ -23096,7 +23096,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "client_email",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "InvitationsOfBasicContractClientEmail",
@@ -23112,7 +23112,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "worker_email",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "InvitationsOfBasicContractWorkerEmail",
@@ -23236,7 +23236,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "label",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Invoice label as displayed in Deel platform.",
               "type": "nullable",
@@ -23258,7 +23258,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "payment_method",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "InvoicePaymentMethod",
@@ -23274,7 +23274,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "paid_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "InvoicePaidAt",
@@ -23290,7 +23290,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "money_received_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "InvoiceMoneyReceivedAt",
@@ -23306,7 +23306,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "payment_processed_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "InvoicePaymentProcessedAt",
@@ -23322,7 +23322,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "fee",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Fee added to the amount.",
               "type": "nullable",
@@ -23342,7 +23342,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "exchange_fee",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -23362,7 +23362,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "amount",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Billed amount.",
               "type": "nullable",
@@ -23382,7 +23382,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "vat_total",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Amount of VAT.",
               "type": "nullable",
@@ -23402,7 +23402,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "vat_percentage",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "VAT percentrage.",
               "type": "nullable",
@@ -23422,7 +23422,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "is_overdue",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates if the invoice is overdue.",
               "type": "nullable",
@@ -23442,7 +23442,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "is_offcycle",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates if the invoice related to an offcycle payment.",
               "type": "nullable",
@@ -23613,7 +23613,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "InvoiceAdjustmentCreatedId",
@@ -23629,7 +23629,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "public_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "InvoiceAdjustmentCreatedPublicId",
@@ -23645,7 +23645,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "InvoiceAdjustmentCreatedStatus",
@@ -23661,7 +23661,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "created_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "InvoiceAdjustmentCreatedCreatedAt",
@@ -23779,7 +23779,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "reason",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -23858,7 +23858,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "reason",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -23924,7 +23924,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "limit",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Return a page of results with given number of records.",
               "schema": {
@@ -23942,7 +23942,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "offset",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -23960,7 +23960,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "order_direction",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "InvoiceAdjustmentSearchContainerOrderDirection",
@@ -23976,7 +23976,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "contract_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -23994,7 +23994,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "invoice_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -24012,7 +24012,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "reporter_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -24030,7 +24030,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "contract_types",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -24064,7 +24064,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "types",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -24098,7 +24098,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "statuses",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -24132,7 +24132,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "date_from",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "InvoiceAdjustmentSearchContainerDateFrom",
@@ -24148,7 +24148,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "date_to",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "InvoiceAdjustmentSearchContainerDateTo",
@@ -24248,7 +24248,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "description",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Description of the adjustment.",
               "schema": {
@@ -24266,7 +24266,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "paymentCycleId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "ID of an existing active payment cycle - required if type is "vat"",
               "type": "nullable",
@@ -24356,7 +24356,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "amount",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -24685,7 +24685,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Contract title.",
               "schema": {
@@ -24823,7 +24823,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Requested invoice id to download.",
               "schema": {
@@ -24841,7 +24841,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "URL to requested invoice to download.",
               "schema": {
@@ -24859,7 +24859,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "expires_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Expiration date time of download URL.",
               "schema": {
@@ -24918,7 +24918,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "rows",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "InvoiceObjectRows",
@@ -24934,7 +24934,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "total",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -25221,7 +25221,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "LegalEntityListContainerData",
@@ -25288,7 +25288,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "is_main_income",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -25634,7 +25634,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "reason",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -25713,7 +25713,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "reason",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -25836,7 +25836,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The number of monthly payments",
               "schema": {
@@ -25881,7 +25881,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "public_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "OffCyclePaymentPublicId",
@@ -26176,7 +26176,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "description",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Description of off-cycle payment.",
               "schema": {
@@ -26669,7 +26669,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -26687,7 +26687,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "general_ledger_account",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -26705,7 +26705,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "team",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -26723,7 +26723,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "contractor_unique_identifier",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Worker's unique identifier.",
               "schema": {
@@ -26741,7 +26741,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "contractor_employee_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Worker's name.",
               "schema": {
@@ -26759,7 +26759,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "contractor_email",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Worker's email.",
               "schema": {
@@ -26777,7 +26777,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "invoice_number",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Invoice number.",
               "schema": {
@@ -26795,7 +26795,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "currency",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Currency code.",
               "schema": {
@@ -26813,7 +26813,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "payment_currency",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -26831,7 +26831,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "receipt_number",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -26849,7 +26849,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "work",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -26867,7 +26867,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "bonus",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -26885,7 +26885,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "expenses",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -26903,7 +26903,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "commissions",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -26921,7 +26921,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "deductions",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -26939,7 +26939,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "overtime",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -26957,7 +26957,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "pro_rata",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -26975,7 +26975,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "others",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -26993,7 +26993,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "processing_fee",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -27011,7 +27011,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "adjustment",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -27029,7 +27029,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "total",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Total due.",
               "schema": {
@@ -27047,7 +27047,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "total_payment_currency",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Total in payment currency.",
               "schema": {
@@ -27065,7 +27065,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "payment_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Date of payment.",
               "schema": {
@@ -27083,7 +27083,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "frequency",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -27101,7 +27101,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "contract_country",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Country of the contract.",
               "schema": {
@@ -27119,7 +27119,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "contract_start_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Contract start date.",
               "schema": {
@@ -27137,7 +27137,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "approvers",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -27155,7 +27155,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "approve_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -27367,7 +27367,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "rows",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PaymentObjectRows",
@@ -27383,7 +27383,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "total",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -27514,7 +27514,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "contract_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The worker's Deel contract Id.",
               "type": "nullable",
@@ -27557,7 +27557,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Unique identifier for the user",
               "schema": {
@@ -27575,7 +27575,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "first_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "First name of the user",
               "schema": {
@@ -27593,7 +27593,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "last_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Last name of the user",
               "schema": {
@@ -27611,7 +27611,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "full_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Full name of the user",
               "schema": {
@@ -27629,7 +27629,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "email",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Email address of the user",
               "schema": {
@@ -27647,7 +27647,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "work_email",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Work email address of the user",
               "schema": {
@@ -27665,7 +27665,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "personal_email",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Personal email address of the user",
               "schema": {
@@ -27683,7 +27683,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "country_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Name of the country where the user is located",
               "schema": {
@@ -27701,7 +27701,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "birth_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Date of birth of the user in ISO format (yyyy-mm-dd)",
               "schema": {
@@ -27719,7 +27719,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "pic_url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "URL of the user's profile picture",
               "schema": {
@@ -27737,7 +27737,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "start_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Date when the user started their current employment in ISO format (yyyy-mm-dd)",
               "schema": {
@@ -27755,7 +27755,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "payments",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "List of payment objects representing the user's payment history",
               "type": "array",
@@ -27775,7 +27775,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "hourly_report_total",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Total amount of hours worked by the user in ISO format (hh:mm:ss)",
               "schema": {
@@ -27793,7 +27793,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "client_legal_entity",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Object representing the client legal entity that the user is associated with",
               "generatedName": "PeopleClientLegalEntity",
@@ -27809,7 +27809,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "state",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "State where the user is located",
               "schema": {
@@ -27827,7 +27827,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "seniority",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Seniority level of the user's role",
               "schema": {
@@ -27845,7 +27845,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "completion_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Date when the user's current employment is expected to end in ISO format (yyyy-mm-ddThh:mm:ss.sssZ)",
               "schema": {
@@ -27863,7 +27863,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "monthly_payment",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Object representing the user's monthly payment information",
               "generatedName": "PeopleMonthlyPayment",
@@ -27879,7 +27879,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "direct_manager",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Name of the user's direct manager",
               "schema": {
@@ -27897,7 +27897,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "direct_reports",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Names of the user's direct reports",
               "schema": {
@@ -27915,7 +27915,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "direct_reports_count",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Number of direct reports that the user has",
               "schema": {
@@ -27931,7 +27931,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "employments",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "List of employment objects representing the user's employment history",
               "type": "array",
@@ -27951,7 +27951,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "hiring_status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Hiring status of the user",
               "schema": {
@@ -27969,7 +27969,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "hiring_type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Type of employment contract that the user has",
               "schema": {
@@ -27987,7 +27987,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "job_title",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Title of the user's role",
               "schema": {
@@ -28005,7 +28005,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "country",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "ISO 3166-1 alpha-2 code of the country where the user is located",
               "schema": {
@@ -28023,7 +28023,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "team_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Unique identifier for the team that the user belongs to",
               "schema": {
@@ -28039,7 +28039,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "team",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Name of the team that the user belongs to",
               "schema": {
@@ -28057,7 +28057,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "timezone",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Time zone of the user's location",
               "schema": {
@@ -28075,7 +28075,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "department",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Name of the department that the user belongs to",
               "schema": {
@@ -28093,7 +28093,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "work_location",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Name of the user's work location",
               "schema": {
@@ -28111,7 +28111,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "contract_types",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "List of contract types that the user has had in the past and/or currently has",
               "type": "array",
@@ -28133,7 +28133,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "has_deel_user",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates whether the user has a Deel account or not",
               "schema": {
@@ -28159,7 +28159,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The unique identifier for the client legal entity.",
               "schema": {
@@ -28175,7 +28175,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The name of the client legal entity.",
               "schema": {
@@ -28229,7 +28229,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Unique identifier for the user profile",
               "schema": {
@@ -28245,7 +28245,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "user_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Unique identifier for the user",
               "schema": {
@@ -28261,7 +28261,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "username",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Username of the user",
               "schema": {
@@ -28279,7 +28279,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "first_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "First name of the user",
               "schema": {
@@ -28297,7 +28297,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "middle_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Middle name of the user",
               "type": "nullable",
@@ -28319,7 +28319,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "last_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Last name of the user",
               "schema": {
@@ -28337,7 +28337,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "full_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Full name of the user",
               "schema": {
@@ -28355,7 +28355,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "email",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Email address of the user",
               "schema": {
@@ -28373,7 +28373,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "avatar_url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "URL of the user's avatar",
               "type": "nullable",
@@ -28395,7 +28395,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "profile_type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PeopleMeProfileType",
@@ -28411,7 +28411,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "slack_user_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "User's slack id",
               "type": "nullable",
@@ -28433,7 +28433,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "slack_team_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "User's team slack id",
               "type": "nullable",
@@ -28455,7 +28455,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "organization_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Unique identifier for the organization",
               "schema": {
@@ -28471,7 +28471,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "organization_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Name of the organization",
               "type": "nullable",
@@ -28493,7 +28493,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "client_country",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PeopleMeClientCountry",
@@ -28509,7 +28509,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "contractor_country",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PeopleMeContractorCountry",
@@ -28542,7 +28542,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "rate",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The payment rate",
               "schema": {
@@ -28558,7 +28558,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "scale",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The payment scale (e.g., hourly, weekly, monthly, etc.)",
               "schema": {
@@ -28576,7 +28576,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "currency",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The currency code (ISO 4217) for the payment",
               "schema": {
@@ -28594,7 +28594,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "contract_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The name of the contract associated with the payment",
               "schema": {
@@ -28686,7 +28686,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "attachment",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PgoTaskAttachment",
@@ -28737,7 +28737,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "reason",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Review comments.",
               "type": "nullable",
@@ -28794,7 +28794,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "reason",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Additional comments with the reivew.",
               "type": "nullable",
@@ -28886,7 +28886,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "attachment",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PgoTaskToCreateAttachment",
@@ -28912,7 +28912,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "description",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Description of exclusion.",
               "type": "nullable",
@@ -28934,7 +28934,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "delete_recurring_report",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Request to delete recurring report.",
               "type": "nullable",
@@ -29001,7 +29001,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "name",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "Legal costs.",
                     "schema": {
@@ -29019,7 +29019,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "description",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "Cover your legal defense costs.",
                     "schema": {
@@ -29052,7 +29052,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "name",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "Penalties.",
                     "schema": {
@@ -29070,7 +29070,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "description",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "Get indemnity against tax authority penalties, liabilities and fines.",
                     "schema": {
@@ -29103,7 +29103,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "name",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "Third-party liabilities.",
                     "schema": {
@@ -29121,7 +29121,7 @@ exports[`open api parser deel parse open api 1`] = `
                 "key": "description",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": "Get indemnity against third parties up to $10k depending on the court's decision.",
                     "schema": {
@@ -29235,7 +29235,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "calculation_type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Either works days or calendar days",
               "generatedName": "ProRataCalculationType",
@@ -29276,7 +29276,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "rate",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Rate to be paid.",
               "schema": {
@@ -29292,7 +29292,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "daily_rate",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Daily rate to be paid.",
               "schema": {
@@ -29308,7 +29308,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "total",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Total to be paid.",
               "schema": {
@@ -29324,7 +29324,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "cycle_work_days",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Total days to be work.",
               "schema": {
@@ -29340,7 +29340,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "work_week_start",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ProRataWorkWeekStart",
@@ -29356,7 +29356,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "work_week_end",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ProRataWorkWeekEnd",
@@ -29372,7 +29372,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "cycle_start",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ProRataCycleStart",
@@ -29388,7 +29388,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "cycle_end",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ProRataCycleEnd",
@@ -29515,7 +29515,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "pro_rata",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ResponseEstimateFirstPaymentProRata",
@@ -29531,7 +29531,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "first_payment_dates",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -29612,7 +29612,7 @@ exports[`open api parser deel parse open api 1`] = `
             "key": "level",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": "Level of seniority level e.g. 2",
                 "type": "nullable",
@@ -29937,7 +29937,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The unique identifier for the team.",
               "schema": {
@@ -29953,7 +29953,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The name of the team.",
               "schema": {
@@ -30106,7 +30106,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "denial_reason",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Denial reason for the time off requested.",
               "schema": {
@@ -30202,7 +30202,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -30218,7 +30218,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "label",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The file name",
               "schema": {
@@ -30236,7 +30236,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "file_extension",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The file name extension",
               "schema": {
@@ -30290,7 +30290,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "pic_url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Avatar or selfie.",
               "type": "nullable",
@@ -30322,7 +30322,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "is_employee",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Only valid for requester. True if requester is an employee.",
               "schema": {
@@ -30444,7 +30444,7 @@ exports[`open api parser deel parse open api 1`] = `
               "key": "mapping_category",
               "schema": {
                 "description": undefined,
-                "type": "nullable",
+                "type": "optional",
                 "value": {
                   "allOf": [],
                   "allOfPropertyConflicts": [],
@@ -30709,7 +30709,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "reason",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -30788,7 +30788,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "reason",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -30854,7 +30854,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "limit",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Return a page of results with given number of records.",
               "schema": {
@@ -30872,7 +30872,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "offset",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -30890,7 +30890,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "order_direction",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TimesheetSearchContainerOrderDirection",
@@ -30906,7 +30906,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "contract_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -30924,7 +30924,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "invoice_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -30942,7 +30942,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "reporter_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -30960,7 +30960,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "contract_types",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -30994,7 +30994,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "types",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -31028,7 +31028,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "statuses",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -31062,7 +31062,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "date_from",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TimesheetSearchContainerDateFrom",
@@ -31078,7 +31078,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "date_to",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TimesheetSearchContainerDateTo",
@@ -31538,7 +31538,7 @@ exports[`open api parser deel parse open api 1`] = `
           "key": "hidden",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Property to hide the webhook from frontend view. Commonly by Dell 3rd party apps",
               "type": "nullable",
@@ -31958,7 +31958,7 @@ exports[`open api parser deel parse open api 1`] = `
             "key": "alternate_email",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "generatedName": "WorkerOfBasicContractAlternateEmail",
@@ -31974,7 +31974,7 @@ exports[`open api parser deel parse open api 1`] = `
             "key": "image",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "generatedName": "WorkerOfBasicContractImage",
@@ -32004,7 +32004,7 @@ exports[`open api parser deel parse open api 1`] = `
             "key": "id",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "schema": {
@@ -32020,7 +32020,7 @@ exports[`open api parser deel parse open api 1`] = `
             "key": "full_name",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": "Worker's full name.",
                 "schema": {
@@ -32038,7 +32038,7 @@ exports[`open api parser deel parse open api 1`] = `
             "key": "email",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "generatedName": "WorkerOfContractEmail",
@@ -32054,7 +32054,7 @@ exports[`open api parser deel parse open api 1`] = `
             "key": "alternate_email",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "generatedName": "WorkerOfContractAlternateEmail",
@@ -32070,7 +32070,7 @@ exports[`open api parser deel parse open api 1`] = `
             "key": "nationality",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": "Worker's nationality.",
                 "type": "nullable",
@@ -32092,7 +32092,7 @@ exports[`open api parser deel parse open api 1`] = `
             "key": "image",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "schema": {
@@ -32110,7 +32110,7 @@ exports[`open api parser deel parse open api 1`] = `
             "key": "legal_entity",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "generatedName": "WorkerOfContractLegalEntity",
@@ -32126,7 +32126,7 @@ exports[`open api parser deel parse open api 1`] = `
             "key": "date_of_birth",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "generatedName": "WorkerOfContractDateOfBirth",
@@ -32142,7 +32142,7 @@ exports[`open api parser deel parse open api 1`] = `
             "key": "expected_email",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": undefined,
                 "generatedName": "WorkerOfContractExpectedEmail",
@@ -32158,7 +32158,7 @@ exports[`open api parser deel parse open api 1`] = `
             "key": "first_name",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": "Worker's first name",
                 "type": "nullable",
@@ -32180,7 +32180,7 @@ exports[`open api parser deel parse open api 1`] = `
             "key": "last_name",
             "schema": {
               "description": undefined,
-              "type": "nullable",
+              "type": "optional",
               "value": {
                 "description": "Worker's last name",
                 "type": "nullable",

@@ -3658,7 +3658,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "key": "google",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "allOf": [],
                     "allOfPropertyConflicts": [],
@@ -3691,7 +3691,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "key": "nickname",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": undefined,
                     "generatedName": "ApplicationAuthConfigurationNickname",
@@ -3707,7 +3707,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "key": "anonymous",
                 "schema": {
                   "description": undefined,
-                  "type": "nullable",
+                  "type": "optional",
                   "value": {
                     "description": undefined,
                     "generatedName": "ApplicationAuthConfigurationAnonymous",
@@ -4313,7 +4313,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "state",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "key": {
@@ -4932,7 +4932,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "cpu",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -4952,7 +4952,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "memory",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -4972,7 +4972,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "rate_egress",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -4992,7 +4992,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "total_egress",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",

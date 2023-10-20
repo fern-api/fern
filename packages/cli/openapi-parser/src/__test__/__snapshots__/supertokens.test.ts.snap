@@ -16047,7 +16047,7 @@ e.g.:
           "key": "token",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "CookieInfoToken",
@@ -16063,7 +16063,7 @@ e.g.:
           "key": "expiry",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "CookieInfoExpiry",
@@ -16079,7 +16079,7 @@ e.g.:
           "key": "createdTime",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "CookieInfoCreatedTime",
@@ -16144,7 +16144,7 @@ e.g.:
           "key": "userId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "EmailVerificationVerifyTokenRequestUserId",
@@ -16160,7 +16160,7 @@ e.g.:
           "key": "email",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "EmailVerificationVerifyTokenRequestEmail",
@@ -16235,7 +16235,7 @@ e.g.:
           "key": "alg",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "JwkAlg",
@@ -16251,7 +16251,7 @@ e.g.:
           "key": "kty",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -16269,7 +16269,7 @@ e.g.:
           "key": "use",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -16287,7 +16287,7 @@ e.g.:
           "key": "kid",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Unique identifier for the JWK",
               "schema": {
@@ -16305,7 +16305,7 @@ e.g.:
           "key": "x5c",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "X.509 Certificate Chain",
               "type": "array",
@@ -16399,7 +16399,7 @@ e.g.:
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PasswordlessUserId",
@@ -16415,7 +16415,7 @@ e.g.:
           "key": "email",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PasswordlessUserEmail",
@@ -16431,7 +16431,7 @@ e.g.:
           "key": "phoneNumber",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PasswordlessUserPhoneNumber",
@@ -16447,7 +16447,7 @@ e.g.:
           "key": "timeJoined",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PasswordlessUserTimeJoined",
@@ -16505,7 +16505,7 @@ e.g.:
           "key": "handle",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "SessionHandle",
@@ -16521,7 +16521,7 @@ e.g.:
           "key": "userId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "SessionUserId",
@@ -16537,7 +16537,7 @@ e.g.:
           "key": "userDataInJWT",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "SessionUserDataInJwt",
@@ -16588,7 +16588,7 @@ e.g.:
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ThirdPartyEmailId",
@@ -16623,7 +16623,7 @@ e.g.:
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ThirdPartyUserId",
@@ -16639,7 +16639,7 @@ e.g.:
           "key": "timeJoined",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ThirdPartyUserTimeJoined",
@@ -16655,7 +16655,7 @@ e.g.:
           "key": "email",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ThirdPartyUserEmail",
@@ -16671,7 +16671,7 @@ e.g.:
           "key": "thirdParty",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "allOf": [],
               "allOfPropertyConflicts": [],
@@ -16685,7 +16685,7 @@ e.g.:
                   "key": "id",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": undefined,
                       "generatedName": "ThirdPartyUserThirdPartyId",
@@ -16701,7 +16701,7 @@ e.g.:
                   "key": "userId",
                   "schema": {
                     "description": undefined,
-                    "type": "nullable",
+                    "type": "optional",
                     "value": {
                       "description": undefined,
                       "generatedName": "ThirdPartyUserThirdPartyUserId",
@@ -16774,7 +16774,7 @@ e.g.:
           "key": "message",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "UnauthorisedMessageResponseMessage",
@@ -16823,7 +16823,7 @@ e.g.:
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "UserId",
@@ -16839,7 +16839,7 @@ e.g.:
           "key": "email",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "UserEmail",
@@ -16855,7 +16855,7 @@ e.g.:
           "key": "timeJoined",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "UserTimeJoined",

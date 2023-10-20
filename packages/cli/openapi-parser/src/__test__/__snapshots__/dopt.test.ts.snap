@@ -1433,7 +1433,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "groupIdentifier",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -1511,7 +1511,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "groupIdentifier",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -1672,7 +1672,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "include",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "literal",
@@ -1700,7 +1700,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "groupIdentifier",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {

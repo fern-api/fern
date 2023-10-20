@@ -15476,7 +15476,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "partitioning",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Determines the optional partitioning of the field.",
               "type": "nullable",
@@ -15672,7 +15672,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "ids",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The list of ids to query.",
               "type": "nullable",
@@ -15698,7 +15698,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "scheduledFrom",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The start of the schedule.",
               "type": "nullable",
@@ -15718,7 +15718,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "scheduledTo",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The end of the schedule.",
               "type": "nullable",
@@ -15738,7 +15738,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "referencing",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The ID of the referencing content item.",
               "type": "nullable",
@@ -15760,7 +15760,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "references",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The ID of the reference content item.",
               "type": "nullable",
@@ -15782,7 +15782,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "oData",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional odata query.",
               "type": "nullable",
@@ -15804,7 +15804,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "q",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "type": "unknown",
             },
@@ -15826,7 +15826,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "fileName",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The new name of the asset.",
               "type": "nullable",
@@ -15848,7 +15848,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "slug",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The new slug of the asset.",
               "type": "nullable",
@@ -15870,7 +15870,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "isProtected",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "True, when the asset is not public.",
               "type": "nullable",
@@ -15890,7 +15890,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "tags",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The new asset tags.",
               "type": "nullable",
@@ -15916,7 +15916,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "metadata",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The asset metadata.",
               "type": "nullable",
@@ -15991,7 +15991,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "label",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional label of the app.",
               "type": "nullable",
@@ -16013,7 +16013,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "description",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional description of the app.",
               "type": "nullable",
@@ -16071,7 +16071,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "teamId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The ID of the team.",
               "type": "nullable",
@@ -16135,7 +16135,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "roleName",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The role name of the user.",
               "type": "nullable",
@@ -16396,7 +16396,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "minItems",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The minimum allowed items for the field value.",
               "type": "nullable",
@@ -16416,7 +16416,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "maxItems",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The maximum allowed items for the field value.",
               "type": "nullable",
@@ -16436,7 +16436,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "uniqueFields",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The fields that must be unique.",
               "type": "nullable",
@@ -16472,7 +16472,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "condition",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Javascript condition when to trigger.",
               "type": "nullable",
@@ -16554,7 +16554,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "fileHash",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The file hash.",
               "type": "nullable",
@@ -16644,7 +16644,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "editToken",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The UI token.",
               "type": "nullable",
@@ -16687,7 +16687,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "tags",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The asset tags.",
               "type": "nullable",
@@ -16813,7 +16813,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "_meta",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The metadata.",
               "generatedName": "AssetDtoMeta",
@@ -16841,7 +16841,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "pixelWidth",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The width of the image in pixels if the asset is an image.",
               "type": "nullable",
@@ -16861,7 +16861,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "pixelHeight",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The height of the image in pixels if the asset is an image.",
               "type": "nullable",
@@ -17109,7 +17109,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "query",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The script that is executed for each asset when querying assets.",
               "type": "nullable",
@@ -17131,7 +17131,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "queryPre",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The script that is executed for all assets when querying assets.",
               "type": "nullable",
@@ -17153,7 +17153,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "create",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The script that is executed when creating an asset.",
               "type": "nullable",
@@ -17175,7 +17175,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "update",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The script that is executed when updating a content.",
               "type": "nullable",
@@ -17197,7 +17197,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "annotate",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The script that is executed when annotating a content.",
               "type": "nullable",
@@ -17219,7 +17219,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "move",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The script that is executed when moving a content.",
               "type": "nullable",
@@ -17241,7 +17241,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "delete",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The script that is executed when deleting a content.",
               "type": "nullable",
@@ -17375,7 +17375,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "defaultValues",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The language specific default value as a list of asset ids.",
               "generatedName": "AssetsFieldPropertiesDtoDefaultValues",
@@ -17391,7 +17391,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "defaultValue",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The default value as a list of asset ids.",
               "type": "nullable",
@@ -17417,7 +17417,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "folderId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The initial id to the folder.",
               "type": "nullable",
@@ -17439,7 +17439,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "previewFormat",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The preview format.",
               "type": "nullable",
@@ -17461,7 +17461,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "minItems",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The minimum allowed items for the field value.",
               "type": "nullable",
@@ -17481,7 +17481,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "maxItems",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The maximum allowed items for the field value.",
               "type": "nullable",
@@ -17501,7 +17501,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "minSize",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The minimum file size in bytes.",
               "type": "nullable",
@@ -17521,7 +17521,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "maxSize",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The maximum file size in bytes.",
               "type": "nullable",
@@ -17541,7 +17541,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "minWidth",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The minimum image width in pixels.",
               "type": "nullable",
@@ -17561,7 +17561,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "maxWidth",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The maximum image width in pixels.",
               "type": "nullable",
@@ -17581,7 +17581,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "minHeight",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The minimum image height in pixels.",
               "type": "nullable",
@@ -17601,7 +17601,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "maxHeight",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The maximum image height in pixels.",
               "type": "nullable",
@@ -17621,7 +17621,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "aspectWidth",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The image aspect width in pixels.",
               "type": "nullable",
@@ -17641,7 +17641,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "aspectHeight",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The image aspect height in pixels.",
               "type": "nullable",
@@ -17661,7 +17661,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "expectedType",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The expected type.",
               "generatedName": "AssetsFieldPropertiesDtoExpectedType",
@@ -17713,7 +17713,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "allowedExtensions",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The allowed file extensions.",
               "type": "nullable",
@@ -17775,7 +17775,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "role",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The role of the contributor.",
               "type": "nullable",
@@ -17797,7 +17797,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "invite",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Set to true to invite the user if he does not exist.",
               "schema": {
@@ -17909,7 +17909,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "stopped",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The time when the job has been stopped.",
               "type": "nullable",
@@ -18029,7 +18029,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "defaultValues",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The language specific default value for the field value.",
               "generatedName": "BooleanFieldPropertiesDtoDefaultValues",
@@ -18045,7 +18045,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "defaultValue",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The default value for the field value.",
               "type": "nullable",
@@ -18099,7 +18099,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "error",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The error when the bulk job failed.",
               "generatedName": "BulkResultDtoError",
@@ -18127,7 +18127,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The ID of the entity that has been handled successfully or not.",
               "type": "nullable",
@@ -18149,7 +18149,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "contentId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The ID of the entity that has been handled successfully or not.",
               "type": "nullable",
@@ -18207,7 +18207,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "jobs",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The contents to update or insert.",
               "type": "nullable",
@@ -18231,7 +18231,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "checkReferrers",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "True to check referrers of deleted assets.",
               "schema": {
@@ -18247,7 +18247,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "optimizeValidation",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "True to turn off costly validation: Folder checks. Default: true.",
               "schema": {
@@ -18263,7 +18263,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "doNotScript",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "True to turn off scripting for faster inserts. Default: true.",
               "schema": {
@@ -18289,7 +18289,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "An optional ID of the asset to update.",
               "schema": {
@@ -18307,7 +18307,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The update type.",
               "generatedName": "BulkUpdateAssetsJobDtoType",
@@ -18323,7 +18323,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "parentId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The parent folder id.",
               "schema": {
@@ -18341,7 +18341,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "fileName",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The new name of the asset.",
               "type": "nullable",
@@ -18363,7 +18363,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "slug",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The new slug of the asset.",
               "type": "nullable",
@@ -18385,7 +18385,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "isProtected",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "True, when the asset is not public.",
               "type": "nullable",
@@ -18405,7 +18405,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "tags",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The new asset tags.",
               "type": "nullable",
@@ -18431,7 +18431,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "metadata",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The asset metadata.",
               "type": "nullable",
@@ -18460,7 +18460,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "permanent",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "True to delete the asset permanently.",
               "schema": {
@@ -18476,7 +18476,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "expectedVersion",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The expected version.",
               "schema": {
@@ -18568,7 +18568,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "publish",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "True to automatically publish the content.",
               "schema": {
@@ -18584,7 +18584,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "doNotScript",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "True to turn off scripting for faster inserts. Default: true.",
               "schema": {
@@ -18600,7 +18600,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "doNotValidate",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "True to turn off validation for faster inserts. Default: false.",
               "schema": {
@@ -18616,7 +18616,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "doNotValidateWorkflow",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "True to turn off validation of workflow rules. Default: false.",
               "schema": {
@@ -18632,7 +18632,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "checkReferrers",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "True to check referrers of deleted contents.",
               "schema": {
@@ -18648,7 +18648,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "optimizeValidation",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "True to turn off costly validation: Unique checks, asset checks and reference checks. Default: true.",
               "schema": {
@@ -18674,7 +18674,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "query",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "An optional query to identify the content to update.",
               "generatedName": "BulkUpdateContentsJobDtoQuery",
@@ -18690,7 +18690,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "An optional ID of the content to update.",
               "type": "nullable",
@@ -18712,7 +18712,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The data of the content when type is set to 'Upsert', 'Create', 'Update' or 'Patch.",
               "generatedName": "BulkUpdateContentsJobDtoData",
@@ -18728,7 +18728,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The new status when the type is set to 'ChangeStatus' or 'Upsert'.",
               "type": "nullable",
@@ -18750,7 +18750,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "dueTime",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The due time.",
               "type": "nullable",
@@ -18770,7 +18770,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The update type.",
               "generatedName": "BulkUpdateContentsJobDtoType",
@@ -18786,7 +18786,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "schema",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional schema id or name.",
               "type": "nullable",
@@ -18808,7 +18808,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "patch",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Makes the update as patch.",
               "schema": {
@@ -18824,7 +18824,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "permanent",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "True to delete the content permanently.",
               "schema": {
@@ -18840,7 +18840,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "expectedCount",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The number of expected items. Set it to a higher number to update multiple items when a query is defined.",
               "schema": {
@@ -18856,7 +18856,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "expectedVersion",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The expected version.",
               "schema": {
@@ -19077,7 +19077,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The name of the category.",
               "type": "nullable",
@@ -19147,7 +19147,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "dueTime",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The due time.",
               "type": "nullable",
@@ -19167,7 +19167,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "checkReferrers",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "True to check referrers of this content.",
               "schema": {
@@ -19243,7 +19243,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "role",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The role of the client.",
               "type": "nullable",
@@ -19399,7 +19399,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The url where the comment is created.",
               "type": "nullable",
@@ -19469,7 +19469,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "condition",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Javascript condition when to trigger.",
               "type": "nullable",
@@ -19501,7 +19501,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "createdComments",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The created comments including the updates.",
               "type": "nullable",
@@ -19525,7 +19525,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "updatedComments",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The updates comments since the last version.",
               "type": "nullable",
@@ -19549,7 +19549,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "deletedComments",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The deleted comments since the last version.",
               "type": "nullable",
@@ -19597,7 +19597,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "schemaIds",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The ID of the embedded schemas.",
               "type": "nullable",
@@ -19633,7 +19633,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "minItems",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The minimum allowed items for the field value.",
               "type": "nullable",
@@ -19653,7 +19653,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "maxItems",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The maximum allowed items for the field value.",
               "type": "nullable",
@@ -19673,7 +19673,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "schemaIds",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The ID of the embedded schemas.",
               "type": "nullable",
@@ -19699,7 +19699,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "uniqueFields",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The fields that must be unique.",
               "type": "nullable",
@@ -19735,7 +19735,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "fieldRules",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The field rules to configure.",
               "type": "nullable",
@@ -19791,7 +19791,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "fieldsInLists",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The name of fields that are used in content lists.",
               "type": "nullable",
@@ -19817,7 +19817,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "fieldsInReferences",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The name of fields that are used in content references.",
               "type": "nullable",
@@ -19853,7 +19853,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "schemas",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The schema settings.",
               "type": "nullable",
@@ -19877,7 +19877,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "referencedSchemas",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The schema references.",
               "type": "nullable",
@@ -20001,7 +20001,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "referenceData",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The reference data for the frontend UI.",
               "generatedName": "ContentDtoReferenceData",
@@ -20055,7 +20055,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "newStatus",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The new status of the content.",
               "type": "nullable",
@@ -20091,7 +20091,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "newStatusColor",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The color of the new status.",
               "type": "nullable",
@@ -20113,7 +20113,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "editToken",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The UI token.",
               "type": "nullable",
@@ -20135,7 +20135,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "scheduleJob",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The scheduled status.",
               "generatedName": "ContentDtoScheduleJob",
@@ -20165,7 +20165,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "schemaName",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The name of the schema.",
               "type": "nullable",
@@ -20187,7 +20187,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "schemaDisplayName",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The display name of the schema.",
               "type": "nullable",
@@ -20209,7 +20209,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "referenceFields",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The reference fields.",
               "type": "nullable",
@@ -20395,7 +20395,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "role",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The role of the contributor.",
               "type": "nullable",
@@ -20463,7 +20463,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "_meta",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The metadata to provide information about this request.",
               "generatedName": "ContributorsDtoMeta",
@@ -20527,7 +20527,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "template",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Initialize the app with the inbuilt template.",
               "type": "nullable",
@@ -20573,7 +20573,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "parentId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The ID of the parent folder.",
               "schema": {
@@ -20947,7 +20947,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "defaultValues",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The language specific default value for the field value.",
               "generatedName": "DateTimeFieldPropertiesDtoDefaultValues",
@@ -20963,7 +20963,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "defaultValue",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The default value for the field value.",
               "type": "nullable",
@@ -20983,7 +20983,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "maxValue",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The maximum allowed value for the field value.",
               "type": "nullable",
@@ -21003,7 +21003,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "minValue",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The minimum allowed value for the field value.",
               "type": "nullable",
@@ -21023,7 +21023,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "format",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The format pattern when displayed in the UI.",
               "type": "nullable",
@@ -21057,7 +21057,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "calculatedDefaultValue",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The calculated default value for the field value.",
               "generatedName": "DateTimeFieldPropertiesDtoCalculatedDefaultValue",
@@ -21153,7 +21153,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "topic",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional topic id.",
               "type": "nullable",
@@ -21173,7 +21173,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "category",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional category id.",
               "type": "nullable",
@@ -21469,7 +21469,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "errorCode",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The error code.",
               "type": "nullable",
@@ -21491,7 +21491,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "traceId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional trace id.",
               "type": "nullable",
@@ -21513,7 +21513,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Link to the error details.",
               "type": "nullable",
@@ -21535,7 +21535,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "details",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Detailed error messages.",
               "type": "nullable",
@@ -21641,7 +21641,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "error",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The error details if the event consumer has been stopped after a failure.",
               "type": "nullable",
@@ -21663,7 +21663,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "position",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The position within the vent stream.",
               "type": "nullable",
@@ -21961,7 +21961,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "nested",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The nested fields.",
               "type": "nullable",
@@ -22266,7 +22266,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "condition",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The condition.",
               "type": "nullable",
@@ -22487,7 +22487,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "publish",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "True to automatically publish the content.",
               "schema": {
@@ -22503,7 +22503,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "doNotScript",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "True to turn off scripting for faster inserts. Default: true.",
               "schema": {
@@ -22519,7 +22519,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "optimizeValidation",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "True to turn off costly validation: Unique checks, asset checks and reference checks. Default: true.",
               "schema": {
@@ -22577,7 +22577,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "graphQLSchema",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The GraphQL schema.",
               "type": "nullable",
@@ -22781,7 +22781,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "downloadUrl",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The url to download the log.",
               "type": "nullable",
@@ -22928,7 +22928,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "parentId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The parent folder id.",
               "schema": {
@@ -22956,7 +22956,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "parentId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The parent folder id.",
               "schema": {
@@ -23174,7 +23174,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "defaultValues",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The language specific default value for the field value.",
               "generatedName": "NumberFieldPropertiesDtoDefaultValues",
@@ -23190,7 +23190,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "defaultValue",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The default value for the field value.",
               "type": "nullable",
@@ -23210,7 +23210,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "maxValue",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The maximum allowed value for the field value.",
               "type": "nullable",
@@ -23230,7 +23230,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "minValue",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The minimum allowed value for the field value.",
               "type": "nullable",
@@ -23250,7 +23250,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "allowedValues",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The allowed values for the field value.",
               "type": "nullable",
@@ -23442,7 +23442,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "message",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The regex message.",
               "type": "nullable",
@@ -23474,7 +23474,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "redirectUri",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Optional redirect uri.",
               "type": "nullable",
@@ -23548,7 +23548,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "confirmText",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "An optional confirm text for the monthly subscription.",
               "type": "nullable",
@@ -23570,7 +23570,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "yearlyConfirmText",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "An optional confirm text for the yearly subscription.",
               "type": "nullable",
@@ -23592,7 +23592,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "yearlyCosts",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The yearly costs of the plan.",
               "type": "nullable",
@@ -23614,7 +23614,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "yearlyId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The yearly ID of the plan.",
               "type": "nullable",
@@ -23710,7 +23710,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "currentPlanId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The current plan id.",
               "type": "nullable",
@@ -23732,7 +23732,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "planOwner",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The plan owner.",
               "type": "nullable",
@@ -23754,7 +23754,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "portalLink",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The link to the management portal.",
               "type": "nullable",
@@ -23776,7 +23776,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "referral",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The referral management.",
               "generatedName": "PlansDtoReferral",
@@ -23897,7 +23897,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "ids",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional list of ids to query.",
               "type": "nullable",
@@ -23923,7 +23923,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "oData",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional odata query.",
               "type": "nullable",
@@ -23945,7 +23945,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "q",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "type": "unknown",
             },
@@ -23957,7 +23957,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "parentId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The parent id (for assets).",
               "type": "nullable",
@@ -23989,7 +23989,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "filter",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "type": "unknown",
             },
@@ -24001,7 +24001,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "fullText",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -24071,7 +24071,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "sort",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -24143,7 +24143,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "defaultValues",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The language specific default value as a list of content ids.",
               "generatedName": "ReferencesFieldPropertiesDtoDefaultValues",
@@ -24159,7 +24159,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "defaultValue",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The default value as a list of content ids.",
               "type": "nullable",
@@ -24185,7 +24185,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "minItems",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The minimum allowed items for the field value.",
               "type": "nullable",
@@ -24205,7 +24205,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "maxItems",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The maximum allowed items for the field value.",
               "type": "nullable",
@@ -24273,7 +24273,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "schemaIds",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The ID of the referenced schemas.",
               "type": "nullable",
@@ -24548,7 +24548,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "metadata",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Additional data about the link.",
               "type": "nullable",
@@ -24641,7 +24641,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "stopped",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The time when the job has been stopped.",
               "type": "nullable",
@@ -24683,7 +24683,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The name of the app.",
               "type": "nullable",
@@ -25107,7 +25107,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Optional rule name.",
               "type": "nullable",
@@ -25177,7 +25177,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "lastExecuted",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The date and time when the rule was executed the last time.",
               "type": "nullable",
@@ -25235,7 +25235,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "title",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Optional title.",
               "type": "nullable",
@@ -25257,7 +25257,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "iconColor",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The color for the icon.",
               "type": "nullable",
@@ -25279,7 +25279,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "iconImage",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The image for the icon.",
               "type": "nullable",
@@ -25301,7 +25301,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "readMore",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional link to the product that is integrated.",
               "type": "nullable",
@@ -25389,7 +25389,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "options",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The options, if the editor is a dropdown.",
               "type": "nullable",
@@ -25415,7 +25415,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "description",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional description.",
               "type": "nullable",
@@ -25533,7 +25533,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "lastDump",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The last dump.",
               "type": "nullable",
@@ -25567,7 +25567,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "nextAttempt",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The next attempt.",
               "type": "nullable",
@@ -25878,7 +25878,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "runningRuleId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The ID of the rule that is currently rerunning.",
               "type": "nullable",
@@ -25988,7 +25988,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "condition",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Javascript condition when to trigger.",
               "type": "nullable",
@@ -26034,7 +26034,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "condition",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26142,7 +26142,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "category",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The name of the category.",
               "type": "nullable",
@@ -26353,7 +26353,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "label",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Optional label for the editor.",
               "type": "nullable",
@@ -26375,7 +26375,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "hints",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Hints to describe the schema.",
               "type": "nullable",
@@ -26397,7 +26397,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "contentsSidebarUrl",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The url to a the sidebar plugin for content lists.",
               "type": "nullable",
@@ -26419,7 +26419,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "contentSidebarUrl",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The url to a the sidebar plugin for content items.",
               "type": "nullable",
@@ -26441,7 +26441,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "contentEditorUrl",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The url to the editor plugin.",
               "type": "nullable",
@@ -26475,7 +26475,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "tags",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Tags for automation processes.",
               "type": "nullable",
@@ -26511,7 +26511,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "query",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The script that is executed for each content when querying contents.",
               "type": "nullable",
@@ -26533,7 +26533,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "queryPre",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The script that is executed for all contents when querying contents.",
               "type": "nullable",
@@ -26555,7 +26555,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "create",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The script that is executed when creating a content.",
               "type": "nullable",
@@ -26577,7 +26577,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "update",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The script that is executed when updating a content.",
               "type": "nullable",
@@ -26599,7 +26599,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "delete",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The script that is executed when deleting a content.",
               "type": "nullable",
@@ -26621,7 +26621,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "change",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The script that is executed when change a content status.",
               "type": "nullable",
@@ -26771,7 +26771,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "label",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "An optional label.",
               "type": "nullable",
@@ -26991,7 +26991,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "enrichedEvent",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "type": "unknown",
             },
@@ -27003,7 +27003,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "actionName",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The data for the action.",
               "type": "nullable",
@@ -27025,7 +27025,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "actionData",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The name of the action.",
               "type": "nullable",
@@ -27047,7 +27047,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "error",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The name of the event.",
               "type": "nullable",
@@ -27487,7 +27487,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "defaultValues",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The language specific default value for the field value.",
               "generatedName": "StringFieldPropertiesDtoDefaultValues",
@@ -27503,7 +27503,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "defaultValue",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The default value for the field value.",
               "type": "nullable",
@@ -27525,7 +27525,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "pattern",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The pattern to enforce a specific format for the field value.",
               "type": "nullable",
@@ -27547,7 +27547,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "patternMessage",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The validation message for the pattern.",
               "type": "nullable",
@@ -27569,7 +27569,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "folderId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The initial id to the folder when the control supports file uploads.",
               "type": "nullable",
@@ -27591,7 +27591,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "minLength",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The minimum allowed length for the field value.",
               "type": "nullable",
@@ -27611,7 +27611,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "maxLength",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The maximum allowed length for the field value.",
               "type": "nullable",
@@ -27631,7 +27631,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "minCharacters",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The minimum allowed of normal characters for the field value.",
               "type": "nullable",
@@ -27651,7 +27651,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "maxCharacters",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The maximum allowed of normal characters for the field value.",
               "type": "nullable",
@@ -27671,7 +27671,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "minWords",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The minimum allowed number of words for the field value.",
               "type": "nullable",
@@ -27691,7 +27691,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "maxWords",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The maximum allowed number of words for the field value.",
               "type": "nullable",
@@ -27711,7 +27711,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "allowedValues",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The allowed values for the field value.",
               "type": "nullable",
@@ -27737,7 +27737,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "schemaIds",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The allowed schema ids that can be embedded.",
               "type": "nullable",
@@ -27913,7 +27913,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "defaultValues",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The language specific default value for the field value.",
               "generatedName": "TagsFieldPropertiesDtoDefaultValues",
@@ -27929,7 +27929,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "defaultValue",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The default value.",
               "type": "nullable",
@@ -27955,7 +27955,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "minItems",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The minimum allowed items for the field value.",
               "type": "nullable",
@@ -27975,7 +27975,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "maxItems",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The maximum allowed items for the field value.",
               "type": "nullable",
@@ -27995,7 +27995,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "allowedValues",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The allowed values for the field value.",
               "type": "nullable",
@@ -28127,7 +28127,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "roleName",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The role name of the user.",
               "type": "nullable",
@@ -28297,7 +28297,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "teamId",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The ID of the team.",
               "type": "nullable",
@@ -28357,7 +28357,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "sourceLanguage",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional source language.",
               "schema": {
@@ -28397,7 +28397,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "text",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The translated text.",
               "type": "nullable",
@@ -28666,7 +28666,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "label",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional label of your app.",
               "type": "nullable",
@@ -28688,7 +28688,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "description",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional description of your app.",
               "type": "nullable",
@@ -28752,7 +28752,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "hideScheduler",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Hide the scheduler for content items.",
               "schema": {
@@ -28768,7 +28768,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "hideDateTimeModeButton",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Hide the datetime mode button.",
               "schema": {
@@ -28794,7 +28794,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "query",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The script that is executed for each asset when querying assets.",
               "type": "nullable",
@@ -28816,7 +28816,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "queryPre",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The script that is executed for all assets when querying assets.",
               "type": "nullable",
@@ -28838,7 +28838,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "create",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The script that is executed when creating an asset.",
               "type": "nullable",
@@ -28860,7 +28860,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "update",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The script that is executed when updating a content.",
               "type": "nullable",
@@ -28882,7 +28882,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "annotate",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The script that is executed when annotating a content.",
               "type": "nullable",
@@ -28904,7 +28904,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "move",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The script that is executed when moving a content.",
               "type": "nullable",
@@ -28926,7 +28926,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "delete",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The script that is executed when deleting a content.",
               "type": "nullable",
@@ -28958,7 +28958,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The new display name of the client.",
               "type": "nullable",
@@ -28980,7 +28980,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "role",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The role of the client.",
               "type": "nullable",
@@ -29002,7 +29002,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "allowAnonymous",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "True to allow anonymous access without an access token for this client.",
               "type": "nullable",
@@ -29022,7 +29022,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "apiCallsLimit",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The number of allowed api calls per month for this client.",
               "type": "nullable",
@@ -29042,7 +29042,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "apiTrafficLimit",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The number of allowed api traffic bytes per month for this client.",
               "type": "nullable",
@@ -29094,7 +29094,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "isMaster",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Set the value to true to make the language the master.",
               "type": "nullable",
@@ -29114,7 +29114,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "isOptional",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Set the value to true to make the language optional.",
               "schema": {
@@ -29130,7 +29130,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "fallback",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Optional fallback languages.",
               "type": "nullable",
@@ -29184,7 +29184,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "properties",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Associated list of UI properties.",
               "key": {
@@ -29219,7 +29219,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Optional rule name.",
               "type": "nullable",
@@ -29241,7 +29241,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "trigger",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The trigger properties.",
               "generatedName": "UpdateRuleDtoTrigger",
@@ -29257,7 +29257,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "action",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The action properties.",
               "generatedName": "UpdateRuleDtoAction",
@@ -29273,7 +29273,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "isEnabled",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Enable or disable the rule.",
               "type": "nullable",
@@ -29303,7 +29303,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "label",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Optional label for the editor.",
               "type": "nullable",
@@ -29325,7 +29325,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "hints",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Hints to describe the schema.",
               "type": "nullable",
@@ -29347,7 +29347,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "contentsSidebarUrl",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The url to a the sidebar plugin for content lists.",
               "type": "nullable",
@@ -29369,7 +29369,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "contentSidebarUrl",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The url to a the sidebar plugin for content items.",
               "type": "nullable",
@@ -29391,7 +29391,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "contentEditorUrl",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The url to the editor plugin.",
               "type": "nullable",
@@ -29425,7 +29425,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "tags",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Tags for automation processes.",
               "type": "nullable",
@@ -29531,7 +29531,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "password",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The password of the user.",
               "type": "nullable",
@@ -29581,7 +29581,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The name of the workflow.",
               "type": "nullable",
@@ -29628,7 +29628,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "schemaIds",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The schema ids.",
               "type": "nullable",
@@ -29692,7 +29692,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The url where the comment is created.",
               "type": "nullable",
@@ -29724,7 +29724,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "properties",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional properties.",
               "generatedName": "UpsertSchemaDtoProperties",
@@ -29740,7 +29740,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "scripts",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional scripts.",
               "generatedName": "UpsertSchemaDtoScripts",
@@ -29756,7 +29756,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "fieldsInReferences",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The names of the fields that should be used in references.",
               "type": "nullable",
@@ -29782,7 +29782,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "fieldsInLists",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The names of the fields that should be shown in lists, including meta fields.",
               "type": "nullable",
@@ -29808,7 +29808,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "fields",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Optional fields.",
               "type": "nullable",
@@ -29832,7 +29832,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "previewUrls",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional preview urls.",
               "type": "nullable",
@@ -29871,7 +29871,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "fieldRules",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional field Rules.",
               "type": "nullable",
@@ -29895,7 +29895,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "category",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The category.",
               "type": "nullable",
@@ -29989,7 +29989,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "partitioning",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Determines the optional partitioning of the field.",
               "type": "nullable",
@@ -30023,7 +30023,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "nested",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The nested fields.",
               "type": "nullable",
@@ -30141,7 +30141,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "numDays",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The number of days to check or null for the current month.",
               "type": "nullable",
@@ -30483,7 +30483,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The workflow id.",
               "schema": {
@@ -30501,7 +30501,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The name of the workflow.",
               "type": "nullable",
@@ -30523,7 +30523,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "steps",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The workflow steps.",
               "key": {
@@ -30552,7 +30552,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "schemaIds",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The schema ids.",
               "type": "nullable",
@@ -30578,7 +30578,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "initial",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The initial step.",
               "schema": {
@@ -30606,7 +30606,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "transitions",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The transitions.",
               "key": {
@@ -30635,7 +30635,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "color",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional color.",
               "type": "nullable",
@@ -30657,7 +30657,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "validate",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "True if the content should be validated when moving to this step.",
               "schema": {
@@ -30673,7 +30673,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "noUpdate",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates if updates should not be allowed.",
               "schema": {
@@ -30689,7 +30689,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "noUpdateExpression",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Optional expression that must evaluate to true when you want to prevent updates.",
               "type": "nullable",
@@ -30711,7 +30711,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "noUpdateRoles",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Optional list of roles to restrict the updates for users with these roles.",
               "type": "nullable",
@@ -30747,7 +30747,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "expression",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional expression.",
               "type": "nullable",
@@ -30769,7 +30769,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "key": "roles",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The optional restricted role.",
               "type": "nullable",

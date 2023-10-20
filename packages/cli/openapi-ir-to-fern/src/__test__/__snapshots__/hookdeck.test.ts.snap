@@ -7395,6 +7395,19 @@ exports[`open api parser hookdeck simple 1`] = `
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "count": 5,
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/issues/count",
             "request": {

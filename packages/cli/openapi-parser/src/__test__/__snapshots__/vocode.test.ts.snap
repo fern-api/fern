@@ -2004,7 +2004,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "language",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "AgentLanguage",
@@ -2109,7 +2109,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "initial_message",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -2127,7 +2127,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "webhook",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "AgentWebhook",
@@ -2143,7 +2143,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "vector_database",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "AgentVectorDatabase",
@@ -2159,7 +2159,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "interrupt_sensitivity",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "AgentInterruptSensitivity",
@@ -2261,7 +2261,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "language",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "AgentParamsLanguage",
@@ -2277,7 +2277,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "actions",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -2410,7 +2410,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "initial_message",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -2428,7 +2428,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "webhook",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -2464,7 +2464,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "vector_database",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -2500,7 +2500,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "interrupt_sensitivity",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "AgentParamsInterruptSensitivity",
@@ -2526,7 +2526,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "prompt",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -2562,7 +2562,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "language",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -2596,7 +2596,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "actions",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -2681,7 +2681,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "voice",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -2758,7 +2758,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "initial_message",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -2794,7 +2794,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "webhook",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -2837,7 +2837,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "vector_database",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -2880,7 +2880,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "interrupt_sensitivity",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -2966,7 +2966,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "pitch",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -2982,7 +2982,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "rate",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3022,7 +3022,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "pitch",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3038,7 +3038,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "rate",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3064,7 +3064,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "voice_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -3100,7 +3100,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "pitch",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -3134,7 +3134,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "rate",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -3206,7 +3206,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "CallStatus",
@@ -3222,7 +3222,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "error_message",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3240,7 +3240,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "recording_available",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3256,7 +3256,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "transcript",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3328,7 +3328,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "start_time",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3344,7 +3344,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "end_time",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3478,7 +3478,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "language",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "CreateCallAgentParamsLanguage",
@@ -3494,7 +3494,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "actions",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -3561,7 +3561,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "voice",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -3631,7 +3631,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "initial_message",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3649,7 +3649,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "webhook",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -3685,7 +3685,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "vector_database",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -3721,7 +3721,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "interrupt_sensitivity",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "CreateCallAgentParamsInterruptSensitivity",
@@ -3845,7 +3845,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "config",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "DtmfActionConfig",
@@ -3871,7 +3871,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "config",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "DtmfActionParamsConfig",
@@ -3897,7 +3897,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "config",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -3983,7 +3983,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "stability",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -3999,7 +3999,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "similarity_boost",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -4053,7 +4053,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "stability",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -4069,7 +4069,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "similarity_boost",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -4109,7 +4109,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "voice_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -4145,7 +4145,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "stability",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -4179,7 +4179,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "similarity_boost",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -4213,7 +4213,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "api_key",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -4296,7 +4296,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "config",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "EndConversationActionConfig",
@@ -4322,7 +4322,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "config",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "EndConversationActionParamsConfig",
@@ -4348,7 +4348,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "config",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -4456,7 +4456,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "detail",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -4574,7 +4574,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "language",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "NormalizedAgentLanguage",
@@ -4622,7 +4622,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "initial_message",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -4640,7 +4640,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "webhook",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -4658,7 +4658,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "vector_database",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -4694,7 +4694,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "interrupt_sensitivity",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "NormalizedAgentInterruptSensitivity",
@@ -4748,7 +4748,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "NormalizedCallStatus",
@@ -4764,7 +4764,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "error_message",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -4782,7 +4782,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "recording_available",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -4798,7 +4798,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "transcript",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -4872,7 +4872,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "start_time",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -4888,7 +4888,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "end_time",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -4942,7 +4942,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "active",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -4958,7 +4958,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "label",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -5042,7 +5042,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "active",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -5058,7 +5058,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "label",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -5336,7 +5336,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "index",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -5372,7 +5372,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "api_key",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -5408,7 +5408,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "api_environment",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -5612,7 +5612,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "voice_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -5648,7 +5648,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "api_user_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -5684,7 +5684,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "api_key",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -5806,7 +5806,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "speaker",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -5924,7 +5924,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "config",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -6001,7 +6001,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "label",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -6037,7 +6037,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "inbound_agent",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -6460,7 +6460,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "method",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "WebhookMethod",
@@ -6578,7 +6578,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "method",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "WebhookParamsMethod",
@@ -6604,7 +6604,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "subscriptions",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -6642,7 +6642,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -6678,7 +6678,7 @@ exports[`open api parser vocode parse open api 1`] = `
           "key": "method",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,

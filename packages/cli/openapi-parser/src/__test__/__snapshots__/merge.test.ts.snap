@@ -15174,7 +15174,7 @@ exports[`open api parser merge parse open api 1`] = `
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -15192,7 +15192,7 @@ exports[`open api parser merge parse open api 1`] = `
           "key": "integration",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -15210,7 +15210,7 @@ exports[`open api parser merge parse open api 1`] = `
           "key": "integration_slug",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -15228,7 +15228,7 @@ exports[`open api parser merge parse open api 1`] = `
           "key": "category",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -15248,7 +15248,7 @@ exports[`open api parser merge parse open api 1`] = `
           "key": "end_user_origin_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -15266,7 +15266,7 @@ exports[`open api parser merge parse open api 1`] = `
           "key": "end_user_organization_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -15284,7 +15284,7 @@ exports[`open api parser merge parse open api 1`] = `
           "key": "end_user_email_address",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -15302,7 +15302,7 @@ exports[`open api parser merge parse open api 1`] = `
           "key": "status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -15320,7 +15320,7 @@ exports[`open api parser merge parse open api 1`] = `
           "key": "webhook_listener_url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -15338,7 +15338,7 @@ exports[`open api parser merge parse open api 1`] = `
           "key": "is_duplicate",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Whether a Production Linked Account's credentials match another existing Production Linked Account. This field is \`null\` for Test Linked Accounts, incomplete Production Linked Accounts, and ignored duplicate Production Linked Account sets.",
               "type": "nullable",
@@ -15387,7 +15387,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
           "key": "category",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "AccountDetailsAndActionsCategory",
@@ -15415,7 +15415,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
           "key": "status_detail",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -15433,7 +15433,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
           "key": "end_user_origin_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -15493,7 +15493,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
           "key": "is_duplicate",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Whether a Production Linked Account's credentials match another existing Production Linked Account. This field is \`null\` for Test Linked Accounts, incomplete Production Linked Accounts, and ignored duplicate Production Linked Account sets.",
               "type": "nullable",
@@ -15513,7 +15513,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
           "key": "integration",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "AccountDetailsAndActionsIntegration",
@@ -15569,7 +15569,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
           "key": "image",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -15587,7 +15587,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
           "key": "square_image",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -15645,7 +15645,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
           "key": "available_model_operations",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -15717,7 +15717,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
           "key": "categories",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Category or categories this integration belongs to. Multiple categories should be comma separated, i.e. [ats, hris].",
               "type": "array",
@@ -15737,7 +15737,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
           "key": "image",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Company logo in rectangular shape. <b>Upload an image with a clear background.</b>",
               "type": "nullable",
@@ -15759,7 +15759,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
           "key": "square_image",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Company logo in square shape. <b>Upload an image with a white background.</b>",
               "type": "nullable",
@@ -15781,7 +15781,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
           "key": "color",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The color of this integration used for buttons and text throughout the app and landing pages. <b>Choose a darker, saturated color.</b>",
               "schema": {
@@ -15799,7 +15799,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
           "key": "slug",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -15817,7 +15817,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
           "key": "is_in_beta",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "If checked, this integration will not appear in the linking flow, and will appear elsewhere with a Beta tag.",
               "schema": {
@@ -15833,7 +15833,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
           "key": "api_endpoints_to_documentation_urls",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Mapping of API endpoints to documentation urls for support. Example: {'GET': [['/common-model-scopes', 'https://docs.merge.dev/accounting/common-model-scopes/#common_model_scopes_retrieve'],['/common-model-actions', 'https://docs.merge.dev/accounting/common-model-actions/#common_model_actions_retrieve']], 'POST': []}",
               "key": {
@@ -15954,7 +15954,7 @@ Fetch all the actions available for the \`Zenefits\` integration.",
           "key": "available_model_operations",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -15989,7 +15989,7 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -16007,7 +16007,7 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
           "key": "remote_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The third-party API ID of the matching object.",
               "type": "nullable",
@@ -16029,7 +16029,7 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
           "key": "employee",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee with this bank account.",
               "type": "nullable",
@@ -16051,7 +16051,7 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
           "key": "account_number",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The account number.",
               "type": "nullable",
@@ -16073,7 +16073,7 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
           "key": "routing_number",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The routing number.",
               "type": "nullable",
@@ -16095,7 +16095,7 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
           "key": "bank_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The bank name.",
               "type": "nullable",
@@ -16117,7 +16117,7 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
           "key": "account_type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The bank account type
 
@@ -16163,7 +16163,7 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
           "key": "remote_created_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "When the matching bank object was created in the third party system.",
               "type": "nullable",
@@ -16183,7 +16183,7 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
           "key": "remote_was_deleted",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates whether or not this object has been deleted by third party webhooks.",
               "schema": {
@@ -16199,7 +16199,7 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
           "key": "modified_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "This is the datetime that this object was last updated by Merge",
               "schema": {
@@ -16215,7 +16215,7 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
           "key": "field_mappings",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -16244,7 +16244,7 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
           "key": "remote_data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -16283,7 +16283,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -16301,7 +16301,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
           "key": "remote_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The third-party API ID of the matching object.",
               "type": "nullable",
@@ -16323,7 +16323,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
           "key": "employee",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee on the plan.",
               "type": "nullable",
@@ -16345,7 +16345,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
           "key": "provider_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The name of the benefit provider.",
               "type": "nullable",
@@ -16367,7 +16367,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
           "key": "benefit_plan_type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The type of benefit plan",
               "type": "nullable",
@@ -16389,7 +16389,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
           "key": "employee_contribution",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's contribution.",
               "type": "nullable",
@@ -16409,7 +16409,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
           "key": "company_contribution",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The company's contribution.",
               "type": "nullable",
@@ -16429,7 +16429,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
           "key": "start_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The day and time the benefit started.",
               "type": "nullable",
@@ -16449,7 +16449,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
           "key": "end_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The day and time the benefit ended.",
               "type": "nullable",
@@ -16469,7 +16469,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
           "key": "remote_was_deleted",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates whether or not this object has been deleted by third party webhooks.",
               "schema": {
@@ -16485,7 +16485,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
           "key": "modified_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "This is the datetime that this object was last updated by Merge",
               "schema": {
@@ -16501,7 +16501,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
           "key": "field_mappings",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -16530,7 +16530,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
           "key": "remote_data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -16739,7 +16739,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -16757,7 +16757,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
           "key": "remote_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The third-party API ID of the matching object.",
               "type": "nullable",
@@ -16779,7 +16779,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
           "key": "legal_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The company's legal name.",
               "type": "nullable",
@@ -16801,7 +16801,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
           "key": "display_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The company's display name.",
               "type": "nullable",
@@ -16823,7 +16823,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
           "key": "eins",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The company's Employer Identification Numbers.",
               "type": "nullable",
@@ -16853,7 +16853,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
           "key": "remote_was_deleted",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates whether or not this object has been deleted by third party webhooks.",
               "schema": {
@@ -16869,7 +16869,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
           "key": "modified_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "This is the datetime that this object was last updated by Merge",
               "schema": {
@@ -16885,7 +16885,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
           "key": "field_mappings",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -16914,7 +16914,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
           "key": "remote_data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -16962,7 +16962,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
           "key": "common_model",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The common model for which a condition schema is defined.",
               "schema": {
@@ -17016,7 +17016,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
           "key": "is_unique",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Whether this condition can only be applied once. If false, the condition can be AND'd together multiple times.",
               "schema": {
@@ -18935,7 +18935,7 @@ Create a \`DataPassthrough\` to get team hierarchies from your Rippling integrat
           "key": "base_url_override",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -18957,7 +18957,7 @@ Create a \`DataPassthrough\` to get team hierarchies from your Rippling integrat
           "key": "data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -18979,7 +18979,7 @@ Create a \`DataPassthrough\` to get team hierarchies from your Rippling integrat
           "key": "multipart_form_data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Pass an array of \`MultipartFormField\` objects in here instead of using the \`data\` param if \`request_format\` is set to \`MULTIPART\`.",
               "type": "nullable",
@@ -19003,7 +19003,7 @@ Create a \`DataPassthrough\` to get team hierarchies from your Rippling integrat
           "key": "headers",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The headers to use for the request (Merge will handle the account's authorization headers). \`Content-Type\` header is required for passthrough. Choose content type corresponding to expected format of receiving server.",
               "type": "nullable",
@@ -19032,7 +19032,7 @@ Create a \`DataPassthrough\` to get team hierarchies from your Rippling integrat
           "key": "request_format",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -19052,7 +19052,7 @@ Create a \`DataPassthrough\` to get team hierarchies from your Rippling integrat
           "key": "normalize_response",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Optional. If true, the response will always be an object of the form \`{"type": T, "value": ...}\` where \`T\` will be one of \`string, boolean, number, null, array, object\`.",
               "schema": {
@@ -19183,7 +19183,7 @@ Fetch from the \`LIST Deductions\` endpoint and filter by \`ID\` to show all ded
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -19201,7 +19201,7 @@ Fetch from the \`LIST Deductions\` endpoint and filter by \`ID\` to show all ded
           "key": "remote_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The third-party API ID of the matching object.",
               "type": "nullable",
@@ -19223,7 +19223,7 @@ Fetch from the \`LIST Deductions\` endpoint and filter by \`ID\` to show all ded
           "key": "employee_payroll_run",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -19245,7 +19245,7 @@ Fetch from the \`LIST Deductions\` endpoint and filter by \`ID\` to show all ded
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The deduction's name.",
               "type": "nullable",
@@ -19267,7 +19267,7 @@ Fetch from the \`LIST Deductions\` endpoint and filter by \`ID\` to show all ded
           "key": "employee_deduction",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The amount of money that is withheld from an employee's gross pay by the employee.",
               "type": "nullable",
@@ -19287,7 +19287,7 @@ Fetch from the \`LIST Deductions\` endpoint and filter by \`ID\` to show all ded
           "key": "company_deduction",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The amount of money that is withheld on behalf of an employee by the company.",
               "type": "nullable",
@@ -19307,7 +19307,7 @@ Fetch from the \`LIST Deductions\` endpoint and filter by \`ID\` to show all ded
           "key": "remote_was_deleted",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates whether or not this object has been deleted by third party webhooks.",
               "schema": {
@@ -19323,7 +19323,7 @@ Fetch from the \`LIST Deductions\` endpoint and filter by \`ID\` to show all ded
           "key": "modified_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "This is the datetime that this object was last updated by Merge",
               "schema": {
@@ -19339,7 +19339,7 @@ Fetch from the \`LIST Deductions\` endpoint and filter by \`ID\` to show all ded
           "key": "field_mappings",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -19368,7 +19368,7 @@ Fetch from the \`LIST Deductions\` endpoint and filter by \`ID\` to show all ded
           "key": "remote_data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -19407,7 +19407,7 @@ Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earni
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -19425,7 +19425,7 @@ Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earni
           "key": "remote_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The third-party API ID of the matching object.",
               "type": "nullable",
@@ -19447,7 +19447,7 @@ Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earni
           "key": "employee_payroll_run",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -19469,7 +19469,7 @@ Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earni
           "key": "amount",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The amount earned.",
               "type": "nullable",
@@ -19489,7 +19489,7 @@ Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earni
           "key": "type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The type of earning.
 
@@ -19539,7 +19539,7 @@ Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earni
           "key": "remote_was_deleted",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates whether or not this object has been deleted by third party webhooks.",
               "schema": {
@@ -19555,7 +19555,7 @@ Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earni
           "key": "modified_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "This is the datetime that this object was last updated by Merge",
               "schema": {
@@ -19571,7 +19571,7 @@ Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earni
           "key": "field_mappings",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -19600,7 +19600,7 @@ Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earni
           "key": "remote_data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -19674,7 +19674,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -19692,7 +19692,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "remote_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The third-party API ID of the matching object.",
               "type": "nullable",
@@ -19714,7 +19714,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "employee_number",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's number that appears in the third-party integration's UI.",
               "type": "nullable",
@@ -19736,7 +19736,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "company",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The ID of the employee's company.",
               "type": "nullable",
@@ -19758,7 +19758,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "first_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's first name.",
               "type": "nullable",
@@ -19780,7 +19780,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "last_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's last name.",
               "type": "nullable",
@@ -19802,7 +19802,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "display_full_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's full name, to use for display purposes. If a preferred first name is available, the full name will include the preferred first name.",
               "type": "nullable",
@@ -19824,7 +19824,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "username",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's username that appears in the remote UI.",
               "type": "nullable",
@@ -19846,7 +19846,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "groups",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -19872,7 +19872,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "work_email",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's work email.",
               "type": "nullable",
@@ -19894,7 +19894,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "personal_email",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's personal email.",
               "type": "nullable",
@@ -19916,7 +19916,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "mobile_phone_number",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's mobile phone number.",
               "type": "nullable",
@@ -19938,7 +19938,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "employments",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Array of \`Employment\` IDs for this Employee.",
               "type": "array",
@@ -19964,7 +19964,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "home_location",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's home address.",
               "type": "nullable",
@@ -19986,7 +19986,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "work_location",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's work address.",
               "type": "nullable",
@@ -20008,7 +20008,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "manager",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee ID of the employee's manager.",
               "type": "nullable",
@@ -20030,7 +20030,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "team",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's team.",
               "type": "nullable",
@@ -20052,7 +20052,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "pay_group",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's pay group",
               "type": "nullable",
@@ -20074,7 +20074,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "ssn",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's social security number.",
               "type": "nullable",
@@ -20096,7 +20096,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "gender",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's gender.
 
@@ -20148,7 +20148,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "ethnicity",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's ethnicity.
 
@@ -20206,7 +20206,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "marital_status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's filing status as related to marital status.
 
@@ -20258,7 +20258,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "date_of_birth",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's date of birth.",
               "type": "nullable",
@@ -20278,7 +20278,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "hire_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The date that the employee was hired, usually the day that an offer letter is signed. If an employee has multiple hire dates from previous employments, this represents the most recent hire date. Note: If you're looking for the employee's start date, refer to the start_date field.",
               "type": "nullable",
@@ -20298,7 +20298,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "start_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The date that the employee started working. If an employee was rehired, the most recent start date will be returned.",
               "type": "nullable",
@@ -20318,7 +20318,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "remote_created_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "When the third party's employee was created.",
               "type": "nullable",
@@ -20338,7 +20338,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "employment_status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employment status of the employee.
 
@@ -20386,7 +20386,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "termination_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's termination date.",
               "type": "nullable",
@@ -20406,7 +20406,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "avatar",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The URL of the employee's avatar image.",
               "type": "nullable",
@@ -20428,7 +20428,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "custom_fields",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Custom fields configured for a given model.",
               "type": "nullable",
@@ -20457,7 +20457,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "remote_was_deleted",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -20473,7 +20473,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "modified_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "This is the datetime that this object was last updated by Merge",
               "schema": {
@@ -20489,7 +20489,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "field_mappings",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -20518,7 +20518,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "remote_data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -20579,7 +20579,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -20597,7 +20597,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
           "key": "remote_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The third-party API ID of the matching object.",
               "type": "nullable",
@@ -20619,7 +20619,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
           "key": "employee",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee whose payroll is being run.",
               "type": "nullable",
@@ -20641,7 +20641,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
           "key": "payroll_run",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The payroll being run.",
               "type": "nullable",
@@ -20663,7 +20663,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
           "key": "gross_pay",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The total earnings throughout a given period for an employee before any deductions are made.",
               "type": "nullable",
@@ -20683,7 +20683,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
           "key": "net_pay",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The take-home pay throughout a given period for an employee after deductions are made.",
               "type": "nullable",
@@ -20703,7 +20703,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
           "key": "start_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The day and time the payroll run started.",
               "type": "nullable",
@@ -20723,7 +20723,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
           "key": "end_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The day and time the payroll run ended.",
               "type": "nullable",
@@ -20743,7 +20743,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
           "key": "check_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The day and time the payroll run was checked.",
               "type": "nullable",
@@ -20763,7 +20763,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
           "key": "earnings",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -20783,7 +20783,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
           "key": "deductions",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -20803,7 +20803,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
           "key": "taxes",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -20823,7 +20823,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
           "key": "remote_was_deleted",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates whether or not this object has been deleted by third party webhooks.",
               "schema": {
@@ -20839,7 +20839,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
           "key": "modified_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "This is the datetime that this object was last updated by Merge",
               "schema": {
@@ -20855,7 +20855,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
           "key": "field_mappings",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -20884,7 +20884,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
           "key": "remote_data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -20923,7 +20923,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "employee_number",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's number that appears in the third-party integration's UI.",
               "type": "nullable",
@@ -20945,7 +20945,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "company",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The ID of the employee's company.",
               "type": "nullable",
@@ -20967,7 +20967,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "first_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's first name.",
               "type": "nullable",
@@ -20989,7 +20989,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "last_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's last name.",
               "type": "nullable",
@@ -21011,7 +21011,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "display_full_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's full name, to use for display purposes. If a preferred first name is available, the full name will include the preferred first name.",
               "type": "nullable",
@@ -21033,7 +21033,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "username",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's username that appears in the remote UI.",
               "type": "nullable",
@@ -21055,7 +21055,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "groups",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -21081,7 +21081,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "work_email",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's work email.",
               "type": "nullable",
@@ -21103,7 +21103,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "personal_email",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's personal email.",
               "type": "nullable",
@@ -21125,7 +21125,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "mobile_phone_number",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's mobile phone number.",
               "type": "nullable",
@@ -21147,7 +21147,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "employments",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Array of \`Employment\` IDs for this Employee.",
               "type": "array",
@@ -21173,7 +21173,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "home_location",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's home address.",
               "type": "nullable",
@@ -21195,7 +21195,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "work_location",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's work address.",
               "type": "nullable",
@@ -21217,7 +21217,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "manager",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee ID of the employee's manager.",
               "type": "nullable",
@@ -21239,7 +21239,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "team",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's team.",
               "type": "nullable",
@@ -21261,7 +21261,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "pay_group",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's pay group",
               "type": "nullable",
@@ -21283,7 +21283,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "ssn",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's social security number.",
               "type": "nullable",
@@ -21305,7 +21305,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "gender",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's gender.
 
@@ -21357,7 +21357,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "ethnicity",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's ethnicity.
 
@@ -21415,7 +21415,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "marital_status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's filing status as related to marital status.
 
@@ -21467,7 +21467,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "date_of_birth",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's date of birth.",
               "type": "nullable",
@@ -21487,7 +21487,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "hire_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The date that the employee was hired, usually the day that an offer letter is signed. If an employee has multiple hire dates from previous employments, this represents the most recent hire date. Note: If you're looking for the employee's start date, refer to the start_date field.",
               "type": "nullable",
@@ -21507,7 +21507,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "start_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The date that the employee started working. If an employee was rehired, the most recent start date will be returned.",
               "type": "nullable",
@@ -21527,7 +21527,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "employment_status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employment status of the employee.
 
@@ -21575,7 +21575,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "termination_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee's termination date.",
               "type": "nullable",
@@ -21595,7 +21595,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "avatar",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The URL of the employee's avatar image.",
               "type": "nullable",
@@ -21617,7 +21617,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "integration_params",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -21646,7 +21646,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "linked_account_params",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -21729,7 +21729,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
           "key": "logs",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -21766,7 +21766,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -21784,7 +21784,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
           "key": "remote_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The third-party API ID of the matching object.",
               "type": "nullable",
@@ -21806,7 +21806,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
           "key": "employee",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee holding this position.",
               "type": "nullable",
@@ -21828,7 +21828,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
           "key": "job_title",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The position's title.",
               "type": "nullable",
@@ -21850,7 +21850,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
           "key": "pay_rate",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The position's pay rate in dollars.",
               "type": "nullable",
@@ -21870,7 +21870,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
           "key": "pay_period",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The time period this pay rate encompasses.
 
@@ -21930,7 +21930,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
           "key": "pay_frequency",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The position's pay frequency.
 
@@ -21990,7 +21990,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
           "key": "pay_currency",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The position's currency code.
 
@@ -22644,7 +22644,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
           "key": "pay_group",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employment's pay group",
               "type": "nullable",
@@ -22666,7 +22666,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
           "key": "flsa_status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The position's FLSA status.
 
@@ -22716,7 +22716,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
           "key": "effective_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The position's effective date.",
               "type": "nullable",
@@ -22736,7 +22736,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
           "key": "employment_type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The position's type of employment.
 
@@ -22788,7 +22788,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
           "key": "remote_was_deleted",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates whether or not this object has been deleted by third party webhooks.",
               "schema": {
@@ -22804,7 +22804,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
           "key": "modified_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "This is the datetime that this object was last updated by Merge",
               "schema": {
@@ -22820,7 +22820,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
           "key": "field_mappings",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -22849,7 +22849,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
           "key": "remote_data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -23060,7 +23060,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
           "key": "integration",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The slug of a specific pre-selected integration for this linking flow token. For examples of slugs, see https://www.merge.dev/docs/basics/integration-metadata/.",
               "type": "nullable",
@@ -23082,7 +23082,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
           "key": "link_expiry_mins",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "An integer number of minutes between [30, 720 or 10080 if for a Magic Link URL] for how long this token is valid. Defaults to 30.",
               "schema": {
@@ -23098,7 +23098,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
           "key": "should_create_magic_link_url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Whether to generate a Magic Link URL. Defaults to false. For more information on Magic Link, see https://merge.dev/blog/product/integrations,-fast.-say-hello-to-magic-link/.",
               "type": "nullable",
@@ -23118,7 +23118,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
           "key": "common_models",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "An array of objects to specify the models and fields that will be disabled for a given Linked Account. Each object uses model_id, enabled_actions, and disabled_fields to specify the model, method, and fields that are scoped for a given Linked Account.",
               "type": "nullable",
@@ -23152,7 +23152,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
           "key": "source",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ErrorValidationProblemSource",
@@ -23394,7 +23394,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -23412,7 +23412,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "remote_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The third-party API ID of the matching object.",
               "type": "nullable",
@@ -23434,7 +23434,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "parent_group",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The parent group for this group.",
               "type": "nullable",
@@ -23456,7 +23456,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The group name.",
               "type": "nullable",
@@ -23478,7 +23478,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The group type
 
@@ -23530,7 +23530,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "remote_was_deleted",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates whether or not this object has been deleted by third party webhooks.",
               "schema": {
@@ -23546,7 +23546,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "modified_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "This is the datetime that this object was last updated by Merge",
               "schema": {
@@ -23562,7 +23562,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "field_mappings",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -23591,7 +23591,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "remote_data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -23699,7 +23699,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "message",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -23727,7 +23727,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -23745,7 +23745,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": "Status of the issue. Options: ('ONGOING', 'RESOLVED')
@@ -23798,7 +23798,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "end_user",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "key": {
@@ -23823,7 +23823,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "first_incident_time",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -23843,7 +23843,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "last_incident_time",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -23863,7 +23863,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "is_muted",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -23879,7 +23879,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "error_details",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -23946,7 +23946,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "integration_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -23964,7 +23964,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "magic_link_url",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -24006,7 +24006,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "common_model",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The common model for a specific condition.",
               "schema": {
@@ -24056,7 +24056,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "value",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "type": "unknown",
             },
@@ -24142,7 +24142,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
           "key": "linked_account_conditions",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The conditions belonging to a selective sync.",
               "type": "array",
@@ -24265,7 +24265,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -24283,7 +24283,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
           "key": "remote_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The third-party API ID of the matching object.",
               "type": "nullable",
@@ -24305,7 +24305,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The location's name.",
               "type": "nullable",
@@ -24327,7 +24327,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
           "key": "phone_number",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The location's phone number.",
               "type": "nullable",
@@ -24349,7 +24349,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
           "key": "street_1",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Line 1 of the location's street address.",
               "type": "nullable",
@@ -24371,7 +24371,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
           "key": "street_2",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Line 2 of the location's street address.",
               "type": "nullable",
@@ -24393,7 +24393,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
           "key": "city",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The location's city.",
               "type": "nullable",
@@ -24415,7 +24415,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
           "key": "state",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The location's state. Represents a region if outside of the US.",
               "type": "nullable",
@@ -24437,7 +24437,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
           "key": "zip_code",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The location's zip code or postal code.",
               "type": "nullable",
@@ -24459,7 +24459,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
           "key": "country",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The location's country.
 
@@ -24999,7 +24999,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
           "key": "location_type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The location's type. Can be either WORK or HOME
 
@@ -25045,7 +25045,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
           "key": "remote_was_deleted",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates whether or not this object has been deleted by third party webhooks.",
               "schema": {
@@ -25061,7 +25061,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
           "key": "modified_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "This is the datetime that this object was last updated by Merge",
               "schema": {
@@ -25077,7 +25077,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
           "key": "field_mappings",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -25106,7 +25106,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
           "key": "remote_data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -25224,7 +25224,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
           "key": "remote_field_classes",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "key": {
@@ -25249,7 +25249,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
           "key": "status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "MetaResponseStatus",
@@ -25471,7 +25471,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "encoding",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The encoding of the value of \`data\`. Defaults to \`RAW\` if not defined.
 
@@ -25519,7 +25519,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "file_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The file name of the form field, if the field is for a file.",
               "type": "nullable",
@@ -25541,7 +25541,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "content_type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The MIME type of the file, if the field is for a file.",
               "type": "nullable",
@@ -25573,7 +25573,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "operator",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The operator for which an operator schema is defined.",
               "schema": {
@@ -25591,7 +25591,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "is_unique",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Whether the operator can be repeated multiple times.",
               "schema": {
@@ -25617,7 +25617,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "next",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -25639,7 +25639,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "previous",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -25661,7 +25661,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "results",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -25691,7 +25691,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "next",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -25713,7 +25713,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "previous",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -25735,7 +25735,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "results",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -25765,7 +25765,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "next",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -25787,7 +25787,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "previous",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -25809,7 +25809,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "results",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -25839,7 +25839,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "next",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -25861,7 +25861,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "previous",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -25883,7 +25883,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "results",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -25913,7 +25913,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "next",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -25935,7 +25935,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "previous",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -25957,7 +25957,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "results",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -25987,7 +25987,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "next",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26009,7 +26009,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "previous",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26031,7 +26031,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "results",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -26061,7 +26061,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "next",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26083,7 +26083,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "previous",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26105,7 +26105,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "results",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -26135,7 +26135,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "next",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26157,7 +26157,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "previous",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26179,7 +26179,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "results",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -26209,7 +26209,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "next",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26231,7 +26231,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "previous",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26253,7 +26253,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "results",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -26283,7 +26283,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "next",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26305,7 +26305,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "previous",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26327,7 +26327,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "results",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -26357,7 +26357,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "next",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26379,7 +26379,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "previous",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26401,7 +26401,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "results",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -26431,7 +26431,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "next",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26453,7 +26453,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "previous",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26475,7 +26475,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "results",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -26505,7 +26505,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "next",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26527,7 +26527,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "previous",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26549,7 +26549,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "results",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -26579,7 +26579,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "next",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26601,7 +26601,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "previous",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26623,7 +26623,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "results",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -26653,7 +26653,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "next",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26675,7 +26675,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "previous",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26697,7 +26697,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "results",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -26727,7 +26727,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "next",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26749,7 +26749,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "previous",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26771,7 +26771,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "results",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -26801,7 +26801,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "next",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26823,7 +26823,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "previous",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -26845,7 +26845,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
           "key": "results",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -29099,7 +29099,7 @@ Fetch from the \`LIST PayGroup\` endpoint and filter by \`ID\` to show all pay g
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -29117,7 +29117,7 @@ Fetch from the \`LIST PayGroup\` endpoint and filter by \`ID\` to show all pay g
           "key": "remote_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The third-party API ID of the matching object.",
               "type": "nullable",
@@ -29139,7 +29139,7 @@ Fetch from the \`LIST PayGroup\` endpoint and filter by \`ID\` to show all pay g
           "key": "pay_group_name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The pay group name.",
               "type": "nullable",
@@ -29161,7 +29161,7 @@ Fetch from the \`LIST PayGroup\` endpoint and filter by \`ID\` to show all pay g
           "key": "remote_was_deleted",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates whether or not this object has been deleted by third party webhooks.",
               "schema": {
@@ -29177,7 +29177,7 @@ Fetch from the \`LIST PayGroup\` endpoint and filter by \`ID\` to show all pay g
           "key": "modified_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "This is the datetime that this object was last updated by Merge",
               "schema": {
@@ -29193,7 +29193,7 @@ Fetch from the \`LIST PayGroup\` endpoint and filter by \`ID\` to show all pay g
           "key": "field_mappings",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -29222,7 +29222,7 @@ Fetch from the \`LIST PayGroup\` endpoint and filter by \`ID\` to show all pay g
           "key": "remote_data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -29331,7 +29331,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -29349,7 +29349,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
           "key": "remote_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The third-party API ID of the matching object.",
               "type": "nullable",
@@ -29371,7 +29371,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
           "key": "run_state",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The state of the payroll run
 
@@ -29423,7 +29423,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
           "key": "run_type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The type of the payroll run
 
@@ -29475,7 +29475,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
           "key": "start_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The day and time the payroll run started.",
               "type": "nullable",
@@ -29495,7 +29495,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
           "key": "end_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The day and time the payroll run ended.",
               "type": "nullable",
@@ -29515,7 +29515,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
           "key": "check_date",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The day and time the payroll run was checked.",
               "type": "nullable",
@@ -29535,7 +29535,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
           "key": "remote_was_deleted",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates whether or not this object has been deleted by third party webhooks.",
               "schema": {
@@ -29551,7 +29551,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
           "key": "modified_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "This is the datetime that this object was last updated by Merge",
               "schema": {
@@ -29567,7 +29567,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
           "key": "field_mappings",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -29596,7 +29596,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
           "key": "remote_data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -29721,7 +29721,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
           "key": "data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "key": {
@@ -29881,7 +29881,7 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
           "key": "response_headers",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "key": {
@@ -29906,7 +29906,7 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
           "key": "response_type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "oneOf": {
                 "description": undefined,
@@ -29942,7 +29942,7 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
           "key": "headers",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "key": {
@@ -30213,7 +30213,7 @@ View the \`SyncStatus\` for an account to see how recently its models were synce
           "key": "last_sync_start",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -30229,7 +30229,7 @@ View the \`SyncStatus\` for an account to see how recently its models were synce
           "key": "next_sync_start",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -30269,7 +30269,7 @@ View the \`SyncStatus\` for an account to see how recently its models were synce
           "key": "selective_sync_configurations_usage",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "SyncStatusSelectiveSyncConfigurationsUsage",
@@ -30349,7 +30349,7 @@ Fetch from the \`LIST Taxes\` endpoint and filter by \`ID\` to show all taxes.",
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -30367,7 +30367,7 @@ Fetch from the \`LIST Taxes\` endpoint and filter by \`ID\` to show all taxes.",
           "key": "remote_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The third-party API ID of the matching object.",
               "type": "nullable",
@@ -30389,7 +30389,7 @@ Fetch from the \`LIST Taxes\` endpoint and filter by \`ID\` to show all taxes.",
           "key": "employee_payroll_run",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -30411,7 +30411,7 @@ Fetch from the \`LIST Taxes\` endpoint and filter by \`ID\` to show all taxes.",
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The tax's name.",
               "type": "nullable",
@@ -30433,7 +30433,7 @@ Fetch from the \`LIST Taxes\` endpoint and filter by \`ID\` to show all taxes.",
           "key": "amount",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The tax amount.",
               "type": "nullable",
@@ -30453,7 +30453,7 @@ Fetch from the \`LIST Taxes\` endpoint and filter by \`ID\` to show all taxes.",
           "key": "employer_tax",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Whether or not the employer is responsible for paying the tax.",
               "type": "nullable",
@@ -30473,7 +30473,7 @@ Fetch from the \`LIST Taxes\` endpoint and filter by \`ID\` to show all taxes.",
           "key": "remote_was_deleted",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates whether or not this object has been deleted by third party webhooks.",
               "schema": {
@@ -30489,7 +30489,7 @@ Fetch from the \`LIST Taxes\` endpoint and filter by \`ID\` to show all taxes.",
           "key": "modified_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "This is the datetime that this object was last updated by Merge",
               "schema": {
@@ -30505,7 +30505,7 @@ Fetch from the \`LIST Taxes\` endpoint and filter by \`ID\` to show all taxes.",
           "key": "field_mappings",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -30534,7 +30534,7 @@ Fetch from the \`LIST Taxes\` endpoint and filter by \`ID\` to show all taxes.",
           "key": "remote_data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -30573,7 +30573,7 @@ If you're building a way to filter by \`Team\`, you'd hit the \`GET Teams\` endp
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -30591,7 +30591,7 @@ If you're building a way to filter by \`Team\`, you'd hit the \`GET Teams\` endp
           "key": "remote_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The third-party API ID of the matching object.",
               "type": "nullable",
@@ -30613,7 +30613,7 @@ If you're building a way to filter by \`Team\`, you'd hit the \`GET Teams\` endp
           "key": "name",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The team's name.",
               "type": "nullable",
@@ -30635,7 +30635,7 @@ If you're building a way to filter by \`Team\`, you'd hit the \`GET Teams\` endp
           "key": "parent_team",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The team's parent team.",
               "type": "nullable",
@@ -30657,7 +30657,7 @@ If you're building a way to filter by \`Team\`, you'd hit the \`GET Teams\` endp
           "key": "remote_was_deleted",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates whether or not this object has been deleted by third party webhooks.",
               "schema": {
@@ -30673,7 +30673,7 @@ If you're building a way to filter by \`Team\`, you'd hit the \`GET Teams\` endp
           "key": "modified_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "This is the datetime that this object was last updated by Merge",
               "schema": {
@@ -30689,7 +30689,7 @@ If you're building a way to filter by \`Team\`, you'd hit the \`GET Teams\` endp
           "key": "field_mappings",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -30718,7 +30718,7 @@ If you're building a way to filter by \`Team\`, you'd hit the \`GET Teams\` endp
           "key": "remote_data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -30757,7 +30757,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -30775,7 +30775,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "remote_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The third-party API ID of the matching object.",
               "type": "nullable",
@@ -30797,7 +30797,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "employee",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee requesting time off.",
               "type": "nullable",
@@ -30819,7 +30819,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "approver",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The Merge ID of the employee with the ability to approve the time off request.",
               "type": "nullable",
@@ -30841,7 +30841,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The status of this time off request.
 
@@ -30893,7 +30893,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "employee_note",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee note for this time off request.",
               "type": "nullable",
@@ -30915,7 +30915,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "units",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The measurement that the third-party integration uses to count time requested.
 
@@ -30961,7 +30961,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "amount",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The time off quantity measured by the prescribed “units”.",
               "type": "nullable",
@@ -30981,7 +30981,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "request_type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The type of time off request.
 
@@ -31035,7 +31035,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "start_time",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The day and time of the start of the time requested off.",
               "type": "nullable",
@@ -31055,7 +31055,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "end_time",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The day and time of the end of the time requested off.",
               "type": "nullable",
@@ -31075,7 +31075,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "remote_was_deleted",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -31091,7 +31091,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "modified_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "This is the datetime that this object was last updated by Merge",
               "schema": {
@@ -31107,7 +31107,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "field_mappings",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -31136,7 +31136,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "remote_data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -31175,7 +31175,7 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
           "key": "id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -31193,7 +31193,7 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
           "key": "remote_id",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The third-party API ID of the matching object.",
               "type": "nullable",
@@ -31215,7 +31215,7 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
           "key": "employee",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee the balance belongs to.",
               "type": "nullable",
@@ -31237,7 +31237,7 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
           "key": "balance",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The current remaining PTO balance, always measured in terms of hours.",
               "type": "nullable",
@@ -31257,7 +31257,7 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
           "key": "used",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The amount of PTO used in terms of hours.",
               "type": "nullable",
@@ -31277,7 +31277,7 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
           "key": "policy_type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The policy type of this time off balance.
 
@@ -31331,7 +31331,7 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
           "key": "remote_was_deleted",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "Indicates whether or not this object has been deleted by third party webhooks.",
               "schema": {
@@ -31347,7 +31347,7 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
           "key": "modified_at",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "This is the datetime that this object was last updated by Merge",
               "schema": {
@@ -31363,7 +31363,7 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
           "key": "field_mappings",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -31392,7 +31392,7 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
           "key": "remote_data",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -31453,7 +31453,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "employee",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee requesting time off.",
               "type": "nullable",
@@ -31475,7 +31475,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "approver",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The Merge ID of the employee with the ability to approve the time off request.",
               "type": "nullable",
@@ -31497,7 +31497,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "status",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The status of this time off request.
 
@@ -31549,7 +31549,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "employee_note",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The employee note for this time off request.",
               "type": "nullable",
@@ -31571,7 +31571,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "units",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The measurement that the third-party integration uses to count time requested.
 
@@ -31617,7 +31617,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "amount",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The time off quantity measured by the prescribed “units”.",
               "type": "nullable",
@@ -31637,7 +31637,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "request_type",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The type of time off request.
 
@@ -31691,7 +31691,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "start_time",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The day and time of the start of the time requested off.",
               "type": "nullable",
@@ -31711,7 +31711,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "end_time",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": "The day and time of the end of the time requested off.",
               "type": "nullable",
@@ -31731,7 +31731,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "integration_params",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -31760,7 +31760,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "linked_account_params",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "nullable",
@@ -31843,7 +31843,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "logs",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "type": "array",
@@ -31960,7 +31960,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "source",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "WarningValidationProblemSource",
@@ -32054,7 +32054,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "key",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
@@ -32108,7 +32108,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
           "key": "key",
           "schema": {
             "description": undefined,
-            "type": "nullable",
+            "type": "optional",
             "value": {
               "description": undefined,
               "schema": {
