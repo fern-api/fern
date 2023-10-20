@@ -52,9 +52,7 @@ exports[`open api parser hume simple 1`] = `
                 "query-parameters": {
                   "direction": "asc",
                   "sort_by": "created",
-                  "status": [
-                    "QUEUED",
-                  ],
+                  "status": "QUEUED",
                   "when": "created_before",
                 },
                 "request": undefined,

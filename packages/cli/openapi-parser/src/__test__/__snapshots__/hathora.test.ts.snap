@@ -419,7 +419,26 @@ exports[`open api parser hathora parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "app-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DeleteAppRequest",
       "headers": [],
       "internal": undefined,
@@ -717,7 +736,29 @@ exports[`open api parser hathora parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "app-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "GetBuildsRequest",
       "headers": [],
       "internal": undefined,
@@ -953,7 +994,36 @@ exports[`open api parser hathora parse open api 1`] = `
         422,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "app-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "buildId",
+              "value": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DeleteBuildRequest",
       "headers": [],
       "internal": undefined,
@@ -1005,7 +1075,29 @@ exports[`open api parser hathora parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "app-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "GetDeploymentsRequest",
       "headers": [],
       "internal": undefined,
@@ -1441,7 +1533,48 @@ exports[`open api parser hathora parse open api 1`] = `
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [
+            {
+              "name": "Authorization",
+              "value": {
+                "primitive": {
+                  "string": "authorization",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "app-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "region",
+              "value": {
+                "enum": "Seattle",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "ListActivePublicLobbiesDeprecatedRequest",
       "headers": [
         {
@@ -2093,7 +2226,37 @@ exports[`open api parser hathora parse open api 1`] = `
       "availability": undefined,
       "description": undefined,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "app-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "region",
+              "value": {
+                "enum": "Seattle",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "ListActivePublicLobbiesRequest",
       "headers": [],
       "internal": undefined,
@@ -2579,7 +2742,52 @@ exports[`open api parser hathora parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "app-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "processId",
+              "value": {
+                "primitive": {
+                  "string": "process-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "metrics",
+              "value": {
+                "array": [
+                  {
+                    "enum": "cpu",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetMetricsRequest",
       "headers": [],
       "internal": undefined,
@@ -2706,7 +2914,37 @@ exports[`open api parser hathora parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "app-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "region",
+              "value": {
+                "enum": "Seattle",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "GetRunningProcessesRequest",
       "headers": [],
       "internal": undefined,
@@ -2776,7 +3014,37 @@ exports[`open api parser hathora parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "app-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "region",
+              "value": {
+                "enum": "Seattle",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "GetStoppedProcessesRequest",
       "headers": [],
       "internal": undefined,
@@ -3047,7 +3315,39 @@ exports[`open api parser hathora parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "app-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "processId",
+              "value": {
+                "primitive": {
+                  "string": "process-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "GetActiveRoomsForProcessRequest",
       "headers": [],
       "internal": undefined,
@@ -3113,7 +3413,39 @@ exports[`open api parser hathora parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "app-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "processId",
+              "value": {
+                "primitive": {
+                  "string": "process-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [],
+            "type": "array",
+          },
+        },
+      ],
       "generatedRequestName": "GetInactiveRoomsForProcessRequest",
       "headers": [],
       "internal": undefined,
@@ -3180,7 +3512,36 @@ exports[`open api parser hathora parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "app-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "roomId",
+              "value": {
+                "primitive": {
+                  "string": "room-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "DestroyRoomRequest",
       "headers": [],
       "internal": undefined,
@@ -3233,7 +3594,36 @@ exports[`open api parser hathora parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "app-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "roomId",
+              "value": {
+                "primitive": {
+                  "string": "room-id",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": undefined,
+        },
+      ],
       "generatedRequestName": "SuspendRoomRequest",
       "headers": [],
       "internal": undefined,

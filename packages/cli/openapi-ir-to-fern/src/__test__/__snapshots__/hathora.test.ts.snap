@@ -752,6 +752,17 @@ exports[`open api parser hathora simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "app-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/apps/v1/delete/{appId}",
             "path-parameters": {
@@ -957,6 +968,18 @@ exports[`open api parser hathora simple 1`] = `
               "root.UnprocessableEntityError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "app-id",
+                  "buildId": 1.1,
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "DELETE",
             "path": "/builds/v1/{appId}/delete/{buildId}",
             "path-parameters": {
@@ -998,6 +1021,19 @@ exports[`open api parser hathora simple 1`] = `
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "app-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
             ],
             "method": "GET",
             "path": "/builds/v1/{appId}/list",
@@ -1113,6 +1149,19 @@ exports[`open api parser hathora simple 1`] = `
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "app-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
             ],
             "method": "GET",
             "path": "/deployments/v1/{appId}/list",
@@ -1267,6 +1316,23 @@ exports[`open api parser hathora simple 1`] = `
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {
+                  "Authorization": "authorization",
+                },
+                "path-parameters": {
+                  "appId": "app-id",
+                },
+                "query-parameters": {
+                  "region": "Seattle",
+                },
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
             ],
             "method": "GET",
             "path": "/lobby/v1/{appId}/list",
@@ -1553,6 +1619,21 @@ exports[`open api parser hathora simple 1`] = `
             "auth": true,
             "docs": undefined,
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "app-id",
+                },
+                "query-parameters": {
+                  "region": "Seattle",
+                },
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/lobby/v2/{appId}/list/public",
             "path-parameters": {
@@ -1751,6 +1832,22 @@ exports[`open api parser hathora simple 1`] = `
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "app-id",
+                  "processId": "process-id",
+                },
+                "query-parameters": {
+                  "metrics": "cpu",
+                },
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
             "method": "GET",
             "path": "/metrics/v1/{appId}/process/{processId}",
             "path-parameters": {
@@ -1833,6 +1930,21 @@ exports[`open api parser hathora simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "app-id",
+                },
+                "query-parameters": {
+                  "region": "Seattle",
+                },
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/processes/v1/{appId}/list/running",
             "path-parameters": {
@@ -1861,6 +1973,21 @@ exports[`open api parser hathora simple 1`] = `
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "app-id",
+                },
+                "query-parameters": {
+                  "region": "Seattle",
+                },
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
             ],
             "method": "GET",
             "path": "/processes/v1/{appId}/list/stopped",
@@ -1936,6 +2063,18 @@ exports[`open api parser hathora simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "app-id",
+                  "roomId": "room-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/rooms/v1/{appId}/destroy/{roomId}",
             "path-parameters": {
@@ -1954,6 +2093,20 @@ exports[`open api parser hathora simple 1`] = `
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "app-id",
+                  "processId": "process-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
             ],
             "method": "GET",
             "path": "/rooms/v1/{appId}/list/{processId}/active",
@@ -2003,6 +2156,20 @@ exports[`open api parser hathora simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "app-id",
+                  "processId": "process-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
             "method": "GET",
             "path": "/rooms/v1/{appId}/list/{processId}/inactive",
             "path-parameters": {
@@ -2049,6 +2216,18 @@ exports[`open api parser hathora simple 1`] = `
             "errors": [
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "app-id",
+                  "roomId": "room-id",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/rooms/v1/{appId}/suspend/{roomId}",

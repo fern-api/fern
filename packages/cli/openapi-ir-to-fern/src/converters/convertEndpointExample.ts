@@ -11,7 +11,7 @@ export function convertEndpointExample(endpointExample: EndpointExample): RawSch
                 : undefined,
         "query-parameters":
             endpointExample.queryParameters != null && endpointExample.queryParameters.length > 0
-                ? convertNamedFullExamples(endpointExample.queryParameters)
+                ? convertQueryParameterExample(endpointExample.queryParameters)
                 : undefined,
         headers:
             endpointExample.headers != null && endpointExample.headers.length > 0
@@ -34,6 +34,21 @@ function convertNamedFullExamples(
     namedFullExamples.map(
         (namedFullExample) => (result[namedFullExample.name] = convertFullExample(namedFullExample.value))
     );
+    return result;
+}
+
+function convertQueryParameterExample(
+    namedFullExamples: NamedFullExample[]
+): Record<string, RawSchemas.ExampleTypeReferenceSchema> {
+    const result: Record<string, RawSchemas.ExampleTypeReferenceSchema> = {};
+    namedFullExamples.forEach((namedFullExample) => {
+        const convertedExample = convertFullExample(namedFullExample.value);
+        if (Array.isArray(convertedExample)) {
+            result[namedFullExample.name] = convertedExample[0];
+        } else {
+            result[namedFullExample.name] = convertedExample;
+        }
+    });
     return result;
 }
 

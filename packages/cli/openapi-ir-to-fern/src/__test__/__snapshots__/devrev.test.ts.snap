@@ -3661,9 +3661,7 @@ organization.
                 "path-parameters": undefined,
                 "query-parameters": {
                   "mode": "after",
-                  "state": [
-                    "active",
-                  ],
+                  "state": "active",
                 },
                 "request": undefined,
                 "response": {
@@ -3888,9 +3886,7 @@ used.
                 "path-parameters": undefined,
                 "query-parameters": {
                   "mode": "after",
-                  "type": [
-                    "capability",
-                  ],
+                  "type": "capability",
                 },
                 "request": undefined,
                 "response": {
@@ -5023,15 +5019,9 @@ won't receive any object events until successfully verified.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "issue.priority": [
-                    "p0",
-                  ],
-                  "ticket.severity": [
-                    "blocker",
-                  ],
-                  "type": [
-                    "issue",
-                  ],
+                  "issue.priority": "p0",
+                  "ticket.severity": "blocker",
+                  "type": "issue",
                 },
                 "request": undefined,
                 "response": {
@@ -5153,16 +5143,10 @@ organizations.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "issue.priority": [
-                    "p0",
-                  ],
+                  "issue.priority": "p0",
                   "mode": "after",
-                  "ticket.severity": [
-                    "blocker",
-                  ],
-                  "type": [
-                    "issue",
-                  ],
+                  "ticket.severity": "blocker",
+                  "type": "issue",
                 },
                 "request": undefined,
                 "response": {

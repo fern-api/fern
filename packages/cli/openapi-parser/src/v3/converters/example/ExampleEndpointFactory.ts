@@ -14,8 +14,6 @@ import {
     ResponseWithExample,
     SchemaWithExample,
 } from "@fern-fern/openapi-ir-model/parseIr";
-import { convertSchemaWithExampleToSchema } from "../../utils/convertSchemaWithExampleToSchema";
-import { isSchemaPrimitive } from "../../utils/isSchemaPrmitive";
 import { isSchemaRequired } from "../../utils/isSchemaRequired";
 import { DummyExampleFactory } from "./DummyExampleFactory";
 import { ExampleTypeFactory } from "./ExampleTypeFactory";
@@ -137,6 +135,7 @@ export class ExampleEndpointFactory {
     private buildParameterExample(
         parameter: QueryParameterWithExample | PathParameterWithExample | HeaderWithExample
     ): GeneratedParamterExample {
+        const isRequired = isSchemaRequired(parameter.schema);
         const example = this.exampleTypeFactory.buildExample(parameter.schema);
         if (example != null) {
             return {
@@ -146,9 +145,7 @@ export class ExampleEndpointFactory {
                     value: example,
                 },
             };
-        }
-        const required = isSchemaRequired(parameter.schema);
-        if (required && isSchemaPrimitive(convertSchemaWithExampleToSchema(parameter.schema))) {
+        } else if (isRequired) {
             const dummyExample = this.dummyExampleFactory.generateExample({
                 schema: parameter.schema,
                 name: parameter.name,
@@ -163,13 +160,8 @@ export class ExampleEndpointFactory {
                     value: dummyExample,
                 },
             };
-        } else if (!required) {
-            return {
-                type: "success",
-                value: undefined,
-            };
         }
-        return { type: "failed" };
+        return { type: "success", value: undefined };
     }
 }
 
