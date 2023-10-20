@@ -552,6 +552,19 @@
         "parameters": [
           {
             "schema": {
+              "minItems": 1,
+              "uniqueItems": true,
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "in": "query",
+            "name": "transitions",
+            "required": true
+          },
+          {
+            "schema": {
               "type": "number"
             },
             "in": "query",
