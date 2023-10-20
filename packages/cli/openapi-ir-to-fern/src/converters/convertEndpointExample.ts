@@ -3,7 +3,13 @@ import { RawSchemas } from "@fern-api/yaml-schema";
 import { FullExample, FullOneOfExample, KeyValuePair, PrimitiveExample } from "@fern-fern/openapi-ir-model/example";
 import { EndpointExample } from "@fern-fern/openapi-ir-model/finalIr";
 
-export function convertEndpointExample(endpointExample: EndpointExample): RawSchemas.ExampleEndpointCallSchema {
+export function convertEndpointExample({
+    endpointExample,
+    globalHeaderNames,
+}: {
+    endpointExample: EndpointExample;
+    globalHeaderNames: Set<string>;
+}): RawSchemas.ExampleEndpointCallSchema {
     return {
         "path-parameters":
             endpointExample.pathParameters != null && endpointExample.pathParameters.length > 0
@@ -15,7 +21,7 @@ export function convertEndpointExample(endpointExample: EndpointExample): RawSch
                 : undefined,
         headers:
             endpointExample.headers != null && endpointExample.headers.length > 0
-                ? convertNamedFullExamples(endpointExample.headers)
+                ? convertHeaderExamples({ globalHeaderNames, namedFullExamples: endpointExample.headers })
                 : undefined,
         request: endpointExample.request != null ? convertFullExample(endpointExample.request) : undefined,
         response: endpointExample.response != null ? { body: convertFullExample(endpointExample.response) } : undefined,
@@ -47,6 +53,24 @@ function convertQueryParameterExample(
             result[namedFullExample.name] = convertedExample[0];
         } else {
             result[namedFullExample.name] = convertedExample;
+        }
+    });
+    return result;
+}
+
+function convertHeaderExamples({
+    globalHeaderNames,
+    namedFullExamples,
+}: {
+    globalHeaderNames: Set<string>;
+    namedFullExamples: NamedFullExample[];
+}): Record<string, RawSchemas.ExampleTypeReferenceSchema> {
+    const result: Record<string, RawSchemas.ExampleTypeReferenceSchema> = {};
+    namedFullExamples.forEach((namedFullExample) => {
+        if (globalHeaderNames.has(namedFullExample.name)) {
+            return;
+        } else {
+            result[namedFullExample.name] = convertFullExample(namedFullExample.value);
         }
     });
     return result;
