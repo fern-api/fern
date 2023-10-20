@@ -8006,6 +8006,15 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": undefined,
+              },
+            ],
             "method": "POST",
             "path": "/api/apps/{app}/rules",
             "path-parameters": {
@@ -8162,6 +8171,15 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": undefined,
+              },
             ],
             "method": "POST",
             "path": "/api/apps/{app}/rules/simulate",
@@ -8793,6 +8811,15 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": undefined,
+              },
+            ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
             "path-parameters": {
@@ -8828,6 +8855,15 @@ The client secret is auto generated on the server and returned. The client does 
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {},
+                "response": undefined,
+              },
             ],
             "method": "PUT",
             "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
@@ -9778,6 +9814,17 @@ You will be assigned as owner of the new team automatically.",
             "errors": [
               "root.BadRequestError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
             ],
             "method": "POST",
             "path": "/api/apps/{app}/translations",

@@ -1546,15 +1546,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Delete a linked account.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DeleteAccountCreateRequest",
       "headers": [
         {
@@ -6673,15 +6665,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Ignores a specific row based on the \`model_id\` in the url. These records will have their properties set to null, and will not be updated in future syncs. The "reason" and "message" fields in the request body will be stored for audit purposes.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EmployeesIgnoreCreateRequest",
       "headers": [
         {
@@ -6747,15 +6731,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns metadata for \`Employee\` POSTs.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EmployeesMetaPostRetrieveRequest",
       "headers": [
         {
@@ -9413,15 +9389,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Pull data from an endpoint not currently supported by Merge.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PassthroughCreateRequest",
       "headers": [
         {
@@ -10498,15 +10466,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Get a linked account's selective syncs.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SelectiveSyncConfigurationsListRequest",
       "headers": [
         {
@@ -10559,15 +10519,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Replace a linked account's selective syncs.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SelectiveSyncConfigurationsUpdateRequest",
       "headers": [
         {
@@ -10865,15 +10817,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Core, Professional, or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SyncStatusResyncCreateRequest",
       "headers": [
         {
@@ -12752,15 +12696,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns metadata for \`TimeOff\` POSTs.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TimeOffMetaPostRetrieveRequest",
       "headers": [
         {
@@ -12809,15 +12745,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Returns a list of \`WebhookReceiver\` objects.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WebhookReceiversListRequest",
       "headers": [
         {
@@ -12870,15 +12798,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": undefined,
       "description": "Creates a \`WebhookReceiver\` object with the given values.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WebhookReceiversCreateRequest",
       "headers": [
         {

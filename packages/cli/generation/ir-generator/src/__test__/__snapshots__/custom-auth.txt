@@ -498,12 +498,15 @@ exports[`generate IR 1`] = `
           "queryParameters": [],
           "requestBody": null,
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "primitive",
-              "primitive": "BOOLEAN",
-            },
             "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "primitive",
+                "primitive": "BOOLEAN",
+              },
+              "type": "response",
+            },
           },
           "sdkRequest": null,
         },
@@ -694,12 +697,15 @@ exports[`generate IR 1`] = `
             "type": "reference",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "primitive",
-              "primitive": "BOOLEAN",
-            },
             "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "primitive",
+                "primitive": "BOOLEAN",
+              },
+              "type": "response",
+            },
           },
           "sdkRequest": {
             "requestParameterName": {

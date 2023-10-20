@@ -547,12 +547,15 @@ exports[`generate IR 1`] = `
             "type": "inlinedRequestBody",
           },
           "response": {
-            "docs": null,
-            "responseBodyType": {
-              "_type": "primitive",
-              "primitive": "STRING",
-            },
             "type": "json",
+            "value": {
+              "docs": null,
+              "responseBodyType": {
+                "_type": "primitive",
+                "primitive": "STRING",
+              },
+              "type": "response",
+            },
           },
           "sdkRequest": {
             "requestParameterName": {

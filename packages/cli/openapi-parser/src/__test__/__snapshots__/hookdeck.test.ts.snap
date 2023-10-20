@@ -13,18 +13,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetIssueTriggersRequest",
       "headers": [],
       "internal": undefined,
@@ -412,12 +401,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "channels": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -558,15 +542,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpsertIssueTriggerRequest",
       "headers": [],
       "internal": undefined,
@@ -697,15 +673,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetIssueTriggerRequest",
       "headers": [],
       "internal": undefined,
@@ -758,18 +726,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateIssueTriggerRequest",
       "headers": [],
       "internal": undefined,
@@ -931,15 +888,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DeleteIssueTriggerRequest",
       "headers": [],
       "internal": undefined,
@@ -991,15 +940,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DisableIssueTriggerRequest",
       "headers": [],
       "internal": undefined,
@@ -1051,15 +992,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EnableIssueTriggerRequest",
       "headers": [],
       "internal": undefined,
@@ -1112,18 +1045,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetAttemptsRequest",
       "headers": [],
       "internal": undefined,
@@ -1347,15 +1269,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetAttemptRequest",
       "headers": [],
       "internal": undefined,
@@ -1408,18 +1322,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetBookmarksRequest",
       "headers": [],
       "internal": undefined,
@@ -1944,15 +1847,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateBookmarkRequest",
       "headers": [],
       "internal": undefined,
@@ -2064,15 +1959,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetBookmarkRequest",
       "headers": [],
       "internal": undefined,
@@ -2126,18 +2013,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateBookmarkRequest",
       "headers": [],
       "internal": undefined,
@@ -2276,15 +2152,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DeleteBookmarkRequest",
       "headers": [],
       "internal": undefined,
@@ -2338,18 +2206,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TriggerBookmarkRequest",
       "headers": [],
       "internal": undefined,
@@ -2446,18 +2303,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetDestinationsRequest",
       "headers": [],
       "internal": undefined,
@@ -3085,15 +2931,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateDestinationRequest",
       "headers": [],
       "internal": undefined,
@@ -3275,15 +3113,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpsertDestinationRequest",
       "headers": [],
       "internal": undefined,
@@ -3464,15 +3294,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetDestinationRequest",
       "headers": [],
       "internal": undefined,
@@ -3526,15 +3348,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateDestinationRequest",
       "headers": [],
       "internal": undefined,
@@ -3750,15 +3564,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ArchiveDestinationRequest",
       "headers": [],
       "internal": undefined,
@@ -3810,15 +3616,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UnarchiveDestinationRequest",
       "headers": [],
       "internal": undefined,
@@ -3871,18 +3669,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetEventsRequest",
       "headers": [],
       "internal": undefined,
@@ -5344,15 +5131,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetEventRequest",
       "headers": [],
       "internal": undefined,
@@ -5404,15 +5183,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetRequestRawBodyRequest",
       "headers": [],
       "internal": undefined,
@@ -5527,15 +5298,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "MuteEventRequest",
       "headers": [],
       "internal": undefined,
@@ -5588,18 +5351,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetEventBulkRetriesRequest",
       "headers": [],
       "internal": undefined,
@@ -7750,18 +7502,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateEventBulkRetryRequest",
       "headers": [],
       "internal": undefined,
@@ -9097,18 +8838,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GenerateEventBulkRetryPlanRequest",
       "headers": [],
       "internal": undefined,
@@ -10428,15 +10158,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetEventBulkRetryRequest",
       "headers": [],
       "internal": undefined,
@@ -10488,15 +10210,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CancelEventBulkRetryRequest",
       "headers": [],
       "internal": undefined,
@@ -10549,18 +10263,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetIgnoredEventBulkRetriesRequest",
       "headers": [],
       "internal": undefined,
@@ -11343,18 +11046,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateIgnoredEventBulkRetryRequest",
       "headers": [],
       "internal": undefined,
@@ -11528,18 +11220,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GenerateIgnoredEventBulkRetryPlanRequest",
       "headers": [],
       "internal": undefined,
@@ -11697,15 +11378,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetIgnoredEventBulkRetryRequest",
       "headers": [],
       "internal": undefined,
@@ -11757,15 +11430,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CancelIgnoredEventBulkRetryRequest",
       "headers": [],
       "internal": undefined,
@@ -11818,18 +11483,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetIntegrationsRequest",
       "headers": [],
       "internal": undefined,
@@ -11900,15 +11554,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateIntegrationRequest",
       "headers": [],
       "internal": undefined,
@@ -12053,15 +11699,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetIntegrationRequest",
       "headers": [],
       "internal": undefined,
@@ -12115,18 +11753,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateIntegrationRequest",
       "headers": [],
       "internal": undefined,
@@ -12302,15 +11929,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DeleteIntegrationRequest",
       "headers": [],
       "internal": undefined,
@@ -12363,15 +11982,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AttachIntegrationToSourceRequest",
       "headers": [],
       "internal": undefined,
@@ -12438,18 +12049,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DetachIntegrationToSourceRequest",
       "headers": [],
       "internal": undefined,
@@ -12516,18 +12116,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetIssuesRequest",
       "headers": [],
       "internal": undefined,
@@ -13741,15 +13330,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetIssueCountRequest",
       "headers": [],
       "internal": undefined,
@@ -14963,15 +14544,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetIssueRequest",
       "headers": [],
       "internal": undefined,
@@ -15024,15 +14597,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateIssueRequest",
       "headers": [],
       "internal": undefined,
@@ -15136,15 +14701,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DismissIssueRequest",
       "headers": [],
       "internal": undefined,
@@ -15197,18 +14754,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetRequestsRequest",
       "headers": [],
       "internal": undefined,
@@ -16389,15 +15935,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetRequestRequest",
       "headers": [],
       "internal": undefined,
@@ -16449,15 +15987,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetRequestRawBodyRequest",
       "headers": [],
       "internal": undefined,
@@ -16609,18 +16139,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetRequestEventsRequest",
       "headers": [],
       "internal": undefined,
@@ -18099,18 +17618,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetRequestIgnoredEventsRequest",
       "headers": [],
       "internal": undefined,
@@ -18350,18 +17858,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetRequestBulkRetriesRequest",
       "headers": [],
       "internal": undefined,
@@ -20209,18 +19706,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateRequestBulkRetryRequest",
       "headers": [],
       "internal": undefined,
@@ -21265,18 +20751,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GenerateRequestBulkRetryPlanRequest",
       "headers": [],
       "internal": undefined,
@@ -22305,15 +21780,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetRequestBulkRetryRequest",
       "headers": [],
       "internal": undefined,
@@ -22365,15 +21832,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CancelRequestBulkRetryRequest",
       "headers": [],
       "internal": undefined,
@@ -22426,18 +21885,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetRulesetsRequest",
       "headers": [],
       "internal": undefined,
@@ -23149,15 +22597,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateRulesetRequest",
       "headers": [],
       "internal": undefined,
@@ -23260,15 +22700,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpsertRulesetRequest",
       "headers": [],
       "internal": undefined,
@@ -23370,15 +22802,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetRulesetRequest",
       "headers": [],
       "internal": undefined,
@@ -23432,18 +22856,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateRulesetRequest",
       "headers": [],
       "internal": undefined,
@@ -23584,15 +22997,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ArchiveRulesetRequest",
       "headers": [],
       "internal": undefined,
@@ -23644,15 +23049,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UnarchiveRulesetRequest",
       "headers": [],
       "internal": undefined,
@@ -23705,18 +23102,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetSourcesRequest",
       "headers": [],
       "internal": undefined,
@@ -24294,15 +23680,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateSourceRequest",
       "headers": [],
       "internal": undefined,
@@ -24369,15 +23747,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpsertSourceRequest",
       "headers": [],
       "internal": undefined,
@@ -24443,15 +23813,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetSourceRequest",
       "headers": [],
       "internal": undefined,
@@ -24505,18 +23867,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateSourceRequest",
       "headers": [],
       "internal": undefined,
@@ -24621,15 +23972,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ArchiveSourceRequest",
       "headers": [],
       "internal": undefined,
@@ -24681,15 +24024,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UnarchiveSourceRequest",
       "headers": [],
       "internal": undefined,
@@ -24739,18 +24074,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "availability": undefined,
       "description": "",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ToggleWebhookNotificationsRequest",
       "headers": [],
       "internal": undefined,
@@ -24857,18 +24181,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetTransformationsRequest",
       "headers": [],
       "internal": undefined,
@@ -25142,15 +24455,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateTransformationRequest",
       "headers": [],
       "internal": undefined,
@@ -25276,15 +24581,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpsertTransformationRequest",
       "headers": [],
       "internal": undefined,
@@ -25409,15 +24706,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetTransformationRequest",
       "headers": [],
       "internal": undefined,
@@ -25471,18 +24760,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateTransformationRequest",
       "headers": [],
       "internal": undefined,
@@ -25636,10 +24914,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
+          "request": undefined,
           "response": {
             "properties": {},
             "type": "object",
@@ -25930,18 +25205,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetTransformationExecutionsRequest",
       "headers": [],
       "internal": undefined,
@@ -26444,15 +25708,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetTransformationExecutionRequest",
       "headers": [],
       "internal": undefined,
@@ -26519,18 +25775,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetConnectionsRequest",
       "headers": [],
       "internal": undefined,
@@ -27285,15 +26530,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "CreateConnectionRequest",
       "headers": [],
       "internal": undefined,
@@ -27696,15 +26933,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         400,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpsertConnectionRequest",
       "headers": [],
       "internal": undefined,
@@ -28106,15 +27335,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetConnectionRequest",
       "headers": [],
       "internal": undefined,
@@ -28168,18 +27389,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpdateConnectionRequest",
       "headers": [],
       "internal": undefined,
@@ -28375,15 +27585,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ArchiveConnectionRequest",
       "headers": [],
       "internal": undefined,
@@ -28435,15 +27637,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UnarchiveConnectionRequest",
       "headers": [],
       "internal": undefined,
@@ -28495,15 +27689,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PauseConnectionRequest",
       "headers": [],
       "internal": undefined,
@@ -28555,15 +27741,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UnpauseConnectionRequest",
       "headers": [],
       "internal": undefined,

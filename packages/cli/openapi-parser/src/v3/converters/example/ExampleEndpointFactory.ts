@@ -25,6 +25,10 @@ export class ExampleEndpointFactory {
             responseSchemaIdResponse != null
                 ? this.exampleTypeFactory.buildExampleFromSchemaId(responseSchemaIdResponse.schemaId)
                 : undefined;
+        if (requestExample === undefined && responseExample === undefined) {
+            return undefined;
+        }
+
         return {
             pathParameters: [],
             queryParameters: [],

@@ -2270,6 +2270,20 @@ Creates a new document index.",
 Used to list documents. Optionally filter on supported fields.
 ",
             "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "next": "http://api.example.org/accounts/?offset=400&limit=100",
+                    "previous": "http://api.example.org/accounts/?offset=200&limit=100",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/v1/documents",
             "request": {

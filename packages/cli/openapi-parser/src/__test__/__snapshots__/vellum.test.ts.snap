@@ -42,15 +42,7 @@ with all stable endpoints. You can find them here:
 Used to retrieve a deployment given its ID or name.
 ",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DeploymentsRetrieveRequest",
       "headers": [],
       "internal": undefined,
@@ -102,15 +94,7 @@ Used to retrieve a deployment given its ID or name.
 
 Creates a new document index.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DocumentIndexesCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -351,15 +335,7 @@ Generate a completion using a previously defined deployment.
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GenerateRequest",
       "headers": [],
       "internal": undefined,
@@ -478,15 +454,7 @@ Generate a stream of completions using a previously defined deployment.
 Used to retrieve a model version given its ID.
 ",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ModelVersionsRetrieveRequest",
       "headers": [],
       "internal": undefined,
@@ -538,15 +506,7 @@ Used to retrieve a model version given its ID.
 
 Compiles the prompt backing the model version using the provided input values.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ModelVersionCompilePromptRequest",
       "headers": [],
       "internal": undefined,
@@ -615,15 +575,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
       "errorStatusCode": [
         409,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RegisterPromptRequest",
       "headers": [],
       "internal": undefined,
@@ -678,15 +630,7 @@ is found, a new scenario will be appended to the end.
 Note that a full replacement of the scenario is performed, so any fields not provided will be removed
 or overwritten with default values.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpsertSandboxScenarioRequest",
       "headers": [],
       "internal": undefined,
@@ -750,15 +694,7 @@ or overwritten with default values.",
 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DeleteSandboxScenarioRequest",
       "headers": [],
       "internal": undefined,
@@ -820,15 +756,7 @@ Perform a search against a document index.
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SearchRequest",
       "headers": [],
       "internal": undefined,
@@ -889,15 +817,7 @@ Used to submit feedback regarding the quality of previously generated completion
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SubmitCompletionActualsRequest",
       "headers": [],
       "internal": undefined,
@@ -948,15 +868,7 @@ is found, a new test case will be appended to the end.
 Note that a full replacement of the test case is performed, so any fields not provided will be removed
 or overwritten with default values.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UpsertTestSuiteTestCaseRequest",
       "headers": [],
       "internal": undefined,
@@ -1020,15 +932,7 @@ or overwritten with default values.",
 
 Deletes an existing test case for a test suite, keying off of the test case id.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DeleteTestSuiteTestCaseRequest",
       "headers": [],
       "internal": undefined,

@@ -1136,15 +1136,7 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetContractPreviewRequest",
       "headers": [],
       "internal": undefined,
@@ -1378,15 +1370,7 @@ exports[`open api parser deel parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetAlternateEmailsByContractIdRequest",
       "headers": [],
       "internal": undefined,
@@ -1643,15 +1627,7 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DeleteContractPgoTakRequest",
       "headers": [],
       "internal": undefined,
@@ -1841,21 +1817,11 @@ exports[`open api parser deel parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "data": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
-            "properties": {
-              "data": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -2008,15 +1974,7 @@ exports[`open api parser deel parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ArchiveContractRequest",
       "headers": [],
       "internal": undefined,
@@ -2155,15 +2113,7 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UninviteToSignContractRequest",
       "headers": [],
       "internal": undefined,
@@ -2629,15 +2579,7 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DeleteMilestoneByIdRequest",
       "headers": [],
       "internal": undefined,
@@ -3199,15 +3141,7 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RemovePremiumFromContractRequest",
       "headers": [],
       "internal": undefined,
@@ -3446,12 +3380,7 @@ exports[`open api parser deel parse open api 1`] = `
             "type": "object",
           },
           "response": {
-            "properties": {
-              "data": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -3749,15 +3678,7 @@ exports[`open api parser deel parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DeleteEorTimeOffsRequest",
       "headers": [],
       "internal": undefined,
@@ -4082,12 +4003,7 @@ exports[`open api parser deel parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "data": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -4226,15 +4142,7 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DeleteTimesheetByIdRequest",
       "headers": [],
       "internal": undefined,
@@ -5013,15 +4921,7 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DeleteInvoiceAdjustmentByIdRequest",
       "headers": [],
       "internal": undefined,
@@ -5240,18 +5140,7 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetLegalEntityListRequest",
       "headers": [],
       "internal": undefined,
@@ -5402,15 +5291,7 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetJobTitleListRequest",
       "headers": [],
       "internal": undefined,
@@ -5884,18 +5765,7 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": {
-            "properties": {},
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetContractTemplatesRequest",
       "headers": [],
       "internal": true,
@@ -6161,12 +6031,7 @@ exports[`open api parser deel parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "data": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -6471,12 +6336,7 @@ exports[`open api parser deel parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "data": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -6599,15 +6459,7 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetPeopleListRequest",
       "headers": [],
       "internal": undefined,
@@ -6681,15 +6533,7 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetPeopleRequest",
       "headers": [],
       "internal": undefined,
@@ -6732,15 +6576,7 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetAllWebhooksRequest",
       "headers": [],
       "internal": undefined,
@@ -6999,15 +6835,7 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WebhookControllerDeleteByIdRequest",
       "headers": [],
       "internal": undefined,
@@ -7055,15 +6883,7 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetPaymentsBreakDownByIdRequest",
       "headers": [],
       "internal": undefined,
