@@ -1,6 +1,7 @@
 import { TaskContext } from "@fern-api/task-context";
 import { SecurityScheme } from "@fern-fern/openapi-ir-model/commons";
 import { Endpoint, OpenAPIIntermediateRepresentation, Schema, Webhook } from "@fern-fern/openapi-ir-model/finalIr";
+import { SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext";
 import { convertPathItem } from "./converters/convertPathItem";
@@ -10,6 +11,7 @@ import { convertServer } from "./converters/convertServer";
 import { ExampleEndpointFactory } from "./converters/example/ExampleEndpointFactory";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
+import { convertSchemaWithExampleToSchema } from "./utils/convertSchemaWithExampleToSchema";
 
 export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext): OpenAPIIntermediateRepresentation {
     const securitySchemes: Record<string, SecurityScheme> = Object.fromEntries(
@@ -47,10 +49,16 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
         webhooks.push(...convertedPathItem.webhooks);
     });
 
-    const schemas = Object.fromEntries(
+    const schemasWithExample: Record<string, SchemaWithExample> = Object.fromEntries(
         Object.entries(openApi.components?.schemas ?? {}).map(([key, schema]) => {
-            taskContext.logger.debug(`Converting schema ${key}`);
             return [key, convertSchema(schema, false, context, [key])];
+        })
+    );
+
+    const schemas: Record<string, Schema> = Object.fromEntries(
+        Object.entries(schemasWithExample).map(([key, schemaWithExample]) => {
+            taskContext.logger.debug(`Converting schema ${key}`);
+            return [key, convertSchemaWithExampleToSchema(schemaWithExample)];
         })
     );
 
@@ -73,7 +81,7 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
         variables,
     };
 
-    const exampleEndpointFactory = new ExampleEndpointFactory(schemas);
+    const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithExample);
     ir.endpoints.forEach((endpoint) => {
         const endpointExample = exampleEndpointFactory.buildEndpointExample(endpoint);
         if (endpointExample != null) {

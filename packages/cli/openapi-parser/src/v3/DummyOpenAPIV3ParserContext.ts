@@ -1,6 +1,6 @@
 import { TaskContext } from "@fern-api/task-context";
-import { HttpError } from "@fern-fern/openapi-ir-model/finalIr";
 import { SchemaId, StatusCode } from "@fern-fern/openapi-ir-model/commons";
+import { HttpError } from "@fern-fern/openapi-ir-model/finalIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext, DiscriminatedUnionReference } from "./AbstractOpenAPIV3ParserContext";
 
