@@ -65,6 +65,9 @@ service:
         docs: A paged array of pets
         type: root.Pets
       errors: []
+      examples:
+        - response:
+            body: []
 
     createPets:
       path: /pets
