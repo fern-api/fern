@@ -80,7 +80,7 @@ export async function loadOpenAPIFromUrl({
         if (endpointToDocsTagsMap) {
             jsonData = injectTags(JSON.stringify(jsonData), endpointToDocsTagsMap, logger);
         }
-        const yamlData = yaml.dump(jsonData);
+        const yamlData = yaml.dump(jsonopenApiJsonData);
         const tmpDir = await tmp.dir();
         const filePath = join(tmpDir.path, "openapi.yml");
         logger.debug("tmpDir", tmpDir.path);

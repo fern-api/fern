@@ -1,16 +1,26 @@
 import axios from "axios";
 import { load } from "cheerio";
 import { Logger } from "../../logger/src/Logger";
+import { FernDocsConfig } from "@fern-fern/docs-config";
 
 export type DocsWebsite = ReadMeDocsWebsite | GenericDocsWebsite;
 
 export type Endpoint = string;
 export type ApiSection = string;
+
+export interface ColorConfig {
+    primaryColor: string;
+    secondaryColor: string;
+    textColor: FernDocsConfig.ApiSectionConfiguration;
+}
+
+//todo add interface for readme color cfg
 export interface DocsWebsiteInterface {
     getAllOpenApiUrls(): Promise<string[]>;
     getBaseUrl(): string;
     getGroupingStructure(): Promise<Map<Endpoint, ApiSection>>;
     isUrlValid(): boolean;
+    getColorConfig(): ColorConfig;
 }
 
 class GenericDocsWebsite implements DocsWebsiteInterface {
@@ -20,6 +30,9 @@ class GenericDocsWebsite implements DocsWebsiteInterface {
     constructor(url: string, logger: Logger) {
         this.url = url;
         this.logger = logger;
+    }
+    getColorConfig(): ColorConfig {
+        throw new Error("Method not implemented.");
     }
 
     async getAllOpenApiUrls(): Promise<string[]> {
