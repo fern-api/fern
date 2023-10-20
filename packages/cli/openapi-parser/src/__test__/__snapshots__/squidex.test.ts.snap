@@ -694,7 +694,23 @@ exports[`open api parser squidex parse open api 1`] = `
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "result": {
+                "enum": "Translated",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "TranslationsPostTranslationRequest",
       "headers": [],
       "internal": undefined,
@@ -6178,7 +6194,27 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "locked": {
+                "enum": "None",
+                "type": "enum",
+              },
+              "plans": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PlansGetPlansRequest",
       "headers": [],
       "internal": undefined,
@@ -6319,7 +6355,27 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "locked": {
+                "enum": "None",
+                "type": "enum",
+              },
+              "plans": {
+                "array": [],
+                "type": "array",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "PlansGetTeamPlansRequest",
       "headers": [],
       "internal": undefined,
@@ -8637,7 +8693,17 @@ You will be assigned as owner of the new team automatically.",
           "request": {
             "properties": {
               "jobs": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "type": {
+                        "enum": "Upsert",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -12066,7 +12132,22 @@ You will be assigned as owner of the new team automatically.",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "jobs": {
+                "array": [
+                  {
+                    "properties": {
+                      "type": {
+                        "enum": "Annotate",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -14719,7 +14800,17 @@ You will retrieve all apps, where you are assigned as a contributor.",
                 "type": "array",
               },
               "items": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "_links": {
+                        "map": [],
+                        "type": "map",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -14803,7 +14894,17 @@ You will retrieve all apps, where you are assigned as a contributor.",
                 "type": "array",
               },
               "items": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "_links": {
+                        "map": [],
+                        "type": "map",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -14898,7 +14999,17 @@ You will retrieve all apps, where you are assigned as a contributor.",
                 "type": "array",
               },
               "items": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "_links": {
+                        "map": [],
+                        "type": "map",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -15008,7 +15119,17 @@ You will retrieve all apps, where you are assigned as a contributor.",
                 "type": "array",
               },
               "items": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "_links": {
+                        "map": [],
+                        "type": "map",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },

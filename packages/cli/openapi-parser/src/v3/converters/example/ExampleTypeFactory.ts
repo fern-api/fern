@@ -14,7 +14,7 @@ export class ExampleTypeFactory {
     public buildExampleFromSchemaId(schemaId: SchemaId): FullExample | undefined {
         const schema = this.schemas[schemaId];
         if (schema != null) {
-            return this.buildExampleFromSchema({ schema, isOptional: false, visitedSchemaIds: new Set() });
+            return this.buildExampleFromSchema({ schema, isOptional: false, visitedSchemaIds: new Set(schemaId) });
         }
         return undefined;
     }
@@ -49,8 +49,13 @@ export class ExampleTypeFactory {
                 const referencedSchemaWithExample = this.schemas[schema.schema];
                 if (referencedSchemaWithExample != null && !visitedSchemaIds.has(schema.schema)) {
                     visitedSchemaIds.add(schema.schema);
-                    this.buildExampleFromSchema({ schema: referencedSchemaWithExample, isOptional, visitedSchemaIds });
+                    const example = this.buildExampleFromSchema({
+                        schema: referencedSchemaWithExample,
+                        isOptional,
+                        visitedSchemaIds,
+                    });
                     visitedSchemaIds.delete(schema.schema);
+                    return example;
                 }
                 return undefined;
             }
@@ -96,7 +101,7 @@ export class ExampleTypeFactory {
                     const allOfExample = this.buildExampleFromSchema({
                         schema: allOfSchemaWithExample,
                         isOptional: false,
-                        visitedSchemaIds,
+                        visitedSchemaIds: new Set(),
                     });
                     if (allOfExample?.type === "object") {
                         properties = {

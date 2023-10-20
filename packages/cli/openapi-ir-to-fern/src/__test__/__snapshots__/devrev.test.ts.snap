@@ -3330,7 +3330,11 @@ authenticated user.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {},
+                "request": {
+                  "grant_type": "urn:devrev:params:oauth:grant-type:token-issue",
+                  "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                  "subject_token_type": "urn:devrev:params:oauth:token-type:jwt:auth0",
+                },
                 "response": undefined,
               },
             ],
@@ -3456,6 +3460,22 @@ given Dev organization.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "token": {
+                      "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                      "status": "active",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/auth-tokens.get",
             "request": {
@@ -3496,7 +3516,12 @@ token type issued for a given subject.
                 "request": undefined,
                 "response": {
                   "body": {
-                    "tokens": [],
+                    "tokens": [
+                      {
+                        "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                        "status": "active",
+                      },
+                    ],
                   },
                 },
               },
@@ -3554,7 +3579,9 @@ authenticated user.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {},
+                "request": {
+                  "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                },
                 "response": undefined,
               },
             ],
@@ -3587,6 +3614,22 @@ organization.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "token": {
+                      "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                      "status": "active",
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/auth-tokens.update",
@@ -3645,7 +3688,11 @@ organization.
                 "request": undefined,
                 "response": {
                   "body": {
-                    "dev_users": [],
+                    "dev_users": [
+                      {
+                        "state": "active",
+                      },
+                    ],
                   },
                 },
               },
@@ -3708,6 +3755,21 @@ used.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "dev_user": {
+                      "state": "active",
+                    },
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/dev-users.self",
@@ -3957,6 +4019,19 @@ organization.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "rev_org": {},
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/rev-orgs.create",
             "request": {
@@ -4057,6 +4132,19 @@ records.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "rev_org": {},
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/rev-orgs.get",
             "request": {
@@ -4097,7 +4185,9 @@ to access.
                 "request": undefined,
                 "response": {
                   "body": {
-                    "rev_orgs": [],
+                    "rev_orgs": [
+                      {},
+                    ],
                   },
                 },
               },
@@ -4195,9 +4285,14 @@ them.
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
+                  "environment": "production",
                   "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
                 },
-                "response": undefined,
+                "response": {
+                  "body": {
+                    "rev_org": {},
+                  },
+                },
               },
             ],
             "method": "POST",
@@ -4451,6 +4546,7 @@ used.
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
+                  "allowed_values": {},
                   "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
                 },
                 "response": undefined,
@@ -4822,6 +4918,18 @@ response.
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
+                  "action": "activate",
+                  "event_types": {
+                    "add": [
+                      "part_created",
+                    ],
+                    "remove": [
+                      "part_created",
+                    ],
+                    "set": [
+                      "part_created",
+                    ],
+                  },
                   "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
                 },
                 "response": undefined,

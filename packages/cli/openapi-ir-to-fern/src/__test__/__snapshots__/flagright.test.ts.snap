@@ -41,7 +41,69 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "acquisitionChannel": "ORGANIC",
+                    "allowedPaymentMethods": [
+                      "ACH",
+                    ],
+                    "kycStatusDetails": {
+                      "status": "SUCCESSFUL",
+                    },
+                    "linkedEntities": {},
+                    "riskLevel": "VERY_HIGH",
+                    "transactionLimits": {
+                      "paymentMethodLimits": {
+                        "ACH": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "CARD": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "CHECK": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "GENERIC_BANK_ACCOUNT": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "IBAN": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "MPESA": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "SWIFT": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "UPI": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "WALLET": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                      },
+                    },
+                    "userStateDetails": {
+                      "state": "UNACCEPTABLE",
+                    },
+                  },
                 },
               },
             ],
@@ -78,8 +140,10 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                 "request": undefined,
                 "response": {
                   "body": {
+                    "deviceData": {},
                     "executedRules": [],
                     "hitRules": [],
+                    "transactionState": "CREATED",
                   },
                 },
               },
@@ -117,7 +181,65 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                 "request": undefined,
                 "response": {
                   "body": {
+                    "acquisitionChannel": "ORGANIC",
+                    "contactDetails": {},
+                    "kycStatusDetails": {
+                      "status": "SUCCESSFUL",
+                    },
+                    "riskLevel": "VERY_HIGH",
+                    "transactionLimits": {
+                      "paymentMethodLimits": {
+                        "ACH": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "CARD": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "CHECK": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "GENERIC_BANK_ACCOUNT": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "IBAN": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "MPESA": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "SWIFT": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "UPI": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "WALLET": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                      },
+                    },
                     "userSegment": "RETAIL",
+                    "userStateDetails": {
+                      "state": "UNACCEPTABLE",
+                    },
                   },
                 },
               },
@@ -162,7 +284,69 @@ Each consumer Business entity needs three mandatory fields:
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {},
+                "request": {
+                  "acquisitionChannel": "ORGANIC",
+                  "allowedPaymentMethods": [
+                    "ACH",
+                  ],
+                  "kycStatusDetails": {
+                    "status": "SUCCESSFUL",
+                  },
+                  "linkedEntities": {},
+                  "riskLevel": "VERY_HIGH",
+                  "transactionLimits": {
+                    "paymentMethodLimits": {
+                      "ACH": {
+                        "averageTransactionAmountLimit": {},
+                        "transactionAmountLimit": {},
+                        "transactionCountLimit": {},
+                      },
+                      "CARD": {
+                        "averageTransactionAmountLimit": {},
+                        "transactionAmountLimit": {},
+                        "transactionCountLimit": {},
+                      },
+                      "CHECK": {
+                        "averageTransactionAmountLimit": {},
+                        "transactionAmountLimit": {},
+                        "transactionCountLimit": {},
+                      },
+                      "GENERIC_BANK_ACCOUNT": {
+                        "averageTransactionAmountLimit": {},
+                        "transactionAmountLimit": {},
+                        "transactionCountLimit": {},
+                      },
+                      "IBAN": {
+                        "averageTransactionAmountLimit": {},
+                        "transactionAmountLimit": {},
+                        "transactionCountLimit": {},
+                      },
+                      "MPESA": {
+                        "averageTransactionAmountLimit": {},
+                        "transactionAmountLimit": {},
+                        "transactionCountLimit": {},
+                      },
+                      "SWIFT": {
+                        "averageTransactionAmountLimit": {},
+                        "transactionAmountLimit": {},
+                        "transactionCountLimit": {},
+                      },
+                      "UPI": {
+                        "averageTransactionAmountLimit": {},
+                        "transactionAmountLimit": {},
+                        "transactionCountLimit": {},
+                      },
+                      "WALLET": {
+                        "averageTransactionAmountLimit": {},
+                        "transactionAmountLimit": {},
+                        "transactionCountLimit": {},
+                      },
+                    },
+                  },
+                  "userStateDetails": {
+                    "state": "UNACCEPTABLE",
+                  },
+                },
                 "response": undefined,
               },
             ],
@@ -214,7 +398,69 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "acquisitionChannel": "ORGANIC",
+                    "allowedPaymentMethods": [
+                      "ACH",
+                    ],
+                    "kycStatusDetails": {
+                      "status": "SUCCESSFUL",
+                    },
+                    "linkedEntities": {},
+                    "riskLevel": "VERY_HIGH",
+                    "transactionLimits": {
+                      "paymentMethodLimits": {
+                        "ACH": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "CARD": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "CHECK": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "GENERIC_BANK_ACCOUNT": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "IBAN": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "MPESA": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "SWIFT": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "UPI": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "WALLET": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                      },
+                    },
+                    "userStateDetails": {
+                      "state": "UNACCEPTABLE",
+                    },
+                  },
                 },
               },
             ],
@@ -292,7 +538,10 @@ Here are some of the most used payload fields explained (you can find the full p
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {},
+                "request": {
+                  "deviceData": {},
+                  "transactionState": "CREATED",
+                },
                 "response": undefined,
               },
             ],
@@ -349,7 +598,65 @@ Each consumer User entity needs three mandatory fields:
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
+                  "acquisitionChannel": "ORGANIC",
+                  "contactDetails": {},
+                  "kycStatusDetails": {
+                    "status": "SUCCESSFUL",
+                  },
+                  "riskLevel": "VERY_HIGH",
+                  "transactionLimits": {
+                    "paymentMethodLimits": {
+                      "ACH": {
+                        "averageTransactionAmountLimit": {},
+                        "transactionAmountLimit": {},
+                        "transactionCountLimit": {},
+                      },
+                      "CARD": {
+                        "averageTransactionAmountLimit": {},
+                        "transactionAmountLimit": {},
+                        "transactionCountLimit": {},
+                      },
+                      "CHECK": {
+                        "averageTransactionAmountLimit": {},
+                        "transactionAmountLimit": {},
+                        "transactionCountLimit": {},
+                      },
+                      "GENERIC_BANK_ACCOUNT": {
+                        "averageTransactionAmountLimit": {},
+                        "transactionAmountLimit": {},
+                        "transactionCountLimit": {},
+                      },
+                      "IBAN": {
+                        "averageTransactionAmountLimit": {},
+                        "transactionAmountLimit": {},
+                        "transactionCountLimit": {},
+                      },
+                      "MPESA": {
+                        "averageTransactionAmountLimit": {},
+                        "transactionAmountLimit": {},
+                        "transactionCountLimit": {},
+                      },
+                      "SWIFT": {
+                        "averageTransactionAmountLimit": {},
+                        "transactionAmountLimit": {},
+                        "transactionCountLimit": {},
+                      },
+                      "UPI": {
+                        "averageTransactionAmountLimit": {},
+                        "transactionAmountLimit": {},
+                        "transactionCountLimit": {},
+                      },
+                      "WALLET": {
+                        "averageTransactionAmountLimit": {},
+                        "transactionAmountLimit": {},
+                        "transactionCountLimit": {},
+                      },
+                    },
+                  },
                   "userSegment": "RETAIL",
+                  "userStateDetails": {
+                    "state": "UNACCEPTABLE",
+                  },
                 },
                 "response": undefined,
               },
@@ -480,7 +787,65 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "request": undefined,
                 "response": {
                   "body": {
+                    "acquisitionChannel": "ORGANIC",
+                    "contactDetails": {},
+                    "kycStatusDetails": {
+                      "status": "SUCCESSFUL",
+                    },
+                    "riskLevel": "VERY_HIGH",
+                    "transactionLimits": {
+                      "paymentMethodLimits": {
+                        "ACH": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "CARD": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "CHECK": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "GENERIC_BANK_ACCOUNT": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "IBAN": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "MPESA": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "SWIFT": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "UPI": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                        "WALLET": {
+                          "averageTransactionAmountLimit": {},
+                          "transactionAmountLimit": {},
+                          "transactionCountLimit": {},
+                        },
+                      },
+                    },
                     "userSegment": "RETAIL",
+                    "userStateDetails": {
+                      "state": "UNACCEPTABLE",
+                    },
                   },
                 },
               },

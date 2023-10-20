@@ -137,7 +137,20 @@ authenticated user.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "grant_type": {
+                "enum": "urn:devrev:params:oauth:grant-type:token-issue",
+                "type": "enum",
+              },
+              "requested_token_type": {
+                "enum": "urn:devrev:params:oauth:token-type:aat",
+                "type": "enum",
+              },
+              "subject_token_type": {
+                "enum": "urn:devrev:params:oauth:token-type:jwt:auth0",
+                "type": "enum",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -255,7 +268,32 @@ given Dev organization.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "token": {
+                "properties": {
+                  "requested_token_type": {
+                    "enum": "urn:devrev:params:oauth:token-type:aat",
+                    "type": "enum",
+                  },
+                  "status": {
+                    "enum": "active",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AuthTokensGetRequest",
       "headers": [],
       "internal": undefined,
@@ -325,7 +363,21 @@ token type issued for a given subject.
           "response": {
             "properties": {
               "tokens": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "requested_token_type": {
+                        "enum": "urn:devrev:params:oauth:token-type:aat",
+                        "type": "enum",
+                      },
+                      "status": {
+                        "enum": "active",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -442,7 +494,12 @@ authenticated user.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "requested_token_type": {
+                "enum": "urn:devrev:params:oauth:token-type:aat",
+                "type": "enum",
+              },
+            },
             "type": "object",
           },
           "response": undefined,
@@ -493,7 +550,32 @@ organization.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "token": {
+                "properties": {
+                  "requested_token_type": {
+                    "enum": "urn:devrev:params:oauth:token-type:aat",
+                    "type": "enum",
+                  },
+                  "status": {
+                    "enum": "active",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AuthTokensUpdateRequest",
       "headers": [],
       "internal": undefined,
@@ -890,7 +972,17 @@ disabled.
           "response": {
             "properties": {
               "dev_users": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "state": {
+                        "enum": "active",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -1058,7 +1150,28 @@ used.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "dev_user": {
+                "properties": {
+                  "state": {
+                    "enum": "active",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DevUsersSelfRequest",
       "headers": [],
       "internal": undefined,
@@ -1544,7 +1657,23 @@ organization.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "rev_org": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "RevOrgsCreateRequest",
       "headers": [],
       "internal": undefined,
@@ -1674,7 +1803,23 @@ organization.
         500,
         503,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "rev_org": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "RevOrgsGetRequest",
       "headers": [],
       "internal": undefined,
@@ -1744,7 +1889,12 @@ to access.
           "response": {
             "properties": {
               "rev_orgs": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -1994,6 +2144,10 @@ them.
           "queryParameters": [],
           "request": {
             "properties": {
+              "environment": {
+                "enum": "production",
+                "type": "enum",
+              },
               "id": {
                 "primitive": {
                   "string": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
@@ -2004,7 +2158,15 @@ them.
             },
             "type": "object",
           },
-          "response": undefined,
+          "response": {
+            "properties": {
+              "rev_org": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
         },
       ],
       "generatedRequestName": "RevOrgsUpdateRequest",
@@ -2368,6 +2530,10 @@ used.
           "queryParameters": [],
           "request": {
             "properties": {
+              "allowed_values": {
+                "properties": {},
+                "type": "object",
+              },
               "id": {
                 "primitive": {
                   "string": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
@@ -2979,6 +3145,42 @@ used.
           "queryParameters": [],
           "request": {
             "properties": {
+              "action": {
+                "enum": "activate",
+                "type": "enum",
+              },
+              "event_types": {
+                "properties": {
+                  "add": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "remove": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "set": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                },
+                "type": "object",
+              },
               "id": {
                 "primitive": {
                   "string": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",

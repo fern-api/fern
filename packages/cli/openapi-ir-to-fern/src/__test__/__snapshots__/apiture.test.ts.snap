@@ -2576,7 +2576,16 @@ This information provides hints to clients, allowing bank customers to select tr
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "restrictedDates": [
+                      {
+                        "creditOn": "2022-07-05",
+                        "debitOn": "2022-07-05",
+                        "occursOn": "2019-04-05",
+                        "reason": "pastDate",
+                      },
+                    ],
+                  },
                 },
               },
             ],
@@ -2637,7 +2646,12 @@ This information provides hints to clients, allowing bank customers to select tr
                 "request": undefined,
                 "response": {
                   "body": {
-                    "items": [],
+                    "items": [
+                      {
+                        "effectiveOn": "2022-07-05",
+                        "scheduledOn": "2022-07-04",
+                      },
+                    ],
                   },
                 },
               },
@@ -2939,7 +2953,11 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                 "request": undefined,
                 "response": {
                   "body": {
-                    "items": [],
+                    "items": [
+                      {
+                        "type": "credit",
+                      },
+                    ],
                   },
                 },
               },
@@ -2996,7 +3014,9 @@ The default response lists only recent transactions. Normally, this is transacti
                 "request": undefined,
                 "response": {
                   "body": {
-                    "items": [],
+                    "items": [
+                      {},
+                    ],
                   },
                 },
               },
@@ -3107,7 +3127,14 @@ Note: This operation requires an identity challenge if the financial institution
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": undefined,
+                "request": {
+                  "amount": "3456.78",
+                  "schedule": {
+                    "amountLimit": "3456.78",
+                    "frequency": "once",
+                    "recurrenceType": "fixed",
+                  },
+                },
                 "response": {
                   "body": {},
                 },
@@ -3278,7 +3305,14 @@ Note: This operation requires an identity challenge if the financial institution
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
-                "request": {},
+                "request": {
+                  "amount": "3456.78",
+                  "schedule": {
+                    "amountLimit": "3456.78",
+                    "frequency": "once",
+                    "recurrenceType": "fixed",
+                  },
+                },
                 "response": {
                   "body": {},
                 },

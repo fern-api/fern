@@ -2604,7 +2604,18 @@ exports[`open api parser hathora parse open api 1`] = `
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {},
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetMetricsRequest",
       "headers": [],
       "internal": undefined,
